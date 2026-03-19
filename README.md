@@ -1,3 +1,8 @@
+# ExtremeRoles.WebUI
+
+このリポジトリは開発中です、そのため「NO LICENSE」(最も使用が厳しいライセンス)になります
+リリース前には何らかのライセンスをつける想定
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
