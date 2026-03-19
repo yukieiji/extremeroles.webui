@@ -88,3 +88,68 @@ export const ExRTabDtoSchema = z.object({
 });
 
 export const ExRTabDtoArraySchema = z.array(ExRTabDtoSchema);
+
+/**
+ * Au系のオプション設定に関連する型定義
+ */
+
+export const OptionValueType = {
+  Bool: 0,
+  Byte: 1,
+  Int: 2,
+  UInt: 3,
+  Float: 4,
+  RoleBase: 5,
+} as const;
+
+export type OptionValueType = (typeof OptionValueType)[keyof typeof OptionValueType];
+
+export const OptionValueTypeSchema = z.nativeEnum(OptionValueType);
+
+export interface AuRoleOption {
+  MaxCount: number;
+  Chance: number;
+}
+
+export const AuRoleOptionSchema = z.object({
+  MaxCount: z.number().int(),
+  Chance: z.number().int(),
+});
+
+export interface AuOptionInfo {
+  ValueType: OptionValueType;
+  OptionName: number;
+}
+
+export const AuOptionInfoSchema = z.object({
+  ValueType: OptionValueTypeSchema,
+  OptionName: z.number().int(),
+});
+
+export interface AuOptionDto {
+  TranslatedTitle: string;
+  TranslatedFormat: string;
+  Value: number | string | AuRoleOption;
+  Info: AuOptionInfo;
+  Range: (number | string)[] | null;
+}
+
+export const AuOptionDtoSchema = z.object({
+  TranslatedTitle: z.string(),
+  TranslatedFormat: z.string(),
+  Value: z.union([z.number(), z.string(), AuRoleOptionSchema]),
+  Info: AuOptionInfoSchema,
+  Range: z.array(z.union([z.number(), z.string()])).nullable(),
+});
+
+export interface AuOptionCategoryDto {
+  TranslatedTitle: string;
+  Options: AuOptionDto[];
+}
+
+export const AuOptionCategoryDtoSchema = z.object({
+  TranslatedTitle: z.string(),
+  Options: z.array(AuOptionDtoSchema),
+});
+
+export const AuOptionCategoryDtoArraySchema = z.array(AuOptionCategoryDtoSchema);
