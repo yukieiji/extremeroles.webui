@@ -20,7 +20,6 @@ describe('ExRTabDto Validation', () => {
                 Format: '{0}',
                 RangeMeta: {
                   Type: 'Int32',
-                  Selection: 1,
                   Values: [1, 2, 3],
                 },
                 Childs: [],
@@ -66,7 +65,6 @@ describe('ExRTabDto Validation', () => {
                 Format: '',
                 RangeMeta: {
                   Type: 'Int32',
-                  Selection: 0,
                   Values: [1, 'a'], // Mixed
                 },
                 Childs: [],
@@ -96,7 +94,7 @@ describe('ExRTabDto Validation', () => {
                 TransedName: 'Parent',
                 Selection: 0,
                 Format: '{0}',
-                RangeMeta: { Type: 'Int32', Selection: 0, Values: [] },
+                RangeMeta: { Type: 'Int32', Values: [] },
                 Childs: [
                   {
                     Id: 102,
@@ -104,7 +102,7 @@ describe('ExRTabDto Validation', () => {
                     TransedName: 'Child',
                     Selection: 0,
                     Format: '{0}',
-                    RangeMeta: { Type: 'Int32', Selection: 0, Values: [] },
+                    RangeMeta: { Type: 'Int32', Values: [] },
                     Childs: [],
                   },
                 ],

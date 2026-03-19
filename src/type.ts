@@ -23,13 +23,11 @@ export const OptionTabSchema = z.nativeEnum(OptionTab);
  */
 export interface IOptionRangeMeta {
   Type: string;
-  Selection: number;
   Values: number[] | string[];
 }
 
 export const IOptionRangeMetaSchema = z.object({
   Type: z.enum(['Single', 'Int32', 'String']),
-  Selection: z.number(),
   Values: z.union([z.array(z.number()), z.array(z.string())]),
 });
 
