@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema, OptionTab, OptionValueType } from '../src/type';
-import type { AuOptionCategoryDto, ExRTabDto } from '../src/type';
+import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema, OptionTab, OptionValueType, UpdatedOptionsSchema, VanillaOptionPutRequestSchema } from '../src/type';
+import type { AuOptionCategoryDto, ExRTabDto, UpdatedOptions } from '../src/type';
 
 /**
  * モックデータの作成
@@ -157,5 +157,46 @@ export const handlers = [
    */
   http.get('/au/option/', () => {
     return HttpResponse.json(validatedAuMockData);
+  }),
+
+  /**
+   * PUT /au/option/ のハンドラー
+   */
+  http.put('/au/option/', async ({ request }) => {
+    const body = await request.json();
+
+    // リクエストボディのバリデーション
+    const validatedRequest = VanillaOptionPutRequestSchema.safeParse(body);
+    if (!validatedRequest.success) {
+      return HttpResponse.json(validatedRequest.error, { status: 400 });
+    }
+
+    // 固定のレスポンスデータを定義
+    const mockUpdatedOptions: UpdatedOptions = {
+      UpdatedCategory: {
+        Id: 1,
+        Name: 'ゲーム設定',
+        Options: [
+          {
+            Id: 101,
+            IsActive: true,
+            TransedName: '移動速度',
+            Selection: 1,
+            Format: '{0}x',
+            RangeMeta: {
+              Type: 'Single',
+              Values: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+            },
+            Childs: [],
+          },
+        ],
+      },
+      ChainUpdatedOption: [],
+    };
+
+    // レスポンスデータのバリデーション
+    const validatedResponse = UpdatedOptionsSchema.parse(mockUpdatedOptions);
+
+    return HttpResponse.json(validatedResponse);
   }),
 ];
