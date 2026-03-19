@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { ExRTabDtoArraySchema, OptionTab } from '../type';
-import type { ExRTabDto } from '../type';
+import { ExRTabDtoArraySchema, OptionTab } from '../src/type';
+import type { ExRTabDto } from '../src/type';
 
 /**
  * モックデータの作成

@@ -11,7 +11,7 @@ async function enableMocking() {
     return
   }
 
-  const { worker } = await import('./mocks/browser')
+  const { worker } = await import('../mocks/browser')
 
   // MSWをサービスワーカーとして登録
   return worker.start()
