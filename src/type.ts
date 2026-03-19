@@ -28,7 +28,7 @@ export interface IOptionRangeMeta {
 }
 
 export const IOptionRangeMetaSchema = z.object({
-  Type: z.string(),
+  Type: z.enum(['Single', 'Int32', 'String']),
   Selection: z.number(),
   Values: z.union([z.array(z.number()), z.array(z.string())]),
 });

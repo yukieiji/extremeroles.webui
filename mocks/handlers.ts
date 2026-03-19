@@ -21,7 +21,7 @@ const mockExRTabDtoList: ExRTabDto[] = [
             Selection: 1,
             Format: '{0}x',
             RangeMeta: {
-              Type: 'Double',
+              Type: 'Single',
               Selection: 1,
               Values: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
             },
@@ -46,7 +46,7 @@ const mockExRTabDtoList: ExRTabDto[] = [
             Selection: 0,
             Format: '{0}',
             RangeMeta: {
-              Type: 'Toggle',
+              Type: 'String',
               Selection: 0,
               Values: ['無効', '有効'],
             },
@@ -58,7 +58,7 @@ const mockExRTabDtoList: ExRTabDto[] = [
                 Selection: 2,
                 Format: '{0}s',
                 RangeMeta: {
-                  Type: 'Float',
+                  Type: 'Single',
                   Selection: 2,
                   Values: [10, 20, 30, 40],
                 },
