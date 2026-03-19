@@ -153,3 +153,33 @@ export const AuOptionCategoryDtoSchema = z.object({
 });
 
 export const AuOptionCategoryDtoArraySchema = z.array(AuOptionCategoryDtoSchema);
+
+/**
+ * オプション更新リクエスト
+ */
+export interface ExROptionPutRequest {
+  TabId: number;
+  CategoryId: number;
+  OptionId: number;
+  Selection: number;
+}
+
+export const ExROptionPutRequestSchema = z.object({
+  TabId: z.number().int(),
+  CategoryId: z.number().int(),
+  OptionId: z.number().int(),
+  Selection: z.number().int(),
+});
+
+/**
+ * 更新されたオプション情報
+ */
+export interface UpdatedOptions {
+  UpdatedCategory: ExRCategoryDto | null;
+  ChainUpdatedOption: ExROptionDto[];
+}
+
+export const UpdatedOptionsSchema = z.object({
+  UpdatedCategory: ExRCategoryDtoSchema.nullable(),
+  ChainUpdatedOption: z.array(ExROptionDtoSchema),
+});
