@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ExROptionPutRequestSchema, UpdatedOptionsSchema } from '../src/type';
+import { ExROptionPutRequestSchema, UpdatedOptionsSchema, OptionValueType, VanillaOptionPutRequestSchema, } from '../src/type';
 
 describe('ExROptionPutRequest and UpdatedOptions Validation', () => {
   it('should validate a correct ExROptionPutRequest', () => {
@@ -50,6 +50,74 @@ describe('ExROptionPutRequest and UpdatedOptions Validation', () => {
           Id: 101,
           IsActive: true,
           TransedName: 'Test Option',
+
+describe('VanillaOptionPutRequest Validation', () => {
+  it('should validate a correct number value request', () => {
+    const data = {
+      ValueType: OptionValueType.Int,
+      OptionName: 1,
+      NewValue: 10,
+    };
+    const result = VanillaOptionPutRequestSchema.safeParse(data);
+    expect(result.success).toBe(true);
+  });
+
+  it('should validate a correct boolean value request', () => {
+    const data = {
+      ValueType: OptionValueType.Bool,
+      OptionName: 3,
+      NewValue: true,
+    };
+    const result = VanillaOptionPutRequestSchema.safeParse(data);
+    expect(result.success).toBe(true);
+  });
+
+  it('should validate a correct AuRoleOption value request', () => {
+    const data = {
+      ValueType: OptionValueType.RoleBase,
+      OptionName: 101,
+      NewValue: {
+        MaxCount: 2,
+        Chance: 50,
+      },
+    };
+    const result = VanillaOptionPutRequestSchema.safeParse(data);
+    expect(result.success).toBe(true);
+  });
+
+  it('should fail if NewValue is a string', () => {
+    const data = {
+      ValueType: OptionValueType.Byte,
+      OptionName: 1,
+      NewValue: 'invalid',
+    };
+    const result = VanillaOptionPutRequestSchema.safeParse(data);
+    expect(result.success).toBe(false);
+  });
+});
+
+describe('UpdatedOptions Validation', () => {
+  it('should validate a correct UpdatedOptions with category', () => {
+    const data = {
+      UpdatedCategory: {
+        Id: 1,
+        Name: 'Category',
+        Options: [],
+      },
+      ChainUpdatedOption: [],
+    };
+    const result = UpdatedOptionsSchema.safeParse(data);
+    expect(result.success).toBe(true);
+  });
+
+  it('should validate a correct UpdatedOptions with null category', () => {
+    const data = {
+      UpdatedCategory: null,
+      ChainUpdatedOption: [
+        {
+          Id: 201,
+          IsActive: true,
+          TransedName: 'Option',
           Selection: 1,
           Format: '{0}',
           RangeMeta: {

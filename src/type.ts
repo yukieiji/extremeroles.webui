@@ -169,6 +169,18 @@ export const ExROptionPutRequestSchema = z.object({
   CategoryId: z.number().int(),
   OptionId: z.number().int(),
   Selection: z.number().int(),
+})
+
+export interface VanillaOptionPutRequest {
+  ValueType: OptionValueType;
+  OptionName: number;
+  NewValue: number | boolean | AuRoleOption;
+}
+
+export const VanillaOptionPutRequestSchema = z.object({
+  ValueType: OptionValueTypeSchema,
+  OptionName: z.number().int(),
+  NewValue: z.union([z.number(), z.boolean(), AuRoleOptionSchema]),
 });
 
 /**

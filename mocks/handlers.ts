@@ -6,6 +6,7 @@ import {
   UpdatedOptionsSchema,
   OptionTab,
   OptionValueType,
+  VanillaOptionPutRequestSchema
 } from '../src/type';
 import type { AuOptionCategoryDto, ExRTabDto, UpdatedOptions } from '../src/type';
 
@@ -146,10 +147,36 @@ const mockAuOptionCategoryDtoList: AuOptionCategoryDto[] = [
 ];
 
 /**
+ * 更新されたオプションのモックデータ作成
+ */
+const mockUpdatedOptions: UpdatedOptions = {
+  UpdatedCategory: {
+    Id: 1,
+    Name: 'ゲーム設定',
+    Options: [
+      {
+        Id: 101,
+        IsActive: true,
+        TransedName: '移動速度',
+        Selection: 1,
+        Format: '{0}x',
+        RangeMeta: {
+          Type: 'Single',
+          Values: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+        },
+        Childs: [],
+      },
+    ],
+  },
+  ChainUpdatedOption: [],
+};
+
+/**
  * Zodを使用してモックデータのバリデーションを実施
  */
 const validatedExRMockData = ExRTabDtoArraySchema.parse(mockExRTabDtoList);
 const validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(mockAuOptionCategoryDtoList);
+const validatedUpdatedOptions = UpdatedOptionsSchema.parse(mockUpdatedOptions);
 
 export const handlers = [
   /**
@@ -196,5 +223,20 @@ export const handlers = [
    */
   http.get('/au/option/', () => {
     return HttpResponse.json(validatedAuMockData);
+  }),
+
+  /**
+   * PUT /au/option/ のハンドラー
+   */
+  http.put('/au/option/', async ({ request }) => {
+    const body = await request.json();
+
+    // リクエストボディのバリデーション
+    const validatedRequest = VanillaOptionPutRequestSchema.safeParse(body);
+    if (!validatedRequest.success) {
+      return HttpResponse.json(validatedRequest.error, { status: 400 });
+    }
+
+    return HttpResponse.json(validatedUpdatedOptions);
   }),
 ];
