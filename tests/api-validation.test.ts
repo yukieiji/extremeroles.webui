@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ExROptionPutRequestSchema, UpdatedOptionsSchema, OptionValueType, VanillaOptionPutRequestSchema, } from '../src/type';
+import { ExROptionPutRequestSchema, UpdatedOptionsSchema, OptionValueType, VanillaOptionPutRequestSchema } from '../src/type';
 
 describe('ExROptionPutRequest and UpdatedOptions Validation', () => {
   it('should validate a correct ExROptionPutRequest', () => {
@@ -50,6 +50,21 @@ describe('ExROptionPutRequest and UpdatedOptions Validation', () => {
           Id: 101,
           IsActive: true,
           TransedName: 'Test Option',
+          Selection: 1,
+          Format: 'Test Format',
+          RangeMeta: {
+            Type: 'Int32',
+            Values: [1, 2, 3],
+          },
+          Childs: [],
+        },
+      ],
+    };
+
+    const result = UpdatedOptionsSchema.safeParse(data);
+    expect(result.success).toBe(true);
+  });
+});
 
 describe('VanillaOptionPutRequest Validation', () => {
   it('should validate a correct number value request', () => {
