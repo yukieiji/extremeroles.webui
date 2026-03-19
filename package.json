@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "e2e": "pnpm exec playwright test"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
