@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { ExRTabDtoArraySchema, OptionTab } from '../src/type';
-import type { ExRTabDto } from '../src/type';
+import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema, OptionTab, OptionValueType } from '../src/type';
+import type { AuOptionCategoryDto, ExRTabDto } from '../src/type';
 
 /**
  * モックデータの作成
@@ -70,15 +70,92 @@ const mockExRTabDtoList: ExRTabDto[] = [
 ];
 
 /**
+ * Au系オプションのモックデータ作成
+ */
+const mockAuOptionCategoryDtoList: AuOptionCategoryDto[] = [
+  {
+    TranslatedTitle: 'ゲーム設定',
+    Options: [
+      {
+        TranslatedTitle: 'マップ',
+        TranslatedFormat: '{0}',
+        Value: 0,
+        Info: {
+          ValueType: OptionValueType.Byte,
+          OptionName: 1,
+        },
+        Range: ['The Skeld', 'Mira HQ', 'Polus', 'The Fungle'],
+      },
+      {
+        TranslatedTitle: 'インポスターの数',
+        TranslatedFormat: '{0}',
+        Value: 2,
+        Info: {
+          ValueType: OptionValueType.Int,
+          OptionName: 2,
+        },
+        Range: [1, 2, 3],
+      },
+      {
+        TranslatedTitle: '匿名投票',
+        TranslatedFormat: '{0}',
+        Value: true,
+        Info: {
+          ValueType: OptionValueType.Bool,
+          OptionName: 3,
+        },
+        Range: ['OFF', 'ON'],
+      },
+    ],
+  },
+  {
+    TranslatedTitle: '役職設定',
+    Options: [
+      {
+        TranslatedTitle: 'シェリフ',
+        TranslatedFormat: '{0}',
+        Value: {
+          MaxCount: 1,
+          Chance: 100,
+        },
+        Info: {
+          ValueType: OptionValueType.RoleBase,
+          OptionName: 101,
+        },
+        Range: null,
+      },
+      {
+        TranslatedTitle: 'キルクールダウン',
+        TranslatedFormat: '{0}s',
+        Value: 20.5,
+        Info: {
+          ValueType: OptionValueType.Float,
+          OptionName: 102,
+        },
+        Range: [10.0, 15.0, 20.0, 25.0, 30.0],
+      },
+    ],
+  },
+];
+
+/**
  * Zodを使用してモックデータのバリデーションを実施
  */
-const validatedMockData = ExRTabDtoArraySchema.parse(mockExRTabDtoList);
+const validatedExRMockData = ExRTabDtoArraySchema.parse(mockExRTabDtoList);
+const validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(mockAuOptionCategoryDtoList);
 
 export const handlers = [
   /**
    * GET /exr/option/ のハンドラー
    */
   http.get('/exr/option/', () => {
-    return HttpResponse.json(validatedMockData);
+    return HttpResponse.json(validatedExRMockData);
+  }),
+
+  /**
+   * GET /au/option/ のハンドラー
+   */
+  http.get('/au/option/', () => {
+    return HttpResponse.json(validatedAuMockData);
   }),
 ];
