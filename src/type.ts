@@ -157,6 +157,20 @@ export const AuOptionCategoryDtoArraySchema = z.array(AuOptionCategoryDtoSchema)
 /**
  * オプション更新リクエスト
  */
+export interface ExROptionPutRequest {
+  TabId: number;
+  CategoryId: number;
+  OptionId: number;
+  Selection: number;
+}
+
+export const ExROptionPutRequestSchema = z.object({
+  TabId: z.number().int(),
+  CategoryId: z.number().int(),
+  OptionId: z.number().int(),
+  Selection: z.number().int(),
+})
+
 export interface VanillaOptionPutRequest {
   ValueType: OptionValueType;
   OptionName: number;

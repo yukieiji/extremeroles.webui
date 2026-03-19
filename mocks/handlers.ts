@@ -1,5 +1,13 @@
 import { http, HttpResponse } from 'msw';
-import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema, OptionTab, OptionValueType, UpdatedOptionsSchema, VanillaOptionPutRequestSchema } from '../src/type';
+import {
+  AuOptionCategoryDtoArraySchema,
+  ExRTabDtoArraySchema,
+  ExROptionPutRequestSchema,
+  UpdatedOptionsSchema,
+  OptionTab,
+  OptionValueType,
+  VanillaOptionPutRequestSchema
+} from '../src/type';
 import type { AuOptionCategoryDto, ExRTabDto, UpdatedOptions } from '../src/type';
 
 /**
@@ -176,6 +184,38 @@ export const handlers = [
    */
   http.get('/exr/option/', () => {
     return HttpResponse.json(validatedExRMockData);
+  }),
+
+  /**
+   * PUT /exr/option/ のハンドラー
+   */
+  http.put('/exr/option/', async ({ request }) => {
+    const body = await request.json();
+
+    // Zodを使用してリクエストボディをバリデーション
+    const result = ExROptionPutRequestSchema.safeParse(body);
+
+    if (!result.success) {
+      return new HttpResponse(null, { status: 400 });
+    }
+
+    const { CategoryId, OptionId } = result.data;
+
+    // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
+    if (CategoryId === 0 && OptionId === 0) {
+      return new HttpResponse(null, { status: 202 });
+    }
+
+    // それ以外はUpdatedOptionsを返す
+    const mockUpdatedOptions: UpdatedOptions = {
+      UpdatedCategory: validatedExRMockData[0].Categories[0],
+      ChainUpdatedOption: [validatedExRMockData[0].Categories[0].Options[0]],
+    };
+
+    // レスポンスデータのバリデーション
+    const validatedResponse = UpdatedOptionsSchema.parse(mockUpdatedOptions);
+
+    return HttpResponse.json(validatedResponse);
   }),
 
   /**
