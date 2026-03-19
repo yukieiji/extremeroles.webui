@@ -153,3 +153,31 @@ export const AuOptionCategoryDtoSchema = z.object({
 });
 
 export const AuOptionCategoryDtoArraySchema = z.array(AuOptionCategoryDtoSchema);
+
+/**
+ * オプション更新リクエスト
+ */
+export interface VanillaOptionPutRequest {
+  ValueType: OptionValueType;
+  OptionName: number;
+  NewValue: number | boolean | AuRoleOption;
+}
+
+export const VanillaOptionPutRequestSchema = z.object({
+  ValueType: OptionValueTypeSchema,
+  OptionName: z.number().int(),
+  NewValue: z.union([z.number(), z.boolean(), AuRoleOptionSchema]),
+});
+
+/**
+ * 更新されたオプション情報
+ */
+export interface UpdatedOptions {
+  UpdatedCategory: ExRCategoryDto | null;
+  ChainUpdatedOption: ExROptionDto[];
+}
+
+export const UpdatedOptionsSchema = z.object({
+  UpdatedCategory: ExRCategoryDtoSchema.nullable(),
+  ChainUpdatedOption: z.array(ExROptionDtoSchema),
+});
