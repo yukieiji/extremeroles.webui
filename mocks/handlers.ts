@@ -139,10 +139,36 @@ const mockAuOptionCategoryDtoList: AuOptionCategoryDto[] = [
 ];
 
 /**
+ * 更新されたオプションのモックデータ作成
+ */
+const mockUpdatedOptions: UpdatedOptions = {
+  UpdatedCategory: {
+    Id: 1,
+    Name: 'ゲーム設定',
+    Options: [
+      {
+        Id: 101,
+        IsActive: true,
+        TransedName: '移動速度',
+        Selection: 1,
+        Format: '{0}x',
+        RangeMeta: {
+          Type: 'Single',
+          Values: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+        },
+        Childs: [],
+      },
+    ],
+  },
+  ChainUpdatedOption: [],
+};
+
+/**
  * Zodを使用してモックデータのバリデーションを実施
  */
 const validatedExRMockData = ExRTabDtoArraySchema.parse(mockExRTabDtoList);
 const validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(mockAuOptionCategoryDtoList);
+const validatedUpdatedOptions = UpdatedOptionsSchema.parse(mockUpdatedOptions);
 
 export const handlers = [
   /**
@@ -171,32 +197,6 @@ export const handlers = [
       return HttpResponse.json(validatedRequest.error, { status: 400 });
     }
 
-    // 固定のレスポンスデータを定義
-    const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: {
-        Id: 1,
-        Name: 'ゲーム設定',
-        Options: [
-          {
-            Id: 101,
-            IsActive: true,
-            TransedName: '移動速度',
-            Selection: 1,
-            Format: '{0}x',
-            RangeMeta: {
-              Type: 'Single',
-              Values: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
-            },
-            Childs: [],
-          },
-        ],
-      },
-      ChainUpdatedOption: [],
-    };
-
-    // レスポンスデータのバリデーション
-    const validatedResponse = UpdatedOptionsSchema.parse(mockUpdatedOptions);
-
-    return HttpResponse.json(validatedResponse);
+    return HttpResponse.json(validatedUpdatedOptions);
   }),
 ];
