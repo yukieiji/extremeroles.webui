@@ -48,6 +48,38 @@ describe('ExRTabDto Validation', () => {
     expect(result.success).toBe(false);
   });
 
+  it('should fail validation if RangeMeta Values are mixed types', () => {
+    const data = [
+      {
+        Id: OptionTab.GeneralTab,
+        Name: 'T',
+        Categories: [
+          {
+            Id: 1,
+            Name: 'C',
+            Options: [
+              {
+                Id: 1,
+                IsActive: true,
+                TransedName: 'O',
+                Selection: 0,
+                Format: '',
+                RangeMeta: {
+                  Type: 'T',
+                  Selection: 0,
+                  Values: [1, 'a'], // Mixed
+                },
+                Childs: [],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const result = ExRTabDtoArraySchema.safeParse(data);
+    expect(result.success).toBe(false);
+  });
+
   it('should validate recursive Childs in ExROptionDto', () => {
     const data = [
       {

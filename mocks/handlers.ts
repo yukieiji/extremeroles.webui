@@ -48,7 +48,7 @@ const mockExRTabDtoList: ExRTabDto[] = [
             RangeMeta: {
               Type: 'Toggle',
               Selection: 0,
-              Values: [false, true],
+              Values: ['無効', '有効'],
             },
             Childs: [
               {
