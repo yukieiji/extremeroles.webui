@@ -129,7 +129,7 @@ export const AuOptionInfoSchema = z.object({
 export interface AuOptionDto {
   TranslatedTitle: string;
   TranslatedFormat: string;
-  Value: number | string | AuRoleOption;
+  Value: number | boolean | AuRoleOption;
   Info: AuOptionInfo;
   Range: (number | string)[] | null;
 }
@@ -137,7 +137,7 @@ export interface AuOptionDto {
 export const AuOptionDtoSchema = z.object({
   TranslatedTitle: z.string(),
   TranslatedFormat: z.string(),
-  Value: z.union([z.number(), z.string(), AuRoleOptionSchema]),
+  Value: z.union([z.number(), z.boolean(), AuRoleOptionSchema]),
   Info: AuOptionInfoSchema,
   Range: z.array(z.union([z.number(), z.string()])).nullable(),
 });

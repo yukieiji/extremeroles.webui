@@ -96,6 +96,16 @@ const mockAuOptionCategoryDtoList: AuOptionCategoryDto[] = [
         },
         Range: [1, 2, 3],
       },
+      {
+        TranslatedTitle: '匿名投票',
+        TranslatedFormat: '{0}',
+        Value: true,
+        Info: {
+          ValueType: OptionValueType.Bool,
+          OptionName: 3,
+        },
+        Range: ['OFF', 'ON'],
+      },
     ],
   },
   {

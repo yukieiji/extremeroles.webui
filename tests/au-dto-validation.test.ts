@@ -30,12 +30,45 @@ describe('AuOptionCategoryDto Validation', () => {
             },
             Range: null,
           },
+          {
+            TranslatedTitle: 'Anonymous Voting',
+            TranslatedFormat: '{0}',
+            Value: true,
+            Info: {
+              ValueType: OptionValueType.Bool,
+              OptionName: 3,
+            },
+            Range: ['OFF', 'ON'],
+          },
         ],
       },
     ];
 
     const result = AuOptionCategoryDtoArraySchema.safeParse(data);
     expect(result.success).toBe(true);
+  });
+
+  it('should fail validation if Value is a string', () => {
+    const invalidData = [
+      {
+        TranslatedTitle: 'Settings',
+        Options: [
+          {
+            TranslatedTitle: 'Invalid Option',
+            TranslatedFormat: '{0}',
+            Value: 'string value', // No longer allowed
+            Info: {
+              ValueType: OptionValueType.Int,
+              OptionName: 1,
+            },
+            Range: [],
+          },
+        ],
+      },
+    ];
+
+    const result = AuOptionCategoryDtoArraySchema.safeParse(invalidData);
+    expect(result.success).toBe(false);
   });
 
   it('should fail validation if Value is incorrect for AuRoleOption', () => {
