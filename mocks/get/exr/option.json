@@ -1,0 +1,63 @@
+[
+  {
+    "Id": 0,
+    "Name": "基本設定",
+    "Categories": [
+      {
+        "Id": 1,
+        "Name": "ゲーム設定",
+        "Options": [
+          {
+            "Id": 101,
+            "IsActive": true,
+            "TransedName": "移動速度",
+            "Selection": 1,
+            "Format": "{0}x",
+            "RangeMeta": {
+              "Type": "Single",
+              "Values": [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+            },
+            "Childs": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 1,
+    "Name": "クルーメイト",
+    "Categories": [
+      {
+        "Id": 2,
+        "Name": "役職設定",
+        "Options": [
+          {
+            "Id": 201,
+            "IsActive": true,
+            "TransedName": "シェリフ",
+            "Selection": 0,
+            "Format": "{0}",
+            "RangeMeta": {
+              "Type": "String",
+              "Values": ["無効", "有効"]
+            },
+            "Childs": [
+              {
+                "Id": 202,
+                "IsActive": false,
+                "TransedName": "キルクールダウン",
+                "Selection": 2,
+                "Format": "{0}s",
+                "RangeMeta": {
+                  "Type": "Single",
+                  "Values": [10, 20, 30, 40]
+                },
+                "Childs": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

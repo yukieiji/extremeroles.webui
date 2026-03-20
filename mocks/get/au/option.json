@@ -1,0 +1,65 @@
+[
+  {
+    "TranslatedTitle": "ゲーム設定",
+    "Options": [
+      {
+        "TranslatedTitle": "マップ",
+        "TranslatedFormat": "{0}",
+        "Value": 0,
+        "Info": {
+          "ValueType": 1,
+          "OptionName": 1
+        },
+        "Range": ["The Skeld", "Mira HQ", "Polus", "The Fungle"]
+      },
+      {
+        "TranslatedTitle": "インポスターの数",
+        "TranslatedFormat": "{0}",
+        "Value": 2,
+        "Info": {
+          "ValueType": 2,
+          "OptionName": 2
+        },
+        "Range": [1, 2, 3]
+      },
+      {
+        "TranslatedTitle": "匿名投票",
+        "TranslatedFormat": "{0}",
+        "Value": true,
+        "Info": {
+          "ValueType": 0,
+          "OptionName": 3
+        },
+        "Range": ["OFF", "ON"]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "役職設定",
+    "Options": [
+      {
+        "TranslatedTitle": "シェリフ",
+        "TranslatedFormat": "{0}",
+        "Value": {
+          "MaxCount": 1,
+          "Chance": 100
+        },
+        "Info": {
+          "ValueType": 5,
+          "OptionName": 101
+        },
+        "Range": null
+      },
+      {
+        "TranslatedTitle": "キルクールダウン",
+        "TranslatedFormat": "{0}s",
+        "Value": 20.5,
+        "Info": {
+          "ValueType": 4,
+          "OptionName": 102
+        },
+        "Range": [10.0, 15.0, 20.0, 25.0, 30.0]
+      }
+    ]
+  }
+]
