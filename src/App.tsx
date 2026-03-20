@@ -1,5 +1,5 @@
 import { Suspense, use } from 'react';
-import { OptionGroupToggleSidebar } from './components/blocks/OptionGroupToggleSidebar';
+import { OptionGroupToggleSidebar } from './feature/OptionGroupToggleSidebar';
 import { LoadingView } from './feature/LoadingView';
 import { ExROptionEditor } from './feature/ExROptionEditor';
 import { AuOptionEditor } from './feature/AuOptionEditor';

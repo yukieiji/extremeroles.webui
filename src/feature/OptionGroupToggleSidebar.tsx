@@ -1,6 +1,6 @@
-import { useStore } from '../../useStore';
-import type { SelectedTab } from '../../slices/optionGroupToggleSidebarSlice';
-import { OptionGroupToggleSidebarToggleButton } from '../parts/OptionGroupToggleSidebarToggleButton';
+import { useStore } from '../useStore';
+import type { SelectedTab } from '../slices/optionGroupToggleSidebarSlice';
+import { OptionGroupToggleSidebarToggleButton } from '../components/parts/OptionGroupToggleSidebarToggleButton';
 
 /**
  * タブ情報の定義
@@ -51,7 +51,6 @@ export function OptionGroupToggleSidebar() {
 
       {isSidebarOpen ? (
         <nav className="p-4 flex flex-col gap-4">
-          <h2 className="text-xl font-bold border-b border-gray-400 pb-2">Options</h2>
           <ul className="flex flex-col gap-2">
             {TABS.map((tab) => {
               return (
