@@ -8,17 +8,17 @@ test('has sidebar and json viewer', async ({ page }) => {
   await expect(sidebar).toBeVisible();
 
   // サイドバー内のボタンを明示的に指定
-  await expect(sidebar.getByRole('button', { name: 'ExR Options' })).toBeVisible();
   await expect(sidebar.getByRole('button', { name: 'Au Options' })).toBeVisible();
+  await expect(sidebar.getByRole('button', { name: 'ExR Options' })).toBeVisible();
 
-  // 初期状態で ExR Options JSON が表示されていることを確認
-  await expect(page.getByRole('heading', { name: 'ExR Options JSON' })).toBeVisible();
-  await expect(page.getByTestId('exr-json-pre')).toContainText('"Id": 0');
-
-  // Au Options に切り替え
-  await sidebar.getByRole('button', { name: 'Au Options' }).click();
+  // Au Options が初期で表示されることを確認する
   await expect(page.getByRole('heading', { name: 'Au Options JSON' })).toBeVisible();
   await expect(page.getByTestId('au-json-pre')).toContainText('"TranslatedTitle": "ゲーム設定"');
+  
+  // ExR Options に切り替え
+  await sidebar.getByRole('button', { name: 'ExR Options' }).click();
+  await expect(page.getByRole('heading', { name: 'ExR Options JSON' })).toBeVisible();
+  await expect(page.getByTestId('exr-json-pre')).toContainText('"Id": 0');
 
   // サイドバーの開閉
   await page.getByRole('button', { name: 'サイドバーを閉じる' }).click();
