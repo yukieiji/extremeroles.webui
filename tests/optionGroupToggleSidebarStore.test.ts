@@ -7,6 +7,7 @@ describe('OptionGroupToggleSidebarStore', () => {
     useStore.setState({
       isSidebarOpen: true,
       selectedTab: 'ExR',
+      selectedExRTabId: 0,
     });
   });
 
@@ -14,6 +15,7 @@ describe('OptionGroupToggleSidebarStore', () => {
     const state = useStore.getState();
     expect(state.isSidebarOpen).toBe(true);
     expect(state.selectedTab).toBe('ExR');
+    expect(state.selectedExRTabId).toBe(0);
   });
 
   it('toggleSidebar で isSidebarOpen が切り替わること', () => {
@@ -30,5 +32,13 @@ describe('OptionGroupToggleSidebarStore', () => {
 
     useStore.getState().setSelectedTab('ExR');
     expect(useStore.getState().selectedTab).toBe('ExR');
+  });
+
+  it('setSelectedExRTabId で selectedExRTabId が変更されること', () => {
+    useStore.getState().setSelectedExRTabId(1);
+    expect(useStore.getState().selectedExRTabId).toBe(1);
+
+    useStore.getState().setSelectedExRTabId(2);
+    expect(useStore.getState().selectedExRTabId).toBe(2);
   });
 });

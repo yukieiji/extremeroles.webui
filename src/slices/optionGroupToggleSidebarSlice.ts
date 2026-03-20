@@ -1,5 +1,7 @@
 import type { StateCreator } from 'zustand';
 
+import type { OptionTab } from '../type';
+
 export type SelectedTab = 'Au' | 'ExR';
 
 /**
@@ -8,8 +10,10 @@ export type SelectedTab = 'Au' | 'ExR';
 export interface OptionGroupToggleSidebarSlice {
   isSidebarOpen: boolean;
   selectedTab: SelectedTab;
+  selectedExRTabId: OptionTab;
   toggleSidebar: () => void;
   setSelectedTab: (tab: SelectedTab) => void;
+  setSelectedExRTabId: (id: OptionTab) => void;
 }
 
 /**
@@ -19,6 +23,7 @@ export const createOptionGroupToggleSidebarSlice: StateCreator<OptionGroupToggle
   return {
     isSidebarOpen: true,
     selectedTab: 'Au',
+    selectedExRTabId: 0,
     toggleSidebar: () => {
       set((state) => {
         return { isSidebarOpen: !state.isSidebarOpen };
@@ -26,6 +31,9 @@ export const createOptionGroupToggleSidebarSlice: StateCreator<OptionGroupToggle
     },
     setSelectedTab: (tab: SelectedTab) => {
       set({ selectedTab: tab });
+    },
+    setSelectedExRTabId: (id: OptionTab) => {
+      set({ selectedExRTabId: id });
     },
   };
 };
