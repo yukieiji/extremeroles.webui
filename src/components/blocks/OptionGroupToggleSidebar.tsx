@@ -3,6 +3,20 @@ import type { SelectedTab } from '../../slices/optionGroupToggleSidebarSlice';
 import { OptionGroupToggleSidebarToggleButton } from '../parts/OptionGroupToggleSidebarToggleButton';
 
 /**
+ * タブ情報の定義
+ */
+interface TabItem {
+  id: SelectedTab;
+  label: string;
+  shortLabel: string;
+}
+
+const TABS: TabItem[] = [
+  { id: 'ExR', label: 'ExR Options', shortLabel: 'E' },
+  { id: 'Au', label: 'Au Options', shortLabel: 'A' },
+];
+
+/**
  * サイドバーコンポーネント
  */
 export function OptionGroupToggleSidebar() {
@@ -39,60 +53,44 @@ export function OptionGroupToggleSidebar() {
         <nav className="p-4 flex flex-col gap-4">
           <h2 className="text-xl font-bold border-b border-gray-400 pb-2">Options</h2>
           <ul className="flex flex-col gap-2">
-            <li>
-              <button
-                onClick={() => {
-                  handleTabChange('ExR');
-                }}
-                className={`
-                  w-full text-left p-2 rounded-md transition-colors
-                  ${selectedTab === 'ExR' ? 'bg-blue-500 text-white' : 'hover:bg-gray-200'}
-                `}
-              >
-                ExR Options
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  handleTabChange('Au');
-                }}
-                className={`
-                  w-full text-left p-2 rounded-md transition-colors
-                  ${selectedTab === 'Au' ? 'bg-blue-500 text-white' : 'hover:bg-gray-200'}
-                `}
-              >
-                Au Options
-              </button>
-            </li>
+            {TABS.map((tab) => {
+              return (
+                <li key={tab.id}>
+                  <button
+                    onClick={() => {
+                      handleTabChange(tab.id);
+                    }}
+                    className={`
+                      w-full text-left p-2 rounded-md transition-colors
+                      ${selectedTab === tab.id ? 'bg-blue-500 text-white' : 'hover:bg-gray-200'}
+                    `}
+                  >
+                    {tab.label}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       ) : (
         <div className="flex flex-col items-center pt-8 gap-4">
-          <button
-            onClick={() => {
-              handleTabChange('ExR');
-            }}
-            title="ExR Options"
-            className={`
-              w-8 h-8 rounded-full transition-colors flex items-center justify-center font-bold
-              ${selectedTab === 'ExR' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'}
-            `}
-          >
-            E
-          </button>
-          <button
-            onClick={() => {
-              handleTabChange('Au');
-            }}
-            title="Au Options"
-            className={`
-              w-8 h-8 rounded-full transition-colors flex items-center justify-center font-bold
-              ${selectedTab === 'Au' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'}
-            `}
-          >
-            A
-          </button>
+          {TABS.map((tab) => {
+            return (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  handleTabChange(tab.id);
+                }}
+                title={tab.label}
+                className={`
+                  w-8 h-8 rounded-full transition-colors flex items-center justify-center font-bold
+                  ${selectedTab === tab.id ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'}
+                `}
+              >
+                {tab.shortLabel}
+              </button>
+            );
+          })}
         </div>
       )}
     </aside>
