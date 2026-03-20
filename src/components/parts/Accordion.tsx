@@ -16,10 +16,9 @@ export function Accordion({ title, isOpen, onToggle, children }: AccordionProps)
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex justify-between items-center p-4 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
+        className="w-full flex items-center gap-3 p-4 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
         aria-expanded={isOpen}
       >
-        <span className="font-semibold text-gray-200">{title}</span>
         <svg
           className={`w-5 h-5 transition-transform duration-200 text-gray-400 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -28,6 +27,7 @@ export function Accordion({ title, isOpen, onToggle, children }: AccordionProps)
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
+        <span className="font-semibold text-gray-200">{title}</span>
       </button>
       {isOpen && (
         <div className="transition-all duration-200 ease-in-out overflow-hidden">
