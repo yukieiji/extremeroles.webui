@@ -31,7 +31,7 @@ describe('Accordion', () => {
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
 
-  it('should not render content when closed', () => {
+  it('should be hidden when closed', () => {
     const onToggle = vi.fn();
     render(
       <Accordion title="Test Title" isOpen={false} onToggle={onToggle}>
@@ -39,6 +39,10 @@ describe('Accordion', () => {
       </Accordion>
     );
 
-    expect(screen.queryByText('Test Content')).not.toBeInTheDocument();
+    const content = screen.getByText('Test Content');
+    // 親の grid コンテナが grid-rows-[0fr] かつ overflow-hidden になっていることを確認
+    const gridContainer = content.closest('.grid');
+    expect(gridContainer).toHaveClass('grid-rows-[0fr]');
+    expect(gridContainer).toHaveClass('overflow-hidden');
   });
 });

@@ -29,13 +29,17 @@ export function Accordion({ title, isOpen, onToggle, children }: AccordionProps)
         </svg>
         <span className="font-semibold text-gray-200">{title}</span>
       </button>
-      {isOpen && (
-        <div className="transition-all duration-200 ease-in-out overflow-hidden">
+      <div
+        className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden ${
+          isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <div className="min-h-0">
           <div className="p-4 bg-gray-900 border-t border-gray-700">
             {children}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
