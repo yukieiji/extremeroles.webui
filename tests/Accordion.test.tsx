@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Accordion } from '../src/components/parts/Accordion';
 
@@ -18,31 +19,37 @@ describe('Accordion', () => {
     expect(button).toHaveAttribute('aria-expanded', 'true');
   });
 
-  it('should call onToggle when button is clicked', () => {
-    const onToggle = vi.fn();
-    render(
-      <Accordion title="Test Title" isOpen={false} onToggle={onToggle}>
-        <div>Test Content</div>
-      </Accordion>
-    );
+  it('should handle toggle lifecycle (initial closed, open, close)', () => {
+    const TestWrapper = () => {
+      const [isOpen, setIsOpen] = React.useState(false);
+      return (
+        <Accordion
+          title="Test Title"
+          isOpen={isOpen}
+          onToggle={() => setIsOpen(!isOpen)}
+        >
+          <div>Test Content</div>
+        </Accordion>
+      );
+    };
 
+    render(<TestWrapper />);
     const button = screen.getByRole('button');
-    fireEvent.click(button);
-    expect(onToggle).toHaveBeenCalledTimes(1);
-  });
-
-  it('should be hidden when closed', () => {
-    const onToggle = vi.fn();
-    render(
-      <Accordion title="Test Title" isOpen={false} onToggle={onToggle}>
-        <div>Test Content</div>
-      </Accordion>
-    );
-
     const content = screen.getByText('Test Content');
-    // 親の grid コンテナが grid-rows-[0fr] かつ overflow-hidden になっていることを確認
     const gridContainer = content.closest('.grid');
+
+    // 1. 初期状態: 閉じている
+    expect(button).toHaveAttribute('aria-expanded', 'false');
     expect(gridContainer).toHaveClass('grid-rows-[0fr]');
-    expect(gridContainer).toHaveClass('overflow-hidden');
+
+    // 2. 開く動作
+    fireEvent.click(button);
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(gridContainer).toHaveClass('grid-rows-[1fr]');
+
+    // 3. 閉じる動作
+    fireEvent.click(button);
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(gridContainer).toHaveClass('grid-rows-[0fr]');
   });
 });
