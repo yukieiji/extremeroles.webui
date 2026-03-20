@@ -10,12 +10,18 @@ interface ExROptionEditorProps {
  * ExRオプションを表示するコンポーネント
  */
 export function ExROptionEditor({ data }: ExROptionEditorProps) {
-  const {
-    selectedExRTabId,
-    setSelectedExRTabId,
-    openedExRCategoryIds,
-    toggleExRCategory,
-  } = useStore();
+  const selectedExRTabId = useStore((state) => {
+    return state.selectedExRTabId;
+  });
+  const setSelectedExRTabId = useStore((state) => {
+    return state.setSelectedExRTabId;
+  });
+  const openedExRCategoryIds = useStore((state) => {
+    return state.openedExRCategoryIds;
+  });
+  const toggleExRCategory = useStore((state) => {
+    return state.toggleExRCategory;
+  });
 
   const selectedTab = data.find((tab) => {
     return tab.Id === selectedExRTabId;
