@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useStore } from '../src/useStore';
 
-describe('OptionGroupToggleSidebarStore', () => {
+describe('SidebarStore', () => {
   beforeEach(() => {
     // ストアを初期状態にリセット
     useStore.setState({
