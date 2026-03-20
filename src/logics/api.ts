@@ -1,6 +1,12 @@
 import type { ExRTabDto, AuOptionCategoryDto } from '../type';
 
 /**
+ * API エンドポイントの定数定義
+ */
+const EXR_OPTION_URL = '/exr/option/';
+const AU_OPTION_URL = '/au/option/';
+
+/**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
@@ -15,9 +21,9 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
     return exrOptionsPromise;
   }
 
-  exrOptionsPromise = fetch('/exr/option/').then((res) => {
+  exrOptionsPromise = fetch(EXR_OPTION_URL).then((res) => {
     if (!res.ok) {
-      throw new Error('Failed to fetch ExR options');
+      throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
     }
     return res.json();
   });
@@ -33,9 +39,9 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
     return auOptionsPromise;
   }
 
-  auOptionsPromise = fetch('/au/option/').then((res) => {
+  auOptionsPromise = fetch(AU_OPTION_URL).then((res) => {
     if (!res.ok) {
-      throw new Error('Failed to fetch Au options');
+      throw new Error(`Failed to fetch Au options: ${res.statusText}`);
     }
     return res.json();
   });
