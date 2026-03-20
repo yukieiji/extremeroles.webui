@@ -2,14 +2,20 @@ import type { StateCreator } from 'zustand';
 
 export type SelectedTab = 'ExR' | 'Au';
 
-export interface UISlice {
+/**
+ * サイドバーの開閉と表示するタブを選択するスライスのインターフェース
+ */
+export interface OptionGroupToggleSidebarSlice {
   isSidebarOpen: boolean;
   selectedTab: SelectedTab;
   toggleSidebar: () => void;
   setSelectedTab: (tab: SelectedTab) => void;
 }
 
-export const createUISlice: StateCreator<UISlice> = (set) => {
+/**
+ * サイドバーの状態管理を行うスライスの生成
+ */
+export const createOptionGroupToggleSidebarSlice: StateCreator<OptionGroupToggleSidebarSlice> = (set) => {
   return {
     isSidebarOpen: true,
     selectedTab: 'ExR',

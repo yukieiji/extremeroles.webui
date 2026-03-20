@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Sidebar } from './components/blocks/Sidebar';
+import { OptionGroupToggleSidebar } from './components/blocks/OptionGroupToggleSidebar';
 import { JsonViewer } from './feature/JsonViewer';
 import { LoadingView } from './feature/LoadingView';
 import { useStore } from './useStore';
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar />
+      <OptionGroupToggleSidebar />
       <main
         className={`
           flex-1 p-8 transition-all duration-300

@@ -1,11 +1,11 @@
 import { useStore } from '../../useStore';
-import type { SelectedTab } from '../../slices/uiSlice';
-import { SidebarToggleBtn } from '../parts/SidebarToggleBtn';
+import type { SelectedTab } from '../../slices/optionGroupToggleSidebarSlice';
+import { OptionGroupToggleSidebarToggleButton } from '../parts/OptionGroupToggleSidebarToggleButton';
 
 /**
  * サイドバーコンポーネント
  */
-export function Sidebar() {
+export function OptionGroupToggleSidebar() {
   const isSidebarOpen = useStore((state) => {
     return state.isSidebarOpen;
   });
@@ -29,9 +29,10 @@ export function Sidebar() {
         fixed left-0 top-0 h-full bg-gray-100 border-r border-gray-300 transition-all duration-300 z-10
         ${isSidebarOpen ? 'w-64' : 'w-12'}
       `}
+      aria-label="オプションサイドバー"
     >
       <div className="flex justify-end p-2 border-b border-gray-200">
-        <SidebarToggleBtn onClick={toggleSidebar} isOpen={isSidebarOpen} />
+        <OptionGroupToggleSidebarToggleButton onClick={toggleSidebar} isOpen={isSidebarOpen} />
       </div>
 
       {isSidebarOpen ? (

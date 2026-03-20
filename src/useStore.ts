@@ -1,9 +1,12 @@
 import { create } from 'zustand';
-import { createUISlice } from './slices/uiSlice';
-import type { UISlice } from './slices/uiSlice';
+import { createOptionGroupToggleSidebarSlice } from './slices/optionGroupToggleSidebarSlice';
+import type { OptionGroupToggleSidebarSlice } from './slices/optionGroupToggleSidebarSlice';
 
-export const useStore = create<UISlice>()((...a) => {
+/**
+ * Zustand ストアの作成
+ */
+export const useStore = create<OptionGroupToggleSidebarSlice>()((...a) => {
   return {
-    ...createUISlice(...a),
+    ...createOptionGroupToggleSidebarSlice(...a),
   };
 });

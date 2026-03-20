@@ -1,4 +1,4 @@
-interface SidebarToggleBtnProps {
+interface OptionGroupToggleSidebarToggleButtonProps {
   onClick: () => void;
   isOpen: boolean;
 }
@@ -6,7 +6,7 @@ interface SidebarToggleBtnProps {
 /**
  * サイドバーの開閉を切り替えるボタン
  */
-export function SidebarToggleBtn({ onClick, isOpen }: SidebarToggleBtnProps) {
+export function OptionGroupToggleSidebarToggleButton({ onClick, isOpen }: OptionGroupToggleSidebarToggleButtonProps) {
   return (
     <button
       onClick={onClick}

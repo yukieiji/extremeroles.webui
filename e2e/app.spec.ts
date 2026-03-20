@@ -19,7 +19,10 @@ test('has sidebar and json viewer', async ({ page }) => {
 
   // サイドバーの開閉
   await page.getByRole('button', { name: 'サイドバーを閉じる' }).click();
+  // 折りたたみ時は nav[role="navigation"] は存在するが、テキストは非表示になるか、aria-labelで制御している
+  // 実装では isSidebarOpen が false のときは nav の代わりに div が表示される
   await expect(page.getByRole('navigation')).not.toBeVisible();
+
   await page.getByRole('button', { name: 'サイドバーを開く' }).click();
   await expect(page.getByRole('navigation')).toBeVisible();
 });
