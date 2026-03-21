@@ -15,7 +15,7 @@ describe('ExRTabDto Validation', () => {
               {
                 Id: 101,
                 IsActive: true,
-                TransedName: 'Test Option',
+                TranslatedName: 'Test Option',
                 Selection: 1,
                 Format: '{0}',
                 RangeMeta: {
@@ -60,7 +60,7 @@ describe('ExRTabDto Validation', () => {
               {
                 Id: 1,
                 IsActive: true,
-                TransedName: 'O',
+                TranslatedName: 'O',
                 Selection: 0,
                 Format: '',
                 RangeMeta: {
@@ -91,7 +91,7 @@ describe('ExRTabDto Validation', () => {
               {
                 Id: 101,
                 IsActive: true,
-                TransedName: 'Parent',
+                TranslatedName: 'Parent',
                 Selection: 0,
                 Format: '{0}',
                 RangeMeta: { Type: 'Int32', Values: [] },
@@ -99,7 +99,7 @@ describe('ExRTabDto Validation', () => {
                   {
                     Id: 102,
                     IsActive: true,
-                    TransedName: 'Child',
+                    TranslatedName: 'Child',
                     Selection: 0,
                     Format: '{0}',
                     RangeMeta: { Type: 'Int32', Values: [] },

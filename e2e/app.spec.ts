@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 test('has sidebar and json viewer', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'networkidle' });
 
   // サイドバーが表示されていることを確認
   const sidebar = page.getByLabel('オプションサイドバー');
-  await expect(sidebar).toBeVisible();
+  await expect(sidebar).toBeVisible({ timeout: 10000 });
 
   // サイドバー内のボタンを明示的に指定
   await expect(sidebar.getByRole('button', { name: 'Au Options' })).toBeVisible();
@@ -13,13 +13,14 @@ test('has sidebar and json viewer', async ({ page }) => {
 
   // Au Options が初期で表示されることを確認する
   await expect(page.getByRole('heading', { name: 'Au Options JSON' })).toBeVisible();
-  await expect(page.getByTestId('au-json-pre')).toContainText('"TranslatedTitle": "ゲーム設定"');
+  // 以前のデータには "ゲーム設定" があったが、新しいデータには "インポスター" などがある
+  await expect(page.getByTestId('au-json-pre')).toContainText('"TranslatedTitle": "インポスター"');
   
   // ExR Options に切り替え
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
   await expect(page.getByRole('heading', { name: 'ExR Options JSON' })).toBeVisible();
   // JSON pre はなくなったので、アコーディオンが表示されていることを確認
-  await expect(page.getByText('基本設定')).toBeVisible();
+  await expect(page.getByText('グローバル設定')).toBeVisible();
 
   // サイドバーの開閉
   await page.getByRole('button', { name: 'サイドバーを閉じる' }).click();

@@ -49,7 +49,7 @@ describe('ExROptionPutRequest and UpdatedOptions Validation', () => {
         {
           Id: 101,
           IsActive: true,
-          TransedName: 'Test Option',
+          TranslatedName: 'Test Option',
           Selection: 1,
           Format: 'Test Format',
           RangeMeta: {
@@ -132,7 +132,7 @@ describe('UpdatedOptions Validation', () => {
         {
           Id: 201,
           IsActive: true,
-          TransedName: 'Option',
+          TranslatedName: 'Option',
           Selection: 1,
           Format: '{0}',
           RangeMeta: {
