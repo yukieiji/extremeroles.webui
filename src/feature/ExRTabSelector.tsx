@@ -22,6 +22,7 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
+    // console.log('Tab isPending:', isPending);
     setIsTabPending(isPending);
   }, [isPending, setIsTabPending]);
 

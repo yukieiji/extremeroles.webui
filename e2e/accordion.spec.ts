@@ -10,17 +10,19 @@ test('ExR Option Accordion behavior', async ({ page }) => {
   const accordionButton = page.getByRole('button', { name: 'プリセット' });
   await expect(accordionButton).toBeVisible();
 
-  // 初期状態では閉じている（JSONが表示されていない）
+  // 初期状態では閉じている
+  // アコーディオンの開閉状態を管理するコンテナ（button の次の要素）を取得
+  const accordionItem = page.locator('div.border.border-gray-700').filter({ hasText: 'プリセット' });
+  const contentContainer = accordionItem.locator('div.grid');
+  await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
+
+  // 閉じているときは JSON プレビューが DOM に存在しない（lazy rendering）
   const jsonPre = page.getByTestId('category-json-0');
-  // アコーディオンのコンテンツ部分は DOM にはあるが、高さ 0 で隠されている。
-  // grid-rows-[0fr] かつ overflow-hidden の場合、Playwright では visibility をどう判断するかによる。
-  // 以前のテスト結果では visible と判定されていたため、属性やスタイルを直接確認するか、
-  // あるいはコンテンツの高さが 0 であることを確認する。
-  const container = jsonPre.locator('xpath=./../../../..');
-  await expect(container).toHaveClass(/grid-rows-\[0fr\]/);
+  await expect(jsonPre).not.toBeAttached();
 
   // アコーディオンを開く
   await accordionButton.click();
+  await expect(contentContainer).toHaveClass(/grid-rows-\[1fr\]/);
   await expect(jsonPre).toBeVisible();
   await expect(jsonPre).toContainText('"TranslatedName": "使用するプリセット"');
 
@@ -43,5 +45,6 @@ test('ExR Option Accordion behavior', async ({ page }) => {
 
   // アコーディオンを閉じる
   await accordionButton.click();
-  await expect(container).toHaveClass(/grid-rows-\[0fr\]/);
+  await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
+  await expect(jsonPre).not.toBeAttached();
 });

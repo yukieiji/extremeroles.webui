@@ -23,7 +23,10 @@ function MainContent() {
   const auData = use(getAuOptions());
 
   return (
-    <section className={`flex flex-col gap-4 transition-opacity duration-200 ${isSidebarPending ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+    <section
+      data-testid="main-content-section"
+      className={`flex flex-col gap-4 transition-opacity duration-200 ${isSidebarPending ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}
+    >
       <div className="flex items-center gap-4">
         <h2 className="text-2xl font-bold">
           {selectedTab === 'ExR' ? 'ExR Options' : 'Au Options'} JSON

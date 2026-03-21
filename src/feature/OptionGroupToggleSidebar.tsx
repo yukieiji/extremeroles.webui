@@ -51,6 +51,7 @@ export function OptionGroupToggleSidebar() {
   };
 
   useEffect(() => {
+    // console.log('Sidebar isPending:', isPending);
     setIsSidebarPending(isPending);
   }, [isPending, setIsSidebarPending]);
 
