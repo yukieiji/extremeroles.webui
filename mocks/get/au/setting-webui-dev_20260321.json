@@ -1,0 +1,1000 @@
+[
+  {
+    "TranslatedTitle": "map",
+    "Options": [
+      {
+        "TranslatedTitle": "map",
+        "TranslatedFormat": "",
+        "Value": 0,
+        "Info": {
+          "ValueType": "Byte",
+          "OptionName": 1
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u6570",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 1
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "TranslatedTitle": "\u30AD\u30EB\u306E\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3\u6642\u9593",
+        "TranslatedFormat": "second",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1
+        },
+        "Range": [
+          10,
+          12.5,
+          15,
+          17.5,
+          20,
+          22.5,
+          25,
+          27.5,
+          30,
+          32.5,
+          35,
+          37.5,
+          40,
+          42.5,
+          45,
+          47.5,
+          50,
+          52.5,
+          55,
+          57.5,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u30D3\u30B8\u30E7\u30F3",
+        "TranslatedFormat": "x",
+        "Value": 0.75,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 3
+        },
+        "Range": [
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3,
+          3.25,
+          3.5,
+          3.75,
+          4,
+          4.25,
+          4.5,
+          4.75,
+          5
+        ]
+      },
+      {
+        "TranslatedTitle": "\u30AD\u30EB\u53EF\u80FD\u8DDD\u96E2",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 2
+        },
+        "Range": [
+          "\u30B7\u30E7\u30FC\u30C8",
+          "\u30DF\u30C9\u30EB",
+          "\u30ED\u30F3\u30B0"
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30AF\u30EB\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "\u30D7\u30EC\u30A4\u30E4\u30FC\u901F\u5EA6",
+        "TranslatedFormat": "x",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 2
+        },
+        "Range": [
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3
+        ]
+      },
+      {
+        "TranslatedTitle": "\u30AF\u30EB\u30FC\u30D3\u30B8\u30E7\u30F3",
+        "TranslatedFormat": "x",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 4
+        },
+        "Range": [
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3,
+          3.25,
+          3.5,
+          3.75,
+          4,
+          4.25,
+          4.5,
+          4.75,
+          5
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u4F1A\u8B70",
+    "Options": [
+      {
+        "TranslatedTitle": "# \u7DCA\u6025\u4F1A\u8B70",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 3
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "TranslatedTitle": "\u7DCA\u6025\u30DC\u30BF\u30F3\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
+        "TranslatedFormat": "second",
+        "Value": 0,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 4
+        },
+        "Range": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "\u8B70\u8AD6\u30BF\u30A4\u30E0",
+        "TranslatedFormat": "second",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 5
+        },
+        "Range": [
+          0,
+          15,
+          30,
+          45,
+          60,
+          75,
+          90,
+          105,
+          120
+        ]
+      },
+      {
+        "TranslatedTitle": "\u6295\u7968\u6642\u9593",
+        "TranslatedFormat": "second",
+        "Value": 120,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 6
+        },
+        "Range": [
+          0,
+          15,
+          30,
+          45,
+          60,
+          75,
+          90,
+          105,
+          120,
+          135,
+          150,
+          165,
+          180,
+          195,
+          210,
+          225,
+          240,
+          255,
+          270,
+          285,
+          300
+        ]
+      },
+      {
+        "TranslatedTitle": "\u533F\u540D\u6295\u7968",
+        "TranslatedFormat": "",
+        "Value": false,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 4
+        }
+      },
+      {
+        "TranslatedTitle": "\u8FFD\u653E\u6570\u3092\u78BA\u8A8D",
+        "TranslatedFormat": "",
+        "Value": true,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 3
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30BF\u30B9\u30AF",
+    "Options": [
+      {
+        "TranslatedTitle": "\u30BF\u30B9\u30AF\u30D0\u30FC\u30A2\u30C3\u30D7\u30C7\u30FC\u30C8",
+        "TranslatedFormat": "",
+        "Value": 0,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 13
+        },
+        "Range": [
+          "\u5E38\u6642",
+          "\u4F1A\u8B70",
+          "\u884C\u308F\u306A\u3044"
+        ]
+      },
+      {
+        "TranslatedTitle": "# \u901A\u5E38\u30BF\u30B9\u30AF",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 10
+        },
+        "Range": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "TranslatedTitle": "# \u30ED\u30F3\u30B0\u30BF\u30B9\u30AF",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 12
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "TranslatedTitle": "# \u30B7\u30E7\u30FC\u30C8\u30BF\u30B9\u30AF",
+        "TranslatedFormat": "",
+        "Value": 2,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 11
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "TranslatedTitle": "\u8996\u8A8D\u30BF\u30B9\u30AF",
+        "TranslatedFormat": "",
+        "Value": true,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30AF\u30EB\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 0
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 1
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u79D1\u5B66\u8005",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 2
+        }
+      },
+      {
+        "TranslatedTitle": "\u30D0\u30A4\u30BF\u30EB\u753B\u9762\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
+        "TranslatedFormat": "second",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1200
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "\u5145\u96FB\u6301\u7D9A\u6642\u9593",
+        "TranslatedFormat": "second",
+        "Value": 5,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1201
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u5B88\u8B77\u5929\u4F7F",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 4
+        }
+      },
+      {
+        "TranslatedTitle": "\u8B77\u885B\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
+        "TranslatedFormat": "second",
+        "Value": 60,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1101
+        },
+        "Range": [
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          100,
+          105,
+          110,
+          115,
+          120
+        ]
+      },
+      {
+        "TranslatedTitle": "\u8B77\u885B\u6301\u7D9A\u6642\u9593",
+        "TranslatedFormat": "second",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1100
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30
+        ]
+      },
+      {
+        "TranslatedTitle": "\u30B7\u30FC\u30EB\u30C9\u306F\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u306B\u898B\u3048\u308B",
+        "TranslatedFormat": "",
+        "Value": false,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1100
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30A8\u30F3\u30B8\u30CB\u30A2",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 3
+        }
+      },
+      {
+        "TranslatedTitle": "\u901A\u6C17\u5B54\u4F7F\u7528\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
+        "TranslatedFormat": "second",
+        "Value": 30,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1300
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "\u901A\u6C17\u5B54\u5185\u3067\u306E\u6700\u5927\u6642\u9593",
+        "TranslatedFormat": "second",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1301
+        },
+        "Range": [
+          3.4028235E+38,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30B7\u30A7\u30A4\u30D7\u30B7\u30D5\u30BF\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 5
+        }
+      },
+      {
+        "TranslatedTitle": "\u5909\u8EAB\u306E\u8A3C\u62E0\u3092\u6B8B\u3059",
+        "TranslatedFormat": "",
+        "Value": false,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1000
+        }
+      },
+      {
+        "TranslatedTitle": "\u5909\u8EAB\u6301\u7D9A\u6642\u9593",
+        "TranslatedFormat": "second",
+        "Value": 30,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1001
+        },
+        "Range": [
+          3.4028235E+38,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30
+        ]
+      },
+      {
+        "TranslatedTitle": "\u5909\u8EAB\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
+        "TranslatedFormat": "second",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1000
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "STRMISS",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 6
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "STRMISS",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 7
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30CE\u30A4\u30BA\u30E1\u30FC\u30AB\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 8
+        }
+      },
+      {
+        "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u3078\u306E\u8B66\u5831",
+        "TranslatedFormat": "",
+        "Value": true,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1300
+        }
+      },
+      {
+        "TranslatedTitle": "\u8B66\u5831\u306E\u9577\u3055",
+        "TranslatedFormat": "second",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1600
+        },
+        "Range": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30D5\u30A1\u30F3\u30C8\u30E0",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 9
+        }
+      },
+      {
+        "TranslatedTitle": "\u6D88\u3048\u308B\u9577\u3055",
+        "TranslatedFormat": "second",
+        "Value": 30,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1501
+        },
+        "Range": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ]
+      },
+      {
+        "TranslatedTitle": "\u6D88\u3048\u308B\u306E\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
+        "TranslatedFormat": "second",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1500
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30C8\u30E9\u30C3\u30AB\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 10
+        }
+      },
+      {
+        "TranslatedTitle": "\u8FFD\u8DE1\u306E\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
+        "TranslatedFormat": "second",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1550
+        },
+        "Range": [
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          100,
+          105,
+          110,
+          115,
+          120
+        ]
+      },
+      {
+        "TranslatedTitle": "\u8FFD\u8DE1\u306E\u9045\u308C",
+        "TranslatedFormat": "second",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1552
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "TranslatedTitle": "\u8FFD\u8DE1\u306E\u9577\u3055",
+        "TranslatedFormat": "second",
+        "Value": 30,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1551
+        },
+        "Range": [
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          100,
+          105,
+          110,
+          115,
+          120
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u30D0\u30A4\u30D1\u30FC",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 18
+        }
+      },
+      {
+        "TranslatedTitle": "\u6EB6\u89E3\u6642\u9593",
+        "TranslatedFormat": "second",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1601
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "\u63A2\u5075",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 12
+        }
+      },
+      {
+        "TranslatedTitle": "\u4E8B\u4EF6\u3054\u3068\u306E\u5BB9\u7591\u8005\u6570",
+        "TranslatedFormat": "",
+        "Value": 3,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1602
+        },
+        "Range": [
+          2,
+          3,
+          4
+        ]
+      }
+    ]
+  }
+]

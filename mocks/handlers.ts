@@ -9,8 +9,8 @@ import {
 import type { UpdatedOptions } from '../src/type';
 
 // JSONファイルのロード
-import exrOptionData from './get/exr/option.json';
-import auOptionData from './get/au/option.json';
+import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
+import auOptionData from './get/au/setting-webui-dev_20260321.json';
 
 /**
  * Zodを使用してロードしたデータのバリデーションを実施
