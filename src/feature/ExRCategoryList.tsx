@@ -1,5 +1,6 @@
 import { useStore } from '../useStore';
 import { Accordion } from '../components/parts/Accordion';
+import { ColoredText } from '../components/parts/ColoredText';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
 interface CategoryAccordionProps {
@@ -20,7 +21,7 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
 
   return (
     <Accordion
-      title={category.Name}
+      title={<ColoredText text={category.Name} />}
       isOpen={isOpen}
       onToggle={() => {
         toggleExRCategory(category.Id);

@@ -1,4 +1,5 @@
 import { useStore } from '../useStore';
+import { ColoredText } from '../components/parts/ColoredText';
 import type { ExRTabDto } from '../type';
 
 interface ExRTabSelectorProps {
@@ -30,7 +31,7 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
               ${selectedExRTabId === tab.Id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}
             `}
           >
-            {tab.Name}
+            <ColoredText text={tab.Name} />
           </button>
         );
       })}
