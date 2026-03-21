@@ -57,9 +57,9 @@ export function OptionGroupToggleSidebar() {
   const handleReset = () => {
     // 実際にはAPI側でキャッシュリセットする必要があるが
     // ここではグローバルに公開されたリセット関数を呼ぶ想定
-    // @ts-ignore - テスト用
+    // @ts-expect-error - テスト用
     if (window.resetApp) {
-      // @ts-ignore
+      // @ts-expect-error - テスト用
       window.resetApp();
     }
     resetAll();
@@ -75,13 +75,16 @@ export function OptionGroupToggleSidebar() {
       aria-label="オプションサイドバー"
     >
       <div className="flex justify-between items-center p-2 border-b border-gray-200">
-        <button
-          onClick={handleReset}
-          className="text-[10px] bg-red-100 text-red-600 px-1 rounded hover:bg-red-200"
-          data-testid="reset-button"
-        >
-          Reset
-        </button>
+        {import.meta.env.DEV && (
+          <button
+            onClick={handleReset}
+            className="text-[10px] bg-red-100 text-red-600 px-1 rounded hover:bg-red-200"
+            data-testid="reset-button"
+          >
+            Reset
+          </button>
+        )}
+        <div className={isSidebarOpen ? '' : 'flex-1'} />
         <OptionGroupToggleSidebarToggleButton onClick={toggleSidebar} isOpen={isSidebarOpen} />
       </div>
 
