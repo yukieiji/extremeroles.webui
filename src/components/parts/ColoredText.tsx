@@ -5,6 +5,16 @@ interface ColoredTextProps {
 }
 
 /**
+ * カラータグ（<color=#RRGGBB>...</color> または <color=#RRGGBBAA>...</color>）および改行（\n）を検出する正規表現
+ */
+const COLOR_TAG_REGEX = /(<color=#[0-9A-F]{6,8}>|<\/color>|\n)/gi;
+
+/**
+ * カラータグから16進数カラーコードを抽出する正規表現
+ */
+const COLOR_HEX_REGEX = /#[0-9A-F]{6,8}/i;
+
+/**
  * カラータグ（<color=#RRGGBB>...</color>）と改行（\n）を反映させるコンポーネント
  * ネストをサポートします。
  */
@@ -13,9 +23,7 @@ export function ColoredText({ text }: ColoredTextProps) {
     return null;
   }
 
-  // <color=#RRGGBB> または <color=#RRGGBBAA> にマッチする正規表現
-  const regex = /(<color=#[0-9A-F]{6,8}>|<\/color>|\n)/gi;
-  const parts = text.split(regex);
+  const parts = text.split(COLOR_TAG_REGEX);
 
   // ステートフルに解析するためにスタックを使用
   const stack: { color: string; elements: ReactNode[] }[] = [];
@@ -28,7 +36,7 @@ export function ColoredText({ text }: ColoredTextProps) {
 
     const lowerPart = part.toLowerCase();
     if (lowerPart.startsWith('<color=')) {
-      const colorMatch = part.match(/#[0-9A-F]{6,8}/i);
+      const colorMatch = part.match(COLOR_HEX_REGEX);
       const color = colorMatch ? colorMatch[0] : 'inherit';
 
       // 現在の要素リストをスタックに保存し、新しい要素リストを開始
