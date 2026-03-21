@@ -6,7 +6,9 @@ import type { OptionTab } from '../type';
  */
 export interface OptionViewerSlice {
   selectedExRTabId: OptionTab;
+  openedExRCategoryIds: Record<number, boolean>;
   setSelectedExRTabId: (id: OptionTab) => void;
+  toggleExRCategory: (categoryId: number) => void;
 }
 
 /**
@@ -15,8 +17,19 @@ export interface OptionViewerSlice {
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) => {
   return {
     selectedExRTabId: 0,
+    openedExRCategoryIds: {},
     setSelectedExRTabId: (id: OptionTab) => {
       set({ selectedExRTabId: id });
+    },
+    toggleExRCategory: (categoryId: number) => {
+      set((state) => {
+        return {
+          openedExRCategoryIds: {
+            ...state.openedExRCategoryIds,
+            [categoryId]: !state.openedExRCategoryIds[categoryId],
+          },
+        };
+      });
     },
   };
 };

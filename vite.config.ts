@@ -8,6 +8,8 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   test: {
     environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./tests/setup.ts'],
     exclude: ['**/e2e/**', '**/node_modules/**', '**/dist/**', '**/cypress/**', '**/.{idea,git,cache,output,temp}/**'],
   },
   plugins: [

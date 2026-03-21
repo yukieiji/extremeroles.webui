@@ -18,7 +18,8 @@ test('has sidebar and json viewer', async ({ page }) => {
   // ExR Options に切り替え
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
   await expect(page.getByRole('heading', { name: 'ExR Options JSON' })).toBeVisible();
-  await expect(page.getByTestId('exr-json-pre')).toContainText('"Id": 0');
+  // JSON pre はなくなったので、アコーディオンが表示されていることを確認
+  await expect(page.getByText('基本設定')).toBeVisible();
 
   // サイドバーの開閉
   await page.getByRole('button', { name: 'サイドバーを閉じる' }).click();
