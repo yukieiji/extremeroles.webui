@@ -12,7 +12,7 @@ interface CategoryAccordionProps {
  */
 function CategoryAccordion({ category }: CategoryAccordionProps) {
   const isOpen = useStore((state) => {
-    return !!state.openedExRCategoryIds[category.Id];
+    return state.openedExRCategoryIds[category.Id] ?? false;
   });
   const toggleExRCategory = useStore((state) => {
     return state.toggleExRCategory;
