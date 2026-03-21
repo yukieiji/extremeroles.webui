@@ -16,12 +16,12 @@ export const OptionTab = {
 
 export type OptionTab = (typeof OptionTab)[keyof typeof OptionTab];
 
-export const OptionTabSchema = z.union([
-  z.nativeEnum(OptionTab),
-  z.enum(Object.keys(OptionTab) as [string, ...string[]]).transform((val) => {
+export const OptionTabSchema = z.preprocess((val) => {
+  if (typeof val === 'string' && val in OptionTab) {
     return OptionTab[val as keyof typeof OptionTab];
-  }),
-]);
+  }
+  return val;
+}, z.nativeEnum(OptionTab));
 
 /**
  * オプションの範囲メタデータ
@@ -109,12 +109,12 @@ export const OptionValueType = {
 
 export type OptionValueType = (typeof OptionValueType)[keyof typeof OptionValueType];
 
-export const OptionValueTypeSchema = z.union([
-  z.nativeEnum(OptionValueType),
-  z.enum(Object.keys(OptionValueType) as [string, ...string[]]).transform((val) => {
+export const OptionValueTypeSchema = z.preprocess((val) => {
+  if (typeof val === 'string' && val in OptionValueType) {
     return OptionValueType[val as keyof typeof OptionValueType];
-  }),
-]);
+  }
+  return val;
+}, z.nativeEnum(OptionValueType));
 
 export interface AuRoleOption {
   MaxCount: number;
