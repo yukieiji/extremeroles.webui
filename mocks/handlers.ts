@@ -6,7 +6,7 @@ import {
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema
 } from '../src/type';
-import type { UpdatedOptions } from '../src/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto } from '../src/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
@@ -15,8 +15,16 @@ import auOptionData from './get/au/setting-webui-dev_20260321.json';
 /**
  * Zodを使用してロードしたデータのバリデーションを実施
  */
-const validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData);
-const validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData);
+let validatedExRMockData: ExRTabDto[];
+let validatedAuMockData: AuOptionCategoryDto[];
+
+try {
+  validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData);
+  validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData);
+} catch (error) {
+  console.error('Mock data validation failed:', error);
+  throw error;
+}
 
 /**
  * 更新されたオプションのモックデータ作成
