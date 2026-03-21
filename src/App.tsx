@@ -43,17 +43,17 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      <OptionGroupToggleSidebar />
-      <main
-        className={`
-          flex-1 p-8 transition-all duration-300
-          ${isSidebarOpen ? 'ml-64' : 'ml-12'}
-        `}
-      >
-        <Suspense fallback={<LoadingView />}>
+      <Suspense fallback={<LoadingView />}>
+        <OptionGroupToggleSidebar />
+        <main
+          className={`
+            flex-1 p-8 transition-all duration-300
+            ${isSidebarOpen ? 'ml-64' : 'ml-12'}
+          `}
+        >
           <MainContent />
-        </Suspense>
-      </main>
+        </main>
+      </Suspense>
     </div>
   );
 }
