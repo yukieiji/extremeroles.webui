@@ -37,7 +37,7 @@ export const IOptionRangeMetaSchema = z.object({
 export interface ExROptionDto {
   Id: number;
   IsActive: boolean;
-  TransedName: string;
+  TranslatedName: string;
   Selection: number;
   Format: string;
   RangeMeta: IOptionRangeMeta;
@@ -49,7 +49,7 @@ export const ExROptionDtoSchema: z.ZodType<ExROptionDto> = z.lazy(() =>
   z.object({
     Id: z.number(),
     IsActive: z.boolean(),
-    TransedName: z.string(),
+    TranslatedName: z.string(),
     Selection: z.number(),
     Format: z.string(),
     RangeMeta: IOptionRangeMetaSchema,

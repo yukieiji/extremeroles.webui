@@ -29,7 +29,7 @@ const mockUpdatedOptions: UpdatedOptions = {
       {
         Id: 101,
         IsActive: true,
-        TransedName: '移動速度',
+        TranslatedName: '移動速度',
         Selection: 1,
         Format: '{0}x',
         RangeMeta: {
