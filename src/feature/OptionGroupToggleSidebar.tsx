@@ -1,3 +1,4 @@
+import { useTransition, useEffect } from 'react';
 import { useStore } from '../useStore';
 import type { SelectedTab } from '../slices/optionGroupToggleSidebarSlice';
 import { OptionGroupToggleSidebarToggleButton } from '../components/parts/OptionGroupToggleSidebarToggleButton';
@@ -32,9 +33,37 @@ export function OptionGroupToggleSidebar() {
   const setSelectedTab = useStore((state) => {
     return state.setSelectedTab;
   });
+  const resetAll = useStore((state) => {
+    return state.resetAll;
+  });
+  const resetViewer = useStore((state) => {
+    return state.resetViewer;
+  });
+  const setIsSidebarPending = useStore((state) => {
+    return state.setIsSidebarPending;
+  });
+  const [isPending, startTransition] = useTransition();
 
   const handleTabChange = (tab: SelectedTab) => {
-    setSelectedTab(tab);
+    startTransition(() => {
+      setSelectedTab(tab);
+    });
+  };
+
+  useEffect(() => {
+    setIsSidebarPending(isPending);
+  }, [isPending, setIsSidebarPending]);
+
+  const handleReset = () => {
+    // 実際にはAPI側でキャッシュリセットする必要があるが
+    // ここではグローバルに公開されたリセット関数を呼ぶ想定
+    // @ts-ignore - テスト用
+    if (window.resetApp) {
+      // @ts-ignore
+      window.resetApp();
+    }
+    resetAll();
+    resetViewer();
   };
 
   return (
@@ -45,7 +74,14 @@ export function OptionGroupToggleSidebar() {
       `}
       aria-label="オプションサイドバー"
     >
-      <div className="flex justify-end p-2 border-b border-gray-200">
+      <div className="flex justify-between items-center p-2 border-b border-gray-200">
+        <button
+          onClick={handleReset}
+          className="text-[10px] bg-red-100 text-red-600 px-1 rounded hover:bg-red-200"
+          data-testid="reset-button"
+        >
+          Reset
+        </button>
         <OptionGroupToggleSidebarToggleButton onClick={toggleSidebar} isOpen={isSidebarOpen} />
       </div>
 

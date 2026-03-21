@@ -10,6 +10,7 @@ export interface OptionGroupToggleSidebarSlice {
   selectedTab: SelectedTab;
   toggleSidebar: () => void;
   setSelectedTab: (tab: SelectedTab) => void;
+  resetAll: () => void;
 }
 
 /**
@@ -26,6 +27,9 @@ export const createOptionGroupToggleSidebarSlice: StateCreator<OptionGroupToggle
     },
     setSelectedTab: (tab: SelectedTab) => {
       set({ selectedTab: tab });
+    },
+    resetAll: () => {
+      set({ selectedTab: 'Au', isSidebarOpen: true });
     },
   };
 };

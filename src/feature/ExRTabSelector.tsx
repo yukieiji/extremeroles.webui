@@ -1,3 +1,4 @@
+import { useTransition, useEffect } from 'react';
 import { useStore } from '../useStore';
 import type { ExRTabDto } from '../type';
 
@@ -15,6 +16,20 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
   const setSelectedExRTabId = useStore((state) => {
     return state.setSelectedExRTabId;
   });
+  const setIsTabPending = useStore((state) => {
+    return state.setIsTabPending;
+  });
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setIsTabPending(isPending);
+  }, [isPending, setIsTabPending]);
+
+  const handleClick = (id: number) => {
+    startTransition(() => {
+      setSelectedExRTabId(id);
+    });
+  };
 
   return (
     <div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
@@ -23,7 +38,7 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
           <button
             key={tab.Id}
             onClick={() => {
-              setSelectedExRTabId(tab.Id);
+              handleClick(tab.Id);
             }}
             className={`
               px-4 py-2 rounded-t-lg transition-colors font-medium

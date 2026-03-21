@@ -14,6 +14,14 @@ let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 
 /**
+ * キャッシュをリセットする（テスト用）
+ */
+export function resetApiCache() {
+  exrOptionsPromise = null;
+  auOptionsPromise = null;
+}
+
+/**
  * ExRオプションを取得する
  */
 export function getExrOptions(): Promise<ExRTabDto[]> {

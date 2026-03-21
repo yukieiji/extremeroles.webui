@@ -35,21 +35,22 @@ describe('Accordion', () => {
 
     render(<TestWrapper />);
     const button = screen.getByRole('button');
-    const content = screen.getByText('Test Content');
-    const gridContainer = content.closest('.grid');
 
     // 1. 初期状態: 閉じている
     expect(button).toHaveAttribute('aria-expanded', 'false');
-    expect(gridContainer).toHaveClass('grid-rows-[0fr]');
+    // 閉じているときはコンテンツがレンダリングされないことを確認
+    expect(screen.queryByText('Test Content')).not.toBeInTheDocument();
 
     // 2. 開く動作
     fireEvent.click(button);
     expect(button).toHaveAttribute('aria-expanded', 'true');
+    const content = screen.getByText('Test Content');
+    const gridContainer = content.closest('.grid');
     expect(gridContainer).toHaveClass('grid-rows-[1fr]');
 
     // 3. 閉じる動作
     fireEvent.click(button);
     expect(button).toHaveAttribute('aria-expanded', 'false');
-    expect(gridContainer).toHaveClass('grid-rows-[0fr]');
+    expect(screen.queryByText('Test Content')).not.toBeInTheDocument();
   });
 });
