@@ -12,8 +12,8 @@ interface TabItem {
 }
 
 const TABS: TabItem[] = [
-  { id: 'ExR', label: 'ExR Options', shortLabel: 'E' },
   { id: 'Au', label: 'Au Options', shortLabel: 'A' },
+  { id: 'ExR', label: 'ExR Options', shortLabel: 'E' },
 ];
 
 /**
