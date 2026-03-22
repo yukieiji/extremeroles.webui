@@ -11,7 +11,6 @@ describe('optionViewerSlice', () => {
   it('should have initial state', () => {
     const state = useStore.getState();
     expect(state.selectedExRTabId).toBe(0);
-    expect(state.isSidebarPending).toBe(false);
     expect(state.isTabPending).toBe(false);
     expect(state.openedExRCategoryIds).toEqual({});
   });
@@ -37,15 +36,6 @@ describe('optionViewerSlice', () => {
     expect(useStore.getState().selectedExRTabId).toBe(2);
   });
 
-  it('should set isSidebarPending', () => {
-    const { setIsSidebarPending } = useStore.getState();
-
-    setIsSidebarPending(true);
-    expect(useStore.getState().isSidebarPending).toBe(true);
-
-    setIsSidebarPending(false);
-    expect(useStore.getState().isSidebarPending).toBe(false);
-  });
 
   it('should set isTabPending', () => {
     const { setIsTabPending } = useStore.getState();

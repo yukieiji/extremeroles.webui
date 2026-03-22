@@ -22,11 +22,18 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    // console.log('Tab isPending:', isPending);
-    setIsTabPending(isPending);
+    // トランジションが完了したらペンディング状態を解除する
+    if (!isPending) {
+      setIsTabPending(false);
+    }
   }, [isPending, setIsTabPending]);
 
   const handleClick = (id: number) => {
+    if (id === selectedExRTabId) {
+      return;
+    }
+    // トランジション開始前に即座にペンディング状態にする
+    setIsTabPending(true);
     startTransition(() => {
       setSelectedExRTabId(id);
     });

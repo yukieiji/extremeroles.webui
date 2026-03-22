@@ -7,8 +7,28 @@ import { useStore } from './useStore';
 import { getExrOptions, getAuOptions } from './logics/api';
 
 /**
+ * オプションエディタを表示する内側のコンポーネント
+ * データを取得し、選択されたタブに応じてエディタを表示します
+ */
+function EditorContainer() {
+  const selectedTab = useStore((state) => {
+    return state.selectedTab;
+  });
+
+  // React 19 の use() フックを使用してデータを取得
+  const exrData = use(getExrOptions());
+  const auData = use(getAuOptions());
+
+  return selectedTab === 'ExR' ? (
+    <ExROptionEditor data={exrData} />
+  ) : (
+    <AuOptionEditor data={auData} />
+  );
+}
+
+/**
  * メインコンテンツコンポーネント
- * Suspense 境界の内側でデータを取得・表示するために分離
+ * 状態管理と Suspense 境界の調整
  */
 function MainContent() {
   const selectedTab = useStore((state) => {
@@ -18,14 +38,11 @@ function MainContent() {
     return state.isSidebarPending;
   });
 
-  // React 19 の use() フックを使用してデータを取得
-  const exrData = use(getExrOptions());
-  const auData = use(getAuOptions());
-
   return (
     <section
       data-testid="main-content-section"
-      className={`flex flex-col gap-4 transition-opacity duration-200 ${isSidebarPending ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}
+      className={`flex flex-col gap-4 transition-opacity duration-200 ${isSidebarPending ? 'is-pending opacity-50 pointer-events-none' : 'opacity-100'}`}
+      data-is-pending={isSidebarPending ? "true" : "false"}
     >
       <div className="flex items-center gap-4">
         <h2 className="text-2xl font-bold">
@@ -35,11 +52,15 @@ function MainContent() {
           <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
         )}
       </div>
-      {selectedTab === 'ExR' ? (
-        <ExROptionEditor data={exrData} />
-      ) : (
-        <AuOptionEditor data={auData} />
-      )}
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center h-64">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        }
+      >
+        <EditorContainer />
+      </Suspense>
     </section>
   );
 }

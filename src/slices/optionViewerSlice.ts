@@ -6,11 +6,9 @@ import type { OptionTab } from '../type';
  */
 export interface OptionViewerSlice {
   selectedExRTabId: OptionTab;
-  isSidebarPending: boolean;
   isTabPending: boolean;
   openedExRCategoryIds: Record<number, boolean>;
   setSelectedExRTabId: (id: OptionTab) => void;
-  setIsSidebarPending: (isPending: boolean) => void;
   setIsTabPending: (isPending: boolean) => void;
   toggleExRCategory: (categoryId: number) => void;
   resetViewer: () => void;
@@ -22,14 +20,10 @@ export interface OptionViewerSlice {
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) => {
   return {
     selectedExRTabId: 0,
-    isSidebarPending: false,
     isTabPending: false,
     openedExRCategoryIds: {},
     setSelectedExRTabId: (id: OptionTab) => {
       set({ selectedExRTabId: id });
-    },
-    setIsSidebarPending: (isPending: boolean) => {
-      set({ isSidebarPending: isPending });
     },
     setIsTabPending: (isPending: boolean) => {
       set({ isTabPending: isPending });
@@ -37,7 +31,6 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
     resetViewer: () => {
       set({
         selectedExRTabId: 0,
-        isSidebarPending: false,
         isTabPending: false,
         openedExRCategoryIds: {},
       });

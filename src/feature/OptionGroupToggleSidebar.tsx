@@ -45,14 +45,21 @@ export function OptionGroupToggleSidebar() {
   const [isPending, startTransition] = useTransition();
 
   const handleTabChange = (tab: SelectedTab) => {
+    if (tab === selectedTab) {
+      return;
+    }
+    // トランジション開始前に即座にペンディング状態にする
+    setIsSidebarPending(true);
     startTransition(() => {
       setSelectedTab(tab);
     });
   };
 
   useEffect(() => {
-    // console.log('Sidebar isPending:', isPending);
-    setIsSidebarPending(isPending);
+    // トランジションが完了したらペンディング状態を解除する
+    if (!isPending) {
+      setIsSidebarPending(false);
+    }
   }, [isPending, setIsSidebarPending]);
 
   const handleReset = () => {

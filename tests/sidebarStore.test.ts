@@ -14,6 +14,7 @@ describe('SidebarStore', () => {
     const state = useStore.getState();
     expect(state.isSidebarOpen).toBe(true);
     expect(state.selectedTab).toBe('ExR');
+    expect(state.isSidebarPending).toBe(false);
   });
 
   it('toggleSidebar で isSidebarOpen が切り替わること', () => {
@@ -30,5 +31,13 @@ describe('SidebarStore', () => {
 
     useStore.getState().setSelectedTab('ExR');
     expect(useStore.getState().selectedTab).toBe('ExR');
+  });
+
+  it('setIsSidebarPending で isSidebarPending が変更されること', () => {
+    useStore.getState().setIsSidebarPending(true);
+    expect(useStore.getState().isSidebarPending).toBe(true);
+
+    useStore.getState().setIsSidebarPending(false);
+    expect(useStore.getState().isSidebarPending).toBe(false);
   });
 });

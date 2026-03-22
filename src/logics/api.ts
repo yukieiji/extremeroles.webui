@@ -29,12 +29,21 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
     return exrOptionsPromise;
   }
 
-  exrOptionsPromise = fetch(EXR_OPTION_URL).then((res) => {
+  // @ts-expect-error - テスト用
+  const delay = typeof window !== 'undefined' ? window.__API_DELAY__ || 0 : 0;
+
+  exrOptionsPromise = (async () => {
+    if (delay > 0) {
+      await new Promise((resolve) => {
+        return setTimeout(resolve, delay);
+      });
+    }
+    const res = await fetch(EXR_OPTION_URL);
     if (!res.ok) {
       throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
     }
     return res.json();
-  });
+  })();
 
   return exrOptionsPromise;
 }
@@ -47,12 +56,21 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
     return auOptionsPromise;
   }
 
-  auOptionsPromise = fetch(AU_OPTION_URL).then((res) => {
+  // @ts-expect-error - テスト用
+  const delay = typeof window !== 'undefined' ? window.__API_DELAY__ || 0 : 0;
+
+  auOptionsPromise = (async () => {
+    if (delay > 0) {
+      await new Promise((resolve) => {
+        return setTimeout(resolve, delay);
+      });
+    }
+    const res = await fetch(AU_OPTION_URL);
     if (!res.ok) {
       throw new Error(`Failed to fetch Au options: ${res.statusText}`);
     }
     return res.json();
-  });
+  })();
 
   return auOptionsPromise;
 }

@@ -67,7 +67,8 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
   return (
     <div
       data-testid="exr-category-list"
-      className={`flex flex-col relative transition-opacity duration-200 ${isTabPending ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}
+      className={`flex flex-col relative transition-opacity duration-200 ${isTabPending ? 'is-pending opacity-50 pointer-events-none' : 'opacity-100'}`}
+      data-is-pending={isTabPending ? "true" : "false"}
     >
       {isTabPending && (
         <div className="absolute inset-0 flex items-center justify-center z-10">
