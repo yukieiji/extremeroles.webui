@@ -1,7 +1,7 @@
 import { useTransition, useEffect } from 'react';
 import { useStore } from '../useStore';
 import { ColoredText } from '../components/parts/ColoredText';
-import type { ExRTabDto } from '../type';
+import type { ExRTabDto, OptionTab } from '../type';
 
 interface ExRTabSelectorProps {
   tabs: ExRTabDto[];
@@ -29,7 +29,7 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
     }
   }, [isPending, setIsTabPending]);
 
-  const handleClick = (id: number) => {
+  const handleClick = (id: OptionTab) => {
     if (id === selectedExRTabId) {
       return;
     }

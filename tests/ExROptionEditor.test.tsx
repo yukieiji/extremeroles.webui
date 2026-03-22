@@ -16,10 +16,10 @@ describe('ExROptionEditor', () => {
             {
               Id: 101,
               IsActive: true,
-              TransedName: 'Option 1',
+              TranslatedName: 'Option 1',
               Selection: 0,
-              Format: '',
-              RangeMeta: { Type: 'Int32', Values: [] },
+              Format: '{0}',
+              RangeMeta: { Type: 'Int32', Values: [0, 10, 20] },
               Childs: [],
             },
           ],
@@ -36,10 +36,10 @@ describe('ExROptionEditor', () => {
             {
               Id: 102,
               IsActive: false,
-              TransedName: 'Option 2',
+              TranslatedName: 'Option 2',
               Selection: 0,
-              Format: '',
-              RangeMeta: { Type: 'Int32', Values: [] },
+              Format: '{0}',
+              RangeMeta: { Type: 'Int32', Values: [0, 10, 20] },
               Childs: [],
             },
           ],
@@ -57,10 +57,10 @@ describe('ExROptionEditor', () => {
             {
               Id: 201,
               IsActive: true,
-              TransedName: 'Option 3',
+              TranslatedName: 'Option 3',
               Selection: 0,
-              Format: '',
-              RangeMeta: { Type: 'Int32', Values: [] },
+              Format: '{0}',
+              RangeMeta: { Type: 'Int32', Values: [0, 10, 20] },
               Childs: [],
             },
           ],
@@ -90,7 +90,7 @@ describe('ExROptionEditor', () => {
     unmount();
   });
 
-  it('should toggle accordion and show/hide options JSON', () => {
+  it('should toggle accordion and show options UI', () => {
     const { unmount } = render(<ExROptionEditor data={mockData} />);
 
     // Tab 1 を選択状態にする（初期値がずれている可能性があるため）
@@ -98,16 +98,18 @@ describe('ExROptionEditor', () => {
     fireEvent.click(tab1Button);
 
     const categoryButton = screen.getByText('Category 1');
-    const jsonContainerId = 'category-json-1';
-
-    // 最初は閉じている（アコーディオンのコンテンツは存在するが、スタイルで隠されているか、テストでチェック可能）
-    // Accordionコンポーネントの実装では、isOpenがfalseのときmax-h-0 opacity-0になる
 
     fireEvent.click(categoryButton);
 
-    const jsonPre = screen.getByTestId(jsonContainerId);
-    expect(jsonPre).toBeInTheDocument();
-    expect(jsonPre.textContent).toContain('"TransedName": "Option 1"');
+    // オプション名が表示されていることを確認
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+
+    // スライダー（input[type="range"]）が存在することを確認
+    expect(screen.getByRole('slider')).toBeInTheDocument();
+
+    // 現在の値が表示されていることを確認
+    expect(screen.getAllByDisplayValue('0')).toHaveLength(2);
+
     unmount();
   });
 });
