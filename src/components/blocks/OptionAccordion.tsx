@@ -25,13 +25,12 @@ export function OptionAccordion({
     <div className={`flex flex-col ${className}`}>
       <OptionRowContainer
         leading={
-          <div className="flex items-center justify-center gap-0.5 w-full h-full">
-            <span className="text-gray-500 select-none text-xs">・</span>
-            {showArrow && (
+          <div className="flex items-center justify-center w-full h-full">
+            {showArrow ? (
               <button
                 type="button"
                 onClick={onToggle}
-                className="flex items-center justify-center text-gray-500 hover:text-gray-300"
+                className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full"
                 aria-expanded={isOpen}
                 aria-label={isOpen ? '閉じる' : '開く'}
               >
@@ -44,6 +43,8 @@ export function OptionAccordion({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
+            ) : (
+              <span className="text-gray-500 select-none text-xs">・</span>
             )}
           </div>
         }
