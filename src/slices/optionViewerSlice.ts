@@ -83,10 +83,13 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
     },
     updatePresetName: (presetIndex: number, name: string) => {
       set((state) => {
-        const newPresetNames = {
-          ...state.presetNames,
-          [presetIndex]: name,
-        };
+        const newPresetNames = { ...state.presetNames };
+        const trimmedName = name.trim();
+        if (trimmedName === '') {
+          delete newPresetNames[presetIndex];
+        } else {
+          newPresetNames[presetIndex] = trimmedName;
+        }
         savePresetNamesToCookie(newPresetNames);
         return {
           presetNames: newPresetNames,

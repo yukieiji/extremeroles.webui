@@ -83,7 +83,11 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
    */
   const commitNameChange = () => {
     if (inputRef.current) {
-      updatePresetName(currentSelection, inputRef.current.value);
+      const value = inputRef.current.value.trim();
+      updatePresetName(currentSelection, value);
+      if (value === '') {
+        inputRef.current.value = String(currentPresetValue);
+      }
     }
   };
 
