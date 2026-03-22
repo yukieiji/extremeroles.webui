@@ -48,9 +48,6 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
   const selectedExRTabId = useStore((state) => {
     return state.selectedExRTabId;
   });
-  const isTabPending = useStore((state) => {
-    return state.isTabPending;
-  });
 
   const selectedTab = tabs.find((tab) => {
     return tab.Id === selectedExRTabId;
@@ -66,14 +63,8 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
   return (
     <div
       data-testid="exr-category-list"
-      className={`flex flex-col relative transition-opacity duration-200 ${isTabPending ? 'is-pending opacity-50 pointer-events-none' : 'opacity-100'}`}
-      data-is-pending={isTabPending ? "true" : "false"}
+      className="flex flex-col"
     >
-      {isTabPending && (
-        <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      )}
       {visibleCategories.map((category) => {
         return <CategoryAccordion key={category.Id} category={category} />;
       })}

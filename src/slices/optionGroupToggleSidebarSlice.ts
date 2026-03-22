@@ -8,10 +8,8 @@ export type SelectedTab = 'Au' | 'ExR';
 export interface OptionGroupToggleSidebarSlice {
   isSidebarOpen: boolean;
   selectedTab: SelectedTab;
-  isSidebarPending: boolean;
   toggleSidebar: () => void;
   setSelectedTab: (tab: SelectedTab) => void;
-  setIsSidebarPending: (isPending: boolean) => void;
   resetAll: () => void;
 }
 
@@ -22,7 +20,6 @@ export const createOptionGroupToggleSidebarSlice: StateCreator<OptionGroupToggle
   return {
     isSidebarOpen: true,
     selectedTab: 'Au',
-    isSidebarPending: false,
     toggleSidebar: () => {
       set((state) => {
         return { isSidebarOpen: !state.isSidebarOpen };
@@ -31,11 +28,8 @@ export const createOptionGroupToggleSidebarSlice: StateCreator<OptionGroupToggle
     setSelectedTab: (tab: SelectedTab) => {
       set({ selectedTab: tab });
     },
-    setIsSidebarPending: (isPending: boolean) => {
-      set({ isSidebarPending: isPending });
-    },
     resetAll: () => {
-      set({ selectedTab: 'Au', isSidebarOpen: true, isSidebarPending: false });
+      set({ selectedTab: 'Au', isSidebarOpen: true });
     },
   };
 };

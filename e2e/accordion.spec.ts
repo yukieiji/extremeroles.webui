@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 test('ExR Option Accordion behavior', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'networkidle' });
 
   const sidebar = page.getByLabel('オプションサイドバー');
+  await expect(sidebar).toBeVisible({ timeout: 10000 });
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 
   // カテゴリ「プリセット」のアコーディオンがあることを確認
