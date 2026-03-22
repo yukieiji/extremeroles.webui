@@ -1,4 +1,4 @@
-import { useTransition } from 'react';
+import { useTransition, useEffect } from 'react';
 import { useStore } from '../useStore';
 import type { SelectedTab } from '../slices/optionGroupToggleSidebarSlice';
 import { OptionGroupToggleSidebarToggleButton } from '../components/parts/OptionGroupToggleSidebarToggleButton';
@@ -39,19 +39,26 @@ export function OptionGroupToggleSidebar() {
   const resetViewer = useStore((state) => {
     return state.resetViewer;
   });
-  const [, startTransition] = useTransition();
+  const setIsSidebarPending = useStore((state) => {
+    return state.setIsSidebarPending;
+  });
+  const [isPending, startTransition] = useTransition();
 
   const handleTabChange = (tab: SelectedTab) => {
     if (tab === selectedTab) {
       return;
     }
-    // トランジション開始前に即座にペンディング状態にする
-    setIsSidebarPending(true);
     startTransition(() => {
       setSelectedTab(tab);
     });
   };
 
+  useEffect(() => {
+    // トランジションが完了したらペンディング状態を解除する
+    if (!isPending) {
+      setIsSidebarPending(false);
+    }
+  }, [isPending, setIsSidebarPending]);
 
   const handleReset = () => {
     // 実際にはAPI側でキャッシュリセットする必要があるが

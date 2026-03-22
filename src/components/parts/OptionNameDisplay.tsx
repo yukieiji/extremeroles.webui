@@ -6,7 +6,6 @@ interface OptionNameDisplayProps {
 
 /**
  * オプション名を表示するコンポーネント
- * ColoredText をラップして表示を統一します。
  */
 export function OptionNameDisplay({ name }: OptionNameDisplayProps) {
   return <ColoredText text={name} />;

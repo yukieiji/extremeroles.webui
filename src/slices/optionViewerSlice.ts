@@ -6,11 +6,15 @@ import type { OptionTab } from '../type';
  */
 export interface OptionViewerSlice {
   selectedExRTabId: OptionTab;
+  isTabPending: boolean;
   openedExRCategoryIds: Record<number, boolean>;
   openedExROptionIds: Record<number, boolean>;
+  effectiveSelections: Record<number, number>;
   setSelectedExRTabId: (id: OptionTab) => void;
+  setIsTabPending: (isPending: boolean) => void;
   toggleExRCategory: (categoryId: number) => void;
   toggleExROption: (optionId: number) => void;
+  TEMP_updateExROptionSelection: (optionId: number, selection: number) => void;
   resetViewer: () => void;
 }
 
@@ -20,16 +24,23 @@ export interface OptionViewerSlice {
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) => {
   return {
     selectedExRTabId: 0,
+    isTabPending: false,
     openedExRCategoryIds: {},
     openedExROptionIds: {},
+    effectiveSelections: {},
     setSelectedExRTabId: (id: OptionTab) => {
       set({ selectedExRTabId: id });
+    },
+    setIsTabPending: (isPending: boolean) => {
+      set({ isTabPending: isPending });
     },
     resetViewer: () => {
       set({
         selectedExRTabId: 0,
+        isTabPending: false,
         openedExRCategoryIds: {},
         openedExROptionIds: {},
+        effectiveSelections: {},
       });
     },
     toggleExRCategory: (categoryId: number) => {
@@ -48,6 +59,16 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
           openedExROptionIds: {
             ...state.openedExROptionIds,
             [optionId]: !state.openedExROptionIds[optionId],
+          },
+        };
+      });
+    },
+    TEMP_updateExROptionSelection: (optionId: number, selection: number) => {
+      set((state) => {
+        return {
+          effectiveSelections: {
+            ...state.effectiveSelections,
+            [optionId]: selection,
           },
         };
       });

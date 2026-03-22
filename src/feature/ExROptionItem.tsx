@@ -18,8 +18,14 @@ export function ExROptionItem({ option, depth = 0 }: ExROptionItemProps) {
   const isOpen = useStore((state) => {
     return state.openedExROptionIds[option.Id] ?? false;
   });
+  const currentSelection = useStore((state) => {
+    return state.effectiveSelections[option.Id] ?? option.Selection;
+  });
   const toggleExROption = useStore((state) => {
     return state.toggleExROption;
+  });
+  const TEMP_updateExROptionSelection = useStore((state) => {
+    return state.TEMP_updateExROptionSelection;
   });
 
   if (!option.IsActive) {
@@ -31,8 +37,7 @@ export function ExROptionItem({ option, depth = 0 }: ExROptionItemProps) {
   };
 
   const handleChange = (newSelection: number) => {
-    // TODO: 将来的に API を呼び出すロジックを追加
-    console.log(`Option ${option.Id} changed to selection ${newSelection}`);
+    TEMP_updateExROptionSelection(option.Id, newSelection);
   };
 
   const hasChildren = option.Childs && option.Childs.length > 0;
@@ -43,7 +48,7 @@ export function ExROptionItem({ option, depth = 0 }: ExROptionItemProps) {
     if (Type === 'String') {
       return (
         <OptionDropdownControl
-          selection={option.Selection}
+          selection={currentSelection}
           values={Values as string[]}
           onChange={handleChange}
         />
@@ -53,7 +58,7 @@ export function ExROptionItem({ option, depth = 0 }: ExROptionItemProps) {
     if (Type === 'Int32' || Type === 'Single') {
       return (
         <OptionSliderControl
-          selection={option.Selection}
+          selection={currentSelection}
           values={Values as number[]}
           format={option.Format}
           onChange={handleChange}

@@ -11,6 +11,7 @@ describe('optionViewerSlice', () => {
   it('should have initial state', () => {
     const state = useStore.getState();
     expect(state.selectedExRTabId).toBe(0);
+    expect(state.isTabPending).toBe(false);
     expect(state.openedExRCategoryIds).toEqual({});
   });
 
@@ -36,4 +37,13 @@ describe('optionViewerSlice', () => {
   });
 
 
+  it('should set isTabPending', () => {
+    const { setIsTabPending } = useStore.getState();
+
+    setIsTabPending(true);
+    expect(useStore.getState().isTabPending).toBe(true);
+
+    setIsTabPending(false);
+    expect(useStore.getState().isTabPending).toBe(false);
+  });
 });

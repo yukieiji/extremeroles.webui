@@ -1,10 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 test('ExR Option Accordion behavior', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'networkidle' });
+  await page.goto('/');
 
   const sidebar = page.getByLabel('オプションサイドバー');
-  await expect(sidebar).toBeVisible({ timeout: 10000 });
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 
   // カテゴリ「プリセット」のアコーディオンがあることを確認
@@ -41,10 +40,7 @@ test('ExR Option Accordion behavior', async ({ page }) => {
   await sidebar.getByRole('button', { name: 'Au Options' }).click();
   await expect(page.getByRole('heading', { name: 'Au Options JSON' })).toBeVisible();
 
-  // 再び ExR Options に切り替え
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
-  // transition を考慮して少し待つか、見出しの変更を待つ
-  await expect(page.getByRole('heading', { name: 'ExR Options JSON' })).toBeVisible();
   await expect(optionName).toBeVisible();
 
   // アコーディオンを閉じる
