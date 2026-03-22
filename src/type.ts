@@ -205,3 +205,22 @@ export const UpdatedOptionsSchema = z.object({
   UpdatedCategory: ExRCategoryDtoSchema.nullable(),
   ChainUpdatedOption: z.array(ExROptionDtoSchema),
 });
+
+/**
+ * プリセット名管理用のスキーマ
+ * キーが数値（文字列としてシリアライズされる）、値がユーザー入力の文字列
+ */
+export const PresetNamesSchema = z.record(z.string(), z.string()).transform((val) => {
+  const result: Record<number, string> = {};
+  for (const key in val) {
+    if (Object.prototype.hasOwnProperty.call(val, key)) {
+      const numKey = Number(key);
+      if (!isNaN(numKey)) {
+        result[numKey] = val[key];
+      }
+    }
+  }
+  return result;
+});
+
+export type PresetNames = z.infer<typeof PresetNamesSchema>;

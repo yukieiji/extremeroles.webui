@@ -3,8 +3,18 @@ import { OptionGroupToggleSidebar } from './feature/OptionGroupToggleSidebar';
 import { LoadingView } from './feature/LoadingView';
 import { ExROptionEditor } from './feature/ExROptionEditor';
 import { AuOptionEditor } from './feature/AuOptionEditor';
+import { PresetSelector } from './feature/PresetSelector';
 import { useStore } from './useStore';
 import { getExrOptions, getAuOptions } from './logics/api';
+
+/**
+ * プリセットセレクターを表示するためのコンテナコンポーネント
+ * データを取得し、Suspense境界内で動作します
+ */
+function PresetSelectorContainer() {
+  const exrData = use(getExrOptions());
+  return <PresetSelector tabs={exrData} />;
+}
 
 /**
  * オプションエディタを表示する内側のコンポーネント
@@ -19,11 +29,11 @@ function EditorContainer() {
   const exrData = use(getExrOptions());
   const auData = use(getAuOptions());
 
-  return selectedTab === 'ExR' ? (
-    <ExROptionEditor data={exrData} />
-  ) : (
-    <AuOptionEditor data={auData} />
-  );
+  if (selectedTab === 'ExR') {
+    return <ExROptionEditor data={exrData} />;
+  }
+
+  return <AuOptionEditor data={auData} />;
 }
 
 /**
@@ -45,9 +55,14 @@ function MainContent() {
       data-is-pending={isSidebarPending ? "true" : "false"}
     >
       <div className="flex items-center gap-4">
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-2xl font-bold whitespace-nowrap">
           {selectedTab === 'ExR' ? 'ExR Options' : 'Au Options'}
         </h2>
+        {selectedTab === 'ExR' && (
+          <Suspense fallback={<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />}>
+            <PresetSelectorContainer />
+          </Suspense>
+        )}
         {isSidebarPending && (
           <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
         )}

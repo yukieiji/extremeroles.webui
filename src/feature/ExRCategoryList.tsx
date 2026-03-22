@@ -2,6 +2,7 @@ import { useStore } from '../useStore';
 import { Accordion } from '../components/parts/Accordion';
 import { ColoredText } from '../components/parts/ColoredText';
 import { ExROptionItem } from './ExROptionItem';
+import { isPresetOption } from '../logics/optionUtils';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
 interface CategoryAccordionProps {
@@ -20,6 +21,16 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     return state.toggleExRCategory;
   });
 
+  // プリセット設定（Category 0, Option 0）を非表示にする
+  const filteredOptions = category.Options.filter((option) => {
+    return !isPresetOption(category.Id, option.Id);
+  });
+
+  // 全てのオプションが除外された場合はアコーディオンを表示しない
+  if (filteredOptions.length === 0) {
+    return null;
+  }
+
   return (
     <Accordion
       title={<ColoredText text={category.Name} />}
@@ -29,9 +40,11 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
       }}
     >
       <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-        {category.Options.map((option) => (
-          <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
-        ))}
+        {filteredOptions.map((option) => {
+          return (
+            <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
+          );
+        })}
       </div>
     </Accordion>
   );
@@ -52,13 +65,22 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
     return state.isTabPending;
   });
 
-  const selectedTab = tabs.find((tab) => {
+  let selectedTab = tabs.find((tab) => {
     return tab.Id === selectedExRTabId;
-  }) || tabs[0];
+  });
+
+  if (!selectedTab) {
+    selectedTab = tabs[0];
+  }
 
   // オプションが空でない、かつ少なくとも1つのオプションが有効なカテゴリのみを抽出
+  // ※ プリセット設定が唯一のオプションだった場合も考慮してフィルタリング
   const visibleCategories = selectedTab.Categories.filter((category) => {
-    return category.Options.length > 0 && category.Options.some((opt) => {
+    const filteredOptions = category.Options.filter((option) => {
+      const isPreset = isPresetOption(category.Id, option.Id);
+      return !isPreset;
+    });
+    return filteredOptions.some((opt) => {
       return opt.IsActive;
     });
   });

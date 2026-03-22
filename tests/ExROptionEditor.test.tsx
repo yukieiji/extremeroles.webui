@@ -1,7 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ExROptionEditor } from '../src/feature/ExROptionEditor';
 import type { ExRTabDto } from '../src/type';
+import { useStore } from '../src/useStore';
 
 describe('ExROptionEditor', () => {
   const mockData: ExRTabDto[] = [
@@ -20,6 +21,21 @@ describe('ExROptionEditor', () => {
               Selection: 0,
               Format: '{0}',
               RangeMeta: { Type: 'Int32', Values: [0, 10, 20] },
+              Childs: [],
+            },
+          ],
+        },
+        {
+          Id: 0,
+          Name: 'Preset Category',
+          Options: [
+            {
+              Id: 0,
+              IsActive: true,
+              TranslatedName: '使用するプリセット',
+              Selection: 0,
+              Format: 'Preset',
+              RangeMeta: { Type: 'Int32', Values: [1, 2, 3] },
               Childs: [],
             },
           ],
@@ -69,12 +85,19 @@ describe('ExROptionEditor', () => {
     },
   ];
 
-  it('should only show visible categories (not empty, at least one active option)', () => {
+  beforeEach(() => {
+    useStore.getState().resetViewer();
+  });
+
+  it('should only show visible categories (not empty, at least one active option) and hide preset', () => {
     render(<ExROptionEditor data={mockData} />);
 
     expect(screen.getByText('Category 1')).toBeInTheDocument();
     expect(screen.queryByText('Empty Category')).not.toBeInTheDocument();
     expect(screen.queryByText('Inactive Category')).not.toBeInTheDocument();
+
+    // プリセットカテゴリは非表示になっていることを確認
+    expect(screen.queryByText('Preset Category')).not.toBeInTheDocument();
   });
 
   it('should switch tabs and show correct categories', () => {
@@ -92,10 +115,6 @@ describe('ExROptionEditor', () => {
 
   it('should toggle accordion and show options UI', () => {
     const { unmount } = render(<ExROptionEditor data={mockData} />);
-
-    // Tab 1 を選択状態にする（初期値がずれている可能性があるため）
-    const tab1Button = screen.getByText('Tab 1');
-    fireEvent.click(tab1Button);
 
     const categoryButton = screen.getByText('Category 1');
 
