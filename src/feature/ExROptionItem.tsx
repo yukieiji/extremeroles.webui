@@ -3,7 +3,7 @@ import { OptionItem } from '../components/parts/OptionItem';
 import { OptionNameDisplay } from '../components/parts/OptionNameDisplay';
 import { OptionSliderControl } from '../components/parts/OptionSliderControl';
 import { OptionDropdownControl } from '../components/parts/OptionDropdownControl';
-import { Accordion } from '../components/parts/Accordion';
+import { OptionAccordion } from '../components/blocks/OptionAccordion';
 import type { ExROptionDto } from '../type';
 
 interface ExROptionItemProps {
@@ -76,8 +76,8 @@ export function ExROptionItem({ option, depth = 0 }: ExROptionItemProps) {
 
   if (hasChildren) {
     return (
-      <Accordion
-        title={optionItem}
+      <OptionAccordion
+        optionItem={optionItem}
         isOpen={isOpen}
         onToggle={handleToggle}
       >
@@ -86,7 +86,7 @@ export function ExROptionItem({ option, depth = 0 }: ExROptionItemProps) {
             <ExROptionItem key={child.Id} option={child} depth={depth + 1} />
           ))}
         </div>
-      </Accordion>
+      </OptionAccordion>
     );
   }
 
