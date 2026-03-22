@@ -35,9 +35,11 @@ export function Accordion({ title, isOpen, onToggle, children }: AccordionProps)
         }`}
       >
         <div className="min-h-0">
-          <div className="p-4 bg-gray-900 border-t border-gray-700">
-            {children}
-          </div>
+          {isOpen && (
+            <div className="p-4 bg-gray-900 border-t border-gray-700">
+              {children}
+            </div>
+          )}
         </div>
       </div>
     </div>

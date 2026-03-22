@@ -2,6 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
+import { resetApiCache } from './logics/api'
+
+if (import.meta.env.DEV) {
+  // @ts-expect-error - テスト用
+  window.resetApp = resetApiCache;
+}
 
 /**
  * 開発環境の場合にMSWを有効化
