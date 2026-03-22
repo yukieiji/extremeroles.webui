@@ -12,12 +12,14 @@ export interface OptionViewerSlice {
   openedExROptionIds: Record<string, boolean>;
   effectiveSelections: Record<string, number>;
   presetNames: Record<number, string>;
+  isPresetDropdownOpen: boolean;
   setSelectedExRTabId: (id: OptionTab) => void;
   setIsTabPending: (isPending: boolean) => void;
   toggleExRCategory: (categoryId: number) => void;
   toggleExROption: (uniqueOptionId: string) => void;
   TEMP_updateExROptionSelection: (uniqueOptionId: string, selection: number) => void;
   updatePresetName: (presetIndex: number, name: string) => void;
+  setPresetDropdownOpen: (isOpen: boolean) => void;
   resetViewer: () => void;
 }
 
@@ -32,6 +34,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
     openedExROptionIds: {},
     effectiveSelections: {},
     presetNames: loadPresetNamesFromCookie(),
+    isPresetDropdownOpen: false,
     setSelectedExRTabId: (id: OptionTab) => {
       set({ selectedExRTabId: id });
     },
@@ -45,6 +48,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
         openedExRCategoryIds: {},
         openedExROptionIds: {},
         effectiveSelections: {},
+        isPresetDropdownOpen: false,
       });
     },
     toggleExRCategory: (categoryId: number) => {
@@ -88,6 +92,9 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
           presetNames: newPresetNames,
         };
       });
+    },
+    setPresetDropdownOpen: (isOpen: boolean) => {
+      set({ isPresetDropdownOpen: isOpen });
     },
   };
 };

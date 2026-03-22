@@ -26,7 +26,9 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
   });
 
   // 全てのオプションが除外された場合はアコーディオンを表示しない
-  if (filteredOptions.length === 0) return null;
+  if (filteredOptions.length === 0) {
+    return null;
+  }
 
   return (
     <Accordion
@@ -37,9 +39,11 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
       }}
     >
       <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-        {filteredOptions.map((option) => (
-          <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
-        ))}
+        {filteredOptions.map((option) => {
+          return (
+            <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
+          );
+        })}
       </div>
     </Accordion>
   );
