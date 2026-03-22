@@ -1,3 +1,5 @@
+import { PresetNamesSchema } from '../type';
+
 /**
  * クッキーを取得する
  */
@@ -53,14 +55,12 @@ export function loadPresetNamesFromCookie(): Record<number, string> {
   }
   try {
     const parsed = JSON.parse(cookieValue);
-    // キーを数値に変換して返す
-    const result: Record<number, string> = {};
-    for (const key in parsed) {
-      if (Object.prototype.hasOwnProperty.call(parsed, key)) {
-        result[Number(key)] = parsed[key];
-      }
+    const result = PresetNamesSchema.safeParse(parsed);
+    if (result.success) {
+      return result.data;
     }
-    return result;
+    console.error('Failed to validate preset names from cookie', result.error);
+    return {};
   } catch (e) {
     console.error('Failed to parse preset names from cookie', e);
     return {};

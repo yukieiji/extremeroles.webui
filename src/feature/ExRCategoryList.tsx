@@ -75,7 +75,7 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
     const filteredOptions = category.Options.filter((option) => {
       return !isPresetOption(category.Id, option.Id);
     });
-    return filteredOptions.length > 0 && filteredOptions.some((opt) => {
+    return filteredOptions.some((opt) => {
       return opt.IsActive;
     });
   });
