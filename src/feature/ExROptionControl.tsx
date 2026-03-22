@@ -14,9 +14,10 @@ interface ExROptionControlProps {
  */
 export function ExROptionControl({ categoryId, option }: ExROptionControlProps) {
   const uniqueId = getUniqueOptionId(categoryId, option.Id);
-  const currentSelection = useStore((state) => {
-    return state.effectiveSelections[uniqueId] ?? option.Selection;
+  const effectiveSelection = useStore((state) => {
+    return state.effectiveSelections[uniqueId];
   });
+  const currentSelection = effectiveSelection ?? option.Selection;
   const TEMP_updateExROptionSelection = useStore((state) => {
     return state.TEMP_updateExROptionSelection;
   });
