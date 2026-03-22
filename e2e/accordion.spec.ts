@@ -38,7 +38,7 @@ test('ExR Option Accordion behavior', async ({ page }) => {
 
   // サイドバーを切り替えて戻ってきても維持されることを確認
   await sidebar.getByRole('button', { name: 'Au Options' }).click();
-  await expect(page.getByRole('heading', { name: 'Au Options JSON' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Au Options' })).toBeVisible();
 
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
   await expect(optionName).toBeVisible();

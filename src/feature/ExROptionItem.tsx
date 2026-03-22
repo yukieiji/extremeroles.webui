@@ -28,5 +28,5 @@ export function ExROptionItem({ categoryId, option, depth = 0 }: ExROptionItemPr
     );
   }
 
-  return <ExROptionRow categoryId={categoryId} option={option} depth={depth} />;
+  return <ExROptionRow categoryId={categoryId} option={option} depth={depth} isLeaf={true} />;
 }

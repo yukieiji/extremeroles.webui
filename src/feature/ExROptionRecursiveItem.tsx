@@ -29,9 +29,10 @@ export function ExROptionRecursiveItem({ categoryId, option, depth = 0 }: ExROpt
 
   return (
     <OptionAccordion
-      optionItem={<ExROptionRow categoryId={categoryId} option={option} depth={depth} />}
+      optionItem={<ExROptionRow categoryId={categoryId} option={option} depth={depth} isLeaf={false} />}
       isOpen={isOpen}
       onToggle={handleToggle}
+      className={depth > 0 ? 'border-l-2 border-blue-500/30 ml-4' : ''}
     >
       <div className="flex flex-col">
         {option.Childs.map((child) => (

@@ -46,7 +46,7 @@ function MainContent() {
     >
       <div className="flex items-center gap-4">
         <h2 className="text-2xl font-bold">
-          {selectedTab === 'ExR' ? 'ExR Options' : 'Au Options'} JSON
+          {selectedTab === 'ExR' ? 'ExR Options' : 'Au Options'}
         </h2>
         {isSidebarPending && (
           <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
