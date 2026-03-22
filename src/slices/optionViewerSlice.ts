@@ -1,5 +1,6 @@
 import type { StateCreator } from 'zustand';
 import type { OptionTab } from '../type';
+import { loadPresetNamesFromCookie, savePresetNamesToCookie } from '../logics/cookieUtils';
 
 /**
  * オプション表示エリア（ExR オプションのタブなど）の状態を管理するスライスのインターフェース
@@ -10,11 +11,13 @@ export interface OptionViewerSlice {
   openedExRCategoryIds: Record<number, boolean>;
   openedExROptionIds: Record<string, boolean>;
   effectiveSelections: Record<string, number>;
+  presetNames: Record<number, string>;
   setSelectedExRTabId: (id: OptionTab) => void;
   setIsTabPending: (isPending: boolean) => void;
   toggleExRCategory: (categoryId: number) => void;
   toggleExROption: (uniqueOptionId: string) => void;
   TEMP_updateExROptionSelection: (uniqueOptionId: string, selection: number) => void;
+  updatePresetName: (presetIndex: number, name: string) => void;
   resetViewer: () => void;
 }
 
@@ -28,6 +31,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
     openedExRCategoryIds: {},
     openedExROptionIds: {},
     effectiveSelections: {},
+    presetNames: loadPresetNamesFromCookie(),
     setSelectedExRTabId: (id: OptionTab) => {
       set({ selectedExRTabId: id });
     },
@@ -70,6 +74,18 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
             ...state.effectiveSelections,
             [uniqueOptionId]: selection,
           },
+        };
+      });
+    },
+    updatePresetName: (presetIndex: number, name: string) => {
+      set((state) => {
+        const newPresetNames = {
+          ...state.presetNames,
+          [presetIndex]: name,
+        };
+        savePresetNamesToCookie(newPresetNames);
+        return {
+          presetNames: newPresetNames,
         };
       });
     },

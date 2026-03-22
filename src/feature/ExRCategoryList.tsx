@@ -20,6 +20,14 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     return state.toggleExRCategory;
   });
 
+  // プリセットカテゴリ (CategoryId: 0) かつ、個別のプリセットオプション (OptionId: 0) を非表示にする
+  const filteredOptions = category.Options.filter((option) => {
+    return !(category.Id === 0 && option.Id === 0);
+  });
+
+  // 全てのオプションが除外された場合はアコーディオンを表示しない
+  if (filteredOptions.length === 0) return null;
+
   return (
     <Accordion
       title={<ColoredText text={category.Name} />}
@@ -29,7 +37,7 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
       }}
     >
       <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-        {category.Options.map((option) => (
+        {filteredOptions.map((option) => (
           <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
         ))}
       </div>
@@ -57,8 +65,12 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
   }) || tabs[0];
 
   // オプションが空でない、かつ少なくとも1つのオプションが有効なカテゴリのみを抽出
+  // ※ プリセット (Category 0, Option 0) が唯一のオプションだった場合も考慮してフィルタリング
   const visibleCategories = selectedTab.Categories.filter((category) => {
-    return category.Options.length > 0 && category.Options.some((opt) => {
+    const filteredOptions = category.Options.filter((option) => {
+      return !(category.Id === 0 && option.Id === 0);
+    });
+    return filteredOptions.length > 0 && filteredOptions.some((opt) => {
       return opt.IsActive;
     });
   });
