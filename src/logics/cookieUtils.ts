@@ -20,7 +20,10 @@ export function getCookie(name: string): string | null {
       return decodeURIComponent(cookie.substring(nameLenPlus));
     });
 
-  return result[0] || null;
+  if (result.length > 0) {
+    return result[0];
+  }
+  return null;
 }
 
 /**

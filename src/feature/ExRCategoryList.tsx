@@ -65,15 +65,20 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
     return state.isTabPending;
   });
 
-  const selectedTab = tabs.find((tab) => {
+  let selectedTab = tabs.find((tab) => {
     return tab.Id === selectedExRTabId;
-  }) || tabs[0];
+  });
+
+  if (!selectedTab) {
+    selectedTab = tabs[0];
+  }
 
   // オプションが空でない、かつ少なくとも1つのオプションが有効なカテゴリのみを抽出
   // ※ プリセット設定が唯一のオプションだった場合も考慮してフィルタリング
   const visibleCategories = selectedTab.Categories.filter((category) => {
     const filteredOptions = category.Options.filter((option) => {
-      return !isPresetOption(category.Id, option.Id);
+      const isPreset = isPresetOption(category.Id, option.Id);
+      return !isPreset;
     });
     return filteredOptions.some((opt) => {
       return opt.IsActive;
