@@ -7,29 +7,22 @@ test('Options interaction behavior', async ({ page }) => {
   await expect(sidebar).toBeVisible({ timeout: 10000 });
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 
-  // カテゴリ「プリセット」を開く
-  const categoryButton = page.getByRole('button', { name: 'プリセット' });
-  await expect(categoryButton).toBeVisible();
-  await categoryButton.click();
+  // ヘッダーのプリセットセレクターを確認
+  const presetInput = page.getByPlaceholder('プリセット名を入力...');
+  await expect(presetInput).toBeVisible();
 
-  // 「使用するプリセット」オプション（Int32/Slider）を確認
-  const optionName = page.getByText('使用するプリセット');
-  await expect(optionName).toBeVisible();
+  // 初期値 (1)
+  await expect(presetInput).toHaveValue('1');
 
-  // 初期値を確認 (Selection 0 -> Value 1)
-  const input = page.locator('input[type="text"]').first();
-  await expect(input).toHaveValue('1');
-  await expect(page.getByText('(Preset 1)')).toBeVisible({ timeout: 10000 });
+  // 名前を変更
+  await presetInput.fill('Test Preset');
+  await presetInput.press('Enter');
 
-  // スライダーを操作（直接入力を変更してストアの更新を確認）
-  await input.fill('5');
-  // スナップされて 5 になるはず
-  await expect(input).toHaveValue('5');
-  await expect(page.getByText('(Preset 5)')).toBeVisible({ timeout: 10000 });
+  // ドロップダウンを開いて名前が反映されているか確認
+  await page.getByRole('button', { name: 'プリセットを選択' }).click();
+  await expect(page.getByText('Test Preset')).toBeVisible();
 
-  // クルーメイトタブに切り替えてドロップダウンをテスト（データ構造に基づく）
-  // 実際には「基本設定」が「プリセット」カテゴリを持っている
-  // 別の「乱数に関する設定」カテゴリの「強力なシャッフルを使用する」をテスト
+  // 別のカテゴリの操作を確認
   const shuffleCategory = page.getByRole('button', { name: '乱数に関する設定' });
   await shuffleCategory.click();
 
@@ -39,7 +32,7 @@ test('Options interaction behavior', async ({ page }) => {
   const dropdown = page.getByRole('combobox');
   await expect(dropdown).toHaveValue('0'); // オフ
 
-  // ドロップダウンを変更 (インデックスで選択。ラベルにはカラータグが含まれているため)
+  // ドロップダウンを変更
   await dropdown.selectOption({ index: 1 });
   await expect(dropdown).toHaveValue('1');
 });

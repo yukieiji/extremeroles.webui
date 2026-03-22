@@ -2,6 +2,7 @@ import { useStore } from '../useStore';
 import { Accordion } from '../components/parts/Accordion';
 import { ColoredText } from '../components/parts/ColoredText';
 import { ExROptionItem } from './ExROptionItem';
+import { isPresetOption } from '../logics/optionUtils';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
 interface CategoryAccordionProps {
@@ -20,9 +21,9 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     return state.toggleExRCategory;
   });
 
-  // プリセットカテゴリ (CategoryId: 0) かつ、個別のプリセットオプション (OptionId: 0) を非表示にする
+  // プリセット設定（Category 0, Option 0）を非表示にする
   const filteredOptions = category.Options.filter((option) => {
-    return !(category.Id === 0 && option.Id === 0);
+    return !isPresetOption(category.Id, option.Id);
   });
 
   // 全てのオプションが除外された場合はアコーディオンを表示しない
@@ -69,10 +70,10 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
   }) || tabs[0];
 
   // オプションが空でない、かつ少なくとも1つのオプションが有効なカテゴリのみを抽出
-  // ※ プリセット (Category 0, Option 0) が唯一のオプションだった場合も考慮してフィルタリング
+  // ※ プリセット設定が唯一のオプションだった場合も考慮してフィルタリング
   const visibleCategories = selectedTab.Categories.filter((category) => {
     const filteredOptions = category.Options.filter((option) => {
-      return !(category.Id === 0 && option.Id === 0);
+      return !isPresetOption(category.Id, option.Id);
     });
     return filteredOptions.length > 0 && filteredOptions.some((opt) => {
       return opt.IsActive;

@@ -6,18 +6,18 @@ test('ExR Option Accordion behavior', async ({ page }) => {
   const sidebar = page.getByLabel('オプションサイドバー');
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 
-  // カテゴリ「プリセット」のアコーディオンがあることを確認
-  const accordionButton = page.getByRole('button', { name: 'プリセット' });
+  // プリセットカテゴリは非表示になったため、別のカテゴリ「乱数に関する設定」を使用する
+  const categoryName = '乱数に関する設定';
+  const accordionButton = page.getByRole('button', { name: categoryName });
   await expect(accordionButton).toBeVisible();
 
   // 初期状態では閉じている
-  // アコーディオンの開閉状態を管理するコンテナ（button の次の要素）を取得
-  const accordionItem = page.locator('div.border.border-gray-700').filter({ hasText: 'プリセット' });
+  const accordionItem = page.locator('div.border.border-gray-700').filter({ hasText: categoryName });
   const contentContainer = accordionItem.locator('div.grid');
   await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
   // 閉じているときはオプション名が表示されていない（lazy rendering）
-  const optionName = page.getByText('使用するプリセット');
+  const optionName = page.getByText('強力なシャッフルを使用する');
   await expect(optionName).not.toBeAttached();
 
   // アコーディオンを開く
@@ -26,14 +26,12 @@ test('ExR Option Accordion behavior', async ({ page }) => {
   await expect(optionName).toBeVisible();
 
   // タブを切り替えてもアコーディオンの状態が維持されることを確認
-  // ゴーストニュートラルタブに切り替え
-  // ColoredText を使用しているため、厳密な一致ではなく部分一致で検索する
   await page.getByRole('button', { name: 'ゴーストニュートラル役職設定', exact: false }).click();
   await expect(page.getByRole('button', { name: 'フォラス' })).toBeVisible();
 
   // グローバル設定タブに戻る
   await page.getByRole('button', { name: 'グローバル設定', exact: false }).click();
-  // ゲーム設定アコーディオンがまだ開いていることを確認
+  // アコーディオンがまだ開いていることを確認
   await expect(optionName).toBeVisible();
 
   // サイドバーを切り替えて戻ってきても維持されることを確認
