@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('has sidebar and json viewer', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'networkidle' });
+  await page.goto('/');
 
   // サイドバーが表示されていることを確認
   const sidebar = page.getByLabel('オプションサイドバー');

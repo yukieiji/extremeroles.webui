@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Preset naming and persistence behavior', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'networkidle' });
+  await page.goto('/');
 
   const sidebar = page.getByLabel('オプションサイドバー');
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
@@ -26,7 +26,7 @@ test('Preset naming and persistence behavior', async ({ page }) => {
   await presetInput.blur(); // onBlur での保存をテスト
 
   // ページをリロードして Cookie から復元されるか確認
-  await page.reload({ waitUntil: 'networkidle' });
+  await page.reload();
 
   // ExR Options を再度開く
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();

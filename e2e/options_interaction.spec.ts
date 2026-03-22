@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Options interaction behavior', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'networkidle' });
+  await page.goto('/');
 
   const sidebar = page.getByLabel('オプションサイドバー');
   await expect(sidebar).toBeVisible({ timeout: 10000 });
