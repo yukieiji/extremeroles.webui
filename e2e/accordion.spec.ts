@@ -16,15 +16,14 @@ test('ExR Option Accordion behavior', async ({ page }) => {
   const contentContainer = accordionItem.locator('div.grid');
   await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
-  // 閉じているときは JSON プレビューが DOM に存在しない（lazy rendering）
-  const jsonPre = page.getByTestId('category-json-0');
-  await expect(jsonPre).not.toBeAttached();
+  // 閉じているときはオプション名が表示されていない（lazy rendering）
+  const optionName = page.getByText('使用するプリセット');
+  await expect(optionName).not.toBeAttached();
 
   // アコーディオンを開く
   await accordionButton.click();
   await expect(contentContainer).toHaveClass(/grid-rows-\[1fr\]/);
-  await expect(jsonPre).toBeVisible();
-  await expect(jsonPre).toContainText('"TranslatedName": "使用するプリセット"');
+  await expect(optionName).toBeVisible();
 
   // タブを切り替えてもアコーディオンの状態が維持されることを確認
   // ゴーストニュートラルタブに切り替え
@@ -35,17 +34,20 @@ test('ExR Option Accordion behavior', async ({ page }) => {
   // グローバル設定タブに戻る
   await page.getByRole('button', { name: 'グローバル設定', exact: false }).click();
   // ゲーム設定アコーディオンがまだ開いていることを確認
-  await expect(jsonPre).toBeVisible();
+  await expect(optionName).toBeVisible();
 
   // サイドバーを切り替えて戻ってきても維持されることを確認
   await sidebar.getByRole('button', { name: 'Au Options' }).click();
   await expect(page.getByRole('heading', { name: 'Au Options JSON' })).toBeVisible();
 
+  // 再び ExR Options に切り替え
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
-  await expect(jsonPre).toBeVisible();
+  // transition を考慮して少し待つか、見出しの変更を待つ
+  await expect(page.getByRole('heading', { name: 'ExR Options JSON' })).toBeVisible();
+  await expect(optionName).toBeVisible();
 
   // アコーディオンを閉じる
   await accordionButton.click();
   await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
-  await expect(jsonPre).not.toBeAttached();
+  await expect(optionName).not.toBeAttached();
 });
