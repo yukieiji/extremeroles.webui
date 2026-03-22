@@ -43,7 +43,9 @@ export function OptionSliderControl({
     onChange(closestIdx);
   };
 
-  const formattedValue = format.replace('{0}', currentValue.toString());
+  const formattedValue = format.includes('{0}')
+    ? format.replace('{0}', currentValue.toString())
+    : `${format} ${currentValue}`.trim();
 
   return (
     <div className="flex items-center gap-4 w-full sm:w-64">

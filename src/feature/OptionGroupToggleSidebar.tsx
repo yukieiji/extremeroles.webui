@@ -48,6 +48,8 @@ export function OptionGroupToggleSidebar() {
     if (tab === selectedTab) {
       return;
     }
+    // トランジション開始前に即座にペンディング状態にする
+    setIsSidebarPending(true);
     startTransition(() => {
       setSelectedTab(tab);
     });

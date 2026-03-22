@@ -33,6 +33,8 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
     if (id === selectedExRTabId) {
       return;
     }
+    // トランジション開始前に即座にペンディング状態にする
+    setIsTabPending(true);
     startTransition(() => {
       setSelectedExRTabId(id);
     });
