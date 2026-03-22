@@ -30,7 +30,7 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     >
       <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
         {category.Options.map((option) => (
-          <ExROptionItem key={option.Id} option={option} />
+          <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
         ))}
       </div>
     </Accordion>

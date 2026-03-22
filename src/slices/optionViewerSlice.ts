@@ -8,13 +8,13 @@ export interface OptionViewerSlice {
   selectedExRTabId: OptionTab;
   isTabPending: boolean;
   openedExRCategoryIds: Record<number, boolean>;
-  openedExROptionIds: Record<number, boolean>;
-  effectiveSelections: Record<number, number>;
+  openedExROptionIds: Record<string, boolean>;
+  effectiveSelections: Record<string, number>;
   setSelectedExRTabId: (id: OptionTab) => void;
   setIsTabPending: (isPending: boolean) => void;
   toggleExRCategory: (categoryId: number) => void;
-  toggleExROption: (optionId: number) => void;
-  TEMP_updateExROptionSelection: (optionId: number, selection: number) => void;
+  toggleExROption: (uniqueOptionId: string) => void;
+  TEMP_updateExROptionSelection: (uniqueOptionId: string, selection: number) => void;
   resetViewer: () => void;
 }
 
@@ -53,22 +53,22 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
         };
       });
     },
-    toggleExROption: (optionId: number) => {
+    toggleExROption: (uniqueOptionId: string) => {
       set((state) => {
         return {
           openedExROptionIds: {
             ...state.openedExROptionIds,
-            [optionId]: !state.openedExROptionIds[optionId],
+            [uniqueOptionId]: !state.openedExROptionIds[uniqueOptionId],
           },
         };
       });
     },
-    TEMP_updateExROptionSelection: (optionId: number, selection: number) => {
+    TEMP_updateExROptionSelection: (uniqueOptionId: string, selection: number) => {
       set((state) => {
         return {
           effectiveSelections: {
             ...state.effectiveSelections,
-            [optionId]: selection,
+            [uniqueOptionId]: selection,
           },
         };
       });
