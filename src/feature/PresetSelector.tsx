@@ -11,6 +11,9 @@ interface PresetSelectorProps {
  * プリセットを選択・編集するためのコンポーネント。
  * CategoryId: 0, OptionId: 0 の設定を操作します。
  * AGENT.md のガイドラインに従い、useState を使用せず、グローバルストアで状態を管理します。
+ *
+ * 入力更新の最適化:
+ * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
 export function PresetSelector({ tabs }: PresetSelectorProps) {
   // GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
@@ -29,6 +32,7 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
     return state.effectiveSelections[uniqueId];
   });
   const currentSelection = effectiveSelection ?? presetOption?.Selection ?? 0;
+
   const presetNames = useStore((state) => {
     return state.presetNames;
   });
@@ -46,6 +50,7 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
   });
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // 外部クリックでドロップダウンを閉じる
   useEffect(() => {
@@ -73,8 +78,25 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
     setPresetDropdownOpen(false);
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updatePresetName(currentSelection, e.target.value);
+  /**
+   * ストアと Cookie を更新する
+   */
+  const commitNameChange = () => {
+    if (inputRef.current) {
+      updatePresetName(currentSelection, inputRef.current.value);
+    }
+  };
+
+  const handleBlur = () => {
+    commitNameChange();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      commitNameChange();
+      // Enter 入力後はフォーカスを外して確定を視覚的に示す
+      e.currentTarget.blur();
+    }
   };
 
   const toggleDropdown = () => {
@@ -85,9 +107,12 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
     <div className="relative flex items-center gap-2" ref={dropdownRef}>
       <div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:border-blue-500">
         <input
+          ref={inputRef}
           type="text"
-          value={currentPresetName}
-          onChange={handleNameChange}
+          key={currentSelection}
+          defaultValue={currentPresetName}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
           className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
           placeholder="プリセット名を入力..."
         />
