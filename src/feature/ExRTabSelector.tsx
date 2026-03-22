@@ -29,7 +29,7 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
     }
   }, [isPending, setIsTabPending]);
 
-  const handleClick = (id: number) => {
+  const handleClick = (id: OptionTab) => {
     if (id === selectedExRTabId) {
       return;
     }

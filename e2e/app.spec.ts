@@ -12,13 +12,13 @@ test('has sidebar and json viewer', async ({ page }) => {
   await expect(sidebar.getByRole('button', { name: 'ExR Options' })).toBeVisible();
 
   // Au Options が初期で表示されることを確認する
-  await expect(page.getByRole('heading', { name: 'Au Options JSON' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Au Options' })).toBeVisible();
   // 以前のデータには "ゲーム設定" があったが、新しいデータには "インポスター" などがある
   await expect(page.getByTestId('au-json-pre')).toContainText('"TranslatedTitle": "インポスター"');
   
   // ExR Options に切り替え
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
-  await expect(page.getByRole('heading', { name: 'ExR Options JSON' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'ExR Options' })).toBeVisible();
   // JSON pre はなくなったので、アコーディオンが表示されていることを確認
   await expect(page.getByText('グローバル設定')).toBeVisible();
 

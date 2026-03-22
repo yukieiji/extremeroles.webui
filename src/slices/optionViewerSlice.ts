@@ -8,9 +8,13 @@ export interface OptionViewerSlice {
   selectedExRTabId: OptionTab;
   isTabPending: boolean;
   openedExRCategoryIds: Record<number, boolean>;
+  openedExROptionIds: Record<string, boolean>;
+  effectiveSelections: Record<string, number>;
   setSelectedExRTabId: (id: OptionTab) => void;
   setIsTabPending: (isPending: boolean) => void;
   toggleExRCategory: (categoryId: number) => void;
+  toggleExROption: (uniqueOptionId: string) => void;
+  TEMP_updateExROptionSelection: (uniqueOptionId: string, selection: number) => void;
   resetViewer: () => void;
 }
 
@@ -22,6 +26,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
     selectedExRTabId: 0,
     isTabPending: false,
     openedExRCategoryIds: {},
+    openedExROptionIds: {},
+    effectiveSelections: {},
     setSelectedExRTabId: (id: OptionTab) => {
       set({ selectedExRTabId: id });
     },
@@ -33,6 +39,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
         selectedExRTabId: 0,
         isTabPending: false,
         openedExRCategoryIds: {},
+        openedExROptionIds: {},
+        effectiveSelections: {},
       });
     },
     toggleExRCategory: (categoryId: number) => {
@@ -41,6 +49,26 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
           openedExRCategoryIds: {
             ...state.openedExRCategoryIds,
             [categoryId]: !state.openedExRCategoryIds[categoryId],
+          },
+        };
+      });
+    },
+    toggleExROption: (uniqueOptionId: string) => {
+      set((state) => {
+        return {
+          openedExROptionIds: {
+            ...state.openedExROptionIds,
+            [uniqueOptionId]: !state.openedExROptionIds[uniqueOptionId],
+          },
+        };
+      });
+    },
+    TEMP_updateExROptionSelection: (uniqueOptionId: string, selection: number) => {
+      set((state) => {
+        return {
+          effectiveSelections: {
+            ...state.effectiveSelections,
+            [uniqueOptionId]: selection,
           },
         };
       });

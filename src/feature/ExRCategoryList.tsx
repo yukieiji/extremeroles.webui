@@ -1,6 +1,7 @@
 import { useStore } from '../useStore';
 import { Accordion } from '../components/parts/Accordion';
 import { ColoredText } from '../components/parts/ColoredText';
+import { ExROptionItem } from './ExROptionItem';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
 interface CategoryAccordionProps {
@@ -27,13 +28,10 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
         toggleExRCategory(category.Id);
       }}
     >
-      <div className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-auto max-h-[40vh]">
-        <pre
-          data-testid={`category-json-${category.Id}`}
-          className="whitespace-pre-wrap break-words font-mono text-xs leading-relaxed"
-        >
-          {JSON.stringify(category.Options, null, 2)}
-        </pre>
+      <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
+        {category.Options.map((option) => (
+          <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
+        ))}
       </div>
     </Accordion>
   );
