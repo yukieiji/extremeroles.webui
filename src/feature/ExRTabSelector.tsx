@@ -1,4 +1,4 @@
-import { useTransition, useEffect } from 'react';
+import { useTransition } from 'react';
 import { useStore } from '../useStore';
 import { ColoredText } from '../components/parts/ColoredText';
 import type { ExRTabDto, OptionTab } from '../type';
@@ -17,31 +17,23 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
   const setSelectedExRTabId = useStore((state) => {
     return state.setSelectedExRTabId;
   });
-  const setIsTabPending = useStore((state) => {
-    return state.setIsTabPending;
-  });
   const [isPending, startTransition] = useTransition();
-
-  useEffect(() => {
-    // トランジションが完了したらペンディング状態を解除する
-    if (!isPending) {
-      setIsTabPending(false);
-    }
-  }, [isPending, setIsTabPending]);
 
   const handleClick = (id: OptionTab) => {
     if (id === selectedExRTabId) {
       return;
     }
-    // トランジション開始前に即座にペンディング状態にする
-    setIsTabPending(true);
     startTransition(() => {
       setSelectedExRTabId(id);
     });
   };
 
+  const isTabPendingInternal = isPending;
+
   return (
-    <div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
+    <div
+      className={`flex flex-wrap gap-2 border-b border-gray-200 pb-2 ${isTabPendingInternal ? 'opacity-50' : ''}`}
+    >
       {tabs.map((tab) => {
         return (
           <button

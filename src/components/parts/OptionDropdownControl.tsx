@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 interface OptionDropdownControlProps {
   selection: number;
   values: string[];
@@ -16,12 +14,9 @@ export function OptionDropdownControl({
   onChange,
   disabled = false,
 }: OptionDropdownControlProps) {
-  const handleSelectChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      onChange(parseInt(e.target.value, 10));
-    },
-    [onChange]
-  );
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(parseInt(e.target.value, 10));
+  };
 
   return (
     <select

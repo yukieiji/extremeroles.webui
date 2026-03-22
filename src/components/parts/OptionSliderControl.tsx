@@ -1,5 +1,3 @@
-import { useCallback, useMemo } from 'react';
-
 interface OptionSliderControlProps {
   selection: number;
   values: number[];
@@ -20,40 +18,32 @@ export function OptionSliderControl({
 }: OptionSliderControlProps) {
   const currentValue = values[selection] ?? values[0] ?? 0;
 
-  const handleSliderChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(parseInt(e.target.value, 10));
-    },
-    [onChange]
-  );
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(parseInt(e.target.value, 10));
+  };
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = parseFloat(e.target.value);
-      if (isNaN(val)) {
-        return;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseFloat(e.target.value);
+    if (isNaN(val)) {
+      return;
+    }
+
+    // 最も近い値を探す
+    let closestIdx = 0;
+    let minDiff = Math.abs(values[0] - val);
+
+    for (let i = 1; i < values.length; i++) {
+      const diff = Math.abs(values[i] - val);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = i;
       }
+    }
 
-      // 最も近い値を探す
-      let closestIdx = 0;
-      let minDiff = Math.abs(values[0] - val);
+    onChange(closestIdx);
+  };
 
-      for (let i = 1; i < values.length; i++) {
-        const diff = Math.abs(values[i] - val);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closestIdx = i;
-        }
-      }
-
-      onChange(closestIdx);
-    },
-    [values, onChange]
-  );
-
-  const formattedValue = useMemo(() => {
-    return format.replace('{0}', currentValue.toString());
-  }, [format, currentValue]);
+  const formattedValue = format.replace('{0}', currentValue.toString());
 
   return (
     <div className="flex items-center gap-4 w-full sm:w-64">

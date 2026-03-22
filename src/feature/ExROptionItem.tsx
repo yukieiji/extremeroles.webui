@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useStore } from '../useStore';
 import { OptionItem } from '../components/parts/OptionItem';
 import { OptionNameDisplay } from '../components/parts/OptionNameDisplay';
 import { OptionSliderControl } from '../components/parts/OptionSliderControl';
@@ -15,20 +15,25 @@ interface ExROptionItemProps {
  * ExRオプションの個別の項目を表示・管理するコンポーネント
  */
 export function ExROptionItem({ option, depth = 0 }: ExROptionItemProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggle = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []);
-
-  const handleChange = useCallback((newSelection: number) => {
-    // TODO: 将来的に API を呼び出すロジックを追加
-    console.log(`Option ${option.Id} changed to selection ${newSelection}`);
-  }, [option.Id]);
+  const isOpen = useStore((state) => {
+    return state.openedExROptionIds[option.Id] ?? false;
+  });
+  const toggleExROption = useStore((state) => {
+    return state.toggleExROption;
+  });
 
   if (!option.IsActive) {
     return null;
   }
+
+  const handleToggle = () => {
+    toggleExROption(option.Id);
+  };
+
+  const handleChange = (newSelection: number) => {
+    // TODO: 将来的に API を呼び出すロジックを追加
+    console.log(`Option ${option.Id} changed to selection ${newSelection}`);
+  };
 
   const hasChildren = option.Childs && option.Childs.length > 0;
 
