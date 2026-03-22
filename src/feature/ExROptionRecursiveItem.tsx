@@ -27,11 +27,16 @@ export function ExROptionRecursiveItem({ categoryId, option, depth = 0 }: ExROpt
     toggleExROption(uniqueId);
   };
 
+  const hasActiveChildren = option.Childs.some((child) => {
+    return child.IsActive;
+  });
+
   return (
     <OptionAccordion
       optionItem={<ExROptionRow categoryId={categoryId} option={option} depth={depth} isLeaf={false} />}
       isOpen={isOpen}
       onToggle={handleToggle}
+      showArrow={hasActiveChildren}
       className={depth > 0 ? 'border-l-2 border-blue-500/30 ml-4' : ''}
     >
       <div className="flex flex-col">

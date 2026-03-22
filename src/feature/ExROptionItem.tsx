@@ -16,9 +16,11 @@ export function ExROptionItem({ categoryId, option, depth = 0 }: ExROptionItemPr
     return null;
   }
 
-  const hasChildren = option.Childs && option.Childs.length > 0;
+  const hasActiveChildren = option.Childs && option.Childs.some((child) => {
+    return child.IsActive;
+  });
 
-  if (hasChildren) {
+  if (hasActiveChildren) {
     return (
       <ExROptionRecursiveItem
         categoryId={categoryId}
