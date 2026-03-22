@@ -16,7 +16,7 @@ export function ExROptionItem({ categoryId, option, depth = 0 }: ExROptionItemPr
     return null;
   }
 
-  const hasActiveChildren = option.Childs && option.Childs.length > 1;
+  const hasActiveChildren = option.Childs && option.Childs.length > 0;
 
   if (hasActiveChildren) {
     return (
