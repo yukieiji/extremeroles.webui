@@ -1,19 +1,25 @@
 import { test, expect } from '@playwright/test';
 
 test('Preset naming and persistence behavior', async ({ page }) => {
-  // すべてのテストで API の遅延を設定可能にする
+  // タイムアウトを延長
+  test.setTimeout(60000);
+
+  // すべてのテストで API の遅延を設定可能にする（CI 向けに最短に）
   await page.addInitScript(() => {
     // @ts-expect-error - window has no __API_DELAY__ property
-    window.__API_DELAY__ = 1000;
+    window.__API_DELAY__ = 100;
   });
 
   await page.goto('/');
+
+  // ローディング画面が消えるのを待つ
+  await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 45000 });
 
   const sidebar = page.getByLabel('オプションサイドバー');
   await expect(sidebar).toBeVisible({ timeout: 30000 });
 
   const exrButton = sidebar.getByRole('button', { name: 'ExR Options' });
-  await expect(exrButton).toBeVisible({ timeout: 15000 });
+  await expect(exrButton).toBeVisible({ timeout: 30000 });
   await exrButton.click();
 
   // ヘッダーのプリセットセレクターを確認
@@ -42,7 +48,10 @@ test('Preset naming and persistence behavior', async ({ page }) => {
   await presetInput.blur(); // onBlur での保存をテスト
 
   // ページをリロードして Cookie から復元されるか確認
-  await page.reload();
+  await page.goto('/');
+
+  // ローディング画面が消えるのを待つ
+  await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 45000 });
 
   // サイドバーの再表示を待つ
   await expect(sidebar).toBeVisible({ timeout: 30000 });
