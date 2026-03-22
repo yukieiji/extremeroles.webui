@@ -16,9 +16,7 @@ export function ExROptionItem({ categoryId, option, depth = 0 }: ExROptionItemPr
     return null;
   }
 
-  const hasActiveChildren = option.Childs && option.Childs.some((child) => {
-    return child.IsActive;
-  });
+  const hasActiveChildren = option.Childs && option.Childs.length > 1;
 
   if (hasActiveChildren) {
     return (
