@@ -76,6 +76,7 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
   const handlePresetSelect = (index: number) => {
     TEMP_updateExROptionSelection(uniqueId, index);
     setPresetDropdownOpen(false);
+    inputRef.current?.blur();
   };
 
   /**
@@ -105,6 +106,9 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 
   const toggleDropdown = () => {
     setPresetDropdownOpen(!isDropdownOpen);
+    if (!isDropdownOpen) {
+      inputRef.current?.blur();
+    }
   };
 
   return (
