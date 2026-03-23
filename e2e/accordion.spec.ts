@@ -1,7 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 test('ExR Option Accordion behavior', async ({ page }) => {
+  await page.addInitScript(() => {
+    // @ts-expect-error - window has no __API_DELAY__ property
+    window.__API_DELAY__ = 100;
+  });
+
   await page.goto('/');
+
+  // ローディング画面が消えるのを待つ
+  await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 30000 });
 
   const sidebar = page.getByLabel('オプションサイドバー');
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
@@ -13,7 +21,7 @@ test('ExR Option Accordion behavior', async ({ page }) => {
 
   // 初期状態では閉じている
   const accordionItem = page.locator('div.border.border-gray-700').filter({ hasText: categoryName });
-  const contentContainer = accordionItem.locator('div.grid');
+  const contentContainer = accordionItem.getByTestId('accordion-content');
   await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
   // 閉じているときはオプション名が表示されていない（lazy rendering）

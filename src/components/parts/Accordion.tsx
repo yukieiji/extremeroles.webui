@@ -30,6 +30,7 @@ export function Accordion({ title, isOpen, onToggle, children }: AccordionProps)
         <span className="font-semibold text-gray-200">{title}</span>
       </button>
       <div
+        data-testid="accordion-content"
         className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden ${
           isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         }`}
