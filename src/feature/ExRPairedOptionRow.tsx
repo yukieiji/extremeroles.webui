@@ -3,7 +3,7 @@ import { OptionItem } from '../components/parts/OptionItem';
 import { OptionNameDisplay } from '../components/parts/OptionNameDisplay';
 import { OptionRowContainer } from '../components/blocks/OptionRowContainer';
 import { OptionPairedSliderControl } from '../components/parts/OptionPairedSliderControl';
-import { getUniqueOptionId } from '../logics/optionUtils';
+import { getUniqueOptionId, isNumericRange } from '../logics/optionUtils';
 import type { ExROptionDto } from '../type';
 
 interface ExRPairedOptionRowProps {
@@ -51,6 +51,14 @@ export function ExRPairedOptionRow({
     TEMP_updateExROptionSelection(maxUniqueId, newSelection);
   };
 
+  // 念のため数値配列であることを確認する
+  const minValues = isNumericRange(min.RangeMeta.Values)
+    ? min.RangeMeta.Values
+    : [];
+  const maxValues = isNumericRange(max.RangeMeta.Values)
+    ? max.RangeMeta.Values
+    : [];
+
   const content = (
     <OptionItem className="min-h-[4.5rem]">
       <div className="flex-1 min-w-0">
@@ -62,8 +70,8 @@ export function ExRPairedOptionRow({
         <OptionPairedSliderControl
           minSelection={minSelection}
           maxSelection={maxSelection}
-          minValues={min.RangeMeta.Values as number[]}
-          maxValues={max.RangeMeta.Values as number[]}
+          minValues={minValues}
+          maxValues={maxValues}
           format={min.Format}
           onMinChange={handleMinChange}
           onMaxChange={handleMaxChange}

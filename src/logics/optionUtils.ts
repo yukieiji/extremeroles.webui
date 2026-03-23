@@ -59,6 +59,13 @@ export function getBaseOptionName(name: string): string {
 }
 
 /**
+ * RangeMeta.Values が数値配列であるか判定する型ガードです。
+ */
+export function isNumericRange(values: number[] | string[]): values is number[] {
+  return values.length > 0 && typeof values[0] === 'number';
+}
+
+/**
  * オプション名からサフィックス（「最小」「最大」など）のみを抽出します。
  */
 export function getOptionLabel(name: string): string {
