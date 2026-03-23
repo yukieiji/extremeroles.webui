@@ -12,8 +12,11 @@ test('ExR Option Accordion behavior', async ({ page }) => {
   await expect(accordionButton).toBeVisible();
 
   // 初期状態では閉じている
-  const accordionItem = page.locator('div.border.border-gray-700').filter({ hasText: categoryName });
-  const contentContainer = accordionItem.locator('div.grid');
+  const accordionButtonLocator = page.getByRole('button', { name: categoryName });
+  // Accordion component has the structure: div > button, div.grid
+  // Use first() to avoid strict mode violation if there are nested accordions
+  const accordionContainer = page.locator('div.border.border-gray-700').filter({ has: accordionButtonLocator }).first();
+  const contentContainer = accordionContainer.locator('> div.grid');
   await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
   // 閉じているときはオプション名が表示されていない（lazy rendering）

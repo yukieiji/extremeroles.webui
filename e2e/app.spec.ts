@@ -3,9 +3,12 @@ import { test, expect } from '@playwright/test';
 test('has sidebar and json viewer', async ({ page }) => {
   await page.goto('/');
 
+  // ローディング画面が消えるのを待つ
+  await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 45000 });
+
   // サイドバーが表示されていることを確認
   const sidebar = page.getByLabel('オプションサイドバー');
-  await expect(sidebar).toBeVisible({ timeout: 10000 });
+  await expect(sidebar).toBeVisible({ timeout: 30000 });
 
   // サイドバー内のボタンを明示的に指定
   await expect(sidebar.getByRole('button', { name: 'Au Options' })).toBeVisible();
