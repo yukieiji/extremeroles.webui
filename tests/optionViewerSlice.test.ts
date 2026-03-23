@@ -46,4 +46,17 @@ describe('optionViewerSlice', () => {
     setIsTabPending(false);
     expect(useStore.getState().isTabPending).toBe(false);
   });
+
+  it('should update and delete preset name', () => {
+    const { updatePresetName } = useStore.getState();
+
+    updatePresetName(0, 'Test Preset');
+    expect(useStore.getState().presetNames[0]).toBe('Test Preset');
+
+    updatePresetName(0, '');
+    expect(useStore.getState().presetNames[0]).toBeUndefined();
+
+    updatePresetName(1, '  ');
+    expect(useStore.getState().presetNames[1]).toBeUndefined();
+  });
 });
