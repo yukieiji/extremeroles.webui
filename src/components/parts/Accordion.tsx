@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 interface AccordionProps {
 	title: ReactNode;
+  headerExtra?: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
 	children: ReactNode;
