@@ -1,51 +1,55 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  // すべてのテストで API の遅延を設定可能にする
-  await page.addInitScript(() => {
-    // @ts-expect-error - window has no __API_DELAY__ property
-    window.__API_DELAY__ = 100;
-  });
+	// すべてのテストで API の遅延を設定可能にする
+	await page.addInitScript(() => {
+		// @ts-expect-error - window has no __API_DELAY__ property
+		window.__API_DELAY__ = 100;
+	});
 
-  await page.goto('/');
+	await page.goto("/");
 
-  // ローディング画面が消えるのを待つ
-  await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 30000 });
+	// ローディング画面が消えるのを待つ
+	await expect(page.getByText("Loading data...")).not.toBeVisible({
+		timeout: 30000,
+	});
 });
 
-test('Options interaction behavior', async ({ page }) => {
-  const sidebar = page.getByLabel('オプションサイドバー');
-  await sidebar.getByRole('button', { name: 'ExR Options' }).click();
+test("Options interaction behavior", async ({ page }) => {
+	const sidebar = page.getByLabel("オプションサイドバー");
+	await sidebar.getByRole("button", { name: "ExR Options" }).click();
 
-  // ヘッダーのプリセットセレクターを確認
-  const presetInput = page.getByPlaceholder('プリセット名を入力...');
-  await expect(presetInput).toBeVisible();
+	// ヘッダーのプリセットセレクターを確認
+	const presetInput = page.getByPlaceholder("プリセット名を入力...");
+	await expect(presetInput).toBeVisible();
 
-  // 初期値 (1)
-  await expect(presetInput).toHaveValue('1');
+	// 初期値 (1)
+	await expect(presetInput).toHaveValue("1");
 
-  // 名前を変更
-  await presetInput.fill('Test Preset');
-  await presetInput.press('Enter');
+	// 名前を変更
+	await presetInput.fill("Test Preset");
+	await presetInput.press("Enter");
 
-  // ドロップダウンを開いて名前が反映されているか確認
-  await page.getByRole('button', { name: 'プリセットを選択' }).click();
-  await expect(page.getByText('Test Preset')).toBeVisible();
+	// ドロップダウンを開いて名前が反映されているか確認
+	await page.getByRole("button", { name: "プリセットを選択" }).click();
+	await expect(page.getByText("Test Preset")).toBeVisible();
 
-  // 別のカテゴリの操作を確認
-  const shuffleCategory = page.getByRole('button', { name: '乱数に関する設定' });
-  await shuffleCategory.click();
+	// 別のカテゴリの操作を確認
+	const shuffleCategory = page.getByRole("button", {
+		name: "乱数に関する設定",
+	});
+	await shuffleCategory.click();
 
-  const shuffleOption = page.getByText('強力なシャッフルを使用する');
-  await expect(shuffleOption).toBeVisible();
+	const shuffleOption = page.getByText("強力なシャッフルを使用する");
+	await expect(shuffleOption).toBeVisible();
 
-  // トグルスイッチに変更されたので、トグルを操作する
-  const toggle = page.getByTestId('option-toggle').first();
-  await expect(toggle).toHaveAttribute('aria-checked', 'false');
-  await expect(page.getByText('オフ')).toBeVisible();
+	// トグルスイッチに変更されたので、トグルを操作する
+	const toggle = page.getByTestId("option-toggle").first();
+	await expect(toggle).toHaveAttribute("aria-checked", "false");
+	await expect(page.getByText("オフ")).toBeVisible();
 
-  // トグルを切り替え
-  await toggle.click();
-  await expect(toggle).toHaveAttribute('aria-checked', 'true');
-  await expect(page.getByText('オン', { exact: true })).toBeVisible();
+	// トグルを切り替え
+	await toggle.click();
+	await expect(toggle).toHaveAttribute("aria-checked", "true");
+	await expect(page.getByText("オン", { exact: true })).toBeVisible();
 });

@@ -1,0 +1,15 @@
+{
+	"$schema": "https://biomejs.dev/schemas/latest/schema.json",
+	"files": {
+		"includes": ["src/**", "tests/**", "e2e/**"]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noReactPropAssignments": "error"
+			}
+		}
+	}
+}

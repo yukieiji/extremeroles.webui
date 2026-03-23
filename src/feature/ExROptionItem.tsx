@@ -1,32 +1,43 @@
-import { ExROptionRow } from './ExROptionRow';
-import { ExROptionRecursiveItem } from './ExROptionRecursiveItem';
-import type { ExROptionDto } from '../type';
+import type { ExROptionDto } from "../type";
+import { ExROptionRecursiveItem } from "./ExROptionRecursiveItem";
+import { ExROptionRow } from "./ExROptionRow";
 
 interface ExROptionItemProps {
-  categoryId: number;
-  option: ExROptionDto;
-  depth?: number;
+	categoryId: number;
+	option: ExROptionDto;
+	depth?: number;
 }
 
 /**
  * ExRオプションの個別の項目を表示・管理するエントリーポイント
  */
-export function ExROptionItem({ categoryId, option, depth = 0 }: ExROptionItemProps) {
-  if (!option.IsActive) {
-    return null;
-  }
+export function ExROptionItem({
+	categoryId,
+	option,
+	depth = 0,
+}: ExROptionItemProps) {
+	if (!option.IsActive) {
+		return null;
+	}
 
-  const hasActiveChildren = option.Childs && option.Childs.length > 0;
+	const hasActiveChildren = option.Childs && option.Childs.length > 0;
 
-  if (hasActiveChildren) {
-    return (
-      <ExROptionRecursiveItem
-        categoryId={categoryId}
-        option={option}
-        depth={depth}
-      />
-    );
-  }
+	if (hasActiveChildren) {
+		return (
+			<ExROptionRecursiveItem
+				categoryId={categoryId}
+				option={option}
+				depth={depth}
+			/>
+		);
+	}
 
-  return <ExROptionRow categoryId={categoryId} option={option} depth={depth} isLeaf={true} />;
+	return (
+		<ExROptionRow
+			categoryId={categoryId}
+			option={option}
+			depth={depth}
+			isLeaf={true}
+		/>
+	);
 }
