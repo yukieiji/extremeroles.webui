@@ -1,12 +1,9 @@
 import { useStore } from '../useStore';
 import { ColoredText } from '../components/parts/ColoredText';
-import { ExROptionItem } from './ExROptionItem';
-import { ExRPairedOptionRow } from './ExRPairedOptionRow';
+import { ExRCategoryOptionList } from './ExRCategoryOptionList';
 import { ExRHeaderOptionControl } from './ExRHeaderOptionControl';
-import { isPresetOption, groupOptionPairs, getUniqueOptionId } from '../logics/optionUtils';
+import { isPresetOption, getUniqueOptionId } from '../logics/optionUtils';
 import type { ExRCategoryDto } from '../type';
-
-const GROUPED_CATEGORY_IDS = [5, 6];
 
 interface ExRRoleCategoryItemProps {
   category: ExRCategoryDto;
@@ -48,9 +45,6 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
   if (filteredOptions.length === 0) {
     return null;
   }
-
-  const shouldGroup = GROUPED_CATEGORY_IDS.includes(category.Id);
-  const groupedItems = shouldGroup ? groupOptionPairs(filteredOptions) : filteredOptions;
 
   return (
     <div className="border border-gray-700 rounded-lg overflow-hidden mb-2">
@@ -107,26 +101,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
         <div className="min-h-0">
           {isOpen && (
             <div className="p-4 bg-gray-900 border-t border-gray-700">
-              <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-                {groupedItems.map((item, idx) => {
-                  if ('type' in item && item.type === 'pair') {
-                    return (
-                      <ExRPairedOptionRow
-                        key={`pair-${idx}`}
-                        categoryId={category.Id}
-                        baseName={item.baseName}
-                        min={item.min}
-                        max={item.max}
-                        minLabel={item.minLabel}
-                        maxLabel={item.maxLabel}
-                      />
-                    );
-                  }
-                  return (
-                    <ExROptionItem key={item.Id} categoryId={category.Id} option={item} />
-                  );
-                })}
-              </div>
+              <ExRCategoryOptionList categoryId={category.Id} options={filteredOptions} />
             </div>
           )}
         </div>
