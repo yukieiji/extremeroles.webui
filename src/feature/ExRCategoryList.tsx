@@ -3,7 +3,9 @@ import { Accordion } from '../components/parts/Accordion';
 import { ColoredText } from '../components/parts/ColoredText';
 import { ExROptionItem } from './ExROptionItem';
 import { ExRPairedOptionRow } from './ExRPairedOptionRow';
-import { isPresetOption, groupOptionPairs } from '../logics/optionUtils';
+import { ExRHeaderOptionControl } from './ExRHeaderOptionControl';
+import { isPresetOption, groupOptionPairs, getUniqueOptionId } from '../logics/optionUtils';
+import { OptionTab } from '../type';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
 /**
@@ -12,6 +14,7 @@ import type { ExRCategoryDto, ExRTabDto } from '../type';
 const GROUPED_CATEGORY_IDS = [5, 6];
 
 interface CategoryAccordionProps {
+  tabId: OptionTab;
   category: ExRCategoryDto;
 }
 
@@ -19,7 +22,7 @@ interface CategoryAccordionProps {
  * 個別のカテゴリを表示するコンポーネント
  * 特定のカテゴリの開閉状態のみを監視することで、再レンダリングを最小限に抑えます。
  */
-function CategoryAccordion({ category }: CategoryAccordionProps) {
+function CategoryAccordion({ tabId, category }: CategoryAccordionProps) {
   const isOpen = useStore((state) => {
     return state.openedExRCategoryIds[category.Id] ?? false;
   });
@@ -27,9 +30,41 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     return state.toggleExRCategory;
   });
 
-  // プリセット設定（Category 0, Option 0）を非表示にする
+  // スポーンレート(50)のセレクション状態を監視
+  const spawnRateSelection = useStore((state) => {
+    const uniqueId = getUniqueOptionId(category.Id, 50);
+    const effectiveSelection = state.effectiveSelections[uniqueId];
+    if (effectiveSelection !== undefined) {
+      return effectiveSelection;
+    }
+    const option = category.Options.find((opt) => {
+      return opt.Id === 50;
+    });
+    return option?.Selection ?? 0;
+  });
+
+  // 役職タブ（GeneralTab以外）の場合は、Id: 50, 51 を特別扱いする
+  const isRoleTab = tabId !== OptionTab.GeneralTab;
+  const spawnRateOption = isRoleTab
+    ? category.Options.find((opt) => {
+        return opt.Id === 50;
+      })
+    : null;
+  const spawnCountOption = isRoleTab
+    ? category.Options.find((opt) => {
+        return opt.Id === 51;
+      })
+    : null;
+
+  // プリセット設定（Category 0, Option 0）およびヘッダーに移動した 50, 51 を非表示にする
   const filteredOptions = category.Options.filter((option) => {
-    return !isPresetOption(category.Id, option.Id);
+    if (isPresetOption(category.Id, option.Id)) {
+      return false;
+    }
+    if (isRoleTab && (option.Id === 50 || option.Id === 51)) {
+      return false;
+    }
+    return true;
   });
 
   // 全てのオプションが除外された場合はアコーディオンを表示しない
@@ -42,9 +77,27 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     ? groupOptionPairs(filteredOptions)
     : filteredOptions;
 
+  const headerExtra = (isRoleTab && spawnRateOption) ? (
+    <div className="flex items-center gap-4">
+      <ExRHeaderOptionControl
+        categoryId={category.Id}
+        option={spawnRateOption}
+        label="レート"
+      />
+      {spawnRateSelection >= 1 && spawnCountOption && (
+        <ExRHeaderOptionControl
+          categoryId={category.Id}
+          option={spawnCountOption}
+          label="数"
+        />
+      )}
+    </div>
+  ) : undefined;
+
   return (
     <Accordion
       title={<ColoredText text={category.Name} />}
+      headerExtra={headerExtra}
       isOpen={isOpen}
       onToggle={() => {
         toggleExRCategory(category.Id);
@@ -121,7 +174,13 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
         </div>
       )}
       {visibleCategories.map((category) => {
-        return <CategoryAccordion key={category.Id} category={category} />;
+        return (
+          <CategoryAccordion
+            key={category.Id}
+            tabId={selectedExRTabId}
+            category={category}
+          />
+        );
       })}
     </div>
   );
