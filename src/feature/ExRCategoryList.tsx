@@ -1,78 +1,9 @@
 import { useStore } from '../useStore';
-import { Accordion } from '../components/parts/Accordion';
-import { ColoredText } from '../components/parts/ColoredText';
-import { ExROptionItem } from './ExROptionItem';
-import { ExRPairedOptionRow } from './ExRPairedOptionRow';
-import { isPresetOption, groupOptionPairs } from '../logics/optionUtils';
-import type { ExRCategoryDto, ExRTabDto } from '../type';
-
-/**
- * グループ化表示（最小・最大ペア）を有効にするカテゴリIDのリスト
- */
-const GROUPED_CATEGORY_IDS = [5, 6];
-
-interface CategoryAccordionProps {
-  category: ExRCategoryDto;
-}
-
-/**
- * 個別のカテゴリを表示するコンポーネント
- * 特定のカテゴリの開閉状態のみを監視することで、再レンダリングを最小限に抑えます。
- */
-function CategoryAccordion({ category }: CategoryAccordionProps) {
-  const isOpen = useStore((state) => {
-    return state.openedExRCategoryIds[category.Id] ?? false;
-  });
-  const toggleExRCategory = useStore((state) => {
-    return state.toggleExRCategory;
-  });
-
-  // プリセット設定（Category 0, Option 0）を非表示にする
-  const filteredOptions = category.Options.filter((option) => {
-    return !isPresetOption(category.Id, option.Id);
-  });
-
-  // 全てのオプションが除外された場合はアコーディオンを表示しない
-  if (filteredOptions.length === 0) {
-    return null;
-  }
-
-  const shouldGroup = GROUPED_CATEGORY_IDS.includes(category.Id);
-  const groupedItems = shouldGroup
-    ? groupOptionPairs(filteredOptions)
-    : filteredOptions;
-
-  return (
-    <Accordion
-      title={<ColoredText text={category.Name} />}
-      isOpen={isOpen}
-      onToggle={() => {
-        toggleExRCategory(category.Id);
-      }}
-    >
-      <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-        {groupedItems.map((item, idx) => {
-          if ('type' in item && item.type === 'pair') {
-            return (
-              <ExRPairedOptionRow
-                key={`pair-${idx}`}
-                categoryId={category.Id}
-                baseName={item.baseName}
-                min={item.min}
-                max={item.max}
-                minLabel={item.minLabel}
-                maxLabel={item.maxLabel}
-              />
-            );
-          }
-          return (
-            <ExROptionItem key={item.Id} categoryId={category.Id} option={item} />
-          );
-        })}
-      </div>
-    </Accordion>
-  );
-}
+import { ExRStandardCategoryItem } from './ExRStandardCategoryItem';
+import { ExRRoleCategoryItem } from './ExRRoleCategoryItem';
+import { isPresetOption } from '../logics/optionUtils';
+import { OptionTab } from '../type';
+import type { ExRTabDto } from '../type';
 
 interface ExRCategoryListProps {
   tabs: ExRTabDto[];
@@ -97,6 +28,8 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
     selectedTab = tabs[0];
   }
 
+  const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
+
   // オプションが空でない、かつ少なくとも1つのオプションが有効なカテゴリのみを抽出
   // ※ プリセット設定が唯一のオプションだった場合も考慮してフィルタリング
   const visibleCategories = selectedTab.Categories.filter((category) => {
@@ -113,7 +46,7 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
     <div
       data-testid="exr-category-list"
       className={`flex flex-col relative transition-opacity duration-200 ${isTabPending ? 'is-pending opacity-50 pointer-events-none' : 'opacity-100'}`}
-      data-is-pending={isTabPending ? "true" : "false"}
+      data-is-pending={isTabPending ? 'true' : 'false'}
     >
       {isTabPending && (
         <div className="absolute inset-0 flex items-center justify-center z-10">
@@ -121,7 +54,20 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
         </div>
       )}
       {visibleCategories.map((category) => {
-        return <CategoryAccordion key={category.Id} category={category} />;
+        if (isRoleTab) {
+          return (
+            <ExRRoleCategoryItem
+              key={`${selectedExRTabId}-${category.Id}`}
+              category={category}
+            />
+          );
+        }
+        return (
+          <ExRStandardCategoryItem
+            key={`${selectedExRTabId}-${category.Id}`}
+            category={category}
+          />
+        );
       })}
     </div>
   );
