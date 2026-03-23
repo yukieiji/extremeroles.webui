@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface ColoredTextProps {
-  text: string;
+	text: string;
 }
 
 /**
@@ -19,62 +19,66 @@ const COLOR_HEX_REGEX = /#[0-9A-F]{6,8}/i;
  * ネストをサポートします。
  */
 export function ColoredText({ text }: ColoredTextProps) {
-  if (!text) {
-    return null;
-  }
+	if (!text) {
+		return null;
+	}
 
-  const parts = text.split(COLOR_TAG_REGEX);
+	const parts = text.split(COLOR_TAG_REGEX);
 
-  // ステートフルに解析するためにスタックを使用
-  const stack: { color: string; elements: ReactNode[] }[] = [];
-  let currentElements: ReactNode[] = [];
+	// ステートフルに解析するためにスタックを使用
+	const stack: { color: string; elements: ReactNode[] }[] = [];
+	let currentElements: ReactNode[] = [];
 
-  parts.forEach((part, index) => {
-    if (!part) {
-      return;
-    }
+	for (let i = 0; i < parts.length; i++) {
+		const part = parts[i];
+		if (!part) {
+			continue;
+		}
 
-    const lowerPart = part.toLowerCase();
-    if (lowerPart.startsWith('<color=')) {
-      const colorMatch = part.match(COLOR_HEX_REGEX);
-      const color = colorMatch ? colorMatch[0] : 'inherit';
+		const lowerPart = part.toLowerCase();
+		if (lowerPart.startsWith("<color=")) {
+			const colorMatch = part.match(COLOR_HEX_REGEX);
+			const color = colorMatch ? colorMatch[0] : "inherit";
 
-      // 現在の要素リストをスタックに保存し、新しい要素リストを開始
-      stack.push({ color, elements: currentElements });
-      currentElements = [];
-    } else if (lowerPart === '</color>') {
-      if (stack.length > 0) {
-        const last = stack.pop()!;
-        const coloredSpan = (
-          <span key={`color-${index}`} style={{ color: last.color }}>
-            {currentElements}
-          </span>
-        );
-        // 親の要素リストに戻り、作成した要素を追加
-        currentElements = last.elements;
-        currentElements.push(coloredSpan);
-      } else {
-        // 閉じタグが余分な場合はテキストとして扱う
-        currentElements.push(part);
-      }
-    } else if (part === '\n') {
-      currentElements.push(<br key={`br-${index}`} />);
-    } else {
-      currentElements.push(part);
-    }
-  });
+			// 現在の要素リストをスタックに保存し、新しい要素リストを開始
+			stack.push({ color, elements: currentElements });
+			currentElements = [];
+		} else if (lowerPart === "</color>") {
+			const last = stack.pop();
+			if (last) {
+				const coloredSpan = (
+					<span key={`color-${i}-${last.color}`} style={{ color: last.color }}>
+						{currentElements}
+					</span>
+				);
+				// 親の要素リストに戻り、作成した要素を追加
+				currentElements = last.elements;
+				currentElements.push(coloredSpan);
+			} else {
+				// 閉じタグが余分な場合はテキストとして扱う
+				currentElements.push(part);
+			}
+		} else if (part === "\n") {
+			currentElements.push(<br key={`br-${i}`} />);
+		} else {
+			currentElements.push(part);
+		}
+	}
 
-  // 未閉じのタグがある場合の処理
-  while (stack.length > 0) {
-    const last = stack.pop()!;
-    const coloredSpan = (
-      <span key={`unclosed-${stack.length}`} style={{ color: last.color }}>
-        {currentElements}
-      </span>
-    );
-    currentElements = last.elements;
-    currentElements.push(coloredSpan);
-  }
+	// 未閉じのタグがある場合の処理
+	while (stack.length > 0) {
+		const last = stack.pop();
+		if (!last) {
+			break;
+		}
+		const coloredSpan = (
+			<span key={`unclosed-${stack.length}`} style={{ color: last.color }}>
+				{currentElements}
+			</span>
+		);
+		currentElements = last.elements;
+		currentElements.push(coloredSpan);
+	}
 
-  return <>{currentElements}</>;
+	return <>{currentElements}</>;
 }

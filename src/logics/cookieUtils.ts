@@ -1,71 +1,73 @@
-import { PresetNamesSchema } from '../type';
+import { PresetNamesSchema } from "../type";
 
 /**
  * クッキーを取得する
  */
 export function getCookie(name: string): string | null {
-  if (typeof document === 'undefined') {
-    return null;
-  }
-  const nameLenPlus = name.length + 1;
-  const result = document.cookie
-    .split(';')
-    .map((c) => {
-      return c.trim();
-    })
-    .filter((cookie) => {
-      return cookie.substring(0, nameLenPlus) === `${name}=`;
-    })
-    .map((cookie) => {
-      return decodeURIComponent(cookie.substring(nameLenPlus));
-    });
+	if (typeof document === "undefined") {
+		return null;
+	}
+	const nameLenPlus = name.length + 1;
+	const result = document.cookie
+		.split(";")
+		.map((c) => {
+			return c.trim();
+		})
+		.filter((cookie) => {
+			return cookie.substring(0, nameLenPlus) === `${name}=`;
+		})
+		.map((cookie) => {
+			return decodeURIComponent(cookie.substring(nameLenPlus));
+		});
 
-  if (result.length > 0) {
-    return result[0];
-  }
-  return null;
+	if (result.length > 0) {
+		return result[0];
+	}
+	return null;
 }
 
 /**
  * クッキーを設定する
  */
 export function setCookie(name: string, value: string, days: number = 365) {
-  if (typeof document === 'undefined') {
-    return;
-  }
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  const expires = `; expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax`;
+	if (typeof document === "undefined") {
+		return;
+	}
+	const date = new Date();
+	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+	const expires = `; expires=${date.toUTCString()}`;
+	const cookieString = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax`;
+	/* biome-ignore lint/suspicious/noDocumentCookie: document.cookie is used for compatibility. */
+	document.cookie = cookieString;
 }
 
-const PRESET_NAMES_COOKIE_NAME = 'exr_preset_names';
+const PRESET_NAMES_COOKIE_NAME = "exr_preset_names";
 
 /**
  * プリセット名のリストをクッキーに保存する
  */
 export function savePresetNamesToCookie(names: Record<number, string>) {
-  setCookie(PRESET_NAMES_COOKIE_NAME, JSON.stringify(names));
+	setCookie(PRESET_NAMES_COOKIE_NAME, JSON.stringify(names));
 }
 
 /**
  * プリセット名のリストをクッキーから読み込む
  */
 export function loadPresetNamesFromCookie(): Record<number, string> {
-  const cookieValue = getCookie(PRESET_NAMES_COOKIE_NAME);
-  if (!cookieValue) {
-    return {};
-  }
-  try {
-    const parsed = JSON.parse(cookieValue);
-    const result = PresetNamesSchema.safeParse(parsed);
-    if (result.success) {
-      return result.data;
-    }
-    console.error('Failed to validate preset names from cookie', result.error);
-    return {};
-  } catch (e) {
-    console.error('Failed to parse preset names from cookie', e);
-    return {};
-  }
+	const cookieValue = getCookie(PRESET_NAMES_COOKIE_NAME);
+	if (!cookieValue) {
+		return {};
+	}
+	try {
+		const parsed = JSON.parse(cookieValue);
+		const result = PresetNamesSchema.safeParse(parsed);
+		if (result.success) {
+			return result.data;
+		}
+		console.error("Failed to validate preset names from cookie", result.error);
+		return {};
+	} catch (e) {
+		console.error("Failed to parse preset names from cookie", e);
+		return {};
+	}
 }
