@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getOptionPairType, getBaseOptionName, groupOptionPairs, findClosestIndex } from '../src/logics/optionUtils';
+import { getOptionPairType, getBaseOptionName, groupOptionPairs, findClosestIndex, getOptionLabel } from '../src/logics/optionUtils';
 import type { ExROptionDto } from '../src/type';
 
 describe('optionUtils', () => {
@@ -54,6 +54,26 @@ describe('optionUtils', () => {
     });
   });
 
+  describe('getOptionLabel', () => {
+    it('extracts Japanese label', () => {
+      expect(getOptionLabel('テスト 最小')).toBe('最小');
+      expect(getOptionLabel('テスト 最大')).toBe('最大');
+    });
+
+    it('extracts English label', () => {
+      expect(getOptionLabel('Test Min')).toBe('Min');
+      expect(getOptionLabel('Test Max')).toBe('Max');
+    });
+
+    it('extracts parenthesized label', () => {
+      expect(getOptionLabel('Test (Min)')).toBe('(Min)');
+    });
+
+    it('returns empty string if no suffix', () => {
+      expect(getOptionLabel('テスト')).toBe('');
+    });
+  });
+
   describe('groupOptionPairs', () => {
     const mockOption = (id: number, name: string): ExROptionDto => {
       return {
@@ -80,6 +100,8 @@ describe('optionUtils', () => {
         baseName: 'A',
         min: options[0],
         max: options[1],
+        minLabel: '最小',
+        maxLabel: '最大',
       });
       expect(grouped[1]).toEqual(options[2]);
     });

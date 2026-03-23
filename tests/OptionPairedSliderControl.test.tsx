@@ -20,11 +20,13 @@ describe('OptionPairedSliderControl', () => {
         format={format}
         onMinChange={onMinChange}
         onMaxChange={onMaxChange}
+        minLabel="最小"
+        maxLabel="最大"
       />
     );
 
-    expect(screen.getByText('Min')).toBeInTheDocument();
-    expect(screen.getByText('Max')).toBeInTheDocument();
+    expect(screen.getByText('最小')).toBeInTheDocument();
+    expect(screen.getByText('最大')).toBeInTheDocument();
     expect(screen.getAllByRole('slider')).toHaveLength(2);
     // Values are displayed in inputs
     expect(screen.getByDisplayValue('5')).toBeInTheDocument(); // Min value at index 1
@@ -41,6 +43,8 @@ describe('OptionPairedSliderControl', () => {
         format={format}
         onMinChange={onMinChange}
         onMaxChange={onMaxChange}
+        minLabel="Min"
+        maxLabel="Max"
       />
     );
 
@@ -62,6 +66,8 @@ describe('OptionPairedSliderControl', () => {
         format={format}
         onMinChange={onMinChange}
         onMaxChange={onMaxChange}
+        minLabel="Min"
+        maxLabel="Max"
       />
     );
 

@@ -11,12 +11,21 @@ interface ExRPairedOptionRowProps {
   baseName: string;
   min: ExROptionDto;
   max: ExROptionDto;
+  minLabel: string;
+  maxLabel: string;
 }
 
 /**
  * 最小・最大ペアのオプションを1行で表示するコンポーネント
  */
-export function ExRPairedOptionRow({ categoryId, baseName, min, max }: ExRPairedOptionRowProps) {
+export function ExRPairedOptionRow({
+  categoryId,
+  baseName,
+  min,
+  max,
+  minLabel,
+  maxLabel,
+}: ExRPairedOptionRowProps) {
   const minUniqueId = getUniqueOptionId(categoryId, min.Id);
   const maxUniqueId = getUniqueOptionId(categoryId, max.Id);
 
@@ -58,6 +67,8 @@ export function ExRPairedOptionRow({ categoryId, baseName, min, max }: ExRPaired
           format={min.Format}
           onMinChange={handleMinChange}
           onMaxChange={handleMaxChange}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
         />
       </div>
     </OptionItem>

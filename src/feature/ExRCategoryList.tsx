@@ -60,6 +60,8 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
                 baseName={item.baseName}
                 min={item.min}
                 max={item.max}
+                minLabel={item.minLabel}
+                maxLabel={item.maxLabel}
               />
             );
           }

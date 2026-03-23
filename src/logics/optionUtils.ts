@@ -59,6 +59,21 @@ export function getBaseOptionName(name: string): string {
 }
 
 /**
+ * オプション名からサフィックス（「最小」「最大」など）のみを抽出します。
+ */
+export function getOptionLabel(name: string): string {
+  const allSuffixes = [...MIN_SUFFIXES, ...MAX_SUFFIXES].sort((a, b) => {
+    return b.length - a.length;
+  });
+  for (const suffix of allSuffixes) {
+    if (name.endsWith(suffix)) {
+      return suffix.trim();
+    }
+  }
+  return '';
+}
+
+/**
  * 数値配列の中から、ターゲット値に最も近い値のインデックスを返します。
  */
 export function findClosestIndex(values: number[], target: number): number {
@@ -83,8 +98,28 @@ export function findClosestIndex(values: number[], target: number): number {
  */
 export function groupOptionPairs(
   options: ExROptionDto[]
-): (ExROptionDto | { type: 'pair'; baseName: string; min: ExROptionDto; max: ExROptionDto })[] {
-  const result: (ExROptionDto | { type: 'pair'; baseName: string; min: ExROptionDto; max: ExROptionDto })[] = [];
+): (
+  | ExROptionDto
+  | {
+      type: 'pair';
+      baseName: string;
+      min: ExROptionDto;
+      max: ExROptionDto;
+      minLabel: string;
+      maxLabel: string;
+    }
+)[] {
+  const result: (
+    | ExROptionDto
+    | {
+        type: 'pair';
+        baseName: string;
+        min: ExROptionDto;
+        max: ExROptionDto;
+        minLabel: string;
+        maxLabel: string;
+      }
+  )[] = [];
 
   for (let i = 0; i < options.length; i++) {
     const current = options[i];
@@ -104,6 +139,8 @@ export function groupOptionPairs(
             baseName: currentBase,
             min: current,
             max: next,
+            minLabel: getOptionLabel(current.TranslatedName),
+            maxLabel: getOptionLabel(next.TranslatedName),
           });
           i++; // 次の要素をスキップ
           continue;
