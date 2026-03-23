@@ -17,20 +17,20 @@ import type { ExROptionDto } from '../type';
 export type MinMaxType = 'min' | 'max';
 
 const MIN_PATTERNS = [
-  /[ 　]最小$/,
-  /[ 　]最少$/,
-  /[ 　]最小值$/,
-  /[ 　]最小値$/,
-  /[ 　]Min$/,
-  /[ 　]Minimum$/,
+  /[ \u3000]最小$/,
+  /[ \u3000]最少$/,
+  /[ \u3000]最小值$/,
+  /[ \u3000]最小値$/,
+  /[ \u3000]Min$/,
+  /[ \u3000]Minimum$/,
 ];
 const MAX_PATTERNS = [
-  /[ 　]最大$/,
-  /[ 　]最多$/,
-  /[ 　]最大值$/,
-  /[ 　]最大値$/,
-  /[ 　]Max$/,
-  /[ 　]Maximum$/,
+  /[ \u3000]最大$/,
+  /[ \u3000]最多$/,
+  /[ \u3000]最大值$/,
+  /[ \u3000]最大値$/,
+  /[ \u3000]Max$/,
+  /[ \u3000]Maximum$/,
 ];
 
 /**

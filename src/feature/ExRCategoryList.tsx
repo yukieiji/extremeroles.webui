@@ -41,7 +41,7 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
       }}
     >
       <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-        {groupOptions(filteredOptions).map((group, index) => {
+        {groupOptions(filteredOptions).map((group) => {
           if (group.type === 'min-max') {
             return (
               <ExRMinMaxOptionRow
