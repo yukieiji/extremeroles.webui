@@ -74,6 +74,8 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
   const currentPresetName = presetNames[currentSelection] ?? String(currentPresetValue);
 
   const handlePresetSelect = (index: number) => {
+    // Explicitly blur the input when selecting from dropdown to fix the caret issue
+    inputRef.current?.blur();
     TEMP_updateExROptionSelection(uniqueId, index);
     setPresetDropdownOpen(false);
   };
