@@ -1,7 +1,8 @@
 import { useStore } from '../useStore';
 import { OptionSliderControl } from '../components/parts/OptionSliderControl';
 import { OptionDropdownControl } from '../components/parts/OptionDropdownControl';
-import { getUniqueOptionId } from '../logics/optionUtils';
+import { OptionToggleControl } from '../components/parts/OptionToggleControl';
+import { getUniqueOptionId, isToggleOption } from '../logics/optionUtils';
 import type { ExROptionDto } from '../type';
 
 interface ExROptionControlProps {
@@ -29,6 +30,15 @@ export function ExROptionControl({ categoryId, option }: ExROptionControlProps) 
   const { Type, Values } = option.RangeMeta;
 
   if (Type === 'String') {
+    if (isToggleOption(option)) {
+      return (
+        <OptionToggleControl
+          selection={currentSelection}
+          onChange={handleChange}
+        />
+      );
+    }
+
     return (
       <OptionDropdownControl
         selection={currentSelection}

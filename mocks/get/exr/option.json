@@ -39,7 +39,7 @@
             "Format": "{0}",
             "RangeMeta": {
               "Type": "String",
-              "Values": ["無効", "有効"]
+              "Values": ["<color=#FF0000>無効</color>", "<color=#00FF00>有効</color>"]
             },
             "Childs": [
               {
