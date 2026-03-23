@@ -76,6 +76,10 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
   const handlePresetSelect = (index: number) => {
     TEMP_updateExROptionSelection(uniqueId, index);
     setPresetDropdownOpen(false);
+    // 状態更新後に確実にフォーカスを外すため、次のフレームで実行する
+    requestAnimationFrame(() => {
+      inputRef.current?.blur();
+    });
   };
 
   /**
@@ -105,6 +109,10 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 
   const toggleDropdown = () => {
     setPresetDropdownOpen(!isDropdownOpen);
+    // 状態更新後に確実にフォーカスを外すため、次のフレームで実行する
+    requestAnimationFrame(() => {
+      inputRef.current?.blur();
+    });
   };
 
   return (
