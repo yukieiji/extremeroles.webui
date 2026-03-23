@@ -1,6 +1,7 @@
 import { useStore } from '../useStore';
 import { OptionSliderControl } from '../components/parts/OptionSliderControl';
 import { OptionDropdownControl } from '../components/parts/OptionDropdownControl';
+import { OptionToggleControl } from '../components/parts/OptionToggleControl';
 import { getUniqueOptionId } from '../logics/optionUtils';
 import type { ExROptionDto } from '../type';
 
@@ -29,10 +30,27 @@ export function ExROptionControl({ categoryId, option }: ExROptionControlProps) 
   const { Type, Values } = option.RangeMeta;
 
   if (Type === 'String') {
+    const stringValues = Values as string[];
+    const isToggleType =
+      stringValues.length === 2 &&
+      stringValues.every((val) => {
+        return val.includes('<color=#');
+      });
+
+    if (isToggleType) {
+      return (
+        <OptionToggleControl
+          selection={currentSelection}
+          values={stringValues}
+          onChange={handleChange}
+        />
+      );
+    }
+
     return (
       <OptionDropdownControl
         selection={currentSelection}
-        values={Values as string[]}
+        values={stringValues}
         onChange={handleChange}
       />
     );

@@ -15,7 +15,6 @@ test.beforeEach(async ({ page }) => {
 
 test('Options interaction behavior', async ({ page }) => {
   const sidebar = page.getByLabel('オプションサイドバー');
-  await expect(sidebar.getByRole('navigation')).toBeVisible({ timeout: 20000 });
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 
   // ヘッダーのプリセットセレクターを確認
@@ -40,10 +39,13 @@ test('Options interaction behavior', async ({ page }) => {
   const shuffleOption = page.getByText('強力なシャッフルを使用する');
   await expect(shuffleOption).toBeVisible();
 
-  const dropdown = page.getByRole('combobox');
-  await expect(dropdown).toHaveValue('0'); // オフ
+  // トグルスイッチに変更されたので、トグルを操作する
+  const toggle = page.getByTestId('option-toggle').first();
+  await expect(toggle).toHaveAttribute('aria-checked', 'false');
+  await expect(page.getByText('オフ')).toBeVisible();
 
-  // ドロップダウンを変更
-  await dropdown.selectOption({ index: 1 });
-  await expect(dropdown).toHaveValue('1');
+  // トグルを切り替え
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-checked', 'true');
+  await expect(page.getByText('オン', { exact: true })).toBeVisible();
 });

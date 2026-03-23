@@ -141,10 +141,10 @@ export interface AuOptionDto {
   TranslatedFormat: string;
   Value: number | boolean | AuRoleOption;
   Info: AuOptionInfo;
-  Range: (number | string)[] | null;
+  Range?: (number | string)[] | null;
 }
 
-export const AuOptionDtoSchema = z.object({
+export const AuOptionDtoSchema: z.ZodType<AuOptionDto> = z.object({
   TranslatedTitle: z.string(),
   TranslatedFormat: z.string(),
   Value: z.union([z.number(), z.boolean(), AuRoleOptionSchema]),
