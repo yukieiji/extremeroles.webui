@@ -47,7 +47,10 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
   }
 
   return (
-    <div className="border border-gray-700 rounded-lg overflow-hidden mb-2">
+    <div
+      className="border border-gray-700 rounded-lg overflow-hidden mb-2"
+      data-testid={`exr-category-${category.Id}`}
+    >
       <div className="flex items-center bg-gray-800 hover:bg-gray-700 transition-colors">
         <button
           type="button"
@@ -77,18 +80,22 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 
         <div className="flex items-center px-4 gap-4">
           {spawnRateOption && (
-            <ExRHeaderOptionControl
-              categoryId={category.Id}
-              option={spawnRateOption}
-              label="レート"
-            />
+            <div data-testid="spawn-rate-control">
+              <ExRHeaderOptionControl
+                categoryId={category.Id}
+                option={spawnRateOption}
+                label="レート"
+              />
+            </div>
           )}
           {spawnRateSelection >= 1 && spawnCountOption && (
-            <ExRHeaderOptionControl
-              categoryId={category.Id}
-              option={spawnCountOption}
-              label="数"
-            />
+            <div data-testid="spawn-count-control">
+              <ExRHeaderOptionControl
+                categoryId={category.Id}
+                option={spawnCountOption}
+                label="数"
+              />
+            </div>
           )}
         </div>
       </div>

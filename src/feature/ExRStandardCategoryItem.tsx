@@ -29,14 +29,16 @@ export function ExRStandardCategoryItem({ category }: ExRStandardCategoryItemPro
   }
 
   return (
-    <Accordion
-      title={<ColoredText text={category.Name} />}
-      isOpen={isOpen}
-      onToggle={() => {
-        toggleExRCategory(category.Id);
-      }}
-    >
-      <ExRCategoryOptionList categoryId={category.Id} options={filteredOptions} />
-    </Accordion>
+    <div data-testid={`exr-category-${category.Id}`}>
+      <Accordion
+        title={<ColoredText text={category.Name} />}
+        isOpen={isOpen}
+        onToggle={() => {
+          toggleExRCategory(category.Id);
+        }}
+      >
+        <ExRCategoryOptionList categoryId={category.Id} options={filteredOptions} />
+      </Accordion>
+    </div>
   );
 }
