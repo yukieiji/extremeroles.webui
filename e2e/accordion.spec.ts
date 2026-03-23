@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test('ExR Option Accordion behavior', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
+  // すべてのテストで API の遅延を設定可能にする
   await page.addInitScript(() => {
     // @ts-expect-error - window has no __API_DELAY__ property
     window.__API_DELAY__ = 100;
@@ -10,7 +11,9 @@ test('ExR Option Accordion behavior', async ({ page }) => {
 
   // ローディング画面が消えるのを待つ
   await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 30000 });
+});
 
+test('ExR Option Accordion behavior', async ({ page }) => {
   const sidebar = page.getByLabel('オプションサイドバー');
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 

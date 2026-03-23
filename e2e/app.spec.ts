@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test('has sidebar and json viewer', async ({ page }) => {
-  // デフォルトで API 遅延がある可能性があるため、明示的に設定
+test.beforeEach(async ({ page }) => {
+  // すべてのテストで API の遅延を設定可能にする
   await page.addInitScript(() => {
     // @ts-expect-error - window has no __API_DELAY__ property
     window.__API_DELAY__ = 100;
@@ -11,7 +11,9 @@ test('has sidebar and json viewer', async ({ page }) => {
 
   // ローディング画面が消えるのを待つ
   await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 30000 });
+});
 
+test('has sidebar and json viewer', async ({ page }) => {
   // サイドバーが表示されていることを確認
   const sidebar = page.getByLabel('オプションサイドバー');
   await expect(sidebar).toBeVisible({ timeout: 15000 });
