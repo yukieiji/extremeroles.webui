@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import { useStore } from '../useStore';
 import { Accordion } from '../components/parts/Accordion';
 import { ColoredText } from '../components/parts/ColoredText';
