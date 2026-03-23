@@ -10,7 +10,7 @@
           {
             "Id": 101,
             "IsActive": true,
-            "TransedName": "移動速度",
+            "TranslatedName": "移動速度",
             "Selection": 1,
             "Format": "{0}x",
             "RangeMeta": {
@@ -34,18 +34,18 @@
           {
             "Id": 201,
             "IsActive": true,
-            "TransedName": "シェリフ",
+            "TranslatedName": "シェリフ",
             "Selection": 0,
             "Format": "{0}",
             "RangeMeta": {
               "Type": "String",
-              "Values": ["無効", "有効"]
+              "Values": ["<color=#808080>OFF</color>", "<color=#00FF00>ON</color>"]
             },
             "Childs": [
               {
                 "Id": 202,
                 "IsActive": false,
-                "TransedName": "キルクールダウン",
+                "TranslatedName": "キルクールダウン",
                 "Selection": 2,
                 "Format": "{0}s",
                 "RangeMeta": {
