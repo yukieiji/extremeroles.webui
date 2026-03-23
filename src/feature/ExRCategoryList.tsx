@@ -6,6 +6,11 @@ import { ExRPairedOptionRow } from './ExRPairedOptionRow';
 import { isPresetOption, groupOptionPairs } from '../logics/optionUtils';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
+/**
+ * グループ化表示（最小・最大ペア）を有効にするカテゴリIDのリスト
+ */
+const GROUPED_CATEGORY_IDS = [5, 6];
+
 interface CategoryAccordionProps {
   category: ExRCategoryDto;
 }
@@ -32,7 +37,10 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     return null;
   }
 
-  const groupedItems = groupOptionPairs(category.Id, filteredOptions);
+  const shouldGroup = GROUPED_CATEGORY_IDS.includes(category.Id);
+  const groupedItems = shouldGroup
+    ? groupOptionPairs(filteredOptions)
+    : filteredOptions;
 
   return (
     <Accordion

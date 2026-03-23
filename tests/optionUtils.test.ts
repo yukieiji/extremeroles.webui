@@ -47,13 +47,13 @@ describe('optionUtils', () => {
       };
     };
 
-    it('should group consecutive min/max pairs in category 5', () => {
+    it('should group consecutive min/max pairs', () => {
       const options = [
         mockOption(1, 'A 最小'),
         mockOption(2, 'A 最大'),
         mockOption(3, 'B'),
       ];
-      const grouped = groupOptionPairs(5, options);
+      const grouped = groupOptionPairs(options);
       expect(grouped).toHaveLength(2);
       expect(grouped[0]).toEqual({
         type: 'pair',
@@ -70,17 +70,8 @@ describe('optionUtils', () => {
         mockOption(3, 'B'),
         mockOption(2, 'A 最大'),
       ];
-      const grouped = groupOptionPairs(5, options);
+      const grouped = groupOptionPairs(options);
       expect(grouped).toHaveLength(3);
-    });
-
-    it('should not group in other categories', () => {
-      const options = [
-        mockOption(1, 'A 最小'),
-        mockOption(2, 'A 最大'),
-      ];
-      const grouped = groupOptionPairs(1, options);
-      expect(grouped).toHaveLength(2);
     });
   });
 });

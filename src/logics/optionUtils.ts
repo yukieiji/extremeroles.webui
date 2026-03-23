@@ -62,14 +62,8 @@ export function getBaseOptionName(name: string): string {
  * オプションリストを走査し、連続する最小・最大ペアをまとめます。
  */
 export function groupOptionPairs(
-  categoryId: number,
   options: ExROptionDto[]
 ): (ExROptionDto | { type: 'pair'; baseName: string; min: ExROptionDto; max: ExROptionDto })[] {
-  // Category 5, 6 のみペアリングを行う
-  if (categoryId !== 5 && categoryId !== 6) {
-    return options;
-  }
-
   const result: (ExROptionDto | { type: 'pair'; baseName: string; min: ExROptionDto; max: ExROptionDto })[] = [];
 
   for (let i = 0; i < options.length; i++) {
