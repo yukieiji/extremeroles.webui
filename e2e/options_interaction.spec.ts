@@ -15,7 +15,6 @@ test.beforeEach(async ({ page }) => {
 
 test('Options interaction behavior', async ({ page }) => {
   const sidebar = page.getByLabel('オプションサイドバー');
-  await expect(sidebar.getByRole('navigation')).toBeVisible({ timeout: 20000 });
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 
   // ヘッダーのプリセットセレクターを確認

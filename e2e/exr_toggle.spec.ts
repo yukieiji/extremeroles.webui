@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
-    // @ts-expect-error
+    // @ts-expect-error - window has no __API_DELAY__ property
     window.__API_DELAY__ = 100;
   });
 
