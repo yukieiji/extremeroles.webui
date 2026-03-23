@@ -2,7 +2,8 @@ import { useStore } from '../useStore';
 import { Accordion } from '../components/parts/Accordion';
 import { ColoredText } from '../components/parts/ColoredText';
 import { ExROptionItem } from './ExROptionItem';
-import { isPresetOption } from '../logics/optionUtils';
+import { ExRPairedOptionRow } from './ExRPairedOptionRow';
+import { isPresetOption, groupOptionPairs } from '../logics/optionUtils';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
 interface CategoryAccordionProps {
@@ -31,6 +32,8 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
     return null;
   }
 
+  const groupedItems = groupOptionPairs(category.Id, filteredOptions);
+
   return (
     <Accordion
       title={<ColoredText text={category.Name} />}
@@ -40,9 +43,20 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
       }}
     >
       <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-        {filteredOptions.map((option) => {
+        {groupedItems.map((item, idx) => {
+          if ('type' in item && item.type === 'pair') {
+            return (
+              <ExRPairedOptionRow
+                key={`pair-${idx}`}
+                categoryId={category.Id}
+                baseName={item.baseName}
+                min={item.min}
+                max={item.max}
+              />
+            );
+          }
           return (
-            <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
+            <ExROptionItem key={item.Id} categoryId={category.Id} option={item} />
           );
         })}
       </div>
