@@ -18,6 +18,7 @@ export interface OptionViewerSlice {
   toggleExRCategory: (categoryId: number) => void;
   toggleExROption: (uniqueOptionId: string) => void;
   TEMP_updateExROptionSelection: (uniqueOptionId: string, selection: number) => void;
+  TEMP_updateMultipleExROptionSelections: (updates: Record<string, number>) => void;
   updatePresetName: (presetIndex: number, name: string) => void;
   setPresetDropdownOpen: (isOpen: boolean) => void;
   resetViewer: () => void;
@@ -57,6 +58,16 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (set) =>
           openedExRCategoryIds: {
             ...state.openedExRCategoryIds,
             [categoryId]: !state.openedExRCategoryIds[categoryId],
+          },
+        };
+      });
+    },
+    TEMP_updateMultipleExROptionSelections: (updates: Record<string, number>) => {
+      set((state) => {
+        return {
+          effectiveSelections: {
+            ...state.effectiveSelections,
+            ...updates,
           },
         };
       });

@@ -2,7 +2,8 @@ import { useStore } from '../useStore';
 import { Accordion } from '../components/parts/Accordion';
 import { ColoredText } from '../components/parts/ColoredText';
 import { ExROptionItem } from './ExROptionItem';
-import { isPresetOption } from '../logics/optionUtils';
+import { ExRMinMaxOptionRow } from './ExRMinMaxOptionRow';
+import { isPresetOption, groupOptions } from '../logics/optionUtils';
 import type { ExRCategoryDto, ExRTabDto } from '../type';
 
 interface CategoryAccordionProps {
@@ -40,9 +41,22 @@ function CategoryAccordion({ category }: CategoryAccordionProps) {
       }}
     >
       <div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-        {filteredOptions.map((option) => {
+        {groupOptions(filteredOptions).map((group, index) => {
+          if (group.type === 'min-max') {
+            return (
+              <ExRMinMaxOptionRow
+                key={`${group.minOption.Id}-${group.maxOption.Id}`}
+                categoryId={category.Id}
+                baseName={group.baseName}
+                minOption={group.minOption}
+                minSuffix={group.minSuffix}
+                maxOption={group.maxOption}
+                maxSuffix={group.maxSuffix}
+              />
+            );
+          }
           return (
-            <ExROptionItem key={option.Id} categoryId={category.Id} option={option} />
+            <ExROptionItem key={group.option.Id} categoryId={category.Id} option={group.option} />
           );
         })}
       </div>
