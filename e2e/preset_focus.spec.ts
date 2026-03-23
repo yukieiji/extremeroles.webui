@@ -35,7 +35,8 @@ test('Preset input should lose focus when interacting with dropdown', async ({ p
   const preset1Button = page.getByRole('button', { name: '1', exact: true });
   await preset1Button.click();
 
-  // 項目選択後もフォーカスが外れていることを期待
+  // 項目選択後、少し待機してフォーカスを確認
+  await page.waitForTimeout(500);
   await expect(presetInput).not.toBeFocused();
 
   // 4. 再び開いて別の項目を選択
@@ -43,8 +44,8 @@ test('Preset input should lose focus when interacting with dropdown', async ({ p
   const preset2Button = page.getByRole('button', { name: '2', exact: true });
   await preset2Button.click();
 
-  // 別の項目選択後もフォーカスが外れていることを期待
-  // 新しい入力要素がマウントされるため、再度取得する
+  // 別の項目選択後
+  await page.waitForTimeout(500);
   const newPresetInput = page.getByPlaceholder('プリセット名を入力...');
   await expect(newPresetInput).toHaveValue('2');
   await expect(newPresetInput).not.toBeFocused();
