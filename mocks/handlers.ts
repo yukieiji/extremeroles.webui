@@ -19,8 +19,8 @@ let validatedExRMockData: ExRTabDto[];
 let validatedAuMockData: AuOptionCategoryDto[];
 
 try {
-  validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData) as ExRTabDto[];
-  validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData) as AuOptionCategoryDto[];
+  validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData);
+  validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData);
 } catch (error) {
   console.error('Mock data validation failed:', error);
   throw error;
