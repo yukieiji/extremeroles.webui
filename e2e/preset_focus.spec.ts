@@ -16,38 +16,36 @@ test('Preset input should lose focus when interacting with dropdown', async ({ p
   const presetInput = page.getByPlaceholder('プリセット名を入力...');
   await expect(presetInput).toBeVisible();
 
-  const checkFocus = async (label: string) => {
-    const isInputFocused = await page.evaluate(() => document.activeElement?.tagName === 'INPUT');
-    console.log(`Is some input focused [${label}]:`, isInputFocused);
-    return isInputFocused;
-  };
-
   // 1. フォーカスを当てる
   await presetInput.click();
   await expect(presetInput).toBeFocused();
 
   // 2. ドロップダウンボタンをクリックして開く
   const selectButton = page.getByRole('button', { name: 'プリセットを選択' });
-  await selectButton.dispatchEvent('click');
+  await selectButton.click();
+
+  // ドロップダウンが開いていることを確認
   await expect(page.getByRole('button', { name: '2', exact: true })).toBeVisible();
 
-  const focusedAfterOpen = await checkFocus('after opening');
+  // フォーカスが外れていることを期待
+  await expect(presetInput).not.toBeFocused();
 
   // 3. 同じ項目を選択する
   // 初期状態は 1 (index 0) なので、ボタン "1" をクリック
   const preset1Button = page.getByRole('button', { name: '1', exact: true });
-  await preset1Button.dispatchEvent('click');
+  await preset1Button.click();
 
-  const focusedAfterSelectSame = await checkFocus('after selecting same');
+  // 項目選択後もフォーカスが外れていることを期待
+  await expect(presetInput).not.toBeFocused();
 
   // 4. 再び開いて別の項目を選択
-  await selectButton.dispatchEvent('click');
+  await selectButton.click();
   const preset2Button = page.getByRole('button', { name: '2', exact: true });
-  await preset2Button.dispatchEvent('click');
+  await preset2Button.click();
 
-  const focusedAfterSelectDifferent = await checkFocus('after selecting different');
-
-  expect(focusedAfterOpen).toBe(false);
-  expect(focusedAfterSelectSame).toBe(false);
-  expect(focusedAfterSelectDifferent).toBe(false);
+  // 別の項目選択後もフォーカスが外れていることを期待
+  // 新しい入力要素がマウントされるため、再度取得する
+  const newPresetInput = page.getByPlaceholder('プリセット名を入力...');
+  await expect(newPresetInput).toHaveValue('2');
+  await expect(newPresetInput).not.toBeFocused();
 });
