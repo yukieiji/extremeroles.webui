@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getOptionPairType, getBaseOptionName, groupOptionPairs, findClosestIndex, getOptionLabel, isNumericRange } from '../src/logics/optionUtils';
+import { getOptionPairType, getBaseOptionName, groupOptionPairs, findClosestIndex, getOptionLabel } from '../src/logics/optionUtils';
 import type { ExROptionDto } from '../src/type';
 
 describe('optionUtils', () => {
@@ -74,19 +74,6 @@ describe('optionUtils', () => {
     });
   });
 
-  describe('isNumericRange', () => {
-    it('should return true for number array', () => {
-      expect(isNumericRange([1, 2, 3])).toBe(true);
-    });
-
-    it('should return false for string array', () => {
-      expect(isNumericRange(['a', 'b'])).toBe(false);
-    });
-
-    it('should return false for empty array', () => {
-      expect(isNumericRange([])).toBe(false);
-    });
-  });
 
   describe('groupOptionPairs', () => {
     const mockOption = (id: number, name: string): ExROptionDto => {
