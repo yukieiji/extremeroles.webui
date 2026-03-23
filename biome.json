@@ -3,6 +3,9 @@
 	"files": {
 		"includes": ["src/**", "tests/**", "e2e/**"]
 	},
+	"formatter": {
+		"enabled": true
+	},
 	"linter": {
 		"enabled": true,
 		"rules": {
