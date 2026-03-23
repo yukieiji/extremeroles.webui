@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test('Preset naming and persistence behavior', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   // タイムアウトを延長
   test.setTimeout(60000);
 
-  // すべてのテストで API の遅延を設定可能にする（CI 向けに最短に）
+  // すべてのテストで API の遅延を設定可能にする
   await page.addInitScript(() => {
     // @ts-expect-error - window has no __API_DELAY__ property
     window.__API_DELAY__ = 100;
@@ -14,7 +14,9 @@ test('Preset naming and persistence behavior', async ({ page }) => {
 
   // ローディング画面が消えるのを待つ
   await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 45000 });
+});
 
+test('Preset naming and persistence behavior', async ({ page }) => {
   const sidebar = page.getByLabel('オプションサイドバー');
   await expect(sidebar).toBeVisible({ timeout: 30000 });
 

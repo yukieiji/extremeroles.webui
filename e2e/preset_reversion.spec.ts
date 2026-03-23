@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Preset name reversion to default when cleared', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   test.setTimeout(60000);
 
   // すべてのテストで API の遅延を設定可能にする
@@ -13,7 +13,9 @@ test('Preset name reversion to default when cleared', async ({ page }) => {
 
   // ローディング画面が消えるのを待つ
   await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 45000 });
+});
 
+test('Preset name reversion to default when cleared', async ({ page }) => {
   const sidebar = page.getByLabel('オプションサイドバー');
   await expect(sidebar).toBeVisible({ timeout: 30000 });
 

@@ -1,10 +1,21 @@
 import { test, expect } from '@playwright/test';
 
-test('Options interaction behavior', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
+  // すべてのテストで API の遅延を設定可能にする
+  await page.addInitScript(() => {
+    // @ts-expect-error - window has no __API_DELAY__ property
+    window.__API_DELAY__ = 100;
+  });
+
   await page.goto('/');
 
+  // ローディング画面が消えるのを待つ
+  await expect(page.getByText('Loading data...')).not.toBeVisible({ timeout: 30000 });
+});
+
+test('Options interaction behavior', async ({ page }) => {
   const sidebar = page.getByLabel('オプションサイドバー');
-  await expect(sidebar).toBeVisible({ timeout: 10000 });
+  await expect(sidebar.getByRole('navigation')).toBeVisible({ timeout: 20000 });
   await sidebar.getByRole('button', { name: 'ExR Options' }).click();
 
   // ヘッダーのプリセットセレクターを確認
