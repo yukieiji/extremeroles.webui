@@ -59,6 +59,26 @@ export function getBaseOptionName(name: string): string {
 }
 
 /**
+ * 数値配列の中から、ターゲット値に最も近い値のインデックスを返します。
+ */
+export function findClosestIndex(values: number[], target: number): number {
+  if (values.length === 0) {
+    return 0;
+  }
+  let closestIdx = 0;
+  let minDiff = Math.abs(values[0] - target);
+
+  for (let i = 1; i < values.length; i++) {
+    const diff = Math.abs(values[i] - target);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closestIdx = i;
+    }
+  }
+  return closestIdx;
+}
+
+/**
  * オプションリストを走査し、連続する最小・最大ペアをまとめます。
  */
 export function groupOptionPairs(

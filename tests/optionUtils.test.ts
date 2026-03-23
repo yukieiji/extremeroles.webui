@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getOptionPairType, getBaseOptionName, groupOptionPairs } from '../src/logics/optionUtils';
+import { getOptionPairType, getBaseOptionName, groupOptionPairs, findClosestIndex } from '../src/logics/optionUtils';
 import type { ExROptionDto } from '../src/type';
 
 describe('optionUtils', () => {
@@ -22,6 +22,26 @@ describe('optionUtils', () => {
     it('should return none for other names', () => {
       expect(getOptionPairType('テスト')).toBe('none');
       expect(getOptionPairType('最小テスト')).toBe('none');
+    });
+  });
+
+  describe('findClosestIndex', () => {
+    it('should find exact match', () => {
+      expect(findClosestIndex([0, 10, 20], 10)).toBe(1);
+    });
+
+    it('should find closest value', () => {
+      expect(findClosestIndex([0, 10, 20], 12)).toBe(1);
+      expect(findClosestIndex([0, 10, 20], 18)).toBe(2);
+    });
+
+    it('should handle boundary values', () => {
+      expect(findClosestIndex([0, 10, 20], -5)).toBe(0);
+      expect(findClosestIndex([0, 10, 20], 25)).toBe(2);
+    });
+
+    it('should return 0 for empty array', () => {
+      expect(findClosestIndex([], 10)).toBe(0);
     });
   });
 

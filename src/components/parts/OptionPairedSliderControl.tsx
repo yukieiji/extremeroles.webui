@@ -1,3 +1,5 @@
+import { findClosestIndex } from '../../logics/optionUtils';
+
 interface OptionSingleSliderProps {
   label: string;
   selection: number;
@@ -27,18 +29,7 @@ function OptionSingleSlider({
       return;
     }
 
-    let closestIdx = 0;
-    let minDiff = Math.abs(values[0] - val);
-
-    for (let i = 1; i < values.length; i++) {
-      const diff = Math.abs(values[i] - val);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestIdx = i;
-      }
-    }
-
-    onChange(closestIdx);
+    onChange(findClosestIndex(values, val));
   };
 
   const formattedValue = format.includes('{0}')
@@ -106,16 +97,7 @@ export function OptionPairedSliderControl({
 
     if (newMinVal > currentMaxVal) {
       // 最小が最大を超えた場合、最大を同じ値（またはそれに近い値）に調整
-      let closestMaxIdx = 0;
-      let minDiff = Math.abs(maxValues[0] - newMinVal);
-      for (let i = 1; i < maxValues.length; i++) {
-        const diff = Math.abs(maxValues[i] - newMinVal);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closestMaxIdx = i;
-        }
-      }
-      onMaxChange(closestMaxIdx);
+      onMaxChange(findClosestIndex(maxValues, newMinVal));
     }
     onMinChange(newMinIdx);
   };
@@ -126,16 +108,7 @@ export function OptionPairedSliderControl({
 
     if (newMaxVal < currentMinVal) {
       // 最大が最小を下回った場合、最小を同じ値（またはそれに近い値）に調整
-      let closestMinIdx = 0;
-      let minDiff = Math.abs(minValues[0] - newMaxVal);
-      for (let i = 1; i < minValues.length; i++) {
-        const diff = Math.abs(minValues[i] - newMaxVal);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closestMinIdx = i;
-        }
-      }
-      onMinChange(closestMinIdx);
+      onMinChange(findClosestIndex(minValues, newMaxVal));
     }
     onMaxChange(newMaxIdx);
   };

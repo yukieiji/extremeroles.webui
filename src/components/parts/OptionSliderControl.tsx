@@ -1,3 +1,5 @@
+import { findClosestIndex } from '../../logics/optionUtils';
+
 interface OptionSliderControlProps {
   selection: number;
   values: number[];
@@ -28,19 +30,7 @@ export function OptionSliderControl({
       return;
     }
 
-    // 最も近い値を探す
-    let closestIdx = 0;
-    let minDiff = Math.abs(values[0] - val);
-
-    for (let i = 1; i < values.length; i++) {
-      const diff = Math.abs(values[i] - val);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestIdx = i;
-      }
-    }
-
-    onChange(closestIdx);
+    onChange(findClosestIndex(values, val));
   };
 
   const formattedValue = format.includes('{0}')
