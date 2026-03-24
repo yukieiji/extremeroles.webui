@@ -13,7 +13,13 @@ if (import.meta.env.DEV) {
  * 開発環境の場合にMSWを有効化
  */
 async function enableMocking() {
-	if (!import.meta.env.DEV) {
+	// VITE_USE_MSW が明示的に "false" の場合は無効化
+	if (import.meta.env.VITE_USE_MSW === "false") {
+		return;
+	}
+
+	// 開発モード以外、かつ VITE_USE_MSW が "true" でない場合は無効化
+	if (!import.meta.env.DEV && import.meta.env.VITE_USE_MSW !== "true") {
 		return;
 	}
 

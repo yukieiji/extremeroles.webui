@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:mock": "VITE_USE_MSW=true vite",
+    "dev:no-mock": "VITE_USE_MSW=false vite",
     "build": "tsc -b && vite build",
     "lint": "biome lint",
     "format": "biome format",
