@@ -13,12 +13,14 @@ interface ExRRoleCategoryItemProps {
  * 役職タブで使用される、スポーン設定をヘッダーに持つカテゴリ表示コンポーネント
  */
 export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
-	const isOpen = useStore((state) => {
-		return state.openedExRCategoryIds[category.Id] ?? false;
+	const isOpendCategory = useStore((state) => {
+		return state.openedExRCategoryIds[category.Id];
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
+
+	const isOpen = isOpendCategory ?? false;
 
 	const spawnRateOption = category.Options.find((opt) => {
 		return opt.Id === 50;

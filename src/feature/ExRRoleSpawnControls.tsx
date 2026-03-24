@@ -20,23 +20,22 @@ export function ExRRoleSpawnControls({
 	const uniqueRateId = getUniqueOptionId(categoryId, 50);
 	const uniqueCountId = getUniqueOptionId(categoryId, 51);
 
-	const spawnRateSelection = useStore((state) => {
-		return (
-			state.effectiveSelections[uniqueRateId] ?? spawnRateOption.Selection ?? 0
-		);
+	const effectiveSpawnRateSelection = useStore((state) => {
+		return state.effectiveSelections[uniqueRateId];
 	});
 
-	const spawnCountSelection = useStore((state) => {
-		return (
-			state.effectiveSelections[uniqueCountId] ??
-			spawnCountOption.Selection ??
-			0
-		);
+	const effectiveSpawnCountSelection = useStore((state) => {
+		return state.effectiveSelections[uniqueCountId];
 	});
 
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;
 	});
+
+	const spawnRateSelection =
+		effectiveSpawnRateSelection ?? spawnRateOption.Selection;
+	const spawnCountSelection =
+		effectiveSpawnCountSelection ?? spawnCountOption.Selection;
 
 	const rateValues = spawnRateOption.RangeMeta.Values as number[];
 	const originalCountValues = spawnCountOption.RangeMeta.Values as number[];

@@ -21,7 +21,7 @@ export function ExROptionRecursiveItem({
 }: ExROptionRecursiveItemProps) {
 	const uniqueId = getUniqueOptionId(categoryId, option.Id);
 	const isOpen = useStore((state) => {
-		return state.openedExROptionIds[uniqueId] ?? false;
+		return state.openedExROptionIds[uniqueId];
 	});
 	const toggleExROption = useStore((state) => {
 		return state.toggleExROption;
@@ -45,7 +45,7 @@ export function ExROptionRecursiveItem({
 					isLeaf={false}
 				/>
 			}
-			isOpen={isOpen}
+			isOpen={isOpen ?? false}
 			onToggle={handleToggle}
 			showArrow={hasActiveChildren}
 			className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
