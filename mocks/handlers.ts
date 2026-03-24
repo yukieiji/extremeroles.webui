@@ -104,8 +104,10 @@ export const handlers = [
                 return foundOption;
             }
             if (opt.Childs.length > 0) {
+                const oldFound = foundOption;
                 const newChilds = updateRecursive(opt.Childs);
-                if (foundOption) {
+                // 子要素の探索で新しく見つかった場合のみ、オブジェクトを再生成
+                if (foundOption && foundOption !== oldFound) {
                     return { ...opt, Childs: newChilds };
                 }
             }
