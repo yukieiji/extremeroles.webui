@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionPairedSliderControl } from "../src/components/parts/OptionPairedSliderControl";
+import { OptionPairedSliderControl } from "../src/components/blocks/OptionPairedSliderControl";
 
 describe("OptionPairedSliderControl", () => {
 	const minValues = [0, 5, 10, 15, 20];
