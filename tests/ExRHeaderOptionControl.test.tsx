@@ -67,7 +67,10 @@ describe("ExRHeaderOptionControl", () => {
 		const inputs = screen.getAllByDisplayValue("0");
 		const textInput = inputs.find(
 			(i) => (i as HTMLInputElement).type === "text",
-		)!;
+		);
+		if (!textInput) {
+			throw new Error("Text input not found");
+		}
 
 		fireEvent.change(textInput, { target: { value: "100" } });
 
@@ -78,13 +81,18 @@ describe("ExRHeaderOptionControl", () => {
 	it("prevents click propagation to parent", () => {
 		const parentClick = vi.fn();
 		render(
-			<div onClick={parentClick}>
+			<button
+				type="button"
+				onClick={parentClick}
+				onKeyDown={parentClick}
+				aria-label="parent"
+			>
 				<ExRHeaderOptionControl
 					categoryId={1}
 					option={mockOption}
 					label="Rate"
 				/>
-			</div>,
+			</button>,
 		);
 
 		const label = screen.getByText("Rate");

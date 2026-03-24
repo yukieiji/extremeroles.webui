@@ -44,9 +44,14 @@ describe("CompactSlider", () => {
 	it("stops event propagation on click", () => {
 		const parentClick = vi.fn();
 		render(
-			<div onClick={parentClick}>
+			<button
+				type="button"
+				onClick={parentClick}
+				onKeyDown={parentClick}
+				aria-label="parent"
+			>
 				<CompactSlider {...defaultProps} />
-			</div>,
+			</button>,
 		);
 
 		fireEvent.click(screen.getByText("Test Label"));
@@ -56,9 +61,9 @@ describe("CompactSlider", () => {
 	it("stops event propagation on slider change", () => {
 		const parentChange = vi.fn();
 		render(
-			<div onChange={parentChange}>
+			<form onChange={parentChange}>
 				<CompactSlider {...defaultProps} />
-			</div>,
+			</form>,
 		);
 
 		fireEvent.change(screen.getByRole("slider"), { target: { value: "0" } });
