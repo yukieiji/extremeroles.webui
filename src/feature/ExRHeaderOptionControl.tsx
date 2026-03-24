@@ -6,6 +6,9 @@ interface ExRHeaderOptionControlProps {
   categoryId: number;
   option: ExROptionDto;
   label: string;
+  customValues?: number[];
+  customSelection?: number;
+  onSelectionChange?: (selection: number) => void;
 }
 
 /**
@@ -15,23 +18,33 @@ export function ExRHeaderOptionControl({
   categoryId,
   option,
   label,
+  customValues,
+  customSelection,
+  onSelectionChange,
 }: ExRHeaderOptionControlProps) {
   const uniqueId = getUniqueOptionId(categoryId, option.Id);
   const effectiveSelection = useStore((state) => {
     return state.effectiveSelections[uniqueId];
   });
-  const currentSelection = effectiveSelection ?? option.Selection;
   const TEMP_updateExROptionSelection = useStore((state) => {
     return state.TEMP_updateExROptionSelection;
   });
 
-  const { Values } = option.RangeMeta;
-  const values = Values as number[];
+  const values = customValues ?? (option.RangeMeta.Values as number[]);
+  const currentSelection = customSelection ?? effectiveSelection ?? option.Selection;
   const currentValue = values[currentSelection] ?? values[0] ?? 0;
+
+  const handleSelectionUpdate = (newSelection: number) => {
+    if (onSelectionChange) {
+      onSelectionChange(newSelection);
+    } else {
+      TEMP_updateExROptionSelection(uniqueId, newSelection);
+    }
+  };
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
-    TEMP_updateExROptionSelection(uniqueId, parseInt(e.target.value, 10));
+    handleSelectionUpdate(parseInt(e.target.value, 10));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +53,7 @@ export function ExRHeaderOptionControl({
     if (isNaN(val)) {
       return;
     }
-    TEMP_updateExROptionSelection(uniqueId, findClosestIndex(values, val));
+    handleSelectionUpdate(findClosestIndex(values, val));
   };
 
   const handleClick = (e: React.MouseEvent) => {
