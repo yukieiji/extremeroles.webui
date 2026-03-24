@@ -1,5 +1,5 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
-import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
+import { findClosestIndex } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
@@ -18,23 +18,19 @@ export function ExRHeaderOptionControl({
 	option,
 	label,
 }: ExRHeaderOptionControlProps) {
-	const uniqueId = getUniqueOptionId(categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const currentSelection = option.Selection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const values = option.RangeMeta.Values as number[];
 
 	const handleSelectionChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(categoryId, option.Id, newSelection);
 	};
 
 	const handleInputChange = (val: number) => {
-		TEMP_updateExROptionSelection(uniqueId, findClosestIndex(values, val));
+		updateExROptionSelection(categoryId, option.Id, findClosestIndex(values, val));
 	};
 
 	return (

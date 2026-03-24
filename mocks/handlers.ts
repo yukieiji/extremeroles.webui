@@ -6,7 +6,7 @@ import {
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema
 } from '../src/type';
-import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto } from '../src/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto } from '../src/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
@@ -19,8 +19,8 @@ let validatedExRMockData: ExRTabDto[];
 let validatedAuMockData: AuOptionCategoryDto[];
 
 try {
-  validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData);
-  validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData);
+  validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData) as ExRTabDto[];
+  validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData) as AuOptionCategoryDto[];
 } catch (error) {
   console.error('Mock data validation failed:', error);
   throw error;
@@ -74,17 +74,72 @@ export const handlers = [
       return new HttpResponse(null, { status: 400 });
     }
 
-    const { CategoryId, OptionId } = result.data;
+    const { TabId, CategoryId, OptionId, Selection } = result.data;
 
     // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
       return new HttpResponse(null, { status: 202 });
     }
 
+    // データの更新
+    const tab = validatedExRMockData.find((t) => t.Id === TabId);
+    if (!tab) {
+        return new HttpResponse(null, { status: 404 });
+    }
+
+    const category = tab.Categories.find((c) => c.Id === CategoryId);
+    if (!category) {
+        return new HttpResponse(null, { status: 404 });
+    }
+
+    // 不変性を保ちながらデータを更新
+    let foundOption: ExROptionDto | undefined;
+    const updateRecursive = (options: ExROptionDto[]): ExROptionDto[] => {
+        return options.map((opt) => {
+            if (opt.Id === OptionId) {
+                foundOption = { ...opt, Selection: Selection };
+                return foundOption;
+            }
+            if (opt.Childs.length > 0) {
+                const newChilds = updateRecursive(opt.Childs);
+                if (foundOption) {
+                    return { ...opt, Childs: newChilds };
+                }
+            }
+            return opt;
+        });
+    };
+
+    const newOptions = updateRecursive(category.Options);
+
+    if (!foundOption) {
+        return new HttpResponse(null, { status: 404 });
+    }
+
+    // 全体のモックデータを更新
+    validatedExRMockData = validatedExRMockData.map((t) => {
+        if (t.Id !== TabId) {
+            return t;
+        }
+        return {
+            ...t,
+            Categories: t.Categories.map((c) => {
+                if (c.Id !== CategoryId) {
+                    return c;
+                }
+                return { ...c, Options: newOptions };
+            }),
+        };
+    });
+
+    // 更新後のカテゴリとオプションを取得
+    const updatedTab = validatedExRMockData.find((t) => t.Id === TabId);
+    const updatedCategory = updatedTab?.Categories.find((c) => c.Id === CategoryId) || null;
+
     // それ以外はUpdatedOptionsを返す
     const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [validatedExRMockData[0].Categories[0].Options[0]],
+      UpdatedCategory: updatedCategory,
+      ChainUpdatedOption: [foundOption],
     };
 
     // レスポンスデータのバリデーション

@@ -1,8 +1,18 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "../src/feature/ExRHeaderOptionControl";
 import type { ExROptionDto } from "../src/type";
 import { useStore } from "../src/useStore";
+
+vi.mock("../src/logics/api", () => ({
+	updateExrOption: vi.fn().mockResolvedValue({
+		UpdatedCategory: null,
+		ChainUpdatedOption: [],
+	}),
+	getExrOptions: vi.fn(),
+	getAuOptions: vi.fn(),
+	updateExrOptionsCache: vi.fn(),
+}));
 
 describe("ExRHeaderOptionControl", () => {
 	const mockOption: ExROptionDto = {
@@ -38,7 +48,12 @@ describe("ExRHeaderOptionControl", () => {
 		expect(textInput).toBeInTheDocument();
 	});
 
-	it("updates selection when slider is moved", () => {
+	it("updates selection when slider is moved", async () => {
+		const updateExROptionSelection = vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		);
+
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -48,14 +63,22 @@ describe("ExRHeaderOptionControl", () => {
 		);
 
 		const slider = screen.getByRole("slider");
+		vi.useFakeTimers();
 		fireEvent.change(slider, { target: { value: "1" } });
+		act(() => {
+			vi.advanceTimersByTime(300);
+		});
+		vi.useRealTimers();
 
-		// Check if store was updated
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(1);
+		expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 1);
 	});
 
-	it("updates selection when input is changed", () => {
+	it("updates selection when input is changed", async () => {
+		const updateExROptionSelection = vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		);
+
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -74,8 +97,7 @@ describe("ExRHeaderOptionControl", () => {
 
 		fireEvent.change(textInput, { target: { value: "100" } });
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(2); // 100 is at index 2
+		expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 2); // 100 is at index 2
 	});
 
 	it("prevents click propagation to parent", () => {

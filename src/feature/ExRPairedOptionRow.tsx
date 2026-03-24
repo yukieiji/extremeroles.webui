@@ -2,7 +2,6 @@ import { OptionPairedSliderControl } from "../components/blocks/OptionPairedSlid
 import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
 import { OptionRowContainer } from "../components/parts/OptionRowContainer";
-import { getUniqueOptionId } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
@@ -26,29 +25,19 @@ export function ExRPairedOptionRow({
 	minLabel,
 	maxLabel,
 }: ExRPairedOptionRowProps) {
-	const minUniqueId = getUniqueOptionId(categoryId, min.Id);
-	const maxUniqueId = getUniqueOptionId(categoryId, max.Id);
+	const minSelection = min.Selection;
+	const maxSelection = max.Selection;
 
-	const effectiveMinSelection = useStore((state) => {
-		return state.effectiveSelections[minUniqueId];
-	});
-	const effectiveMaxSelection = useStore((state) => {
-		return state.effectiveSelections[maxUniqueId];
-	});
-
-	const minSelection = effectiveMinSelection ?? min.Selection;
-	const maxSelection = effectiveMaxSelection ?? max.Selection;
-
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const handleMinChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(minUniqueId, newSelection);
+		updateExROptionSelection(categoryId, min.Id, newSelection);
 	};
 
 	const handleMaxChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(maxUniqueId, newSelection);
+		updateExROptionSelection(categoryId, max.Id, newSelection);
 	};
 
 	const content = (

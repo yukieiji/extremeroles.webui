@@ -25,7 +25,8 @@ describe("OptionSliderControl", () => {
 		expect(screen.getByText("(20s)")).toBeInTheDocument();
 	});
 
-	it("calls onChange when slider moves", () => {
+	it("calls onChange when slider moves after debounce", () => {
+		vi.useFakeTimers();
 		const onChange = vi.fn();
 		render(
 			<OptionSliderControl
@@ -39,7 +40,11 @@ describe("OptionSliderControl", () => {
 		const slider = screen.getByRole("slider");
 		fireEvent.change(slider, { target: { value: "3" } });
 
+		expect(onChange).not.toHaveBeenCalled();
+
+		vi.advanceTimersByTime(300);
 		expect(onChange).toHaveBeenCalledWith(3);
+		vi.useRealTimers();
 	});
 
 	it("calls onChange with closest value when input changes", () => {

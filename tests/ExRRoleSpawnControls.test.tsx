@@ -1,8 +1,18 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
 import type { ExROptionDto } from "../src/type";
 import { useStore } from "../src/useStore";
+
+vi.mock("../src/logics/api", () => ({
+	updateExrOption: vi.fn().mockResolvedValue({
+		UpdatedCategory: null,
+		ChainUpdatedOption: [],
+	}),
+	getExrOptions: vi.fn(),
+	getAuOptions: vi.fn(),
+	updateExrOptionsCache: vi.fn(),
+}));
 
 describe("ExRRoleSpawnControls", () => {
 	const spawnRateOption: ExROptionDto = {
@@ -33,7 +43,7 @@ describe("ExRRoleSpawnControls", () => {
 		render(
 			<ExRRoleSpawnControls
 				categoryId={1}
-				spawnRateOption={spawnRateOption}
+				spawnRateOption={{ ...spawnRateOption, Selection: 1 }}
 				spawnCountOption={spawnCountOption}
 			/>,
 		);
@@ -60,15 +70,17 @@ describe("ExRRoleSpawnControls", () => {
 		expect(slider.max).toBe("3");
 	});
 
-	it("syncs rate to 0 when count is set to 0", () => {
-		// Set initial rate to 10%
-		useStore.getState().TEMP_updateExROptionSelection("1-50", 1);
+	it("syncs rate to 0 when count is set to 0", async () => {
+		const updateExROptionSelection = vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		);
 
 		render(
 			<ExRRoleSpawnControls
 				categoryId={1}
-				spawnRateOption={spawnRateOption}
-				spawnCountOption={spawnCountOption}
+				spawnRateOption={{ ...spawnRateOption, Selection: 1 }} // initial 10%
+				spawnCountOption={{ ...spawnCountOption, Selection: 0 }} // initial count 1 (UI index 1)
 			/>,
 		);
 
@@ -77,13 +89,22 @@ describe("ExRRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
+		// 0番目の値（仮想0）に変更
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(0); // Rate 0%
+		// waitFor handles the debounce timeout
+		await vi.waitFor(() => {
+			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 0);
+			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
+		}, { timeout: 2000 });
 	});
 
-	it("syncs rate to 10% when count is set to non-zero from zero rate", () => {
+	it("syncs rate to 10% when count is set to non-zero from zero rate", async () => {
+		const updateExROptionSelection = vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		);
+
 		render(
 			<ExRRoleSpawnControls
 				categoryId={1}
@@ -99,20 +120,23 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "1" } }); // Select '1'
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(1); // Rate index 1 is 10%
+		await vi.waitFor(() => {
+			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 1);
+			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
+		}, { timeout: 2000 });
 	});
 
-	it("syncs count to 0 when rate is set to 0%", () => {
-		// Set initial rate to 10% and count to 2
-		useStore.getState().TEMP_updateExROptionSelection("1-50", 1);
-		useStore.getState().TEMP_updateExROptionSelection("1-51", 1); // backend index 1 is value 2
+	it("syncs count to 0 when rate is set to 0%", async () => {
+		const updateExROptionSelection = vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		);
 
 		render(
 			<ExRRoleSpawnControls
 				categoryId={1}
-				spawnRateOption={spawnRateOption}
-				spawnCountOption={spawnCountOption}
+				spawnRateOption={{ ...spawnRateOption, Selection: 1 }}
+				spawnCountOption={{ ...spawnCountOption, Selection: 1 }}
 			/>,
 		);
 
@@ -123,13 +147,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-51"]).toBe(0); // Count reset to index 0
-
-		// UI should show 0
-		const countDisplay = screen
-			.getByTestId("spawn-count-control")
-			.querySelector('input[type="text"]');
-		expect(countDisplay).toHaveValue("0");
+		await vi.waitFor(() => {
+			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 0);
+			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
+		}, { timeout: 2000 });
 	});
 });

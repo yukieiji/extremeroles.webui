@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import { updateExrOption } from "../logics/api";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
@@ -13,17 +14,18 @@ export interface OptionViewerSlice {
 	isTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<string, boolean>;
-	effectiveSelections: Record<string, number>;
+	dataVersion: number;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: string) => void;
-	TEMP_updateExROptionSelection: (
-		uniqueOptionId: string,
+	updateExROptionSelection: (
+		categoryId: number,
+		optionId: number,
 		selection: number,
-	) => void;
+	) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -34,13 +36,14 @@ export interface OptionViewerSlice {
  */
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 	set,
+	get,
 ) => {
 	return {
 		selectedExRTabId: 0,
 		isTabPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
-		effectiveSelections: {},
+		dataVersion: 0,
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -55,7 +58,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				isTabPending: false,
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
-				effectiveSelections: {},
+				dataVersion: 0,
 				isPresetDropdownOpen: false,
 			});
 		},
@@ -79,18 +82,23 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		TEMP_updateExROptionSelection: (
-			uniqueOptionId: string,
+		updateExROptionSelection: async (
+			categoryId: number,
+			optionId: number,
 			selection: number,
 		) => {
-			set((state) => {
-				return {
-					effectiveSelections: {
-						...state.effectiveSelections,
-						[uniqueOptionId]: selection,
-					},
-				};
-			});
+			const { selectedExRTabId } = get() as OptionViewerSlice;
+			try {
+				await updateExrOption({
+					TabId: selectedExRTabId,
+					CategoryId: categoryId,
+					OptionId: optionId,
+					Selection: selection,
+				});
+				set((state) => ({ dataVersion: state.dataVersion + 1 }));
+			} catch (error) {
+				console.error("Failed to update ExR option:", error);
+			}
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {

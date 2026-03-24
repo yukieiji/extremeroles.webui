@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { getUniqueOptionId } from "../logics/optionUtils";
 import type { ExRTabDto } from "../type";
 import { useStore } from "../useStore";
 
@@ -16,6 +15,11 @@ interface PresetSelectorProps {
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
 export function PresetSelector({ tabs }: PresetSelectorProps) {
+	// dataVersion を購読して再レンダリングをトリガーする
+	useStore((state) => {
+		return state.dataVersion;
+	});
+
 	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
 	const generalTab = tabs.find((t) => {
 		return t.Id === 0;
@@ -27,11 +31,7 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 		return o.Id === 0;
 	});
 
-	const uniqueId = getUniqueOptionId(0, 0);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? presetOption?.Selection ?? 0;
+	const currentSelection = presetOption?.Selection ?? 0;
 
 	const presetNames = useStore((state) => {
 		return state.presetNames;
@@ -42,8 +42,8 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 	const updatePresetName = useStore((state) => {
 		return state.updatePresetName;
 	});
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
@@ -78,7 +78,7 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = (index: number) => {
-		TEMP_updateExROptionSelection(uniqueId, index);
+		updateExROptionSelection(0, 0, index);
 		setPresetDropdownOpen(false);
 	};
 
@@ -117,7 +117,7 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 				<input
 					ref={inputRef}
 					type="text"
-					key={currentSelection}
+					key={`${currentSelection}-${currentPresetName}`}
 					defaultValue={currentPresetName}
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}

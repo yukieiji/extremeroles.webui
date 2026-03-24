@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { findClosestIndex } from "../../logics/optionUtils";
 
 interface OptionSliderControlProps {
@@ -18,10 +19,27 @@ export function OptionSliderControl({
 	onChange,
 	disabled = false,
 }: OptionSliderControlProps) {
-	const currentValue = values[selection] ?? values[0] ?? 0;
+	const [localSelection, setLocalSelection] = useState(selection);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	// Propsが変わった場合にローカルの状態を同期させる
+	useEffect(() => {
+		setLocalSelection(selection);
+	}, [selection]);
+
+	const currentValue = values[localSelection] ?? values[0] ?? 0;
 
 	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(parseInt(e.target.value, 10));
+		const newSelection = parseInt(e.target.value, 10);
+		setLocalSelection(newSelection);
+
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
+
+		timeoutRef.current = setTimeout(() => {
+			onChange(newSelection);
+		}, 300);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +62,7 @@ export function OptionSliderControl({
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={selection}
+				value={localSelection}
 				onChange={handleSliderChange}
 				disabled={disabled}
 				className="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"

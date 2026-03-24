@@ -1,7 +1,6 @@
 import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
-import { getUniqueOptionId } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
@@ -17,17 +16,13 @@ export function ExROptionControl({
 	categoryId,
 	option,
 }: ExROptionControlProps) {
-	const uniqueId = getUniqueOptionId(categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const currentSelection = option.Selection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const handleChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(categoryId, option.Id, newSelection);
 	};
 
 	const { Type, Values } = option.RangeMeta;

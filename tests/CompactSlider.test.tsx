@@ -19,7 +19,8 @@ describe("CompactSlider", () => {
 		expect(screen.getByDisplayValue("10")).toBeInTheDocument();
 	});
 
-	it("calls onSelectionChange when slider is moved", () => {
+	it("calls onSelectionChange when slider is moved after debounce", () => {
+		vi.useFakeTimers();
 		const onSelectionChange = vi.fn();
 		render(
 			<CompactSlider {...defaultProps} onSelectionChange={onSelectionChange} />,
@@ -28,7 +29,11 @@ describe("CompactSlider", () => {
 		const slider = screen.getByRole("slider");
 		fireEvent.change(slider, { target: { value: "2" } });
 
+		expect(onSelectionChange).not.toHaveBeenCalled();
+
+		vi.advanceTimersByTime(300);
 		expect(onSelectionChange).toHaveBeenCalledWith(2);
+		vi.useRealTimers();
 	});
 
 	it("calls onInputChange when text input is changed", () => {

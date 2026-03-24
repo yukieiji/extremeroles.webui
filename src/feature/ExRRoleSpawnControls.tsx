@@ -1,5 +1,5 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
-import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
+import { findClosestIndex } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
@@ -17,25 +17,12 @@ export function ExRRoleSpawnControls({
 	spawnRateOption,
 	spawnCountOption,
 }: ExRRoleSpawnControlsProps) {
-	const uniqueRateId = getUniqueOptionId(categoryId, 50);
-	const uniqueCountId = getUniqueOptionId(categoryId, 51);
+	const spawnRateSelection = spawnRateOption.Selection;
+	const spawnCountSelection = spawnCountOption.Selection;
 
-	const effectiveSpawnRateSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueRateId];
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
-
-	const effectiveSpawnCountSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueCountId];
-	});
-
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
-	});
-
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOption.Selection;
-	const spawnCountSelection =
-		effectiveSpawnCountSelection ?? spawnCountOption.Selection;
 
 	const rateValues = spawnRateOption.RangeMeta.Values as number[];
 	const originalCountValues = spawnCountOption.RangeMeta.Values as number[];
@@ -47,12 +34,12 @@ export function ExRRoleSpawnControls({
 	const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
-	const handleRateChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueRateId, newSelection);
+	const handleRateChange = async (newSelection: number) => {
+		await updateExROptionSelection(categoryId, 50, newSelection);
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			await updateExROptionSelection(categoryId, 51, 0);
 		}
 	};
 
@@ -60,23 +47,25 @@ export function ExRRoleSpawnControls({
 		handleRateChange(findClosestIndex(rateValues, val));
 	};
 
-	const handleCountUIChange = (newUISelection: number) => {
+	const handleCountUIChange = async (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			TEMP_updateExROptionSelection(
-				uniqueRateId,
+			await updateExROptionSelection(
+				categoryId,
+				50,
 				findClosestIndex(rateValues, 0),
 			);
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			await updateExROptionSelection(categoryId, 51, 0);
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
-				TEMP_updateExROptionSelection(
-					uniqueRateId,
+				await updateExROptionSelection(
+					categoryId,
+					50,
 					findClosestIndex(rateValues, 10),
 				);
 			}
-			TEMP_updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			await updateExROptionSelection(categoryId, 51, newUISelection - 1);
 		}
 	};
 

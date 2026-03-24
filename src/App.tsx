@@ -1,7 +1,7 @@
 import { Suspense, use } from "react";
 import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
-import { LoadingView } from "./feature/LoadingView";
+import { LoadingView } from "./components/parts/LoadingView";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
 import { getAuOptions, getExrOptions } from "./logics/api";

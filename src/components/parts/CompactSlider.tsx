@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type React from "react";
 
 interface CompactSliderProps {
@@ -22,11 +23,28 @@ export function CompactSlider({
 	onInputChange,
 	testId,
 }: CompactSliderProps) {
-	const currentValue = values[currentSelection] ?? values[0] ?? 0;
+	const [localSelection, setLocalSelection] = useState(currentSelection);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	// Propsが変わった場合にローカルの状態を同期させる
+	useEffect(() => {
+		setLocalSelection(currentSelection);
+	}, [currentSelection]);
+
+	const currentValue = values[localSelection] ?? values[0] ?? 0;
 
 	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.stopPropagation();
-		onSelectionChange(parseInt(e.target.value, 10));
+		const newSelection = parseInt(e.target.value, 10);
+		setLocalSelection(newSelection);
+
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
+
+		timeoutRef.current = setTimeout(() => {
+			onSelectionChange(newSelection);
+		}, 300);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +84,7 @@ export function CompactSlider({
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={currentSelection}
+				value={localSelection}
 				onChange={handleSliderChange}
 				className="w-20 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
 			/>
