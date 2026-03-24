@@ -96,29 +96,33 @@ export const handlers = [
     }
 
     // 不変性を保ちながらデータを更新
-    let foundOption: ExROptionDto | undefined;
-    const updateRecursive = (options: ExROptionDto[]): ExROptionDto[] => {
-        return options.map((opt) => {
-            if (opt.Id === OptionId) {
-                foundOption = { ...opt, Selection: Selection };
-                return foundOption;
-            }
-            if (opt.Childs.length > 0) {
-                const oldFound = foundOption;
-                const newChilds = updateRecursive(opt.Childs);
-                // 子要素の探索で新しく見つかった場合のみ、オブジェクトを再生成
-                if (foundOption && foundOption !== oldFound) {
-                    return { ...opt, Childs: newChilds };
-                }
-            }
-            return opt;
-        });
+    const updateRecursive = (
+      options: ExROptionDto[],
+    ): { options: ExROptionDto[]; updatedOption?: ExROptionDto } => {
+      let found: ExROptionDto | undefined;
+      const newOptions = options.map((opt) => {
+        if (opt.Id === OptionId) {
+          found = { ...opt, Selection: Selection };
+          return found;
+        }
+        if (opt.Childs.length > 0) {
+          const result = updateRecursive(opt.Childs);
+          if (result.updatedOption) {
+            found = result.updatedOption;
+            return { ...opt, Childs: result.options };
+          }
+        }
+        return opt;
+      });
+      return { options: newOptions, updatedOption: found };
     };
 
-    const newOptions = updateRecursive(category.Options);
+    const { options: newOptions, updatedOption: foundOption } = updateRecursive(
+      category.Options,
+    );
 
     if (!foundOption) {
-        return new HttpResponse(null, { status: 404 });
+      return new HttpResponse(null, { status: 404 });
     }
 
     // 全体のモックデータを更新
