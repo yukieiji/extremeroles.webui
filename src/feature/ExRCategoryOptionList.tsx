@@ -36,11 +36,12 @@ export function ExRCategoryOptionList({
 						/>
 					);
 				}
+				const option = item as ExROptionDto;
 				return (
 					<ExROptionItem
-						key={"Id" in item ? item.Id : `pair-${item.baseName}`}
+						key={option.Id}
 						categoryId={categoryId}
-						option={"Id" in item ? item : item.min}
+						option={option}
 					/>
 				);
 			})}
