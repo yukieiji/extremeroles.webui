@@ -1,0 +1,49 @@
+import { Accordion } from "../components/parts/Accordion";
+import { ColoredText } from "../components/parts/ColoredText";
+import { isPresetOption } from "../logics/optionUtils";
+import type { ExRCategoryDto } from "../type";
+import { useStore } from "../useStore";
+import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
+
+interface ExRStandardCategoryItemProps {
+	category: ExRCategoryDto;
+}
+
+/**
+ * 全般タブなどで使用される標準的なカテゴリ表示コンポーネント
+ */
+export function ExRStandardCategoryItem({
+	category,
+}: ExRStandardCategoryItemProps) {
+	const isOpen = useStore((state) => {
+		return state.openedExRCategoryIds[category.Id] ?? false;
+	});
+	const toggleExRCategory = useStore((state) => {
+		return state.toggleExRCategory;
+	});
+
+	const filteredOptions = category.Options.filter((option) => {
+		return !isPresetOption(category.Id, option.Id);
+	});
+
+	if (filteredOptions.length === 0) {
+		return null;
+	}
+
+	return (
+		<div data-testid={`exr-category-${category.Id}`}>
+			<Accordion
+				title={<ColoredText text={category.Name} />}
+				isOpen={isOpen}
+				onToggle={() => {
+					toggleExRCategory(category.Id);
+				}}
+			>
+				<ExRCategoryOptionList
+					categoryId={category.Id}
+					options={filteredOptions}
+				/>
+			</Accordion>
+		</div>
+	);
+}

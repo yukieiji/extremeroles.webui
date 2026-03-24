@@ -29,8 +29,8 @@ export function Accordion({
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
-					aria-hidden="true"
 				>
+					<title>{isOpen ? "Collapse" : "Expand"}</title>
 					<path
 						strokeLinecap="round"
 						strokeLinejoin="round"
