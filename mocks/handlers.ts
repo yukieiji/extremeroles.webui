@@ -4,7 +4,8 @@ import {
   ExRTabDtoArraySchema,
   ExROptionPutRequestSchema,
   UpdatedOptionsSchema,
-  VanillaOptionPutRequestSchema
+  VanillaOptionPutRequestSchema,
+  OptionTab
 } from '../src/type';
 import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto } from '../src/type';
 
@@ -76,13 +77,15 @@ export const handlers = [
 
     const { TabId, CategoryId, OptionId, Selection } = result.data;
 
-    // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
-    if (CategoryId === 0 && OptionId === 0) {
-      return new HttpResponse(null, { status: 202 });
-    }
-
     // データの更新
-    const tab = validatedExRMockData.find((t) => t.Id === TabId);
+    // モックデータ内のId（文字列の場合がある）を数値に変換して比較
+    const getTabIdNum = (id: string | number): number => {
+        if (typeof id === 'number') return id;
+        const mapped = OptionTab[id as keyof typeof OptionTab];
+        return typeof mapped === 'number' ? mapped : Number(id);
+    };
+
+    const tab = validatedExRMockData.find((t) => getTabIdNum(t.Id) === TabId);
     if (!tab) {
         return new HttpResponse(null, { status: 404 });
     }
@@ -118,7 +121,7 @@ export const handlers = [
 
     // 全体のモックデータを更新
     validatedExRMockData = validatedExRMockData.map((t) => {
-        if (t.Id !== TabId) {
+        if (getTabIdNum(t.Id) !== TabId) {
             return t;
         }
         return {
@@ -133,7 +136,7 @@ export const handlers = [
     });
 
     // 更新後のカテゴリとオプションを取得
-    const updatedTab = validatedExRMockData.find((t) => t.Id === TabId);
+    const updatedTab = validatedExRMockData.find((t) => getTabIdNum(t.Id) === TabId);
     const updatedCategory = updatedTab?.Categories.find((c) => c.Id === CategoryId) || null;
 
     // それ以外はUpdatedOptionsを返す
