@@ -30,6 +30,7 @@ export function Accordion({
 					viewBox="0 0 24 24"
 					stroke="currentColor"
 				>
+					<title>{isOpen ? "Collapse" : "Expand"}</title>
 					<path
 						strokeLinecap="round"
 						strokeLinejoin="round"

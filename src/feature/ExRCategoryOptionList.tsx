@@ -22,11 +22,11 @@ export function ExRCategoryOptionList({
 
 	return (
 		<div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
-			{groupedItems.map((item, idx) => {
+			{groupedItems.map((item) => {
 				if ("type" in item && item.type === "pair") {
 					return (
 						<ExRPairedOptionRow
-							key={`pair-${idx}`}
+							key={`pair-${item.baseName}`}
 							categoryId={categoryId}
 							baseName={item.baseName}
 							min={item.min}
