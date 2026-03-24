@@ -1,5 +1,6 @@
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDebouncedCallback } from "../../hooks/useDebouncedCallback";
 
 interface CompactSliderProps {
 	label: string;
@@ -24,12 +25,16 @@ export function CompactSlider({
 	testId,
 }: CompactSliderProps) {
 	const [localSelection, setLocalSelection] = useState(currentSelection);
-	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	// Propsが変わった場合にローカルの状態を同期させる
 	useEffect(() => {
 		setLocalSelection(currentSelection);
 	}, [currentSelection]);
+
+	const debouncedOnSelectionChange = useDebouncedCallback(
+		onSelectionChange,
+		300,
+	);
 
 	const currentValue = values[localSelection] ?? values[0] ?? 0;
 
@@ -37,14 +42,7 @@ export function CompactSlider({
 		e.stopPropagation();
 		const newSelection = parseInt(e.target.value, 10);
 		setLocalSelection(newSelection);
-
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current);
-		}
-
-		timeoutRef.current = setTimeout(() => {
-			onSelectionChange(newSelection);
-		}, 300);
+		debouncedOnSelectionChange(newSelection);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
