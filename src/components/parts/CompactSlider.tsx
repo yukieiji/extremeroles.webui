@@ -12,6 +12,7 @@ interface CompactSliderProps {
 /**
  * カテゴリアコーディオンのヘッダーなどで使用する、コンパクトなスライダーとテキスト入力のセット
  * (純粋なUIコンポーネント)
+ * 入力欄はスライダーの上に表示されるようにレイアウト
  */
 export function CompactSlider({
   label,
@@ -43,11 +44,19 @@ export function CompactSlider({
 
   return (
     <div
-      className="flex items-center gap-2 px-2 py-1 bg-gray-900/50 rounded border border-gray-700/50"
+      className="flex flex-col gap-1 px-2 py-1 bg-gray-900/50 rounded border border-gray-700/50"
       onClick={handleClick}
       data-testid={testId}
     >
-      <span className="text-xs font-medium text-gray-400 whitespace-nowrap">{label}</span>
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-[10px] font-medium text-gray-400 whitespace-nowrap leading-none">{label}</span>
+        <input
+          type="text"
+          value={currentValue}
+          onChange={handleInputChange}
+          className="w-8 px-0.5 py-0 text-right text-[10px] bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 leading-none"
+        />
+      </div>
       <input
         type="range"
         min={0}
@@ -55,13 +64,7 @@ export function CompactSlider({
         step={1}
         value={currentSelection}
         onChange={handleSliderChange}
-        className="w-20 h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
-      />
-      <input
-        type="text"
-        value={currentValue}
-        onChange={handleInputChange}
-        className="w-10 px-1 py-0.5 text-right text-xs bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500"
+        className="w-20 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
       />
     </div>
   );
