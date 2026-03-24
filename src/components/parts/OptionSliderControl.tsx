@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "../../hooks/useDebouncedCallback";
 import { findClosestIndex } from "../../logics/optionUtils";
 
@@ -20,20 +19,12 @@ export function OptionSliderControl({
 	onChange,
 	disabled = false,
 }: OptionSliderControlProps) {
-	const [localSelection, setLocalSelection] = useState(selection);
-
-	// Propsが変わった場合にローカルの状態を同期させる
-	useEffect(() => {
-		setLocalSelection(selection);
-	}, [selection]);
-
 	const debouncedOnChange = useDebouncedCallback(onChange, 300);
 
-	const currentValue = values[localSelection] ?? values[0] ?? 0;
+	const currentValue = values[selection] ?? values[0] ?? 0;
 
 	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newSelection = parseInt(e.target.value, 10);
-		setLocalSelection(newSelection);
 		debouncedOnChange(newSelection);
 	};
 
@@ -57,7 +48,7 @@ export function OptionSliderControl({
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={localSelection}
+				value={selection}
 				onChange={handleSliderChange}
 				disabled={disabled}
 				className="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"

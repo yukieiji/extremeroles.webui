@@ -1,5 +1,4 @@
 import type React from "react";
-import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "../../hooks/useDebouncedCallback";
 
 interface CompactSliderProps {
@@ -24,24 +23,16 @@ export function CompactSlider({
 	onInputChange,
 	testId,
 }: CompactSliderProps) {
-	const [localSelection, setLocalSelection] = useState(currentSelection);
-
-	// Propsが変わった場合にローカルの状態を同期させる
-	useEffect(() => {
-		setLocalSelection(currentSelection);
-	}, [currentSelection]);
-
 	const debouncedOnSelectionChange = useDebouncedCallback(
 		onSelectionChange,
 		300,
 	);
 
-	const currentValue = values[localSelection] ?? values[0] ?? 0;
+	const currentValue = values[currentSelection] ?? values[0] ?? 0;
 
 	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.stopPropagation();
 		const newSelection = parseInt(e.target.value, 10);
-		setLocalSelection(newSelection);
 		debouncedOnSelectionChange(newSelection);
 	};
 
@@ -82,7 +73,7 @@ export function CompactSlider({
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={localSelection}
+				value={currentSelection}
 				onChange={handleSliderChange}
 				className="w-20 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
 			/>
