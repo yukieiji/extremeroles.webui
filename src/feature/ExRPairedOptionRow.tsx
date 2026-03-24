@@ -1,7 +1,7 @@
-import { OptionRowContainer } from "../components/blocks/OptionRowContainer";
+import { OptionPairedSliderControl } from "../components/blocks/OptionPairedSliderControl";
 import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
-import { OptionPairedSliderControl } from "../components/parts/OptionPairedSliderControl";
+import { OptionRowContainer } from "../components/parts/OptionRowContainer";
 import { getUniqueOptionId } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";

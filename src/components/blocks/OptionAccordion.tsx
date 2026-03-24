@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { OptionRowContainer } from "./OptionRowContainer";
+import { OptionRowContainer } from "../parts/OptionRowContainer";
 
 interface OptionAccordionProps {
 	optionItem: ReactNode;

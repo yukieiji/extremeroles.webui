@@ -1,4 +1,4 @@
-import { ColoredText } from "./ColoredText";
+import { ColoredText } from "../parts/ColoredText";
 
 interface OptionToggleControlProps {
 	selection: number; // 0 or 1

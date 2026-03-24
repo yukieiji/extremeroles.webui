@@ -1,6 +1,6 @@
+import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
-import { OptionToggleControl } from "../components/parts/OptionToggleControl";
 import { getUniqueOptionId } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
