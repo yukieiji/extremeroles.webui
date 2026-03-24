@@ -1,8 +1,8 @@
 import { useStore } from '../useStore';
 import { ColoredText } from '../components/parts/ColoredText';
 import { ExRCategoryOptionList } from './ExRCategoryOptionList';
-import { ExRHeaderOptionControl } from './ExRHeaderOptionControl';
-import { isPresetOption, getUniqueOptionId, findClosestIndex } from '../logics/optionUtils';
+import { ExRRoleSpawnControls } from './ExRRoleSpawnControls';
+import { isPresetOption } from '../logics/optionUtils';
 import type { ExRCategoryDto } from '../type';
 
 interface ExRRoleCategoryItemProps {
@@ -19,9 +19,6 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
   const toggleExRCategory = useStore((state) => {
     return state.toggleExRCategory;
   });
-  const TEMP_updateExROptionSelection = useStore((state) => {
-    return state.TEMP_updateExROptionSelection;
-  });
 
   const spawnRateOption = category.Options.find((opt) => {
     return opt.Id === 50;
@@ -29,62 +26,6 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
   const spawnCountOption = category.Options.find((opt) => {
     return opt.Id === 51;
   });
-
-  const spawnRateSelection = useStore((state) => {
-    const uniqueId = getUniqueOptionId(category.Id, 50);
-    return state.effectiveSelections[uniqueId] ?? spawnRateOption?.Selection ?? 0;
-  });
-
-  const spawnCountSelection = useStore((state) => {
-    const uniqueId = getUniqueOptionId(category.Id, 51);
-    return state.effectiveSelections[uniqueId] ?? spawnCountOption?.Selection ?? 0;
-  });
-
-  // スポーンレートが0のときはスポーン数も0として扱うための仮想的な値リスト
-  const originalSpawnCountValues = (spawnCountOption?.RangeMeta.Values as number[]) ?? [];
-  const virtualSpawnCountValues = [0, ...originalSpawnCountValues];
-
-  // 現在のスポーンレートが0%なら、表示上のスポーン数も0にする
-  const spawnRateValues = (spawnRateOption?.RangeMeta.Values as number[]) ?? [0];
-  const isSpawnRateZero = spawnRateValues[spawnRateSelection] === 0;
-
-  const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
-
-  const handleRateChange = (newSelection: number) => {
-    if (!spawnRateOption) {
-      return;
-    }
-    const uniqueRateId = getUniqueOptionId(category.Id, 50);
-    TEMP_updateExROptionSelection(uniqueRateId, newSelection);
-
-    // スポーンレートを0%にするとスポーン数を0に（内部的にはレートが0なら数も0と見なす）
-    const newRateValue = spawnRateValues[newSelection] ?? 0;
-    if (newRateValue === 0 && spawnCountOption) {
-      const uniqueCountId = getUniqueOptionId(category.Id, 51);
-      // スポーン数を0にする（レート0のときは表示上0になるので、内部値は適当でも良いが、一応最小値にしておく）
-      TEMP_updateExROptionSelection(uniqueCountId, 0);
-    }
-  };
-
-  const handleCountUIChange = (newUISelection: number) => {
-    if (!spawnCountOption || !spawnRateOption) {
-      return;
-    }
-    const uniqueCountId = getUniqueOptionId(category.Id, 51);
-    const uniqueRateId = getUniqueOptionId(category.Id, 50);
-
-    if (newUISelection === 0) {
-      // スポーン数を0へ変更するとスポーンレートが0%へ
-      TEMP_updateExROptionSelection(uniqueRateId, findClosestIndex(spawnRateValues, 0));
-      TEMP_updateExROptionSelection(uniqueCountId, 0);
-    } else {
-      // スポーン数を変更（0以外）するとスポーンレートを10％へ（元が0%の場合のみ）
-      if (isSpawnRateZero) {
-        TEMP_updateExROptionSelection(uniqueRateId, findClosestIndex(spawnRateValues, 10));
-      }
-      TEMP_updateExROptionSelection(uniqueCountId, newUISelection - 1);
-    }
-  };
 
   const filteredOptions = category.Options.filter((option) => {
     if (isPresetOption(category.Id, option.Id)) {
@@ -132,29 +73,13 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
           </span>
         </button>
 
-        <div className="flex items-center px-4 gap-4">
-          {spawnRateOption && (
-            <div data-testid="spawn-rate-control">
-              <ExRHeaderOptionControl
-                categoryId={category.Id}
-                option={spawnRateOption}
-                label="レート"
-                customSelection={spawnRateSelection}
-                onSelectionChange={handleRateChange}
-              />
-            </div>
-          )}
-          {spawnCountOption && (
-            <div data-testid="spawn-count-control">
-              <ExRHeaderOptionControl
-                categoryId={category.Id}
-                option={spawnCountOption}
-                label="数"
-                customValues={virtualSpawnCountValues}
-                customSelection={currentCountUISelection}
-                onSelectionChange={handleCountUIChange}
-              />
-            </div>
+        <div className="flex items-center px-4">
+          {spawnRateOption && spawnCountOption && (
+            <ExRRoleSpawnControls
+              categoryId={category.Id}
+              spawnRateOption={spawnRateOption}
+              spawnCountOption={spawnCountOption}
+            />
           )}
         </div>
       </div>
