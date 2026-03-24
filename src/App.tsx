@@ -1,7 +1,7 @@
 import { Suspense, use } from "react";
+import { LoadingView } from "./components/parts/LoadingView";
 import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
-import { LoadingView } from "./components/parts/LoadingView";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
 import { getAuOptions, getExrOptions } from "./logics/api";
@@ -47,6 +47,9 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
+	const dataVersion = useStore((state) => {
+		return state.dataVersion;
+	});
 
 	return (
 		<section
@@ -64,7 +67,7 @@ function MainContent() {
 							<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />
 						}
 					>
-						<PresetSelectorContainer />
+						<PresetSelectorContainer key={`preset-${dataVersion}`} />
 					</Suspense>
 				)}
 				{isSidebarPending && (
@@ -78,7 +81,7 @@ function MainContent() {
 					</div>
 				}
 			>
-				<EditorContainer />
+				<EditorContainer key={`editor-${dataVersion}`} />
 			</Suspense>
 		</section>
 	);
@@ -94,17 +97,17 @@ function App() {
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex">
-			<Suspense fallback={<LoadingView />}>
-				<OptionGroupToggleSidebar />
-				<main
-					className={`
+			<OptionGroupToggleSidebar />
+			<main
+				className={`
             flex-1 p-8 transition-all duration-300
             ${isSidebarOpen ? "ml-64" : "ml-12"}
           `}
-				>
+			>
+				<Suspense fallback={<LoadingView />}>
 					<MainContent />
-				</main>
-			</Suspense>
+				</Suspense>
+			</main>
 		</div>
 	);
 }

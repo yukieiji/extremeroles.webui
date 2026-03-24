@@ -93,10 +93,13 @@ describe("ExRRoleSpawnControls", () => {
 		fireEvent.change(slider, { target: { value: "0" } });
 
 		// waitFor handles the debounce timeout
-		await vi.waitFor(() => {
-			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 0);
-			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
-		}, { timeout: 2000 });
+		await vi.waitFor(
+			() => {
+				expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 0);
+				expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
+			},
+			{ timeout: 2000 },
+		);
 	});
 
 	it("syncs rate to 10% when count is set to non-zero from zero rate", async () => {
@@ -120,10 +123,13 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "1" } }); // Select '1'
 
-		await vi.waitFor(() => {
-			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 1);
-			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
-		}, { timeout: 2000 });
+		await vi.waitFor(
+			() => {
+				expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 1);
+				expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
+			},
+			{ timeout: 2000 },
+		);
 	});
 
 	it("syncs count to 0 when rate is set to 0%", async () => {
@@ -147,9 +153,12 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		await vi.waitFor(() => {
-			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 0);
-			expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
-		}, { timeout: 2000 });
+		await vi.waitFor(
+			() => {
+				expect(updateExROptionSelection).toHaveBeenCalledWith(1, 50, 0);
+				expect(updateExROptionSelection).toHaveBeenCalledWith(1, 51, 0);
+			},
+			{ timeout: 2000 },
+		);
 	});
 });

@@ -30,7 +30,11 @@ export function ExRHeaderOptionControl({
 	};
 
 	const handleInputChange = (val: number) => {
-		updateExROptionSelection(categoryId, option.Id, findClosestIndex(values, val));
+		updateExROptionSelection(
+			categoryId,
+			option.Id,
+			findClosestIndex(values, val),
+		);
 	};
 
 	return (

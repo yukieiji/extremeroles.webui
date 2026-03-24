@@ -1,9 +1,10 @@
-import type {
-	AuOptionCategoryDto,
-	ExROptionDto,
-	ExROptionPutRequest,
-	ExRTabDto,
-	UpdatedOptions,
+import {
+	type AuOptionCategoryDto,
+	type ExROptionDto,
+	type ExROptionPutRequest,
+	type ExRTabDto,
+	OptionTab,
+	type UpdatedOptions,
 } from "../type";
 
 /**
@@ -30,17 +31,17 @@ export function resetApiCache() {
 /**
  * キャッシュされているExRオプションのデータを更新する
  */
-export function updateExrOptionsCache(
+export async function updateExrOptionsCache(
 	updates: UpdatedOptions,
 	tabId: number,
-): void {
+): Promise<void> {
 	if (!exrOptionsPromise) {
 		return;
 	}
 
-	exrOptionsPromise = exrOptionsPromise.then((currentData) => {
-		return applyUpdates(currentData, updates, tabId);
-	});
+	const currentData = await exrOptionsPromise;
+	const newData = applyUpdates(currentData, updates, tabId);
+	exrOptionsPromise = Promise.resolve(newData);
 }
 
 /**
@@ -51,17 +52,31 @@ function applyUpdates(
 	updates: UpdatedOptions,
 	tabId: number,
 ): ExRTabDto[] {
+	const targetIdNum = Number(tabId);
 	return tabs.map((tab) => {
-		if (tab.Id !== tabId) {
+		// IDを数値に変換して比較
+		let currentTabIdNum: number;
+		if (typeof tab.Id === "number") {
+			currentTabIdNum = tab.Id;
+		} else {
+			const mappedId = OptionTab[tab.Id as keyof typeof OptionTab];
+			currentTabIdNum =
+				typeof mappedId === "number" ? mappedId : Number(tab.Id);
+		}
+
+		if (currentTabIdNum !== targetIdNum) {
 			return tab;
 		}
 
-		let newCategories = tab.Categories;
+		let newCategories = [...tab.Categories];
+
 		if (updates.UpdatedCategory) {
+			const updatedCat = updates.UpdatedCategory;
 			newCategories = newCategories.map((cat) => {
-				return cat.Id === updates.UpdatedCategory?.Id
-					? updates.UpdatedCategory
-					: cat;
+				if (cat.Id === updatedCat.Id) {
+					return { ...updatedCat };
+				}
+				return cat;
 			});
 		}
 
@@ -176,7 +191,7 @@ export async function updateExrOption(
 	const updated: UpdatedOptions = await res.json();
 
 	// キャッシュを更新
-	updateExrOptionsCache(updated, params.TabId);
+	await updateExrOptionsCache(updated, params.TabId);
 
 	return updated;
 }
