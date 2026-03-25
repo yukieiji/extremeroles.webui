@@ -64,11 +64,17 @@ test("ExR slider update with debouncing", async ({ page }) => {
 	const slider = spawnCountFieldset.locator("input[type='range']");
 	const input = spawnCountFieldset.locator("input[type='text']");
 
+	// PUTリクエストを監視
+	const sliderPutRequestPromise = page.waitForRequest(
+		(request) =>
+			request.url().includes("/exr/option/") && request.method() === "PUT",
+	);
+
 	// スライダーを操作
 	await slider.fill("5");
 
-	// デバウンス待ち
-	await page.waitForTimeout(1000);
+	// リクエストが送信されるのを待つ (デバウンス後)
+	await sliderPutRequestPromise;
 
 	// 値が反映されていることを確認
 	await expect(input).toHaveValue("5");
