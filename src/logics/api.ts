@@ -34,13 +34,14 @@ export function resetApiCache() {
 export async function updateExrOptionsCache(
 	updates: UpdatedOptions,
 	tabId: number,
+	categoryId: number,
 ): Promise<void> {
 	if (!exrOptionsPromise) {
 		return;
 	}
 
 	const currentData = await exrOptionsPromise;
-	const newData = applyUpdates(currentData, updates, tabId);
+	const newData = applyUpdates(currentData, updates, tabId, categoryId);
 	exrOptionsPromise = Promise.resolve(newData);
 }
 
@@ -51,6 +52,7 @@ function applyUpdates(
 	tabs: ExRTabDto[],
 	updates: UpdatedOptions,
 	tabId: number,
+	categoryId: number,
 ): ExRTabDto[] {
 	const targetIdNum = Number(tabId);
 	return tabs.map((tab) => {
@@ -80,8 +82,13 @@ function applyUpdates(
 			});
 		}
 
+		// ChainUpdatedOption は更新対象のカテゴリ内のみに適用する
+		// オプションIDはカテゴリ内でのみ一意であるため、全カテゴリに適用すると重複や誤更新が発生する
 		if (updates.ChainUpdatedOption.length > 0) {
 			newCategories = newCategories.map((cat) => {
+				if (cat.Id !== categoryId) {
+					return cat;
+				}
 				return {
 					...cat,
 					Options: cat.Options.map((opt) => {
@@ -191,7 +198,7 @@ export async function updateExrOption(
 	const updated: UpdatedOptions = await res.json();
 
 	// キャッシュを更新
-	await updateExrOptionsCache(updated, params.TabId);
+	await updateExrOptionsCache(updated, params.TabId, params.CategoryId);
 
 	return updated;
 }

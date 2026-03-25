@@ -96,59 +96,76 @@ export const handlers = [
     }
 
     // 不変性を保ちながらデータを更新
+    const chainUpdatedOptions: ExROptionDto[] = [];
+
     const updateRecursive = (
       options: ExROptionDto[],
-    ): { options: ExROptionDto[]; updatedOption?: ExROptionDto } => {
-      let found: ExROptionDto | undefined;
-      const newOptions = options.map((opt) => {
-        if (opt.Id === OptionId) {
-          found = { ...opt, Selection: Selection };
-          return found;
+      targetId: number,
+      newSelection: number,
+    ): ExROptionDto[] => {
+      return options.map((opt) => {
+        if (opt.Id === targetId) {
+          const updated = { ...opt, Selection: newSelection };
+          chainUpdatedOptions.push(updated);
+          return updated;
         }
         if (opt.Childs.length > 0) {
-          const result = updateRecursive(opt.Childs);
-          if (result.updatedOption) {
-            found = result.updatedOption;
-            return { ...opt, Childs: result.options };
+          const newChilds = updateRecursive(opt.Childs, targetId, newSelection);
+          if (newChilds !== opt.Childs) {
+            return { ...opt, Childs: newChilds };
           }
         }
         return opt;
       });
-      return { options: newOptions, updatedOption: found };
     };
 
-    const { options: newOptions, updatedOption: foundOption } = updateRecursive(
-      category.Options,
-    );
+    // 1. 指定されたオプションを更新
+    let newOptions = updateRecursive(category.Options, OptionId, Selection);
 
-    if (!foundOption) {
+    // 2. 特殊ロジック：スポーンレート・スポーン数の同期（モックのリアリティ向上のため）
+    if (OptionId === 50 && Selection === 0) {
+      // レートが0なら数も0
+      newOptions = updateRecursive(newOptions, 51, 0);
+    } else if (OptionId === 51 && Selection > 0) {
+      // 数が0以外なら、レートが0なら10%(インデックス1)に上げる
+      const rateOpt = newOptions.find((o) => o.Id === 50);
+      if (rateOpt && rateOpt.Selection === 0) {
+        newOptions = updateRecursive(newOptions, 50, 1);
+      }
+    }
+
+    if (chainUpdatedOptions.length === 0) {
       return new HttpResponse(null, { status: 404 });
     }
 
     // 全体のモックデータを更新
     validatedExRMockData = validatedExRMockData.map((t) => {
-        if (getTabIdNum(t.Id) !== TabId) {
-            return t;
-        }
-        return {
-            ...t,
-            Categories: t.Categories.map((c) => {
-                if (c.Id !== CategoryId) {
-                    return c;
-                }
-                return { ...c, Options: newOptions };
-            }),
-        };
+      if (getTabIdNum(t.Id) !== TabId) {
+        return t;
+      }
+      return {
+        ...t,
+        Categories: t.Categories.map((c) => {
+          if (c.Id !== CategoryId) {
+            return c;
+          }
+          return { ...c, Options: newOptions };
+        }),
+      };
     });
 
-    // 更新後のカテゴリとオプションを取得
-    const updatedTab = validatedExRMockData.find((t) => getTabIdNum(t.Id) === TabId);
-    const updatedCategory = updatedTab?.Categories.find((c) => c.Id === CategoryId) || null;
+    // 更新後のカテゴリを取得
+    const updatedTab = validatedExRMockData.find(
+      (t) => getTabIdNum(t.Id) === TabId,
+    );
+    const updatedCategory =
+      updatedTab?.Categories.find((c) => c.Id === CategoryId) || null;
 
-    // それ以外はUpdatedOptionsを返す
+    // ChainUpdatedOption には「副作用」として更新されたもののみを含める
+    // (プライマリな更新は UpdatedCategory に含まれるため)
     const mockUpdatedOptions: UpdatedOptions = {
       UpdatedCategory: updatedCategory,
-      ChainUpdatedOption: [foundOption],
+      ChainUpdatedOption: chainUpdatedOptions.filter((o) => o.Id !== OptionId),
     };
 
     // レスポンスデータのバリデーション
