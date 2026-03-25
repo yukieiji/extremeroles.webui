@@ -52,16 +52,21 @@ describe("ExROptionPutRequest and UpdatedOptions Validation", () => {
 			},
 			ChainUpdatedOption: [
 				{
-					Id: 101,
-					IsActive: true,
-					TranslatedName: "Test Option",
-					Selection: 1,
-					Format: "Test Format",
-					RangeMeta: {
-						Type: "Int32",
-						Values: [1, 2, 3],
-					},
-					Childs: [],
+					Id: 2,
+					Options: [
+						{
+							Id: 101,
+							IsActive: true,
+							TranslatedName: "Test Option",
+							Selection: 1,
+							Format: "Test Format",
+							RangeMeta: {
+								Type: "Int32",
+								Values: [1, 2, 3],
+							},
+							Childs: [],
+						},
+					],
 				},
 			],
 		};
@@ -135,16 +140,21 @@ describe("UpdatedOptions Validation", () => {
 			UpdatedCategory: null,
 			ChainUpdatedOption: [
 				{
-					Id: 201,
-					IsActive: true,
-					TranslatedName: "Option",
-					Selection: 1,
-					Format: "{0}",
-					RangeMeta: {
-						Type: "Int32",
-						Values: [1, 2, 3],
-					},
-					Childs: [],
+					Id: 5,
+					Options: [
+						{
+							Id: 201,
+							IsActive: true,
+							TranslatedName: "Option",
+							Selection: 1,
+							Format: "{0}",
+							RangeMeta: {
+								Type: "Int32",
+								Values: [1, 2, 3],
+							},
+							Childs: [],
+						},
+					],
 				},
 			],
 		};
