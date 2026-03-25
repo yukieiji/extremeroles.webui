@@ -10,9 +10,8 @@ import {
 /**
  * API エンドポイントの定数定義
  */
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
-const EXR_OPTION_URL = `${API_BASE_URL}/exr/option/`;
-const AU_OPTION_URL = `${API_BASE_URL}/au/option/`;
+const EXR_OPTION_URL = "/exr/option/";
+const AU_OPTION_URL = "/au/option/";
 
 /**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
