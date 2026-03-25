@@ -15,11 +15,6 @@ interface PresetSelectorProps {
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
 export function PresetSelector({ tabs }: PresetSelectorProps) {
-	// dataVersion を購読して再レンダリングをトリガーする
-	useStore((state) => {
-		return state.dataVersion;
-	});
-
 	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
 	const generalTab = tabs.find((t) => {
 		return t.Id === 0;

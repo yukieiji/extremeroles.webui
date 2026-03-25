@@ -19,10 +19,6 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
 	const isTabPending = useStore((state) => {
 		return state.isTabPending;
 	});
-	// dataVersion を購読して再レンダリングをトリガーする
-	useStore((state) => {
-		return state.dataVersion;
-	});
 
 	let selectedTab = tabs.find((tab) => {
 		return tab.Id === selectedExRTabId;
