@@ -38,7 +38,8 @@ describe("ExRHeaderOptionControl", () => {
 		expect(textInput).toBeInTheDocument();
 	});
 
-	it("updates selection when slider is moved", () => {
+	it("updates selection when slider is moved", async () => {
+		const updateSpy = vi.spyOn(useStore.getState(), "updateExROptionSelection");
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -50,12 +51,11 @@ describe("ExRHeaderOptionControl", () => {
 		const slider = screen.getByRole("slider");
 		fireEvent.change(slider, { target: { value: "1" } });
 
-		// Check if store was updated
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(1);
+		expect(updateSpy).toHaveBeenCalledWith("1-50", 1);
 	});
 
-	it("updates selection when input is changed", () => {
+	it("updates selection when input is changed", async () => {
+		const updateSpy = vi.spyOn(useStore.getState(), "updateExROptionSelection");
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -74,8 +74,7 @@ describe("ExRHeaderOptionControl", () => {
 
 		fireEvent.change(textInput, { target: { value: "100" } });
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(2); // 100 is at index 2
+		expect(updateSpy).toHaveBeenCalledWith("1-50", 2); // 100 is at index 2
 	});
 
 	it("prevents click propagation to parent", () => {

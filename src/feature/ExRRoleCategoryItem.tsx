@@ -16,6 +16,9 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 	const isOpendCategory = useStore((state) => {
 		return state.openedExRCategoryIds[category.Id];
 	});
+	const isPending = useStore((state) => {
+		return state.pendingCategoryIds[category.Id] ?? false;
+	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
@@ -45,10 +48,12 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 
 	return (
 		<div
-			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
+			className="border border-gray-700 rounded-lg overflow-hidden mb-2 relative"
 			data-testid={`exr-category-${category.Id}`}
 		>
-			<div className="flex items-center bg-gray-800 hover:bg-gray-700 transition-colors">
+			<div
+				className={`flex items-center bg-gray-800 hover:bg-gray-700 transition-all duration-200 ${isPending ? "opacity-50 pointer-events-none" : "opacity-100"}`}
+			>
 				<button
 					type="button"
 					onClick={() => {
@@ -88,9 +93,9 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 			</div>
 
 			<div
-				className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden ${
+				className={`grid transition-all duration-200 ease-in-out overflow-hidden ${
 					isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-				}`}
+				} ${isPending ? "opacity-50 pointer-events-none" : "opacity-100"}`}
 			>
 				<div className="min-h-0">
 					{isOpen && (
@@ -103,6 +108,12 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 					)}
 				</div>
 			</div>
+
+			{isPending && (
+				<div className="absolute inset-0 flex items-center justify-center bg-black/10 z-10 pointer-events-none">
+					<div className="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin" />
+				</div>
+			)}
 		</div>
 	);
 }

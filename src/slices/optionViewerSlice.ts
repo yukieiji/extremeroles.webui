@@ -13,12 +13,14 @@ export interface OptionViewerSlice {
 	selectedExRTabId: OptionTab;
 	isTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
+	pendingCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<string, boolean>;
 	effectiveSelections: Record<string, number>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsTabPending: (isPending: boolean) => void;
+	setCategoryPending: (categoryId: number, isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: string) => void;
 	updateExROptionSelection: (
@@ -41,6 +43,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		selectedExRTabId: 0,
 		isTabPending: false,
 		openedExRCategoryIds: {},
+		pendingCategoryIds: {},
 		openedExROptionIds: {},
 		effectiveSelections: {},
 		presetNames: loadPresetNamesFromCookie(),
@@ -51,11 +54,22 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		setIsTabPending: (isPending: boolean) => {
 			set({ isTabPending: isPending });
 		},
+		setCategoryPending: (categoryId: number, isPending: boolean) => {
+			set((state) => {
+				return {
+					pendingCategoryIds: {
+						...state.pendingCategoryIds,
+						[categoryId]: isPending,
+					},
+				};
+			});
+		},
 		resetViewer: () => {
 			set({
 				selectedExRTabId: 0,
 				isTabPending: false,
 				openedExRCategoryIds: {},
+				pendingCategoryIds: {},
 				openedExROptionIds: {},
 				effectiveSelections: {},
 				isPresetDropdownOpen: false,
@@ -91,15 +105,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 
 			const TabId = get().selectedExRTabId;
 
-			// 楽観的更新 (テスト互換性のため)
-			set((state) => {
-				return {
-					effectiveSelections: {
-						...state.effectiveSelections,
-						[uniqueOptionId]: selection,
-					},
-				};
-			});
+			// カテゴリをペンディング状態にする
+			get().setCategoryPending(CategoryId, true);
 
 			try {
 				const updatedData = await updateExrOption({
@@ -112,21 +119,11 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				if (updatedData) {
 					await updateExrOptionsCache(updatedData);
 				}
-
-				// Preset設定（0-0）以外は、楽観的更新に使用した一時的な選択状態をクリアし、
-				// コンポーネントがサーバーから提供された最新データ（キャッシュ側）を参照するようにします。
-				// Preset設定はCookieベースの管理と同期するため、有効な選択状態を維持します。
-				if (CategoryId !== 0 || OptionId !== 0) {
-					set((state) => {
-						const newEffectiveSelections = { ...state.effectiveSelections };
-						delete newEffectiveSelections[uniqueOptionId];
-						return {
-							effectiveSelections: newEffectiveSelections,
-						};
-					});
-				}
 			} catch (error) {
 				console.error("Failed to update ExR option:", error);
+			} finally {
+				// ペンディング状態を解除
+				get().setCategoryPending(CategoryId, false);
 			}
 		},
 		updatePresetName: (presetIndex: number, name: string) => {

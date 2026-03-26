@@ -18,6 +18,9 @@ export function ExRStandardCategoryItem({
 	const isOpen = useStore((state) => {
 		return state.openedExRCategoryIds[category.Id] ?? false;
 	});
+	const isPending = useStore((state) => {
+		return state.pendingCategoryIds[category.Id] ?? false;
+	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
@@ -31,19 +34,31 @@ export function ExRStandardCategoryItem({
 	}
 
 	return (
-		<div data-testid={`exr-category-${category.Id}`}>
-			<Accordion
-				title={<ColoredText text={category.Name} />}
-				isOpen={isOpen}
-				onToggle={() => {
-					toggleExRCategory(category.Id);
-				}}
+		<div
+			data-testid={`exr-category-${category.Id}`}
+			className="relative overflow-hidden"
+		>
+			<div
+				className={`transition-opacity duration-200 ${isPending ? "opacity-50 pointer-events-none" : "opacity-100"}`}
 			>
-				<ExRCategoryOptionList
-					categoryId={category.Id}
-					options={filteredOptions}
-				/>
-			</Accordion>
+				<Accordion
+					title={<ColoredText text={category.Name} />}
+					isOpen={isOpen}
+					onToggle={() => {
+						toggleExRCategory(category.Id);
+					}}
+				>
+					<ExRCategoryOptionList
+						categoryId={category.Id}
+						options={filteredOptions}
+					/>
+				</Accordion>
+			</div>
+			{isPending && (
+				<div className="absolute inset-0 flex items-center justify-center bg-black/10 z-10">
+					<div className="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin" />
+				</div>
+			)}
 		</div>
 	);
 }
