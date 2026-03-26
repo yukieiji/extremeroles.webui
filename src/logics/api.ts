@@ -7,15 +7,21 @@ import type {
 
 /**
  * API エンドポイントの定数定義
+ * Node.js (Vitest) 環境での相対パス問題を解決するため、絶対URLを生成します。
  */
-const EXR_OPTION_URL = `${import.meta.env.BASE_URL ?? "/"}exr/option/`.replace(
-	/\/+/g,
-	"/",
-);
-const AU_OPTION_URL = `${import.meta.env.BASE_URL ?? "/"}au/option/`.replace(
-	/\/+/g,
-	"/",
-);
+function getAbsoluteUrl(path: string): string {
+	const baseUrl = import.meta.env.BASE_URL ?? "/";
+	const fullPath = `${baseUrl}${path}`.replace(/\/+/g, "/");
+
+	if (typeof window !== "undefined") {
+		return new URL(fullPath, window.location.origin).toString();
+	}
+	// フォールバック (主にテスト環境用)
+	return new URL(fullPath, "http://localhost:5173").toString();
+}
+
+const EXR_OPTION_URL = getAbsoluteUrl("exr/option/");
+const AU_OPTION_URL = getAbsoluteUrl("au/option/");
 
 /**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数

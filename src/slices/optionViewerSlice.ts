@@ -89,7 +89,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			const CategoryId = Number.parseInt(catIdStr, 10);
 			const OptionId = Number.parseInt(optIdStr, 10);
 
-			const TabId = get().selectedExRTabId ?? 0;
+			const TabId = get().selectedExRTabId;
 
 			// 楽観的更新 (テスト互換性のため)
 			set((state) => {
@@ -115,6 +115,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 
 				// Preset設定（0-0）以外は、楽観的更新に使用した一時的な選択状態をクリアし、
 				// コンポーネントがサーバーから提供された最新データ（キャッシュ側）を参照するようにします。
+				// Preset設定はCookieベースの管理と同期するため、有効な選択状態を維持します。
 				if (CategoryId !== 0 || OptionId !== 0) {
 					set((state) => {
 						const newEffectiveSelections = { ...state.effectiveSelections };

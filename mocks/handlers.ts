@@ -82,18 +82,27 @@ export const handlers = [
     }
 
     // それ以外はUpdatedOptionsを返す
-    const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [
-        {
-          Id: validatedExRMockData[0].Categories[0].Id,
-          Options: [validatedExRMockData[0].Categories[0].Options[0]],
-        },
-      ],
+    // 実際にデータを更新して、E2Eテストが正常に動作するようにします。
+    const { TabId, Selection } = result.data;
+    const tab = validatedExRMockData.find(t => t.Id === TabId);
+    if (!tab) return new HttpResponse(null, { status: 404 });
+
+    const category = tab.Categories.find(c => c.Id === CategoryId);
+    if (!category) return new HttpResponse(null, { status: 404 });
+
+    const option = category.Options.find(o => o.Id === OptionId);
+    if (!option) return new HttpResponse(null, { status: 404 });
+
+    // データの更新 (メモ上でのみ)
+    option.Selection = Selection;
+
+    const responseData: UpdatedOptions = {
+      UpdatedCategory: category,
+      ChainUpdatedOption: [],
     };
 
     // レスポンスデータのバリデーション
-    const validatedResponse = UpdatedOptionsSchema.parse(mockUpdatedOptions);
+    const validatedResponse = UpdatedOptionsSchema.parse(responseData);
 
     return HttpResponse.json(validatedResponse);
   }),
