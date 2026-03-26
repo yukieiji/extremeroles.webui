@@ -132,61 +132,72 @@ export async function updateExrOptionsCache(updatedData: UpdatedOptions) {
 		return;
 	}
 
+	// チェーン更新用のルックアップマップを作成 (O(1)アクセス用)
+	const chainMap = new Map(
+		updatedData.ChainUpdatedOption.map((c) => {
+			return [c.Id, c.Options];
+		}),
+	);
+
 	// 複数の更新が並列で走った際のレースコンディションを防ぐため、
 	// Promiseを連鎖させて順次実行されるようにします。
 	exrOptionsPromise = (async () => {
-		const currentTabs = await exrOptionsPromise!;
-		const newTabs = [...currentTabs];
+		const currentPromise = exrOptionsPromise;
+		if (!currentPromise) return [];
+		const currentTabs = await currentPromise;
 
-		// UpdatedCategory の反映
-		if (updatedData.UpdatedCategory) {
-			const cat = updatedData.UpdatedCategory;
-			for (let i = 0; i < newTabs.length; i++) {
-				const tab = newTabs[i];
-				const categoryIndex = tab.Categories.findIndex((c) => {
-					return c.Id === cat.Id;
-				});
-				if (categoryIndex !== -1) {
-					const newCategories = [...tab.Categories];
-					newCategories[categoryIndex] = cat;
-					newTabs[i] = { ...tab, Categories: newCategories };
-				}
+		return currentTabs.map((tab) => {
+			// このタブ内に更新対象のカテゴリが含まれているかチェック
+			const hasTargetCategory = tab.Categories.some((cat) => {
+				return (
+					cat.Id === updatedData.UpdatedCategory?.Id || chainMap.has(cat.Id)
+				);
+			});
+
+			if (!hasTargetCategory) {
+				return tab;
 			}
-		}
 
-		// ChainUpdatedOption の反映
-		for (const chain of updatedData.ChainUpdatedOption) {
-			for (let i = 0; i < newTabs.length; i++) {
-				const tab = newTabs[i];
-				const categoryIndex = tab.Categories.findIndex((c) => {
-					return c.Id === chain.Id;
-				});
-				if (categoryIndex !== -1) {
-					const targetCategory = tab.Categories[categoryIndex];
-					const newOptions = [...targetCategory.Options];
+			// カテゴリをマッピングして更新
+			const newCategories = tab.Categories.map((cat) => {
+				// 1. UpdatedCategory の完全置き換え
+				if (cat.Id === updatedData.UpdatedCategory?.Id) {
+					return updatedData.UpdatedCategory;
+				}
 
-					for (const newOpt of chain.Options) {
-						const optIndex = newOptions.findIndex((o) => {
-							return o.Id === newOpt.Id;
-						});
-						if (optIndex !== -1) {
-							newOptions[optIndex] = newOpt;
-						} else {
+				// 2. ChainUpdatedOption による部分更新
+				const chainOptions = chainMap.get(cat.Id);
+				if (chainOptions) {
+					// オプションIDでのルックアップ用マップ
+					const newOptMap = new Map(
+						chainOptions.map((o) => {
+							return [o.Id, o];
+						}),
+					);
+
+					const newOptions = cat.Options.map((opt) => {
+						return newOptMap.get(opt.Id) ?? opt;
+					});
+
+					// 既存に存在しない新しいオプションがあれば追加
+					for (const newOpt of chainOptions) {
+						if (
+							!cat.Options.some((o) => {
+								return o.Id === newOpt.Id;
+							})
+						) {
 							newOptions.push(newOpt);
 						}
 					}
 
-					const newCategories = [...tab.Categories];
-					newCategories[categoryIndex] = {
-						...targetCategory,
-						Options: newOptions,
-					};
-					newTabs[i] = { ...tab, Categories: newCategories };
+					return { ...cat, Options: newOptions };
 				}
-			}
-		}
 
-		return newTabs;
+				return cat;
+			});
+
+			return { ...tab, Categories: newCategories };
+		});
 	})();
 
 	// 更新完了を待機
