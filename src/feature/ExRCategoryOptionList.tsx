@@ -37,7 +37,11 @@ export function ExRCategoryOptionList({
 					);
 				}
 				return (
-					<ExROptionItem key={item.Id} categoryId={categoryId} option={item} />
+					<ExROptionItem
+						key={(item as ExROptionDto).Id}
+						categoryId={categoryId}
+						option={item as ExROptionDto}
+					/>
 				);
 			})}
 		</div>

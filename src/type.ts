@@ -200,16 +200,29 @@ export const VanillaOptionPutRequestSchema = z.object({
 });
 
 /**
+ * カテゴリごとのオプションリスト
+ */
+export interface CategoryOptionDto {
+	Id: number;
+	Options: ExROptionDto[];
+}
+
+export const CategoryOptionDtoSchema = z.object({
+	Id: z.number().int(),
+	Options: z.array(ExROptionDtoSchema),
+});
+
+/**
  * 更新されたオプション情報
  */
 export interface UpdatedOptions {
 	UpdatedCategory: ExRCategoryDto | null;
-	ChainUpdatedOption: ExROptionDto[];
+	ChainUpdatedOption: CategoryOptionDto[];
 }
 
 export const UpdatedOptionsSchema = z.object({
 	UpdatedCategory: ExRCategoryDtoSchema.nullable(),
-	ChainUpdatedOption: z.array(ExROptionDtoSchema),
+	ChainUpdatedOption: z.array(CategoryOptionDtoSchema),
 });
 
 /**

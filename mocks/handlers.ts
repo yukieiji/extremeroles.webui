@@ -84,7 +84,12 @@ export const handlers = [
     // それ以外はUpdatedOptionsを返す
     const mockUpdatedOptions: UpdatedOptions = {
       UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [validatedExRMockData[0].Categories[0].Options[0]],
+      ChainUpdatedOption: [
+        {
+          Id: validatedExRMockData[0].Categories[0].Id,
+          Options: [validatedExRMockData[0].Categories[0].Options[0]],
+        },
+      ],
     };
 
     // レスポンスデータのバリデーション
