@@ -10,10 +10,15 @@ if (import.meta.env.DEV) {
 }
 
 /**
- * 開発環境の場合にMSWを有効化
+ * 開発環境かつモックが有効な場合にMSWを有効化
  */
 async function enableMocking() {
 	if (!import.meta.env.DEV) {
+		return;
+	}
+
+	const useMock = import.meta.env.VITE_USE_MOCK !== "false";
+	if (!useMock) {
 		return;
 	}
 

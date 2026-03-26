@@ -39,16 +39,16 @@ export function ExRPairedOptionRow({
 	const minSelection = effectiveMinSelection ?? min.Selection;
 	const maxSelection = effectiveMaxSelection ?? max.Selection;
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const handleMinChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(minUniqueId, newSelection);
+		updateExROptionSelection(minUniqueId, newSelection);
 	};
 
 	const handleMaxChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(maxUniqueId, newSelection);
+		updateExROptionSelection(maxUniqueId, newSelection);
 	};
 
 	const content = (

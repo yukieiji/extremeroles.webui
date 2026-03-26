@@ -1,4 +1,9 @@
-import type { AuOptionCategoryDto, ExRTabDto } from "../type";
+import type {
+	AuOptionCategoryDto,
+	ExRTabDto,
+	ExROptionPutRequest,
+	UpdatedOptions,
+} from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -80,4 +85,91 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
  */
 export function getAllOptions(): Promise<[ExRTabDto[], AuOptionCategoryDto[]]> {
 	return Promise.all([getExrOptions(), getAuOptions()]);
+}
+
+/**
+ * ExRオプションを更新する
+ */
+export async function updateExrOption(
+	params: ExROptionPutRequest,
+): Promise<UpdatedOptions | null> {
+	const res = await fetch(EXR_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(params),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	if (res.status === 202) {
+		return null;
+	}
+
+	return res.json();
+}
+
+/**
+ * ExRオプションのキャッシュを差分更新する
+ */
+export async function updateExrOptionsCache(updatedData: UpdatedOptions) {
+	if (!exrOptionsPromise) {
+		return;
+	}
+
+	const currentTabs = await exrOptionsPromise;
+	const newTabs = [...currentTabs];
+
+	// UpdatedCategory の反映
+	if (updatedData.UpdatedCategory) {
+		const cat = updatedData.UpdatedCategory;
+		for (let i = 0; i < newTabs.length; i++) {
+			const tab = newTabs[i];
+			const categoryIndex = tab.Categories.findIndex((c) => {
+				return c.Id === cat.Id;
+			});
+			if (categoryIndex !== -1) {
+				const newCategories = [...tab.Categories];
+				newCategories[categoryIndex] = cat;
+				newTabs[i] = { ...tab, Categories: newCategories };
+			}
+		}
+	}
+
+	// ChainUpdatedOption の反映
+	for (const chain of updatedData.ChainUpdatedOption) {
+		for (let i = 0; i < newTabs.length; i++) {
+			const tab = newTabs[i];
+			const categoryIndex = tab.Categories.findIndex((c) => {
+				return c.Id === chain.Id;
+			});
+			if (categoryIndex !== -1) {
+				const targetCategory = tab.Categories[categoryIndex];
+				const newOptions = [...targetCategory.Options];
+
+				for (const newOpt of chain.Options) {
+					const optIndex = newOptions.findIndex((o) => {
+						return o.Id === newOpt.Id;
+					});
+					if (optIndex !== -1) {
+						newOptions[optIndex] = newOpt;
+					} else {
+						newOptions.push(newOpt);
+					}
+				}
+
+				const newCategories = [...tab.Categories];
+				newCategories[categoryIndex] = {
+					...targetCategory,
+					Options: newOptions,
+				};
+				newTabs[i] = { ...tab, Categories: newCategories };
+			}
+		}
+	}
+
+	exrOptionsPromise = Promise.resolve(newTabs);
 }

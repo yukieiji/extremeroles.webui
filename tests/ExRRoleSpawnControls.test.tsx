@@ -62,7 +62,7 @@ describe("ExRRoleSpawnControls", () => {
 
 	it("syncs rate to 0 when count is set to 0", () => {
 		// Set initial rate to 10%
-		useStore.getState().TEMP_updateExROptionSelection("1-50", 1);
+		useStore.getState().updateExROptionSelection("1-50", 1);
 
 		render(
 			<ExRRoleSpawnControls
@@ -105,8 +105,8 @@ describe("ExRRoleSpawnControls", () => {
 
 	it("syncs count to 0 when rate is set to 0%", () => {
 		// Set initial rate to 10% and count to 2
-		useStore.getState().TEMP_updateExROptionSelection("1-50", 1);
-		useStore.getState().TEMP_updateExROptionSelection("1-51", 1); // backend index 1 is value 2
+		useStore.getState().updateExROptionSelection("1-50", 1);
+		useStore.getState().updateExROptionSelection("1-51", 1); // backend index 1 is value 2
 
 		render(
 			<ExRRoleSpawnControls

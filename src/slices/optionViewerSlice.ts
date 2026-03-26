@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import { updateExrOption, updateExrOptionsCache } from "../logics/api";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
@@ -20,10 +21,10 @@ export interface OptionViewerSlice {
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: string) => void;
-	TEMP_updateExROptionSelection: (
+	updateExROptionSelection: (
 		uniqueOptionId: string,
 		selection: number,
-	) => void;
+	) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -34,6 +35,7 @@ export interface OptionViewerSlice {
  */
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 	set,
+	get,
 ) => {
 	return {
 		selectedExRTabId: 0,
@@ -79,10 +81,17 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		TEMP_updateExROptionSelection: (
+		updateExROptionSelection: async (
 			uniqueOptionId: string,
 			selection: number,
 		) => {
+			const [catIdStr, optIdStr] = uniqueOptionId.split("-");
+			const CategoryId = Number.parseInt(catIdStr, 10);
+			const OptionId = Number.parseInt(optIdStr, 10);
+
+			const TabId = get().selectedExRTabId ?? 0;
+
+			// 楽観的更新 (テスト互換性のため)
 			set((state) => {
 				return {
 					effectiveSelections: {
@@ -91,6 +100,32 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 					},
 				};
 			});
+
+			try {
+				const updatedData = await updateExrOption({
+					TabId,
+					CategoryId,
+					OptionId,
+					Selection: selection,
+				});
+
+				if (updatedData) {
+					await updateExrOptionsCache(updatedData);
+				}
+
+				// サーバーからの最新データで状態を上書き (必要であれば)
+				set((state) => {
+					const newEffectiveSelections = { ...state.effectiveSelections };
+					// Preset 以外は最終的にはキャッシュ (option.Selection) を見るので、
+					// ここで effectiveSelections をクリアしても良いが、
+					// 今回はシンプルに維持する
+					return {
+						effectiveSelections: newEffectiveSelections,
+					};
+				});
+			} catch (error) {
+				console.error("Failed to update ExR option:", error);
+			}
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {

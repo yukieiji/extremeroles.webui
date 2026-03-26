@@ -17,4 +17,16 @@ export default defineConfig({
     tailwindcss(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  server: {
+    proxy: {
+      '/exr/option/': {
+        target: 'http://localhost:57700',
+        changeOrigin: true,
+      },
+      '/au/option/': {
+        target: 'http://localhost:57700',
+        changeOrigin: true,
+      },
+    },
+  },
 })
