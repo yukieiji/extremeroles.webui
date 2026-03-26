@@ -113,16 +113,17 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 					await updateExrOptionsCache(updatedData);
 				}
 
-				// サーバーからの最新データで状態を上書き (必要であれば)
-				set((state) => {
-					const newEffectiveSelections = { ...state.effectiveSelections };
-					// Preset 以外は最終的にはキャッシュ (option.Selection) を見るので、
-					// ここで effectiveSelections をクリアしても良いが、
-					// 今回はシンプルに維持する
-					return {
-						effectiveSelections: newEffectiveSelections,
-					};
-				});
+				// Preset設定（0-0）以外は、楽観的更新に使用した一時的な選択状態をクリアし、
+				// コンポーネントがサーバーから提供された最新データ（キャッシュ側）を参照するようにします。
+				if (CategoryId !== 0 || OptionId !== 0) {
+					set((state) => {
+						const newEffectiveSelections = { ...state.effectiveSelections };
+						delete newEffectiveSelections[uniqueOptionId];
+						return {
+							effectiveSelections: newEffectiveSelections,
+						};
+					});
+				}
 			} catch (error) {
 				console.error("Failed to update ExR option:", error);
 			}

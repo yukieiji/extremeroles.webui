@@ -1,15 +1,21 @@
 import type {
 	AuOptionCategoryDto,
-	ExRTabDto,
 	ExROptionPutRequest,
+	ExRTabDto,
 	UpdatedOptions,
 } from "../type";
 
 /**
  * API エンドポイントの定数定義
  */
-const EXR_OPTION_URL = "/exr/option/";
-const AU_OPTION_URL = "/au/option/";
+const EXR_OPTION_URL = `${import.meta.env.BASE_URL ?? "/"}exr/option/`.replace(
+	/\/+/g,
+	"/",
+);
+const AU_OPTION_URL = `${import.meta.env.BASE_URL ?? "/"}au/option/`.replace(
+	/\/+/g,
+	"/",
+);
 
 /**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
@@ -120,56 +126,63 @@ export async function updateExrOptionsCache(updatedData: UpdatedOptions) {
 		return;
 	}
 
-	const currentTabs = await exrOptionsPromise;
-	const newTabs = [...currentTabs];
+	// 複数の更新が並列で走った際のレースコンディションを防ぐため、
+	// Promiseを連鎖させて順次実行されるようにします。
+	exrOptionsPromise = (async () => {
+		const currentTabs = await exrOptionsPromise!;
+		const newTabs = [...currentTabs];
 
-	// UpdatedCategory の反映
-	if (updatedData.UpdatedCategory) {
-		const cat = updatedData.UpdatedCategory;
-		for (let i = 0; i < newTabs.length; i++) {
-			const tab = newTabs[i];
-			const categoryIndex = tab.Categories.findIndex((c) => {
-				return c.Id === cat.Id;
-			});
-			if (categoryIndex !== -1) {
-				const newCategories = [...tab.Categories];
-				newCategories[categoryIndex] = cat;
-				newTabs[i] = { ...tab, Categories: newCategories };
-			}
-		}
-	}
-
-	// ChainUpdatedOption の反映
-	for (const chain of updatedData.ChainUpdatedOption) {
-		for (let i = 0; i < newTabs.length; i++) {
-			const tab = newTabs[i];
-			const categoryIndex = tab.Categories.findIndex((c) => {
-				return c.Id === chain.Id;
-			});
-			if (categoryIndex !== -1) {
-				const targetCategory = tab.Categories[categoryIndex];
-				const newOptions = [...targetCategory.Options];
-
-				for (const newOpt of chain.Options) {
-					const optIndex = newOptions.findIndex((o) => {
-						return o.Id === newOpt.Id;
-					});
-					if (optIndex !== -1) {
-						newOptions[optIndex] = newOpt;
-					} else {
-						newOptions.push(newOpt);
-					}
+		// UpdatedCategory の反映
+		if (updatedData.UpdatedCategory) {
+			const cat = updatedData.UpdatedCategory;
+			for (let i = 0; i < newTabs.length; i++) {
+				const tab = newTabs[i];
+				const categoryIndex = tab.Categories.findIndex((c) => {
+					return c.Id === cat.Id;
+				});
+				if (categoryIndex !== -1) {
+					const newCategories = [...tab.Categories];
+					newCategories[categoryIndex] = cat;
+					newTabs[i] = { ...tab, Categories: newCategories };
 				}
-
-				const newCategories = [...tab.Categories];
-				newCategories[categoryIndex] = {
-					...targetCategory,
-					Options: newOptions,
-				};
-				newTabs[i] = { ...tab, Categories: newCategories };
 			}
 		}
-	}
 
-	exrOptionsPromise = Promise.resolve(newTabs);
+		// ChainUpdatedOption の反映
+		for (const chain of updatedData.ChainUpdatedOption) {
+			for (let i = 0; i < newTabs.length; i++) {
+				const tab = newTabs[i];
+				const categoryIndex = tab.Categories.findIndex((c) => {
+					return c.Id === chain.Id;
+				});
+				if (categoryIndex !== -1) {
+					const targetCategory = tab.Categories[categoryIndex];
+					const newOptions = [...targetCategory.Options];
+
+					for (const newOpt of chain.Options) {
+						const optIndex = newOptions.findIndex((o) => {
+							return o.Id === newOpt.Id;
+						});
+						if (optIndex !== -1) {
+							newOptions[optIndex] = newOpt;
+						} else {
+							newOptions.push(newOpt);
+						}
+					}
+
+					const newCategories = [...tab.Categories];
+					newCategories[categoryIndex] = {
+						...targetCategory,
+						Options: newOptions,
+					};
+					newTabs[i] = { ...tab, Categories: newCategories };
+				}
+			}
+		}
+
+		return newTabs;
+	})();
+
+	// 更新完了を待機
+	await exrOptionsPromise;
 }
