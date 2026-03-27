@@ -17,6 +17,11 @@ async function enableMocking() {
 		return;
 	}
 
+	// 環境変数 VITE_USE_MOCK が false の場合はモックを有効化しない
+	if (import.meta.env.VITE_USE_MOCK === "false") {
+		return;
+	}
+
 	const { worker } = await import("../mocks/browser");
 
 	// MSWをサービスワーカーとして登録
