@@ -6,6 +6,12 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/exr/option/': 'http://localhost:57700',
+      '/au/option/': 'http://localhost:57700',
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,

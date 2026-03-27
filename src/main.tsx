@@ -13,7 +13,16 @@ if (import.meta.env.DEV) {
  * 開発環境の場合にMSWを有効化
  */
 async function enableMocking() {
+	// 本番環境（!DEV）ではモックを有効化しない
+	// ただし、E2Eテスト環境（process.env.NODE_ENV === 'test'）などの例外を考慮し、
+	// 常に import.meta.env.DEV をチェックする
 	if (!import.meta.env.DEV) {
+		return;
+	}
+
+	// VITE_USE_MOCK 環境変数が "true" の場合にのみ有効化
+	// これにより、デフォルト（pnpm dev）ではモックが無効になる
+	if (import.meta.env.VITE_USE_MOCK !== "true") {
 		return;
 	}
 
