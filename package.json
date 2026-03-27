@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env VITE_USE_MOCK=false vite",
+    "dev": "vite",
     "dev:mock": "cross-env VITE_USE_MOCK=true vite",
     "build": "tsc -b && vite build",
     "lint": "biome lint",
