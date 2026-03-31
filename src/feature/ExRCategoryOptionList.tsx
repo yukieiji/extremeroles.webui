@@ -21,7 +21,10 @@ export function ExRCategoryOptionList({
 	const groupedItems = shouldGroup ? groupOptionPairs(options) : options;
 
 	return (
-		<div className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
+		<div
+			data-testid="exr-category-list-container"
+			className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700"
+		>
 			{groupedItems.map((item) => {
 				if ("type" in item && item.type === "pair") {
 					return (

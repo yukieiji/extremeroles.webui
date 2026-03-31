@@ -96,6 +96,8 @@ describe("ExRCategoryList Component Selection", () => {
 
 	it("filters out 50 and 51 from role category body", () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+		// Set a non-zero spawn rate so the accordion is enabled
+		useStore.getState().TEMP_updateExROptionSelection("2-50", 1); // Category 2, Option 50, Index 1 (Value 100)
 		render(<ExRCategoryList tabs={mockTabs} />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,

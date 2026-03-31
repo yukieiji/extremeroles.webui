@@ -31,6 +31,12 @@ export function ExRRoleSpawnControls({
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;
 	});
+	const toggleExRCategory = useStore((state) => {
+		return state.toggleExRCategory;
+	});
+	const isOpenedCategory = useStore((state) => {
+		return state.openedExRCategoryIds[categoryId] ?? false;
+	});
 
 	const spawnRateSelection =
 		effectiveSpawnRateSelection ?? spawnRateOption.Selection;
@@ -53,6 +59,9 @@ export function ExRRoleSpawnControls({
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
 			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			if (isOpenedCategory) {
+				toggleExRCategory(categoryId);
+			}
 		}
 	};
 
@@ -68,6 +77,9 @@ export function ExRRoleSpawnControls({
 				findClosestIndex(rateValues, 0),
 			);
 			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			if (isOpenedCategory) {
+				toggleExRCategory(categoryId);
+			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
