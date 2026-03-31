@@ -92,11 +92,11 @@ test.describe("ExR Role Spawn Options in Header", () => {
 		// 最初は閉じている
 		await expect(content).not.toBeVisible();
 
-		// レートのスライダーを操作
+		// レートを 0% から 10% に変更（アコーディオンを有効化）
 		const rateSlider = sheriffCategory
 			.getByTestId("spawn-rate-control")
 			.locator('input[type="range"]');
-		await rateSlider.fill("10");
+		await rateSlider.fill("1");
 
 		// まだ閉じているはず（stopPropagationが効いている）
 		await expect(content).not.toBeVisible();
@@ -123,6 +123,12 @@ test.describe("ExR Role Spawn Options in Header", () => {
 			.click();
 
 		const sheriffCategory = page.getByTestId(`exr-category-${SHERIFF_ID}`);
+
+		// レートを 10% に変更（アコーディオンを有効化）
+		await sheriffCategory
+			.getByTestId("spawn-rate-control")
+			.locator('input[type="range"]')
+			.fill("1");
 
 		// アコーディオンを開く
 		await sheriffCategory.getByRole("button", { name: "シェリフ" }).click();

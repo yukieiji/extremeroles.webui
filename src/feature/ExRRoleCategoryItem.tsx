@@ -1,5 +1,5 @@
 import { ColoredText } from "../components/parts/ColoredText";
-import { isPresetOption } from "../logics/optionUtils";
+import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
 import type { ExRCategoryDto } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
@@ -20,14 +20,23 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 		return state.toggleExRCategory;
 	});
 
-	const isOpen = isOpendCategory ?? false;
-
 	const spawnRateOption = category.Options.find((opt) => {
 		return opt.Id === 50;
 	});
 	const spawnCountOption = category.Options.find((opt) => {
 		return opt.Id === 51;
 	});
+
+	const uniqueRateId = getUniqueOptionId(category.Id, 50);
+	const effectiveSpawnRateSelection = useStore((state) => {
+		return state.effectiveSelections[uniqueRateId];
+	});
+	const spawnRateSelection =
+		effectiveSpawnRateSelection ?? spawnRateOption?.Selection ?? 0;
+	const rateValues = (spawnRateOption?.RangeMeta.Values as number[]) ?? [];
+	const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
+
+	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 
 	const filteredOptions = category.Options.filter((option) => {
 		if (isPresetOption(category.Id, option.Id)) {
@@ -48,29 +57,40 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
 			data-testid={`exr-category-${category.Id}`}
 		>
-			<div className="flex items-center bg-gray-800 hover:bg-gray-700 transition-colors">
+			<div
+				className={`flex items-center bg-gray-800 ${!isSpawnRateZero ? "hover:bg-gray-700 transition-colors" : ""}`}
+			>
 				<button
 					type="button"
 					onClick={() => {
-						toggleExRCategory(category.Id);
+						if (!isSpawnRateZero) {
+							toggleExRCategory(category.Id);
+						}
 					}}
-					className="flex-1 flex items-center gap-3 p-4 text-left"
+					className={`flex-1 flex items-center gap-3 p-4 text-left ${isSpawnRateZero ? "cursor-default" : ""}`}
 					aria-expanded={isOpen}
+					disabled={isSpawnRateZero}
 				>
-					<svg
-						className={`w-5 h-5 transition-transform duration-200 text-gray-400 ${isOpen ? "rotate-180" : ""}`}
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<title>{isOpen ? "Collapse" : "Expand"}</title>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
+					{isSpawnRateZero ? (
+						<div className="w-5 h-5 flex items-center justify-center text-gray-500 font-bold">
+							・
+						</div>
+					) : (
+						<svg
+							className={`w-5 h-5 transition-transform duration-200 text-gray-400 ${isOpen ? "rotate-180" : ""}`}
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<title>{isOpen ? "Collapse" : "Expand"}</title>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M19 9l-7 7-7-7"
+							/>
+						</svg>
+					)}
 					<span className="font-semibold text-gray-200">
 						<ColoredText text={category.Name} />
 					</span>
