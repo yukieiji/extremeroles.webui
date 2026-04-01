@@ -38,14 +38,14 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 
-	const filteredOptions = category.Options.filter((option) => {
+	const filteredOptions = category.Options.flatMap((option) => {
 		if (isPresetOption(category.Id, option.Id)) {
-			return false;
+			return [];
 		}
 		if (option.Id === 50 || option.Id === 51) {
-			return false;
+			return option.Childs || [];
 		}
-		return true;
+		return [option];
 	});
 
 	if (filteredOptions.length === 0) {
