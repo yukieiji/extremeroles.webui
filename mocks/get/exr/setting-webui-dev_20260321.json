@@ -419909,7 +419909,7 @@
           },
           {
             "Id": 52,
-            "IsActive": false,
+            "IsActive": true,
             "TranslatedName": "アサインウェイト",
             "Selection": 5,
             "Format": "",

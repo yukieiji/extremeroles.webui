@@ -38,7 +38,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 
-	const filteredOptions = category.Options.flatMap((option) => {
+	const allPotentialOptions = category.Options.flatMap((option) => {
 		if (isPresetOption(category.Id, option.Id)) {
 			return [];
 		}
@@ -46,6 +46,19 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 			return option.Childs || [];
 		}
 		return [option];
+	});
+
+	// ID 50 と 51 を除外しつつ、重複（トップレベルと子要素の両方に存在する場合など）を排除
+	const filteredOptions = allPotentialOptions.filter((option, index, self) => {
+		if (option.Id === 50 || option.Id === 51) {
+			return false;
+		}
+		return (
+			index ===
+			self.findIndex((o) => {
+				return o.Id === option.Id;
+			})
+		);
 	});
 
 	if (filteredOptions.length === 0) {
