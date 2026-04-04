@@ -26,7 +26,7 @@ export function ExROptionEditor({ data }: ExROptionEditorProps) {
 					</div>
 				}
 			>
-				<ExRCategoryList tabs={data} />
+				<ExRCategoryList />
 			</Suspense>
 		</div>
 	);

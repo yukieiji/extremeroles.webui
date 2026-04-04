@@ -1,32 +1,27 @@
+import { use } from "react";
+import { getExrTabOptions } from "../logics/api";
 import { isPresetOption } from "../logics/optionUtils";
-import type { ExRTabDto } from "../type";
 import { OptionTab } from "../type";
 import { useStore } from "../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
 import { ExRStandardCategoryItem } from "./ExRStandardCategoryItem";
 
-interface ExRCategoryListProps {
-	tabs: ExRTabDto[];
-}
-
 /**
  * 選択されたタブのカテゴリ一覧を表示するコンポーネント
  */
-export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
+export function ExRCategoryList() {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
 	const isTabPending = useStore((state) => {
 		return state.isTabPending;
 	});
-
-	let selectedTab = tabs.find((tab) => {
-		return tab.Id === selectedExRTabId;
+	const exrOptionsVersion = useStore((state) => {
+		return state.exrOptionsVersion;
 	});
 
-	if (!selectedTab) {
-		selectedTab = tabs[0];
-	}
+	// タブごとのデータを取得。exrOptionsVersionが更新されると再レンダリングされ、最新のプロミスがuse()される
+	const selectedTab = use(getExrTabOptions(selectedExRTabId));
 
 	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
 
@@ -44,6 +39,7 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
 
 	return (
 		<div
+			key={`${selectedExRTabId}-${exrOptionsVersion}`}
 			data-testid="exr-category-list"
 			className={`flex flex-col relative transition-opacity duration-200 ${isTabPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
 			data-is-pending={isTabPending ? "true" : "false"}

@@ -1,16 +1,30 @@
-import type { AuOptionCategoryDto, ExRTabDto } from "../type";
+import type {
+	AuOptionCategoryDto,
+	ExROptionPutRequest,
+	ExRTabDto,
+	UpdatedOptions,
+} from "../type";
 
 /**
  * API エンドポイントの定数定義
+ * テスト環境（Node.js/JSDOM）での相対パスエラーを避けるため、必要に応じてベースURLを付与します
  */
-const EXR_OPTION_URL = "/exr/option/";
-const AU_OPTION_URL = "/au/option/";
+const getBaseUrl = () => {
+	if (typeof window !== "undefined" && window.location.origin !== "null") {
+		return window.location.origin;
+	}
+	return "";
+};
+
+const EXR_OPTION_URL = `${getBaseUrl()}/exr/option/`;
+const AU_OPTION_URL = `${getBaseUrl()}/au/option/`;
 
 /**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
 let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
+const exrTabPromises: Record<number, Promise<ExRTabDto> | null> = {};
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 
 /**
@@ -18,6 +32,9 @@ let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
  */
 export function resetApiCache() {
 	exrOptionsPromise = null;
+	for (const key in exrTabPromises) {
+		delete exrTabPromises[Number(key)];
+	}
 	auOptionsPromise = null;
 }
 
@@ -42,10 +59,32 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 		}
-		return res.json();
+		const data: ExRTabDto[] = await res.json();
+
+		// タブごとのプロミスも個別にキャッシュ
+		for (const tab of data) {
+			exrTabPromises[tab.Id] = Promise.resolve(tab);
+		}
+
+		return data;
 	})();
 
 	return exrOptionsPromise;
+}
+
+/**
+ * 指定されたタブのExRオプションを取得する
+ */
+export function getExrTabOptions(tabId: number): Promise<ExRTabDto> {
+	if (exrTabPromises[tabId]) {
+		return exrTabPromises[tabId] as Promise<ExRTabDto>;
+	}
+
+	return (async () => {
+		const allTabs = await getExrOptions();
+		const tab = allTabs.find((t) => t.Id === tabId) || allTabs[0];
+		return tab;
+	})();
 }
 
 /**
@@ -80,4 +119,79 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
  */
 export function getAllOptions(): Promise<[ExRTabDto[], AuOptionCategoryDto[]]> {
 	return Promise.all([getExrOptions(), getAuOptions()]);
+}
+
+/**
+ * ExRオプションを更新する
+ */
+export async function putExrOption(
+	request: ExROptionPutRequest,
+): Promise<UpdatedOptions> {
+	const res = await fetch(EXR_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	const data = await res.json();
+	await updateExrOptionsCache(data);
+	return data;
+}
+
+/**
+ * ExRオプションのキャッシュを差分更新する
+ */
+export async function updateExrOptionsCache(updatedData: UpdatedOptions) {
+	if (!exrOptionsPromise) {
+		return;
+	}
+
+	const currentData = await exrOptionsPromise;
+	const newData = currentData.map((tab) => {
+		let isTabUpdated = false;
+		const newCategories = tab.Categories.map((category) => {
+			// UpdatedCategory が一致する場合、丸ごと差し替え
+			if (
+				updatedData.UpdatedCategory &&
+				category.Id === updatedData.UpdatedCategory.Id
+			) {
+				isTabUpdated = true;
+				return updatedData.UpdatedCategory;
+			}
+
+			// ChainUpdatedOption に含まれるカテゴリの場合、Options を更新
+			const chainUpdate = updatedData.ChainUpdatedOption.find(
+				(u) => u.Id === category.Id,
+			);
+			if (chainUpdate) {
+				isTabUpdated = true;
+				return {
+					...category,
+					Options: chainUpdate.Options,
+				};
+			}
+
+			return category;
+		});
+
+		const newTab = {
+			...tab,
+			Categories: newCategories,
+		};
+
+		// タブが更新された場合、タブごとのプロミスも更新
+		if (isTabUpdated) {
+			exrTabPromises[tab.Id] = Promise.resolve(newTab);
+		}
+
+		return newTab;
+	});
+
+	exrOptionsPromise = Promise.resolve(newData);
 }

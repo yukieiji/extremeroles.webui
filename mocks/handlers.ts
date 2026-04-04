@@ -74,7 +74,7 @@ export const handlers = [
       return new HttpResponse(null, { status: 400 });
     }
 
-    const { CategoryId, OptionId } = result.data;
+    const { CategoryId, OptionId, Selection } = result.data;
 
     // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
@@ -82,14 +82,31 @@ export const handlers = [
     }
 
     // それ以外はUpdatedOptionsを返す
+    // モックでは、リクエストされた Selection を反映させたデータを返すようにする
+    // また、永続化のために validatedExRMockData 自体を更新する
+    let targetCategory: any = null;
+    for (const tab of validatedExRMockData) {
+      for (const category of tab.Categories) {
+        if (category.Id === CategoryId) {
+          targetCategory = category;
+          const updateOptionRecursive = (options: any[]) => {
+            for (const option of options) {
+              if (option.Id === OptionId) {
+                option.Selection = Selection;
+              }
+              if (option.Childs) {
+                updateOptionRecursive(option.Childs);
+              }
+            }
+          };
+          updateOptionRecursive(category.Options);
+        }
+      }
+    }
+
     const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [
-        {
-          Id: validatedExRMockData[0].Categories[0].Id,
-          Options: [validatedExRMockData[0].Categories[0].Options[0]],
-        },
-      ],
+      UpdatedCategory: targetCategory,
+      ChainUpdatedOption: [],
     };
 
     // レスポンスデータのバリデーション
