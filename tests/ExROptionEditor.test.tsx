@@ -1,6 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { Suspense } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
+import * as api from "../src/logics/api";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -87,12 +89,28 @@ describe("ExROptionEditor", () => {
 
 	beforeEach(() => {
 		useStore.getState().resetViewer();
+		vi.restoreAllMocks();
 	});
 
-	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
-		render(<ExROptionEditor data={mockData} />);
+	const renderWithSuspense = (ui: React.ReactElement) => {
+		return render(<Suspense fallback={<div>Loading...</div>}>{ui}</Suspense>);
+	};
 
-		expect(screen.getByText("Category 1")).toBeInTheDocument();
+	it("should only show visible categories (not empty, at least one active option) and hide preset", async () => {
+		const promises: Record<number, Promise<ExRTabDto>> = {};
+		vi.spyOn(api, "getExrTabOptions").mockImplementation((id) => {
+			if (!promises[id]) {
+				const tab = mockData.find((t) => t.Id === id) || mockData[0];
+				promises[id] = Promise.resolve(tab);
+			}
+			return promises[id];
+		});
+
+		await act(async () => {
+			renderWithSuspense(<ExROptionEditor data={mockData} />);
+		});
+
+		expect(await screen.findByText("Category 1")).toBeInTheDocument();
 		expect(screen.queryByText("Empty Category")).not.toBeInTheDocument();
 		expect(screen.queryByText("Inactive Category")).not.toBeInTheDocument();
 
@@ -100,23 +118,51 @@ describe("ExROptionEditor", () => {
 		expect(screen.queryByText("Preset Category")).not.toBeInTheDocument();
 	});
 
-	it("should switch tabs and show correct categories", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+	it("should switch tabs and show correct categories", async () => {
+		const promises: Record<number, Promise<ExRTabDto>> = {};
+		vi.spyOn(api, "getExrTabOptions").mockImplementation((id) => {
+			if (!promises[id]) {
+				const tab = mockData.find((t) => t.Id === id) || mockData[0];
+				promises[id] = Promise.resolve(tab);
+			}
+			return promises[id];
+		});
 
-		expect(screen.getByText("Category 1")).toBeInTheDocument();
+		let unmount: () => void;
+		await act(async () => {
+			const result = renderWithSuspense(<ExROptionEditor data={mockData} />);
+			unmount = result.unmount;
+		});
+
+		expect(await screen.findByText("Category 1")).toBeInTheDocument();
 
 		const tab2Button = screen.getByText("Tab 2");
-		fireEvent.click(tab2Button);
+		await act(async () => {
+			fireEvent.click(tab2Button);
+		});
 
 		expect(screen.queryByText("Category 1")).not.toBeInTheDocument();
-		expect(screen.getByText("Category 2")).toBeInTheDocument();
-		unmount();
+		expect(await screen.findByText("Category 2")).toBeInTheDocument();
+		unmount!();
 	});
 
-	it("should toggle accordion and show options UI", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+	it("should toggle accordion and show options UI", async () => {
+		const promises: Record<number, Promise<ExRTabDto>> = {};
+		vi.spyOn(api, "getExrTabOptions").mockImplementation((id) => {
+			if (!promises[id]) {
+				const tab = mockData.find((t) => t.Id === id) || mockData[0];
+				promises[id] = Promise.resolve(tab);
+			}
+			return promises[id];
+		});
 
-		const categoryButton = screen.getByText("Category 1");
+		let unmount: () => void;
+		await act(async () => {
+			const result = renderWithSuspense(<ExROptionEditor data={mockData} />);
+			unmount = result.unmount;
+		});
+
+		const categoryButton = await screen.findByText("Category 1");
 
 		fireEvent.click(categoryButton);
 
@@ -129,6 +175,6 @@ describe("ExROptionEditor", () => {
 		// 現在の値が表示されていることを確認
 		expect(screen.getAllByDisplayValue("0")).toHaveLength(2);
 
-		unmount();
+		unmount!();
 	});
 });

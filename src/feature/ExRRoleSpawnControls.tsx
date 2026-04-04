@@ -28,8 +28,8 @@ export function ExRRoleSpawnControls({
 		return state.effectiveSelections[uniqueCountId];
 	});
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
@@ -54,11 +54,11 @@ export function ExRRoleSpawnControls({
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueRateId, newSelection);
+		updateExROptionSelection(uniqueRateId, newSelection);
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
@@ -72,23 +72,23 @@ export function ExRRoleSpawnControls({
 	const handleCountUIChange = (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			TEMP_updateExROptionSelection(
+			updateExROptionSelection(
 				uniqueRateId,
 				findClosestIndex(rateValues, 0),
 			);
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
-				TEMP_updateExROptionSelection(
+				updateExROptionSelection(
 					uniqueRateId,
 					findClosestIndex(rateValues, 10),
 				);
 			}
-			TEMP_updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			updateExROptionSelection(uniqueCountId, newUISelection - 1);
 		}
 	};
 

@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import { putExrOption } from "../logics/api";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
@@ -14,16 +15,18 @@ export interface OptionViewerSlice {
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<string, boolean>;
 	effectiveSelections: Record<string, number>;
+	pendingCategoryCounts: Record<number, number>;
+	exrOptionsVersion: number;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: string) => void;
-	TEMP_updateExROptionSelection: (
+	updateExROptionSelection: (
 		uniqueOptionId: string,
 		selection: number,
-	) => void;
+	) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -34,6 +37,7 @@ export interface OptionViewerSlice {
  */
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 	set,
+	get,
 ) => {
 	return {
 		selectedExRTabId: 0,
@@ -41,6 +45,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
 		effectiveSelections: {},
+		pendingCategoryCounts: {},
+		exrOptionsVersion: 0,
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -56,6 +62,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
 				effectiveSelections: {},
+				pendingCategoryCounts: {},
+				exrOptionsVersion: 0,
 				isPresetDropdownOpen: false,
 			});
 		},
@@ -79,18 +87,73 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		TEMP_updateExROptionSelection: (
+		updateExROptionSelection: async (
 			uniqueOptionId: string,
 			selection: number,
 		) => {
+			const [categoryIdStr, optionIdStr] = uniqueOptionId.split("-");
+			const categoryId = parseInt(categoryIdStr, 10);
+			const optionId = parseInt(optionIdStr, 10);
+			const tabId = get().selectedExRTabId;
+
+			// UIを即座に更新するために一時的な選択状態をセット
 			set((state) => {
 				return {
 					effectiveSelections: {
 						...state.effectiveSelections,
 						[uniqueOptionId]: selection,
 					},
+					pendingCategoryCounts: {
+						...state.pendingCategoryCounts,
+						[categoryId]: (state.pendingCategoryCounts[categoryId] || 0) + 1,
+					},
 				};
 			});
+
+			try {
+				await putExrOption({
+					TabId: tabId,
+					CategoryId: categoryId,
+					OptionId: optionId,
+					Selection: selection,
+				});
+
+				// 成功したら一時的な選択状態をクリア（キャッシュから最新が取得されるため）
+				set((state) => {
+					const newEffectiveSelections = { ...state.effectiveSelections };
+					delete newEffectiveSelections[uniqueOptionId];
+
+					return {
+						effectiveSelections: newEffectiveSelections,
+						exrOptionsVersion: state.exrOptionsVersion + 1,
+						pendingCategoryCounts: {
+							...state.pendingCategoryCounts,
+							[categoryId]: Math.max(
+								0,
+								(state.pendingCategoryCounts[categoryId] || 1) - 1,
+							),
+						},
+					};
+				});
+			} catch (error) {
+				console.error("Failed to update ExR option selection:", error);
+				// エラー時は保留状態を解除し、一時的な選択状態も戻す
+				set((state) => {
+					const newEffectiveSelections = { ...state.effectiveSelections };
+					delete newEffectiveSelections[uniqueOptionId];
+
+					return {
+						effectiveSelections: newEffectiveSelections,
+						pendingCategoryCounts: {
+							...state.pendingCategoryCounts,
+							[categoryId]: Math.max(
+								0,
+								(state.pendingCategoryCounts[categoryId] || 1) - 1,
+							),
+						},
+					};
+				});
+			}
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {

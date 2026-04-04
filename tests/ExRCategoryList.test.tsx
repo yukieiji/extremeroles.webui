@@ -1,6 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { Suspense } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
+import * as api from "../src/logics/api";
 import { type ExRTabDto, OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -70,35 +72,77 @@ describe("ExRCategoryList Component Selection", () => {
 
 	beforeEach(() => {
 		useStore.getState().resetViewer();
+		vi.restoreAllMocks();
 	});
 
-	it("renders ExRStandardCategoryItem for General Tab", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+	const renderWithSuspense = (ui: React.ReactElement) => {
+		return render(<Suspense fallback={<div>Loading...</div>}>{ui}</Suspense>);
+	};
 
-		// General Tab: Should render standard category
-		expect(screen.getByText("General Category")).toBeInTheDocument();
+	it("renders ExRStandardCategoryItem for General Tab", async () => {
+		const promises: Record<number, Promise<ExRTabDto>> = {};
+		vi.spyOn(api, "getExrTabOptions").mockImplementation((id) => {
+			if (!promises[id]) {
+				const tab = mockTabs.find((t) => t.Id === id) || mockTabs[0];
+				promises[id] = Promise.resolve(tab);
+			}
+			return promises[id];
+		});
+
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
+			renderWithSuspense(<ExRCategoryList />);
+		});
+
+		// Wait for Suspense to resolve
+		expect(await screen.findByText("General Category")).toBeInTheDocument();
 
 		// Header should NOT have spawn controls
 		expect(screen.queryByText("レート")).not.toBeInTheDocument();
 	});
 
-	it("renders ExRRoleCategoryItem for Role Tab", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+	it("renders ExRRoleCategoryItem for Role Tab", async () => {
+		const promises: Record<number, Promise<ExRTabDto>> = {};
+		vi.spyOn(api, "getExrTabOptions").mockImplementation((id) => {
+			if (!promises[id]) {
+				const tab = mockTabs.find((t) => t.Id === id) || mockTabs[0];
+				promises[id] = Promise.resolve(tab);
+			}
+			return promises[id];
+		});
 
-		// Role Tab: Should render specialized category item
-		expect(screen.getByText("Sheriff")).toBeInTheDocument();
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+			renderWithSuspense(<ExRCategoryList />);
+		});
+
+		expect(await screen.findByText("Sheriff")).toBeInTheDocument();
 
 		// Header should have spawn rate control (レート)
 		expect(screen.getByText("レート")).toBeInTheDocument();
 	});
 
-	it("filters out 50 and 51 from role category body", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+	it("filters out 50 and 51 from role category body", async () => {
+		const testMockTabs = JSON.parse(JSON.stringify(mockTabs));
 		// Set a non-zero spawn rate so the accordion is enabled
-		useStore.getState().TEMP_updateExROptionSelection("2-50", 1); // Category 2, Option 50, Index 1 (Value 100)
-		render(<ExRCategoryList tabs={mockTabs} />);
+		testMockTabs[1].Categories[0].Options[0].Selection = 1;
+
+		const promises: Record<number, Promise<ExRTabDto>> = {};
+		vi.spyOn(api, "getExrTabOptions").mockImplementation((id) => {
+			if (!promises[id]) {
+				const tab =
+					testMockTabs.find((t: ExRTabDto) => t.Id === id) || testMockTabs[0];
+				promises[id] = Promise.resolve(tab);
+			}
+			return promises[id];
+		});
+
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+			renderWithSuspense(<ExRCategoryList />);
+		});
+
+		expect(await screen.findByText("Sheriff")).toBeInTheDocument();
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
 		// we find the toggle button by role.
