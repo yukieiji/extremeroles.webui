@@ -72,10 +72,7 @@ export function ExRRoleSpawnControls({
 	const handleCountUIChange = (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			updateExROptionSelection(
-				uniqueRateId,
-				findClosestIndex(rateValues, 0),
-			);
+			updateExROptionSelection(uniqueRateId, findClosestIndex(rateValues, 0));
 			updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);

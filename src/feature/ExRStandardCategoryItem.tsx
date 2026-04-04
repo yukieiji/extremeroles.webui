@@ -18,6 +18,9 @@ export function ExRStandardCategoryItem({
 	const isOpen = useStore((state) => {
 		return state.openedExRCategoryIds[category.Id] ?? false;
 	});
+	const isPending = useStore((state) => {
+		return (state.pendingCategoryCounts[category.Id] ?? 0) > 0;
+	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
@@ -31,18 +34,32 @@ export function ExRStandardCategoryItem({
 	}
 
 	return (
-		<div data-testid={`exr-category-${category.Id}`}>
+		<div
+			data-testid={`exr-category-${category.Id}`}
+			className={`relative transition-opacity duration-200 ${isPending ? "opacity-75" : "opacity-100"}`}
+		>
 			<Accordion
 				title={<ColoredText text={category.Name} />}
 				isOpen={isOpen}
 				onToggle={() => {
-					toggleExRCategory(category.Id);
+					if (!isPending) {
+						toggleExRCategory(category.Id);
+					}
 				}}
+				headerExtra={
+					isPending ? (
+						<div className="flex items-center px-4">
+							<div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+						</div>
+					) : undefined
+				}
 			>
-				<ExRCategoryOptionList
-					categoryId={category.Id}
-					options={filteredOptions}
-				/>
+				<div className={isPending ? "pointer-events-none grayscale-[0.5]" : ""}>
+					<ExRCategoryOptionList
+						categoryId={category.Id}
+						options={filteredOptions}
+					/>
+				</div>
 			</Accordion>
 		</div>
 	);

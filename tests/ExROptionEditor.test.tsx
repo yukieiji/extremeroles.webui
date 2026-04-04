@@ -143,7 +143,7 @@ describe("ExROptionEditor", () => {
 
 		expect(screen.queryByText("Category 1")).not.toBeInTheDocument();
 		expect(await screen.findByText("Category 2")).toBeInTheDocument();
-		unmount!();
+		unmount?.();
 	});
 
 	it("should toggle accordion and show options UI", async () => {
@@ -175,6 +175,6 @@ describe("ExROptionEditor", () => {
 		// 現在の値が表示されていることを確認
 		expect(screen.getAllByDisplayValue("0")).toHaveLength(2);
 
-		unmount!();
+		unmount?.();
 	});
 });

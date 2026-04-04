@@ -16,6 +16,9 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 	const isOpendCategory = useStore((state) => {
 		return state.openedExRCategoryIds[category.Id];
 	});
+	const isPending = useStore((state) => {
+		return (state.pendingCategoryCounts[category.Id] ?? 0) > 0;
+	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
@@ -67,26 +70,30 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 
 	return (
 		<div
-			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
+			className={`border border-gray-700 rounded-lg overflow-hidden mb-2 relative transition-opacity duration-200 ${isPending ? "opacity-75" : "opacity-100"}`}
 			data-testid={`exr-category-${category.Id}`}
 		>
 			<div
-				className={`flex items-center bg-gray-800 ${!isSpawnRateZero ? "hover:bg-gray-700 transition-colors" : ""}`}
+				className={`flex items-center bg-gray-800 ${!isSpawnRateZero && !isPending ? "hover:bg-gray-700 transition-colors" : ""}`}
 			>
 				<button
 					type="button"
 					onClick={() => {
-						if (!isSpawnRateZero) {
+						if (!isSpawnRateZero && !isPending) {
 							toggleExRCategory(category.Id);
 						}
 					}}
-					className={`flex-1 flex items-center gap-3 p-4 text-left ${isSpawnRateZero ? "cursor-default" : ""}`}
+					className={`flex-1 flex items-center gap-3 p-4 text-left ${isSpawnRateZero || isPending ? "cursor-default" : ""}`}
 					aria-expanded={isOpen}
-					disabled={isSpawnRateZero}
+					disabled={isSpawnRateZero || isPending}
 				>
 					{isSpawnRateZero ? (
 						<div className="w-5 h-5 flex items-center justify-center text-gray-500 font-bold">
 							・
+						</div>
+					) : isPending ? (
+						<div className="w-5 h-5 flex items-center justify-center">
+							<div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
 						</div>
 					) : (
 						<svg
@@ -109,7 +116,9 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 					</span>
 				</button>
 
-				<div className="flex items-center px-4">
+				<div
+					className={`flex items-center px-4 ${isPending ? "pointer-events-none grayscale-[0.5]" : ""}`}
+				>
 					{spawnRateOption && spawnCountOption && (
 						<ExRRoleSpawnControls
 							categoryId={category.Id}
@@ -127,7 +136,9 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 			>
 				<div className="min-h-0">
 					{isOpen && (
-						<div className="p-4 bg-gray-900 border-t border-gray-700">
+						<div
+							className={`p-4 bg-gray-900 border-t border-gray-700 ${isPending ? "pointer-events-none grayscale-[0.5]" : ""}`}
+						>
 							<ExRCategoryOptionList
 								categoryId={category.Id}
 								options={filteredOptions}
