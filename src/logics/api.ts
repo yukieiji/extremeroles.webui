@@ -1,8 +1,9 @@
-import type {
-	AuOptionCategoryDto,
-	ExROptionPutRequest,
-	ExRTabDto,
-	UpdatedOptions,
+import {
+	type AuOptionCategoryDto,
+	type ExROptionPutRequest,
+	type ExRTabDto,
+	ExRTabDtoArraySchema,
+	type UpdatedOptions,
 } from "../type";
 
 /**
@@ -32,10 +33,11 @@ let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
  */
 export function resetApiCache() {
 	exrOptionsPromise = null;
-	for (const key in exrTabPromises) {
+	for (const key of Object.keys(exrTabPromises)) {
 		delete exrTabPromises[Number(key)];
 	}
 	auOptionsPromise = null;
+	cacheUpdateQueue = Promise.resolve();
 }
 
 /**
@@ -59,11 +61,17 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 		}
-		const data: ExRTabDto[] = await res.json();
+		const json = await res.json();
+		// スキーマバリデーションを通して、IDが文字列の場合（モックデータなど）を数値に変換する
+		const data = ExRTabDtoArraySchema.parse(json);
 
 		// タブごとのプロミスも個別にキャッシュ
+		// すでに getExrTabOptions によって作成されているプロミスがある場合は、
+		// そのインスタンスの同一性を維持するために上書きしない（解決を待つだけにする）
 		for (const tab of data) {
-			exrTabPromises[tab.Id] = Promise.resolve(tab);
+			if (!exrTabPromises[tab.Id]) {
+				exrTabPromises[tab.Id] = Promise.resolve(tab);
+			}
 		}
 
 		return data;
@@ -76,15 +84,23 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
  * 指定されたタブのExRオプションを取得する
  */
 export function getExrTabOptions(tabId: number): Promise<ExRTabDto> {
-	if (exrTabPromises[tabId]) {
-		return exrTabPromises[tabId] as Promise<ExRTabDto>;
+	// キャッシュがあればそれを返す（同一インスタンスを維持）
+	const existing = exrTabPromises[tabId];
+	if (existing) {
+		return existing;
 	}
 
+	// キャッシュがない場合は、全体の取得を待ってから該当するタブを返すプロミスを作成してキャッシュする
 	const promise = (async () => {
 		const allTabs = await getExrOptions();
-		const tab = allTabs.find((t) => t.Id === tabId) || allTabs[0];
+		const tab = allTabs.find((t) => t.Id === tabId);
+		if (!tab) {
+			// 指定されたIDが見つからない場合は、最初のタブをフォールバックとして返す
+			return allTabs[0];
+		}
 		return tab;
 	})();
+
 	exrTabPromises[tabId] = promise;
 	return promise;
 }

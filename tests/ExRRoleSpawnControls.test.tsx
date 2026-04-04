@@ -79,7 +79,6 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		const state = useStore.getState();
 		// In tests, updateExROptionSelection might fail (TypeError: fetch failed)
 		// but we still want to check synchronization.
 		// However, it seems the async update isn't finishing or state is being cleared.
