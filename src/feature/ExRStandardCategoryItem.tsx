@@ -42,9 +42,7 @@ export function ExRStandardCategoryItem({
 				title={<ColoredText text={category.Name} />}
 				isOpen={isOpen}
 				onToggle={() => {
-					if (!isPending) {
-						toggleExRCategory(category.Id);
-					}
+					toggleExRCategory(category.Id);
 				}}
 				headerExtra={
 					isPending ? (

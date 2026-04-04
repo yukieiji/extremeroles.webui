@@ -80,11 +80,13 @@ export function getExrTabOptions(tabId: number): Promise<ExRTabDto> {
 		return exrTabPromises[tabId] as Promise<ExRTabDto>;
 	}
 
-	return (async () => {
+	const promise = (async () => {
 		const allTabs = await getExrOptions();
 		const tab = allTabs.find((t) => t.Id === tabId) || allTabs[0];
 		return tab;
 	})();
+	exrTabPromises[tabId] = promise;
+	return promise;
 }
 
 /**
@@ -139,59 +141,77 @@ export async function putExrOption(
 		throw new Error(`Failed to update ExR option: ${res.statusText}`);
 	}
 
+	// 202/204などの空レスポンスを考慮する
+	if (res.status === 202 || res.status === 204) {
+		return {
+			UpdatedCategory: null,
+			ChainUpdatedOption: [],
+		};
+	}
+
 	const data = await res.json();
 	await updateExrOptionsCache(data);
 	return data;
 }
 
 /**
+ * 更新キューの処理を順序正しく行うための変数
+ */
+let cacheUpdateQueue: Promise<void> = Promise.resolve();
+
+/**
  * ExRオプションのキャッシュを差分更新する
  */
-export async function updateExrOptionsCache(updatedData: UpdatedOptions) {
+export function updateExrOptionsCache(updatedData: UpdatedOptions) {
 	if (!exrOptionsPromise) {
-		return;
+		return Promise.resolve();
 	}
 
-	const currentData = await exrOptionsPromise;
-	const newData = currentData.map((tab) => {
-		let isTabUpdated = false;
-		const newCategories = tab.Categories.map((category) => {
-			// UpdatedCategory が一致する場合、丸ごと差し替え
-			if (
-				updatedData.UpdatedCategory &&
-				category.Id === updatedData.UpdatedCategory.Id
-			) {
-				isTabUpdated = true;
-				return updatedData.UpdatedCategory;
+	// 複数の更新が同時に走った場合に、前の更新が終わるのを待ってから次に進むようにする
+	cacheUpdateQueue = cacheUpdateQueue.then(async () => {
+		const currentData = await (exrOptionsPromise as Promise<ExRTabDto[]>);
+		const newData = currentData.map((tab) => {
+			let isTabUpdated = false;
+			const newCategories = tab.Categories.map((category) => {
+				// UpdatedCategory が一致する場合、丸ごと差し替え
+				if (
+					updatedData.UpdatedCategory &&
+					category.Id === updatedData.UpdatedCategory.Id
+				) {
+					isTabUpdated = true;
+					return updatedData.UpdatedCategory;
+				}
+
+				// ChainUpdatedOption に含まれるカテゴリの場合、Options を更新
+				const chainUpdate = updatedData.ChainUpdatedOption.find(
+					(u) => u.Id === category.Id,
+				);
+				if (chainUpdate) {
+					isTabUpdated = true;
+					return {
+						...category,
+						Options: chainUpdate.Options,
+					};
+				}
+
+				return category;
+			});
+
+			const newTab = {
+				...tab,
+				Categories: newCategories,
+			};
+
+			// タブが更新された場合、タブごとのプロミスも更新
+			if (isTabUpdated) {
+				exrTabPromises[tab.Id] = Promise.resolve(newTab);
 			}
 
-			// ChainUpdatedOption に含まれるカテゴリの場合、Options を更新
-			const chainUpdate = updatedData.ChainUpdatedOption.find(
-				(u) => u.Id === category.Id,
-			);
-			if (chainUpdate) {
-				isTabUpdated = true;
-				return {
-					...category,
-					Options: chainUpdate.Options,
-				};
-			}
-
-			return category;
+			return newTab;
 		});
 
-		const newTab = {
-			...tab,
-			Categories: newCategories,
-		};
-
-		// タブが更新された場合、タブごとのプロミスも更新
-		if (isTabUpdated) {
-			exrTabPromises[tab.Id] = Promise.resolve(newTab);
-		}
-
-		return newTab;
+		exrOptionsPromise = Promise.resolve(newData);
 	});
 
-	exrOptionsPromise = Promise.resolve(newData);
+	return cacheUpdateQueue;
 }

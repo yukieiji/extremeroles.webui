@@ -79,13 +79,13 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 				<button
 					type="button"
 					onClick={() => {
-						if (!isSpawnRateZero && !isPending) {
+						if (!isSpawnRateZero) {
 							toggleExRCategory(category.Id);
 						}
 					}}
-					className={`flex-1 flex items-center gap-3 p-4 text-left ${isSpawnRateZero || isPending ? "cursor-default" : ""}`}
+					className={`flex-1 flex items-center gap-3 p-4 text-left ${isSpawnRateZero ? "cursor-default" : ""}`}
 					aria-expanded={isOpen}
-					disabled={isSpawnRateZero || isPending}
+					disabled={isSpawnRateZero}
 				>
 					{isSpawnRateZero ? (
 						<div className="w-5 h-5 flex items-center justify-center text-gray-500 font-bold">

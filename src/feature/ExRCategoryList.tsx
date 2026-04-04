@@ -16,11 +16,11 @@ export function ExRCategoryList() {
 	const isTabPending = useStore((state) => {
 		return state.isTabPending;
 	});
-	const exrOptionsVersion = useStore((state) => {
+	const _version = useStore((state) => {
 		return state.exrOptionsVersion;
 	});
 
-	// タブごとのデータを取得。exrOptionsVersionが更新されると再レンダリングされ、最新のプロミスがuse()される
+	// タブごとのデータを取得。
 	const selectedTab = use(getExrTabOptions(selectedExRTabId));
 
 	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
@@ -39,7 +39,7 @@ export function ExRCategoryList() {
 
 	return (
 		<div
-			key={`${selectedExRTabId}-${exrOptionsVersion}`}
+			key={selectedExRTabId}
 			data-testid="exr-category-list"
 			className={`flex flex-col relative transition-opacity duration-200 ${isTabPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
 			data-is-pending={isTabPending ? "true" : "false"}
