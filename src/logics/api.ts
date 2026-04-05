@@ -11,14 +11,19 @@ const AU_OPTION_URL = "/au/option/";
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
 let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
+const exrTabPromises = new Map<number, Promise<ExRTabDto>>();
+
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
+const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
 
 /**
  * キャッシュをリセットする（テスト用）
  */
 export function resetApiCache() {
 	exrOptionsPromise = null;
+	exrTabPromises.clear();
 	auOptionsPromise = null;
+	auCategoryPromises.clear();
 }
 
 /**
@@ -42,10 +47,40 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 		}
-		return res.json();
+		const data: ExRTabDto[] = await res.json();
+
+		// タブごとのPromiseを事前に解決済みの状態でキャッシュに格納する
+		for (const tab of data) {
+			if (!exrTabPromises.has(tab.Id)) {
+				exrTabPromises.set(tab.Id, Promise.resolve(tab));
+			}
+		}
+
+		return data;
 	})();
 
 	return exrOptionsPromise;
+}
+
+/**
+ * 特定のExRタブのオプションを取得する
+ */
+export function getExrTabOptions(tabId: number): Promise<ExRTabDto> {
+	const cached = exrTabPromises.get(tabId);
+	if (cached) {
+		return cached;
+	}
+
+	const promise = getExrOptions().then((tabs) => {
+		const tab = tabs.find((t) => t.Id === tabId);
+		if (!tab) {
+			throw new Error(`ExR tab not found: ${tabId}`);
+		}
+		return tab;
+	});
+
+	exrTabPromises.set(tabId, promise);
+	return promise;
 }
 
 /**
@@ -69,10 +104,45 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch Au options: ${res.statusText}`);
 		}
-		return res.json();
+		const data: AuOptionCategoryDto[] = await res.json();
+
+		// カテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
+		for (const category of data) {
+			if (!auCategoryPromises.has(category.TranslatedTitle)) {
+				auCategoryPromises.set(
+					category.TranslatedTitle,
+					Promise.resolve(category),
+				);
+			}
+		}
+
+		return data;
 	})();
 
 	return auOptionsPromise;
+}
+
+/**
+ * 特定のAuカテゴリーのオプションを取得する
+ */
+export function getAuCategoryOptions(
+	categoryName: string,
+): Promise<AuOptionCategoryDto> {
+	const cached = auCategoryPromises.get(categoryName);
+	if (cached) {
+		return cached;
+	}
+
+	const promise = getAuOptions().then((categories) => {
+		const category = categories.find((c) => c.TranslatedTitle === categoryName);
+		if (!category) {
+			throw new Error(`Au category not found: ${categoryName}`);
+		}
+		return category;
+	});
+
+	auCategoryPromises.set(categoryName, promise);
+	return promise;
 }
 
 /**
