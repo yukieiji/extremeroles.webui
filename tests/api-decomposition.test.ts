@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	getAuCategoryOptions,
 	getAuOptions,
+	getExrCategoryOptions,
 	getExrOptions,
 	getExrTabOptions,
 	resetApiCache,
@@ -46,9 +47,13 @@ describe("Granular API Promise decomposition", () => {
 		expect(p1).toBe(p2);
 	});
 
-	it("getExrOptions should populate individual tab promises", async () => {
+	it("getExrOptions should populate individual tab and category promises", async () => {
 		const mockTabs = [
-			{ Id: 0, Name: "General", Categories: [] },
+			{
+				Id: 0,
+				Name: "General",
+				Categories: [{ Id: 10, Name: "SubCat", Options: [] }],
+			},
 			{ Id: 1, Name: "Crewmate", Categories: [] },
 		];
 		fetchMock.mockResolvedValue({
@@ -62,7 +67,47 @@ describe("Granular API Promise decomposition", () => {
 		const p0 = getExrTabOptions(0);
 		const tab0 = await p0;
 		expect(tab0.Name).toBe("General");
+
+		// Now getExrCategoryOptions should return a resolved promise without fetching again
+		const pc = getExrCategoryOptions(10);
+		const cat = await pc;
+		expect(cat.Name).toBe("SubCat");
+
 		expect(fetch).toHaveBeenCalledTimes(1);
+	});
+
+	it("getExrCategoryOptions should trigger getExrOptions and return the specific category", async () => {
+		const mockTabs = [
+			{
+				Id: 0,
+				Name: "General",
+				Categories: [{ Id: 10, Name: "SubCat", Options: [] }],
+			},
+		];
+		fetchMock.mockResolvedValue({
+			ok: true,
+			json: async () => mockTabs,
+		} as Response);
+
+		const categoryPromise = getExrCategoryOptions(10);
+		expect(fetch).toHaveBeenCalledTimes(1);
+
+		const category = await categoryPromise;
+		expect(category.Id).toBe(10);
+		expect(category.Name).toBe("SubCat");
+	});
+
+	it("getExrCategoryOptions should return the same promise instance for the same categoryId", () => {
+		fetchMock.mockResolvedValue({
+			ok: true,
+			json: async () => [
+				{ Id: 0, Name: "General", Categories: [{ Id: 10, Name: "SubCat" }] },
+			],
+		} as Response);
+
+		const p1 = getExrCategoryOptions(10);
+		const p2 = getExrCategoryOptions(10);
+		expect(p1).toBe(p2);
 	});
 
 	it("getAuCategoryOptions should trigger getAuOptions and return the specific category", async () => {

@@ -12,6 +12,7 @@ const AU_OPTION_URL = "/au/option/";
  */
 let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
 const exrTabPromises = new Map<number, Promise<ExRTabDto>>();
+const exrCategoryPromises = new Map<number, Promise<ExRCategoryDto>>();
 
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
@@ -22,6 +23,7 @@ const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
 export function resetApiCache() {
 	exrOptionsPromise = null;
 	exrTabPromises.clear();
+	exrCategoryPromises.clear();
 	auOptionsPromise = null;
 	auCategoryPromises.clear();
 }
@@ -49,10 +51,15 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		}
 		const data: ExRTabDto[] = await res.json();
 
-		// タブごとのPromiseを事前に解決済みの状態でキャッシュに格納する
+		// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
 		for (const tab of data) {
 			if (!exrTabPromises.has(tab.Id)) {
 				exrTabPromises.set(tab.Id, Promise.resolve(tab));
+			}
+			for (const category of tab.Categories) {
+				if (!exrCategoryPromises.has(category.Id)) {
+					exrCategoryPromises.set(category.Id, Promise.resolve(category));
+				}
 			}
 		}
 
@@ -80,6 +87,31 @@ export function getExrTabOptions(tabId: number): Promise<ExRTabDto> {
 	});
 
 	exrTabPromises.set(tabId, promise);
+	return promise;
+}
+
+/**
+ * 特定のExRカテゴリーのオプションを取得する
+ */
+export function getExrCategoryOptions(
+	categoryId: number,
+): Promise<ExRCategoryDto> {
+	const cached = exrCategoryPromises.get(categoryId);
+	if (cached) {
+		return cached;
+	}
+
+	const promise = getExrOptions().then((tabs) => {
+		for (const tab of tabs) {
+			const category = tab.Categories.find((c) => c.Id === categoryId);
+			if (category) {
+				return category;
+			}
+		}
+		throw new Error(`ExR category not found: ${categoryId}`);
+	});
+
+	exrCategoryPromises.set(categoryId, promise);
 	return promise;
 }
 
