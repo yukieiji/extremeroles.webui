@@ -4,7 +4,7 @@ import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
-import { getAuOptions, getExrOptions } from "./logics/api";
+import { getAuOptions, getExrTabOptions } from "./logics/api";
 import { useStore } from "./useStore";
 
 /**
@@ -12,8 +12,8 @@ import { useStore } from "./useStore";
  * データを取得し、Suspense境界内で動作します
  */
 function PresetSelectorContainer() {
-	const exrData = use(getExrOptions());
-	return <PresetSelector tabs={exrData} />;
+	const generalTab = use(getExrTabOptions(0));
+	return <PresetSelector tab={generalTab} />;
 }
 
 /**
@@ -26,11 +26,10 @@ function EditorContainer() {
 	});
 
 	// React 19 の use() フックを使用してデータを取得
-	const exrData = use(getExrOptions());
 	const auData = use(getAuOptions());
 
 	if (selectedTab === "ExR") {
-		return <ExROptionEditor data={exrData} />;
+		return <ExROptionEditor />;
 	}
 
 	return <AuOptionEditor data={auData} />;

@@ -1,18 +1,15 @@
+import { use } from "react";
+import { getExrTabOptions } from "../logics/api";
 import { isPresetOption } from "../logics/optionUtils";
-import type { ExRTabDto } from "../type";
 import { OptionTab } from "../type";
 import { useStore } from "../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
 import { ExRStandardCategoryItem } from "./ExRStandardCategoryItem";
 
-interface ExRCategoryListProps {
-	tabs: ExRTabDto[];
-}
-
 /**
  * 選択されたタブのカテゴリ一覧を表示するコンポーネント
  */
-export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
+export function ExRCategoryList() {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
@@ -20,13 +17,7 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
 		return state.isTabPending;
 	});
 
-	let selectedTab = tabs.find((tab) => {
-		return tab.Id === selectedExRTabId;
-	});
-
-	if (!selectedTab) {
-		selectedTab = tabs[0];
-	}
+	const selectedTab = use(getExrTabOptions(selectedExRTabId));
 
 	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
 
@@ -58,14 +49,14 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
 					return (
 						<ExRRoleCategoryItem
 							key={`${selectedExRTabId}-${category.Id}`}
-							category={category}
+							categoryId={category.Id}
 						/>
 					);
 				}
 				return (
 					<ExRStandardCategoryItem
 						key={`${selectedExRTabId}-${category.Id}`}
-						category={category}
+						categoryId={category.Id}
 					/>
 				);
 			})}

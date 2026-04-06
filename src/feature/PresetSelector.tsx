@@ -4,7 +4,7 @@ import type { ExRTabDto } from "../type";
 import { useStore } from "../useStore";
 
 interface PresetSelectorProps {
-	tabs: ExRTabDto[];
+	tab: ExRTabDto;
 }
 
 /**
@@ -15,12 +15,9 @@ interface PresetSelectorProps {
  * 入力更新の最適化:
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
-export function PresetSelector({ tabs }: PresetSelectorProps) {
+export function PresetSelector({ tab }: PresetSelectorProps) {
 	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
-	const generalTab = tabs.find((t) => {
-		return t.Id === 0;
-	});
-	const presetCategory = generalTab?.Categories.find((c) => {
+	const presetCategory = tab.Categories.find((c) => {
 		return c.Id === 0;
 	});
 	const presetOption = presetCategory?.Options.find((o) => {

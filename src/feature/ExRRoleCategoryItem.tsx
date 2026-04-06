@@ -1,20 +1,22 @@
+import { use } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
+import { getExrCategoryOptions } from "../logics/api";
 import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
-import type { ExRCategoryDto } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 import { ExRRoleSpawnControls } from "./ExRRoleSpawnControls";
 
 interface ExRRoleCategoryItemProps {
-	category: ExRCategoryDto;
+	categoryId: number;
 }
 
 /**
  * 役職タブで使用される、スポーン設定をヘッダーに持つカテゴリ表示コンポーネント
  */
-export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
+export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
+	const category = use(getExrCategoryOptions(categoryId));
 	const isOpendCategory = useStore((state) => {
-		return state.openedExRCategoryIds[category.Id];
+		return state.openedExRCategoryIds[categoryId];
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
@@ -27,7 +29,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 		return opt.Id === 51;
 	});
 
-	const uniqueRateId = getUniqueOptionId(category.Id, 50);
+	const uniqueRateId = getUniqueOptionId(categoryId, 50);
 	const effectiveSpawnRateSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueRateId];
 	});
@@ -39,7 +41,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 
 	const allPotentialOptions = category.Options.flatMap((option) => {
-		if (isPresetOption(category.Id, option.Id)) {
+		if (isPresetOption(categoryId, option.Id)) {
 			return [];
 		}
 		if (option.Id === 50 || option.Id === 51) {
@@ -68,7 +70,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 	return (
 		<div
 			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
-			data-testid={`exr-category-${category.Id}`}
+			data-testid={`exr-category-${categoryId}`}
 		>
 			<div
 				className={`flex items-center bg-gray-800 ${!isSpawnRateZero ? "hover:bg-gray-700 transition-colors" : ""}`}
@@ -77,7 +79,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 					type="button"
 					onClick={() => {
 						if (!isSpawnRateZero) {
-							toggleExRCategory(category.Id);
+							toggleExRCategory(categoryId);
 						}
 					}}
 					className={`flex-1 flex items-center gap-3 p-4 text-left ${isSpawnRateZero ? "cursor-default" : ""}`}
@@ -112,7 +114,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 				<div className="flex items-center px-4">
 					{spawnRateOption && spawnCountOption && (
 						<ExRRoleSpawnControls
-							categoryId={category.Id}
+							categoryId={categoryId}
 							spawnRateOption={spawnRateOption}
 							spawnCountOption={spawnCountOption}
 						/>
@@ -129,7 +131,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 					{isOpen && (
 						<div className="p-4 bg-gray-900 border-t border-gray-700">
 							<ExRCategoryOptionList
-								categoryId={category.Id}
+								categoryId={categoryId}
 								options={filteredOptions}
 							/>
 						</div>

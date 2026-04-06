@@ -1,4 +1,4 @@
-import type { AuOptionCategoryDto, ExRTabDto } from "../type";
+import type { AuOptionCategoryDto, ExRCategoryDto, ExRTabDto } from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -10,7 +10,7 @@ const AU_OPTION_URL = "/au/option/";
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
-let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
+let exrFetchPromise: Promise<ExRTabDto[]> | null = null;
 const exrTabPromises = new Map<number, Promise<ExRTabDto>>();
 const exrCategoryPromises = new Map<number, Promise<ExRCategoryDto>>();
 
@@ -21,7 +21,7 @@ const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
  * キャッシュをリセットする（テスト用）
  */
 export function resetApiCache() {
-	exrOptionsPromise = null;
+	exrFetchPromise = null;
 	exrTabPromises.clear();
 	exrCategoryPromises.clear();
 	auOptionsPromise = null;
@@ -32,41 +32,46 @@ export function resetApiCache() {
  * ExRオプションを取得する
  */
 export function getExrOptions(): Promise<ExRTabDto[]> {
-	if (exrOptionsPromise) {
-		return exrOptionsPromise;
+	if (exrFetchPromise) {
+		return exrFetchPromise;
 	}
 
 	// @ts-expect-error - テスト用
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 
-	exrOptionsPromise = (async () => {
-		if (delay > 0) {
-			await new Promise((resolve) => {
-				return setTimeout(resolve, delay);
-			});
-		}
-		const res = await fetch(EXR_OPTION_URL);
-		if (!res.ok) {
-			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
-		}
-		const data: ExRTabDto[] = await res.json();
-
-		// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
-		for (const tab of data) {
-			if (!exrTabPromises.has(tab.Id)) {
-				exrTabPromises.set(tab.Id, Promise.resolve(tab));
+	exrFetchPromise = (async () => {
+		try {
+			if (delay > 0) {
+				await new Promise((resolve) => {
+					return setTimeout(resolve, delay);
+				});
 			}
-			for (const category of tab.Categories) {
-				if (!exrCategoryPromises.has(category.Id)) {
-					exrCategoryPromises.set(category.Id, Promise.resolve(category));
+			const res = await fetch(EXR_OPTION_URL);
+			if (!res.ok) {
+				throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
+			}
+			const data: ExRTabDto[] = await res.json();
+
+			// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
+			for (const tab of data) {
+				if (!exrTabPromises.has(tab.Id)) {
+					exrTabPromises.set(tab.Id, Promise.resolve(tab));
+				}
+				for (const category of tab.Categories) {
+					if (!exrCategoryPromises.has(category.Id)) {
+						exrCategoryPromises.set(category.Id, Promise.resolve(category));
+					}
 				}
 			}
-		}
 
-		return data;
+			return data;
+		} finally {
+			// フェッチ完了後にPromiseをリセットし、Map側のキャッシュを優先するようにする
+			exrFetchPromise = null;
+		}
 	})();
 
-	return exrOptionsPromise;
+	return exrFetchPromise;
 }
 
 /**
