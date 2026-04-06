@@ -1,4 +1,4 @@
-import { Suspense, use, useEffect, useRef } from "react";
+import { use, useEffect, useRef } from "react";
 import { getExrOptions } from "../logics/api";
 import { getUniqueOptionId } from "../logics/optionUtils";
 import { useStore } from "../useStore";

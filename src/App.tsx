@@ -4,7 +4,7 @@ import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
-import { getAuOptions, getExrOptions } from "./logics/api";
+import { getAuOptions } from "./logics/api";
 import { useStore } from "./useStore";
 
 /**

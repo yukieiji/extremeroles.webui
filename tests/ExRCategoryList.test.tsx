@@ -1,7 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { http, HttpResponse } from "msw";
+import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import {
+	afterAll,
+	afterEach,
+	beforeAll,
+	beforeEach,
+	describe,
+	expect,
+	it,
+} from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { type ExRTabDto, OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
@@ -122,7 +130,9 @@ describe("ExRCategoryList Component Selection", () => {
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
 		// we find the toggle button by role.
-		const toggleButton = await screen.findByRole("button", { name: /Sheriff/i });
+		const toggleButton = await screen.findByRole("button", {
+			name: /Sheriff/i,
+		});
 		fireEvent.click(toggleButton);
 
 		// Body content should be visible after click
