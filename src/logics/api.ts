@@ -40,35 +40,30 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 
 	exrFetchPromise = (async () => {
-		try {
-			if (delay > 0) {
-				await new Promise((resolve) => {
-					return setTimeout(resolve, delay);
-				});
-			}
-			const res = await fetch(EXR_OPTION_URL);
-			if (!res.ok) {
-				throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
-			}
-			const data: ExRTabDto[] = await res.json();
-
-			// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
-			for (const tab of data) {
-				if (!exrTabPromises.has(tab.Id)) {
-					exrTabPromises.set(tab.Id, Promise.resolve(tab));
-				}
-				for (const category of tab.Categories) {
-					if (!exrCategoryPromises.has(category.Id)) {
-						exrCategoryPromises.set(category.Id, Promise.resolve(category));
-					}
-				}
-			}
-
-			return data;
-		} finally {
-			// フェッチ完了後にPromiseをリセットし、Map側のキャッシュを優先するようにする
-			exrFetchPromise = null;
+		if (delay > 0) {
+			await new Promise((resolve) => {
+				return setTimeout(resolve, delay);
+			});
 		}
+		const res = await fetch(EXR_OPTION_URL);
+		if (!res.ok) {
+			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
+		}
+		const data: ExRTabDto[] = await res.json();
+
+		// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
+		for (const tab of data) {
+			if (!exrTabPromises.has(tab.Id)) {
+				exrTabPromises.set(tab.Id, Promise.resolve(tab));
+			}
+			for (const category of tab.Categories) {
+				if (!exrCategoryPromises.has(category.Id)) {
+					exrCategoryPromises.set(category.Id, Promise.resolve(category));
+				}
+			}
+		}
+
+		return data;
 	})();
 
 	return exrFetchPromise;
@@ -84,7 +79,9 @@ export function getExrTabOptions(tabId: number): Promise<ExRTabDto> {
 	}
 
 	const promise = getExrOptions().then((tabs) => {
-		const tab = tabs.find((t) => t.Id === tabId);
+		const tab = tabs.find((t) => {
+			return t.Id === tabId;
+		});
 		if (!tab) {
 			throw new Error(`ExR tab not found: ${tabId}`);
 		}
@@ -108,7 +105,9 @@ export function getExrCategoryOptions(
 
 	const promise = getExrOptions().then((tabs) => {
 		for (const tab of tabs) {
-			const category = tab.Categories.find((c) => c.Id === categoryId);
+			const category = tab.Categories.find((c) => {
+				return c.Id === categoryId;
+			});
 			if (category) {
 				return category;
 			}
@@ -171,7 +170,9 @@ export function getAuCategoryOptions(
 	}
 
 	const promise = getAuOptions().then((categories) => {
-		const category = categories.find((c) => c.TranslatedTitle === categoryName);
+		const category = categories.find((c) => {
+			return c.TranslatedTitle === categoryName;
+		});
 		if (!category) {
 			throw new Error(`Au category not found: ${categoryName}`);
 		}
