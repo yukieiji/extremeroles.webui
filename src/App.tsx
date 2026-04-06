@@ -8,15 +8,6 @@ import { getAuOptions, getExrOptions } from "./logics/api";
 import { useStore } from "./useStore";
 
 /**
- * プリセットセレクターを表示するためのコンテナコンポーネント
- * データを取得し、Suspense境界内で動作します
- */
-function PresetSelectorContainer() {
-	const exrData = use(getExrOptions());
-	return <PresetSelector tabs={exrData} />;
-}
-
-/**
  * オプションエディタを表示する内側のコンポーネント
  * データを取得し、選択されたタブに応じてエディタを表示します
  */
@@ -26,11 +17,10 @@ function EditorContainer() {
 	});
 
 	// React 19 の use() フックを使用してデータを取得
-	const exrData = use(getExrOptions());
 	const auData = use(getAuOptions());
 
 	if (selectedTab === "ExR") {
-		return <ExROptionEditor data={exrData} />;
+		return <ExROptionEditor />;
 	}
 
 	return <AuOptionEditor data={auData} />;
@@ -64,7 +54,7 @@ function MainContent() {
 							<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />
 						}
 					>
-						<PresetSelectorContainer />
+						<PresetSelector />
 					</Suspense>
 				)}
 				{isSidebarPending && (

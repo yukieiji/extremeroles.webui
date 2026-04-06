@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { type ExRTabDto, OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
@@ -68,46 +70,64 @@ describe("ExRCategoryList Component Selection", () => {
 		},
 	];
 
+	const server = setupServer(
+		http.get("/exr/option/", () => {
+			return HttpResponse.json(mockTabs);
+		}),
+	);
+
+	beforeAll(() => {
+		server.listen();
+	});
+
+	afterEach(() => {
+		server.resetHandlers();
+	});
+
+	afterAll(() => {
+		server.close();
+	});
+
 	beforeEach(() => {
 		useStore.getState().resetViewer();
 	});
 
-	it("renders ExRStandardCategoryItem for General Tab", () => {
+	it("renders ExRStandardCategoryItem for General Tab", async () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+		render(<ExRCategoryList />);
 
 		// General Tab: Should render standard category
-		expect(screen.getByText("General Category")).toBeInTheDocument();
+		expect(await screen.findByText("General Category")).toBeInTheDocument();
 
 		// Header should NOT have spawn controls
 		expect(screen.queryByText("レート")).not.toBeInTheDocument();
 	});
 
-	it("renders ExRRoleCategoryItem for Role Tab", () => {
+	it("renders ExRRoleCategoryItem for Role Tab", async () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+		render(<ExRCategoryList />);
 
 		// Role Tab: Should render specialized category item
-		expect(screen.getByText("Sheriff")).toBeInTheDocument();
+		expect(await screen.findByText("Sheriff")).toBeInTheDocument();
 
 		// Header should have spawn rate control (レート)
 		expect(screen.getByText("レート")).toBeInTheDocument();
 	});
 
-	it("filters out 50 and 51 from role category body", () => {
+	it("filters out 50 and 51 from role category body", async () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
 		// Set a non-zero spawn rate so the accordion is enabled
 		useStore.getState().TEMP_updateExROptionSelection("2-50", 1); // Category 2, Option 50, Index 1 (Value 100)
-		render(<ExRCategoryList tabs={mockTabs} />);
+		render(<ExRCategoryList />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
 		// we find the toggle button by role.
-		const toggleButton = screen.getByRole("button", { name: /Sheriff/i });
+		const toggleButton = await screen.findByRole("button", { name: /Sheriff/i });
 		fireEvent.click(toggleButton);
 
 		// Body content should be visible after click
 		// ExRRoleCategoryItem renders options list when isOpen is true
-		expect(screen.getByText("Kill CD")).toBeInTheDocument();
+		expect(await screen.findByText("Kill CD")).toBeInTheDocument();
 
 		// 50 and 51 should be filtered out from the body
 		expect(screen.queryByText("Spawn Rate")).not.toBeInTheDocument();

@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
@@ -85,14 +87,37 @@ describe("ExROptionEditor", () => {
 		},
 	];
 
+	const server = setupServer(
+		http.get("/exr/option/", () => {
+			return HttpResponse.json(mockData);
+		}),
+	);
+
+	beforeAll(() => {
+		server.listen();
+	});
+
+	afterEach(() => {
+		server.resetHandlers();
+	});
+
+	afterAll(() => {
+		server.close();
+	});
+
 	beforeEach(() => {
 		useStore.getState().resetViewer();
 	});
 
-	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
-		render(<ExROptionEditor data={mockData} />);
+	it("should only show visible categories (not empty, at least one active option) and hide preset", async () => {
+		server.use(
+			http.get("/exr/option/", () => {
+				return HttpResponse.json(mockData);
+			}),
+		);
+		render(<ExROptionEditor />);
 
-		expect(screen.getByText("Category 1")).toBeInTheDocument();
+		expect(await screen.findByText("Category 1")).toBeInTheDocument();
 		expect(screen.queryByText("Empty Category")).not.toBeInTheDocument();
 		expect(screen.queryByText("Inactive Category")).not.toBeInTheDocument();
 
@@ -100,28 +125,38 @@ describe("ExROptionEditor", () => {
 		expect(screen.queryByText("Preset Category")).not.toBeInTheDocument();
 	});
 
-	it("should switch tabs and show correct categories", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+	it("should switch tabs and show correct categories", async () => {
+		server.use(
+			http.get("/exr/option/", () => {
+				return HttpResponse.json(mockData);
+			}),
+		);
+		const { unmount } = render(<ExROptionEditor />);
 
-		expect(screen.getByText("Category 1")).toBeInTheDocument();
+		expect(await screen.findByText("Category 1")).toBeInTheDocument();
 
-		const tab2Button = screen.getByText("Tab 2");
+		const tab2Button = await screen.findByText("Tab 2");
 		fireEvent.click(tab2Button);
 
 		expect(screen.queryByText("Category 1")).not.toBeInTheDocument();
-		expect(screen.getByText("Category 2")).toBeInTheDocument();
+		expect(await screen.findByText("Category 2")).toBeInTheDocument();
 		unmount();
 	});
 
-	it("should toggle accordion and show options UI", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+	it("should toggle accordion and show options UI", async () => {
+		server.use(
+			http.get("/exr/option/", () => {
+				return HttpResponse.json(mockData);
+			}),
+		);
+		const { unmount } = render(<ExROptionEditor />);
 
-		const categoryButton = screen.getByText("Category 1");
+		const categoryButton = await screen.findByText("Category 1");
 
 		fireEvent.click(categoryButton);
 
 		// オプション名が表示されていることを確認
-		expect(screen.getByText("Option 1")).toBeInTheDocument();
+		expect(await screen.findByText("Option 1")).toBeInTheDocument();
 
 		// スライダー（input[type="range"]）が存在することを確認
 		expect(screen.getByRole("slider")).toBeInTheDocument();
