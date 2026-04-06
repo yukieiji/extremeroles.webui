@@ -47,6 +47,7 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		}
 		const res = await fetch(EXR_OPTION_URL);
 		if (!res.ok) {
+			exrFetchPromise = null; // 失敗時は再試行可能にする
 			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 		}
 		const data: ExRTabDto[] = await res.json();
@@ -138,6 +139,7 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 		}
 		const res = await fetch(AU_OPTION_URL);
 		if (!res.ok) {
+			auOptionsPromise = null; // 失敗時は再試行可能にする
 			throw new Error(`Failed to fetch Au options: ${res.statusText}`);
 		}
 		const data: AuOptionCategoryDto[] = await res.json();
