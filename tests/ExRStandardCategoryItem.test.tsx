@@ -1,12 +1,13 @@
-import { render, screen, act } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRStandardCategoryItem } from "../src/feature/ExRStandardCategoryItem";
 import * as api from "../src/logics/api";
+import type { ExRCategoryDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExRStandardCategoryItem", () => {
-	const mockCategory = {
+	const mockCategory: ExRCategoryDto = {
 		Id: 1,
 		Name: "Test Category",
 		Options: [
@@ -25,7 +26,7 @@ describe("ExRStandardCategoryItem", () => {
 	beforeEach(() => {
 		vi.restoreAllMocks();
 		useStore.getState().resetViewer();
-		vi.spyOn(api, "getExrCategoryOptions").mockResolvedValue(mockCategory as any);
+		vi.spyOn(api, "getExrCategoryOptions").mockResolvedValue(mockCategory);
 	});
 
 	it("should render category name", async () => {
