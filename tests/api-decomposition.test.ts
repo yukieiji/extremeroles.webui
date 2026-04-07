@@ -1,6 +1,5 @@
+import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it } from "vitest";
-import { http, HttpResponse } from "msw";
-import { server } from "./msw-server";
 import {
 	getAuCategoryOptions,
 	getAuOptions,
@@ -9,6 +8,7 @@ import {
 	getExrTabOptions,
 	resetApiCache,
 } from "../src/logics/api";
+import { server } from "./msw-server";
 
 describe("Granular API Promise decomposition", () => {
 	beforeEach(() => {
@@ -20,9 +20,7 @@ describe("Granular API Promise decomposition", () => {
 			{ Id: 0, Name: "General", Categories: [] },
 			{ Id: 1, Name: "Crewmate", Categories: [] },
 		];
-		server.use(
-			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
-		);
+		server.use(http.get("/exr/option/", () => HttpResponse.json(mockTabs)));
 
 		const tab = await getExrTabOptions(1);
 
@@ -45,9 +43,7 @@ describe("Granular API Promise decomposition", () => {
 			},
 			{ Id: 1, Name: "Crewmate", Categories: [] },
 		];
-		server.use(
-			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
-		);
+		server.use(http.get("/exr/option/", () => HttpResponse.json(mockTabs)));
 
 		await getExrOptions();
 
@@ -66,9 +62,7 @@ describe("Granular API Promise decomposition", () => {
 				Categories: [{ Id: 10, Name: "SubCat", Options: [] }],
 			},
 		];
-		server.use(
-			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
-		);
+		server.use(http.get("/exr/option/", () => HttpResponse.json(mockTabs)));
 
 		const category = await getExrCategoryOptions(10);
 
@@ -88,7 +82,7 @@ describe("Granular API Promise decomposition", () => {
 			{ TranslatedTitle: "クルー", Options: [] },
 		];
 		server.use(
-			http.get("/au/option/", () => HttpResponse.json(mockCategories))
+			http.get("/au/option/", () => HttpResponse.json(mockCategories)),
 		);
 
 		const category = await getAuCategoryOptions("クルー");
@@ -105,7 +99,7 @@ describe("Granular API Promise decomposition", () => {
 	it("getAuOptions should populate individual category promises", async () => {
 		const mockCategories = [{ TranslatedTitle: "map", Options: [] }];
 		server.use(
-			http.get("/au/option/", () => HttpResponse.json(mockCategories))
+			http.get("/au/option/", () => HttpResponse.json(mockCategories)),
 		);
 
 		await getAuOptions();

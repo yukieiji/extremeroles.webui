@@ -25,11 +25,9 @@ export function ExRStandardCategoryItem({
 		return state.toggleExRCategory;
 	});
 
-	const filteredOptions = category.Options.filter(
-		(option: ExROptionDto) => {
-			return !isPresetOption(categoryId, option.Id);
-		},
-	);
+	const filteredOptions = category.Options.filter((option: ExROptionDto) => {
+		return !isPresetOption(categoryId, option.Id);
+	});
 
 	if (filteredOptions.length === 0) {
 		return null;

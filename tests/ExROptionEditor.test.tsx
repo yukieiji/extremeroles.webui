@@ -1,12 +1,12 @@
-import { fireEvent, render, screen, act } from "@testing-library/react";
-import { http, HttpResponse } from "msw";
-import { beforeEach, describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { HttpResponse, http } from "msw";
 import { Suspense } from "react";
+import { beforeEach, describe, expect, it } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
+import { resetApiCache } from "../src/logics/api";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
 import { server } from "./msw-server";
-import { resetApiCache } from "../src/logics/api";
 
 describe("ExROptionEditor", { timeout: 15000 }, () => {
 	const mockData: ExRTabDto[] = [
@@ -92,9 +92,7 @@ describe("ExROptionEditor", { timeout: 15000 }, () => {
 	beforeEach(() => {
 		resetApiCache();
 		useStore.getState().resetViewer();
-		server.use(
-			http.get("/exr/option/", () => HttpResponse.json(mockData))
-		);
+		server.use(http.get("/exr/option/", () => HttpResponse.json(mockData)));
 	});
 
 	it("should only show visible categories (not empty, at least one active option) and hide preset", async () => {
@@ -102,11 +100,13 @@ describe("ExROptionEditor", { timeout: 15000 }, () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionEditor />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
-		expect(await screen.findByText("Category 1", {}, { timeout: 5000 })).toBeInTheDocument();
+		expect(
+			await screen.findByText("Category 1", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 
 	it("should switch tabs and show correct categories", async () => {
@@ -115,12 +115,14 @@ describe("ExROptionEditor", { timeout: 15000 }, () => {
 			const result = render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionEditor />
-				</Suspense>
+				</Suspense>,
 			);
 			unmount = result.unmount;
 		});
 
-		expect(await screen.findByText("Category 1", {}, { timeout: 5000 })).toBeInTheDocument();
+		expect(
+			await screen.findByText("Category 1", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 
 		const tab2Button = await screen.findByText("Tab 2", {}, { timeout: 5000 });
 
@@ -128,8 +130,10 @@ describe("ExROptionEditor", { timeout: 15000 }, () => {
 			fireEvent.click(tab2Button);
 		});
 
-		expect(await screen.findByText("Category 2", {}, { timeout: 5000 })).toBeInTheDocument();
-		unmount!();
+		expect(
+			await screen.findByText("Category 2", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
+		unmount?.();
 	});
 
 	it("should toggle accordion and show options UI", async () => {
@@ -138,18 +142,24 @@ describe("ExROptionEditor", { timeout: 15000 }, () => {
 			const result = render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionEditor />
-				</Suspense>
+				</Suspense>,
 			);
 			unmount = result.unmount;
 		});
 
-		const categoryButton = await screen.findByText("Category 1", {}, { timeout: 5000 });
+		const categoryButton = await screen.findByText(
+			"Category 1",
+			{},
+			{ timeout: 5000 },
+		);
 
 		await act(async () => {
 			fireEvent.click(categoryButton);
 		});
 
-		expect(await screen.findByText("Option 1", {}, { timeout: 5000 })).toBeInTheDocument();
-		unmount!();
+		expect(
+			await screen.findByText("Option 1", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
+		unmount?.();
 	});
 });

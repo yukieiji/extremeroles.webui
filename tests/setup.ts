@@ -11,12 +11,12 @@ if (typeof window !== "undefined") {
 			writable: true,
 		});
 	}
-    // @ts-expect-error - testing
-    window.__API_DELAY__ = 0;
+	// @ts-expect-error - testing
+	window.__API_DELAY__ = 0;
 }
 
 beforeAll(() => {
-	server.listen({ onUnhandledRequest: 'bypass' });
+	server.listen({ onUnhandledRequest: "bypass" });
 });
 
 afterEach(() => {

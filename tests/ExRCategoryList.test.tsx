@@ -1,12 +1,12 @@
-import { fireEvent, render, screen, act } from "@testing-library/react";
-import { http, HttpResponse } from "msw";
-import { beforeEach, describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { HttpResponse, http } from "msw";
 import { Suspense } from "react";
+import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
+import { resetApiCache } from "../src/logics/api";
 import { type ExRTabDto, OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
 import { server } from "./msw-server";
-import { resetApiCache } from "../src/logics/api";
 
 describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 	const mockTabs: ExRTabDto[] = [
@@ -75,9 +75,7 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 	beforeEach(() => {
 		resetApiCache();
 		useStore.getState().resetViewer();
-		server.use(
-			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
-		);
+		server.use(http.get("/exr/option/", () => HttpResponse.json(mockTabs)));
 	});
 
 	it("renders ExRStandardCategoryItem for General Tab", async () => {
@@ -89,11 +87,13 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExRCategoryList />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
-		expect(await screen.findByText("General Category", {}, { timeout: 5000 })).toBeInTheDocument();
+		expect(
+			await screen.findByText("General Category", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 
 	it("renders ExRRoleCategoryItem for Role Tab", async () => {
@@ -105,11 +105,13 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExRCategoryList />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
-		expect(await screen.findByText("Sheriff", {}, { timeout: 5000 })).toBeInTheDocument();
+		expect(
+			await screen.findByText("Sheriff", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 
 	it("filters out 50 and 51 from role category body", async () => {
@@ -122,16 +124,22 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExRCategoryList />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
-		const toggleButton = await screen.findByRole("button", { name: /Sheriff/i }, { timeout: 5000 });
+		const toggleButton = await screen.findByRole(
+			"button",
+			{ name: /Sheriff/i },
+			{ timeout: 5000 },
+		);
 
 		await act(async () => {
 			fireEvent.click(toggleButton);
 		});
 
-		expect(await screen.findByText("Kill CD", {}, { timeout: 5000 })).toBeInTheDocument();
+		expect(
+			await screen.findByText("Kill CD", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 });
