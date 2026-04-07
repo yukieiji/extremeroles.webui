@@ -10,8 +10,8 @@ const AU_OPTION_URL = "/au/option/";
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
-const EXR_ALL_TABS_ID = -1;
-const exrTabPromises = new Map<number, Promise<ExRTabDto | ExRTabDto[]>>();
+let exrAllTabsPromise: Promise<ExRTabDto[]> | null = null;
+const exrTabPromises = new Map<number, Promise<ExRTabDto>>();
 const exrCategoryPromises = new Map<number, Promise<ExRCategoryDto>>();
 
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
@@ -21,6 +21,7 @@ const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
  * キャッシュをリセットする（テスト用）
  */
 export function resetApiCache() {
+	exrAllTabsPromise = null;
 	exrTabPromises.clear();
 	exrCategoryPromises.clear();
 	auOptionsPromise = null;
@@ -31,15 +32,14 @@ export function resetApiCache() {
  * ExRオプションを取得する
  */
 export function getExrOptions(): Promise<ExRTabDto[]> {
-	const cached = exrTabPromises.get(EXR_ALL_TABS_ID);
-	if (cached) {
-		return cached as Promise<ExRTabDto[]>;
+	if (exrAllTabsPromise) {
+		return exrAllTabsPromise;
 	}
 
 	// @ts-expect-error - テスト用
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 
-	const promise = (async () => {
+	exrAllTabsPromise = (async () => {
 		if (delay > 0) {
 			await new Promise((resolve) => {
 				return setTimeout(resolve, delay);
@@ -66,8 +66,7 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		return data;
 	})();
 
-	exrTabPromises.set(EXR_ALL_TABS_ID, promise);
-	return promise;
+	return exrAllTabsPromise;
 }
 
 /**
@@ -76,7 +75,7 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 export function getExrTabOptions(tabId: number): Promise<ExRTabDto> {
 	const cached = exrTabPromises.get(tabId);
 	if (cached) {
-		return cached as Promise<ExRTabDto>;
+		return cached;
 	}
 
 	const promise = getExrOptions().then((tabs) => {
