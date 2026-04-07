@@ -2,6 +2,7 @@ import { use } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
 import { getExrCategoryOptions } from "../logics/api";
 import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
+import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 import { ExRRoleSpawnControls } from "./ExRRoleSpawnControls";
@@ -22,10 +23,10 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		return state.toggleExRCategory;
 	});
 
-	const spawnRateOption = category.Options.find((opt) => {
+	const spawnRateOption = category.Options.find((opt: ExROptionDto) => {
 		return opt.Id === 50;
 	});
-	const spawnCountOption = category.Options.find((opt) => {
+	const spawnCountOption = category.Options.find((opt: ExROptionDto) => {
 		return opt.Id === 51;
 	});
 
@@ -40,28 +41,32 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 
-	const allPotentialOptions = category.Options.flatMap((option) => {
-		if (isPresetOption(categoryId, option.Id)) {
-			return [];
-		}
-		if (option.Id === 50 || option.Id === 51) {
-			return option.Childs || [];
-		}
-		return [option];
-	});
+	const allPotentialOptions = category.Options.flatMap(
+		(option: ExROptionDto) => {
+			if (isPresetOption(categoryId, option.Id)) {
+				return [];
+			}
+			if (option.Id === 50 || option.Id === 51) {
+				return option.Childs || [];
+			}
+			return [option];
+		},
+	);
 
 	// ID 50 と 51 を除外しつつ、重複（トップレベルと子要素の両方に存在する場合など）を排除
-	const filteredOptions = allPotentialOptions.filter((option, index, self) => {
-		if (option.Id === 50 || option.Id === 51) {
-			return false;
-		}
-		return (
-			index ===
-			self.findIndex((o) => {
-				return o.Id === option.Id;
-			})
-		);
-	});
+	const filteredOptions = (allPotentialOptions as ExROptionDto[]).filter(
+		(option, index, self) => {
+			if (option.Id === 50 || option.Id === 51) {
+				return false;
+			}
+			return (
+				index ===
+				self.findIndex((o) => {
+					return o.Id === option.Id;
+				})
+			);
+		},
+	);
 
 	if (filteredOptions.length === 0) {
 		return null;

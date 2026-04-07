@@ -1,4 +1,8 @@
-import type { AuOptionCategoryDto, ExRTabDto } from "../type";
+import type {
+	AuOptionCategoryDto,
+	ExRCategoryDto,
+	ExRTabDto,
+} from "../type";
 
 /**
  * API エンドポイントの定数定義

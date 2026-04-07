@@ -3,6 +3,7 @@ import { Accordion } from "../components/parts/Accordion";
 import { ColoredText } from "../components/parts/ColoredText";
 import { getExrCategoryOptions } from "../logics/api";
 import { isPresetOption } from "../logics/optionUtils";
+import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 
@@ -24,9 +25,11 @@ export function ExRStandardCategoryItem({
 		return state.toggleExRCategory;
 	});
 
-	const filteredOptions = category.Options.filter((option) => {
-		return !isPresetOption(categoryId, option.Id);
-	});
+	const filteredOptions = category.Options.filter(
+		(option: ExROptionDto) => {
+			return !isPresetOption(categoryId, option.Id);
+		},
+	);
 
 	if (filteredOptions.length === 0) {
 		return null;

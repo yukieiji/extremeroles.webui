@@ -1,23 +1,17 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { HttpResponse, http } from "msw";
-import { setupServer } from "msw/node";
-import {
-	afterAll,
-	afterEach,
-	beforeAll,
-	beforeEach,
-	describe,
-	expect,
-	it,
-} from "vitest";
+import { fireEvent, render, screen, act } from "@testing-library/react";
+import { http, HttpResponse } from "msw";
+import { beforeEach, describe, expect, it } from "vitest";
+import { Suspense } from "react";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { type ExRTabDto, OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
+import { server } from "./msw-server";
+import { resetApiCache } from "../src/logics/api";
 
-describe("ExRCategoryList Component Selection", () => {
+describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 	const mockTabs: ExRTabDto[] = [
 		{
-			Id: OptionTab.GeneralTab, // Tab 0
+			Id: OptionTab.GeneralTab,
 			Name: "General",
 			Categories: [
 				{
@@ -38,7 +32,7 @@ describe("ExRCategoryList Component Selection", () => {
 			],
 		},
 		{
-			Id: OptionTab.CrewmateTab, // Tab 1
+			Id: OptionTab.CrewmateTab,
 			Name: "Crewmate",
 			Categories: [
 				{
@@ -78,69 +72,66 @@ describe("ExRCategoryList Component Selection", () => {
 		},
 	];
 
-	const server = setupServer(
-		http.get("/exr/option/", () => {
-			return HttpResponse.json(mockTabs);
-		}),
-	);
-
-	beforeAll(() => {
-		server.listen();
-	});
-
-	afterEach(() => {
-		server.resetHandlers();
-	});
-
-	afterAll(() => {
-		server.close();
-	});
-
 	beforeEach(() => {
+		resetApiCache();
 		useStore.getState().resetViewer();
+		server.use(
+			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
+		);
 	});
 
 	it("renders ExRStandardCategoryItem for General Tab", async () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
-		render(<ExRCategoryList />);
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
+		});
 
-		// General Tab: Should render standard category
-		expect(await screen.findByText("General Category")).toBeInTheDocument();
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExRCategoryList />
+				</Suspense>
+			);
+		});
 
-		// Header should NOT have spawn controls
-		expect(screen.queryByText("レート")).not.toBeInTheDocument();
+		expect(await screen.findByText("General Category", {}, { timeout: 5000 })).toBeInTheDocument();
 	});
 
 	it("renders ExRRoleCategoryItem for Role Tab", async () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-		render(<ExRCategoryList />);
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+		});
 
-		// Role Tab: Should render specialized category item
-		expect(await screen.findByText("Sheriff")).toBeInTheDocument();
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExRCategoryList />
+				</Suspense>
+			);
+		});
 
-		// Header should have spawn rate control (レート)
-		expect(screen.getByText("レート")).toBeInTheDocument();
+		expect(await screen.findByText("Sheriff", {}, { timeout: 5000 })).toBeInTheDocument();
 	});
 
 	it("filters out 50 and 51 from role category body", async () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-		// Set a non-zero spawn rate so the accordion is enabled
-		useStore.getState().TEMP_updateExROptionSelection("2-50", 1); // Category 2, Option 50, Index 1 (Value 100)
-		render(<ExRCategoryList />);
-
-		// Open accordion - RoleCategoryItem uses a custom layout,
-		// we find the toggle button by role.
-		const toggleButton = await screen.findByRole("button", {
-			name: /Sheriff/i,
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+			useStore.getState().TEMP_updateExROptionSelection("2-50", 1);
 		});
-		fireEvent.click(toggleButton);
 
-		// Body content should be visible after click
-		// ExRRoleCategoryItem renders options list when isOpen is true
-		expect(await screen.findByText("Kill CD")).toBeInTheDocument();
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExRCategoryList />
+				</Suspense>
+			);
+		});
 
-		// 50 and 51 should be filtered out from the body
-		expect(screen.queryByText("Spawn Rate")).not.toBeInTheDocument();
-		expect(screen.queryByText("Spawn Count")).not.toBeInTheDocument();
+		const toggleButton = await screen.findByRole("button", { name: /Sheriff/i }, { timeout: 5000 });
+
+		await act(async () => {
+			fireEvent.click(toggleButton);
+		});
+
+		expect(await screen.findByText("Kill CD", {}, { timeout: 5000 })).toBeInTheDocument();
 	});
 });

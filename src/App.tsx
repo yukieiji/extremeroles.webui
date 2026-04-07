@@ -16,13 +16,13 @@ function EditorContainer() {
 		return state.selectedTab;
 	});
 
-	// React 19 の use() フックを使用してデータを取得
-	const auData = use(getAuOptions());
-
 	if (selectedTab === "ExR") {
 		return <ExROptionEditor />;
 	}
 
+	// React 19 の use() フックを使用してデータを取得
+	// use() は条件付きで呼び出すことができます
+	const auData = use(getAuOptions());
 	return <AuOptionEditor data={auData} />;
 }
 

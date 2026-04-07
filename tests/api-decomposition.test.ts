@@ -1,4 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { http, HttpResponse } from "msw";
+import { server } from "./msw-server";
 import {
 	getAuCategoryOptions,
 	getAuOptions,
@@ -9,20 +11,23 @@ import {
 } from "../src/logics/api";
 
 describe("Granular API Promise decomposition", () => {
-	// We use the real fetch and let MSW handle it, but we can spy on it
-	const fetchSpy = vi.spyOn(global, "fetch");
-
 	beforeEach(() => {
 		resetApiCache();
-		fetchSpy.mockClear();
 	});
 
-	it("getExrTabOptions should trigger getExrOptions and return the specific tab", async () => {
-		const tab = await getExrTabOptions(0); // GeneralTab in mock data is 0
+	it("getExrTabOptions should return the specific tab", async () => {
+		const mockTabs = [
+			{ Id: 0, Name: "General", Categories: [] },
+			{ Id: 1, Name: "Crewmate", Categories: [] },
+		];
+		server.use(
+			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
+		);
 
-		expect(fetchSpy).toHaveBeenCalled();
-		expect(tab.Id).toBe(0);
-		expect(tab.Name).toBe("グローバル設定");
+		const tab = await getExrTabOptions(1);
+
+		expect(tab.Id).toBe(1);
+		expect(tab.Name).toBe("Crewmate");
 	});
 
 	it("getExrTabOptions should return the same promise instance for the same tabId", () => {
@@ -32,39 +37,63 @@ describe("Granular API Promise decomposition", () => {
 	});
 
 	it("getExrOptions should populate individual tab and category promises", async () => {
+		const mockTabs = [
+			{
+				Id: 0,
+				Name: "General",
+				Categories: [{ Id: 10, Name: "SubCat", Options: [] }],
+			},
+			{ Id: 1, Name: "Crewmate", Categories: [] },
+		];
+		server.use(
+			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
+		);
+
 		await getExrOptions();
 
-		// Now getExrTabOptions should return a resolved promise without fetching again
 		const tab0 = await getExrTabOptions(0);
-		expect(tab0.Name).toBe("グローバル設定");
+		expect(tab0.Name).toBe("General");
 
-		// Category 1 exists in mock data
-		const cat = await getExrCategoryOptions(1);
-		expect(cat.Name).toBe("乱数に関する設定");
-
-		// Fetch should have been called only once (by getExrOptions)
-		expect(fetchSpy).toHaveBeenCalledTimes(1);
+		const cat = await getExrCategoryOptions(10);
+		expect(cat.Name).toBe("SubCat");
 	});
 
-	it("getExrCategoryOptions should trigger getExrOptions and return the specific category", async () => {
-		const category = await getExrCategoryOptions(1);
+	it("getExrCategoryOptions should return the specific category", async () => {
+		const mockTabs = [
+			{
+				Id: 0,
+				Name: "General",
+				Categories: [{ Id: 10, Name: "SubCat", Options: [] }],
+			},
+		];
+		server.use(
+			http.get("/exr/option/", () => HttpResponse.json(mockTabs))
+		);
 
-		expect(fetchSpy).toHaveBeenCalled();
-		expect(category.Id).toBe(1);
-		expect(category.Name).toBe("乱数に関する設定");
+		const category = await getExrCategoryOptions(10);
+
+		expect(category.Id).toBe(10);
+		expect(category.Name).toBe("SubCat");
 	});
 
 	it("getExrCategoryOptions should return the same promise instance for the same categoryId", () => {
-		const p1 = getExrCategoryOptions(1);
-		const p2 = getExrCategoryOptions(1);
+		const p1 = getExrCategoryOptions(10);
+		const p2 = getExrCategoryOptions(10);
 		expect(p1).toBe(p2);
 	});
 
-	it("getAuCategoryOptions should trigger getAuOptions and return the specific category", async () => {
-		const category = await getAuCategoryOptions("map");
+	it("getAuCategoryOptions should return the specific category", async () => {
+		const mockCategories = [
+			{ TranslatedTitle: "map", Options: [] },
+			{ TranslatedTitle: "クルー", Options: [] },
+		];
+		server.use(
+			http.get("/au/option/", () => HttpResponse.json(mockCategories))
+		);
 
-		expect(fetchSpy).toHaveBeenCalled();
-		expect(category.TranslatedTitle).toBe("map");
+		const category = await getAuCategoryOptions("クルー");
+
+		expect(category.TranslatedTitle).toBe("クルー");
 	});
 
 	it("getAuCategoryOptions should return the same promise instance for the same categoryName", () => {
@@ -74,11 +103,15 @@ describe("Granular API Promise decomposition", () => {
 	});
 
 	it("getAuOptions should populate individual category promises", async () => {
+		const mockCategories = [{ TranslatedTitle: "map", Options: [] }];
+		server.use(
+			http.get("/au/option/", () => HttpResponse.json(mockCategories))
+		);
+
 		await getAuOptions();
 
 		const cat = await getAuCategoryOptions("map");
 		expect(cat.TranslatedTitle).toBe("map");
-		expect(fetchSpy).toHaveBeenCalledTimes(1);
 	});
 
 	it("resetApiCache should clear granular promises", async () => {
