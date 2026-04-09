@@ -1,4 +1,5 @@
 import type { AuOptionCategoryDto, ExRCategoryDto, ExRTabDto } from "../type";
+import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema } from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -49,7 +50,8 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 		}
-		const data: ExRTabDto[] = await res.json();
+		const rawData = await res.json();
+		const data = ExRTabDtoArraySchema.parse(rawData);
 
 		// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
 		for (const tab of data) {
@@ -136,7 +138,8 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch Au options: ${res.statusText}`);
 		}
-		const data: AuOptionCategoryDto[] = await res.json();
+		const rawData = await res.json();
+		const data = AuOptionCategoryDtoArraySchema.parse(rawData);
 
 		// カテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
 		for (const category of data) {
