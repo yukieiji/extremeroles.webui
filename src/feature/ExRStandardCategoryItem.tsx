@@ -1,29 +1,32 @@
+import { use } from "react";
 import { Accordion } from "../components/parts/Accordion";
 import { ColoredText } from "../components/parts/ColoredText";
+import { getExrCategoryOptions } from "../logics/api";
 import { isPresetOption } from "../logics/optionUtils";
-import type { ExRCategoryDto } from "../type";
+import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 
 interface ExRStandardCategoryItemProps {
-	category: ExRCategoryDto;
+	categoryId: number;
 }
 
 /**
  * 全般タブなどで使用される標準的なカテゴリ表示コンポーネント
  */
 export function ExRStandardCategoryItem({
-	category,
+	categoryId,
 }: ExRStandardCategoryItemProps) {
+	const category = use(getExrCategoryOptions(categoryId));
 	const isOpen = useStore((state) => {
-		return state.openedExRCategoryIds[category.Id] ?? false;
+		return state.openedExRCategoryIds[categoryId] ?? false;
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
 
-	const filteredOptions = category.Options.filter((option) => {
-		return !isPresetOption(category.Id, option.Id);
+	const filteredOptions = category.Options.filter((option: ExROptionDto) => {
+		return !isPresetOption(categoryId, option.Id);
 	});
 
 	if (filteredOptions.length === 0) {
@@ -31,16 +34,16 @@ export function ExRStandardCategoryItem({
 	}
 
 	return (
-		<div data-testid={`exr-category-${category.Id}`}>
+		<div data-testid={`exr-category-${categoryId}`}>
 			<Accordion
 				title={<ColoredText text={category.Name} />}
 				isOpen={isOpen}
 				onToggle={() => {
-					toggleExRCategory(category.Id);
+					toggleExRCategory(categoryId);
 				}}
 			>
 				<ExRCategoryOptionList
-					categoryId={category.Id}
+					categoryId={categoryId}
 					options={filteredOptions}
 				/>
 			</Accordion>

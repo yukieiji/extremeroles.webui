@@ -4,17 +4,8 @@ import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
-import { getAuOptions, getExrOptions } from "./logics/api";
+import { getAuOptions } from "./logics/api";
 import { useStore } from "./useStore";
-
-/**
- * プリセットセレクターを表示するためのコンテナコンポーネント
- * データを取得し、Suspense境界内で動作します
- */
-function PresetSelectorContainer() {
-	const exrData = use(getExrOptions());
-	return <PresetSelector tabs={exrData} />;
-}
 
 /**
  * オプションエディタを表示する内側のコンポーネント
@@ -25,14 +16,13 @@ function EditorContainer() {
 		return state.selectedTab;
 	});
 
-	// React 19 の use() フックを使用してデータを取得
-	const exrData = use(getExrOptions());
-	const auData = use(getAuOptions());
-
 	if (selectedTab === "ExR") {
-		return <ExROptionEditor data={exrData} />;
+		return <ExROptionEditor />;
 	}
 
+	// React 19 の use() フックを使用してデータを取得
+	// use() は条件付きで呼び出すことができます
+	const auData = use(getAuOptions());
 	return <AuOptionEditor data={auData} />;
 }
 
@@ -64,7 +54,7 @@ function MainContent() {
 							<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />
 						}
 					>
-						<PresetSelectorContainer />
+						<PresetSelector />
 					</Suspense>
 				)}
 				{isSidebarPending && (

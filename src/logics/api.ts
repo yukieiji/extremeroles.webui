@@ -1,4 +1,5 @@
-import type { AuOptionCategoryDto, ExRTabDto } from "../type";
+import type { AuOptionCategoryDto, ExRCategoryDto, ExRTabDto } from "../type";
+import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema } from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -10,7 +11,7 @@ const AU_OPTION_URL = "/au/option/";
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
-let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
+let exrAllTabsPromise: Promise<ExRTabDto[]> | null = null;
 const exrTabPromises = new Map<number, Promise<ExRTabDto>>();
 const exrCategoryPromises = new Map<number, Promise<ExRCategoryDto>>();
 
@@ -21,7 +22,7 @@ const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
  * キャッシュをリセットする（テスト用）
  */
 export function resetApiCache() {
-	exrOptionsPromise = null;
+	exrAllTabsPromise = null;
 	exrTabPromises.clear();
 	exrCategoryPromises.clear();
 	auOptionsPromise = null;
@@ -32,14 +33,14 @@ export function resetApiCache() {
  * ExRオプションを取得する
  */
 export function getExrOptions(): Promise<ExRTabDto[]> {
-	if (exrOptionsPromise) {
-		return exrOptionsPromise;
+	if (exrAllTabsPromise) {
+		return exrAllTabsPromise;
 	}
 
 	// @ts-expect-error - テスト用
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 
-	exrOptionsPromise = (async () => {
+	exrAllTabsPromise = (async () => {
 		if (delay > 0) {
 			await new Promise((resolve) => {
 				return setTimeout(resolve, delay);
@@ -49,7 +50,8 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 		}
-		const data: ExRTabDto[] = await res.json();
+		const rawData = await res.json();
+		const data = ExRTabDtoArraySchema.parse(rawData);
 
 		// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
 		for (const tab of data) {
@@ -66,7 +68,7 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		return data;
 	})();
 
-	return exrOptionsPromise;
+	return exrAllTabsPromise;
 }
 
 /**
@@ -136,7 +138,8 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 		if (!res.ok) {
 			throw new Error(`Failed to fetch Au options: ${res.statusText}`);
 		}
-		const data: AuOptionCategoryDto[] = await res.json();
+		const rawData = await res.json();
+		const data = AuOptionCategoryDtoArraySchema.parse(rawData);
 
 		// カテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
 		for (const category of data) {

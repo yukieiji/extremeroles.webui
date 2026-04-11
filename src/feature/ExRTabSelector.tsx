@@ -1,16 +1,14 @@
-import { useEffect, useTransition } from "react";
+import { use, useEffect, useTransition } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
-import type { ExRTabDto, OptionTab } from "../type";
+import { getExrOptions } from "../logics/api";
+import type { OptionTab } from "../type";
 import { useStore } from "../useStore";
-
-interface ExRTabSelectorProps {
-	tabs: ExRTabDto[];
-}
 
 /**
  * ExRオプションのタブ選択コンポーネント
  */
-export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
+export function ExRTabSelector() {
+	const tabs = use(getExrOptions());
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});

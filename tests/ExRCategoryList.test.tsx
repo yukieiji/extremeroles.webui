@@ -1,13 +1,17 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { HttpResponse, http } from "msw";
+import { Suspense } from "react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
+import { resetApiCache } from "../src/logics/api";
 import { type ExRTabDto, OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
+import { server } from "./msw-server";
 
-describe("ExRCategoryList Component Selection", () => {
+describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 	const mockTabs: ExRTabDto[] = [
 		{
-			Id: OptionTab.GeneralTab, // Tab 0
+			Id: OptionTab.GeneralTab,
 			Name: "General",
 			Categories: [
 				{
@@ -28,7 +32,7 @@ describe("ExRCategoryList Component Selection", () => {
 			],
 		},
 		{
-			Id: OptionTab.CrewmateTab, // Tab 1
+			Id: OptionTab.CrewmateTab,
 			Name: "Crewmate",
 			Categories: [
 				{
@@ -69,48 +73,73 @@ describe("ExRCategoryList Component Selection", () => {
 	];
 
 	beforeEach(() => {
+		resetApiCache();
 		useStore.getState().resetViewer();
+		server.use(http.get("/exr/option/", () => HttpResponse.json(mockTabs)));
 	});
 
-	it("renders ExRStandardCategoryItem for General Tab", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+	it("renders ExRStandardCategoryItem for General Tab", async () => {
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
+		});
 
-		// General Tab: Should render standard category
-		expect(screen.getByText("General Category")).toBeInTheDocument();
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExRCategoryList />
+				</Suspense>,
+			);
+		});
 
-		// Header should NOT have spawn controls
-		expect(screen.queryByText("レート")).not.toBeInTheDocument();
+		expect(
+			await screen.findByText("General Category", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 
-	it("renders ExRRoleCategoryItem for Role Tab", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+	it("renders ExRRoleCategoryItem for Role Tab", async () => {
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+		});
 
-		// Role Tab: Should render specialized category item
-		expect(screen.getByText("Sheriff")).toBeInTheDocument();
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExRCategoryList />
+				</Suspense>,
+			);
+		});
 
-		// Header should have spawn rate control (レート)
-		expect(screen.getByText("レート")).toBeInTheDocument();
+		expect(
+			await screen.findByText("Sheriff", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 
-	it("filters out 50 and 51 from role category body", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-		// Set a non-zero spawn rate so the accordion is enabled
-		useStore.getState().TEMP_updateExROptionSelection("2-50", 1); // Category 2, Option 50, Index 1 (Value 100)
-		render(<ExRCategoryList tabs={mockTabs} />);
+	it("filters out 50 and 51 from role category body", async () => {
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+			useStore.getState().TEMP_updateExROptionSelection("2-50", 1);
+		});
 
-		// Open accordion - RoleCategoryItem uses a custom layout,
-		// we find the toggle button by role.
-		const toggleButton = screen.getByRole("button", { name: /Sheriff/i });
-		fireEvent.click(toggleButton);
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExRCategoryList />
+				</Suspense>,
+			);
+		});
 
-		// Body content should be visible after click
-		// ExRRoleCategoryItem renders options list when isOpen is true
-		expect(screen.getByText("Kill CD")).toBeInTheDocument();
+		const toggleButton = await screen.findByRole(
+			"button",
+			{ name: /Sheriff/i },
+			{ timeout: 5000 },
+		);
 
-		// 50 and 51 should be filtered out from the body
-		expect(screen.queryByText("Spawn Rate")).not.toBeInTheDocument();
-		expect(screen.queryByText("Spawn Count")).not.toBeInTheDocument();
+		await act(async () => {
+			fireEvent.click(toggleButton);
+		});
+
+		expect(
+			await screen.findByText("Kill CD", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 });

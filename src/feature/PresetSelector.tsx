@@ -1,11 +1,7 @@
-import { useEffect, useRef } from "react";
+import { use, useEffect, useRef } from "react";
+import { getExrOptions } from "../logics/api";
 import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExRTabDto } from "../type";
 import { useStore } from "../useStore";
-
-interface PresetSelectorProps {
-	tabs: ExRTabDto[];
-}
 
 /**
  * プリセットを選択・編集するためのコンポーネント。
@@ -15,7 +11,9 @@ interface PresetSelectorProps {
  * 入力更新の最適化:
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
-export function PresetSelector({ tabs }: PresetSelectorProps) {
+export function PresetSelector() {
+	const tabs = use(getExrOptions());
+
 	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
 	const generalTab = tabs.find((t) => {
 		return t.Id === 0;

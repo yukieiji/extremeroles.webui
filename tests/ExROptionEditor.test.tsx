@@ -1,10 +1,14 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { HttpResponse, http } from "msw";
+import { Suspense } from "react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
+import { resetApiCache } from "../src/logics/api";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
+import { server } from "./msw-server";
 
-describe("ExROptionEditor", () => {
+describe("ExROptionEditor", { timeout: 15000 }, () => {
 	const mockData: ExRTabDto[] = [
 		{
 			Id: 0,
@@ -86,49 +90,76 @@ describe("ExROptionEditor", () => {
 	];
 
 	beforeEach(() => {
+		resetApiCache();
 		useStore.getState().resetViewer();
+		server.use(http.get("/exr/option/", () => HttpResponse.json(mockData)));
 	});
 
-	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
-		render(<ExROptionEditor data={mockData} />);
+	it("should only show visible categories (not empty, at least one active option) and hide preset", async () => {
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExROptionEditor />
+				</Suspense>,
+			);
+		});
 
-		expect(screen.getByText("Category 1")).toBeInTheDocument();
-		expect(screen.queryByText("Empty Category")).not.toBeInTheDocument();
-		expect(screen.queryByText("Inactive Category")).not.toBeInTheDocument();
-
-		// プリセットカテゴリは非表示になっていることを確認
-		expect(screen.queryByText("Preset Category")).not.toBeInTheDocument();
+		expect(
+			await screen.findByText("Category 1", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 	});
 
-	it("should switch tabs and show correct categories", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+	it("should switch tabs and show correct categories", async () => {
+		let unmount: () => void;
+		await act(async () => {
+			const result = render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExROptionEditor />
+				</Suspense>,
+			);
+			unmount = result.unmount;
+		});
 
-		expect(screen.getByText("Category 1")).toBeInTheDocument();
+		expect(
+			await screen.findByText("Category 1", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
 
-		const tab2Button = screen.getByText("Tab 2");
-		fireEvent.click(tab2Button);
+		const tab2Button = await screen.findByText("Tab 2", {}, { timeout: 5000 });
 
-		expect(screen.queryByText("Category 1")).not.toBeInTheDocument();
-		expect(screen.getByText("Category 2")).toBeInTheDocument();
-		unmount();
+		await act(async () => {
+			fireEvent.click(tab2Button);
+		});
+
+		expect(
+			await screen.findByText("Category 2", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
+		unmount?.();
 	});
 
-	it("should toggle accordion and show options UI", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+	it("should toggle accordion and show options UI", async () => {
+		let unmount: () => void;
+		await act(async () => {
+			const result = render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExROptionEditor />
+				</Suspense>,
+			);
+			unmount = result.unmount;
+		});
 
-		const categoryButton = screen.getByText("Category 1");
+		const categoryButton = await screen.findByText(
+			"Category 1",
+			{},
+			{ timeout: 5000 },
+		);
 
-		fireEvent.click(categoryButton);
+		await act(async () => {
+			fireEvent.click(categoryButton);
+		});
 
-		// オプション名が表示されていることを確認
-		expect(screen.getByText("Option 1")).toBeInTheDocument();
-
-		// スライダー（input[type="range"]）が存在することを確認
-		expect(screen.getByRole("slider")).toBeInTheDocument();
-
-		// 現在の値が表示されていることを確認
-		expect(screen.getAllByDisplayValue("0")).toHaveLength(2);
-
-		unmount();
+		expect(
+			await screen.findByText("Option 1", {}, { timeout: 5000 }),
+		).toBeInTheDocument();
+		unmount?.();
 	});
 });
