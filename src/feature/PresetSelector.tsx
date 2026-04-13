@@ -1,6 +1,5 @@
 import { use, useEffect, useRef } from "react";
 import { getExrOptions } from "../logics/api";
-import { getUniqueOptionId } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 
 /**
@@ -25,11 +24,7 @@ export function PresetSelector() {
 		return o.Id === 0;
 	});
 
-	const uniqueId = getUniqueOptionId(0, 0);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? presetOption?.Selection ?? 0;
+	const currentSelection = presetOption?.Selection ?? 0;
 
 	const presetNames = useStore((state) => {
 		return state.presetNames;
@@ -39,9 +34,6 @@ export function PresetSelector() {
 	});
 	const updatePresetName = useStore((state) => {
 		return state.updatePresetName;
-	});
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
 	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
@@ -75,8 +67,8 @@ export function PresetSelector() {
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
-	const handlePresetSelect = (index: number) => {
-		TEMP_updateExROptionSelection(uniqueId, index);
+	const handlePresetSelect = (_index: number) => {
+		// PUTリクエストはまだ実装しない
 		setPresetDropdownOpen(false);
 	};
 

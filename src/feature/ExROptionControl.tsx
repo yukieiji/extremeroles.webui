@@ -1,9 +1,7 @@
 import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
-import { getUniqueOptionId } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
-import { useStore } from "../useStore";
 
 interface ExROptionControlProps {
 	categoryId: number;
@@ -14,20 +12,12 @@ interface ExROptionControlProps {
  * オプションの種類に応じた操作用コンポーネントをレンダリングする
  */
 export function ExROptionControl({
-	categoryId,
 	option,
 }: ExROptionControlProps) {
-	const uniqueId = getUniqueOptionId(categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
-	});
+	const currentSelection = option.Selection;
 
-	const handleChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+	const handleChange = (_newSelection: number) => {
+		// PUTリクエストはまだ実装しないため、ここでは何もしない
 	};
 
 	const { Type, Values } = option.RangeMeta;

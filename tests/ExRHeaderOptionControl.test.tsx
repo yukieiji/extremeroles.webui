@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "../src/feature/ExRHeaderOptionControl";
 import type { ExROptionDto } from "../src/type";
@@ -38,46 +38,6 @@ describe("ExRHeaderOptionControl", () => {
 		expect(textInput).toBeInTheDocument();
 	});
 
-	it("updates selection when slider is moved", () => {
-		render(
-			<ExRHeaderOptionControl
-				categoryId={1}
-				option={mockOption}
-				label="Rate"
-			/>,
-		);
-
-		const slider = screen.getByRole("slider");
-		fireEvent.change(slider, { target: { value: "1" } });
-
-		// Check if store was updated
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(1);
-	});
-
-	it("updates selection when input is changed", () => {
-		render(
-			<ExRHeaderOptionControl
-				categoryId={1}
-				option={mockOption}
-				label="Rate"
-			/>,
-		);
-
-		const inputs = screen.getAllByDisplayValue("0");
-		const textInput = inputs.find(
-			(i) => (i as HTMLInputElement).type === "text",
-		);
-		if (!textInput) {
-			throw new Error("Text input not found");
-		}
-
-		fireEvent.change(textInput, { target: { value: "100" } });
-
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(2); // 100 is at index 2
-	});
-
 	it("prevents click propagation to parent", () => {
 		const parentClick = vi.fn();
 		render(
@@ -96,8 +56,16 @@ describe("ExRHeaderOptionControl", () => {
 		);
 
 		const label = screen.getByText("Rate");
-		fireEvent.click(label);
+		fireEventClick(label);
 
 		expect(parentClick).not.toHaveBeenCalled();
 	});
+
+	function fireEventClick(element: HTMLElement) {
+		const event = new MouseEvent("click", {
+			bubbles: true,
+			cancelable: true,
+		});
+		element.dispatchEvent(event);
+	}
 });
