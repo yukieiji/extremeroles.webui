@@ -25,11 +25,7 @@ export function PresetSelector() {
 		return o.Id === 0;
 	});
 
-	const uniqueId = getUniqueOptionId(0, 0);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? presetOption?.Selection ?? 0;
+	const currentSelection = presetOption?.Selection ?? 0;
 
 	const presetNames = useStore((state) => {
 		return state.presetNames;
@@ -76,6 +72,7 @@ export function PresetSelector() {
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = (index: number) => {
+		const uniqueId = getUniqueOptionId(0, 0);
 		TEMP_updateExROptionSelection(uniqueId, index);
 		setPresetDropdownOpen(false);
 	};

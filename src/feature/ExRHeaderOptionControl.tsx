@@ -18,11 +18,7 @@ export function ExRHeaderOptionControl({
 	option,
 	label,
 }: ExRHeaderOptionControlProps) {
-	const uniqueId = getUniqueOptionId(categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? option.Selection;
+	const currentSelection = option.Selection;
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;
 	});
@@ -30,11 +26,12 @@ export function ExRHeaderOptionControl({
 	const values = option.RangeMeta.Values as number[];
 
 	const handleSelectionChange = (newSelection: number) => {
+		const uniqueId = getUniqueOptionId(categoryId, option.Id);
 		TEMP_updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const handleInputChange = (val: number) => {
-		TEMP_updateExROptionSelection(uniqueId, findClosestIndex(values, val));
+		handleSelectionChange(findClosestIndex(values, val));
 	};
 
 	return (

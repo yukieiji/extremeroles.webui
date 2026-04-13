@@ -17,16 +17,13 @@ export function ExROptionControl({
 	categoryId,
 	option,
 }: ExROptionControlProps) {
-	const uniqueId = getUniqueOptionId(categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? option.Selection;
+	const currentSelection = option.Selection;
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;
 	});
 
 	const handleChange = (newSelection: number) => {
+		const uniqueId = getUniqueOptionId(categoryId, option.Id);
 		TEMP_updateExROptionSelection(uniqueId, newSelection);
 	};
 

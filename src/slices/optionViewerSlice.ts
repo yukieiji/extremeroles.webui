@@ -13,7 +13,6 @@ export interface OptionViewerSlice {
 	isTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<string, boolean>;
-	effectiveSelections: Record<string, number>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
@@ -40,7 +39,6 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		isTabPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
-		effectiveSelections: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -55,7 +53,6 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				isTabPending: false,
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
-				effectiveSelections: {},
 				isPresetDropdownOpen: false,
 			});
 		},
@@ -80,17 +77,10 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			});
 		},
 		TEMP_updateExROptionSelection: (
-			uniqueOptionId: string,
-			selection: number,
+			_uniqueOptionId: string,
+			_selection: number,
 		) => {
-			set((state) => {
-				return {
-					effectiveSelections: {
-						...state.effectiveSelections,
-						[uniqueOptionId]: selection,
-					},
-				};
-			});
+			// 将来の拡張用の空関数。楽観的更新を廃止したため、現在は何もしない。
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {
