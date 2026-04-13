@@ -12,6 +12,7 @@ interface ExRRoleSpawnControlsProps {
  * 役職のスポーンレートとスポーン数をセットで管理し、同期させるためのコンポーネント
  */
 export function ExRRoleSpawnControls({
+	categoryId,
 	spawnRateOption,
 	spawnCountOption,
 }: ExRRoleSpawnControlsProps) {

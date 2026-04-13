@@ -13,6 +13,7 @@ interface ExRHeaderOptionControlProps {
  * (ストア接続済みラッパー)
  */
 export function ExRHeaderOptionControl({
+	categoryId,
 	option,
 	label,
 }: ExRHeaderOptionControlProps) {

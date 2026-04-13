@@ -17,6 +17,7 @@ interface ExRPairedOptionRowProps {
  * 最小・最大ペアのオプションを1行で表示するコンポーネント
  */
 export function ExRPairedOptionRow({
+	categoryId,
 	baseName,
 	min,
 	max,
