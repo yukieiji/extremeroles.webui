@@ -1,8 +1,10 @@
 import type { StateCreator } from "zustand";
+import { putExrOption, resetApiCache } from "../logics/api";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
+import { getUniqueOptionId } from "../logics/optionUtils";
 import type { OptionTab } from "../type";
 
 /**
@@ -20,10 +22,10 @@ export interface OptionViewerSlice {
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: string) => void;
-	TEMP_updateExROptionSelection: (
+	updateExROptionSelection: (
 		uniqueOptionId: string,
 		selection: number,
-	) => void;
+	) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -34,6 +36,7 @@ export interface OptionViewerSlice {
  */
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 	set,
+	get,
 ) => {
 	return {
 		selectedExRTabId: 0,
@@ -58,6 +61,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				effectiveSelections: {},
 				isPresetDropdownOpen: false,
 			});
+			resetApiCache();
 		},
 		toggleExRCategory: (categoryId: number) => {
 			set((state) => {
@@ -79,16 +83,57 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		TEMP_updateExROptionSelection: (
+		updateExROptionSelection: async (
 			uniqueOptionId: string,
 			selection: number,
 		) => {
+			const [catIdStr, optIdStr] = uniqueOptionId.split("-");
+			const categoryId = Number.parseInt(catIdStr, 10);
+			const optionId = Number.parseInt(optIdStr, 10);
+			const { selectedExRTabId } = get();
+
+			const result = await putExrOption({
+				TabId: selectedExRTabId,
+				CategoryId: categoryId,
+				OptionId: optionId,
+				Selection: selection,
+			});
+
 			set((state) => {
+				const newSelections = { ...state.effectiveSelections };
+
+				// 更新されたカテゴリ内の全オプションを effectiveSelections に反映
+				if (result.UpdatedCategory) {
+					const cid = result.UpdatedCategory.Id;
+					const traverse = (opts: typeof result.UpdatedCategory.Options) => {
+						for (const opt of opts) {
+							const uid = getUniqueOptionId(cid, opt.Id);
+							newSelections[uid] = opt.Selection;
+							if (opt.Childs) {
+								traverse(opt.Childs);
+							}
+						}
+					};
+					traverse(result.UpdatedCategory.Options);
+				}
+
+				// 連鎖的に更新されたオプションも反映
+				for (const chain of result.ChainUpdatedOption) {
+					const cid = chain.Id;
+					const traverseChain = (opts: typeof chain.Options) => {
+						for (const opt of opts) {
+							const uid = getUniqueOptionId(cid, opt.Id);
+							newSelections[uid] = opt.Selection;
+							if (opt.Childs) {
+								traverseChain(opt.Childs);
+							}
+						}
+					};
+					traverseChain(chain.Options);
+				}
+
 				return {
-					effectiveSelections: {
-						...state.effectiveSelections,
-						[uniqueOptionId]: selection,
-					},
+					effectiveSelections: newSelections,
 				};
 			});
 		},

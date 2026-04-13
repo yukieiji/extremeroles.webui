@@ -22,12 +22,12 @@ export function ExROptionControl({
 		return state.effectiveSelections[uniqueId];
 	});
 	const currentSelection = effectiveSelection ?? option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const handleChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const { Type, Values } = option.RangeMeta;

@@ -1,5 +1,15 @@
-import type { AuOptionCategoryDto, ExRCategoryDto, ExRTabDto } from "../type";
-import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema } from "../type";
+import type {
+	AuOptionCategoryDto,
+	ExRCategoryDto,
+	ExROptionPutRequest,
+	ExRTabDto,
+	UpdatedOptions,
+} from "../type";
+import {
+	AuOptionCategoryDtoArraySchema,
+	ExRTabDtoArraySchema,
+	UpdatedOptionsSchema,
+} from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -185,4 +195,48 @@ export function getAuCategoryOptions(
  */
 export function getAllOptions(): Promise<[ExRTabDto[], AuOptionCategoryDto[]]> {
 	return Promise.all([getExrOptions(), getAuOptions()]);
+}
+
+/**
+ * ExRオプションを更新する
+ */
+export async function putExrOption(
+	request: ExROptionPutRequest,
+): Promise<UpdatedOptions> {
+	const res = await fetch(EXR_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	const rawData = await res.json();
+	const data = UpdatedOptionsSchema.parse(rawData);
+
+	// キャッシュの更新
+	if (data.UpdatedCategory) {
+		exrCategoryPromises.set(
+			data.UpdatedCategory.Id,
+			Promise.resolve(data.UpdatedCategory),
+		);
+	}
+
+	for (const chain of data.ChainUpdatedOption) {
+		const cachedPromise = exrCategoryPromises.get(chain.Id);
+		if (cachedPromise) {
+			const cached = await cachedPromise;
+			const updatedCategory: ExRCategoryDto = {
+				...cached,
+				Options: chain.Options,
+			};
+			exrCategoryPromises.set(chain.Id, Promise.resolve(updatedCategory));
+		}
+	}
+
+	return data;
 }

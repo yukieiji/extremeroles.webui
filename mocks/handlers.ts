@@ -6,7 +6,7 @@ import {
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema
 } from '../src/type';
-import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto } from '../src/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto } from '../src/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
@@ -27,9 +27,9 @@ try {
 }
 
 /**
- * 更新されたオプションのモックデータ作成
+ * 更新されたオプションのモックデータ作成 (Vanilla用)
  */
-const mockUpdatedOptions: UpdatedOptions = {
+const mockUpdatedOptionsVanilla: UpdatedOptions = {
   UpdatedCategory: {
     Id: 1,
     Name: 'ゲーム設定',
@@ -51,7 +51,7 @@ const mockUpdatedOptions: UpdatedOptions = {
   ChainUpdatedOption: [],
 };
 
-const validatedUpdatedOptions = UpdatedOptionsSchema.parse(mockUpdatedOptions);
+const validatedUpdatedOptionsVanilla = UpdatedOptionsSchema.parse(mockUpdatedOptionsVanilla);
 
 export const handlers = [
   /**
@@ -67,35 +67,95 @@ export const handlers = [
   http.put('/exr/option/', async ({ request }) => {
     const body = await request.json();
 
-    // Zodを使用してリクエストボディをバリデーション
     const result = ExROptionPutRequestSchema.safeParse(body);
-
     if (!result.success) {
       return new HttpResponse(null, { status: 400 });
     }
 
-    const { CategoryId, OptionId } = result.data;
+    const { CategoryId, OptionId, Selection } = result.data;
 
-    // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
       return new HttpResponse(null, { status: 202 });
     }
 
-    // それ以外はUpdatedOptionsを返す
-    const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [
+    // 既存のモックデータからカテゴリを探す
+    let sourceCategory = null;
+    for (const tab of validatedExRMockData) {
+      const cat = tab.Categories.find(c => c.Id === CategoryId);
+      if (cat) {
+        sourceCategory = cat;
+        break;
+      }
+    }
+
+    let updatedOptions: ExROptionDto[] = [];
+    if (sourceCategory) {
+      updatedOptions = sourceCategory.Options.map(opt =>
+        opt.Id === OptionId ? { ...opt, Selection } : opt
+      );
+    } else {
+      // 見つからない場合はダミーを生成（テスト用）
+      updatedOptions = [
         {
-          Id: validatedExRMockData[0].Categories[0].Id,
-          Options: [validatedExRMockData[0].Categories[0].Options[0]],
+          Id: OptionId,
+          IsActive: true,
+          TranslatedName: "Mock Option",
+          Selection: Selection,
+          Format: "{0}",
+          RangeMeta: {
+            Type: "Int32",
+            Values: [0, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+          },
+          Childs: []
         },
-      ],
+        {
+          Id: 999, // フィルタリングで消えないためのダミー
+          IsActive: true,
+          TranslatedName: "Dummy Option",
+          Selection: 0,
+          Format: "{0}",
+          RangeMeta: { Type: "Int32", Values: [0, 1] },
+          Childs: []
+        }
+      ];
+    }
+
+    const response: UpdatedOptions = {
+      UpdatedCategory: {
+        Id: CategoryId,
+        Name: sourceCategory ? sourceCategory.Name : "Mock Category",
+        Options: sourceCategory
+          ? updatedOptions
+          : [
+              {
+                Id: OptionId,
+                IsActive: true,
+                TranslatedName: "Mock Option",
+                Selection: Selection,
+                Format: "{0}",
+                RangeMeta: {
+                  Type: "Int32",
+                  Values: [
+                    0, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
+                  ],
+                },
+                Childs: [],
+              },
+              {
+                Id: 51, // Spawn Count for Role tests
+                IsActive: true,
+                TranslatedName: "Mock Option 2",
+                Selection: Selection, // just a placeholder
+                Format: "{0}",
+                RangeMeta: { Type: "Int32", Values: [0, 1, 2, 3] },
+                Childs: [],
+              },
+            ],
+      },
+      ChainUpdatedOption: [],
     };
 
-    // レスポンスデータのバリデーション
-    const validatedResponse = UpdatedOptionsSchema.parse(mockUpdatedOptions);
-
-    return HttpResponse.json(validatedResponse);
+    return HttpResponse.json(UpdatedOptionsSchema.parse(response));
   }),
 
   /**
@@ -111,12 +171,11 @@ export const handlers = [
   http.put('/au/option/', async ({ request }) => {
     const body = await request.json();
 
-    // リクエストボディのバリデーション
     const validatedRequest = VanillaOptionPutRequestSchema.safeParse(body);
     if (!validatedRequest.success) {
       return HttpResponse.json(validatedRequest.error, { status: 400 });
     }
 
-    return HttpResponse.json(validatedUpdatedOptions);
+    return HttpResponse.json(validatedUpdatedOptionsVanilla);
   }),
 ];

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
 import type { ExROptionDto } from "../src/type";
 import { useStore } from "../src/useStore";
@@ -60,9 +60,9 @@ describe("ExRRoleSpawnControls", () => {
 		expect(slider.max).toBe("3");
 	});
 
-	it("syncs rate to 0 when count is set to 0", () => {
+	it("syncs rate to 0 when count is set to 0", async () => {
 		// Set initial rate to 10%
-		useStore.getState().TEMP_updateExROptionSelection("1-50", 1);
+		await useStore.getState().updateExROptionSelection("1-50", 1);
 
 		render(
 			<ExRRoleSpawnControls
@@ -79,11 +79,12 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(0); // Rate 0%
+		await vi.waitFor(() => {
+			expect(useStore.getState().effectiveSelections["1-50"]).toBe(0);
+		});
 	});
 
-	it("syncs rate to 10% when count is set to non-zero from zero rate", () => {
+	it("syncs rate to 10% when count is set to non-zero from zero rate", async () => {
 		render(
 			<ExRRoleSpawnControls
 				categoryId={1}
@@ -99,14 +100,15 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "1" } }); // Select '1'
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(1); // Rate index 1 is 10%
+		await vi.waitFor(() => {
+			expect(useStore.getState().effectiveSelections["1-50"]).toBe(1);
+		});
 	});
 
-	it("syncs count to 0 when rate is set to 0%", () => {
+	it("syncs count to 0 when rate is set to 0%", async () => {
 		// Set initial rate to 10% and count to 2
-		useStore.getState().TEMP_updateExROptionSelection("1-50", 1);
-		useStore.getState().TEMP_updateExROptionSelection("1-51", 1); // backend index 1 is value 2
+		await useStore.getState().updateExROptionSelection("1-50", 1);
+		await useStore.getState().updateExROptionSelection("1-51", 1); // backend index 1 is value 2
 
 		render(
 			<ExRRoleSpawnControls
@@ -123,8 +125,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		const state = useStore.getState();
-		expect(state.effectiveSelections["1-51"]).toBe(0); // Count reset to index 0
+		await vi.waitFor(() => {
+			expect(useStore.getState().effectiveSelections["1-51"]).toBe(0);
+		});
 
 		// UI should show 0
 		const countDisplay = screen

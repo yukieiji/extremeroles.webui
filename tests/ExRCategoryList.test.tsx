@@ -117,7 +117,7 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 	it("filters out 50 and 51 from role category body", async () => {
 		await act(async () => {
 			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-			useStore.getState().TEMP_updateExROptionSelection("2-50", 1);
+			await useStore.getState().updateExROptionSelection("2-50", 1);
 		});
 
 		await act(async () => {
