@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "../src/feature/ExRHeaderOptionControl";
 import type { ExROptionDto } from "../src/type";
@@ -56,16 +56,8 @@ describe("ExRHeaderOptionControl", () => {
 		);
 
 		const label = screen.getByText("Rate");
-		fireEventClick(label);
+		fireEvent.click(label);
 
 		expect(parentClick).not.toHaveBeenCalled();
 	});
-
-	function fireEventClick(element: HTMLElement) {
-		const event = new MouseEvent("click", {
-			bubbles: true,
-			cancelable: true,
-		});
-		element.dispatchEvent(event);
-	}
 });
