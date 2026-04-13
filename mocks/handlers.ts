@@ -67,13 +67,16 @@ export const handlers = [
   http.put('/exr/option/', async ({ request }) => {
     const body = await request.json();
 
+    // Zodを使用してリクエストボディをバリデーション
     const result = ExROptionPutRequestSchema.safeParse(body);
+
     if (!result.success) {
       return new HttpResponse(null, { status: 400 });
     }
 
     const { CategoryId, OptionId, Selection } = result.data;
 
+    // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
       return new HttpResponse(null, { status: 202 });
     }
@@ -90,9 +93,28 @@ export const handlers = [
 
     let updatedOptions: ExROptionDto[] = [];
     if (sourceCategory) {
-      updatedOptions = sourceCategory.Options.map(opt =>
-        opt.Id === OptionId ? { ...opt, Selection } : opt
-      );
+      let found = false;
+      updatedOptions = sourceCategory.Options.map(opt => {
+        if (opt.Id === OptionId) {
+          found = true;
+          return { ...opt, Selection };
+        }
+        return opt;
+      });
+      if (!found) {
+        updatedOptions.push({
+          Id: OptionId,
+          IsActive: true,
+          TranslatedName: "Mock Option",
+          Selection: Selection,
+          Format: "{0}",
+          RangeMeta: {
+            Type: "Int32",
+            Values: [0, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+          },
+          Childs: []
+        });
+      }
     } else {
       // 見つからない場合はダミーを生成（テスト用）
       updatedOptions = [
@@ -109,12 +131,12 @@ export const handlers = [
           Childs: []
         },
         {
-          Id: 999, // フィルタリングで消えないためのダミー
+          Id: 51, // Spawn Count for Role tests
           IsActive: true,
-          TranslatedName: "Dummy Option",
+          TranslatedName: "Mock Option 2",
           Selection: 0,
           Format: "{0}",
-          RangeMeta: { Type: "Int32", Values: [0, 1] },
+          RangeMeta: { Type: "Int32", Values: [0, 1, 2, 3] },
           Childs: []
         }
       ];
@@ -124,38 +146,15 @@ export const handlers = [
       UpdatedCategory: {
         Id: CategoryId,
         Name: sourceCategory ? sourceCategory.Name : "Mock Category",
-        Options: sourceCategory
-          ? updatedOptions
-          : [
-              {
-                Id: OptionId,
-                IsActive: true,
-                TranslatedName: "Mock Option",
-                Selection: Selection,
-                Format: "{0}",
-                RangeMeta: {
-                  Type: "Int32",
-                  Values: [
-                    0, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
-                  ],
-                },
-                Childs: [],
-              },
-              {
-                Id: 51, // Spawn Count for Role tests
-                IsActive: true,
-                TranslatedName: "Mock Option 2",
-                Selection: Selection, // just a placeholder
-                Format: "{0}",
-                RangeMeta: { Type: "Int32", Values: [0, 1, 2, 3] },
-                Childs: [],
-              },
-            ],
+        Options: updatedOptions
       },
-      ChainUpdatedOption: [],
+      ChainUpdatedOption: []
     };
 
-    return HttpResponse.json(UpdatedOptionsSchema.parse(response));
+    // レスポンスデータのバリデーション
+    const validatedResponse = UpdatedOptionsSchema.parse(response);
+
+    return HttpResponse.json(validatedResponse);
   }),
 
   /**
@@ -171,6 +170,7 @@ export const handlers = [
   http.put('/au/option/', async ({ request }) => {
     const body = await request.json();
 
+    // リクエストボディのバリデーション
     const validatedRequest = VanillaOptionPutRequestSchema.safeParse(body);
     if (!validatedRequest.success) {
       return HttpResponse.json(validatedRequest.error, { status: 400 });

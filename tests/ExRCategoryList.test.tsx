@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { resetApiCache } from "../src/logics/api";
-import { type ExRTabDto, OptionTab } from "../src/type";
+import { type ExRTabDto, OptionTab, type UpdatedOptions } from "../src/type";
 import { useStore } from "../src/useStore";
 import { server } from "./msw-server";
 
@@ -76,6 +76,40 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 		resetApiCache();
 		useStore.getState().resetViewer();
 		server.use(http.get("/exr/option/", () => HttpResponse.json(mockTabs)));
+
+		// PUT ハンドラーをこのテストの mockTabs に合わせる
+		server.use(
+			http.put("/exr/option/", async ({ request }) => {
+				const body = (await request.json()) as {
+					CategoryId: number;
+					OptionId: number;
+					Selection: number;
+				};
+				const { CategoryId, OptionId, Selection } = body;
+
+				let sourceCategory = null;
+				for (const tab of mockTabs) {
+					const cat = tab.Categories.find((c) => c.Id === CategoryId);
+					if (cat) {
+						sourceCategory = cat;
+						break;
+					}
+				}
+
+				const response: UpdatedOptions = {
+					UpdatedCategory: sourceCategory
+						? {
+								...sourceCategory,
+								Options: sourceCategory.Options.map((opt) =>
+									opt.Id === OptionId ? { ...opt, Selection } : opt,
+								),
+							}
+						: null,
+					ChainUpdatedOption: [],
+				};
+				return HttpResponse.json(response);
+			}),
+		);
 	});
 
 	it("renders ExRStandardCategoryItem for General Tab", async () => {
