@@ -11,9 +11,7 @@ interface ExROptionControlProps {
 /**
  * オプションの種類に応じた操作用コンポーネントをレンダリングする
  */
-export function ExROptionControl({
-	option,
-}: ExROptionControlProps) {
+export function ExROptionControl({ option }: ExROptionControlProps) {
 	const currentSelection = option.Selection;
 
 	const handleChange = (_newSelection: number) => {
