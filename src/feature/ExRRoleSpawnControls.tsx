@@ -53,39 +53,39 @@ export function ExRRoleSpawnControls({
 	const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
-	const handleRateChange = (newSelection: number) => {
-		updateExROptionSelection(uniqueRateId, newSelection);
+	const handleRateChange = async (newSelection: number) => {
+		await updateExROptionSelection(uniqueRateId, newSelection);
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
-			updateExROptionSelection(uniqueCountId, 0);
+			await updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		}
 	};
 
-	const handleRateInputChange = (val: number) => {
-		handleRateChange(findClosestIndex(rateValues, val));
+	const handleRateInputChange = async (val: number) => {
+		await handleRateChange(findClosestIndex(rateValues, val));
 	};
 
-	const handleCountUIChange = (newUISelection: number) => {
+	const handleCountUIChange = async (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			updateExROptionSelection(uniqueRateId, findClosestIndex(rateValues, 0));
-			updateExROptionSelection(uniqueCountId, 0);
+			await updateExROptionSelection(uniqueRateId, findClosestIndex(rateValues, 0));
+			await updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
-				updateExROptionSelection(
+				await updateExROptionSelection(
 					uniqueRateId,
 					findClosestIndex(rateValues, 10),
 				);
 			}
-			updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			await updateExROptionSelection(uniqueCountId, newUISelection - 1);
 		}
 	};
 

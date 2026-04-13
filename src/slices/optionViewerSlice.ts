@@ -102,6 +102,9 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			set((state) => {
 				const newSelections = { ...state.effectiveSelections };
 
+				// ターゲットとなったオプションをまず更新（結果に含まれない場合への備え）
+				newSelections[uniqueOptionId] = selection;
+
 				// 更新されたカテゴリ内の全オプションを effectiveSelections に反映
 				if (result.UpdatedCategory) {
 					const cid = result.UpdatedCategory.Id;
