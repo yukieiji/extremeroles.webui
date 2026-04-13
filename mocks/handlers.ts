@@ -84,37 +84,41 @@ export const handlers = [
     // 既存のモックデータからカテゴリを探す
     let sourceCategory = null;
     for (const tab of validatedExRMockData) {
-      const cat = tab.Categories.find(c => c.Id === CategoryId);
-      if (cat) {
-        sourceCategory = cat;
+      const catIndex = tab.Categories.findIndex(c => c.Id === CategoryId);
+      if (catIndex !== -1) {
+        sourceCategory = tab.Categories[catIndex];
+
+        // モックデータを更新して状態を保持する
+        let found = false;
+        sourceCategory.Options = sourceCategory.Options.map(opt => {
+          if (opt.Id === OptionId) {
+            found = true;
+            return { ...opt, Selection };
+          }
+          return opt;
+        });
+
+        if (!found) {
+          sourceCategory.Options.push({
+            Id: OptionId,
+            IsActive: true,
+            TranslatedName: "Mock Option",
+            Selection: Selection,
+            Format: "{0}",
+            RangeMeta: {
+              Type: "Int32",
+              Values: [0, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+            },
+            Childs: []
+          });
+        }
         break;
       }
     }
 
     let updatedOptions: ExROptionDto[] = [];
     if (sourceCategory) {
-      let found = false;
-      updatedOptions = sourceCategory.Options.map(opt => {
-        if (opt.Id === OptionId) {
-          found = true;
-          return { ...opt, Selection };
-        }
-        return opt;
-      });
-      if (!found) {
-        updatedOptions.push({
-          Id: OptionId,
-          IsActive: true,
-          TranslatedName: "Mock Option",
-          Selection: Selection,
-          Format: "{0}",
-          RangeMeta: {
-            Type: "Int32",
-            Values: [0, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-          },
-          Childs: []
-        });
-      }
+      updatedOptions = sourceCategory.Options;
     } else {
       // 見つからない場合はダミーを生成（テスト用）
       updatedOptions = [
