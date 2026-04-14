@@ -4,6 +4,7 @@ import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
+import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
 import type { OptionTab } from "../type";
 
 /**
@@ -88,7 +89,10 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			optionId: number,
 			selection: number,
 		) => {
-			const uniqueId = `${categoryId}-${optionId}`;
+			const uniqueId = getUniqueOptionId(categoryId, optionId);
+			const isPreset = isPresetOption(categoryId, optionId);
+			const tabId = isPreset ? 0 : get().selectedExRTabId;
+
 			set((state) => {
 				return {
 					pendingExROptionIds: {
@@ -99,7 +103,6 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			});
 
 			try {
-				const tabId = get().selectedExRTabId;
 				await updateExrOption({
 					TabId: tabId,
 					CategoryId: categoryId,
