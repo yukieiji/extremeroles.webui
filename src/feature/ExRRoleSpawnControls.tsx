@@ -20,8 +20,16 @@ export function ExRRoleSpawnControls({
 	const spawnRateSelection = spawnRateOption.Selection;
 	const spawnCountSelection = spawnCountOption.Selection;
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
+	});
+	const isRatePending = useStore((state) => {
+		const uniqueId = getUniqueOptionId(categoryId, spawnRateOption.Id);
+		return !!state.pendingExROptionIds[uniqueId];
+	});
+	const isCountPending = useStore((state) => {
+		const uniqueId = getUniqueOptionId(categoryId, spawnCountOption.Id);
+		return !!state.pendingExROptionIds[uniqueId];
 	});
 
 	const rateValues = spawnRateOption.RangeMeta.Values as number[];
@@ -35,8 +43,7 @@ export function ExRRoleSpawnControls({
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = (newSelection: number) => {
-		const uniqueId = getUniqueOptionId(categoryId, spawnRateOption.Id);
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(categoryId, spawnRateOption.Id, newSelection);
 	};
 
 	const handleRateInputChange = (val: number) => {
@@ -44,9 +51,8 @@ export function ExRRoleSpawnControls({
 	};
 
 	const handleCountUIChange = (newUISelection: number) => {
-		const uniqueId = getUniqueOptionId(categoryId, spawnCountOption.Id);
 		// 表示上の値から内部のインデックスへ変換するロジックは呼び出し側にある
-		TEMP_updateExROptionSelection(uniqueId, newUISelection);
+		updateExROptionSelection(categoryId, spawnCountOption.Id, newUISelection);
 	};
 
 	const handleCountUIInputChange = (val: number) => {
@@ -54,7 +60,9 @@ export function ExRRoleSpawnControls({
 	};
 
 	return (
-		<div className="flex items-center gap-4">
+		<div
+			className={`flex items-center gap-4 ${isRatePending || isCountPending ? "opacity-50 pointer-events-none" : ""}`}
+		>
 			<CompactSlider
 				label="レート"
 				values={rateValues}

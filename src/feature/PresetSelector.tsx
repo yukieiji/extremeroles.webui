@@ -36,11 +36,15 @@ export function PresetSelector() {
 	const updatePresetName = useStore((state) => {
 		return state.updatePresetName;
 	});
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
+	});
+	const isPending = useStore((state) => {
+		const uniqueId = getUniqueOptionId(0, 0);
+		return !!state.pendingExROptionIds[uniqueId];
 	});
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -72,8 +76,7 @@ export function PresetSelector() {
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = (index: number) => {
-		const uniqueId = getUniqueOptionId(0, 0);
-		TEMP_updateExROptionSelection(uniqueId, index);
+		updateExROptionSelection(0, 0, index);
 		setPresetDropdownOpen(false);
 	};
 
@@ -107,7 +110,10 @@ export function PresetSelector() {
 	};
 
 	return (
-		<div className="relative flex items-center gap-2" ref={dropdownRef}>
+		<div
+			className={`relative flex items-center gap-2 ${isPending ? "opacity-50 pointer-events-none" : ""}`}
+			ref={dropdownRef}
+		>
 			<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:border-blue-500">
 				<input
 					ref={inputRef}

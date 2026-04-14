@@ -18,13 +18,16 @@ export function ExROptionControl({
 	option,
 }: ExROptionControlProps) {
 	const currentSelection = option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
+	});
+	const isPending = useStore((state) => {
+		const uniqueId = getUniqueOptionId(categoryId, option.Id);
+		return !!state.pendingExROptionIds[uniqueId];
 	});
 
 	const handleChange = (newSelection: number) => {
-		const uniqueId = getUniqueOptionId(categoryId, option.Id);
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(categoryId, option.Id, newSelection);
 	};
 
 	const { Type, Values } = option.RangeMeta;
@@ -39,31 +42,37 @@ export function ExROptionControl({
 
 		if (isToggleType) {
 			return (
-				<OptionToggleControl
-					selection={currentSelection}
-					values={stringValues}
-					onChange={handleChange}
-				/>
+				<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+					<OptionToggleControl
+						selection={currentSelection}
+						values={stringValues}
+						onChange={handleChange}
+					/>
+				</div>
 			);
 		}
 
 		return (
-			<OptionDropdownControl
-				selection={currentSelection}
-				values={stringValues}
-				onChange={handleChange}
-			/>
+			<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+				<OptionDropdownControl
+					selection={currentSelection}
+					values={stringValues}
+					onChange={handleChange}
+				/>
+			</div>
 		);
 	}
 
 	if (Type === "Int32" || Type === "Single") {
 		return (
-			<OptionSliderControl
-				selection={currentSelection}
-				values={Values as number[]}
-				format={option.Format}
-				onChange={handleChange}
-			/>
+			<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+				<OptionSliderControl
+					selection={currentSelection}
+					values={Values as number[]}
+					format={option.Format}
+					onChange={handleChange}
+				/>
+			</div>
 		);
 	}
 

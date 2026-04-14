@@ -29,18 +29,24 @@ export function ExRPairedOptionRow({
 	const minSelection = min.Selection;
 	const maxSelection = max.Selection;
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
+	});
+	const isMinPending = useStore((state) => {
+		const uniqueId = getUniqueOptionId(categoryId, min.Id);
+		return !!state.pendingExROptionIds[uniqueId];
+	});
+	const isMaxPending = useStore((state) => {
+		const uniqueId = getUniqueOptionId(categoryId, max.Id);
+		return !!state.pendingExROptionIds[uniqueId];
 	});
 
 	const handleMinChange = (newSelection: number) => {
-		const uniqueId = getUniqueOptionId(categoryId, min.Id);
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(categoryId, min.Id, newSelection);
 	};
 
 	const handleMaxChange = (newSelection: number) => {
-		const uniqueId = getUniqueOptionId(categoryId, max.Id);
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(categoryId, max.Id, newSelection);
 	};
 
 	const content = (
@@ -50,7 +56,9 @@ export function ExRPairedOptionRow({
 					<OptionNameDisplay name={baseName} />
 				</span>
 			</div>
-			<div className="flex-shrink-0 flex items-center gap-2">
+			<div
+				className={`flex-shrink-0 flex items-center gap-2 ${isMinPending || isMaxPending ? "opacity-50 pointer-events-none" : ""}`}
+			>
 				<OptionPairedSliderControl
 					minSelection={minSelection}
 					maxSelection={maxSelection}

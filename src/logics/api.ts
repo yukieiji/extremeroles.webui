@@ -1,5 +1,15 @@
-import type { AuOptionCategoryDto, ExRCategoryDto, ExRTabDto } from "../type";
-import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema } from "../type";
+import type {
+	AuOptionCategoryDto,
+	ExRCategoryDto,
+	ExROptionPutRequest,
+	ExRTabDto,
+	UpdatedOptions,
+} from "../type";
+import {
+	AuOptionCategoryDtoArraySchema,
+	ExRTabDtoArraySchema,
+	UpdatedOptionsSchema,
+} from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -185,4 +195,70 @@ export function getAuCategoryOptions(
  */
 export function getAllOptions(): Promise<[ExRTabDto[], AuOptionCategoryDto[]]> {
 	return Promise.all([getExrOptions(), getAuOptions()]);
+}
+
+/**
+ * ExRオプションを更新する
+ */
+export async function updateExrOption(
+	request: ExROptionPutRequest,
+): Promise<UpdatedOptions> {
+	const res = await fetch(EXR_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	const rawData = await res.json();
+	const data = UpdatedOptionsSchema.parse(rawData);
+
+	// キャッシュを更新する
+	if (exrAllTabsPromise) {
+		const oldTabs = await exrAllTabsPromise;
+		const newTabs = oldTabs.map((tab) => {
+			const newCategories = tab.Categories.map((category) => {
+				// 直接更新されたカテゴリがある場合
+				if (data.UpdatedCategory && category.Id === data.UpdatedCategory.Id) {
+					return data.UpdatedCategory;
+				}
+
+				// 連鎖的に更新されたオプションがある場合
+				const chainUpdate = data.ChainUpdatedOption.find((c) => {
+					return c.Id === category.Id;
+				});
+				if (chainUpdate) {
+					return {
+						...category,
+						Options: chainUpdate.Options,
+					};
+				}
+
+				return category;
+			});
+
+			return {
+				...tab,
+				Categories: newCategories,
+			};
+		});
+
+		// 新しいPromiseでキャッシュを上書き
+		exrAllTabsPromise = Promise.resolve(newTabs);
+
+		// 個別のキャッシュも更新
+		for (const tab of newTabs) {
+			exrTabPromises.set(tab.Id, Promise.resolve(tab));
+			for (const category of tab.Categories) {
+				exrCategoryPromises.set(category.Id, Promise.resolve(category));
+			}
+		}
+	}
+
+	return data;
 }

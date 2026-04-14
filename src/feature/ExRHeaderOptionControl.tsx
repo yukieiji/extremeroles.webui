@@ -19,15 +19,18 @@ export function ExRHeaderOptionControl({
 	label,
 }: ExRHeaderOptionControlProps) {
 	const currentSelection = option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
+	});
+	const isPending = useStore((state) => {
+		const uniqueId = getUniqueOptionId(categoryId, option.Id);
+		return !!state.pendingExROptionIds[uniqueId];
 	});
 
 	const values = option.RangeMeta.Values as number[];
 
 	const handleSelectionChange = (newSelection: number) => {
-		const uniqueId = getUniqueOptionId(categoryId, option.Id);
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(categoryId, option.Id, newSelection);
 	};
 
 	const handleInputChange = (val: number) => {
@@ -35,12 +38,14 @@ export function ExRHeaderOptionControl({
 	};
 
 	return (
-		<CompactSlider
-			label={label}
-			values={values}
-			currentSelection={currentSelection}
-			onSelectionChange={handleSelectionChange}
-			onInputChange={handleInputChange}
-		/>
+		<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+			<CompactSlider
+				label={label}
+				values={values}
+				currentSelection={currentSelection}
+				onSelectionChange={handleSelectionChange}
+				onInputChange={handleInputChange}
+			/>
+		</div>
 	);
 }
