@@ -74,22 +74,43 @@ export const handlers = [
       return new HttpResponse(null, { status: 400 });
     }
 
-    const { CategoryId, OptionId } = result.data;
+    const { TabId, CategoryId, OptionId, Selection } = result.data;
 
     // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
       return new HttpResponse(null, { status: 202 });
     }
 
+    // モックデータから該当のカテゴリとオプションを探す
+    const tab = validatedExRMockData.find(t => t.Id === TabId);
+    const category = tab?.Categories.find(c => c.Id === CategoryId);
+
+    if (!category) {
+      return new HttpResponse(null, { status: 404 });
+    }
+
+    // オプションの値を更新した新しいカテゴリデータを作成
+    const updateOptionInList = (options: any[]): any[] => {
+      return options.map(opt => {
+        if (opt.Id === OptionId) {
+          return { ...opt, Selection };
+        }
+        if (opt.Childs && opt.Childs.length > 0) {
+          return { ...opt, Childs: updateOptionInList(opt.Childs) };
+        }
+        return opt;
+      });
+    };
+
+    const updatedCategory = {
+      ...category,
+      Options: updateOptionInList(category.Options)
+    };
+
     // それ以外はUpdatedOptionsを返す
     const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [
-        {
-          Id: validatedExRMockData[0].Categories[0].Id,
-          Options: [validatedExRMockData[0].Categories[0].Options[0]],
-        },
-      ],
+      UpdatedCategory: updatedCategory,
+      ChainUpdatedOption: [],
     };
 
     // レスポンスデータのバリデーション

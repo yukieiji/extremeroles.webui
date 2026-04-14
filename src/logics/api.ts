@@ -215,8 +215,16 @@ export async function updateExrOption(
 		throw new Error(`Failed to update ExR option: ${res.statusText}`);
 	}
 
-	const rawData = await res.json();
-	const data = UpdatedOptionsSchema.parse(rawData);
+	let data: UpdatedOptions;
+	if (res.status === 202) {
+		data = {
+			UpdatedCategory: null,
+			ChainUpdatedOption: [],
+		};
+	} else {
+		const rawData = await res.json();
+		data = UpdatedOptionsSchema.parse(rawData);
+	}
 
 	// キャッシュを更新する
 	if (exrAllTabsPromise) {

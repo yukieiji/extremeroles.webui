@@ -63,15 +63,16 @@ describe("optionViewerSlice", () => {
 		const { updateExROptionSelection } = useStore.getState();
 
 		const initialVersion = useStore.getState().exrVersion;
-		const updatePromise = updateExROptionSelection(1, 101, 1);
+		// モックデータに存在するIDを使用する (Tab 0, Category 0, Option 0)
+		const updatePromise = updateExROptionSelection(0, 0, 1);
 
 		// リクエスト中なので pending になっているはず
-		expect(useStore.getState().pendingExROptionIds["1-101"]).toBe(true);
+		expect(useStore.getState().pendingExROptionIds["0-0"]).toBe(true);
 
 		await updatePromise;
 
 		// 完了後は pending から削除されているはず
-		expect(useStore.getState().pendingExROptionIds["1-101"]).toBeUndefined();
+		expect(useStore.getState().pendingExROptionIds["0-0"]).toBeUndefined();
 		// exrVersion がインクリメントされているはず
 		expect(useStore.getState().exrVersion).toBe(initialVersion + 1);
 	});

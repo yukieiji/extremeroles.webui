@@ -51,8 +51,15 @@ export function ExRRoleSpawnControls({
 	};
 
 	const handleCountUIChange = (newUISelection: number) => {
-		// 表示上の値から内部のインデックスへ変換するロジックは呼び出し側にある
-		updateExROptionSelection(categoryId, spawnCountOption.Id, newUISelection);
+		// UI上のインデックス（0=0, 1=1枚目...）を
+		// 内部のインデックス（0=1枚目...）に変換。0の場合は何もしない。
+		if (newUISelection > 0) {
+			updateExROptionSelection(
+				categoryId,
+				spawnCountOption.Id,
+				newUISelection - 1,
+			);
+		}
 	};
 
 	const handleCountUIInputChange = (val: number) => {
