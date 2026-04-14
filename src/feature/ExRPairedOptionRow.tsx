@@ -26,29 +26,21 @@ export function ExRPairedOptionRow({
 	minLabel,
 	maxLabel,
 }: ExRPairedOptionRowProps) {
-	const minUniqueId = getUniqueOptionId(categoryId, min.Id);
-	const maxUniqueId = getUniqueOptionId(categoryId, max.Id);
-
-	const effectiveMinSelection = useStore((state) => {
-		return state.effectiveSelections[minUniqueId];
-	});
-	const effectiveMaxSelection = useStore((state) => {
-		return state.effectiveSelections[maxUniqueId];
-	});
-
-	const minSelection = effectiveMinSelection ?? min.Selection;
-	const maxSelection = effectiveMaxSelection ?? max.Selection;
+	const minSelection = min.Selection;
+	const maxSelection = max.Selection;
 
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;
 	});
 
 	const handleMinChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(minUniqueId, newSelection);
+		const uniqueId = getUniqueOptionId(categoryId, min.Id);
+		TEMP_updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const handleMaxChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(maxUniqueId, newSelection);
+		const uniqueId = getUniqueOptionId(categoryId, max.Id);
+		TEMP_updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const content = (

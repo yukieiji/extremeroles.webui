@@ -1,7 +1,7 @@
 import { use } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
 import { getExrCategoryOptions } from "../logics/api";
-import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
+import { isPresetOption } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
@@ -30,12 +30,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		return opt.Id === 51;
 	});
 
-	const uniqueRateId = getUniqueOptionId(categoryId, 50);
-	const effectiveSpawnRateSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueRateId];
-	});
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOption?.Selection ?? 0;
+	const spawnRateSelection = spawnRateOption?.Selection ?? 0;
 	const rateValues = (spawnRateOption?.RangeMeta.Values as number[]) ?? [];
 	const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
 

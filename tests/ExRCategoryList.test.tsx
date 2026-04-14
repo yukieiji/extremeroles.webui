@@ -43,7 +43,7 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 							Id: 50,
 							IsActive: true,
 							TranslatedName: "Spawn Rate",
-							Selection: 0,
+							Selection: 1, // 100%
 							Format: "{0}",
 							RangeMeta: { Type: "Int32", Values: [0, 100] },
 							Childs: [],
@@ -117,7 +117,6 @@ describe("ExRCategoryList Component Selection", { timeout: 15000 }, () => {
 	it("filters out 50 and 51 from role category body", async () => {
 		await act(async () => {
 			useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-			useStore.getState().TEMP_updateExROptionSelection("2-50", 1);
 		});
 
 		await act(async () => {
