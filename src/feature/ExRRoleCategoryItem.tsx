@@ -15,6 +15,8 @@ interface ExRRoleCategoryItemProps {
  * 役職タブで使用される、スポーン設定をヘッダーに持つカテゴリ表示コンポーネント
  */
 export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
+	// データ更新時に再レンダリングを強制するため、exrVersionを監視する
+	useStore((state) => state.exrVersion);
 	const category = use(getExrCategoryOptions(categoryId));
 	const isOpendCategory = useStore((state) => {
 		return state.openedExRCategoryIds[categoryId];

@@ -61,6 +61,7 @@ export function ExRRoleSpawnControls({
 
 	return (
 		<div
+			data-is-pending={isRatePending || isCountPending}
 			className={`flex items-center gap-4 ${isRatePending || isCountPending ? "opacity-50 pointer-events-none" : ""}`}
 		>
 			<CompactSlider

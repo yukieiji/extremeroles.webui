@@ -12,6 +12,8 @@ import { useStore } from "../useStore";
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
 export function PresetSelector() {
+	// データ更新時に再レンダリングを強制するため、exrVersionを監視する
+	useStore((state) => state.exrVersion);
 	const tabs = use(getExrOptions());
 
 	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
@@ -111,6 +113,7 @@ export function PresetSelector() {
 
 	return (
 		<div
+			data-is-pending={isPending}
 			className={`relative flex items-center gap-2 ${isPending ? "opacity-50 pointer-events-none" : ""}`}
 			ref={dropdownRef}
 		>

@@ -13,6 +13,8 @@ export function ExRCategoryList() {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
+	// データ更新時に再レンダリングを強制するため、exrVersionを監視する
+	useStore((state) => state.exrVersion);
 	const isTabPending = useStore((state) => {
 		return state.isTabPending;
 	});

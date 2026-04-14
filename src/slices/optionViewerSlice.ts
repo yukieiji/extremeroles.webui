@@ -15,6 +15,7 @@ export interface OptionViewerSlice {
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<string, boolean>;
 	pendingExROptionIds: Record<string, boolean>;
+	exrVersion: number;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
@@ -44,6 +45,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
 		pendingExROptionIds: {},
+		exrVersion: 0,
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -104,6 +106,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 					OptionId: optionId,
 					Selection: selection,
 				});
+				set((state) => ({ exrVersion: state.exrVersion + 1 }));
 			} catch (error) {
 				console.error("Failed to update ExR option:", error);
 			} finally {

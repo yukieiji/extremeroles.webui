@@ -57,6 +57,7 @@ export function ExRPairedOptionRow({
 				</span>
 			</div>
 			<div
+				data-is-pending={isMinPending || isMaxPending}
 				className={`flex-shrink-0 flex items-center gap-2 ${isMinPending || isMaxPending ? "opacity-50 pointer-events-none" : ""}`}
 			>
 				<OptionPairedSliderControl

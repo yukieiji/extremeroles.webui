@@ -17,6 +17,8 @@ interface ExRStandardCategoryItemProps {
 export function ExRStandardCategoryItem({
 	categoryId,
 }: ExRStandardCategoryItemProps) {
+	// データ更新時に再レンダリングを強制するため、exrVersionを監視する
+	useStore((state) => state.exrVersion);
 	const category = use(getExrCategoryOptions(categoryId));
 	const isOpen = useStore((state) => {
 		return state.openedExRCategoryIds[categoryId] ?? false;

@@ -42,7 +42,10 @@ export function ExROptionControl({
 
 		if (isToggleType) {
 			return (
-				<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+				<div
+					data-is-pending={isPending}
+					className={isPending ? "opacity-50 pointer-events-none" : ""}
+				>
 					<OptionToggleControl
 						selection={currentSelection}
 						values={stringValues}
@@ -53,7 +56,10 @@ export function ExROptionControl({
 		}
 
 		return (
-			<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+			<div
+				data-is-pending={isPending}
+				className={isPending ? "opacity-50 pointer-events-none" : ""}
+			>
 				<OptionDropdownControl
 					selection={currentSelection}
 					values={stringValues}
@@ -65,7 +71,10 @@ export function ExROptionControl({
 
 	if (Type === "Int32" || Type === "Single") {
 		return (
-			<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+			<div
+				data-is-pending={isPending}
+				className={isPending ? "opacity-50 pointer-events-none" : ""}
+			>
 				<OptionSliderControl
 					selection={currentSelection}
 					values={Values as number[]}

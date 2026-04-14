@@ -38,7 +38,10 @@ export function ExRHeaderOptionControl({
 	};
 
 	return (
-		<div className={isPending ? "opacity-50 pointer-events-none" : ""}>
+		<div
+			data-is-pending={isPending}
+			className={isPending ? "opacity-50 pointer-events-none" : ""}
+		>
 			<CompactSlider
 				label={label}
 				values={values}

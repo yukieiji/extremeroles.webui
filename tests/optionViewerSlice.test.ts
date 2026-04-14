@@ -59,9 +59,10 @@ describe("optionViewerSlice", () => {
 		expect(useStore.getState().presetNames[1]).toBeUndefined();
 	});
 
-	it("should update pendingExROptionIds when calling updateExROptionSelection", async () => {
+	it("should update pendingExROptionIds and exrVersion when calling updateExROptionSelection", async () => {
 		const { updateExROptionSelection } = useStore.getState();
 
+		const initialVersion = useStore.getState().exrVersion;
 		const updatePromise = updateExROptionSelection(1, 101, 1);
 
 		// リクエスト中なので pending になっているはず
@@ -71,5 +72,7 @@ describe("optionViewerSlice", () => {
 
 		// 完了後は pending から削除されているはず
 		expect(useStore.getState().pendingExROptionIds["1-101"]).toBeUndefined();
+		// exrVersion がインクリメントされているはず
+		expect(useStore.getState().exrVersion).toBe(initialVersion + 1);
 	});
 });
