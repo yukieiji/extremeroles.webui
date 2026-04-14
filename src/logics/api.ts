@@ -226,46 +226,49 @@ export async function updateExrOption(
 		data = UpdatedOptionsSchema.parse(rawData);
 	}
 
-	// キャッシュを更新する
+	// キャッシュを更新する。レースコンディションを防ぐため、既存のPromiseに連鎖させる
 	if (exrAllTabsPromise) {
-		const oldTabs = await exrAllTabsPromise;
-		const newTabs = oldTabs.map((tab) => {
-			const newCategories = tab.Categories.map((category) => {
-				// 直接更新されたカテゴリがある場合
-				if (data.UpdatedCategory && category.Id === data.UpdatedCategory.Id) {
-					return data.UpdatedCategory;
-				}
+		exrAllTabsPromise = exrAllTabsPromise.then((oldTabs) => {
+			const newTabs = oldTabs.map((tab) => {
+				const newCategories = tab.Categories.map((category) => {
+					// 直接更新されたカテゴリがある場合
+					if (data.UpdatedCategory && category.Id === data.UpdatedCategory.Id) {
+						return data.UpdatedCategory;
+					}
 
-				// 連鎖的に更新されたオプションがある場合
-				const chainUpdate = data.ChainUpdatedOption.find((c) => {
-					return c.Id === category.Id;
+					// 連鎖的に更新されたオプションがある場合
+					const chainUpdate = data.ChainUpdatedOption.find((c) => {
+						return c.Id === category.Id;
+					});
+					if (chainUpdate) {
+						return {
+							...category,
+							Options: chainUpdate.Options,
+						};
+					}
+
+					return category;
 				});
-				if (chainUpdate) {
-					return {
-						...category,
-						Options: chainUpdate.Options,
-					};
-				}
 
-				return category;
+				return {
+					...tab,
+					Categories: newCategories,
+				};
 			});
 
-			return {
-				...tab,
-				Categories: newCategories,
-			};
+			// 個別のキャッシュも更新
+			for (const tab of newTabs) {
+				exrTabPromises.set(tab.Id, Promise.resolve(tab));
+				for (const category of tab.Categories) {
+					exrCategoryPromises.set(category.Id, Promise.resolve(category));
+				}
+			}
+
+			return newTabs;
 		});
 
-		// 新しいPromiseでキャッシュを上書き
-		exrAllTabsPromise = Promise.resolve(newTabs);
-
-		// 個別のキャッシュも更新
-		for (const tab of newTabs) {
-			exrTabPromises.set(tab.Id, Promise.resolve(tab));
-			for (const category of tab.Categories) {
-				exrCategoryPromises.set(category.Id, Promise.resolve(category));
-			}
-		}
+		// キャッシュの更新が完了するまで待機
+		await exrAllTabsPromise;
 	}
 
 	return data;
