@@ -11,6 +11,20 @@ export function getUniqueOptionId(
 }
 
 /**
+ * 一意なIDからカテゴリIDとオプションIDを抽出します。
+ */
+export function parseUniqueOptionId(uniqueId: string): {
+	categoryId: number;
+	optionId: number;
+} {
+	const [categoryIdStr, optionIdStr] = uniqueId.split("-");
+	return {
+		categoryId: Number.parseInt(categoryIdStr, 10),
+		optionId: Number.parseInt(optionIdStr, 10),
+	};
+}
+
+/**
  * 指定されたカテゴリIDとオプションIDがプリセット設定（Category 0, Option 0）であるか判定します。
  */
 export function isPresetOption(categoryId: number, optionId: number): boolean {

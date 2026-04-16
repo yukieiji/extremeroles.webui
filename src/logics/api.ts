@@ -1,5 +1,15 @@
-import type { AuOptionCategoryDto, ExRCategoryDto, ExRTabDto } from "../type";
-import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema } from "../type";
+import type {
+	AuOptionCategoryDto,
+	ExRCategoryDto,
+	ExRTabDto,
+	ExROptionPutRequest,
+	UpdatedOptions,
+} from "../type";
+import {
+	AuOptionCategoryDtoArraySchema,
+	ExRTabDtoArraySchema,
+	UpdatedOptionsSchema,
+} from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -12,6 +22,7 @@ const AU_OPTION_URL = "/au/option/";
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
 let exrAllTabsPromise: Promise<ExRTabDto[]> | null = null;
+let currentExrTabs: ExRTabDto[] | null = null;
 const exrTabPromises = new Map<number, Promise<ExRTabDto>>();
 const exrCategoryPromises = new Map<number, Promise<ExRCategoryDto>>();
 
@@ -23,6 +34,7 @@ const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
  */
 export function resetApiCache() {
 	exrAllTabsPromise = null;
+	currentExrTabs = null;
 	exrTabPromises.clear();
 	exrCategoryPromises.clear();
 	auOptionsPromise = null;
@@ -52,6 +64,7 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		}
 		const rawData = await res.json();
 		const data = ExRTabDtoArraySchema.parse(rawData);
+		currentExrTabs = data;
 
 		// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
 		for (const tab of data) {
@@ -185,4 +198,63 @@ export function getAuCategoryOptions(
  */
 export function getAllOptions(): Promise<[ExRTabDto[], AuOptionCategoryDto[]]> {
 	return Promise.all([getExrOptions(), getAuOptions()]);
+}
+
+/**
+ * ExRオプションを更新する
+ */
+export async function updateExrOption(
+	request: ExROptionPutRequest,
+): Promise<UpdatedOptions> {
+	const res = await fetch(EXR_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	const rawData = await res.json();
+	const result = UpdatedOptionsSchema.parse(rawData);
+
+	// キャッシュの更新
+	if (currentExrTabs) {
+		// 1. UpdatedCategory があれば、該当するカテゴリを差し替える
+		if (result.UpdatedCategory) {
+			const categoryId = result.UpdatedCategory.Id;
+			exrCategoryPromises.set(categoryId, Promise.resolve(result.UpdatedCategory));
+
+			for (const tab of currentExrTabs) {
+				const index = tab.Categories.findIndex((c) => c.Id === categoryId);
+				if (index !== -1) {
+					tab.Categories[index] = result.UpdatedCategory;
+					// タブのPromiseも更新
+					exrTabPromises.set(tab.Id, Promise.resolve(tab));
+				}
+			}
+		}
+
+		// 2. ChainUpdatedOption があれば、それらも更新する
+		for (const chainUpdate of result.ChainUpdatedOption) {
+			const categoryId = chainUpdate.Id;
+			for (const tab of currentExrTabs) {
+				const category = tab.Categories.find((c) => c.Id === categoryId);
+				if (category) {
+					category.Options = chainUpdate.Options;
+					// カテゴリとタブのPromiseを更新
+					exrCategoryPromises.set(categoryId, Promise.resolve(category));
+					exrTabPromises.set(tab.Id, Promise.resolve(tab));
+				}
+			}
+		}
+
+		// 全データのPromiseを更新
+		exrAllTabsPromise = Promise.resolve(currentExrTabs);
+	}
+
+	return result;
 }

@@ -19,6 +19,9 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	const isOpendCategory = useStore((state) => {
 		return state.openedExRCategoryIds[categoryId];
 	});
+	const isPending = useStore((state) => {
+		return state.pendingExRCategoryIds[categoryId] ?? false;
+	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
@@ -106,8 +109,11 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 							/>
 						</svg>
 					)}
-					<span className="font-semibold text-gray-200">
+					<span className="font-semibold text-gray-200 flex items-center gap-2">
 						<ColoredText text={category.Name} />
+						{isPending && (
+							<div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+						)}
 					</span>
 				</button>
 

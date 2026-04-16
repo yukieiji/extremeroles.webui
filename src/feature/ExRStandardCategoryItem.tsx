@@ -21,6 +21,9 @@ export function ExRStandardCategoryItem({
 	const isOpen = useStore((state) => {
 		return state.openedExRCategoryIds[categoryId] ?? false;
 	});
+	const isPending = useStore((state) => {
+		return state.pendingExRCategoryIds[categoryId] ?? false;
+	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
@@ -34,9 +37,19 @@ export function ExRStandardCategoryItem({
 	}
 
 	return (
-		<div data-testid={`exr-category-${categoryId}`}>
+		<div
+			data-testid={`exr-category-${categoryId}`}
+			className="relative"
+		>
 			<Accordion
-				title={<ColoredText text={category.Name} />}
+				title={
+					<div className="flex items-center gap-2">
+						<ColoredText text={category.Name} />
+						{isPending && (
+							<div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+						)}
+					</div>
+				}
 				isOpen={isOpen}
 				onToggle={() => {
 					toggleExRCategory(categoryId);

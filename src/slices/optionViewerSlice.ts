@@ -1,8 +1,10 @@
 import type { StateCreator } from "zustand";
+import { updateExrOption } from "../logics/api";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
+import { parseUniqueOptionId } from "../logics/optionUtils";
 import type { OptionTab } from "../type";
 
 /**
@@ -13,6 +15,8 @@ export interface OptionViewerSlice {
 	isTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<string, boolean>;
+	pendingExROptionIds: Record<string, boolean>;
+	pendingExRCategoryIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
@@ -22,7 +26,7 @@ export interface OptionViewerSlice {
 	TEMP_updateExROptionSelection: (
 		uniqueOptionId: string,
 		selection: number,
-	) => void;
+	) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -33,12 +37,15 @@ export interface OptionViewerSlice {
  */
 export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 	set,
+	get,
 ) => {
 	return {
 		selectedExRTabId: 0,
 		isTabPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
+		pendingExROptionIds: {},
+		pendingExRCategoryIds: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -53,6 +60,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				isTabPending: false,
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
+				pendingExROptionIds: {},
+				pendingExRCategoryIds: {},
 				isPresetDropdownOpen: false,
 			});
 		},
@@ -76,11 +85,70 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		TEMP_updateExROptionSelection: (
-			_uniqueOptionId: string,
-			_selection: number,
+		TEMP_updateExROptionSelection: async (
+			uniqueOptionId: string,
+			selection: number,
 		) => {
-			// 将来の拡張用の空関数。楽観的更新を廃止したため、現在は何もしない。
+			const { categoryId, optionId } = parseUniqueOptionId(uniqueOptionId);
+
+			const tabId = get().selectedExRTabId;
+
+			// 更新対象のオプションをペンディング状態にする
+			set((state) => {
+				return {
+					pendingExROptionIds: {
+						...state.pendingExROptionIds,
+						[uniqueOptionId]: true,
+					},
+				};
+			});
+
+			try {
+				const result = await updateExrOption({
+					TabId: tabId,
+					CategoryId: categoryId,
+					OptionId: optionId,
+					Selection: selection,
+				});
+
+				// 連鎖更新があったカテゴリも一時的にペンディングにする（UI反映のため）
+				if (result.ChainUpdatedOption.length > 0) {
+					set((state) => {
+						const newPendingCategories = { ...state.pendingExRCategoryIds };
+						for (const chain of result.ChainUpdatedOption) {
+							newPendingCategories[chain.Id] = true;
+						}
+						return { pendingExRCategoryIds: newPendingCategories };
+					});
+				}
+
+				// UIに反映させるため、少し遅延させてからペンディングを解除する
+				setTimeout(() => {
+					set((state) => {
+						const newPendingOptions = { ...state.pendingExROptionIds };
+						delete newPendingOptions[uniqueOptionId];
+
+						const newPendingCategories = { ...state.pendingExRCategoryIds };
+						if (result.ChainUpdatedOption.length > 0) {
+							for (const chain of result.ChainUpdatedOption) {
+								delete newPendingCategories[chain.Id];
+							}
+						}
+
+						return {
+							pendingExROptionIds: newPendingOptions,
+							pendingExRCategoryIds: newPendingCategories,
+						};
+					});
+				}, 500);
+			} catch (error) {
+				console.error("Failed to update ExR option:", error);
+				set((state) => {
+					const newPendingOptions = { ...state.pendingExROptionIds };
+					delete newPendingOptions[uniqueOptionId];
+					return { pendingExROptionIds: newPendingOptions };
+				});
+			}
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {
