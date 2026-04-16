@@ -223,20 +223,26 @@ export async function updateExrOption(
 
 	// キャッシュの更新
 	if (currentExrTabs) {
+		const updatePromises: Promise<unknown>[] = [];
+
 		// 1. UpdatedCategory があれば、該当するカテゴリを差し替える
 		if (result.UpdatedCategory) {
-			const categoryId = result.UpdatedCategory.Id;
-			exrCategoryPromises.set(
-				categoryId,
-				Promise.resolve(result.UpdatedCategory),
-			);
+			const updatedCategory = result.UpdatedCategory;
+			const categoryId = updatedCategory.Id;
 
+			// Promise マップを即座に更新 (O(1))
+			const categoryPromise = Promise.resolve(updatedCategory);
+			exrCategoryPromises.set(categoryId, categoryPromise);
+			updatePromises.push(categoryPromise);
+
+			// currentExrTabs 内の参照も更新
 			for (const tab of currentExrTabs) {
 				const index = tab.Categories.findIndex((c) => c.Id === categoryId);
 				if (index !== -1) {
-					tab.Categories[index] = result.UpdatedCategory;
-					// タブのPromiseも更新
-					exrTabPromises.set(tab.Id, Promise.resolve(tab));
+					tab.Categories[index] = updatedCategory;
+					const tabPromise = Promise.resolve(tab);
+					exrTabPromises.set(tab.Id, tabPromise);
+					updatePromises.push(tabPromise);
 				}
 			}
 		}
@@ -244,18 +250,29 @@ export async function updateExrOption(
 		// 2. ChainUpdatedOption があれば、それらも更新する
 		for (const chainUpdate of result.ChainUpdatedOption) {
 			const categoryId = chainUpdate.Id;
-			for (const tab of currentExrTabs) {
-				const category = tab.Categories.find((c) => c.Id === categoryId);
-				if (category) {
+			const cachedCategoryPromise = exrCategoryPromises.get(categoryId);
+
+			if (cachedCategoryPromise) {
+				const updatedPromise = cachedCategoryPromise.then((category) => {
 					category.Options = chainUpdate.Options;
-					// カテゴリとタブのPromiseを更新
-					exrCategoryPromises.set(categoryId, Promise.resolve(category));
-					exrTabPromises.set(tab.Id, Promise.resolve(tab));
+					return category;
+				});
+				exrCategoryPromises.set(categoryId, updatedPromise);
+				updatePromises.push(updatedPromise);
+
+				// 該当するタブの Promise も更新が必要
+				for (const tab of currentExrTabs) {
+					if (tab.Categories.some((c) => c.Id === categoryId)) {
+						const tabPromise = Promise.resolve(tab);
+						exrTabPromises.set(tab.Id, tabPromise);
+						updatePromises.push(tabPromise);
+					}
 				}
 			}
 		}
 
-		// 全データのPromiseを更新
+		// すべての更新が完了したことを保証する Promise
+		await Promise.all(updatePromises);
 		exrAllTabsPromise = Promise.resolve(currentExrTabs);
 	}
 
