@@ -92,7 +92,9 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			const { categoryId, optionId } = parseUniqueOptionId(uniqueOptionId);
 			const tabId = get().selectedExRTabId;
 
-			console.log(`[Store] Starting update: Option ${optionId} in Category ${categoryId} (Tab ${tabId})`);
+			console.log(
+				`[Store] Starting update: Option ${optionId} in Category ${categoryId} (Tab ${tabId})`,
+			);
 
 			// 更新対象のオプションをペンディング状態にする
 			set((state) => {
@@ -116,7 +118,10 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 
 				// 連鎖更新があったカテゴリも一時的にペンディングにする（UI反映のため）
 				if (result.ChainUpdatedOption.length > 0) {
-					console.log("[Store] Chain updates detected for categories:", result.ChainUpdatedOption.map(c => c.Id));
+					console.log(
+						"[Store] Chain updates detected for categories:",
+						result.ChainUpdatedOption.map((c) => c.Id),
+					);
 					set((state) => {
 						const newPendingCategories = { ...state.pendingExRCategoryIds };
 						for (const chain of result.ChainUpdatedOption) {
