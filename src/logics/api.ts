@@ -1,8 +1,8 @@
 import type {
 	AuOptionCategoryDto,
 	ExRCategoryDto,
-	ExRTabDto,
 	ExROptionPutRequest,
+	ExRTabDto,
 	UpdatedOptions,
 } from "../type";
 import {
@@ -226,7 +226,10 @@ export async function updateExrOption(
 		// 1. UpdatedCategory があれば、該当するカテゴリを差し替える
 		if (result.UpdatedCategory) {
 			const categoryId = result.UpdatedCategory.Id;
-			exrCategoryPromises.set(categoryId, Promise.resolve(result.UpdatedCategory));
+			exrCategoryPromises.set(
+				categoryId,
+				Promise.resolve(result.UpdatedCategory),
+			);
 
 			for (const tab of currentExrTabs) {
 				const index = tab.Categories.findIndex((c) => c.Id === categoryId);

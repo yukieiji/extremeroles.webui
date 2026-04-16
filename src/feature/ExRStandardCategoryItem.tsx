@@ -37,10 +37,7 @@ export function ExRStandardCategoryItem({
 	}
 
 	return (
-		<div
-			data-testid={`exr-category-${categoryId}`}
-			className="relative"
-		>
+		<div data-testid={`exr-category-${categoryId}`} className="relative">
 			<Accordion
 				title={
 					<div className="flex items-center gap-2">

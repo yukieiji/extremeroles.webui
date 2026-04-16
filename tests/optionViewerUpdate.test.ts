@@ -1,8 +1,8 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { create } from "zustand";
+import * as api from "../src/logics/api";
 import type { OptionViewerSlice } from "../src/slices/optionViewerSlice";
 import { createOptionViewerSlice } from "../src/slices/optionViewerSlice";
-import * as api from "../src/logics/api";
 
 vi.mock("../src/logics/api", () => ({
 	updateExrOption: vi.fn(),
@@ -26,7 +26,9 @@ describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
 		};
 		vi.mocked(api.updateExrOption).mockResolvedValueOnce(mockResult);
 
-		const promise = useStore.getState().TEMP_updateExROptionSelection("1-101", 2);
+		const promise = useStore
+			.getState()
+			.TEMP_updateExROptionSelection("1-101", 2);
 
 		// ペンディング状態になっていることを確認
 		expect(useStore.getState().pendingExROptionIds["1-101"]).toBe(true);
@@ -52,7 +54,9 @@ describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
 		};
 		vi.mocked(api.updateExrOption).mockResolvedValueOnce(mockResult);
 
-		const promise = useStore.getState().TEMP_updateExROptionSelection("1-101", 2);
+		const promise = useStore
+			.getState()
+			.TEMP_updateExROptionSelection("1-101", 2);
 
 		await promise;
 		await vi.runAllTimersAsync();
@@ -62,9 +66,13 @@ describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
 	});
 
 	it("should clear pending state even on error", async () => {
-		vi.mocked(api.updateExrOption).mockRejectedValueOnce(new Error("API Error"));
+		vi.mocked(api.updateExrOption).mockRejectedValueOnce(
+			new Error("API Error"),
+		);
 
-		const promise = useStore.getState().TEMP_updateExROptionSelection("1-101", 2);
+		const promise = useStore
+			.getState()
+			.TEMP_updateExROptionSelection("1-101", 2);
 
 		await promise;
 
