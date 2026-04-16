@@ -8,7 +8,7 @@ vi.mock("../src/logics/api", () => ({
 	updateExrOption: vi.fn(),
 }));
 
-describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
+describe("optionViewerSlice - updateExROptionSelection", () => {
 	const useStore = create<OptionViewerSlice>()((...a) => ({
 		...createOptionViewerSlice(...a),
 	}));
@@ -26,12 +26,11 @@ describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
 		};
 		vi.mocked(api.updateExrOption).mockResolvedValueOnce(mockResult);
 
-		const promise = useStore
-			.getState()
-			.TEMP_updateExROptionSelection("1-101", 2);
+		const uniqueId = 10101; // Category 1, Option 101
+		const promise = useStore.getState().updateExROptionSelection(uniqueId, 2);
 
 		// ペンディング状態になっていることを確認
-		expect(useStore.getState().pendingExROptionIds["1-101"]).toBe(true);
+		expect(useStore.getState().pendingExROptionIds[uniqueId]).toBe(true);
 
 		await promise;
 
@@ -44,7 +43,7 @@ describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
 
 		// 500ms待機してペンディングが解除されることを確認
 		await vi.runAllTimersAsync();
-		expect(useStore.getState().pendingExROptionIds["1-101"]).toBeUndefined();
+		expect(useStore.getState().pendingExROptionIds[uniqueId]).toBeUndefined();
 	});
 
 	it("should manage category pending state when chain updates occur", async () => {
@@ -54,9 +53,8 @@ describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
 		};
 		vi.mocked(api.updateExrOption).mockResolvedValueOnce(mockResult);
 
-		const promise = useStore
-			.getState()
-			.TEMP_updateExROptionSelection("1-101", 2);
+		const uniqueId = 10101;
+		const promise = useStore.getState().updateExROptionSelection(uniqueId, 2);
 
 		await promise;
 		await vi.runAllTimersAsync();
@@ -70,12 +68,11 @@ describe("optionViewerSlice - TEMP_updateExROptionSelection", () => {
 			new Error("API Error"),
 		);
 
-		const promise = useStore
-			.getState()
-			.TEMP_updateExROptionSelection("1-101", 2);
+		const uniqueId = 10101;
+		const promise = useStore.getState().updateExROptionSelection(uniqueId, 2);
 
 		await promise;
 
-		expect(useStore.getState().pendingExROptionIds["1-101"]).toBeUndefined();
+		expect(useStore.getState().pendingExROptionIds[uniqueId]).toBeUndefined();
 	});
 });

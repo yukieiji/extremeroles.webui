@@ -19,15 +19,15 @@ export function ExRHeaderOptionControl({
 	label,
 }: ExRHeaderOptionControlProps) {
 	const currentSelection = option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const values = option.RangeMeta.Values as number[];
 
 	const handleSelectionChange = (newSelection: number) => {
 		const uniqueId = getUniqueOptionId(categoryId, option.Id);
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const handleInputChange = (val: number) => {

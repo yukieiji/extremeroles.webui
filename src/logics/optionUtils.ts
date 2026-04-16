@@ -1,26 +1,28 @@
 import type { ExROptionDto } from "../type";
 
 /**
- * カテゴリIDとオプションIDを組み合わせて、アプリケーション内で一意なIDを生成します。
+ * カテゴリIDとオプションIDを組み合わせて、アプリケーション内で一意なIDを数値で生成します。
+ * 下位4桁（0〜9999）をオプションID、それ以上をカテゴリIDとして管理します。
  */
 export function getUniqueOptionId(
 	categoryId: number,
 	optionId: number,
-): string {
-	return `${categoryId}-${optionId}`;
+): number {
+	return categoryId * 10000 + optionId;
 }
 
 /**
- * 一意なIDからカテゴリIDとオプションIDを抽出します。
+ * 一意な数値IDからカテゴリIDとオプションIDを抽出します。
  */
-export function parseUniqueOptionId(uniqueId: string): {
+export function parseUniqueOptionId(uniqueId: number): {
 	categoryId: number;
 	optionId: number;
 } {
-	const [categoryIdStr, optionIdStr] = uniqueId.split("-");
+	const categoryId = Math.floor(uniqueId / 10000);
+	const optionId = uniqueId % 10000;
 	return {
-		categoryId: Number.parseInt(categoryIdStr, 10),
-		optionId: Number.parseInt(optionIdStr, 10),
+		categoryId,
+		optionId,
 	};
 }
 

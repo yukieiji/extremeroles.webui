@@ -36,8 +36,8 @@ export function PresetSelector() {
 	const updatePresetName = useStore((state) => {
 		return state.updatePresetName;
 	});
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
@@ -73,7 +73,7 @@ export function PresetSelector() {
 
 	const handlePresetSelect = (index: number) => {
 		const uniqueId = getUniqueOptionId(0, 0);
-		TEMP_updateExROptionSelection(uniqueId, index);
+		updateExROptionSelection(uniqueId, index);
 		setPresetDropdownOpen(false);
 	};
 

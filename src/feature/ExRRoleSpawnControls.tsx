@@ -20,8 +20,8 @@ export function ExRRoleSpawnControls({
 	const spawnRateSelection = spawnRateOption.Selection;
 	const spawnCountSelection = spawnCountOption.Selection;
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const rateValues = spawnRateOption.RangeMeta.Values as number[];
@@ -36,7 +36,7 @@ export function ExRRoleSpawnControls({
 
 	const handleRateChange = (newSelection: number) => {
 		const uniqueId = getUniqueOptionId(categoryId, spawnRateOption.Id);
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const handleRateInputChange = (val: number) => {
@@ -46,7 +46,7 @@ export function ExRRoleSpawnControls({
 	const handleCountUIChange = (newUISelection: number) => {
 		const uniqueId = getUniqueOptionId(categoryId, spawnCountOption.Id);
 		// 表示上の値から内部のインデックスへ変換するロジックは呼び出し側にある
-		TEMP_updateExROptionSelection(uniqueId, newUISelection);
+		updateExROptionSelection(uniqueId, newUISelection);
 	};
 
 	const handleCountUIInputChange = (val: number) => {
