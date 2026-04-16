@@ -22,10 +22,9 @@ const AU_OPTION_URL = "/au/option/";
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
 let exrAllTabsPromise: Promise<ExRTabDto[]> | null = null;
-let currentExrTabs: ExRTabDto[] | null = null;
 const exrTabPromises = new Map<number, Promise<ExRTabDto>>();
 const exrCategoryPromises = new Map<number, Promise<ExRCategoryDto>>();
-const categoryToTabIdMap = new Map<number, number>();
+const exrCategoriesMap = new Map<number, ExRCategoryDto>();
 
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
@@ -35,10 +34,9 @@ const auCategoryPromises = new Map<string, Promise<AuOptionCategoryDto>>();
  */
 export function resetApiCache() {
 	exrAllTabsPromise = null;
-	currentExrTabs = null;
 	exrTabPromises.clear();
 	exrCategoryPromises.clear();
-	categoryToTabIdMap.clear();
+	exrCategoriesMap.clear();
 	auOptionsPromise = null;
 	auCategoryPromises.clear();
 }
@@ -66,7 +64,6 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 		}
 		const rawData = await res.json();
 		const data = ExRTabDtoArraySchema.parse(rawData);
-		currentExrTabs = data;
 
 		// タブごとおよびカテゴリーごとのPromiseを事前に解決済みの状態でキャッシュに格納する
 		for (const tab of data) {
@@ -74,7 +71,7 @@ export function getExrOptions(): Promise<ExRTabDto[]> {
 				exrTabPromises.set(tab.Id, Promise.resolve(tab));
 			}
 			for (const category of tab.Categories) {
-				categoryToTabIdMap.set(category.Id, tab.Id);
+				exrCategoriesMap.set(category.Id, category);
 				if (!exrCategoryPromises.has(category.Id)) {
 					exrCategoryPromises.set(category.Id, Promise.resolve(category));
 				}
@@ -204,6 +201,38 @@ export function getAllOptions(): Promise<[ExRTabDto[], AuOptionCategoryDto[]]> {
 }
 
 /**
+ * オプションのリストを再帰的に走査し、部分的な更新を適用します。
+ */
+function applyPartialOptionsUpdate(
+	baseOptions: ExROptionDto[],
+	updatedOptions: ExROptionDto[],
+) {
+	for (const updated of updatedOptions) {
+		const target = baseOptions.find((o) => o.Id === updated.Id);
+		if (target) {
+			// プロパティを更新
+			target.IsActive = updated.IsActive;
+			target.Selection = updated.Selection;
+			target.TranslatedName = updated.TranslatedName;
+			target.Format = updated.Format;
+			target.RangeMeta = updated.RangeMeta;
+
+			// 子要素も再帰的に更新が必要な場合は、ここで処理
+			if (updated.Childs && updated.Childs.length > 0) {
+				applyPartialOptionsUpdate(target.Childs, updated.Childs);
+			}
+		} else {
+			// トップレベルに見つからない場合、既存の各オプションの子要素を探す
+			for (const base of baseOptions) {
+				if (base.Childs && base.Childs.length > 0) {
+					applyPartialOptionsUpdate(base.Childs, [updated]);
+				}
+			}
+		}
+	}
+}
+
+/**
  * ExRオプションを更新する
  */
 export async function updateExrOption(
@@ -225,49 +254,34 @@ export async function updateExrOption(
 	const result = UpdatedOptionsSchema.parse(rawData);
 
 	// キャッシュの更新
-	if (currentExrTabs) {
-		// 1. UpdatedCategory があれば、該当するカテゴリを差し替える
-		if (result.UpdatedCategory) {
-			const updatedCategory = result.UpdatedCategory;
-			const categoryId = updatedCategory.Id;
+	// 1. UpdatedCategory があれば、該当するカテゴリを差し替える
+	if (result.UpdatedCategory) {
+		const updatedCategory = result.UpdatedCategory;
+		const categoryId = updatedCategory.Id;
 
-			// Promise マップを即座に更新 (O(1))
-			exrCategoryPromises.set(categoryId, Promise.resolve(updatedCategory));
+		// Promise マップを即座に更新 (O(1))
+		exrCategoryPromises.set(categoryId, Promise.resolve(updatedCategory));
 
-			// 該当するタブを Map から特定して更新 (O(1))
-			const tabId = categoryToTabIdMap.get(categoryId);
-			if (tabId !== undefined) {
-				const tab = currentExrTabs.find((t) => t.Id === tabId);
-				if (tab) {
-					const index = tab.Categories.findIndex((c) => c.Id === categoryId);
-					if (index !== -1) {
-						tab.Categories[index] = updatedCategory;
-						exrTabPromises.set(tab.Id, Promise.resolve(tab));
-					}
-				}
-			}
+		// カテゴリの実体の参照も更新 (O(1))
+		const cachedCategory = exrCategoriesMap.get(categoryId);
+		if (cachedCategory) {
+			cachedCategory.Options = updatedCategory.Options;
 		}
+	}
 
-		// 2. ChainUpdatedOption があれば、それらも更新する
-		for (const chainUpdate of result.ChainUpdatedOption) {
-			const categoryId = chainUpdate.Id;
-			const tabId = categoryToTabIdMap.get(categoryId);
+	// 2. ChainUpdatedOption があれば、それらも部分的に更新する
+	for (const chainUpdate of result.ChainUpdatedOption) {
+		const categoryId = chainUpdate.Id;
+		const cachedCategory = exrCategoriesMap.get(categoryId);
 
-			if (tabId !== undefined) {
-				const tab = currentExrTabs.find((t) => t.Id === tabId);
-				if (tab) {
-					const category = tab.Categories.find((c) => c.Id === categoryId);
-					if (category) {
-						category.Options = chainUpdate.Options;
-						exrCategoryPromises.set(categoryId, Promise.resolve(category));
-						exrTabPromises.set(tabId, Promise.resolve(tab));
-					}
-				}
-			}
+		if (cachedCategory) {
+			// カテゴリ全体の Options を上書きするのではなく、部分的に更新を適用
+			applyPartialOptionsUpdate(cachedCategory.Options, chainUpdate.Options);
+
+			// 影響を受けるコンポーネントを再レンダリングさせるため、新しい Promise をセット
+			// 参照が同一でも Promise が新しければ use() は再評価される
+			exrCategoryPromises.set(categoryId, Promise.resolve(cachedCategory));
 		}
-
-		// 全データのPromiseを更新
-		exrAllTabsPromise = Promise.resolve(currentExrTabs);
 	}
 
 	return result;
