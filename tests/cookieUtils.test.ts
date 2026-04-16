@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	getCookie,
 	loadPresetNamesFromCookie,
@@ -7,6 +7,10 @@ import {
 } from "../src/logics/cookieUtils";
 
 describe("cookieUtils", () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	beforeEach(() => {
 		// クッキーをクリア
 		document.cookie.split(";").forEach((c) => {
@@ -31,16 +35,20 @@ describe("cookieUtils", () => {
 	});
 
 	it("should handle corrupted cookie data by returning empty object", () => {
+		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		setCookie("exr_preset_names", "invalid-json");
 		const loaded = loadPresetNamesFromCookie();
 		expect(loaded).toEqual({});
+		expect(consoleSpy).toHaveBeenCalled();
 	});
 
 	it("should handle schema mismatch by returning empty object", () => {
+		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		// 値が文字列ではない場合
 		setCookie("exr_preset_names", JSON.stringify({ 0: 123 }));
 		const loaded = loadPresetNamesFromCookie();
 		expect(loaded).toEqual({});
+		expect(consoleSpy).toHaveBeenCalled();
 	});
 
 	it("should handle getCookie correctly", () => {

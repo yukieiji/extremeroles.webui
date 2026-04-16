@@ -16390,7 +16390,7 @@
             "Id": 50,
             "IsActive": true,
             "TranslatedName": "スポーンレート",
-            "Selection": 0,
+            "Selection": 1,
             "Format": "Percentage",
             "RangeMeta": {
               "Type": "Int32",
@@ -418349,7 +418349,7 @@
             "Id": 50,
             "IsActive": true,
             "TranslatedName": "スポーンレート",
-            "Selection": 0,
+            "Selection": 1,
             "Format": "Percentage",
             "RangeMeta": {
               "Type": "Int32",
