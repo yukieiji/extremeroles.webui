@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	getCookie,
 	loadPresetNamesFromCookie,
@@ -7,6 +7,10 @@ import {
 } from "../src/logics/cookieUtils";
 
 describe("cookieUtils", () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	beforeEach(() => {
 		// クッキーをクリア
 		document.cookie.split(";").forEach((c) => {
@@ -36,7 +40,6 @@ describe("cookieUtils", () => {
 		const loaded = loadPresetNamesFromCookie();
 		expect(loaded).toEqual({});
 		expect(consoleSpy).toHaveBeenCalled();
-		consoleSpy.mockRestore();
 	});
 
 	it("should handle schema mismatch by returning empty object", () => {
@@ -46,7 +49,6 @@ describe("cookieUtils", () => {
 		const loaded = loadPresetNamesFromCookie();
 		expect(loaded).toEqual({});
 		expect(consoleSpy).toHaveBeenCalled();
-		consoleSpy.mockRestore();
 	});
 
 	it("should handle getCookie correctly", () => {
