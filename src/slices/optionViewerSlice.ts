@@ -122,25 +122,23 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 					});
 				}
 
-				// UIに反映させるため、少し遅延させてからペンディングを解除する
-				setTimeout(() => {
-					set((state) => {
-						const newPendingOptions = { ...state.pendingExROptionIds };
-						delete newPendingOptions[uniqueOptionId];
+				// ペンディング状態を解除する
+				set((state) => {
+					const newPendingOptions = { ...state.pendingExROptionIds };
+					delete newPendingOptions[uniqueOptionId];
 
-						const newPendingCategories = { ...state.pendingExRCategoryIds };
-						if (result.ChainUpdatedOption.length > 0) {
-							for (const chain of result.ChainUpdatedOption) {
-								delete newPendingCategories[chain.Id];
-							}
+					const newPendingCategories = { ...state.pendingExRCategoryIds };
+					if (result.ChainUpdatedOption.length > 0) {
+						for (const chain of result.ChainUpdatedOption) {
+							delete newPendingCategories[chain.Id];
 						}
+					}
 
-						return {
-							pendingExROptionIds: newPendingOptions,
-							pendingExRCategoryIds: newPendingCategories,
-						};
-					});
-				}, 500);
+					return {
+						pendingExROptionIds: newPendingOptions,
+						pendingExRCategoryIds: newPendingCategories,
+					};
+				});
 			} catch (error) {
 				console.error("Failed to update ExR option:", error);
 				set((state) => {

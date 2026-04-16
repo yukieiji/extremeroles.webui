@@ -14,7 +14,6 @@ describe("optionViewerSlice - updateExROptionSelection", () => {
 	}));
 
 	beforeEach(() => {
-		vi.useFakeTimers();
 		vi.clearAllMocks();
 		useStore.getState().resetViewer();
 	});
@@ -41,8 +40,7 @@ describe("optionViewerSlice - updateExROptionSelection", () => {
 			Selection: 2,
 		});
 
-		// 500ms待機してペンディングが解除されることを確認
-		await vi.runAllTimersAsync();
+		// ペンディング状態が解除されていることを確認
 		expect(useStore.getState().pendingExROptionIds[uniqueId]).toBeUndefined();
 	});
 
@@ -57,7 +55,6 @@ describe("optionViewerSlice - updateExROptionSelection", () => {
 		const promise = useStore.getState().updateExROptionSelection(uniqueId, 2);
 
 		await promise;
-		await vi.runAllTimersAsync();
 
 		// 成功後はカテゴリのペンディングも解除されている
 		expect(useStore.getState().pendingExRCategoryIds[5]).toBeUndefined();
