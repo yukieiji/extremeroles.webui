@@ -31,16 +31,22 @@ describe("cookieUtils", () => {
 	});
 
 	it("should handle corrupted cookie data by returning empty object", () => {
+		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		setCookie("exr_preset_names", "invalid-json");
 		const loaded = loadPresetNamesFromCookie();
 		expect(loaded).toEqual({});
+		expect(consoleSpy).toHaveBeenCalled();
+		consoleSpy.mockRestore();
 	});
 
 	it("should handle schema mismatch by returning empty object", () => {
+		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		// 値が文字列ではない場合
 		setCookie("exr_preset_names", JSON.stringify({ 0: 123 }));
 		const loaded = loadPresetNamesFromCookie();
 		expect(loaded).toEqual({});
+		expect(consoleSpy).toHaveBeenCalled();
+		consoleSpy.mockRestore();
 	});
 
 	it("should handle getCookie correctly", () => {

@@ -50,6 +50,10 @@ export default defineConfig([
 ])
 ```
 
+## 開発ナレッジ
+本プロジェクトでは、開発中に得た知識を `.gemini/skills/` ディレクトリに集約しています。
+- [Playwrightにおけるテストの一時的な無効化 (test.fixme)](.gemini/skills/playwright-test-fixme/playwright-test-fixme.md)
+
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
