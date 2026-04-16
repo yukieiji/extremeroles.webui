@@ -210,6 +210,9 @@ function applyPartialOptionsUpdate(
 	for (const updated of updatedOptions) {
 		const target = baseOptions.find((o) => o.Id === updated.Id);
 		if (target) {
+			console.log(
+				`Updating option ID ${updated.Id}: ${target.Selection} -> ${updated.Selection}`,
+			);
 			// プロパティを更新
 			target.IsActive = updated.IsActive;
 			target.Selection = updated.Selection;
@@ -234,55 +237,77 @@ function applyPartialOptionsUpdate(
 
 /**
  * ExRオプションを更新する
+ * 更新プロセス自体を Promise として管理し、キャッシュに即座に注入することで
+ * React 19 の Suspense ライフサイクルと連携します。
  */
-export async function updateExrOption(
+export function updateExrOption(
 	request: ExROptionPutRequest,
 ): Promise<UpdatedOptions> {
-	const res = await fetch(EXR_OPTION_URL, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(request),
+	console.log("[API] updateExrOption started:", request);
+
+	const updateProcess = (async () => {
+		const res = await fetch(EXR_OPTION_URL, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(request),
+		});
+
+		if (!res.ok) {
+			console.error(`[API] Failed to update ExR option: ${res.statusText}`);
+			throw new Error(`Failed to update ExR option: ${res.statusText}`);
+		}
+
+		const rawData = await res.json();
+		console.log("[API] API response received:", rawData);
+		const result = UpdatedOptionsSchema.parse(rawData);
+
+		// 1. UpdatedCategory の処理
+		if (result.UpdatedCategory) {
+			const updatedCategory = result.UpdatedCategory;
+			const categoryId = updatedCategory.Id;
+			const cachedCategory = exrCategoriesMap.get(categoryId);
+
+			if (cachedCategory) {
+				cachedCategory.Options = updatedCategory.Options;
+				const newCategory = { ...cachedCategory };
+				exrCategoriesMap.set(categoryId, newCategory);
+				exrCategoryPromises.set(categoryId, Promise.resolve(newCategory));
+				console.log(`[API] Category ${categoryId} updated in cache`);
+			} else {
+				exrCategoriesMap.set(categoryId, updatedCategory);
+				exrCategoryPromises.set(categoryId, Promise.resolve(updatedCategory));
+			}
+		}
+
+		// 2. ChainUpdatedOption の処理
+		for (const chainUpdate of result.ChainUpdatedOption) {
+			const categoryId = chainUpdate.Id;
+			const cachedCategory = exrCategoriesMap.get(categoryId);
+
+			if (cachedCategory) {
+				applyPartialOptionsUpdate(cachedCategory.Options, chainUpdate.Options);
+				const newCategory = { ...cachedCategory };
+				exrCategoriesMap.set(categoryId, newCategory);
+				exrCategoryPromises.set(categoryId, Promise.resolve(newCategory));
+				console.log(`[API] Chain update applied to category ${categoryId}`);
+			}
+		}
+
+		return result;
+	})();
+
+	// 更新プロセスが完了した後に該当カテゴリを返す Promise を作成
+	const categoryPendingPromise = updateProcess.then(() => {
+		const cat = exrCategoriesMap.get(request.CategoryId);
+		if (!cat) throw new Error("Category lost after update");
+		return cat;
 	});
 
-	if (!res.ok) {
-		throw new Error(`Failed to update ExR option: ${res.statusText}`);
-	}
+	// キャッシュの Promise を「進行中」のもので上書き
+	// これにより、React の use() はこの Promise の解決を待機するようになる
+	exrCategoryPromises.set(request.CategoryId, categoryPendingPromise);
 
-	const rawData = await res.json();
-	const result = UpdatedOptionsSchema.parse(rawData);
-
-	// キャッシュの更新
-	// 1. UpdatedCategory があれば、該当するカテゴリを差し替える
-	if (result.UpdatedCategory) {
-		const updatedCategory = result.UpdatedCategory;
-		const categoryId = updatedCategory.Id;
-
-		// Promise マップを即座に更新 (O(1))
-		exrCategoryPromises.set(categoryId, Promise.resolve(updatedCategory));
-
-		// カテゴリの実体の参照も更新 (O(1))
-		const cachedCategory = exrCategoriesMap.get(categoryId);
-		if (cachedCategory) {
-			cachedCategory.Options = updatedCategory.Options;
-		}
-	}
-
-	// 2. ChainUpdatedOption があれば、それらも部分的に更新する
-	for (const chainUpdate of result.ChainUpdatedOption) {
-		const categoryId = chainUpdate.Id;
-		const cachedCategory = exrCategoriesMap.get(categoryId);
-
-		if (cachedCategory) {
-			// カテゴリ全体の Options を上書きするのではなく、部分的に更新を適用
-			applyPartialOptionsUpdate(cachedCategory.Options, chainUpdate.Options);
-
-			// 影響を受けるコンポーネントを再レンダリングさせるため、新しい Promise をセット
-			// 参照が同一でも Promise が新しければ use() は再評価される
-			exrCategoryPromises.set(categoryId, Promise.resolve(cachedCategory));
-		}
-	}
-
-	return result;
+	return updateProcess;
 }
