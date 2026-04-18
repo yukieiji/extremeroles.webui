@@ -13,7 +13,7 @@ import { useStore } from "./useStore";
  */
 function PresetSelectorContainer() {
 	use(getExrOptions());
-	return <PresetSelector tabs={exrData} />;
+	return <PresetSelector />;
 }
 
 /**
