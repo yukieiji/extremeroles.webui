@@ -1,19 +1,12 @@
-import { useCallback } from "react";
 import type { ExROptionValueData, OptionData, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 import { exrOptionMetaData } from "./api";
+import { useShallow } from "zustand/react/shallow";
 
 export function useOptionData(
 	uniqueOptionId: UniqueOptionId,
 ): ExROptionValueData {
-	return useStore(
-		useCallback(
-			(state) => {
-				return state.valueData[uniqueOptionId];
-			},
-			[uniqueOptionId],
-		),
-	);
+	return useStore(useShallow((state) => state.valueData[uniqueOptionId]));
 }
 
 /**
