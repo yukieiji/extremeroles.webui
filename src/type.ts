@@ -27,7 +27,7 @@ export const OptionTabSchema = z.preprocess((val) => {
 		return OptionTab[val as keyof typeof OptionTab];
 	}
 	return val;
-}, z.nativeEnum(OptionTab));
+}, z.enum(OptionTab));
 
 /**
  * オプションの範囲メタデータ
