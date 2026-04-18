@@ -6,6 +6,13 @@ import { z } from "zod";
 export const SPAWN_RATE_OPTION_ID = 50;
 export const SPAWN_COUNT_OPTION_ID = 51;
 
+// ユニークオプションIDは、タブID、カテゴリID、オプションIDの組み合わせを一意に識別するための型
+// 内部的にはnumber型ですが、ブランド型を使用して区別しています
+type Branded<T, Brand extends string> = T & {
+	readonly [K in Brand]: never; // neverなので実行時に存在しない
+};
+export type UniqueOptionId = Branded<number, "UniqueOptionId">;
+
 export interface ExROptionMetaData {
 	translatedName: string;
 	format: string;
@@ -19,11 +26,11 @@ export interface ExROptionValueData {
 
 export interface ExROptionMetaDataRecords {
 	tabInfo: Record<OptionTab, string>; // タブIDとタブ名の対応
-	categoryIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
+	tabIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
 	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
-	optionIdMap: Record<number, number[]>; // カテゴリIDとそのカテゴリに属するオプションIDの対応
-	optionMetaData: Record<number, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
-	childOptionMap: Record<number, number[]>; // 親ユニークオプションIDとその子ユニークオプションIDの対応
+	globalCategoryIdTopLevelMap: Record<number, UniqueOptionId[]>; // グローバル設定のカテゴリIDとそのカテゴリに属するトップレベルオプションのユニークオプションIDの対応
+	optionMetaData: Record<UniqueOptionId, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
+	childOptionMap: Record<UniqueOptionId, UniqueOptionId[]>; // 親ユニークオプションIDとその子ユニークオプションIDの対応
 }
 
 /**
@@ -271,3 +278,9 @@ export const PresetNamesSchema = z
 	});
 
 export type PresetNames = z.infer<typeof PresetNamesSchema>;
+
+export interface OptionData {
+	uniqueOptionId: number;
+	metaData: ExROptionMetaData;
+	label: string;
+}

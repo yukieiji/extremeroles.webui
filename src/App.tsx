@@ -12,8 +12,8 @@ import { useStore } from "./useStore";
  * データを取得し、Suspense境界内で動作します
  */
 function PresetSelectorContainer() {
-	const exrData = use(getExrOptions());
-	return <PresetSelector tabs={exrData} />;
+	use(getExrOptions());
+	return <PresetSelector />;
 }
 
 /**
@@ -26,11 +26,11 @@ function EditorContainer() {
 	});
 
 	// React 19 の use() フックを使用してデータを取得
-	const exrData = use(getExrOptions());
+	use(getExrOptions());
 	const auData = use(getAuOptions());
 
 	if (selectedTab === "ExR") {
-		return <ExROptionEditor data={exrData} />;
+		return <ExROptionEditor />;
 	}
 
 	return <AuOptionEditor data={auData} />;

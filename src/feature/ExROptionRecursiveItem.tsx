@@ -1,13 +1,11 @@
 import { OptionAccordion } from "../components/blocks/OptionAccordion";
-import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
+import { exrOptionMetaData } from "../logics/api";
 import { useStore } from "../useStore";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExROptionRow } from "./ExROptionRow";
 
 interface ExROptionRecursiveItemProps {
-	categoryId: number;
-	option: ExROptionDto;
+	uniqueOptionId: number;
 	depth: number;
 }
 
@@ -15,50 +13,41 @@ interface ExROptionRecursiveItemProps {
  * 子要素を持つオプションをアコーディオンとして表示するコンポーネント
  */
 export function ExROptionRecursiveItem({
-	categoryId,
-	option,
+	uniqueOptionId,
 	depth = 0,
 }: ExROptionRecursiveItemProps) {
-	const selectedExRTabId = useStore((state) => {
-		return state.selectedExRTabId;
-	});
-	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
 	const isOpen = useStore((state) => {
-		return state.openedExROptionIds[uniqueId];
+		return state.openedExROptionIds[uniqueOptionId];
 	});
 	const toggleExROption = useStore((state) => {
 		return state.toggleExROption;
 	});
 
 	const handleToggle = () => {
-		toggleExROption(uniqueId);
+		toggleExROption(uniqueOptionId);
 	};
 
-	const hasActiveChildren = option.Childs.some((child) => {
-		return child.IsActive;
-	});
+	const childs = exrOptionMetaData.childOptionMap[uniqueOptionId];
 
 	return (
 		<OptionAccordion
 			optionItem={
 				<ExROptionRow
-					categoryId={categoryId}
-					option={option}
+					uniqueOptionId={uniqueOptionId}
 					depth={depth}
 					isLeaf={false}
 				/>
 			}
 			isOpen={isOpen ?? false}
 			onToggle={handleToggle}
-			showArrow={hasActiveChildren}
+			showArrow={true} // このコンポーネントが呼ばれている時点で子要素が存在するはずなので、常に矢印を表示
 			className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
 		>
 			<div className="flex flex-col">
-				{option.Childs.map((child) => (
+				{childs?.map((childId) => (
 					<ExROptionItem
-						key={child.Id}
-						categoryId={categoryId}
-						option={child}
+						key={childId}
+						uniqueOptionId={childId}
 						depth={depth + 1}
 					/>
 				))}

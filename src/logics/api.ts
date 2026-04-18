@@ -1,9 +1,13 @@
 import type {
 	AuOptionCategoryDto,
+	ExROptionDto,
 	ExROptionMetaDataRecords,
-	ExRTabDto,
-	OptionTab,
+	ExROptionValueData,
 } from "../type";
+import { ExRTabDtoArraySchema, OptionTab } from "../type";
+
+import { useStore } from "../useStore";
+import { getUniqueOptionId } from "./optionUtils";
 
 /**
  * API エンドポイントの定数定義
@@ -15,15 +19,15 @@ const AU_OPTION_URL = "/au/option/";
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
-let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
+let exrOptionsPromise: Promise<void> | null = null;
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 
-const _exrOptionMetaData: ExROptionMetaDataRecords = {
+export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
 	tabInfo: {} as Record<OptionTab, string>,
-	categoryIdMap: {} as Record<OptionTab, number[]>,
+	tabIdMap: {} as Record<OptionTab, number[]>,
 	categoryInfo: {},
-	optionIdMap: {},
+	globalCategoryIdTopLevelMap: {},
 	optionMetaData: {},
 	childOptionMap: {},
 };
@@ -37,29 +41,100 @@ export function resetApiCache() {
 }
 
 /**
+ * ExRオプションのメタデータをリセットする（テスト用）
+ */
+export function resetExrOptionMetaData() {
+	exrOptionMetaData.tabInfo = {} as Record<OptionTab, string>;
+	exrOptionMetaData.tabIdMap = {} as Record<OptionTab, number[]>;
+	exrOptionMetaData.categoryInfo = {};
+	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
+	exrOptionMetaData.optionMetaData = {};
+	exrOptionMetaData.childOptionMap = {};
+}
+
+async function createExROptionMetaData(delay: number): Promise<void> {
+	if (delay > 0) {
+		await new Promise((resolve) => {
+			return setTimeout(resolve, delay);
+		});
+	}
+	const res = await fetch(EXR_OPTION_URL);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	const data = await ExRTabDtoArraySchema.parseAsync(jsonData);
+
+	const valueData: Record<number, ExROptionValueData> = {};
+	const isOptionActive: Record<number, boolean> = {};
+
+	const processOptions = (
+		options: ExROptionDto[],
+		tabId: OptionTab,
+		categoryId: number,
+		parentOptionId: number | null,
+	) => {
+		for (const opt of options) {
+			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
+
+			exrOptionMetaData.optionMetaData[uniqueId] = {
+				translatedName: opt.TranslatedName,
+				format: opt.Format,
+				type: opt.RangeMeta.Type,
+			};
+
+			valueData[uniqueId] = {
+				selection: opt.Selection,
+				values: opt.RangeMeta.Values,
+			};
+			isOptionActive[uniqueId] = opt.IsActive;
+			if (parentOptionId !== null) {
+				const parentUniqueId = getUniqueOptionId(
+					tabId,
+					categoryId,
+					parentOptionId,
+				);
+				if (!exrOptionMetaData.childOptionMap[parentUniqueId]) {
+					exrOptionMetaData.childOptionMap[parentUniqueId] = [];
+				}
+				exrOptionMetaData.childOptionMap[parentUniqueId].push(uniqueId);
+			}
+
+			if (opt.Childs && opt.Childs.length > 0) {
+				processOptions(opt.Childs, tabId, categoryId, opt.Id);
+			}
+		}
+	};
+
+	for (const tab of data) {
+		exrOptionMetaData.tabInfo[tab.Id] = tab.Name;
+		exrOptionMetaData.tabIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
+		for (const category of tab.Categories) {
+			exrOptionMetaData.categoryInfo[category.Id] = category.Name;
+			if (tab.Id === OptionTab.GeneralTab) {
+				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
+				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
+					category.Options.map((o) =>
+						getUniqueOptionId(tab.Id, category.Id, o.Id),
+					); // カテゴリIDとそのカテゴリに属するオプションIDの対応を保存
+			}
+			processOptions(category.Options, tab.Id, category.Id, null);
+		}
+	}
+	useStore.getState().setExROptions(valueData, isOptionActive);
+}
+
+/**
  * ExRオプションを取得する
  */
-export function getExrOptions(): Promise<ExRTabDto[]> {
+export function getExrOptions(): Promise<void> {
 	if (exrOptionsPromise) {
 		return exrOptionsPromise;
 	}
-
 	// @ts-expect-error - テスト用
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
-
-	exrOptionsPromise = (async () => {
-		if (delay > 0) {
-			await new Promise((resolve) => {
-				return setTimeout(resolve, delay);
-			});
-		}
-		const res = await fetch(EXR_OPTION_URL);
-		if (!res.ok) {
-			throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
-		}
-		return res.json();
-	})();
-
+	exrOptionsPromise = createExROptionMetaData(delay);
 	return exrOptionsPromise;
 }
 
@@ -88,11 +163,4 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 	})();
 
 	return auOptionsPromise;
-}
-
-/**
- * 両方のオプションをまとめて取得する
- */
-export function getAllOptions(): Promise<[ExRTabDto[], AuOptionCategoryDto[]]> {
-	return Promise.all([getExrOptions(), getAuOptions()]);
 }
