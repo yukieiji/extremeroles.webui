@@ -3,10 +3,10 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import {
+	type ExRTabDto,
 	OptionTab,
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
-	type ExRTabDto,
 } from "../src/type";
 import { useStore } from "../src/useStore";
 

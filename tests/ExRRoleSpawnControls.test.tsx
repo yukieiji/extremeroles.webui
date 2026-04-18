@@ -2,8 +2,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
-import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
 import type { ExROptionDto } from "../src/type";
+import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExRRoleSpawnControls", () => {
@@ -89,7 +89,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		const state = useStore.getState();
 		expect(
-			state.effectiveSelections[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)],
+			state.effectiveSelections[
+				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
+			],
 		).toBe(0); // Rate 0%
 	});
 
@@ -112,7 +114,9 @@ describe("ExRRoleSpawnControls", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.effectiveSelections[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)],
+			state.effectiveSelections[
+				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
+			],
 		).toBe(1); // Rate index 1 is 10%
 	});
 
