@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, act } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
 import { getInitialLoadPromise, resetApiCache } from "../src/logics/api";
@@ -82,7 +82,7 @@ describe("ExRRoleSpawnControls", () => {
 		const tabId = useStore.getState().selectedExRTabId;
 		useStore
 			.getState()
-			.updateExROptionSelection(
+			.TEMP_updateExROptionSelection(
 				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID),
 				1,
 			);
@@ -98,7 +98,8 @@ describe("ExRRoleSpawnControls", () => {
 
 		const state = useStore.getState();
 		expect(
-			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)].selection,
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(0); // Rate 0%
 	});
 
@@ -115,7 +116,8 @@ describe("ExRRoleSpawnControls", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)].selection,
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(1); // Rate index 1 is 10%
 	});
 
@@ -124,13 +126,13 @@ describe("ExRRoleSpawnControls", () => {
 		const tabId = useStore.getState().selectedExRTabId;
 		useStore
 			.getState()
-			.updateExROptionSelection(
+			.TEMP_updateExROptionSelection(
 				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID),
 				1,
 			);
 		useStore
 			.getState()
-			.updateExROptionSelection(
+			.TEMP_updateExROptionSelection(
 				getUniqueOptionId(tabId, 1, SPAWN_COUNT_OPTION_ID),
 				1,
 			); // backend index 1 is value 2
@@ -146,7 +148,8 @@ describe("ExRRoleSpawnControls", () => {
 
 		const state = useStore.getState();
 		expect(
-			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_COUNT_OPTION_ID)].selection,
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_COUNT_OPTION_ID)]
+				.selection,
 		).toBe(0); // Count reset to index 0
 
 		// UI should show 0

@@ -29,8 +29,16 @@ export function ExRPairedOptionRow({
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
-	const minUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, minOptionId);
-	const maxUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, maxOptionId);
+	const minUniqueId = getUniqueOptionId(
+		selectedExRTabId,
+		categoryId,
+		minOptionId,
+	);
+	const maxUniqueId = getUniqueOptionId(
+		selectedExRTabId,
+		categoryId,
+		maxOptionId,
+	);
 
 	const minValueData = useStore((state) => {
 		return state.valueData[minUniqueId];
@@ -42,16 +50,16 @@ export function ExRPairedOptionRow({
 	const minSelection = minValueData?.selection ?? 0;
 	const maxSelection = maxValueData?.selection ?? 0;
 
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
+	const TEMP_updateExROptionSelection = useStore((state) => {
+		return state.TEMP_updateExROptionSelection;
 	});
 
 	const handleMinChange = (newSelection: number) => {
-		updateExROptionSelection(minUniqueId, newSelection);
+		TEMP_updateExROptionSelection(minUniqueId, newSelection);
 	};
 
 	const handleMaxChange = (newSelection: number) => {
-		updateExROptionSelection(maxUniqueId, newSelection);
+		TEMP_updateExROptionSelection(maxUniqueId, newSelection);
 	};
 
 	const minMeta = exrOptionMetaData.optionMetaData[minUniqueId];

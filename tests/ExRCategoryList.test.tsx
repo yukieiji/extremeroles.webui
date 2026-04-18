@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, act } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { getInitialLoadPromise, resetApiCache } from "../src/logics/api";
@@ -119,7 +119,7 @@ describe("ExRCategoryList Component Selection", () => {
 		// Set a non-zero spawn rate so the accordion is enabled
 		useStore
 			.getState()
-			.updateExROptionSelection(
+			.TEMP_updateExROptionSelection(
 				getUniqueOptionId(OptionTab.CrewmateTab, 2, SPAWN_RATE_OPTION_ID),
 				1,
 			); // Category 2, Option 50, Index 1 (Value 100)

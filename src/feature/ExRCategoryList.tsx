@@ -32,7 +32,11 @@ export function ExRCategoryList() {
 			return !isPreset;
 		});
 		return filteredOptionIds.some((optionId) => {
-			const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
+			const uniqueId = getUniqueOptionId(
+				selectedExRTabId,
+				categoryId,
+				optionId,
+			);
 			return isOptionActive[uniqueId];
 		});
 	});

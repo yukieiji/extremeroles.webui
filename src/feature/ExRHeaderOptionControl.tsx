@@ -25,18 +25,18 @@ export function ExRHeaderOptionControl({
 		return state.valueData[uniqueId];
 	});
 	const currentSelection = valueData?.selection ?? 0;
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
+	const TEMP_updateExROptionSelection = useStore((state) => {
+		return state.TEMP_updateExROptionSelection;
 	});
 
 	const values = (valueData?.values as number[]) ?? [];
 
 	const handleSelectionChange = (newSelection: number) => {
-		updateExROptionSelection(uniqueId, newSelection);
+		TEMP_updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const handleInputChange = (val: number) => {
-		updateExROptionSelection(uniqueId, findClosestIndex(values, val));
+		TEMP_updateExROptionSelection(uniqueId, findClosestIndex(values, val));
 	};
 
 	return (

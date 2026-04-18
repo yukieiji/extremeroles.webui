@@ -24,12 +24,12 @@ export function ExROptionControl({
 	const valueData = useStore((state) => {
 		return state.valueData[uniqueId];
 	});
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
+	const TEMP_updateExROptionSelection = useStore((state) => {
+		return state.TEMP_updateExROptionSelection;
 	});
 
 	const handleChange = (newSelection: number) => {
-		updateExROptionSelection(uniqueId, newSelection);
+		TEMP_updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const meta = exrOptionMetaData.optionMetaData[uniqueId];

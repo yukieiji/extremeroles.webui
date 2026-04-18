@@ -59,8 +59,15 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		if (isPresetOption(categoryId, optionId)) {
 			return [];
 		}
-		if (optionId === SPAWN_RATE_OPTION_ID || optionId === SPAWN_COUNT_OPTION_ID) {
-			const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
+		if (
+			optionId === SPAWN_RATE_OPTION_ID ||
+			optionId === SPAWN_COUNT_OPTION_ID
+		) {
+			const uniqueId = getUniqueOptionId(
+				selectedExRTabId,
+				categoryId,
+				optionId,
+			);
 			const childUniqueIds = exrOptionMetaData.childOptionMap[uniqueId] ?? [];
 			return childUniqueIds.map((cid) => getOptionIdFromUniqueId(cid));
 		}

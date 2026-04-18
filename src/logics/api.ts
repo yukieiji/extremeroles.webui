@@ -1,4 +1,3 @@
-import { useStore } from "../useStore";
 import type {
 	AuOptionCategoryDto,
 	ExROptionDto,
@@ -7,6 +6,7 @@ import type {
 	ExRTabDto,
 	OptionTab,
 } from "../type";
+import { useStore } from "../useStore";
 import { getUniqueOptionId } from "./optionUtils";
 
 /**
@@ -158,6 +158,6 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 /**
  * 両方のオプションをまとめて取得する
  */
-export function getAllOptions(): Promise<[void, AuOptionCategoryDto[]]> {
+export function getAllOptions(): Promise<[undefined, AuOptionCategoryDto[]]> {
 	return Promise.all([getInitialLoadPromise(), getAuOptions()]);
 }

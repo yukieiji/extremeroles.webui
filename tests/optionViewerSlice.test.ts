@@ -70,7 +70,8 @@ describe("optionViewerSlice", () => {
 	});
 
 	it("should update effective selections with numeric ID", () => {
-		const { setExROptions, updateExROptionSelection } = useStore.getState();
+		const { setExROptions, TEMP_updateExROptionSelection } =
+			useStore.getState();
 
 		setExROptions(
 			{
@@ -79,7 +80,7 @@ describe("optionViewerSlice", () => {
 			{ 10001: true },
 		);
 
-		updateExROptionSelection(10001, 5);
+		TEMP_updateExROptionSelection(10001, 5);
 		expect(useStore.getState().valueData[10001].selection).toBe(5);
 	});
 });

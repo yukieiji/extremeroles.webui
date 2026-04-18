@@ -10,7 +10,9 @@ interface ExRRoleSpawnControlsProps {
 /**
  * 役職のスポーンレートとスポーン数をセットで管理し、同期させるためのコンポーネント
  */
-export function ExRRoleSpawnControls({ categoryId }: ExRRoleSpawnControlsProps) {
+export function ExRRoleSpawnControls({
+	categoryId,
+}: ExRRoleSpawnControlsProps) {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
@@ -33,8 +35,8 @@ export function ExRRoleSpawnControls({ categoryId }: ExRRoleSpawnControlsProps) 
 		return state.valueData[uniqueCountId];
 	});
 
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
+	const TEMP_updateExROptionSelection = useStore((state) => {
+		return state.TEMP_updateExROptionSelection;
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
@@ -57,11 +59,11 @@ export function ExRRoleSpawnControls({ categoryId }: ExRRoleSpawnControlsProps) 
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = (newSelection: number) => {
-		updateExROptionSelection(uniqueRateId, newSelection);
+		TEMP_updateExROptionSelection(uniqueRateId, newSelection);
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
-			updateExROptionSelection(uniqueCountId, 0);
+			TEMP_updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
@@ -75,23 +77,23 @@ export function ExRRoleSpawnControls({ categoryId }: ExRRoleSpawnControlsProps) 
 	const handleCountUIChange = (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			updateExROptionSelection(
+			TEMP_updateExROptionSelection(
 				uniqueRateId,
 				findClosestIndex(rateValues, 0),
 			);
-			updateExROptionSelection(uniqueCountId, 0);
+			TEMP_updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
-				updateExROptionSelection(
+				TEMP_updateExROptionSelection(
 					uniqueRateId,
 					findClosestIndex(rateValues, 10),
 				);
 			}
-			updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			TEMP_updateExROptionSelection(uniqueCountId, newUISelection - 1);
 		}
 	};
 

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, act } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "../src/feature/ExRHeaderOptionControl";
 import { getInitialLoadPromise, resetApiCache } from "../src/logics/api";
@@ -84,7 +84,8 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)].selection,
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(1);
 	});
 
@@ -110,7 +111,8 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)].selection,
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(2); // 100 is at index 2
 	});
 

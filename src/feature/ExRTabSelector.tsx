@@ -37,7 +37,9 @@ export function ExRTabSelector() {
 		});
 	};
 
-	const tabIds = Object.keys(exrOptionMetaData.tabInfo).map(Number) as OptionTab[];
+	const tabIds = Object.keys(exrOptionMetaData.tabInfo).map(
+		Number,
+	) as OptionTab[];
 
 	return (
 		<div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">

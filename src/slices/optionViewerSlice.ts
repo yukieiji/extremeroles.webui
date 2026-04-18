@@ -21,7 +21,10 @@ export interface OptionViewerSlice {
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: number) => void;
-	updateExROptionSelection: (uniqueOptionId: number, selection: number) => void;
+	TEMP_updateExROptionSelection: (
+		uniqueOptionId: number,
+		selection: number,
+	) => void;
 	setExROptions: (
 		valueData: Record<number, ExROptionValueData>,
 		isOptionActive: Record<number, boolean>,
@@ -83,7 +86,10 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		updateExROptionSelection: (uniqueOptionId: number, selection: number) => {
+		TEMP_updateExROptionSelection: (
+			uniqueOptionId: number,
+			selection: number,
+		) => {
 			set((state) => {
 				const current = state.valueData[uniqueOptionId];
 				if (!current) {
