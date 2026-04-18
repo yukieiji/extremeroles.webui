@@ -17,8 +17,11 @@ export function ExRRoleSpawnControls({
 	spawnRateOption,
 	spawnCountOption,
 }: ExRRoleSpawnControlsProps) {
-	const uniqueRateId = getUniqueOptionId(categoryId, 50);
-	const uniqueCountId = getUniqueOptionId(categoryId, 51);
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const uniqueRateId = getUniqueOptionId(selectedExRTabId, categoryId, 50);
+	const uniqueCountId = getUniqueOptionId(selectedExRTabId, categoryId, 51);
 
 	const effectiveSpawnRateSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueRateId];

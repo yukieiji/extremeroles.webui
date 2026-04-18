@@ -26,8 +26,11 @@ export function ExRPairedOptionRow({
 	minLabel,
 	maxLabel,
 }: ExRPairedOptionRowProps) {
-	const minUniqueId = getUniqueOptionId(categoryId, min.Id);
-	const maxUniqueId = getUniqueOptionId(categoryId, max.Id);
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const minUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, min.Id);
+	const maxUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, max.Id);
 
 	const effectiveMinSelection = useStore((state) => {
 		return state.effectiveSelections[minUniqueId];

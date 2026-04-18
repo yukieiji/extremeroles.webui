@@ -27,7 +27,10 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 		return opt.Id === 51;
 	});
 
-	const uniqueRateId = getUniqueOptionId(category.Id, 50);
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const uniqueRateId = getUniqueOptionId(selectedExRTabId, category.Id, 50);
 	const effectiveSpawnRateSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueRateId];
 	});

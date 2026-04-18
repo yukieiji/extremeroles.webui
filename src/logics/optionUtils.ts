@@ -1,13 +1,15 @@
 import type { ExROptionDto } from "../type";
 
 /**
- * カテゴリIDとオプションIDを組み合わせて、アプリケーション内で一意なIDを生成します。
+ * タブID、カテゴリID、オプションIDを組み合わせて、アプリケーション内で一意な数値IDを生成します。
+ * 9桁目以降：タブID、5～8桁目：カテゴリーID、1～4桁目：オプションID
  */
 export function getUniqueOptionId(
+	tabId: number,
 	categoryId: number,
 	optionId: number,
-): string {
-	return `${categoryId}-${optionId}`;
+): number {
+	return tabId * 100_000_000 + categoryId * 10_000 + optionId;
 }
 
 /**
