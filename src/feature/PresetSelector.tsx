@@ -1,11 +1,6 @@
 import { useEffect, useRef } from "react";
-import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExRTabDto } from "../type";
+import { getUniqueOptionId, useOptionData } from "../logics/optionUtils";
 import { useStore } from "../useStore";
-
-interface PresetSelectorProps {
-	tabs: ExRTabDto[];
-}
 
 /**
  * プリセットを選択・編集するためのコンポーネント。
@@ -15,23 +10,16 @@ interface PresetSelectorProps {
  * 入力更新の最適化:
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
-export function PresetSelector({ tabs }: PresetSelectorProps) {
-	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
-	const generalTab = tabs.find((t) => {
-		return t.Id === 0;
-	});
-	const presetCategory = generalTab?.Categories.find((c) => {
-		return c.Id === 0;
-	});
-	const presetOption = presetCategory?.Options.find((o) => {
-		return o.Id === 0;
-	});
 
-	const uniqueId = getUniqueOptionId(0, 0, 0);
+const PRESET_OPTION_UNIQUE_ID = getUniqueOptionId(0, 0, 0);
+
+export function PresetSelector() {
+	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
+
+	const presetOption = useOptionData(PRESET_OPTION_UNIQUE_ID);
 	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
+		return state.effectiveSelections[PRESET_OPTION_UNIQUE_ID];
 	});
-	const currentSelection = effectiveSelection ?? presetOption?.Selection ?? 0;
 
 	const presetNames = useStore((state) => {
 		return state.presetNames;
@@ -72,13 +60,15 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 		return null;
 	}
 
-	const presetValues = presetOption.RangeMeta.Values as number[];
+	
+	const currentSelection = effectiveSelection ?? presetOption.selection;
+	const presetValues = presetOption.values as number[];
 	const currentPresetValue = presetValues[currentSelection];
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = (index: number) => {
-		TEMP_updateExROptionSelection(uniqueId, index);
+		TEMP_updateExROptionSelection(PRESET_OPTION_UNIQUE_ID, index);
 		setPresetDropdownOpen(false);
 	};
 
