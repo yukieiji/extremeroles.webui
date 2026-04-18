@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { OptionAccordion } from "../components/blocks/OptionAccordion";
 import { exrOptionMetaData } from "../logics/api";
 import {
@@ -45,9 +46,11 @@ export function ExROptionRecursiveItem({
 		},
 	);
 
-	const isOptionActive = useStore((state) => {
-		return state.isOptionActive;
-	});
+	const isOptionActive = useStore(
+		useCallback((state) => {
+			return state.isOptionActive;
+		}, []),
+	);
 
 	const hasActiveChildren = childOptionIds.some((cid) => {
 		return isOptionActive[cid];

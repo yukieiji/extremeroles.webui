@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { exrOptionMetaData } from "../logics/api";
 import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
 import { OptionTab } from "../type";
@@ -15,9 +16,11 @@ export function ExRCategoryList() {
 	const isTabPending = useStore((state) => {
 		return state.isTabPending;
 	});
-	const isOptionActive = useStore((state) => {
-		return state.isOptionActive;
-	});
+	const isOptionActive = useStore(
+		useCallback((state) => {
+			return state.isOptionActive;
+		}, []),
+	);
 
 	const categoryIds = exrOptionMetaData.categoryIdMap[selectedExRTabId] ?? [];
 

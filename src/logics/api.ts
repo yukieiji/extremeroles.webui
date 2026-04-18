@@ -158,6 +158,6 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 /**
  * 両方のオプションをまとめて取得する
  */
-export function getAllOptions(): Promise<[undefined, AuOptionCategoryDto[]]> {
+export function getAllOptions(): Promise<[void, AuOptionCategoryDto[]]> {
 	return Promise.all([getInitialLoadPromise(), getAuOptions()]);
 }

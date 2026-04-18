@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { exrOptionMetaData } from "../logics/api";
 import { getUniqueOptionId, groupOptionPairs } from "../logics/optionUtils";
 import { useStore } from "../useStore";
@@ -21,12 +22,16 @@ export function ExRCategoryOptionList({
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
-	const valueDataRecord = useStore((state) => {
-		return state.valueData;
-	});
-	const isOptionActiveRecord = useStore((state) => {
-		return state.isOptionActive;
-	});
+	const valueDataRecord = useStore(
+		useCallback((state) => {
+			return state.valueData;
+		}, []),
+	);
+	const isOptionActiveRecord = useStore(
+		useCallback((state) => {
+			return state.isOptionActive;
+		}, []),
+	);
 
 	const options = optionIds.map((id) => {
 		const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, id);

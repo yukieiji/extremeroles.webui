@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { CompactSlider } from "../components/parts/CompactSlider";
 import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
 import { useStore } from "../useStore";
@@ -21,9 +22,14 @@ export function ExRHeaderOptionControl({
 		return state.selectedExRTabId;
 	});
 	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
-	const valueData = useStore((state) => {
-		return state.valueData[uniqueId];
-	});
+	const valueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueId];
+			},
+			[uniqueId],
+		),
+	);
 	const currentSelection = valueData?.selection ?? 0;
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;

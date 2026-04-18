@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { CompactSlider } from "../components/parts/CompactSlider";
 import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
@@ -27,13 +28,23 @@ export function ExRRoleSpawnControls({
 		SPAWN_COUNT_OPTION_ID,
 	);
 
-	const spawnRateValueData = useStore((state) => {
-		return state.valueData[uniqueRateId];
-	});
+	const spawnRateValueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueRateId];
+			},
+			[uniqueRateId],
+		),
+	);
 
-	const spawnCountValueData = useStore((state) => {
-		return state.valueData[uniqueCountId];
-	});
+	const spawnCountValueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueCountId];
+			},
+			[uniqueCountId],
+		),
+	);
 
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;

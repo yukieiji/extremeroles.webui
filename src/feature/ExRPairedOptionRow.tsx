@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { OptionPairedSliderControl } from "../components/blocks/OptionPairedSliderControl";
 import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
@@ -40,12 +41,22 @@ export function ExRPairedOptionRow({
 		maxOptionId,
 	);
 
-	const minValueData = useStore((state) => {
-		return state.valueData[minUniqueId];
-	});
-	const maxValueData = useStore((state) => {
-		return state.valueData[maxUniqueId];
-	});
+	const minValueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[minUniqueId];
+			},
+			[minUniqueId],
+		),
+	);
+	const maxValueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[maxUniqueId];
+			},
+			[maxUniqueId],
+		),
+	);
 
 	const minSelection = minValueData?.selection ?? 0;
 	const maxSelection = maxValueData?.selection ?? 0;

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
 import { exrOptionMetaData } from "../logics/api";
 import {
@@ -40,12 +41,22 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		SPAWN_COUNT_OPTION_ID,
 	);
 
-	const spawnRateValueData = useStore((state) => {
-		return state.valueData[uniqueRateId];
-	});
-	const spawnCountValueData = useStore((state) => {
-		return state.valueData[uniqueCountId];
-	});
+	const spawnRateValueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueRateId];
+			},
+			[uniqueRateId],
+		),
+	);
+	const spawnCountValueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueCountId];
+			},
+			[uniqueCountId],
+		),
+	);
 
 	const spawnRateSelection = spawnRateValueData?.selection ?? 0;
 	const rateValues = (spawnRateValueData?.values as number[]) ?? [];

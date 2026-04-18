@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
@@ -21,9 +22,14 @@ export function ExROptionControl({
 		return state.selectedExRTabId;
 	});
 	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
-	const valueData = useStore((state) => {
-		return state.valueData[uniqueId];
-	});
+	const valueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueId];
+			},
+			[uniqueId],
+		),
+	);
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;
 	});

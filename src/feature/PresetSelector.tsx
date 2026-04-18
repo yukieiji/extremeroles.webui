@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { getUniqueOptionId } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 
@@ -12,9 +12,14 @@ import { useStore } from "../useStore";
  */
 export function PresetSelector() {
 	const uniqueId = getUniqueOptionId(0, 0, 0);
-	const valueData = useStore((state) => {
-		return state.valueData[uniqueId];
-	});
+	const valueData = useStore(
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueId];
+			},
+			[uniqueId],
+		),
+	);
 	const currentSelection = valueData?.selection ?? 0;
 
 	const presetNames = useStore((state) => {
