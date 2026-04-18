@@ -124,10 +124,9 @@ describe("ExRCategoryList Component Selection", () => {
 						}
 						if (
 							opt.Id !== SPAWN_RATE_OPTION_ID &&
-							!exrOptionMetaData.childOptionMap[rateUniqueId].includes(opt.Id)
+							!exrOptionMetaData.childOptionMap[rateUniqueId].includes(uniqueId)
 						) {
-							// バグ回避用の optionId での登録
-							exrOptionMetaData.childOptionMap[rateUniqueId].push(opt.Id);
+							exrOptionMetaData.childOptionMap[rateUniqueId].push(uniqueId);
 						}
 					}
 				}
