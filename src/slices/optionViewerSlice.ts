@@ -3,7 +3,7 @@ import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
-import type { OptionTab } from "../type";
+import type { ExROptionValueData, OptionTab } from "../type";
 
 /**
  * オプション表示エリア（ExR オプションのタブなど）の状態を管理するスライスのインターフェース
@@ -16,6 +16,8 @@ export interface OptionViewerSlice {
 	effectiveSelections: Record<number, number>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
+	valueData: Record<number, ExROptionValueData>;
+	isOptionActive: Record<number, boolean>;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
@@ -27,6 +29,7 @@ export interface OptionViewerSlice {
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
+	setExROptions: (valueData: Record<number, ExROptionValueData>, optionActiveData: Record<number, boolean>) => void;
 }
 
 /**
@@ -41,6 +44,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
 		effectiveSelections: {},
+		valueData: {},
+		isOptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -110,5 +115,11 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		setPresetDropdownOpen: (isOpen: boolean) => {
 			set({ isPresetDropdownOpen: isOpen });
 		},
+		setExROptions: (valueData: Record<number, ExROptionValueData>, optionActiveData: Record<number, boolean>) => {
+			set({
+				valueData,
+				isOptionActive: optionActiveData,
+			});
+		}
 	};
 };
