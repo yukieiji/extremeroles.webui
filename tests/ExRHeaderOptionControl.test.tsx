@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "../src/feature/ExRHeaderOptionControl";
+import { getUniqueOptionId } from "../src/logics/optionUtils";
 import type { ExROptionDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -52,7 +53,8 @@ describe("ExRHeaderOptionControl", () => {
 
 		// Check if store was updated
 		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(1);
+		const tabId = state.selectedExRTabId;
+		expect(state.effectiveSelections[getUniqueOptionId(tabId, 1, 50)]).toBe(1);
 	});
 
 	it("updates selection when input is changed", () => {
@@ -75,7 +77,8 @@ describe("ExRHeaderOptionControl", () => {
 		fireEvent.change(textInput, { target: { value: "100" } });
 
 		const state = useStore.getState();
-		expect(state.effectiveSelections["1-50"]).toBe(2); // 100 is at index 2
+		const tabId = state.selectedExRTabId;
+		expect(state.effectiveSelections[getUniqueOptionId(tabId, 1, 50)]).toBe(2); // 100 is at index 2
 	});
 
 	it("prevents click propagation to parent", () => {

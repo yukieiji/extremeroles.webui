@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
+import { getUniqueOptionId } from "../src/logics/optionUtils";
 import { type ExRTabDto, OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -97,7 +98,12 @@ describe("ExRCategoryList Component Selection", () => {
 	it("filters out 50 and 51 from role category body", () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
 		// Set a non-zero spawn rate so the accordion is enabled
-		useStore.getState().TEMP_updateExROptionSelection("2-50", 1); // Category 2, Option 50, Index 1 (Value 100)
+		useStore
+			.getState()
+			.TEMP_updateExROptionSelection(
+				getUniqueOptionId(OptionTab.CrewmateTab, 2, 50),
+				1,
+			); // Category 2, Option 50, Index 1 (Value 100)
 		render(<ExRCategoryList tabs={mockTabs} />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
