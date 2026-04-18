@@ -120,7 +120,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 						<div className="p-4 bg-gray-900 border-t border-gray-700">
 							<ExRCategoryOptionList
 								categoryId={categoryId}
-								optionIds={filteredChildOptionIds}
+								uniqueOptionIds={filteredChildOptionIds}
 							/>
 						</div>
 					)}

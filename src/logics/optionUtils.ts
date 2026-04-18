@@ -33,6 +33,8 @@ export function isPresetOption(categoryId: number, optionId: number): boolean {
 	return categoryId === 0 && optionId === 0;
 }
 
+export const PRESET_OPTION_UNIQUE_ID = getUniqueOptionId(0, 0, 0);
+
 const MIN_SUFFIXES = [
 	" 最小",
 	"　最小",
@@ -146,30 +148,26 @@ interface MinMaxOptionPair {
  * オプションリストを走査し、連続する最小・最大ペアをまとめます。
  */
 export function groupOptionPairs(
-	tabId: number,
-	categoryId: number,
-	options: number[],
+	uniqueOptionIds: number[],
 ): (number | MinMaxOptionPair)[] {
 	const result: (number | MinMaxOptionPair)[] = [];
 
-	for (let i = 0; i < options.length; i++) {
-		const current = options[i];
-		const currentUniqueId = getUniqueOptionId(tabId, categoryId, current);
+	for (let i = 0; i < uniqueOptionIds.length; i++) {
+		const currentUniqueId = uniqueOptionIds[i];
 		const currentMeta = exrOptionMetaData.optionMetaData[currentUniqueId];
 		if (!currentMeta) {
 			continue;
 		}
 
-		const next = options[i + 1];
-		if (!next) {
-			result.push(current);
+		const nextUniqueId = uniqueOptionIds[i + 1];
+		if (!nextUniqueId) {
+			result.push(currentUniqueId);
 			continue;
 		}
 
-		const nextUniqueId = getUniqueOptionId(tabId, categoryId, next);
 		const nextMeta = exrOptionMetaData.optionMetaData[nextUniqueId];
 		if (!currentMeta || !nextMeta) {
-			result.push(current);
+			result.push(currentUniqueId);
 			continue;
 		}
 
@@ -181,7 +179,7 @@ export function groupOptionPairs(
 			const nextBase = getBaseOptionName(nextMeta.translatedName);
 
 			if (currentBase !== nextBase) {
-				result.push(current);
+				result.push(currentUniqueId);
 				continue;
 			}
 			result.push({

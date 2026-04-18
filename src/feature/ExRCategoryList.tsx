@@ -1,5 +1,6 @@
 import { useShallow } from "zustand/react/shallow";
 import { exrOptionMetaData } from "../logics/api";
+import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
 import { OptionTab } from "../type";
 import { useStore } from "../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
@@ -20,21 +21,21 @@ function ExRStandardCategoryList({ categoryIds }: CategoryListProps) {
 				return [];
 			}
 			return categoryIds.filter((categoryId) => {
-				const categoryOptions =
+				const categoryUniqueOptions =
 					exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
-				if (!categoryOptions) {
+				if (!categoryUniqueOptions) {
 					return false;
 				}
 
-				const filterdOptions =
+				const filterdUniqueOptions =
 					categoryId === 0
-						? categoryOptions.filter((optionId) => {
-								return optionId !== 0; // プリセット設定（OptionId 0）を除外
+						? categoryUniqueOptions.filter((optionId) => {
+								return optionId !== PRESET_OPTION_UNIQUE_ID; // プリセット設定（OptionId 0）を除外
 							})
-						: categoryOptions;
+						: categoryUniqueOptions;
 				return (
-					filterdOptions.length > 0 &&
-					filterdOptions.some((id) => state.isOptionActive[id])
+					filterdUniqueOptions.length > 0 &&
+					filterdUniqueOptions.some((id) => state.isOptionActive[id])
 				);
 			});
 		}),

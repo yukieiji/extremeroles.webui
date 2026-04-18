@@ -1,5 +1,4 @@
-import { getUniqueOptionId, groupOptionPairs } from "../logics/optionUtils";
-import { useStore } from "../useStore";
+import { groupOptionPairs } from "../logics/optionUtils";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExRPairedOptionRow } from "./ExRPairedOptionRow";
 
@@ -7,7 +6,7 @@ const GROUPED_CATEGORY_IDS = [5, 6];
 
 interface ExRCategoryOptionListProps {
 	categoryId: number;
-	optionIds: number[];
+	uniqueOptionIds: number[];
 }
 
 /**
@@ -15,15 +14,12 @@ interface ExRCategoryOptionListProps {
  */
 export function ExRCategoryOptionList({
 	categoryId,
-	optionIds,
+	uniqueOptionIds,
 }: ExRCategoryOptionListProps) {
-	const selectedExRTabId = useStore((state) => {
-		return state.selectedExRTabId;
-	});
 	const shouldGroup = GROUPED_CATEGORY_IDS.includes(categoryId);
 	const groupedItems = shouldGroup
-		? groupOptionPairs(selectedExRTabId, categoryId, optionIds)
-		: optionIds;
+		? groupOptionPairs(uniqueOptionIds)
+		: uniqueOptionIds;
 
 	// gropedItemsはOptionIdの配列か、ペアオプションの情報を持つオブジェクトの配列になる
 	return (
@@ -33,16 +29,7 @@ export function ExRCategoryOptionList({
 		>
 			{groupedItems.map((item) => {
 				if (typeof item === "number") {
-					return (
-						<ExROptionItem
-							key={item}
-							uniqueOptionId={getUniqueOptionId(
-								selectedExRTabId,
-								categoryId,
-								item,
-							)}
-						/>
-					);
+					return <ExROptionItem key={item} uniqueOptionId={item} />;
 				}
 
 				return (

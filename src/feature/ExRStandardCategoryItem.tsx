@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Accordion } from "../components/parts/Accordion";
 import { ColoredText } from "../components/parts/ColoredText";
 import { exrOptionMetaData } from "../logics/api";
-import { isPresetOption } from "../logics/optionUtils";
+import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 
@@ -23,15 +23,16 @@ export function ExRStandardCategoryItem({
 		return state.toggleExRCategory;
 	});
 
-	const options = exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
+	const uniqueOptions =
+		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
 	const filteredOptions = useMemo(() => {
-		if (!options) {
+		if (!uniqueOptions) {
 			return [];
 		}
-		return options.filter((optionId) => {
-			return !isPresetOption(categoryId, optionId);
+		return uniqueOptions.filter((uniqueId) => {
+			return uniqueId !== PRESET_OPTION_UNIQUE_ID;
 		});
-	}, [categoryId, options]);
+	}, [uniqueOptions]);
 
 	if (filteredOptions.length === 0) {
 		return null;
@@ -50,7 +51,7 @@ export function ExRStandardCategoryItem({
 			>
 				<ExRCategoryOptionList
 					categoryId={categoryId}
-					optionIds={filteredOptions}
+					uniqueOptionIds={filteredOptions}
 				/>
 			</Accordion>
 		</div>

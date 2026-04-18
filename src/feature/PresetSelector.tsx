@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { getUniqueOptionId, useOptionData } from "../logics/optionUtils";
+import { PRESET_OPTION_UNIQUE_ID, useOptionData } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 
 /**
@@ -10,8 +10,6 @@ import { useStore } from "../useStore";
  * 入力更新の最適化:
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
-
-const PRESET_OPTION_UNIQUE_ID = getUniqueOptionId(0, 0, 0);
 
 export function PresetSelector() {
 	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す

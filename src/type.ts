@@ -21,7 +21,7 @@ export interface ExROptionMetaDataRecords {
 	tabInfo: Record<OptionTab, string>; // タブIDとタブ名の対応
 	tabIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
 	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
-	globalCategoryIdTopLevelMap: Record<number, number[]>; // グローバル設定のカテゴリIDとそのカテゴリに属するトップレベルオプションIDの対応
+	globalCategoryIdTopLevelMap: Record<number, number[]>; // グローバル設定のカテゴリIDとそのカテゴリに属するトップレベルオプションのユニークオプションIDの対応
 	optionMetaData: Record<number, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
 	childOptionMap: Record<number, number[]>; // 親ユニークオプションIDとその子ユニークオプションIDの対応
 }

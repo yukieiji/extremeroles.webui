@@ -4,9 +4,7 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 } from "../type";
-import { ExRTabDtoArraySchema } from "../type";
-
-import { OptionTab } from "../type";
+import { ExRTabDtoArraySchema, OptionTab } from "../type";
 
 import { useStore } from "../useStore";
 import { getUniqueOptionId } from "./optionUtils";
@@ -105,7 +103,9 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 			if (tab.Id === OptionTab.GeneralTab) {
 				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
 				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
-					category.Options.map((o) => o.Id); // カテゴリIDとそのカテゴリに属するオプションIDの対応を保存
+					category.Options.map((o) =>
+						getUniqueOptionId(tab.Id, category.Id, o.Id),
+					); // カテゴリIDとそのカテゴリに属するオプションIDの対応を保存
 			}
 			processOptions(category.Options, tab.Id, category.Id, null);
 		}
