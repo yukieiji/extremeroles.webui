@@ -3,8 +3,8 @@ import type {
 	ExROptionDto,
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
-	ExRTabDto,
 } from "../type";
+import { ExRTabDtoArraySchema } from "../type";
 
 import { OptionTab } from "../type";
 
@@ -53,7 +53,8 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 		throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 	}
 
-	const data: ExRTabDto[] = await res.json();
+	const jsonData = await res.json();
+	const data = await ExRTabDtoArraySchema.parseAsync(jsonData);
 
 	const valueData: Record<number, ExROptionValueData> = {};
 	const isOptionActive: Record<number, boolean> = {};
