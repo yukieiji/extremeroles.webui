@@ -56,8 +56,8 @@ export function ExRRoleSpawnControls({
 	const spawnCountSelection =
 		effectiveSpawnCountSelection ?? spawnCountOption?.selection ?? 0;
 
-	const rateValues = spawnRateOption?.values as number[] ?? [];
-	const originalCountValues = spawnCountOption?.values as number[] ?? [];
+	const rateValues = (spawnRateOption?.values as number[]) ?? [];
+	const originalCountValues = (spawnCountOption?.values as number[]) ?? [];
 
 	// スポーン数が0をサポートするための仮想的な値リスト
 	const virtualCountValues = [0, ...originalCountValues];
