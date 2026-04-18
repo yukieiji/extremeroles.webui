@@ -9,17 +9,31 @@ export function useOptionData(
 	return useStore(useShallow((state) => state.valueData[uniqueOptionId]));
 }
 
+const TAB_ID_MULTIPLIER = 1_000_000_000_000;
+const CATEGORY_ID_MULTIPLIER = 1_000_000;
+
 /**
  * タブID、カテゴリID、オプションIDを組み合わせて、アプリケーション内で一意な数値IDを生成します。
- * 9桁目以降：タブID、5～8桁目：カテゴリーID、1～4桁目：オプションID
+ * 13桁目以降：タブID、7～13桁目：カテゴリーID、1～6桁目：オプションID
  */
 export function getUniqueOptionId(
 	tabId: number,
 	categoryId: number,
 	optionId: number,
 ): UniqueOptionId {
-	const uniqueId = tabId * 100_000_000 + categoryId * 10_000 + optionId;
+	const uniqueId = tabId * TAB_ID_MULTIPLIER + categoryId * CATEGORY_ID_MULTIPLIER + optionId;
 	return uniqueId as UniqueOptionId;
+}
+
+export function parseUniqueOptionId(uniqueOptionId: UniqueOptionId): {
+	tabId: number;
+	categoryId: number;
+	optionId: number;
+} {
+	const tabId = Math.floor(uniqueOptionId / TAB_ID_MULTIPLIER);
+	const categoryId = Math.floor((uniqueOptionId % TAB_ID_MULTIPLIER) / CATEGORY_ID_MULTIPLIER);
+	const optionId = uniqueOptionId % CATEGORY_ID_MULTIPLIER;
+	return { tabId, categoryId, optionId };
 }
 
 /**
