@@ -1,4 +1,33 @@
-import type { ExROptionDto } from "../type";
+import { useCallback } from "react";
+import type { ExROptionDto, ExROptionValueData } from "../type";
+
+import { useStore } from "../useStore";
+
+export function useOptionData(uniqueOptionId: number): ExROptionValueData {
+	return useStore(
+		useCallback((state) => {
+			return state.valueData[uniqueOptionId];
+		}, [uniqueOptionId]),
+	)
+}
+
+export function useIsOptionActive(uniqueOptionId: number): boolean {
+	return useStore(
+		useCallback((state) => {
+			return state.isOptionActive[uniqueOptionId];
+		}, [uniqueOptionId]),
+	)
+}
+
+export function useIsOptionsActive(uniqueOptionIds: number[]): boolean {
+	return useStore(
+		useCallback((state) => {
+			return uniqueOptionIds.some((id) => state.isOptionActive[id]);
+		}, [uniqueOptionIds]),
+	)
+}
+
+
 
 /**
  * タブID、カテゴリID、オプションIDを組み合わせて、アプリケーション内で一意な数値IDを生成します。
