@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useMemo } from "react";
 import { Accordion } from "../components/parts/Accordion";
 import { ColoredText } from "../components/parts/ColoredText";
 import { exrOptionMetaData } from "../logics/api";
@@ -24,14 +24,14 @@ export function ExRStandardCategoryItem({
 	});
 
 	const options = exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
-	const filteredOptions = useCallback(() => {
+	const filteredOptions = useMemo(() => {
 		if (!options) {
 			return [];
 		}
 		return options.filter((optionId) => {
 			return !isPresetOption(categoryId, optionId);
 		});
-	}, [categoryId, options])();
+	}, [categoryId, options]);
 
 	if (filteredOptions.length === 0) {
 		return null;
