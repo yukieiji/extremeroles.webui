@@ -24,11 +24,18 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
+	
 	const uniqueRateId = getUniqueOptionId(
 		selectedExRTabId,
 		categoryId,
 		SPAWN_RATE_OPTION_ID,
 	);
+	const uniqueCountId = getUniqueOptionId(
+		selectedExRTabId,
+		categoryId,
+		SPAWN_COUNT_OPTION_ID,
+	);
+
 	const effectiveSpawnRateSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueRateId];
 	});
@@ -48,10 +55,10 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	// ├─ 1
 	// └─ 4
 	// なので、スポーンレートのオプションIDの子要素を取れば、その役職の全オプションを取得できる
-	const childOptionIds = exrOptionMetaData.childOptionMap[uniqueRateId] || [];
+	const childUniqueOptionIds = exrOptionMetaData.childOptionMap[uniqueRateId] || [];
 	// スポーン数のオプションはスポーンレートの子であることが確定、孫とかにはない
-	const filteredChildOptionIds = childOptionIds.filter((optionId) => {
-		return optionId !== SPAWN_COUNT_OPTION_ID;
+	const filteredChildOptionIds = childUniqueOptionIds.filter((optionId) => {
+		return optionId !== uniqueCountId;
 	});
 
 	if (filteredChildOptionIds.length === 0) {
