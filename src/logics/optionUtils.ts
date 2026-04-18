@@ -1,33 +1,18 @@
 import { useCallback } from "react";
-import type { ExROptionDto, ExROptionValueData } from "../type";
-
+import type { ExROptionValueData, OptionData } from "../type";
 import { useStore } from "../useStore";
+import { exrOptionMetaData } from "./api";
 
 export function useOptionData(uniqueOptionId: number): ExROptionValueData {
 	return useStore(
-		useCallback((state) => {
-			return state.valueData[uniqueOptionId];
-		}, [uniqueOptionId]),
-	)
+		useCallback(
+			(state) => {
+				return state.valueData[uniqueOptionId];
+			},
+			[uniqueOptionId],
+		),
+	);
 }
-
-export function useIsOptionActive(uniqueOptionId: number): boolean {
-	return useStore(
-		useCallback((state) => {
-			return state.isOptionActive[uniqueOptionId];
-		}, [uniqueOptionId]),
-	)
-}
-
-export function useIsOptionsActive(uniqueOptionIds: number[]): boolean {
-	return useStore(
-		useCallback((state) => {
-			return uniqueOptionIds.some((id) => state.isOptionActive[id]);
-		}, [uniqueOptionIds]),
-	)
-}
-
-
 
 /**
  * タブID、カテゴリID、オプションIDを組み合わせて、アプリケーション内で一意な数値IDを生成します。
@@ -150,61 +135,71 @@ export function findClosestIndex(values: number[], target: number): number {
 	return closestIdx;
 }
 
+interface MinMaxOptionPair {
+	type: "pair";
+	baseName: string;
+	minData: OptionData;
+	maxData: OptionData;
+}
+
 /**
  * オプションリストを走査し、連続する最小・最大ペアをまとめます。
  */
-export function groupOptionPairs(options: ExROptionDto[]): (
-	| ExROptionDto
-	| {
-			type: "pair";
-			baseName: string;
-			min: ExROptionDto;
-			max: ExROptionDto;
-			minLabel: string;
-			maxLabel: string;
-	  }
-)[] {
-	const result: (
-		| ExROptionDto
-		| {
-				type: "pair";
-				baseName: string;
-				min: ExROptionDto;
-				max: ExROptionDto;
-				minLabel: string;
-				maxLabel: string;
-		  }
-	)[] = [];
+export function groupOptionPairs(
+	tabId: number,
+	categoryId: number,
+	options: number[],
+): (number | MinMaxOptionPair)[] {
+	const result: (number | MinMaxOptionPair)[] = [];
 
 	for (let i = 0; i < options.length; i++) {
 		const current = options[i];
-		const next = options[i + 1];
-
-		if (next) {
-			const currentType = getOptionPairType(current.TranslatedName);
-			const nextType = getOptionPairType(next.TranslatedName);
-
-			if (currentType === "min" && nextType === "max") {
-				const currentBase = getBaseOptionName(current.TranslatedName);
-				const nextBase = getBaseOptionName(next.TranslatedName);
-
-				if (currentBase === nextBase) {
-					result.push({
-						type: "pair",
-						baseName: currentBase,
-						min: current,
-						max: next,
-						minLabel: getOptionLabel(current.TranslatedName),
-						maxLabel: getOptionLabel(next.TranslatedName),
-					});
-					i++; // 次の要素をスキップ
-					continue;
-				}
-			}
+		const currentUniqueId = getUniqueOptionId(tabId, categoryId, current);
+		const currentMeta = exrOptionMetaData.optionMetaData[currentUniqueId];
+		if (!currentMeta) {
+			continue;
 		}
 
-		result.push(current);
-	}
+		const next = options[i + 1];
+		if (!next) {
+			result.push(current);
+			continue;
+		}
 
+		const nextUniqueId = getUniqueOptionId(tabId, categoryId, next);
+		const nextMeta = exrOptionMetaData.optionMetaData[nextUniqueId];
+		if (!currentMeta || !nextMeta) {
+			result.push(current);
+			continue;
+		}
+
+		const currentType = getOptionPairType(currentMeta.translatedName);
+		const nextType = getOptionPairType(nextMeta.translatedName);
+
+		if (currentType === "min" && nextType === "max") {
+			const currentBase = getBaseOptionName(currentMeta.translatedName);
+			const nextBase = getBaseOptionName(nextMeta.translatedName);
+
+			if (currentBase !== nextBase) {
+				result.push(current);
+				continue;
+			}
+			result.push({
+				type: "pair",
+				baseName: currentBase,
+				minData: {
+					uniqueOptionId: currentUniqueId,
+					metaData: currentMeta,
+					label: getOptionLabel(currentMeta.translatedName),
+				},
+				maxData: {
+					uniqueOptionId: nextUniqueId,
+					metaData: nextMeta,
+					label: getOptionLabel(nextMeta.translatedName),
+				},
+			});
+			i++; // 次の要素をスキップ
+		}
+	}
 	return result;
 }

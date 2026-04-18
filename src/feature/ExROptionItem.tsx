@@ -1,43 +1,51 @@
-import type { ExROptionDto } from "../type";
+import { useCallback } from "react";
+import { useShallow } from "zustand/react/shallow";
+import { exrOptionMetaData } from "../logics/api";
+import { useStore } from "../useStore";
 import { ExROptionRecursiveItem } from "./ExROptionRecursiveItem";
 import { ExROptionRow } from "./ExROptionRow";
-
-interface ExROptionItemProps {
-	categoryId: number;
-	option: ExROptionDto;
-	depth?: number;
-}
 
 /**
  * ExRオプションの個別の項目を表示・管理するエントリーポイント
  */
-export function ExROptionItem({
-	categoryId,
-	option,
-	depth = 0,
-}: ExROptionItemProps) {
-	if (!option.IsActive) {
-		return null;
-	}
 
-	const hasActiveChildren = option.Childs && option.Childs.length > 0;
+interface ExROptionItem {
+	uniqueOptionId: number;
+	depth?: number;
+}
+
+function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItem) {
+	const childs = exrOptionMetaData.childOptionMap[uniqueOptionId];
+	const hasActiveChildren = useStore(
+		useShallow((state) => {
+			if (!childs) {
+				return false;
+			}
+			return childs.length > 0 && childs.some((id) => state.isOptionActive[id]);
+		}),
+	);
 
 	if (hasActiveChildren) {
 		return (
-			<ExROptionRecursiveItem
-				categoryId={categoryId}
-				option={option}
-				depth={depth}
-			/>
+			<ExROptionRecursiveItem uniqueOptionId={uniqueOptionId} depth={depth} />
 		);
 	}
 
 	return (
-		<ExROptionRow
-			categoryId={categoryId}
-			option={option}
-			depth={depth}
-			isLeaf={true}
-		/>
+		<ExROptionRow uniqueOptionId={uniqueOptionId} depth={depth} isLeaf={true} />
 	);
+}
+
+export function ExROptionItem({ uniqueOptionId, depth = 0 }: ExROptionItem) {
+	const isActive = useStore(
+		useCallback(
+			(state) => {
+				return state.isOptionActive[uniqueOptionId];
+			},
+			[uniqueOptionId],
+		),
+	);
+	return isActive ? (
+		<ExROptionItemInner uniqueOptionId={uniqueOptionId} depth={depth} />
+	) : null;
 }

@@ -1,8 +1,8 @@
 import { useEffect, useTransition } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
+import { exrOptionMetaData } from "../logics/api";
 import type { OptionTab } from "../type";
 import { useStore } from "../useStore";
-import { exrOptionMetaData } from "../logics/api";
 
 /**
  * ExRオプションのタブ選択コンポーネント
@@ -36,7 +36,6 @@ export function ExRTabSelector() {
 			setSelectedExRTabId(id);
 		});
 	};
-
 
 	return (
 		<div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">

@@ -60,7 +60,6 @@ export function PresetSelector() {
 		return null;
 	}
 
-	
 	const currentSelection = effectiveSelection ?? presetOption.selection;
 	const presetValues = presetOption.values as number[];
 	const currentPresetValue = presetValues[currentSelection];

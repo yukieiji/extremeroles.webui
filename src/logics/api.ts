@@ -1,11 +1,12 @@
 import type {
 	AuOptionCategoryDto,
-	ExROptionMetaDataRecords,
-	ExRTabDto,
 	ExROptionDto,
-	OptionTab,
+	ExROptionMetaDataRecords,
 	ExROptionValueData,
+	ExRTabDto,
 } from "../type";
+
+import { OptionTab } from "../type";
 
 import { useStore } from "../useStore";
 import { getUniqueOptionId } from "./optionUtils";
@@ -26,9 +27,9 @@ let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
 	tabInfo: {} as Record<OptionTab, string>,
-	categoryIdMap: {} as Record<OptionTab, number[]>,
+	tabIdMap: {} as Record<OptionTab, number[]>,
 	categoryInfo: {},
-	optionIdMap: {},
+	globalCategoryIdTopLevelMap: {},
 	optionMetaData: {},
 	childOptionMap: {},
 };
@@ -42,7 +43,6 @@ export function resetApiCache() {
 }
 
 async function createExROptionMetaData(delay: number): Promise<void> {
-
 	if (delay > 0) {
 		await new Promise((resolve) => {
 			return setTimeout(resolve, delay);
@@ -52,7 +52,7 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 	if (!res.ok) {
 		throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 	}
-	
+
 	const data: ExRTabDto[] = await res.json();
 
 	const valueData: Record<number, ExROptionValueData> = {};
@@ -64,10 +64,8 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 		categoryId: number,
 		parentOptionId: number | null,
 	) => {
-		const optionIds: number[] = [];
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
-			optionIds.push(opt.Id);
 
 			exrOptionMetaData.optionMetaData[uniqueId] = {
 				translatedName: opt.TranslatedName,
@@ -80,7 +78,6 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 				values: opt.RangeMeta.Values,
 			};
 			isOptionActive[uniqueId] = opt.IsActive;
-
 			if (parentOptionId !== null) {
 				const parentUniqueId = getUniqueOptionId(
 					tabId,
@@ -97,20 +94,19 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 				processOptions(opt.Childs, tabId, categoryId, opt.Id);
 			}
 		}
-		return optionIds;
 	};
 
 	for (const tab of data) {
 		exrOptionMetaData.tabInfo[tab.Id] = tab.Name;
-		exrOptionMetaData.categoryIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
+		exrOptionMetaData.tabIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
 		for (const category of tab.Categories) {
 			exrOptionMetaData.categoryInfo[category.Id] = category.Name;
-			exrOptionMetaData.optionIdMap[category.Id] = processOptions(
-				category.Options,
-				tab.Id,
-				category.Id,
-				null,
-			);
+			if (tab.Id === OptionTab.GeneralTab) {
+				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
+				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
+					category.Options.map((o) => o.Id); // カテゴリIDとそのカテゴリに属するオプションIDの対応を保存
+			}
+			processOptions(category.Options, tab.Id, category.Id, null);
 		}
 	}
 	useStore.getState().setExROptions(valueData, isOptionActive);
@@ -154,11 +150,4 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 	})();
 
 	return auOptionsPromise;
-}
-
-/**
- * 両方のオプションをまとめて取得する
- */
-export function getAllOptions(): Promise<[void, AuOptionCategoryDto[]]> {
-	return Promise.all([getExrOptions(), getAuOptions()]);
 }

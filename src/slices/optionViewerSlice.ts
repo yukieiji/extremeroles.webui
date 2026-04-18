@@ -29,7 +29,10 @@ export interface OptionViewerSlice {
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
-	setExROptions: (valueData: Record<number, ExROptionValueData>, optionActiveData: Record<number, boolean>) => void;
+	setExROptions: (
+		valueData: Record<number, ExROptionValueData>,
+		optionActiveData: Record<number, boolean>,
+	) => void;
 }
 
 /**
@@ -115,11 +118,14 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		setPresetDropdownOpen: (isOpen: boolean) => {
 			set({ isPresetDropdownOpen: isOpen });
 		},
-		setExROptions: (valueData: Record<number, ExROptionValueData>, optionActiveData: Record<number, boolean>) => {
+		setExROptions: (
+			valueData: Record<number, ExROptionValueData>,
+			optionActiveData: Record<number, boolean>,
+		) => {
 			set({
 				valueData,
 				isOptionActive: optionActiveData,
 			});
-		}
+		},
 	};
 };

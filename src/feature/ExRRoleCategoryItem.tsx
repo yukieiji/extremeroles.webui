@@ -1,31 +1,24 @@
 import { ColoredText } from "../components/parts/ColoredText";
-import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
-import type { ExRCategoryDto } from "../type";
+import { exrOptionMetaData } from "../logics/api";
+import { getUniqueOptionId, useOptionData } from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 import { ExRRoleSpawnControls } from "./ExRRoleSpawnControls";
 
 interface ExRRoleCategoryItemProps {
-	category: ExRCategoryDto;
+	categoryId: number;
 }
 
 /**
  * 役職タブで使用される、スポーン設定をヘッダーに持つカテゴリ表示コンポーネント
  */
-export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
+export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	const isOpendCategory = useStore((state) => {
-		return state.openedExRCategoryIds[category.Id];
+		return state.openedExRCategoryIds[categoryId];
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
-	});
-
-	const spawnRateOption = category.Options.find((opt) => {
-		return opt.Id === SPAWN_RATE_OPTION_ID;
-	});
-	const spawnCountOption = category.Options.find((opt) => {
-		return opt.Id === SPAWN_COUNT_OPTION_ID;
 	});
 
 	const selectedExRTabId = useStore((state) => {
@@ -33,56 +26,42 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 	});
 	const uniqueRateId = getUniqueOptionId(
 		selectedExRTabId,
-		category.Id,
+		categoryId,
 		SPAWN_RATE_OPTION_ID,
 	);
 	const effectiveSpawnRateSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueRateId];
 	});
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOption?.Selection ?? 0;
-	const rateValues = (spawnRateOption?.RangeMeta.Values as number[]) ?? [];
-	const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
 
+	const spawnRateOptionValue = useOptionData(uniqueRateId);
+
+	const category = exrOptionMetaData.categoryInfo[categoryId];
+
+	const spawnRateSelection =
+		effectiveSpawnRateSelection ?? spawnRateOptionValue.selection ?? 0;
+	const isSpawnRateZero = spawnRateSelection === 0;
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 
-	const allPotentialOptions = category.Options.flatMap((option) => {
-		if (isPresetOption(category.Id, option.Id)) {
-			return [];
-		}
-		if (
-			option.Id === SPAWN_RATE_OPTION_ID ||
-			option.Id === SPAWN_COUNT_OPTION_ID
-		) {
-			return option.Childs || [];
-		}
-		return [option];
+	// 役職のオプションは、トップレベルのスポーンレートが一つ合って、その下に各種オプションがぶら下がる構造になっている
+	// 50
+	// ├─ 51
+	// ├─ 1
+	// └─ 4
+	// なので、スポーンレートのオプションIDの子要素を取れば、その役職の全オプションを取得できる
+	const childOptionIds = exrOptionMetaData.childOptionMap[uniqueRateId] || [];
+	// スポーン数のオプションはスポーンレートの子であることが確定、孫とかにはない
+	const filteredChildOptionIds = childOptionIds.filter((optionId) => {
+		return optionId !== SPAWN_COUNT_OPTION_ID;
 	});
 
-	// ID 50 と 51 を除外しつつ、重複（トップレベルと子要素の両方に存在する場合など）を排除
-	const filteredOptions = allPotentialOptions.filter((option, index, self) => {
-		if (
-			option.Id === SPAWN_RATE_OPTION_ID ||
-			option.Id === SPAWN_COUNT_OPTION_ID
-		) {
-			return false;
-		}
-		return (
-			index ===
-			self.findIndex((o) => {
-				return o.Id === option.Id;
-			})
-		);
-	});
-
-	if (filteredOptions.length === 0) {
+	if (filteredChildOptionIds.length === 0) {
 		return null;
 	}
 
 	return (
 		<div
 			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
-			data-testid={`exr-category-${category.Id}`}
+			data-testid={`exr-category-${categoryId}`}
 		>
 			<div
 				className={`flex items-center bg-gray-800 ${!isSpawnRateZero ? "hover:bg-gray-700 transition-colors" : ""}`}
@@ -91,7 +70,7 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 					type="button"
 					onClick={() => {
 						if (!isSpawnRateZero) {
-							toggleExRCategory(category.Id);
+							toggleExRCategory(categoryId);
 						}
 					}}
 					className={`flex-1 flex items-center gap-3 p-4 text-left ${isSpawnRateZero ? "cursor-default" : ""}`}
@@ -119,18 +98,15 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 						</svg>
 					)}
 					<span className="font-semibold text-gray-200">
-						<ColoredText text={category.Name} />
+						<ColoredText text={category} />
 					</span>
 				</button>
 
 				<div className="flex items-center px-4">
-					{spawnRateOption && spawnCountOption && (
-						<ExRRoleSpawnControls
-							categoryId={category.Id}
-							spawnRateOption={spawnRateOption}
-							spawnCountOption={spawnCountOption}
-						/>
-					)}
+					<ExRRoleSpawnControls
+						tabId={selectedExRTabId}
+						categoryId={categoryId}
+					/>
 				</div>
 			</div>
 
@@ -143,8 +119,8 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 					{isOpen && (
 						<div className="p-4 bg-gray-900 border-t border-gray-700">
 							<ExRCategoryOptionList
-								categoryId={category.Id}
-								options={filteredOptions}
+								categoryId={categoryId}
+								optionIds={filteredChildOptionIds}
 							/>
 						</div>
 					)}

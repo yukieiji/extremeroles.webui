@@ -1,42 +1,39 @@
 import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
-import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
+import { useOptionData } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 
 interface ExROptionControlProps {
-	categoryId: number;
-	option: ExROptionDto;
+	uniqueOptionId: number;
+	format: string;
+	type: string;
 }
 
 /**
  * オプションの種類に応じた操作用コンポーネントをレンダリングする
  */
 export function ExROptionControl({
-	categoryId,
-	option,
+	uniqueOptionId,
+	format,
+	type,
 }: ExROptionControlProps) {
-	const selectedExRTabId = useStore((state) => {
-		return state.selectedExRTabId;
-	});
-	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
 	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
+		return state.effectiveSelections[uniqueOptionId];
 	});
-	const currentSelection = effectiveSelection ?? option.Selection;
+	const optionValue = useOptionData(uniqueOptionId);
+
+	const currentSelection = effectiveSelection ?? optionValue.selection;
 	const TEMP_updateExROptionSelection = useStore((state) => {
 		return state.TEMP_updateExROptionSelection;
 	});
 
 	const handleChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		TEMP_updateExROptionSelection(uniqueOptionId, newSelection);
 	};
 
-	const { Type, Values } = option.RangeMeta;
-
-	if (Type === "String") {
-		const stringValues = Values as string[];
+	if (type === "String") {
+		const stringValues = optionValue.values as string[];
 		const isToggleType =
 			stringValues.length === 2 &&
 			stringValues.every((val) => {
@@ -62,12 +59,12 @@ export function ExROptionControl({
 		);
 	}
 
-	if (Type === "Int32" || Type === "Single") {
+	if (type === "Int32" || type === "Single") {
 		return (
 			<OptionSliderControl
 				selection={currentSelection}
-				values={Values as number[]}
-				format={option.Format}
+				values={optionValue.values as number[]}
+				format={format}
 				onChange={handleChange}
 			/>
 		);

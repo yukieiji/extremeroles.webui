@@ -1,33 +1,31 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
-import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
+import {
+	findClosestIndex,
+	getUniqueOptionId,
+	useOptionData,
+} from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 
 interface ExRRoleSpawnControlsProps {
+	tabId: number;
 	categoryId: number;
-	spawnRateOption: ExROptionDto;
-	spawnCountOption: ExROptionDto;
 }
 
 /**
  * 役職のスポーンレートとスポーン数をセットで管理し、同期させるためのコンポーネント
  */
 export function ExRRoleSpawnControls({
+	tabId,
 	categoryId,
-	spawnRateOption,
-	spawnCountOption,
 }: ExRRoleSpawnControlsProps) {
-	const selectedExRTabId = useStore((state) => {
-		return state.selectedExRTabId;
-	});
 	const uniqueRateId = getUniqueOptionId(
-		selectedExRTabId,
+		tabId,
 		categoryId,
 		SPAWN_RATE_OPTION_ID,
 	);
 	const uniqueCountId = getUniqueOptionId(
-		selectedExRTabId,
+		tabId,
 		categoryId,
 		SPAWN_COUNT_OPTION_ID,
 	);
@@ -50,13 +48,16 @@ export function ExRRoleSpawnControls({
 		return state.openedExRCategoryIds[categoryId] ?? false;
 	});
 
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOption.Selection;
-	const spawnCountSelection =
-		effectiveSpawnCountSelection ?? spawnCountOption.Selection;
+	const spawnRateOption = useOptionData(uniqueRateId);
+	const spawnCountOption = useOptionData(uniqueCountId);
 
-	const rateValues = spawnRateOption.RangeMeta.Values as number[];
-	const originalCountValues = spawnCountOption.RangeMeta.Values as number[];
+	const spawnRateSelection =
+		effectiveSpawnRateSelection ?? spawnRateOption?.selection ?? 0;
+	const spawnCountSelection =
+		effectiveSpawnCountSelection ?? spawnCountOption?.selection ?? 0;
+
+	const rateValues = spawnRateOption?.values as number[];
+	const originalCountValues = spawnCountOption?.values as number[];
 
 	// スポーン数が0をサポートするための仮想的な値リスト
 	const virtualCountValues = [0, ...originalCountValues];

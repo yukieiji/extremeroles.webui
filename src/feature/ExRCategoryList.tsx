@@ -1,18 +1,65 @@
-import { isPresetOption } from "../logics/optionUtils";
-import type { ExRTabDto } from "../type";
+import { useShallow } from "zustand/react/shallow";
+import { exrOptionMetaData } from "../logics/api";
 import { OptionTab } from "../type";
 import { useStore } from "../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
 import { ExRStandardCategoryItem } from "./ExRStandardCategoryItem";
 
-interface ExRCategoryListProps {
-	tabs: ExRTabDto[];
-}
-
 /**
  * 選択されたタブのカテゴリ一覧を表示するコンポーネント
  */
-export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
+
+interface CategoryListProps {
+	categoryIds: number[];
+}
+
+function ExRStandardCategoryList({ categoryIds }: CategoryListProps) {
+	const visibleCategories = useStore(
+		useShallow((state) => {
+			if (!categoryIds) {
+				return [];
+			}
+			return categoryIds.filter((categoryId) => {
+				const categoryOptions =
+					exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
+				if (!categoryOptions) {
+					return false;
+				}
+
+				const filterdOptions =
+					categoryId === 0
+						? categoryOptions.filter((optionId) => {
+								return optionId !== 0; // プリセット設定（OptionId 0）を除外
+							})
+						: categoryOptions;
+				return (
+					filterdOptions.length > 0 &&
+					filterdOptions.some((id) => state.isOptionActive[id])
+				);
+			});
+		}),
+	);
+
+	return (
+		<>
+			{visibleCategories.map((categoryId) => (
+				<ExRStandardCategoryItem key={categoryId} categoryId={categoryId} />
+			))}
+		</>
+	);
+}
+
+function ExRRoleCategoryList({ categoryIds }: CategoryListProps) {
+	return (
+		<>
+			{categoryIds.map((categoryId) => (
+				<ExRRoleCategoryItem key={categoryId} categoryId={categoryId} />
+			))}
+		</>
+	);
+}
+
+export function ExRCategoryList() {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
@@ -20,27 +67,8 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
 		return state.isTabPending;
 	});
 
-	let selectedTab = tabs.find((tab) => {
-		return tab.Id === selectedExRTabId;
-	});
-
-	if (!selectedTab) {
-		selectedTab = tabs[0];
-	}
-
+	const tabCategory = exrOptionMetaData.tabIdMap[selectedExRTabId];
 	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
-
-	// オプションが空でない、かつ少なくとも1つのオプションが有効なカテゴリのみを抽出
-	// ※ プリセット設定が唯一のオプションだった場合も考慮してフィルタリング
-	const visibleCategories = selectedTab.Categories.filter((category) => {
-		const filteredOptions = category.Options.filter((option) => {
-			const isPreset = isPresetOption(category.Id, option.Id);
-			return !isPreset;
-		});
-		return filteredOptions.some((opt) => {
-			return opt.IsActive;
-		});
-	});
 
 	return (
 		<div
@@ -53,22 +81,11 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
 					<div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 				</div>
 			)}
-			{visibleCategories.map((category) => {
-				if (isRoleTab) {
-					return (
-						<ExRRoleCategoryItem
-							key={`${selectedExRTabId}-${category.Id}`}
-							category={category}
-						/>
-					);
-				}
-				return (
-					<ExRStandardCategoryItem
-						key={`${selectedExRTabId}-${category.Id}`}
-						category={category}
-					/>
-				);
-			})}
+			{isRoleTab ? (
+				<ExRRoleCategoryList categoryIds={tabCategory || []} />
+			) : (
+				<ExRStandardCategoryList categoryIds={tabCategory || []} />
+			)}
 		</div>
 	);
 }

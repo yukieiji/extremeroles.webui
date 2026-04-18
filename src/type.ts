@@ -19,9 +19,9 @@ export interface ExROptionValueData {
 
 export interface ExROptionMetaDataRecords {
 	tabInfo: Record<OptionTab, string>; // タブIDとタブ名の対応
-	categoryIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
+	tabIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
 	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
-	optionIdMap: Record<number, number[]>; // カテゴリIDとそのカテゴリに属するオプションIDの対応
+	globalCategoryIdTopLevelMap: Record<number, number[]>; // グローバル設定のカテゴリIDとそのカテゴリに属するトップレベルオプションIDの対応
 	optionMetaData: Record<number, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
 	childOptionMap: Record<number, number[]>; // 親ユニークオプションIDとその子ユニークオプションIDの対応
 }
@@ -271,3 +271,9 @@ export const PresetNamesSchema = z
 	});
 
 export type PresetNames = z.infer<typeof PresetNamesSchema>;
+
+export interface OptionData {
+	uniqueOptionId: number;
+	metaData: ExROptionMetaData;
+	label: string;
+}
