@@ -18,7 +18,7 @@ export interface ExROptionValueData {
 	values: number[] | string[];
 }
 
-export interface ExROptionMetaData {
+export interface ExROptionMetaDataRecords {
 	tabInfo: Record<OptionTab, string>; // タブIDとタブ名の対応
 	categoryIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
 	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応

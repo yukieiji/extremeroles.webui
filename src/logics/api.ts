@@ -1,4 +1,9 @@
-import type { AuOptionCategoryDto, ExRTabDto } from "../type";
+import type {
+	AuOptionCategoryDto,
+	ExROptionMetaDataRecords,
+	ExRTabDto,
+	OptionTab,
+} from "../type";
 
 /**
  * API エンドポイントの定数定義
@@ -12,6 +17,15 @@ const AU_OPTION_URL = "/au/option/";
  */
 let exrOptionsPromise: Promise<ExRTabDto[]> | null = null;
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
+
+const _exrOptionMetaData: ExROptionMetaDataRecords = {
+	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
+	tabInfo: {} as Record<OptionTab, string>,
+	categoryIdMap: {} as Record<OptionTab, number[]>,
+	categoryInfo: {},
+	optionIdMap: {},
+	optionMetaData: {},
+};
 
 /**
  * キャッシュをリセットする（テスト用）
