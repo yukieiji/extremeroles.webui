@@ -1,30 +1,51 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
+import { exrOptionMetaData } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
-import type { ExROptionDto } from "../src/type";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExRRoleSpawnControls", () => {
-	const spawnRateOption: ExROptionDto = {
-		Id: SPAWN_RATE_OPTION_ID,
-		IsActive: true,
-		TranslatedName: "レート",
-		Selection: 0,
-		Format: "{0}%",
-		RangeMeta: { Type: "Int32", Values: [0, 10, 20, 30] },
-		Childs: [],
-	};
+	const setupTestData = (tabId: number, categoryId: number) => {
+		const rateUniqueId = getUniqueOptionId(
+			tabId,
+			categoryId,
+			SPAWN_RATE_OPTION_ID,
+		);
+		const countUniqueId = getUniqueOptionId(
+			tabId,
+			categoryId,
+			SPAWN_COUNT_OPTION_ID,
+		);
 
-	const spawnCountOption: ExROptionDto = {
-		Id: SPAWN_COUNT_OPTION_ID,
-		IsActive: true,
-		TranslatedName: "数",
-		Selection: 0,
-		Format: "",
-		RangeMeta: { Type: "Int32", Values: [1, 2, 3] },
-		Childs: [],
+		exrOptionMetaData.optionMetaData[rateUniqueId] = {
+			translatedName: "レート",
+			format: "{0}%",
+			type: "Int32",
+		};
+		exrOptionMetaData.optionMetaData[countUniqueId] = {
+			translatedName: "数",
+			format: "{0}",
+			type: "Int32",
+		};
+
+		useStore.getState().setExROptions(
+			{
+				[rateUniqueId]: {
+					selection: 0,
+					values: [0, 10, 20, 30],
+				},
+				[countUniqueId]: {
+					selection: 0,
+					values: [1, 2, 3],
+				},
+			},
+			{
+				[rateUniqueId]: true,
+				[countUniqueId]: true,
+			},
+		);
 	};
 
 	beforeEach(() => {
@@ -32,26 +53,22 @@ describe("ExRRoleSpawnControls", () => {
 	});
 
 	it("renders both controls", () => {
-		render(
-			<ExRRoleSpawnControls
-				categoryId={1}
-				spawnRateOption={spawnRateOption}
-				spawnCountOption={spawnCountOption}
-			/>,
-		);
+		const tabId = 1;
+		const categoryId = 1;
+		setupTestData(tabId, categoryId);
+
+		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
 		expect(screen.getByTestId("spawn-rate-control")).toBeInTheDocument();
 		expect(screen.getByTestId("spawn-count-control")).toBeInTheDocument();
 	});
 
 	it("handles virtual 0 for spawn count", () => {
-		render(
-			<ExRRoleSpawnControls
-				categoryId={1}
-				spawnRateOption={spawnRateOption}
-				spawnCountOption={spawnCountOption}
-			/>,
-		);
+		const tabId = 1;
+		const categoryId = 1;
+		setupTestData(tabId, categoryId);
+
+		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
@@ -63,22 +80,19 @@ describe("ExRRoleSpawnControls", () => {
 	});
 
 	it("syncs rate to 0 when count is set to 0", () => {
+		const tabId = 1;
+		const categoryId = 1;
+		setupTestData(tabId, categoryId);
+
 		// Set initial rate to 10%
-		const tabId = useStore.getState().selectedExRTabId;
 		useStore
 			.getState()
 			.TEMP_updateExROptionSelection(
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID),
+				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID),
 				1,
 			);
 
-		render(
-			<ExRRoleSpawnControls
-				categoryId={1}
-				spawnRateOption={spawnRateOption}
-				spawnCountOption={spawnCountOption}
-			/>,
-		);
+		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
@@ -90,59 +104,53 @@ describe("ExRRoleSpawnControls", () => {
 		const state = useStore.getState();
 		expect(
 			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
+				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)
 			],
 		).toBe(0); // Rate 0%
 	});
 
 	it("syncs rate to 10% when count is set to non-zero from zero rate", () => {
-		render(
-			<ExRRoleSpawnControls
-				categoryId={1}
-				spawnRateOption={spawnRateOption}
-				spawnCountOption={spawnCountOption}
-			/>,
-		);
+		const tabId = 1;
+		const categoryId = 1;
+		setupTestData(tabId, categoryId);
+
+		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		fireEvent.change(slider, { target: { value: "1" } }); // Select '1'
+		fireEvent.change(slider, { target: { value: "1" } }); // Select '1' (UI selection index 1 means backend selection 0)
 
 		const state = useStore.getState();
-		const tabId = state.selectedExRTabId;
 		expect(
 			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
+				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)
 			],
 		).toBe(1); // Rate index 1 is 10%
 	});
 
 	it("syncs count to 0 when rate is set to 0%", () => {
-		// Set initial rate to 10% and count to 2
-		const tabId = useStore.getState().selectedExRTabId;
+		const tabId = 1;
+		const categoryId = 1;
+		setupTestData(tabId, categoryId);
+
+		// Set initial rate to 10% and count to 2 (selection 1)
 		useStore
 			.getState()
 			.TEMP_updateExROptionSelection(
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID),
+				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID),
 				1,
 			);
 		useStore
 			.getState()
 			.TEMP_updateExROptionSelection(
-				getUniqueOptionId(tabId, 1, SPAWN_COUNT_OPTION_ID),
+				getUniqueOptionId(tabId, categoryId, SPAWN_COUNT_OPTION_ID),
 				1,
-			); // backend index 1 is value 2
+			);
 
-		render(
-			<ExRRoleSpawnControls
-				categoryId={1}
-				spawnRateOption={spawnRateOption}
-				spawnCountOption={spawnCountOption}
-			/>,
-		);
+		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
 		const rateControl = screen.getByTestId("spawn-rate-control");
 		const slider = rateControl.querySelector(
@@ -154,7 +162,7 @@ describe("ExRRoleSpawnControls", () => {
 		const state = useStore.getState();
 		expect(
 			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_COUNT_OPTION_ID)
+				getUniqueOptionId(tabId, categoryId, SPAWN_COUNT_OPTION_ID)
 			],
 		).toBe(0); // Count reset to index 0
 

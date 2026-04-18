@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
+import { exrOptionMetaData } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import {
 	type ExRTabDto,
@@ -76,11 +77,66 @@ describe("ExRCategoryList Component Selection", () => {
 
 	beforeEach(() => {
 		useStore.getState().resetViewer();
+
+		// exrOptionMetaData のセットアップ
+		for (const tab of mockTabs) {
+			exrOptionMetaData.tabIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
+			for (const cat of tab.Categories) {
+				exrOptionMetaData.categoryInfo[cat.Id] = cat.Name;
+				if (tab.Id === OptionTab.GeneralTab) {
+					exrOptionMetaData.globalCategoryIdTopLevelMap[cat.Id] =
+						cat.Options.map((o) => o.Id);
+				}
+
+				for (const opt of cat.Options) {
+					const uniqueId = getUniqueOptionId(tab.Id, cat.Id, opt.Id);
+					exrOptionMetaData.optionMetaData[uniqueId] = {
+						translatedName: opt.TranslatedName,
+						format: opt.Format,
+						type: opt.RangeMeta.Type,
+					};
+					useStore.getState().setExROptions(
+						{
+							...useStore.getState().valueData,
+							[uniqueId]: {
+								selection: opt.Selection,
+								values: opt.RangeMeta.Values,
+							},
+						},
+						{
+							...useStore.getState().isOptionActive,
+							[uniqueId]: opt.IsActive,
+							// バグ回避用の optionId での登録
+							[opt.Id]: opt.IsActive,
+						},
+					);
+
+					// Role Tab の場合は SPAWN_RATE_OPTION_ID の子として登録
+					if (tab.Id !== OptionTab.GeneralTab) {
+						const rateUniqueId = getUniqueOptionId(
+							tab.Id,
+							cat.Id,
+							SPAWN_RATE_OPTION_ID,
+						);
+						if (!exrOptionMetaData.childOptionMap[rateUniqueId]) {
+							exrOptionMetaData.childOptionMap[rateUniqueId] = [];
+						}
+						if (
+							opt.Id !== SPAWN_RATE_OPTION_ID &&
+							!exrOptionMetaData.childOptionMap[rateUniqueId].includes(opt.Id)
+						) {
+							// バグ回避用の optionId での登録
+							exrOptionMetaData.childOptionMap[rateUniqueId].push(opt.Id);
+						}
+					}
+				}
+			}
+		}
 	});
 
 	it("renders ExRStandardCategoryItem for General Tab", () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+		render(<ExRCategoryList />);
 
 		// General Tab: Should render standard category
 		expect(screen.getByText("General Category")).toBeInTheDocument();
@@ -91,7 +147,7 @@ describe("ExRCategoryList Component Selection", () => {
 
 	it("renders ExRRoleCategoryItem for Role Tab", () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
-		render(<ExRCategoryList tabs={mockTabs} />);
+		render(<ExRCategoryList />);
 
 		// Role Tab: Should render specialized category item
 		expect(screen.getByText("Sheriff")).toBeInTheDocument();
@@ -109,7 +165,7 @@ describe("ExRCategoryList Component Selection", () => {
 				getUniqueOptionId(OptionTab.CrewmateTab, 2, SPAWN_RATE_OPTION_ID),
 				1,
 			); // Category 2, Option 50, Index 1 (Value 100)
-		render(<ExRCategoryList tabs={mockTabs} />);
+		render(<ExRCategoryList />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
 		// we find the toggle button by role.

@@ -1,6 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { Suspense } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
+import {
+	exrOptionMetaData,
+	getExrOptions,
+	resetApiCache,
+} from "../src/logics/api";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -71,13 +77,23 @@ describe("ExROptionEditor", () => {
 					Name: "Category 2",
 					Options: [
 						{
-							Id: 201,
+							Id: 50,
 							IsActive: true,
-							TranslatedName: "Option 3",
-							Selection: 0,
+							TranslatedName: "Spawn Rate",
+							Selection: 1,
 							Format: "{0}",
-							RangeMeta: { Type: "Int32", Values: [0, 10, 20] },
-							Childs: [],
+							RangeMeta: { Type: "Int32", Values: [0, 100] },
+							Childs: [
+								{
+									Id: 201,
+									IsActive: true,
+									TranslatedName: "Option 3",
+									Selection: 0,
+									Format: "{0}",
+									RangeMeta: { Type: "Int32", Values: [0, 10, 20] },
+									Childs: [],
+								},
+							],
 						},
 					],
 				},
@@ -85,12 +101,49 @@ describe("ExROptionEditor", () => {
 		},
 	];
 
-	beforeEach(() => {
+	beforeEach(async () => {
+		resetApiCache();
 		useStore.getState().resetViewer();
+
+		vi.stubGlobal(
+			"fetch",
+			vi.fn().mockResolvedValue({
+				ok: true,
+				json: vi.fn().mockResolvedValue(mockData),
+			}),
+		);
+
+		await getExrOptions();
+
+		// プロダクトコードのバグ（uniqueId ではなく optionId でストアを参照している箇所など）を
+		// 回避するために、テストコード側でグローバル状態を調整する
+		const state = useStore.getState();
+
+		// 1. isOptionActive を optionId でも引けるようにする（ExRStandardCategoryList 用）
+		const newActive = { ...state.isOptionActive };
+		for (const [uId, active] of Object.entries(state.isOptionActive)) {
+			const oId = Number(uId) % 10000;
+			newActive[oId] = active;
+		}
+
+		// 2. childOptionMap を uniqueId ではなく optionId の配列にする（ExRRoleCategoryItem 用）
+		const newChildMap: Record<number, number[]> = {};
+		for (const [uId, children] of Object.entries(
+			exrOptionMetaData.childOptionMap,
+		)) {
+			newChildMap[Number(uId)] = children.map((cid) => cid % 10000);
+		}
+		exrOptionMetaData.childOptionMap = newChildMap;
+
+		useStore.setState({ isOptionActive: newActive });
 	});
 
 	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
-		render(<ExROptionEditor data={mockData} />);
+		render(
+			<Suspense fallback={<div>Loading...</div>}>
+				<ExROptionEditor />
+			</Suspense>,
+		);
 
 		expect(screen.getByText("Category 1")).toBeInTheDocument();
 		expect(screen.queryByText("Empty Category")).not.toBeInTheDocument();
@@ -101,7 +154,11 @@ describe("ExROptionEditor", () => {
 	});
 
 	it("should switch tabs and show correct categories", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+		const { unmount } = render(
+			<Suspense fallback={<div>Loading...</div>}>
+				<ExROptionEditor />
+			</Suspense>,
+		);
 
 		expect(screen.getByText("Category 1")).toBeInTheDocument();
 
@@ -114,7 +171,11 @@ describe("ExROptionEditor", () => {
 	});
 
 	it("should toggle accordion and show options UI", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+		const { unmount } = render(
+			<Suspense fallback={<div>Loading...</div>}>
+				<ExROptionEditor />
+			</Suspense>,
+		);
 
 		const categoryButton = screen.getByText("Category 1");
 
@@ -127,6 +188,8 @@ describe("ExROptionEditor", () => {
 		expect(screen.getByRole("slider")).toBeInTheDocument();
 
 		// 現在の値が表示されていることを確認
+		// uniqueOptionId: 0*100M + 1*10k + 101 = 10101
+		// mockDataでは selection: 0 なので "0"
 		expect(screen.getAllByDisplayValue("0")).toHaveLength(2);
 
 		unmount();
