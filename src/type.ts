@@ -6,6 +6,26 @@ import { z } from "zod";
 export const SPAWN_RATE_OPTION_ID = 50;
 export const SPAWN_COUNT_OPTION_ID = 51;
 
+export interface ExROptionMetaData {
+	translatedName: string;
+	format: string;
+	type: string;
+}
+
+export interface ExROptionValueData {
+	isActive: boolean;
+	selection: number;
+	values: number[] | string[];
+}
+
+export interface ExROptionMetaData {
+	tabInfo: Record<OptionTab, string>; // タブIDとタブ名の対応
+	categoryIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
+	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
+	optionIdMap: Record<number, number[]>; // カテゴリIDとそのカテゴリに属するオプションIDの対応
+	optionMetaData: Record<number, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
+}
+
 /**
  * タブの種類を表す定数
  */
