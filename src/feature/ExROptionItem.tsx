@@ -1,10 +1,12 @@
-import type { ExROptionDto } from "../type";
+import { exrOptionMetaData } from "../logics/api";
+import { getUniqueOptionId } from "../logics/optionUtils";
+import { useStore } from "../useStore";
 import { ExROptionRecursiveItem } from "./ExROptionRecursiveItem";
 import { ExROptionRow } from "./ExROptionRow";
 
 interface ExROptionItemProps {
 	categoryId: number;
-	option: ExROptionDto;
+	optionId: number;
 	depth?: number;
 }
 
@@ -13,20 +15,29 @@ interface ExROptionItemProps {
  */
 export function ExROptionItem({
 	categoryId,
-	option,
+	optionId,
 	depth = 0,
 }: ExROptionItemProps) {
-	if (!option.IsActive) {
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
+	const isActive = useStore((state) => {
+		return state.isOptionActive[uniqueId];
+	});
+
+	if (!isActive) {
 		return null;
 	}
 
-	const hasActiveChildren = option.Childs && option.Childs.length > 0;
+	const childOptionIds = exrOptionMetaData.childOptionMap[uniqueId] ?? [];
+	const hasActiveChildren = childOptionIds.length > 0;
 
 	if (hasActiveChildren) {
 		return (
 			<ExROptionRecursiveItem
 				categoryId={categoryId}
-				option={option}
+				optionId={optionId}
 				depth={depth}
 			/>
 		);
@@ -35,7 +46,7 @@ export function ExROptionItem({
 	return (
 		<ExROptionRow
 			categoryId={categoryId}
-			option={option}
+			optionId={optionId}
 			depth={depth}
 			isLeaf={true}
 		/>

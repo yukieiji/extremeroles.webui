@@ -1,11 +1,10 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
 import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
 interface ExRHeaderOptionControlProps {
 	categoryId: number;
-	option: ExROptionDto;
+	optionId: number;
 	label: string;
 }
 
@@ -15,29 +14,29 @@ interface ExRHeaderOptionControlProps {
  */
 export function ExRHeaderOptionControl({
 	categoryId,
-	option,
+	optionId,
 	label,
 }: ExRHeaderOptionControlProps) {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
-	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
+	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
+	const valueData = useStore((state) => {
+		return state.valueData[uniqueId];
 	});
-	const currentSelection = effectiveSelection ?? option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const currentSelection = valueData?.selection ?? 0;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
-	const values = option.RangeMeta.Values as number[];
+	const values = (valueData?.values as number[]) ?? [];
 
 	const handleSelectionChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const handleInputChange = (val: number) => {
-		TEMP_updateExROptionSelection(uniqueId, findClosestIndex(values, val));
+		updateExROptionSelection(uniqueId, findClosestIndex(values, val));
 	};
 
 	return (

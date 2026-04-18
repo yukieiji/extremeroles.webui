@@ -1,23 +1,16 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
 import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 
 interface ExRRoleSpawnControlsProps {
 	categoryId: number;
-	spawnRateOption: ExROptionDto;
-	spawnCountOption: ExROptionDto;
 }
 
 /**
  * 役職のスポーンレートとスポーン数をセットで管理し、同期させるためのコンポーネント
  */
-export function ExRRoleSpawnControls({
-	categoryId,
-	spawnRateOption,
-	spawnCountOption,
-}: ExRRoleSpawnControlsProps) {
+export function ExRRoleSpawnControls({ categoryId }: ExRRoleSpawnControlsProps) {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
@@ -32,16 +25,16 @@ export function ExRRoleSpawnControls({
 		SPAWN_COUNT_OPTION_ID,
 	);
 
-	const effectiveSpawnRateSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueRateId];
+	const spawnRateValueData = useStore((state) => {
+		return state.valueData[uniqueRateId];
 	});
 
-	const effectiveSpawnCountSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueCountId];
+	const spawnCountValueData = useStore((state) => {
+		return state.valueData[uniqueCountId];
 	});
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
@@ -50,13 +43,11 @@ export function ExRRoleSpawnControls({
 		return state.openedExRCategoryIds[categoryId] ?? false;
 	});
 
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOption.Selection;
-	const spawnCountSelection =
-		effectiveSpawnCountSelection ?? spawnCountOption.Selection;
+	const spawnRateSelection = spawnRateValueData?.selection ?? 0;
+	const spawnCountSelection = spawnCountValueData?.selection ?? 0;
 
-	const rateValues = spawnRateOption.RangeMeta.Values as number[];
-	const originalCountValues = spawnCountOption.RangeMeta.Values as number[];
+	const rateValues = (spawnRateValueData?.values as number[]) ?? [];
+	const originalCountValues = (spawnCountValueData?.values as number[]) ?? [];
 
 	// スポーン数が0をサポートするための仮想的な値リスト
 	const virtualCountValues = [0, ...originalCountValues];
@@ -66,11 +57,11 @@ export function ExRRoleSpawnControls({
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueRateId, newSelection);
+		updateExROptionSelection(uniqueRateId, newSelection);
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
@@ -84,23 +75,23 @@ export function ExRRoleSpawnControls({
 	const handleCountUIChange = (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			TEMP_updateExROptionSelection(
+			updateExROptionSelection(
 				uniqueRateId,
 				findClosestIndex(rateValues, 0),
 			);
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
-				TEMP_updateExROptionSelection(
+				updateExROptionSelection(
 					uniqueRateId,
 					findClosestIndex(rateValues, 10),
 				);
 			}
-			TEMP_updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			updateExROptionSelection(uniqueCountId, newUISelection - 1);
 		}
 	};
 

@@ -1,11 +1,6 @@
 import { useEffect, useRef } from "react";
 import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExRTabDto } from "../type";
 import { useStore } from "../useStore";
-
-interface PresetSelectorProps {
-	tabs: ExRTabDto[];
-}
 
 /**
  * プリセットを選択・編集するためのコンポーネント。
@@ -15,23 +10,12 @@ interface PresetSelectorProps {
  * 入力更新の最適化:
  * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
-export function PresetSelector({ tabs }: PresetSelectorProps) {
-	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
-	const generalTab = tabs.find((t) => {
-		return t.Id === 0;
-	});
-	const presetCategory = generalTab?.Categories.find((c) => {
-		return c.Id === 0;
-	});
-	const presetOption = presetCategory?.Options.find((o) => {
-		return o.Id === 0;
-	});
-
+export function PresetSelector() {
 	const uniqueId = getUniqueOptionId(0, 0, 0);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
+	const valueData = useStore((state) => {
+		return state.valueData[uniqueId];
 	});
-	const currentSelection = effectiveSelection ?? presetOption?.Selection ?? 0;
+	const currentSelection = valueData?.selection ?? 0;
 
 	const presetNames = useStore((state) => {
 		return state.presetNames;
@@ -42,8 +26,8 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 	const updatePresetName = useStore((state) => {
 		return state.updatePresetName;
 	});
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
@@ -68,17 +52,17 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 		};
 	}, [setPresetDropdownOpen]);
 
-	if (!presetOption) {
+	if (!valueData) {
 		return null;
 	}
 
-	const presetValues = presetOption.RangeMeta.Values as number[];
+	const presetValues = valueData.values as number[];
 	const currentPresetValue = presetValues[currentSelection];
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = (index: number) => {
-		TEMP_updateExROptionSelection(uniqueId, index);
+		updateExROptionSelection(uniqueId, index);
 		setPresetDropdownOpen(false);
 	};
 

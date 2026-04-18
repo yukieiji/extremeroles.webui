@@ -1,13 +1,13 @@
 import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
+import { exrOptionMetaData } from "../logics/api";
 import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
 interface ExROptionControlProps {
 	categoryId: number;
-	option: ExROptionDto;
+	optionId: number;
 }
 
 /**
@@ -15,25 +15,30 @@ interface ExROptionControlProps {
  */
 export function ExROptionControl({
 	categoryId,
-	option,
+	optionId,
 }: ExROptionControlProps) {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
-	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
+	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
+	const valueData = useStore((state) => {
+		return state.valueData[uniqueId];
 	});
-	const currentSelection = effectiveSelection ?? option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const handleChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(uniqueId, newSelection);
 	};
 
-	const { Type, Values } = option.RangeMeta;
+	const meta = exrOptionMetaData.optionMetaData[uniqueId];
+	if (!meta || !valueData) {
+		return null;
+	}
+
+	const { type: Type, format: Format } = meta;
+	const { selection: currentSelection, values: Values } = valueData;
 
 	if (Type === "String") {
 		const stringValues = Values as string[];
@@ -67,7 +72,7 @@ export function ExROptionControl({
 			<OptionSliderControl
 				selection={currentSelection}
 				values={Values as number[]}
-				format={option.Format}
+				format={Format}
 				onChange={handleChange}
 			/>
 		);

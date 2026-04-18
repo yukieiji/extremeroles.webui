@@ -1,31 +1,59 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, act } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "../src/feature/ExRHeaderOptionControl";
+import { getInitialLoadPromise, resetApiCache } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
-import type { ExROptionDto } from "../src/type";
+import type { ExRTabDto } from "../src/type";
 import { SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExRHeaderOptionControl", () => {
-	const mockOption: ExROptionDto = {
-		Id: SPAWN_RATE_OPTION_ID,
-		IsActive: true,
-		TranslatedName: "レート",
-		Selection: 0,
-		Format: "{0}%",
-		RangeMeta: { Type: "Int32", Values: [0, 50, 100] },
-		Childs: [],
-	};
+	const mockTabs: ExRTabDto[] = [
+		{
+			Id: 0,
+			Name: "General",
+			Categories: [
+				{
+					Id: 1,
+					Name: "Category 1",
+					Options: [
+						{
+							Id: SPAWN_RATE_OPTION_ID,
+							IsActive: true,
+							TranslatedName: "レート",
+							Selection: 0,
+							Format: "{0}%",
+							RangeMeta: { Type: "Int32", Values: [0, 50, 100] },
+							Childs: [],
+						},
+					],
+				},
+			],
+		},
+	];
 
-	beforeEach(() => {
+	beforeEach(async () => {
+		resetApiCache();
 		useStore.getState().resetViewer();
+		vi.stubGlobal(
+			"fetch",
+			vi.fn(() =>
+				Promise.resolve({
+					ok: true,
+					json: () => Promise.resolve(mockTabs),
+				}),
+			),
+		);
+		await act(async () => {
+			await getInitialLoadPromise();
+		});
 	});
 
 	it("renders correctly with given label and value", () => {
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
-				option={mockOption}
+				optionId={SPAWN_RATE_OPTION_ID}
 				label="Rate"
 			/>,
 		);
@@ -44,7 +72,7 @@ describe("ExRHeaderOptionControl", () => {
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
-				option={mockOption}
+				optionId={SPAWN_RATE_OPTION_ID}
 				label="Rate"
 			/>,
 		);
@@ -56,9 +84,7 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
-			],
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)].selection,
 		).toBe(1);
 	});
 
@@ -66,7 +92,7 @@ describe("ExRHeaderOptionControl", () => {
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
-				option={mockOption}
+				optionId={SPAWN_RATE_OPTION_ID}
 				label="Rate"
 			/>,
 		);
@@ -84,9 +110,7 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
-			],
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)].selection,
 		).toBe(2); // 100 is at index 2
 	});
 
@@ -101,7 +125,7 @@ describe("ExRHeaderOptionControl", () => {
 			>
 				<ExRHeaderOptionControl
 					categoryId={1}
-					option={mockOption}
+					optionId={SPAWN_RATE_OPTION_ID}
 					label="Rate"
 				/>
 			</button>,

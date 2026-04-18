@@ -1,44 +1,39 @@
-import { isPresetOption } from "../logics/optionUtils";
-import type { ExRTabDto } from "../type";
+import { exrOptionMetaData } from "../logics/api";
+import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
 import { OptionTab } from "../type";
 import { useStore } from "../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
 import { ExRStandardCategoryItem } from "./ExRStandardCategoryItem";
 
-interface ExRCategoryListProps {
-	tabs: ExRTabDto[];
-}
-
 /**
  * 選択されたタブのカテゴリ一覧を表示するコンポーネント
  */
-export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
+export function ExRCategoryList() {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
 	const isTabPending = useStore((state) => {
 		return state.isTabPending;
 	});
-
-	let selectedTab = tabs.find((tab) => {
-		return tab.Id === selectedExRTabId;
+	const isOptionActive = useStore((state) => {
+		return state.isOptionActive;
 	});
 
-	if (!selectedTab) {
-		selectedTab = tabs[0];
-	}
+	const categoryIds = exrOptionMetaData.categoryIdMap[selectedExRTabId] ?? [];
 
 	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
 
 	// オプションが空でない、かつ少なくとも1つのオプションが有効なカテゴリのみを抽出
 	// ※ プリセット設定が唯一のオプションだった場合も考慮してフィルタリング
-	const visibleCategories = selectedTab.Categories.filter((category) => {
-		const filteredOptions = category.Options.filter((option) => {
-			const isPreset = isPresetOption(category.Id, option.Id);
+	const visibleCategoryIds = categoryIds.filter((categoryId) => {
+		const optionIds = exrOptionMetaData.optionIdMap[categoryId] ?? [];
+		const filteredOptionIds = optionIds.filter((optionId) => {
+			const isPreset = isPresetOption(categoryId, optionId);
 			return !isPreset;
 		});
-		return filteredOptions.some((opt) => {
-			return opt.IsActive;
+		return filteredOptionIds.some((optionId) => {
+			const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
+			return isOptionActive[uniqueId];
 		});
 	});
 
@@ -53,19 +48,19 @@ export function ExRCategoryList({ tabs }: ExRCategoryListProps) {
 					<div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 				</div>
 			)}
-			{visibleCategories.map((category) => {
+			{visibleCategoryIds.map((categoryId) => {
 				if (isRoleTab) {
 					return (
 						<ExRRoleCategoryItem
-							key={`${selectedExRTabId}-${category.Id}`}
-							category={category}
+							key={`${selectedExRTabId}-${categoryId}`}
+							categoryId={categoryId}
 						/>
 					);
 				}
 				return (
 					<ExRStandardCategoryItem
-						key={`${selectedExRTabId}-${category.Id}`}
-						category={category}
+						key={`${selectedExRTabId}-${categoryId}`}
+						categoryId={categoryId}
 					/>
 				);
 			})}

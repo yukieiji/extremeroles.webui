@@ -1,13 +1,16 @@
 import { OptionAccordion } from "../components/blocks/OptionAccordion";
-import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
+import { exrOptionMetaData } from "../logics/api";
+import {
+	getOptionIdFromUniqueId,
+	getUniqueOptionId,
+} from "../logics/optionUtils";
 import { useStore } from "../useStore";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExROptionRow } from "./ExROptionRow";
 
 interface ExROptionRecursiveItemProps {
 	categoryId: number;
-	option: ExROptionDto;
+	optionId: number;
 	depth: number;
 }
 
@@ -16,13 +19,13 @@ interface ExROptionRecursiveItemProps {
  */
 export function ExROptionRecursiveItem({
 	categoryId,
-	option,
+	optionId,
 	depth = 0,
 }: ExROptionRecursiveItemProps) {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
-	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
+	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, optionId);
 	const isOpen = useStore((state) => {
 		return state.openedExROptionIds[uniqueId];
 	});
@@ -34,8 +37,20 @@ export function ExROptionRecursiveItem({
 		toggleExROption(uniqueId);
 	};
 
-	const hasActiveChildren = option.Childs.some((child) => {
-		return child.IsActive;
+	const childOptionIds = (exrOptionMetaData.childOptionMap[uniqueId] ?? []).map(
+		(id) => {
+			// childOptionMap contains full unique IDs because of how I implemented api.ts
+			// Wait, let me double check api.ts
+			return id;
+		},
+	);
+
+	const isOptionActive = useStore((state) => {
+		return state.isOptionActive;
+	});
+
+	const hasActiveChildren = childOptionIds.some((cid) => {
+		return isOptionActive[cid];
 	});
 
 	return (
@@ -43,7 +58,7 @@ export function ExROptionRecursiveItem({
 			optionItem={
 				<ExROptionRow
 					categoryId={categoryId}
-					option={option}
+					optionId={optionId}
 					depth={depth}
 					isLeaf={false}
 				/>
@@ -54,14 +69,17 @@ export function ExROptionRecursiveItem({
 			className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
 		>
 			<div className="flex flex-col">
-				{option.Childs.map((child) => (
-					<ExROptionItem
-						key={child.Id}
-						categoryId={categoryId}
-						option={child}
-						depth={depth + 1}
-					/>
-				))}
+				{childOptionIds.map((cid) => {
+					const originalOptionId = getOptionIdFromUniqueId(cid);
+					return (
+						<ExROptionItem
+							key={cid}
+							categoryId={categoryId}
+							optionId={originalOptionId}
+							depth={depth + 1}
+						/>
+					);
+				})}
 			</div>
 		</OptionAccordion>
 	);

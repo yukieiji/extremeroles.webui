@@ -1,6 +1,7 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { fireEvent, render, screen, act } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
+import { getInitialLoadPromise, resetApiCache } from "../src/logics/api";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -85,12 +86,25 @@ describe("ExROptionEditor", () => {
 		},
 	];
 
-	beforeEach(() => {
+	beforeEach(async () => {
+		resetApiCache();
 		useStore.getState().resetViewer();
+		vi.stubGlobal(
+			"fetch",
+			vi.fn(() =>
+				Promise.resolve({
+					ok: true,
+					json: () => Promise.resolve(mockData),
+				}),
+			),
+		);
+		await act(async () => {
+			await getInitialLoadPromise();
+		});
 	});
 
 	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
-		render(<ExROptionEditor data={mockData} />);
+		render(<ExROptionEditor />);
 
 		expect(screen.getByText("Category 1")).toBeInTheDocument();
 		expect(screen.queryByText("Empty Category")).not.toBeInTheDocument();
@@ -101,7 +115,7 @@ describe("ExROptionEditor", () => {
 	});
 
 	it("should switch tabs and show correct categories", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+		const { unmount } = render(<ExROptionEditor />);
 
 		expect(screen.getByText("Category 1")).toBeInTheDocument();
 
@@ -114,7 +128,7 @@ describe("ExROptionEditor", () => {
 	});
 
 	it("should toggle accordion and show options UI", () => {
-		const { unmount } = render(<ExROptionEditor data={mockData} />);
+		const { unmount } = render(<ExROptionEditor />);
 
 		const categoryButton = screen.getByText("Category 1");
 

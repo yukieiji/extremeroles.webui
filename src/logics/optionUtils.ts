@@ -13,6 +13,13 @@ export function getUniqueOptionId(
 }
 
 /**
+ * 一意な数値IDから元のオプションIDを抽出します。
+ */
+export function getOptionIdFromUniqueId(uniqueId: number): number {
+	return uniqueId % 10_000;
+}
+
+/**
  * 指定されたカテゴリIDとオプションIDがプリセット設定（Category 0, Option 0）であるか判定します。
  */
 export function isPresetOption(categoryId: number, optionId: number): boolean {

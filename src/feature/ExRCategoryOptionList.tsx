@@ -1,5 +1,6 @@
-import { groupOptionPairs } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
+import { exrOptionMetaData } from "../logics/api";
+import { getUniqueOptionId, groupOptionPairs } from "../logics/optionUtils";
+import { useStore } from "../useStore";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExRPairedOptionRow } from "./ExRPairedOptionRow";
 
@@ -7,7 +8,7 @@ const GROUPED_CATEGORY_IDS = [5, 6];
 
 interface ExRCategoryOptionListProps {
 	categoryId: number;
-	options: ExROptionDto[];
+	optionIds: number[];
 }
 
 /**
@@ -15,8 +16,38 @@ interface ExRCategoryOptionListProps {
  */
 export function ExRCategoryOptionList({
 	categoryId,
-	options,
+	optionIds,
 }: ExRCategoryOptionListProps) {
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const valueDataRecord = useStore((state) => {
+		return state.valueData;
+	});
+	const isOptionActiveRecord = useStore((state) => {
+		return state.isOptionActive;
+	});
+
+	const options = optionIds.map((id) => {
+		const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, id);
+		const meta = exrOptionMetaData.optionMetaData[uniqueId];
+		const valueData = valueDataRecord[uniqueId];
+		const isOptionActive = isOptionActiveRecord[uniqueId];
+
+		return {
+			Id: id,
+			TranslatedName: meta?.translatedName ?? "",
+			Format: meta?.format ?? "",
+			IsActive: isOptionActive ?? false,
+			Selection: valueData?.selection ?? 0,
+			RangeMeta: {
+				Type: meta?.type ?? "Single",
+				Values: valueData?.values ?? [],
+			},
+			Childs: [], // We don't need real Childs here for grouping
+		} as any;
+	});
+
 	const shouldGroup = GROUPED_CATEGORY_IDS.includes(categoryId);
 	const groupedItems = shouldGroup ? groupOptionPairs(options) : options;
 
@@ -32,8 +63,8 @@ export function ExRCategoryOptionList({
 							key={`pair-${item.baseName}`}
 							categoryId={categoryId}
 							baseName={item.baseName}
-							min={item.min}
-							max={item.max}
+							minOptionId={item.min.Id}
+							maxOptionId={item.max.Id}
 							minLabel={item.minLabel}
 							maxLabel={item.maxLabel}
 						/>
@@ -41,9 +72,9 @@ export function ExRCategoryOptionList({
 				}
 				return (
 					<ExROptionItem
-						key={(item as ExROptionDto).Id}
+						key={item.Id}
 						categoryId={categoryId}
-						option={item as ExROptionDto}
+						optionId={item.Id}
 					/>
 				);
 			})}

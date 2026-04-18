@@ -1,16 +1,13 @@
 import { useEffect, useTransition } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
-import type { ExRTabDto, OptionTab } from "../type";
+import { exrOptionMetaData } from "../logics/api";
+import type { OptionTab } from "../type";
 import { useStore } from "../useStore";
-
-interface ExRTabSelectorProps {
-	tabs: ExRTabDto[];
-}
 
 /**
  * ExRオプションのタブ選択コンポーネント
  */
-export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
+export function ExRTabSelector() {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
@@ -40,22 +37,25 @@ export function ExRTabSelector({ tabs }: ExRTabSelectorProps) {
 		});
 	};
 
+	const tabIds = Object.keys(exrOptionMetaData.tabInfo).map(Number) as OptionTab[];
+
 	return (
 		<div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
-			{tabs.map((tab) => {
+			{tabIds.map((tabId) => {
+				const tabName = exrOptionMetaData.tabInfo[tabId];
 				return (
 					<button
-						key={tab.Id}
+						key={tabId}
 						type="button"
 						onClick={() => {
-							handleClick(tab.Id);
+							handleClick(tabId);
 						}}
 						className={`
               px-4 py-2 rounded-t-lg transition-colors font-medium
-              ${selectedExRTabId === tab.Id ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}
+              ${selectedExRTabId === tabId ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}
             `}
 					>
-						<ColoredText text={tab.Name} />
+						<ColoredText text={tabName} />
 					</button>
 				);
 			})}

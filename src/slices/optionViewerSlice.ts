@@ -3,7 +3,7 @@ import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
-import type { OptionTab } from "../type";
+import type { ExROptionValueData, OptionTab } from "../type";
 
 /**
  * オプション表示エリア（ExR オプションのタブなど）の状態を管理するスライスのインターフェース
@@ -13,16 +13,18 @@ export interface OptionViewerSlice {
 	isTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<number, boolean>;
-	effectiveSelections: Record<number, number>;
+	valueData: Record<number, ExROptionValueData>;
+	isOptionActive: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: number) => void;
-	TEMP_updateExROptionSelection: (
-		uniqueOptionId: number,
-		selection: number,
+	updateExROptionSelection: (uniqueOptionId: number, selection: number) => void;
+	setExROptions: (
+		valueData: Record<number, ExROptionValueData>,
+		isOptionActive: Record<number, boolean>,
 	) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
@@ -40,7 +42,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		isTabPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
-		effectiveSelections: {},
+		valueData: {},
+		isOptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -55,7 +58,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				isTabPending: false,
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
-				effectiveSelections: {},
+				valueData: {},
+				isOptionActive: {},
 				isPresetDropdownOpen: false,
 			});
 		},
@@ -79,18 +83,25 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		TEMP_updateExROptionSelection: (
-			uniqueOptionId: number,
-			selection: number,
-		) => {
+		updateExROptionSelection: (uniqueOptionId: number, selection: number) => {
 			set((state) => {
+				const current = state.valueData[uniqueOptionId];
+				if (!current) {
+					return state;
+				}
 				return {
-					effectiveSelections: {
-						...state.effectiveSelections,
-						[uniqueOptionId]: selection,
+					valueData: {
+						...state.valueData,
+						[uniqueOptionId]: {
+							...current,
+							selection,
+						},
 					},
 				};
 			});
+		},
+		setExROptions: (valueData, isOptionActive) => {
+			set({ valueData, isOptionActive });
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {

@@ -2,15 +2,15 @@ import { OptionPairedSliderControl } from "../components/blocks/OptionPairedSlid
 import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
 import { OptionRowContainer } from "../components/parts/OptionRowContainer";
+import { exrOptionMetaData } from "../logics/api";
 import { getUniqueOptionId } from "../logics/optionUtils";
-import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
 interface ExRPairedOptionRowProps {
 	categoryId: number;
 	baseName: string;
-	min: ExROptionDto;
-	max: ExROptionDto;
+	minOptionId: number;
+	maxOptionId: number;
 	minLabel: string;
 	maxLabel: string;
 }
@@ -21,38 +21,45 @@ interface ExRPairedOptionRowProps {
 export function ExRPairedOptionRow({
 	categoryId,
 	baseName,
-	min,
-	max,
+	minOptionId,
+	maxOptionId,
 	minLabel,
 	maxLabel,
 }: ExRPairedOptionRowProps) {
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
-	const minUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, min.Id);
-	const maxUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, max.Id);
+	const minUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, minOptionId);
+	const maxUniqueId = getUniqueOptionId(selectedExRTabId, categoryId, maxOptionId);
 
-	const effectiveMinSelection = useStore((state) => {
-		return state.effectiveSelections[minUniqueId];
+	const minValueData = useStore((state) => {
+		return state.valueData[minUniqueId];
 	});
-	const effectiveMaxSelection = useStore((state) => {
-		return state.effectiveSelections[maxUniqueId];
+	const maxValueData = useStore((state) => {
+		return state.valueData[maxUniqueId];
 	});
 
-	const minSelection = effectiveMinSelection ?? min.Selection;
-	const maxSelection = effectiveMaxSelection ?? max.Selection;
+	const minSelection = minValueData?.selection ?? 0;
+	const maxSelection = maxValueData?.selection ?? 0;
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const handleMinChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(minUniqueId, newSelection);
+		updateExROptionSelection(minUniqueId, newSelection);
 	};
 
 	const handleMaxChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(maxUniqueId, newSelection);
+		updateExROptionSelection(maxUniqueId, newSelection);
 	};
+
+	const minMeta = exrOptionMetaData.optionMetaData[minUniqueId];
+	const maxMeta = exrOptionMetaData.optionMetaData[maxUniqueId];
+
+	if (!minValueData || !maxValueData || !minMeta || !maxMeta) {
+		return null;
+	}
 
 	const content = (
 		<OptionItem className="min-h-[4.5rem]">
@@ -65,9 +72,9 @@ export function ExRPairedOptionRow({
 				<OptionPairedSliderControl
 					minSelection={minSelection}
 					maxSelection={maxSelection}
-					minValues={min.RangeMeta.Values as number[]}
-					maxValues={max.RangeMeta.Values as number[]}
-					format={min.Format}
+					minValues={minValueData.values as number[]}
+					maxValues={maxValueData.values as number[]}
+					format={minMeta.format}
 					onMinChange={handleMinChange}
 					onMaxChange={handleMaxChange}
 					minLabel={minLabel}
