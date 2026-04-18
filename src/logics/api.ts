@@ -25,6 +25,7 @@ const _exrOptionMetaData: ExROptionMetaDataRecords = {
 	categoryInfo: {},
 	optionIdMap: {},
 	optionMetaData: {},
+	childOptionMap: {},
 };
 
 /**

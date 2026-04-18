@@ -24,6 +24,7 @@ export interface ExROptionMetaDataRecords {
 	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
 	optionIdMap: Record<number, number[]>; // カテゴリIDとそのカテゴリに属するオプションIDの対応
 	optionMetaData: Record<number, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
+	childOptionMap: Record<number, number[]>; // 親オプションIDとその子オプションIDの対応
 }
 
 /**
