@@ -19,7 +19,10 @@ export function ExROptionRecursiveItem({
 	option,
 	depth = 0,
 }: ExROptionRecursiveItemProps) {
-	const uniqueId = getUniqueOptionId(categoryId, option.Id);
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
 	const isOpen = useStore((state) => {
 		return state.openedExROptionIds[uniqueId];
 	});

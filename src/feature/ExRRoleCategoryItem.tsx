@@ -1,6 +1,7 @@
 import { ColoredText } from "../components/parts/ColoredText";
 import { getUniqueOptionId, isPresetOption } from "../logics/optionUtils";
 import type { ExRCategoryDto } from "../type";
+import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 import { ExRRoleSpawnControls } from "./ExRRoleSpawnControls";
@@ -21,13 +22,20 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 	});
 
 	const spawnRateOption = category.Options.find((opt) => {
-		return opt.Id === 50;
+		return opt.Id === SPAWN_RATE_OPTION_ID;
 	});
 	const spawnCountOption = category.Options.find((opt) => {
-		return opt.Id === 51;
+		return opt.Id === SPAWN_COUNT_OPTION_ID;
 	});
 
-	const uniqueRateId = getUniqueOptionId(category.Id, 50);
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const uniqueRateId = getUniqueOptionId(
+		selectedExRTabId,
+		category.Id,
+		SPAWN_RATE_OPTION_ID,
+	);
 	const effectiveSpawnRateSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueRateId];
 	});
@@ -42,7 +50,10 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 		if (isPresetOption(category.Id, option.Id)) {
 			return [];
 		}
-		if (option.Id === 50 || option.Id === 51) {
+		if (
+			option.Id === SPAWN_RATE_OPTION_ID ||
+			option.Id === SPAWN_COUNT_OPTION_ID
+		) {
 			return option.Childs || [];
 		}
 		return [option];
@@ -50,7 +61,10 @@ export function ExRRoleCategoryItem({ category }: ExRRoleCategoryItemProps) {
 
 	// ID 50 と 51 を除外しつつ、重複（トップレベルと子要素の両方に存在する場合など）を排除
 	const filteredOptions = allPotentialOptions.filter((option, index, self) => {
-		if (option.Id === 50 || option.Id === 51) {
+		if (
+			option.Id === SPAWN_RATE_OPTION_ID ||
+			option.Id === SPAWN_COUNT_OPTION_ID
+		) {
 			return false;
 		}
 		return (

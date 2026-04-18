@@ -58,4 +58,21 @@ describe("optionViewerSlice", () => {
 		updatePresetName(1, "  ");
 		expect(useStore.getState().presetNames[1]).toBeUndefined();
 	});
+
+	it("should toggle option open state with numeric ID", () => {
+		const { toggleExROption } = useStore.getState();
+
+		toggleExROption(10001);
+		expect(useStore.getState().openedExROptionIds[10001]).toBe(true);
+
+		toggleExROption(10001);
+		expect(useStore.getState().openedExROptionIds[10001]).toBe(false);
+	});
+
+	it("should update effective selections with numeric ID", () => {
+		const { TEMP_updateExROptionSelection } = useStore.getState();
+
+		TEMP_updateExROptionSelection(10001, 5);
+		expect(useStore.getState().effectiveSelections[10001]).toBe(5);
+	});
 });

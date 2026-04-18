@@ -1,7 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
-import { type ExRTabDto, OptionTab } from "../src/type";
+import { getUniqueOptionId } from "../src/logics/optionUtils";
+import {
+	type ExRTabDto,
+	OptionTab,
+	SPAWN_COUNT_OPTION_ID,
+	SPAWN_RATE_OPTION_ID,
+} from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExRCategoryList Component Selection", () => {
@@ -36,7 +42,7 @@ describe("ExRCategoryList Component Selection", () => {
 					Name: "Sheriff",
 					Options: [
 						{
-							Id: 50,
+							Id: SPAWN_RATE_OPTION_ID,
 							IsActive: true,
 							TranslatedName: "Spawn Rate",
 							Selection: 0,
@@ -45,7 +51,7 @@ describe("ExRCategoryList Component Selection", () => {
 							Childs: [],
 						},
 						{
-							Id: 51,
+							Id: SPAWN_COUNT_OPTION_ID,
 							IsActive: true,
 							TranslatedName: "Spawn Count",
 							Selection: 0,
@@ -97,7 +103,12 @@ describe("ExRCategoryList Component Selection", () => {
 	it("filters out 50 and 51 from role category body", () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
 		// Set a non-zero spawn rate so the accordion is enabled
-		useStore.getState().TEMP_updateExROptionSelection("2-50", 1); // Category 2, Option 50, Index 1 (Value 100)
+		useStore
+			.getState()
+			.TEMP_updateExROptionSelection(
+				getUniqueOptionId(OptionTab.CrewmateTab, 2, SPAWN_RATE_OPTION_ID),
+				1,
+			); // Category 2, Option 50, Index 1 (Value 100)
 		render(<ExRCategoryList tabs={mockTabs} />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,

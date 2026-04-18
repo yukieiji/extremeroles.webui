@@ -27,7 +27,7 @@ export function PresetSelector({ tabs }: PresetSelectorProps) {
 		return o.Id === 0;
 	});
 
-	const uniqueId = getUniqueOptionId(0, 0);
+	const uniqueId = getUniqueOptionId(0, 0, 0);
 	const effectiveSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueId];
 	});

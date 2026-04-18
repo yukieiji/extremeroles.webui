@@ -18,7 +18,10 @@ export function ExRHeaderOptionControl({
 	option,
 	label,
 }: ExRHeaderOptionControlProps) {
-	const uniqueId = getUniqueOptionId(categoryId, option.Id);
+	const selectedExRTabId = useStore((state) => {
+		return state.selectedExRTabId;
+	});
+	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
 	const effectiveSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueId];
 	});

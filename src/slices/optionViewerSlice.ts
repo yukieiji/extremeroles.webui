@@ -12,16 +12,16 @@ export interface OptionViewerSlice {
 	selectedExRTabId: OptionTab;
 	isTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
-	openedExROptionIds: Record<string, boolean>;
-	effectiveSelections: Record<string, number>;
+	openedExROptionIds: Record<number, boolean>;
+	effectiveSelections: Record<number, number>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
-	toggleExROption: (uniqueOptionId: string) => void;
+	toggleExROption: (uniqueOptionId: number) => void;
 	TEMP_updateExROptionSelection: (
-		uniqueOptionId: string,
+		uniqueOptionId: number,
 		selection: number,
 	) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
@@ -69,7 +69,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		toggleExROption: (uniqueOptionId: string) => {
+		toggleExROption: (uniqueOptionId: number) => {
 			set((state) => {
 				return {
 					openedExROptionIds: {
@@ -80,7 +80,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			});
 		},
 		TEMP_updateExROptionSelection: (
-			uniqueOptionId: string,
+			uniqueOptionId: number,
 			selection: number,
 		) => {
 			set((state) => {
