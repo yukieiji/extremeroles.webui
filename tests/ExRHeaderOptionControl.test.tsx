@@ -2,12 +2,13 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "../src/feature/ExRHeaderOptionControl";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
+import { SPAWN_RATE_OPTION_ID } from "../src/type";
 import type { ExROptionDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExRHeaderOptionControl", () => {
 	const mockOption: ExROptionDto = {
-		Id: 50,
+		Id: SPAWN_RATE_OPTION_ID,
 		IsActive: true,
 		TranslatedName: "レート",
 		Selection: 0,
@@ -54,7 +55,9 @@ describe("ExRHeaderOptionControl", () => {
 		// Check if store was updated
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
-		expect(state.effectiveSelections[getUniqueOptionId(tabId, 1, 50)]).toBe(1);
+		expect(
+			state.effectiveSelections[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)],
+		).toBe(1);
 	});
 
 	it("updates selection when input is changed", () => {
@@ -78,7 +81,9 @@ describe("ExRHeaderOptionControl", () => {
 
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
-		expect(state.effectiveSelections[getUniqueOptionId(tabId, 1, 50)]).toBe(2); // 100 is at index 2
+		expect(
+			state.effectiveSelections[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)],
+		).toBe(2); // 100 is at index 2
 	});
 
 	it("prevents click propagation to parent", () => {

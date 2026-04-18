@@ -1,6 +1,12 @@
 import { z } from "zod";
 
 /**
+ * 特別な意味を持つオプションIDの定数
+ */
+export const SPAWN_RATE_OPTION_ID = 50;
+export const SPAWN_COUNT_OPTION_ID = 51;
+
+/**
  * タブの種類を表す定数
  */
 export const OptionTab = {

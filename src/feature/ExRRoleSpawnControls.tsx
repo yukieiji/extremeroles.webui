@@ -1,5 +1,6 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
 import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
+import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
 
@@ -20,8 +21,16 @@ export function ExRRoleSpawnControls({
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
 	});
-	const uniqueRateId = getUniqueOptionId(selectedExRTabId, categoryId, 50);
-	const uniqueCountId = getUniqueOptionId(selectedExRTabId, categoryId, 51);
+	const uniqueRateId = getUniqueOptionId(
+		selectedExRTabId,
+		categoryId,
+		SPAWN_RATE_OPTION_ID,
+	);
+	const uniqueCountId = getUniqueOptionId(
+		selectedExRTabId,
+		categoryId,
+		SPAWN_COUNT_OPTION_ID,
+	);
 
 	const effectiveSpawnRateSelection = useStore((state) => {
 		return state.effectiveSelections[uniqueRateId];
