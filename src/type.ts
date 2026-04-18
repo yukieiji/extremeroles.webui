@@ -121,7 +121,7 @@ export const OptionValueTypeSchema = z.preprocess((val) => {
 		return OptionValueType[val as keyof typeof OptionValueType];
 	}
 	return val;
-}, z.nativeEnum(OptionValueType));
+}, z.enum(OptionValueType));
 
 export interface AuRoleOption {
 	MaxCount: number;
