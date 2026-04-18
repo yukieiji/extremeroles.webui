@@ -13,7 +13,6 @@ export interface ExROptionMetaData {
 }
 
 export interface ExROptionValueData {
-	isActive: boolean;
 	selection: number;
 	values: number[] | string[];
 }
