@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { exrOptionMetaData } from "../src/logics/api";
+import { beforeEach, describe, expect, it } from "vitest";
+import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import {
 	findClosestIndex,
 	getBaseOptionName,
@@ -10,6 +10,10 @@ import {
 } from "../src/logics/optionUtils";
 
 describe("optionUtils", () => {
+	beforeEach(() => {
+		resetExrOptionMetaData();
+	});
+
 	describe("getUniqueOptionId", () => {
 		it("should generate numeric ID correctly", () => {
 			// Tab 1, Category 2, Option 3 -> 100,000,000 + 20,000 + 3 = 100,020,003

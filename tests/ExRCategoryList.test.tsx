@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
-import { exrOptionMetaData } from "../src/logics/api";
+import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import {
 	type ExRTabDto,
@@ -76,6 +76,7 @@ describe("ExRCategoryList Component Selection", () => {
 	];
 
 	beforeEach(() => {
+		resetExrOptionMetaData();
 		useStore.getState().resetViewer();
 
 		// exrOptionMetaData のセットアップ

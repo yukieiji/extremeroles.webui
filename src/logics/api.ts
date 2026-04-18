@@ -42,6 +42,18 @@ export function resetApiCache() {
 	auOptionsPromise = null;
 }
 
+/**
+ * ExRオプションのメタデータをリセットする（テスト用）
+ */
+export function resetExrOptionMetaData() {
+	exrOptionMetaData.tabInfo = {} as Record<OptionTab, string>;
+	exrOptionMetaData.tabIdMap = {} as Record<OptionTab, number[]>;
+	exrOptionMetaData.categoryInfo = {};
+	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
+	exrOptionMetaData.optionMetaData = {};
+	exrOptionMetaData.childOptionMap = {};
+}
+
 async function createExROptionMetaData(delay: number): Promise<void> {
 	if (delay > 0) {
 		await new Promise((resolve) => {

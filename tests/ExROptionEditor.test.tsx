@@ -6,6 +6,7 @@ import {
 	exrOptionMetaData,
 	getExrOptions,
 	resetApiCache,
+	resetExrOptionMetaData,
 } from "../src/logics/api";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
@@ -103,6 +104,7 @@ describe("ExROptionEditor", () => {
 
 	beforeEach(async () => {
 		resetApiCache();
+		resetExrOptionMetaData();
 		useStore.getState().resetViewer();
 
 		vi.stubGlobal(

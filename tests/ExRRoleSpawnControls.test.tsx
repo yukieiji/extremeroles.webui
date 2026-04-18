@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
-import { exrOptionMetaData } from "../src/logics/api";
+import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
@@ -49,6 +49,7 @@ describe("ExRRoleSpawnControls", () => {
 	};
 
 	beforeEach(() => {
+		resetExrOptionMetaData();
 		useStore.getState().resetViewer();
 	});
 
