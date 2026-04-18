@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import {
 	findClosestIndex,
 	getBaseOptionName,
@@ -7,9 +8,12 @@ import {
 	getUniqueOptionId,
 	groupOptionPairs,
 } from "../src/logics/optionUtils";
-import type { ExROptionDto } from "../src/type";
 
 describe("optionUtils", () => {
+	beforeEach(() => {
+		resetExrOptionMetaData();
+	});
+
 	describe("getUniqueOptionId", () => {
 		it("should generate numeric ID correctly", () => {
 			// Tab 1, Category 2, Option 3 -> 100,000,000 + 20,000 + 3 = 100,020,003
@@ -99,45 +103,65 @@ describe("optionUtils", () => {
 	});
 
 	describe("groupOptionPairs", () => {
-		const mockOption = (id: number, name: string): ExROptionDto => {
-			return {
-				Id: id,
-				IsActive: true,
-				TranslatedName: name,
-				Selection: 0,
-				Format: "",
-				RangeMeta: { Type: "Int32", Values: [0, 1, 2] },
-				Childs: [],
+		const setupMockMeta = (
+			tabId: number,
+			categoryId: number,
+			id: number,
+			name: string,
+		) => {
+			const uniqueId = getUniqueOptionId(tabId, categoryId, id);
+			exrOptionMetaData.optionMetaData[uniqueId] = {
+				translatedName: name,
+				format: "",
+				type: "Int32",
 			};
 		};
 
 		it("should group consecutive min/max pairs", () => {
-			const options = [
-				mockOption(1, "A 最小"),
-				mockOption(2, "A 最大"),
-				mockOption(3, "B"),
-			];
-			const grouped = groupOptionPairs(options);
+			const tabId = 1;
+			const categoryId = 1;
+			setupMockMeta(tabId, categoryId, 1, "A 最小");
+			setupMockMeta(tabId, categoryId, 2, "A 最大");
+			setupMockMeta(tabId, categoryId, 3, "B");
+
+			const options = [1, 2, 3];
+			const grouped = groupOptionPairs(tabId, categoryId, options);
 			expect(grouped).toHaveLength(2);
 			expect(grouped[0]).toEqual({
 				type: "pair",
 				baseName: "A",
-				min: options[0],
-				max: options[1],
-				minLabel: "最小",
-				maxLabel: "最大",
+				minData: {
+					uniqueOptionId: getUniqueOptionId(tabId, categoryId, 1),
+					metaData:
+						exrOptionMetaData.optionMetaData[
+							getUniqueOptionId(tabId, categoryId, 1)
+						],
+					label: "最小",
+				},
+				maxData: {
+					uniqueOptionId: getUniqueOptionId(tabId, categoryId, 2),
+					metaData:
+						exrOptionMetaData.optionMetaData[
+							getUniqueOptionId(tabId, categoryId, 2)
+						],
+					label: "最大",
+				},
 			});
-			expect(grouped[1]).toEqual(options[2]);
+			expect(grouped[1]).toBe(3);
 		});
 
 		it("should not group non-consecutive pairs", () => {
-			const options = [
-				mockOption(1, "A 最小"),
-				mockOption(3, "B"),
-				mockOption(2, "A 最大"),
-			];
-			const grouped = groupOptionPairs(options);
-			expect(grouped).toHaveLength(3);
+			const tabId = 1;
+			const categoryId = 2;
+			setupMockMeta(tabId, categoryId, 1, "A 最小");
+			setupMockMeta(tabId, categoryId, 3, "B");
+			setupMockMeta(tabId, categoryId, 2, "A 最大");
+
+			const options = [1, 3, 2];
+			const grouped = groupOptionPairs(tabId, categoryId, options);
+			// 仕様により、連続しないペアやその間の要素は除外される（最後の一つを除く）
+			expect(grouped).toHaveLength(1);
+			expect(grouped[0]).toBe(2);
 		});
 	});
 });
