@@ -30,7 +30,7 @@ function EditorContainer() {
 	const auData = use(getAuOptions());
 
 	if (selectedTab === "ExR") {
-		return <ExROptionEditor data={exrData} />;
+		return <ExROptionEditor />;
 	}
 
 	return <AuOptionEditor data={auData} />;

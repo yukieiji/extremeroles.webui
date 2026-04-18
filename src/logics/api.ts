@@ -23,7 +23,7 @@ const AU_OPTION_URL = "/au/option/";
 let exrOptionsPromise: Promise<void> | null = null;
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 
-const exrOptionMetaData: ExROptionMetaDataRecords = {
+export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
 	tabInfo: {} as Record<OptionTab, string>,
 	categoryIdMap: {} as Record<OptionTab, number[]>,
