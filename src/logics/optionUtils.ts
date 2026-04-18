@@ -1,9 +1,11 @@
 import { useCallback } from "react";
-import type { ExROptionValueData, OptionData } from "../type";
+import type { ExROptionValueData, OptionData, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 import { exrOptionMetaData } from "./api";
 
-export function useOptionData(uniqueOptionId: number): ExROptionValueData {
+export function useOptionData(
+	uniqueOptionId: UniqueOptionId,
+): ExROptionValueData {
 	return useStore(
 		useCallback(
 			(state) => {
@@ -22,8 +24,9 @@ export function getUniqueOptionId(
 	tabId: number,
 	categoryId: number,
 	optionId: number,
-): number {
-	return tabId * 100_000_000 + categoryId * 10_000 + optionId;
+): UniqueOptionId {
+	const uniqueId = tabId * 100_000_000 + categoryId * 10_000 + optionId;
+	return uniqueId as UniqueOptionId;
 }
 
 /**
@@ -148,9 +151,9 @@ interface MinMaxOptionPair {
  * オプションリストを走査し、連続する最小・最大ペアをまとめます。
  */
 export function groupOptionPairs(
-	uniqueOptionIds: number[],
-): (number | MinMaxOptionPair)[] {
-	const result: (number | MinMaxOptionPair)[] = [];
+	uniqueOptionIds: UniqueOptionId[],
+): (UniqueOptionId | MinMaxOptionPair)[] {
+	const result: (UniqueOptionId | MinMaxOptionPair)[] = [];
 
 	for (let i = 0; i < uniqueOptionIds.length; i++) {
 		const currentUniqueId = uniqueOptionIds[i];

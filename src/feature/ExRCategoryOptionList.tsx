@@ -1,4 +1,5 @@
 import { groupOptionPairs } from "../logics/optionUtils";
+import type { UniqueOptionId } from "../type";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExRPairedOptionRow } from "./ExRPairedOptionRow";
 
@@ -6,7 +7,7 @@ const GROUPED_CATEGORY_IDS = [5, 6];
 
 interface ExRCategoryOptionListProps {
 	categoryId: number;
-	uniqueOptionIds: number[];
+	uniqueOptionIds: UniqueOptionId[];
 }
 
 /**

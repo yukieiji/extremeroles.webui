@@ -3,7 +3,7 @@ import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
-import type { ExROptionValueData, OptionTab } from "../type";
+import type { ExROptionValueData, OptionTab, UniqueOptionId } from "../type";
 
 /**
  * オプション表示エリア（ExR オプションのタブなど）の状態を管理するスライスのインターフェース
@@ -16,22 +16,22 @@ export interface OptionViewerSlice {
 	effectiveSelections: Record<number, number>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
-	valueData: Record<number, ExROptionValueData>;
-	isOptionActive: Record<number, boolean>;
+	valueData: Record<UniqueOptionId, ExROptionValueData>;
+	isOptionActive: Record<UniqueOptionId, boolean>;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
-	toggleExROption: (uniqueOptionId: number) => void;
+	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
 	TEMP_updateExROptionSelection: (
-		uniqueOptionId: number,
+		uniqueOptionId: UniqueOptionId,
 		selection: number,
 	) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
 	setExROptions: (
-		valueData: Record<number, ExROptionValueData>,
-		optionActiveData: Record<number, boolean>,
+		valueData: Record<UniqueOptionId, ExROptionValueData>,
+		optionActiveData: Record<UniqueOptionId, boolean>,
 	) => void;
 }
 
