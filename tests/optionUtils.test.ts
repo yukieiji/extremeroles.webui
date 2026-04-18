@@ -124,8 +124,12 @@ describe("optionUtils", () => {
 			setupMockMeta(tabId, categoryId, 2, "A 最大");
 			setupMockMeta(tabId, categoryId, 3, "B");
 
-			const options = [1, 2, 3];
-			const grouped = groupOptionPairs(tabId, categoryId, options);
+			const options = [
+				getUniqueOptionId(tabId, categoryId, 1),
+				getUniqueOptionId(tabId, categoryId, 2),
+				getUniqueOptionId(tabId, categoryId, 3),
+			];
+			const grouped = groupOptionPairs(options);
 			expect(grouped).toHaveLength(2);
 			expect(grouped[0]).toEqual({
 				type: "pair",
@@ -147,7 +151,7 @@ describe("optionUtils", () => {
 					label: "最大",
 				},
 			});
-			expect(grouped[1]).toBe(3);
+			expect(grouped[1]).toBe(getUniqueOptionId(tabId, categoryId, 3));
 		});
 
 		it("should not group non-consecutive pairs", () => {
@@ -157,11 +161,15 @@ describe("optionUtils", () => {
 			setupMockMeta(tabId, categoryId, 3, "B");
 			setupMockMeta(tabId, categoryId, 2, "A 最大");
 
-			const options = [1, 3, 2];
-			const grouped = groupOptionPairs(tabId, categoryId, options);
+			const options = [
+				getUniqueOptionId(tabId, categoryId, 1),
+				getUniqueOptionId(tabId, categoryId, 3),
+				getUniqueOptionId(tabId, categoryId, 2),
+			];
+			const grouped = groupOptionPairs(options);
 			// 仕様により、連続しないペアやその間の要素は除外される（最後の一つを除く）
 			expect(grouped).toHaveLength(1);
-			expect(grouped[0]).toBe(2);
+			expect(grouped[0]).toBe(getUniqueOptionId(tabId, categoryId, 2));
 		});
 	});
 });
