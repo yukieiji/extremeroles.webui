@@ -13,6 +13,11 @@ test.beforeEach(async ({ page }) => {
 	await expect(page.getByText("Loading data...")).not.toBeVisible({
 		timeout: 30000,
 	});
+
+	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
+	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+		timeout: 15000,
+	});
 });
 
 test("ExR Option Accordion behavior", async ({ page }) => {

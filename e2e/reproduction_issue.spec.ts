@@ -10,6 +10,11 @@ test.beforeEach(async ({ page }) => {
 		timeout: 30000,
 	});
 
+	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
+	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+		timeout: 15000,
+	});
+
 	await page.getByRole("button", { name: "ExR Options" }).click();
 });
 
@@ -38,7 +43,8 @@ test("Option ID 52 and higher should be visible in role categories when active",
 	const content = forasCategory.locator(
 		'[data-testid="exr-category-list-container"]',
 	);
-	await expect(content).toBeVisible();
+	// アコーディオンの開閉アニメーションや、レンダリングの遅延を考慮して待機
+	await expect(content).toBeVisible({ timeout: 10000 });
 
 	// 6. ID 52 のオプション（アサインウェイト）が表示されているか確認
 	// 修正前は ID 50/51 の子要素として定義されているため表示されないはず

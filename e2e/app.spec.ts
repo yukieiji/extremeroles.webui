@@ -13,12 +13,16 @@ test.beforeEach(async ({ page }) => {
 	await expect(page.getByText("Loading data...")).not.toBeVisible({
 		timeout: 30000,
 	});
+
+	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
+	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+		timeout: 15000,
+	});
 });
 
 test("has sidebar and json viewer", async ({ page }) => {
 	// サイドバーが表示されていることを確認
 	const sidebar = page.getByLabel("オプションサイドバー");
-	await expect(sidebar).toBeVisible({ timeout: 15000 });
 
 	// サイドバー内のボタンを明示的に指定
 	await expect(
