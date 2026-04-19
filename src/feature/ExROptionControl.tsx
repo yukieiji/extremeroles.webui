@@ -25,8 +25,8 @@ export function ExROptionControl({
 		return state.updateExROptionSelection;
 	});
 
-	const handleChange = async (newSelection: number) => {
-		await updateExROptionSelection(uniqueOptionId, newSelection);
+	const handleChange = async (selection: number) => {
+		await updateExROptionSelection({ uniqueOptionId, selection });
 	};
 
 	if (type === "String") {

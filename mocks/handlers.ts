@@ -91,7 +91,7 @@ export const handlers = [
           for (const opt of options) {
             if (opt.Id === OptionId) {
               opt.Selection = Selection;
-              opt.IsActive = true;
+              opt.IsActive = true; 
               return true;
             }
             if (opt.Childs && updateOption(opt.Childs)) {

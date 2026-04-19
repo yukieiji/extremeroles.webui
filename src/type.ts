@@ -285,3 +285,8 @@ export interface OptionData {
 	metaData: ExROptionMetaData;
 	label: string;
 }
+
+export interface UpdateExRArg {
+	uniqueOptionId: UniqueOptionId;
+	selection: number
+}

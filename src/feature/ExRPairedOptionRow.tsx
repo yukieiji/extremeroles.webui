@@ -30,11 +30,11 @@ export function ExRPairedOptionRow({
 	});
 
 	const handleMinChange = async (newSelection: number) => {
-		await updateExROptionSelection(minUniqueOptionId, newSelection);
+		await updateExROptionSelection({ uniqueOptionId: minUniqueOptionId, selection: newSelection});
 	};
 
 	const handleMaxChange = async (newSelection: number) => {
-		await updateExROptionSelection(maxUniqueOptionId, newSelection);
+		await updateExROptionSelection({ uniqueOptionId:  maxUniqueOptionId, selection: newSelection });
 	};
 
 	const content = (

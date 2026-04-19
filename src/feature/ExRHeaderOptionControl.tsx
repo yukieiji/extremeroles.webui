@@ -30,11 +30,11 @@ export function ExRHeaderOptionControl({
 	const values = option.RangeMeta.Values as number[];
 
 	const handleSelectionChange = async (newSelection: number) => {
-		await updateExROptionSelection(uniqueId, newSelection);
+		await updateExROptionSelection({ uniqueOptionId: uniqueId, selection: newSelection});
 	};
 
 	const handleInputChange = async (val: number) => {
-		await updateExROptionSelection(uniqueId, findClosestIndex(values, val));
+		await updateExROptionSelection({ uniqueOptionId: uniqueId, selection: findClosestIndex(values, val)});
 	};
 
 	return (
