@@ -18,8 +18,8 @@ import auOptionData from './get/au/setting-webui-dev_20260321.json';
 const masterValidatedExRMockData: ExRTabDto[] = ExRTabDtoArraySchema.parse(exrOptionData);
 const masterValidatedAuMockData: AuOptionCategoryDto[] = AuOptionCategoryDtoArraySchema.parse(auOptionData);
 
-let curValidatedExRMockData: ExRTabDto[] = JSON.parse(JSON.stringify(masterValidatedExRMockData));
-let curValidatedAuMockData: AuOptionCategoryDto[] = JSON.parse(JSON.stringify(masterValidatedAuMockData));
+let curValidatedExRMockData: ExRTabDto[] = structuredClone(masterValidatedExRMockData);
+let curValidatedAuMockData: AuOptionCategoryDto[] = structuredClone(masterValidatedAuMockData);
 
 /**
  * 更新されたオプションのモックデータ作成
@@ -140,11 +140,11 @@ export const handlers = [
 
     // 実際にデータを更新する
     for (const category of curValidatedAuMockData) {
-        const option = category.Options.find(o => o.Info.OptionName === OptionName);
-        if (option) {
-            option.Value = NewValue;
-            break;
-        }
+      const option = category.Options.find(o => o.Info.OptionName === OptionName);
+      if (option) {
+        option.Value = NewValue;
+        break;
+      }
     }
 
     return HttpResponse.json(validatedUpdatedOptions);
@@ -154,8 +154,8 @@ export const handlers = [
    * モックデータをリセットするハンドラー
    */
   http.post('/mock/reset', () => {
-    curValidatedExRMockData = JSON.parse(JSON.stringify(masterValidatedExRMockData));
-    curValidatedAuMockData = JSON.parse(JSON.stringify(masterValidatedAuMockData));
+    curValidatedExRMockData = structuredClone(masterValidatedExRMockData);
+    curValidatedAuMockData = structuredClone(masterValidatedAuMockData);
     return new HttpResponse(null, { status: 200 });
   }),
 ];
