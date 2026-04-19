@@ -1,5 +1,5 @@
 import { OptionAccordion } from "../components/blocks/OptionAccordion";
-import { exrOptionMetaData } from "../logics/api";
+import { exrOptionMetaData } from "../logics/constants";
 import { useStore } from "../useStore";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExROptionRow } from "./ExROptionRow";

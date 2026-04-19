@@ -1,5 +1,6 @@
 import type { StateCreator } from "zustand";
-import { exrOptionMetaData, updateExrOption } from "../logics/api";
+import { updateExrOption } from "../logics/api";
+import { exrOptionMetaData } from "../logics/constants";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
@@ -98,6 +99,24 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		) => {
 			const { tabId, categoryId, optionId } =
 				parseUniqueOptionId(uniqueOptionId);
+
+			// 楽観的更新: 先にストアを更新して UI の反応を速くする
+			set((state) => {
+				const current = state.valueData[uniqueOptionId];
+				if (current && current.selection === selection) {
+					return state;
+				}
+				return {
+					valueData: {
+						...state.valueData,
+						[uniqueOptionId]: {
+							...current,
+							selection,
+						},
+					},
+				};
+			});
+
 			try {
 				const result = await updateExrOption(
 					tabId,
@@ -105,6 +124,10 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 					optionId,
 					selection,
 				);
+
+				if (!result) {
+					return;
+				}
 
 				set((state) => {
 					let nextValueData = state.valueData;

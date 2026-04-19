@@ -69,10 +69,13 @@ describe("optionViewerSlice", () => {
 		expect(useStore.getState().openedExROptionIds[10001]).toBe(false);
 	});
 
-	it("should update effective selections with numeric ID", () => {
-		const { TEMP_updateExROptionSelection } = useStore.getState();
+	it("should set exr options", () => {
+		const { setExROptions } = useStore.getState();
+		const valueData = { 1000001: { selection: 1, values: [0, 1] } };
+		const isOptionActive = { 1000001: true };
 
-		TEMP_updateExROptionSelection(10001, 5);
-		expect(useStore.getState().effectiveSelections[10001]).toBe(5);
+		setExROptions(valueData, isOptionActive);
+		expect(useStore.getState().valueData[1000001]).toEqual(valueData[1000001]);
+		expect(useStore.getState().isOptionActive[1000001]).toBe(true);
 	});
 });

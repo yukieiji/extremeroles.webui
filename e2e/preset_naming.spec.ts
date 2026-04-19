@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	await page.context().clearCookies();
 	// タイムアウトを延長
 	test.setTimeout(60000);
 

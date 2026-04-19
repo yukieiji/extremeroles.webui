@@ -5,6 +5,10 @@ import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
 import { getAuOptions, getExrOptions } from "./logics/api";
+import {
+	exrInitialOptionActive,
+	exrInitialValueData,
+} from "./logics/constants";
 import { useStore } from "./useStore";
 
 /**
@@ -13,6 +17,18 @@ import { useStore } from "./useStore";
  */
 function PresetSelectorContainer() {
 	use(getExrOptions());
+	const setExROptions = useStore((state) => {
+		return state.setExROptions;
+	});
+
+	// 初回のみデータをセット
+	const isDataLoaded = useStore((state) => {
+		return Object.keys(state.valueData).length > 0;
+	});
+	if (!isDataLoaded) {
+		setExROptions(exrInitialValueData, exrInitialOptionActive);
+	}
+
 	return <PresetSelector />;
 }
 
@@ -27,6 +43,18 @@ function EditorContainer() {
 
 	// React 19 の use() フックを使用してデータを取得
 	use(getExrOptions());
+	const setExROptions = useStore((state) => {
+		return state.setExROptions;
+	});
+
+	// 初回のみデータをセット
+	const isDataLoaded = useStore((state) => {
+		return Object.keys(state.valueData).length > 0;
+	});
+	if (!isDataLoaded) {
+		setExROptions(exrInitialValueData, exrInitialOptionActive);
+	}
+
 	const auData = use(getAuOptions());
 
 	if (selectedTab === "ExR") {

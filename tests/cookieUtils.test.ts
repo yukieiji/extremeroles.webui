@@ -22,6 +22,8 @@ describe("cookieUtils", () => {
 		savePresetNamesToCookie(names);
 
 		const loaded = loadPresetNamesFromCookie();
+		// Cookie に保存されるときはキーが文字列になるため、
+		// Zod スキーマで transform されて数値キーに戻る
 		expect(loaded).toEqual(names);
 	});
 
@@ -37,8 +39,8 @@ describe("cookieUtils", () => {
 	});
 
 	it("should handle schema mismatch by returning empty object", () => {
-		// 値が文字列ではない場合
-		setCookie("exr_preset_names", JSON.stringify({ 0: 123 }));
+		// 値が文字列ではない場合（Zod record(z.string(), z.string()) に違反）
+		setCookie("exr_preset_names", JSON.stringify({ "0": 123 }));
 		const loaded = loadPresetNamesFromCookie();
 		expect(loaded).toEqual({});
 	});

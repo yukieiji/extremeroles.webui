@@ -1,6 +1,6 @@
 import { useEffect, useTransition } from "react";
 import { ColoredText } from "../components/parts/ColoredText";
-import { exrOptionMetaData } from "../logics/api";
+import { exrOptionMetaData } from "../logics/constants";
 import type { OptionTab } from "../type";
 import { useStore } from "../useStore";
 

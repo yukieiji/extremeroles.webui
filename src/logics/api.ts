@@ -1,14 +1,6 @@
-import type {
-	AuOptionCategoryDto,
-	ExROptionDto,
-	ExROptionMetaDataRecords,
-	ExROptionValueData,
-	UpdatedOptions,
-} from "../type";
-import { ExRTabDtoArraySchema, OptionTab, UpdatedOptionsSchema } from "../type";
-
-import { useStore } from "../useStore";
-import { getUniqueOptionId } from "./optionUtils";
+import type { AuOptionCategoryDto, UpdatedOptions } from "../type";
+import { ExRTabDtoArraySchema, UpdatedOptionsSchema } from "../type";
+import { processExRTabData } from "./constants";
 
 /**
  * API エンドポイントの定数定義
@@ -23,17 +15,6 @@ const AU_OPTION_URL = "/au/option/";
 let exrOptionsPromise: Promise<void> | null = null;
 let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
 
-export const exrOptionMetaData: ExROptionMetaDataRecords = {
-	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
-	tabInfo: {} as Record<OptionTab, string>,
-	tabIdMap: {} as Record<OptionTab, number[]>,
-	categoryTabMap: {} as Record<number, OptionTab>,
-	categoryInfo: {},
-	globalCategoryIdTopLevelMap: {},
-	optionMetaData: {},
-	childOptionMap: {},
-};
-
 /**
  * キャッシュをリセットする（テスト用）
  */
@@ -42,19 +23,7 @@ export function resetApiCache() {
 	auOptionsPromise = null;
 }
 
-/**
- * ExRオプションのメタデータをリセットする（テスト用）
- */
-export function resetExrOptionMetaData() {
-	exrOptionMetaData.tabInfo = {} as Record<OptionTab, string>;
-	exrOptionMetaData.tabIdMap = {} as Record<OptionTab, number[]>;
-	exrOptionMetaData.categoryInfo = {};
-	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
-	exrOptionMetaData.optionMetaData = {};
-	exrOptionMetaData.childOptionMap = {};
-}
-
-async function createExROptionMetaData(delay: number): Promise<void> {
+async function fetchExROptions(delay: number): Promise<void> {
 	if (delay > 0) {
 		await new Promise((resolve) => {
 			return setTimeout(resolve, delay);
@@ -67,65 +36,7 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 
 	const jsonData = await res.json();
 	const data = await ExRTabDtoArraySchema.parseAsync(jsonData);
-
-	const valueData: Record<number, ExROptionValueData> = {};
-	const isOptionActive: Record<number, boolean> = {};
-
-	const processOptions = (
-		options: ExROptionDto[],
-		tabId: OptionTab,
-		categoryId: number,
-		parentOptionId: number | null,
-	) => {
-		for (const opt of options) {
-			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
-
-			exrOptionMetaData.optionMetaData[uniqueId] = {
-				translatedName: opt.TranslatedName,
-				format: opt.Format,
-				type: opt.RangeMeta.Type,
-			};
-
-			valueData[uniqueId] = {
-				selection: opt.Selection,
-				values: opt.RangeMeta.Values,
-			};
-			isOptionActive[uniqueId] = opt.IsActive;
-			if (parentOptionId !== null) {
-				const parentUniqueId = getUniqueOptionId(
-					tabId,
-					categoryId,
-					parentOptionId,
-				);
-				if (!exrOptionMetaData.childOptionMap[parentUniqueId]) {
-					exrOptionMetaData.childOptionMap[parentUniqueId] = [];
-				}
-				exrOptionMetaData.childOptionMap[parentUniqueId].push(uniqueId);
-			}
-
-			if (opt.Childs && opt.Childs.length > 0) {
-				processOptions(opt.Childs, tabId, categoryId, opt.Id);
-			}
-		}
-	};
-
-	for (const tab of data) {
-		exrOptionMetaData.tabInfo[tab.Id] = tab.Name;
-		exrOptionMetaData.tabIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
-		for (const category of tab.Categories) {
-			exrOptionMetaData.categoryInfo[category.Id] = category.Name;
-			exrOptionMetaData.categoryTabMap[category.Id] = tab.Id;
-			if (tab.Id === OptionTab.GeneralTab) {
-				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
-				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
-					category.Options.map((o) =>
-						getUniqueOptionId(tab.Id, category.Id, o.Id),
-					); // カテゴリIDとそのカテゴリに属するオプションIDの対応を保存
-			}
-			processOptions(category.Options, tab.Id, category.Id, null);
-		}
-	}
-	useStore.getState().setExROptions(valueData, isOptionActive);
+	processExRTabData(data);
 }
 
 /**
@@ -137,7 +48,7 @@ export function getExrOptions(): Promise<void> {
 	}
 	// @ts-expect-error - テスト用
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
-	exrOptionsPromise = createExROptionMetaData(delay);
+	exrOptionsPromise = fetchExROptions(delay);
 	return exrOptionsPromise;
 }
 
@@ -163,6 +74,10 @@ export async function updateExrOption(
 
 	if (!res.ok) {
 		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	if (res.status === 202) {
+		return null as unknown as UpdatedOptions;
 	}
 
 	const jsonData = await res.json();

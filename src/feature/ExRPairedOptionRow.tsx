@@ -2,7 +2,7 @@ import { OptionPairedSliderControl } from "../components/blocks/OptionPairedSlid
 import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
 import { OptionRowContainer } from "../components/parts/OptionRowContainer";
-import { useOptionData } from "../logics/optionUtils";
+import { useOptionData } from "../hooks/useOptionData";
 import type { OptionData } from "../type";
 import { useStore } from "../useStore";
 

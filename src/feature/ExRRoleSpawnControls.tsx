@@ -1,9 +1,6 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
-import {
-	findClosestIndex,
-	getUniqueOptionId,
-	useOptionData,
-} from "../logics/optionUtils";
+import { useOptionData } from "../hooks/useOptionData";
+import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 
@@ -57,13 +54,17 @@ export function ExRRoleSpawnControls({
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = async (newSelection: number) => {
-		await updateExROptionSelection(uniqueRateId, newSelection);
-
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
+			await Promise.all([
+				updateExROptionSelection(uniqueRateId, newSelection),
+				updateExROptionSelection(uniqueCountId, 0),
+			]);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
+		} else {
+			await updateExROptionSelection(uniqueRateId, newSelection);
 		}
 	};
 
@@ -74,24 +75,26 @@ export function ExRRoleSpawnControls({
 	const handleCountUIChange = async (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			const rateUpdatePromise = updateExROptionSelection(
-				uniqueRateId,
-				findClosestIndex(rateValues, 0),
-			);
-			const countUpdatePromise = updateExROptionSelection(uniqueCountId, 1); // 表示上は0だけど、実際の選択肢は1（最小値）にする
-			await Promise.all([rateUpdatePromise, countUpdatePromise]); // 両方の更新が完了するのを待つ
+			await Promise.all([
+				updateExROptionSelection(uniqueRateId, findClosestIndex(rateValues, 0)),
+				updateExROptionSelection(uniqueCountId, 0),
+			]);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
-				await updateExROptionSelection(
-					uniqueRateId,
-					findClosestIndex(rateValues, 10),
-				);
+				await Promise.all([
+					updateExROptionSelection(
+						uniqueRateId,
+						findClosestIndex(rateValues, 10),
+					),
+					updateExROptionSelection(uniqueCountId, newUISelection - 1),
+				]);
+			} else {
+				await updateExROptionSelection(uniqueCountId, newUISelection - 1);
 			}
-			await updateExROptionSelection(uniqueCountId, newUISelection - 1);
 		}
 	};
 

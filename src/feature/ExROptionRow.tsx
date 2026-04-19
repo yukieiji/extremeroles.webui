@@ -1,7 +1,7 @@
 import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
 import { OptionRowContainer } from "../components/parts/OptionRowContainer";
-import { exrOptionMetaData } from "../logics/api";
+import { exrOptionMetaData } from "../logics/constants";
 import type { UniqueOptionId } from "../type";
 import { ExROptionControl } from "./ExROptionControl";
 

@@ -1,13 +1,5 @@
-import { useShallow } from "zustand/react/shallow";
-import type { ExROptionValueData, OptionData, UniqueOptionId } from "../type";
-import { useStore } from "../useStore";
-import { exrOptionMetaData } from "./api";
-
-export function useOptionData(
-	uniqueOptionId: UniqueOptionId,
-): ExROptionValueData {
-	return useStore(useShallow((state) => state.valueData[uniqueOptionId]));
-}
+import type { OptionData, UniqueOptionId } from "../type";
+import { exrOptionMetaData } from "./constants";
 
 const TAB_ID_MULTIPLIER = 1_000_000_000_000;
 const CATEGORY_ID_MULTIPLIER = 1_000_000;

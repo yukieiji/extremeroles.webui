@@ -2,12 +2,13 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
+import { getExrOptions, resetApiCache } from "../src/logics/api";
 import {
+	exrInitialOptionActive,
+	exrInitialValueData,
 	exrOptionMetaData,
-	getExrOptions,
-	resetApiCache,
 	resetExrOptionMetaData,
-} from "../src/logics/api";
+} from "../src/logics/constants";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -116,6 +117,9 @@ describe("ExROptionEditor", () => {
 		);
 
 		await getExrOptions();
+		useStore
+			.getState()
+			.setExROptions(exrInitialValueData, exrInitialOptionActive);
 
 		// プロダクトコードのバグ（uniqueId ではなく optionId でストアを参照している箇所など）を
 		// 回避するために、テストコード側でグローバル状態を調整する

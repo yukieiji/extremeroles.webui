@@ -1,5 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
+import {
+	exrOptionMetaData,
+	resetExrOptionMetaData,
+} from "../src/logics/constants";
 import {
 	findClosestIndex,
 	getBaseOptionName,
@@ -16,18 +19,20 @@ describe("optionUtils", () => {
 
 	describe("getUniqueOptionId", () => {
 		it("should generate numeric ID correctly", () => {
-			// Tab 1, Category 2, Option 3 -> 100,000,000 + 20,000 + 3 = 100,020,003
-			expect(getUniqueOptionId(1, 2, 3)).toBe(100020003);
+			// 13桁目以降：タブID、7～13桁目：カテゴリーID、1～6桁目：オプションID
+			// Tab 1, Category 2, Option 3 -> 1 * 10^12 + 2 * 10^6 + 3 = 1,000,002,000,003
+			expect(getUniqueOptionId(1, 2, 3)).toBe(1_000_002_000_003);
 		});
 
 		it("should handle tab ID 0", () => {
-			// Tab 0, Category 1, Option 1 -> 10,000 + 1 = 10,001
-			expect(getUniqueOptionId(0, 1, 1)).toBe(10001);
+			// Tab 0, Category 1, Option 1 -> 0 * 10^12 + 1 * 10^6 + 1 = 1,000,001
+			expect(getUniqueOptionId(0, 1, 1)).toBe(1_000_001);
 		});
 
 		it("should handle large IDs", () => {
 			// Tab 10, Category 9999, Option 9999
-			expect(getUniqueOptionId(10, 9999, 9999)).toBe(1099999999);
+			// 10 * 10^12 + 9999 * 10^6 + 9999 = 10,009,999,009,999
+			expect(getUniqueOptionId(10, 9999, 9999)).toBe(10_009_999_009_999);
 		});
 	});
 

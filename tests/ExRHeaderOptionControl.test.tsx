@@ -40,7 +40,10 @@ describe("ExRHeaderOptionControl", () => {
 		expect(textInput).toBeInTheDocument();
 	});
 
-	it("updates selection when slider is moved", () => {
+	it("updates selection when slider is moved", async () => {
+		const updateExROptionSelection = vi.fn().mockResolvedValue(undefined);
+		useStore.setState({ updateExROptionSelection });
+
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -52,17 +55,19 @@ describe("ExRHeaderOptionControl", () => {
 		const slider = screen.getByRole("slider");
 		fireEvent.change(slider, { target: { value: "1" } });
 
-		// Check if store was updated
+		// Check if store update was called
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
-		expect(
-			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
-			],
-		).toBe(1);
+		expect(updateExROptionSelection).toHaveBeenCalledWith(
+			getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID),
+			1,
+		);
 	});
 
-	it("updates selection when input is changed", () => {
+	it("updates selection when input is changed", async () => {
+		const updateExROptionSelection = vi.fn().mockResolvedValue(undefined);
+		useStore.setState({ updateExROptionSelection });
+
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -83,11 +88,10 @@ describe("ExRHeaderOptionControl", () => {
 
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
-		expect(
-			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
-			],
-		).toBe(2); // 100 is at index 2
+		expect(updateExROptionSelection).toHaveBeenCalledWith(
+			getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID),
+			2, // 100 is at index 2
+		);
 	});
 
 	it("prevents click propagation to parent", () => {

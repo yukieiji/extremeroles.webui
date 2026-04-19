@@ -7,11 +7,7 @@ export const SPAWN_RATE_OPTION_ID = 50;
 export const SPAWN_COUNT_OPTION_ID = 51;
 
 // ユニークオプションIDは、タブID、カテゴリID、オプションIDの組み合わせを一意に識別するための型
-// 内部的にはnumber型ですが、ブランド型を使用して区別しています
-type Branded<T, Brand extends string> = T & {
-	readonly [K in Brand]: never; // neverなので実行時に存在しない
-};
-export type UniqueOptionId = Branded<number, "UniqueOptionId">;
+export type UniqueOptionId = number;
 
 export interface ExROptionMetaData {
 	translatedName: string;
