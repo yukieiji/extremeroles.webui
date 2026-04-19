@@ -217,34 +217,8 @@ describe("ExRRoleSpawnControls", () => {
 		});
 
 		const state = useStore.getState();
-		// In handleRateChange, when rate becomes 0, it calls updateExROptionSelection for SPAWN_RATE_OPTION_ID.
-		// BUT it doesn't seem to call it for SPAWN_COUNT_OPTION_ID?
-		// Wait, the test is "syncs count to 0 when rate is set to 0%".
-		// In ExRRoleSpawnControls.tsx:
-		/*
-		const handleRateChange = async (newSelection: number) => {
-			await updateExROptionSelection(uniqueRateId, newSelection);
 
-			// スポーンレートが0%なら、スポーン数も0としてリセット
-			if (rateValues[newSelection] === 0) {
-				if (isOpenedCategory) {
-					toggleExRCategory(categoryId);
-				}
-			}
-		};
-		*/
-		// It DOES NOT update spawn count selection in the store!
-		// It only relies on currentCountUISelection:
-		/*
-		const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
-		const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
-		*/
-		// So the UI selection becomes 0, but the store's spawnCountSelection remains unchanged.
-		// The test expects the store to be updated to 0.
-		// Let's check if the test should expect 0 in the store or just check the UI.
-		// If the store is NOT updated, then the test's expectation "state.valueData[...].selection).toBe(0)" is wrong if it was previously 1.
-
-		// UI should show 0
+		// UIが0を表示していることを確認
 		const countDisplay = screen
 			.getByTestId("spawn-count-control")
 			.querySelector('input[type="text"]');
