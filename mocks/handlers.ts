@@ -52,14 +52,14 @@ export const handlers = [
   /**
    * GET /exr/option/ のハンドラー
    */
-  http.get('*/exr/option/', () => {
+  http.get('/exr/option/', () => {
     return HttpResponse.json(curValidatedExRMockData);
   }),
 
   /**
    * PUT /exr/option/ のハンドラー
    */
-  http.put('*/exr/option/', async ({ request }) => {
+  http.put('/exr/option/', async ({ request }) => {
     const body = await request.json();
 
     // Zodを使用してリクエストボディをバリデーション
@@ -115,14 +115,14 @@ export const handlers = [
   /**
    * GET /au/option/ のハンドラー
    */
-  http.get('*/au/option/', () => {
+  http.get('/au/option/', () => {
     return HttpResponse.json(curValidatedAuMockData);
   }),
 
   /**
    * PUT /au/option/ のハンドラー
    */
-  http.put('*/au/option/', async ({ request }) => {
+  http.put('/au/option/', async ({ request }) => {
     const body = await request.json();
 
     // リクエストボディのバリデーション
@@ -137,7 +137,7 @@ export const handlers = [
   /**
    * モックデータをリセットするハンドラー
    */
-  http.post('*/mock/reset', () => {
+  http.post('/mock/reset', () => {
     curValidatedExRMockData = JSON.parse(JSON.stringify(masterValidatedExRMockData));
     curValidatedAuMockData = JSON.parse(JSON.stringify(masterValidatedAuMockData));
     return new HttpResponse(null, { status: 200 });
