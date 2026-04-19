@@ -22,7 +22,7 @@ function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
 			if (!childs) {
 				return false;
 			}
-			return childs.length > 0 && childs.some((id) => state.isOptionActive[id]);
+			return childs.length > 0 && childs.some((id) => state.isExROptionActive[id]);
 		}),
 	);
 
@@ -44,7 +44,7 @@ export function ExROptionItem({
 	const isActive = useStore(
 		useCallback(
 			(state) => {
-				return state.isOptionActive[uniqueOptionId];
+				return state.isExROptionActive[uniqueOptionId];
 			},
 			[uniqueOptionId],
 		),

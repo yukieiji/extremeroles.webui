@@ -1,17 +1,17 @@
 import { create } from "zustand";
 import type { OptionGroupToggleSidebarSlice } from "./slices/optionGroupToggleSidebarSlice";
 import { createOptionGroupToggleSidebarSlice } from "./slices/optionGroupToggleSidebarSlice";
-import type { OptionViewerSlice } from "./slices/optionViewerSlice";
-import { createOptionViewerSlice } from "./slices/optionViewerSlice";
+import type { ExROptionViewerSlice } from "./slices/exrOptionViewerSlice";
+import { exrOptionViewerSlice as createExROptionViewerSlice } from "./slices/exrOptionViewerSlice";
 
 /**
  * Zustand ストアの作成
  */
 export const useStore = create<
-	OptionGroupToggleSidebarSlice & OptionViewerSlice
+	OptionGroupToggleSidebarSlice & ExROptionViewerSlice
 >()((...a) => {
 	return {
 		...createOptionGroupToggleSidebarSlice(...a),
-		...createOptionViewerSlice(...a),
+		...createExROptionViewerSlice(...a),
 	};
 });

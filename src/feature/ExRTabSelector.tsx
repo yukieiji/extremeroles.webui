@@ -15,7 +15,7 @@ export function ExRTabSelector() {
 		return state.setSelectedExRTabId;
 	});
 	const setIsTabPending = useStore((state) => {
-		return state.setIsTabPending;
+		return state.setIsExRTabPending;
 	});
 	const [isPending, startTransition] = useTransition();
 

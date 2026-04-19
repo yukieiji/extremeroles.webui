@@ -35,7 +35,7 @@ function ExRStandardCategoryList({ categoryIds }: CategoryListProps) {
 						: categoryUniqueOptions;
 				return (
 					filterdUniqueOptions.length > 0 &&
-					filterdUniqueOptions.some((id) => state.isOptionActive[id])
+					filterdUniqueOptions.some((id) => state.isExROptionActive[id])
 				);
 			});
 		}),
@@ -65,7 +65,7 @@ export function ExRCategoryList() {
 		return state.selectedExRTabId;
 	});
 	const isTabPending = useStore((state) => {
-		return state.isTabPending;
+		return state.isExRTabPending;
 	});
 
 	const tabCategory = exrOptionMetaData.tabIdMap[selectedExRTabId];
