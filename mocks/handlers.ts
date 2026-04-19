@@ -6,7 +6,7 @@ import {
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema
 } from '../src/type';
-import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto } from '../src/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto } from '../src/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
@@ -74,22 +74,41 @@ export const handlers = [
       return new HttpResponse(null, { status: 400 });
     }
 
-    const { CategoryId, OptionId } = result.data;
+    const { TabId, CategoryId, OptionId, Selection } = result.data;
 
     // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
       return new HttpResponse(null, { status: 202 });
     }
 
+    // 実際にデータを更新する
+    let updatedCategory: ExRCategoryDto | null = null;
+    const tab = validatedExRMockData.find(t => t.Id === TabId);
+    if (tab) {
+      const category = tab.Categories.find(c => c.Id === CategoryId);
+      if (category) {
+        const updateOption = (options: ExROptionDto[]) => {
+          for (const opt of options) {
+            if (opt.Id === OptionId) {
+              opt.Selection = Selection;
+              opt.IsActive = true;
+              return true;
+            }
+            if (opt.Childs && updateOption(opt.Childs)) {
+              return true;
+            }
+          }
+          return false;
+        };
+        updateOption(category.Options);
+        updatedCategory = category;
+      }
+    }
+
     // それ以外はUpdatedOptionsを返す
     const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [
-        {
-          Id: validatedExRMockData[0].Categories[0].Id,
-          Options: [validatedExRMockData[0].Categories[0].Options[0]],
-        },
-      ],
+      UpdatedCategory: updatedCategory,
+      ChainUpdatedOption: [],
     };
 
     // レスポンスデータのバリデーション
