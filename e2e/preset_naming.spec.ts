@@ -19,9 +19,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Preset naming and persistence behavior", async ({ page }) => {
-	// 【失敗の原因】
-	// 前のテストで実行された副作用（Cookieへの保存など）が残っている、
-	// またはモックサーバーが状態をリセットしていないため、初期値が期待値と異なる。
 	const sidebar = page.getByLabel("オプションサイドバー");
 	const exrButton = sidebar.getByRole("button", { name: "ExR Options" });
 	await exrButton.click();
