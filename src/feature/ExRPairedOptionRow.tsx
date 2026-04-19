@@ -3,7 +3,7 @@ import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
 import { OptionRowContainer } from "../components/parts/OptionRowContainer";
 import { useOptionData } from "../hooks/useOptionData";
-import type { OptionData, UniqueOptionId } from "../type";
+import type { OptionData } from "../type";
 import { useStore } from "../useStore";
 
 interface ExRPairedOptionRowProps {
@@ -20,8 +20,8 @@ export function ExRPairedOptionRow({
 	minData,
 	maxData,
 }: ExRPairedOptionRowProps) {
-	const minUniqueOptionId = minData.uniqueOptionId as UniqueOptionId;
-	const maxUniqueOptionId = maxData.uniqueOptionId as UniqueOptionId;
+	const minUniqueOptionId = minData.uniqueOptionId;
+	const maxUniqueOptionId = maxData.uniqueOptionId;
 	const minValueData = useOptionData(minUniqueOptionId);
 	const maxValueData = useOptionData(maxUniqueOptionId);
 
