@@ -193,7 +193,5 @@ describe("ExRCategoryList Component Selection", () => {
 		// 50 and 51 should be filtered out from the body
 		expect(screen.queryByText("Spawn Rate")).not.toBeInTheDocument();
 		expect(screen.queryByText("Spawn Count")).not.toBeInTheDocument();
-
-		vi.restoreAllMocks();
 	});
 });

@@ -125,8 +125,6 @@ describe("ExRRoleSpawnControls", () => {
 			state.valueData[getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)]
 				.selection,
 		).toBe(0); // Rate 0%
-
-		vi.restoreAllMocks();
 	});
 
 	it("syncs rate to 10% when count is set to non-zero from zero rate", async () => {
@@ -164,8 +162,6 @@ describe("ExRRoleSpawnControls", () => {
 			state.valueData[getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)]
 				.selection,
 		).toBe(1); // Rate index 1 is 10%
-
-		vi.restoreAllMocks();
 	});
 
 	it("syncs count to 0 when rate is set to 0%", async () => {
@@ -223,7 +219,5 @@ describe("ExRRoleSpawnControls", () => {
 			.getByTestId("spawn-count-control")
 			.querySelector('input[type="text"]');
 		expect(countDisplay).toHaveValue("0");
-
-		vi.restoreAllMocks();
 	});
 });

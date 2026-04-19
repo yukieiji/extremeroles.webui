@@ -73,8 +73,6 @@ describe("ExRHeaderOptionControl", () => {
 			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
 				.selection,
 		).toBe(1);
-
-		vi.restoreAllMocks();
 	});
 
 	it("updates selection when input is changed", async () => {
@@ -114,8 +112,6 @@ describe("ExRHeaderOptionControl", () => {
 			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
 				.selection,
 		).toBe(2); // 100 is at index 2
-
-		vi.restoreAllMocks();
 	});
 
 	it("prevents click propagation to parent", () => {
