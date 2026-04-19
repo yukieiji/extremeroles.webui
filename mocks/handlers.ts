@@ -15,16 +15,11 @@ import auOptionData from './get/au/setting-webui-dev_20260321.json';
 /**
  * Zodを使用してロードしたデータのバリデーションを実施
  */
-let validatedExRMockData: ExRTabDto[];
-let validatedAuMockData: AuOptionCategoryDto[];
+const masterValidatedExRMockData: ExRTabDto[] = ExRTabDtoArraySchema.parse(exrOptionData);
+const masterValidatedAuMockData: AuOptionCategoryDto[] = AuOptionCategoryDtoArraySchema.parse(auOptionData);
 
-try {
-  validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData);
-  validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData);
-} catch (error) {
-  console.error('Mock data validation failed:', error);
-  throw error;
-}
+let curValidatedExRMockData: ExRTabDto[] = JSON.parse(JSON.stringify(masterValidatedExRMockData));
+let curValidatedAuMockData: AuOptionCategoryDto[] = JSON.parse(JSON.stringify(masterValidatedAuMockData));
 
 /**
  * 更新されたオプションのモックデータ作成
@@ -57,14 +52,14 @@ export const handlers = [
   /**
    * GET /exr/option/ のハンドラー
    */
-  http.get('/exr/option/', () => {
-    return HttpResponse.json(validatedExRMockData);
+  http.get('*/exr/option/', () => {
+    return HttpResponse.json(curValidatedExRMockData);
   }),
 
   /**
    * PUT /exr/option/ のハンドラー
    */
-  http.put('/exr/option/', async ({ request }) => {
+  http.put('*/exr/option/', async ({ request }) => {
     const body = await request.json();
 
     // Zodを使用してリクエストボディをバリデーション
@@ -83,7 +78,7 @@ export const handlers = [
 
     // 実際にデータを更新する
     let updatedCategory: ExRCategoryDto | null = null;
-    const tab = validatedExRMockData.find(t => t.Id === TabId);
+    const tab = curValidatedExRMockData.find(t => t.Id === TabId);
     if (tab) {
       const category = tab.Categories.find(c => c.Id === CategoryId);
       if (category) {
@@ -120,14 +115,14 @@ export const handlers = [
   /**
    * GET /au/option/ のハンドラー
    */
-  http.get('/au/option/', () => {
-    return HttpResponse.json(validatedAuMockData);
+  http.get('*/au/option/', () => {
+    return HttpResponse.json(curValidatedAuMockData);
   }),
 
   /**
    * PUT /au/option/ のハンドラー
    */
-  http.put('/au/option/', async ({ request }) => {
+  http.put('*/au/option/', async ({ request }) => {
     const body = await request.json();
 
     // リクエストボディのバリデーション
@@ -137,5 +132,14 @@ export const handlers = [
     }
 
     return HttpResponse.json(validatedUpdatedOptions);
+  }),
+
+  /**
+   * モックデータをリセットするハンドラー
+   */
+  http.post('*/mock/reset', () => {
+    curValidatedExRMockData = JSON.parse(JSON.stringify(masterValidatedExRMockData));
+    curValidatedAuMockData = JSON.parse(JSON.stringify(masterValidatedAuMockData));
+    return new HttpResponse(null, { status: 200 });
   }),
 ];
