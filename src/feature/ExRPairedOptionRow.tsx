@@ -29,12 +29,12 @@ export function ExRPairedOptionRow({
 		return state.updateExROptionSelection;
 	});
 
-	const handleMinChange = (newSelection: number) => {
-		updateExROptionSelection(minUniqueOptionId, newSelection);
+	const handleMinChange = async (newSelection: number) => {
+		await updateExROptionSelection(minUniqueOptionId, newSelection);
 	};
 
-	const handleMaxChange = (newSelection: number) => {
-		updateExROptionSelection(maxUniqueOptionId, newSelection);
+	const handleMaxChange = async (newSelection: number) => {
+		await updateExROptionSelection(maxUniqueOptionId, newSelection);
 	};
 
 	const content = (
