@@ -18,18 +18,14 @@ export function ExROptionControl({
 	format,
 	type,
 }: ExROptionControlProps) {
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueOptionId];
-	});
 	const optionValue = useOptionData(uniqueOptionId);
-
-	const currentSelection = effectiveSelection ?? optionValue.selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const currentSelection = optionValue.selection ?? 0;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
-	const handleChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueOptionId, newSelection);
+	const handleChange = async (newSelection: number) => {
+		await updateExROptionSelection(uniqueOptionId, newSelection);
 	};
 
 	if (type === "String") {

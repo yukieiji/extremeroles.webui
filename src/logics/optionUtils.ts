@@ -1,7 +1,7 @@
+import { useShallow } from "zustand/react/shallow";
 import type { ExROptionValueData, OptionData, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 import { exrOptionMetaData } from "./api";
-import { useShallow } from "zustand/react/shallow";
 
 export function useOptionData(
 	uniqueOptionId: UniqueOptionId,
@@ -21,7 +21,8 @@ export function getUniqueOptionId(
 	categoryId: number,
 	optionId: number,
 ): UniqueOptionId {
-	const uniqueId = tabId * TAB_ID_MULTIPLIER + categoryId * CATEGORY_ID_MULTIPLIER + optionId;
+	const uniqueId =
+		tabId * TAB_ID_MULTIPLIER + categoryId * CATEGORY_ID_MULTIPLIER + optionId;
 	return uniqueId as UniqueOptionId;
 }
 
@@ -31,7 +32,9 @@ export function parseUniqueOptionId(uniqueOptionId: UniqueOptionId): {
 	optionId: number;
 } {
 	const tabId = Math.floor(uniqueOptionId / TAB_ID_MULTIPLIER);
-	const categoryId = Math.floor((uniqueOptionId % TAB_ID_MULTIPLIER) / CATEGORY_ID_MULTIPLIER);
+	const categoryId = Math.floor(
+		(uniqueOptionId % TAB_ID_MULTIPLIER) / CATEGORY_ID_MULTIPLIER,
+	);
 	const optionId = uniqueOptionId % CATEGORY_ID_MULTIPLIER;
 	return { tabId, categoryId, optionId };
 }

@@ -22,30 +22,19 @@ export function ExRPairedOptionRow({
 }: ExRPairedOptionRowProps) {
 	const minUniqueOptionId = minData.uniqueOptionId;
 	const maxUniqueOptionId = maxData.uniqueOptionId;
-
-	const effectiveMinSelection = useStore((state) => {
-		return state.effectiveSelections[minUniqueOptionId];
-	});
-	const effectiveMaxSelection = useStore((state) => {
-		return state.effectiveSelections[maxUniqueOptionId];
-	});
-
 	const minValueData = useOptionData(minUniqueOptionId);
 	const maxValueData = useOptionData(maxUniqueOptionId);
 
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
-	const minSelection = effectiveMinSelection ?? minValueData.selection;
-	const maxSelection = effectiveMaxSelection ?? maxValueData.selection;
-
 	const handleMinChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(minUniqueOptionId, newSelection);
+		updateExROptionSelection(minUniqueOptionId, newSelection);
 	};
 
 	const handleMaxChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(maxUniqueOptionId, newSelection);
+		updateExROptionSelection(maxUniqueOptionId, newSelection);
 	};
 
 	const content = (
@@ -57,8 +46,8 @@ export function ExRPairedOptionRow({
 			</div>
 			<div className="shrink-0 flex items-center gap-2">
 				<OptionPairedSliderControl
-					minSelection={minSelection}
-					maxSelection={maxSelection}
+					minSelection={minValueData.selection}
+					maxSelection={maxValueData.selection}
 					minValues={minValueData.values as number[]}
 					maxValues={maxValueData.values as number[]}
 					format={minData.metaData.format}

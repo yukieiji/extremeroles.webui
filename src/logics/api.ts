@@ -3,8 +3,9 @@ import type {
 	ExROptionDto,
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
+	UpdatedOptions,
 } from "../type";
-import { ExRTabDtoArraySchema, OptionTab } from "../type";
+import { ExRTabDtoArraySchema, OptionTab, UpdatedOptionsSchema } from "../type";
 
 import { useStore } from "../useStore";
 import { getUniqueOptionId } from "./optionUtils";
@@ -26,6 +27,7 @@ export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
 	tabInfo: {} as Record<OptionTab, string>,
 	tabIdMap: {} as Record<OptionTab, number[]>,
+	categoryTabMap: {} as Record<number, OptionTab>,
 	categoryInfo: {},
 	globalCategoryIdTopLevelMap: {},
 	optionMetaData: {},
@@ -136,6 +138,34 @@ export function getExrOptions(): Promise<void> {
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 	exrOptionsPromise = createExROptionMetaData(delay);
 	return exrOptionsPromise;
+}
+
+export async function updateExrOption(
+	tabId: number,
+	categoryId: number,
+	optionId: number,
+	selection: number,
+): Promise<UpdatedOptions> {
+	const request = {
+		TabId: tabId,
+		CategoryId: categoryId,
+		OptionId: optionId,
+		Selection: selection,
+	};
+	const res = await fetch(EXR_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
 /**

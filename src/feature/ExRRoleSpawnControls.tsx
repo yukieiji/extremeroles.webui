@@ -30,16 +30,8 @@ export function ExRRoleSpawnControls({
 		SPAWN_COUNT_OPTION_ID,
 	);
 
-	const effectiveSpawnRateSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueRateId];
-	});
-
-	const effectiveSpawnCountSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueCountId];
-	});
-
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
@@ -51,10 +43,8 @@ export function ExRRoleSpawnControls({
 	const spawnRateOption = useOptionData(uniqueRateId);
 	const spawnCountOption = useOptionData(uniqueCountId);
 
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOption?.selection ?? 0;
-	const spawnCountSelection =
-		effectiveSpawnCountSelection ?? spawnCountOption?.selection ?? 0;
+	const spawnRateSelection = spawnRateOption?.selection ?? 0;
+	const spawnCountSelection = spawnCountOption?.selection ?? 0;
 
 	const rateValues = (spawnRateOption?.values as number[]) ?? [];
 	const originalCountValues = (spawnCountOption?.values as number[]) ?? [];
@@ -66,12 +56,11 @@ export function ExRRoleSpawnControls({
 	const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
-	const handleRateChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueRateId, newSelection);
+	const handleRateChange = async (newSelection: number) => {
+		await updateExROptionSelection(uniqueRateId, newSelection);
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
@@ -82,26 +71,27 @@ export function ExRRoleSpawnControls({
 		handleRateChange(findClosestIndex(rateValues, val));
 	};
 
-	const handleCountUIChange = (newUISelection: number) => {
+	const handleCountUIChange = async (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			TEMP_updateExROptionSelection(
+			const rateUpdatePromise = updateExROptionSelection(
 				uniqueRateId,
 				findClosestIndex(rateValues, 0),
 			);
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
+			const countUpdatePromise = updateExROptionSelection(uniqueCountId, 1); // 表示上は0だけど、実際の選択肢は1（最小値）にする
+			await Promise.all([rateUpdatePromise, countUpdatePromise]); // 両方の更新が完了するのを待つ
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
 			if (isSpawnRateZero) {
-				TEMP_updateExROptionSelection(
+				await updateExROptionSelection(
 					uniqueRateId,
 					findClosestIndex(rateValues, 10),
 				);
 			}
-			TEMP_updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			await updateExROptionSelection(uniqueCountId, newUISelection - 1);
 		}
 	};
 

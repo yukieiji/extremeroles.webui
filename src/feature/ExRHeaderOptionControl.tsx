@@ -22,22 +22,19 @@ export function ExRHeaderOptionControl({
 		return state.selectedExRTabId;
 	});
 	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueId];
-	});
-	const currentSelection = effectiveSelection ?? option.Selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const currentSelection = option.Selection ?? 0;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
 	const values = option.RangeMeta.Values as number[];
 
 	const handleSelectionChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueId, newSelection);
+		updateExROptionSelection(uniqueId, newSelection);
 	};
 
 	const handleInputChange = (val: number) => {
-		TEMP_updateExROptionSelection(uniqueId, findClosestIndex(values, val));
+		updateExROptionSelection(uniqueId, findClosestIndex(values, val));
 	};
 
 	return (

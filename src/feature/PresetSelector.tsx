@@ -15,9 +15,6 @@ export function PresetSelector() {
 	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
 
 	const presetOption = useOptionData(PRESET_OPTION_UNIQUE_ID);
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[PRESET_OPTION_UNIQUE_ID];
-	});
 
 	const presetNames = useStore((state) => {
 		return state.presetNames;
@@ -28,8 +25,8 @@ export function PresetSelector() {
 	const updatePresetName = useStore((state) => {
 		return state.updatePresetName;
 	});
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
@@ -58,14 +55,14 @@ export function PresetSelector() {
 		return null;
 	}
 
-	const currentSelection = effectiveSelection ?? presetOption.selection;
+	const currentSelection = presetOption.selection ?? 0;
 	const presetValues = presetOption.values as number[];
 	const currentPresetValue = presetValues[currentSelection];
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
-	const handlePresetSelect = (index: number) => {
-		TEMP_updateExROptionSelection(PRESET_OPTION_UNIQUE_ID, index);
+	const handlePresetSelect = async (index: number) => {
+		await updateExROptionSelection(PRESET_OPTION_UNIQUE_ID, index);
 		setPresetDropdownOpen(false);
 	};
 
