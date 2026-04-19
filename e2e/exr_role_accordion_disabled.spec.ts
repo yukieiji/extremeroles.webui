@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// モックサーバーの状態をリセット
+	await page.request.post("/mock/reset");
 	// API遅延を最小限にしてテストを高速化
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property
