@@ -35,17 +35,11 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		categoryId,
 		SPAWN_COUNT_OPTION_ID,
 	);
-
-	const effectiveSpawnRateSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueRateId];
-	});
-
 	const spawnRateOptionValue = useOptionData(uniqueRateId);
 
 	const category = exrOptionMetaData.categoryInfo[categoryId];
 
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOptionValue.selection ?? 0;
+	const spawnRateSelection = spawnRateOptionValue.selection ?? 0;
 	const isSpawnRateZero = spawnRateSelection === 0;
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 

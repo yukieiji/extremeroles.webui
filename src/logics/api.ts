@@ -114,6 +114,7 @@ async function createExROptionMetaData(delay: number): Promise<void> {
 		exrOptionMetaData.tabIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
 		for (const category of tab.Categories) {
 			exrOptionMetaData.categoryInfo[category.Id] = category.Name;
+			exrOptionMetaData.categoryTabMap[category.Id] = tab.Id;
 			if (tab.Id === OptionTab.GeneralTab) {
 				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
 				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
