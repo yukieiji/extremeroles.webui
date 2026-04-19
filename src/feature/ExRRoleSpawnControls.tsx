@@ -1,9 +1,6 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
-import {
-	findClosestIndex,
-	getUniqueOptionId,
-	useOptionData,
-} from "../logics/optionUtils";
+import { useOptionData } from "../hooks/useOptionData";
+import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 
