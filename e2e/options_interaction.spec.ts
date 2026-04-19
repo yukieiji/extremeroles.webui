@@ -16,6 +16,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Options interaction behavior", async ({ page }) => {
+	// 【失敗の原因】
+	// トグルボタンをクリックした後の状態遷移がモックサーバーのレスポンスと不整合を起こしている。
 	const sidebar = page.getByLabel("オプションサイドバー");
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();
 

@@ -21,6 +21,9 @@ test.describe("ExR Role Accordion Disabled State", () => {
 	const SHERIFF_ID = "270";
 
 	test("should disable accordion when spawn rate is 0", async ({ page }) => {
+		// 【失敗の原因】
+		// モックサーバーがPUTリクエストに対して適切なレスポンス（更新されたカテゴリデータ）を返していない、
+		// またはフロントエンドがそのレスポンスを正しく処理してアコーディオンの状態を更新できていない。
 		// 役職タブ（クルーメイト）に切り替え
 		await page
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
