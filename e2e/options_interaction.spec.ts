@@ -43,7 +43,7 @@ test("Options interaction behavior", async ({ page }) => {
 	await shuffleCategory.click();
 
 	const shuffleOption = page.getByText("強力なシャッフルを使用する");
-	await expect(shuffleOption).toBeVisible();
+	await expect(shuffleOption).toBeVisible({ timeout: 3000 });
 
 	// トグルスイッチに変更されたので、トグルを操作する
 	const toggle = page.getByTestId("option-toggle").first();
