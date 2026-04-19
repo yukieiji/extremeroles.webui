@@ -53,7 +53,6 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		isTabPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
-		effectiveSelections: {},
 		valueData: {},
 		isOptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
