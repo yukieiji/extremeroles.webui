@@ -160,17 +160,17 @@ describe("ExRCategoryList Component Selection", () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
 
 		// Mock updateExROptionSelection to update the store manually
-		const originalUpdate = useStore.getState().updateExROptionSelection;
-		useStore.getState().updateExROptionSelection = async (uId, selection) => {
-			const { tabId, categoryId, optionId } = parseUniqueOptionId(uId as any);
-			useStore.getState().setExROptions(
-				{
-					...useStore.getState().valueData,
-					[uId]: { selection, values: [0, 100] },
-				},
-				useStore.getState().isOptionActive,
-			);
-		};
+		vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
+			async (uId, selection) => {
+				useStore.getState().setExROptions(
+					{
+						...useStore.getState().valueData,
+						[uId]: { selection, values: [0, 100] },
+					},
+					useStore.getState().isOptionActive,
+				);
+			},
+		);
 
 		// Set a non-zero spawn rate so the accordion is enabled
 		await useStore
@@ -179,8 +179,6 @@ describe("ExRCategoryList Component Selection", () => {
 				getUniqueOptionId(OptionTab.CrewmateTab, 2, SPAWN_RATE_OPTION_ID),
 				1,
 			); // Category 2, Option 50, Index 1 (Value 100)
-
-		useStore.getState().updateExROptionSelection = originalUpdate;
 		render(<ExRCategoryList />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
@@ -195,5 +193,7 @@ describe("ExRCategoryList Component Selection", () => {
 		// 50 and 51 should be filtered out from the body
 		expect(screen.queryByText("Spawn Rate")).not.toBeInTheDocument();
 		expect(screen.queryByText("Spawn Count")).not.toBeInTheDocument();
+
+		vi.restoreAllMocks();
 	});
 });
