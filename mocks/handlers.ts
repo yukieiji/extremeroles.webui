@@ -6,7 +6,7 @@ import {
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema
 } from '../src/type';
-import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto } from '../src/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto } from '../src/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
@@ -78,24 +78,29 @@ export const handlers = [
 
     // 実際にデータを更新する
     let updatedCategory: ExRCategoryDto | null = null;
+    const chainUpdatedOptions: CategoryOptionDto[] = [];
+
     const tab = curValidatedExRMockData.find(t => t.Id === TabId);
     if (tab) {
       const category = tab.Categories.find(c => c.Id === CategoryId);
       if (category) {
-        const updateOption = (options: ExROptionDto[]) => {
+        const updateAllMatchingOptions = (options: ExROptionDto[], id: number, selection: number) => {
+          let found = false;
           for (const opt of options) {
-            if (opt.Id === OptionId) {
-              opt.Selection = Selection;
+            if (opt.Id === id) {
+              opt.Selection = selection;
               opt.IsActive = true; 
-              return true;
+              found = true;
             }
-            if (opt.Childs && updateOption(opt.Childs)) {
-              return true;
+            if (opt.Childs && updateAllMatchingOptions(opt.Childs, id, selection)) {
+              found = true;
             }
           }
-          return false;
+          return found;
         };
-        updateOption(category.Options);
+
+        // メインターゲットの更新
+        updateAllMatchingOptions(category.Options, OptionId, Selection);
         updatedCategory = category;
       }
     }
@@ -103,7 +108,7 @@ export const handlers = [
     // それ以外はUpdatedOptionsを返す
     const mockUpdatedOptions: UpdatedOptions = {
       UpdatedCategory: updatedCategory,
-      ChainUpdatedOption: [],
+      ChainUpdatedOption: chainUpdatedOptions,
     };
 
     // レスポンスデータのバリデーション
@@ -129,6 +134,17 @@ export const handlers = [
     const validatedRequest = VanillaOptionPutRequestSchema.safeParse(body);
     if (!validatedRequest.success) {
       return HttpResponse.json(validatedRequest.error, { status: 400 });
+    }
+
+    const { OptionName, NewValue } = validatedRequest.data;
+
+    // 実際にデータを更新する
+    for (const category of curValidatedAuMockData) {
+        const option = category.Options.find(o => o.Info.OptionName === OptionName);
+        if (option) {
+            option.Value = NewValue;
+            break;
+        }
     }
 
     return HttpResponse.json(validatedUpdatedOptions);
