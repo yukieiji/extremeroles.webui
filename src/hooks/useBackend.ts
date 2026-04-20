@@ -11,7 +11,7 @@ export function useSyncBackend(): () => void {
 	const [isPending, startTransition] = useTransition();
 
 	const setUiBlock = useStore((state) => state.setPendingBlock);
-	const validate = useStore((state) => state.validateOpenedIds)
+	const validate = useStore((state) => state.validateOpenedIds);
 	const blockFuncton = useBlock();
 
 	useEffect(() => {
