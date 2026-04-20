@@ -23,9 +23,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("ExR Option Accordion behavior", async ({ page }) => {
-	// 【失敗の原因】
-	// アプリケーションの起動待ちタイムアウト、または特定のカテゴリが表示される条件
-	// （isActiveなど）がモックデータと一致していない。
 	const sidebar = page.getByLabel("オプションサイドバー");
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();
 

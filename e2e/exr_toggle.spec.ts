@@ -17,9 +17,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("ExR toggle switch should be visible and functional", async ({ page }) => {
-	// 【失敗の原因】
-	// モックサーバー（MSW）がPUTリクエストに対して適切なレスポンス（更新された値）を返していない、
-	// またはフロントエンドがレスポンスを正しく処理してトグルの状態を更新できていない。
 	const sidebar = page.getByLabel("オプションサイドバー");
 
 	// ExR Options に切り替え
