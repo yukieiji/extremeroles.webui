@@ -68,7 +68,7 @@ export function ExRCategoryList() {
 		return state.isExRTabPending;
 	});
 
-	const tabCategory = exrOptionMetaData.tabIdMap[selectedExRTabId];
+	const tabCategory = exrOptionMetaData.tabs[selectedExRTabId]?.categoryIds;
 	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
 
 	return (

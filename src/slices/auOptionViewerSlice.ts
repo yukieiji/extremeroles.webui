@@ -9,7 +9,7 @@ export interface AuOptionViewerSlice {
 	isAuTabPending: boolean;
 	openedAuCategoryIds: Record<number, boolean>;
 	auValue: Record<AuOptionId, number>; // セレクション
-	setAuValue: (value: Record<AuOptionId, number>) => void
+	setAuValue: (value: Record<AuOptionId, number>) => void;
 }
 
 /**
@@ -24,7 +24,7 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 		openedAuCategoryIds: {},
 		auValue: {},
 		setAuValue(value) {
-			set({auValue: value})
+			set({ auValue: value });
 		},
 	};
 };

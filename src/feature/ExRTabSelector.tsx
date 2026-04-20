@@ -39,7 +39,7 @@ export function ExRTabSelector() {
 
 	return (
 		<div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
-			{Object.keys(exrOptionMetaData.tabInfo).map((tabId) => {
+			{Object.keys(exrOptionMetaData.tabs).map((tabId) => {
 				const castedTabId = Number(tabId) as OptionTab;
 				return (
 					<button
@@ -53,7 +53,9 @@ export function ExRTabSelector() {
               ${selectedExRTabId === castedTabId ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}
             `}
 					>
-						<ColoredText text={exrOptionMetaData.tabInfo[castedTabId]} />
+						<ColoredText
+							text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""}
+						/>
 					</button>
 				);
 			})}

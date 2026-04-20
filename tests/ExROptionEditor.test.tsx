@@ -124,14 +124,15 @@ describe("ExROptionEditor", () => {
 			newActive[oId] = active;
 		}
 
-		// 2. childOptionMap を uniqueId ではなく optionId の配列にする（ExRRoleCategoryItem 用）
-		const newChildMap: Record<number, number[]> = {};
-		for (const [uId, children] of Object.entries(
-			exrOptionMetaData.childOptionMap,
-		)) {
-			newChildMap[Number(uId)] = children.map((cid) => cid % 10000);
+		// 2. childOptionIds を uniqueId ではなく optionId の配列にする（ExRRoleCategoryItem 用）
+		for (const uId in exrOptionMetaData.options) {
+			const option = exrOptionMetaData.options[Number(uId)];
+			if (option) {
+				option.childOptionIds = option.childOptionIds.map(
+					(cid) => (Number(cid) % 10000) as any,
+				);
+			}
 		}
-		exrOptionMetaData.childOptionMap = newChildMap;
 
 		useStore.setState({ isExROptionActive: newActive });
 	});

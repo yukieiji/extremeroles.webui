@@ -42,7 +42,9 @@ export function ExRStandardCategoryItem({
 		<div data-testid={`exr-category-${categoryId}`}>
 			<Accordion
 				title={
-					<ColoredText text={exrOptionMetaData.categoryInfo[categoryId]} />
+					<ColoredText
+						text={exrOptionMetaData.categories[categoryId]?.name ?? ""}
+					/>
 				}
 				isOpen={isOpen}
 				onToggle={() => {

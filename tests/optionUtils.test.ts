@@ -110,10 +110,13 @@ describe("optionUtils", () => {
 			name: string,
 		) => {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, id);
-			exrOptionMetaData.optionMetaData[uniqueId] = {
-				translatedName: name,
-				format: "",
-				type: "Int32",
+			exrOptionMetaData.options[uniqueId] = {
+				metaData: {
+					translatedName: name,
+					format: "",
+					type: "Int32",
+				},
+				childOptionIds: [],
 			};
 		};
 
@@ -137,17 +140,15 @@ describe("optionUtils", () => {
 				minData: {
 					uniqueOptionId: getUniqueOptionId(tabId, categoryId, 1),
 					metaData:
-						exrOptionMetaData.optionMetaData[
-							getUniqueOptionId(tabId, categoryId, 1)
-						],
+						exrOptionMetaData.options[getUniqueOptionId(tabId, categoryId, 1)]
+							?.metaData,
 					label: "最小",
 				},
 				maxData: {
 					uniqueOptionId: getUniqueOptionId(tabId, categoryId, 2),
 					metaData:
-						exrOptionMetaData.optionMetaData[
-							getUniqueOptionId(tabId, categoryId, 2)
-						],
+						exrOptionMetaData.options[getUniqueOptionId(tabId, categoryId, 2)]
+							?.metaData,
 					label: "最大",
 				},
 			});
