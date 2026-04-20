@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { createAuOptionMetaData, auOptionMetaData, AU_OPTION_URL } from '../src/logics/api';
+import { createAuOptionMetaData, auOptionMetaData, AU_OPTION_URL, resetAuOptionMetaData } from '../src/logics/api';
 import { OptionValueType } from '../src/type';
 
 // Mock global fetch
@@ -8,7 +8,7 @@ global.fetch = vi.fn();
 describe('createAuOptionMetaData', () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        // Reset auOptionMetaData manually if needed, or let the function overwrite it
+        resetAuOptionMetaData();
     });
 
     it('should correctly process options and tabs', async () => {
