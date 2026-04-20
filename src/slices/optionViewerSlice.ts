@@ -126,8 +126,10 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 						if (
 							!currentValData ||
 							currentValData.selection !== opt.Selection ||
-							JSON.stringify(currentValData.values) !==
-								JSON.stringify(opt.RangeMeta.Values) // 毎回別の配列インスタンスで来る可能性があるため、値の内容で比較する、ただしコストは重めなので今後最適化の余地あり
+							currentValData.values.length !== opt.RangeMeta.Values.length ||
+							currentValData.values.some(
+								(v, i) => v !== opt.RangeMeta.Values[i],
+							)
 						) {
 							if (!valueDataChanged) {
 								nextValueData = { ...nextValueData };
