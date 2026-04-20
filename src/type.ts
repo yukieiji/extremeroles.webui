@@ -138,12 +138,12 @@ export const ExRTabDtoArraySchema = z.array(ExRTabDtoSchema);
  */
 
 export const AU_PREFIX = {
-  MAX_COUNT: 1,
-  CHANCE: 2,
+	MAX_COUNT: 1,
+	CHANCE: 2,
 } as const;
 
 // 全ての値（1 | 2）を型として抽出
-export type AuOptionPrefix = typeof AU_PREFIX[keyof typeof AU_PREFIX];
+export type AuOptionPrefix = (typeof AU_PREFIX)[keyof typeof AU_PREFIX];
 
 // 基本的には名前で分かるんだけど一部特殊なことをしないといけないので
 // 1～2桁: 予備用プレフィックスコード、基本0
@@ -154,16 +154,15 @@ export type AuOptionId = Branded<number, "AuOptionName">;
 export interface AuOptionMeta {
 	title: string;
 	format: string;
-	range: (number | string)[]
+	range: (number | string)[];
 }
 
 export interface AuOptionMetaDataRecords {
 	tabNames: string[]; // タブの名前
 	tabCategoryMap: Record<number, string[]>; // 1タブにしてゲーム設定はそれぞれでカテゴリ、役職は陣営毎に1タブ役職ごとのカテゴリとして保存
-	categoryOptionMap: Record<string, AuOptionId>; // カテゴリーとオプションの紐づけ 
+	categoryOptionMap: Record<string, AuOptionId>; // カテゴリーとオプションの紐づけ
 	options: Record<AuOptionId, AuOptionMeta>; // 全オプションのメタデータ
 }
-
 
 export const OptionValueType = {
 	Bool: 0,
