@@ -56,11 +56,11 @@ export function PresetSelector() {
 
 	const handlePresetSelect = (index: number) => {
 		setPresetDropdownOpen(false);
-		const newPreset = presetNames[index] ?? String(index);
+		const newPreset = presetNames[index] ?? String(presetValues[index]);
 
 		setBlockDialog({
 			title: "プリセットの切り替え",
-			message: `プリセットを「${currentPresetName}」から「${newPreset}}」に切り替えます`,
+			message: `プリセットを「${currentPresetName}」から「${newPreset}」に切り替えます`,
 			onConfirm: () =>
 				backendUpdator(async () => {
 					await updateExrOption(0, 0, 0, index);
