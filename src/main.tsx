@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import { resetApiCache } from "./logics/api";
+import { resetApiCache } from "./logics/api.store.ts";
 
 if (import.meta.env.DEV) {
 	// @ts-expect-error - テスト用

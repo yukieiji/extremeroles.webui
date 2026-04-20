@@ -1,6 +1,7 @@
 import { ColoredText } from "../components/parts/ColoredText";
+import { useOptionData } from "../hooks/useOptionData";
 import { exrOptionMetaData } from "../logics/api";
-import { getUniqueOptionId, useOptionData } from "../logics/optionUtils";
+import { getUniqueOptionId } from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
@@ -35,17 +36,11 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		categoryId,
 		SPAWN_COUNT_OPTION_ID,
 	);
-
-	const effectiveSpawnRateSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueRateId];
-	});
-
 	const spawnRateOptionValue = useOptionData(uniqueRateId);
 
 	const category = exrOptionMetaData.categoryInfo[categoryId];
 
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOptionValue.selection ?? 0;
+	const spawnRateSelection = spawnRateOptionValue.selection ?? 0;
 	const isSpawnRateZero = spawnRateSelection === 0;
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
 

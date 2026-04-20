@@ -1,9 +1,6 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
-import {
-	findClosestIndex,
-	getUniqueOptionId,
-	useOptionData,
-} from "../logics/optionUtils";
+import { useOptionData } from "../hooks/useOptionData";
+import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
 
@@ -30,16 +27,8 @@ export function ExRRoleSpawnControls({
 		SPAWN_COUNT_OPTION_ID,
 	);
 
-	const effectiveSpawnRateSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueRateId];
-	});
-
-	const effectiveSpawnCountSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueCountId];
-	});
-
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
@@ -51,10 +40,8 @@ export function ExRRoleSpawnControls({
 	const spawnRateOption = useOptionData(uniqueRateId);
 	const spawnCountOption = useOptionData(uniqueCountId);
 
-	const spawnRateSelection =
-		effectiveSpawnRateSelection ?? spawnRateOption?.selection ?? 0;
-	const spawnCountSelection =
-		effectiveSpawnCountSelection ?? spawnCountOption?.selection ?? 0;
+	const spawnRateSelection = spawnRateOption?.selection ?? 0;
+	const spawnCountSelection = spawnCountOption?.selection ?? 0;
 
 	const rateValues = (spawnRateOption?.values as number[]) ?? [];
 	const originalCountValues = (spawnCountOption?.values as number[]) ?? [];
@@ -66,47 +53,58 @@ export function ExRRoleSpawnControls({
 	const isSpawnRateZero = rateValues[spawnRateSelection] === 0;
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
-	const handleRateChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueRateId, newSelection);
+	const handleRateChange = async (newSelection: number) => {
+		await updateExROptionSelection({
+			uniqueOptionId: uniqueRateId,
+			selection: newSelection,
+		});
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		}
 	};
 
-	const handleRateInputChange = (val: number) => {
-		handleRateChange(findClosestIndex(rateValues, val));
+	const handleRateInputChange = async (val: number) => {
+		await handleRateChange(findClosestIndex(rateValues, val));
 	};
 
-	const handleCountUIChange = (newUISelection: number) => {
+	const handleCountUIChange = async (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			TEMP_updateExROptionSelection(
-				uniqueRateId,
-				findClosestIndex(rateValues, 0),
+			await updateExROptionSelection(
+				{
+					uniqueOptionId: uniqueRateId,
+					selection: findClosestIndex(rateValues, 0),
+				},
+				{ uniqueOptionId: uniqueCountId, selection: 1 }, // 表示上は0だけど、実際の選択肢は1（最小値）にする
 			);
-			TEMP_updateExROptionSelection(uniqueCountId, 0);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
+			const updateArg = {
+				uniqueOptionId: uniqueCountId,
+				selection: newUISelection - 1,
+			};
 			if (isSpawnRateZero) {
-				TEMP_updateExROptionSelection(
-					uniqueRateId,
-					findClosestIndex(rateValues, 10),
+				await updateExROptionSelection(
+					{
+						uniqueOptionId: uniqueRateId,
+						selection: findClosestIndex(rateValues, 10),
+					},
+					updateArg,
 				);
 			}
-			TEMP_updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			await updateExROptionSelection(updateArg);
 		}
 	};
 
-	const handleCountUIInputChange = (val: number) => {
-		handleCountUIChange(findClosestIndex(virtualCountValues, val));
+	const handleCountUIInputChange = async (val: number) => {
+		await handleCountUIChange(findClosestIndex(virtualCountValues, val));
 	};
 
 	return (

@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// モックサーバーの状態をリセット
+	await page.request.post("/mock/reset");
 	// API遅延を最小限にしてテストを高速化
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property
@@ -21,7 +23,6 @@ test.describe("ExR Role Accordion Disabled State", () => {
 	const SHERIFF_ID = "270";
 
 	test("should disable accordion when spawn rate is 0", async ({ page }) => {
-		// 役職タブ（クルーメイト）に切り替え
 		await page
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
 			.click();

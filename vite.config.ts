@@ -17,6 +17,9 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./tests/setup.ts'],
     exclude: ['**/e2e/**', '**/node_modules/**', '**/dist/**', '**/cypress/**', '**/.{idea,git,cache,output,temp}/**'],
+    restoreMocks: true,
+    unstubGlobals: true,
+    unstubEnvs: true,
   },
   plugins: [
     react(),

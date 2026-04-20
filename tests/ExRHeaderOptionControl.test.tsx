@@ -6,6 +6,22 @@ import type { ExROptionDto } from "../src/type";
 import { SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
+function setUpudateExROptionSelectionMock(values: (number | string)[]): void {
+	vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
+		async (...args) => {
+			args.forEach((x) => {
+				useStore.getState().setExROptions(
+					{
+						...useStore.getState().valueData,
+						[x.uniqueOptionId]: { selection: x.selection, values: values },
+					},
+					useStore.getState().isOptionActive,
+				);
+			});
+		},
+	);
+}
+
 describe("ExRHeaderOptionControl", () => {
 	const mockOption: ExROptionDto = {
 		Id: SPAWN_RATE_OPTION_ID,
@@ -40,7 +56,10 @@ describe("ExRHeaderOptionControl", () => {
 		expect(textInput).toBeInTheDocument();
 	});
 
-	it("updates selection when slider is moved", () => {
+	it("updates selection when slider is moved", async () => {
+		// Mock updateExROptionSelection to update the store manually since there is no real API
+		setUpudateExROptionSelectionMock(mockOption.RangeMeta.Values);
+
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -56,13 +75,14 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
-			],
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(1);
 	});
 
-	it("updates selection when input is changed", () => {
+	it("updates selection when input is changed", async () => {
+		setUpudateExROptionSelectionMock(mockOption.RangeMeta.Values);
+
 		render(
 			<ExRHeaderOptionControl
 				categoryId={1}
@@ -84,9 +104,8 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.effectiveSelections[
-				getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)
-			],
+			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(2); // 100 is at index 2
 	});
 

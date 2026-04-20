@@ -6,7 +6,7 @@ import {
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema
 } from '../src/type';
-import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto } from '../src/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto } from '../src/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
@@ -15,16 +15,11 @@ import auOptionData from './get/au/setting-webui-dev_20260321.json';
 /**
  * Zodを使用してロードしたデータのバリデーションを実施
  */
-let validatedExRMockData: ExRTabDto[];
-let validatedAuMockData: AuOptionCategoryDto[];
+const masterValidatedExRMockData: ExRTabDto[] = ExRTabDtoArraySchema.parse(exrOptionData);
+const masterValidatedAuMockData: AuOptionCategoryDto[] = AuOptionCategoryDtoArraySchema.parse(auOptionData);
 
-try {
-  validatedExRMockData = ExRTabDtoArraySchema.parse(exrOptionData);
-  validatedAuMockData = AuOptionCategoryDtoArraySchema.parse(auOptionData);
-} catch (error) {
-  console.error('Mock data validation failed:', error);
-  throw error;
-}
+let curValidatedExRMockData: ExRTabDto[] = structuredClone(masterValidatedExRMockData);
+let curValidatedAuMockData: AuOptionCategoryDto[] = structuredClone(masterValidatedAuMockData);
 
 /**
  * 更新されたオプションのモックデータ作成
@@ -58,7 +53,7 @@ export const handlers = [
    * GET /exr/option/ のハンドラー
    */
   http.get('/exr/option/', () => {
-    return HttpResponse.json(validatedExRMockData);
+    return HttpResponse.json(curValidatedExRMockData);
   }),
 
   /**
@@ -74,22 +69,46 @@ export const handlers = [
       return new HttpResponse(null, { status: 400 });
     }
 
-    const { CategoryId, OptionId } = result.data;
+    const { TabId, CategoryId, OptionId, Selection } = result.data;
 
     // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
       return new HttpResponse(null, { status: 202 });
     }
 
+    // 実際にデータを更新する
+    let updatedCategory: ExRCategoryDto | null = null;
+    const chainUpdatedOptions: CategoryOptionDto[] = [];
+
+    const tab = curValidatedExRMockData.find(t => t.Id === TabId);
+    if (tab) {
+      const category = tab.Categories.find(c => c.Id === CategoryId);
+      if (category) {
+        const updateAllMatchingOptions = (options: ExROptionDto[], id: number, selection: number) => {
+          let found = false;
+          for (const opt of options) {
+            if (opt.Id === id) {
+              opt.Selection = selection;
+              opt.IsActive = true; 
+              found = true;
+            }
+            if (opt.Childs && updateAllMatchingOptions(opt.Childs, id, selection)) {
+              found = true;
+            }
+          }
+          return found;
+        };
+
+        // メインターゲットの更新
+        updateAllMatchingOptions(category.Options, OptionId, Selection);
+        updatedCategory = category;
+      }
+    }
+
     // それ以外はUpdatedOptionsを返す
     const mockUpdatedOptions: UpdatedOptions = {
-      UpdatedCategory: validatedExRMockData[0].Categories[0],
-      ChainUpdatedOption: [
-        {
-          Id: validatedExRMockData[0].Categories[0].Id,
-          Options: [validatedExRMockData[0].Categories[0].Options[0]],
-        },
-      ],
+      UpdatedCategory: updatedCategory,
+      ChainUpdatedOption: chainUpdatedOptions,
     };
 
     // レスポンスデータのバリデーション
@@ -102,7 +121,7 @@ export const handlers = [
    * GET /au/option/ のハンドラー
    */
   http.get('/au/option/', () => {
-    return HttpResponse.json(validatedAuMockData);
+    return HttpResponse.json(curValidatedAuMockData);
   }),
 
   /**
@@ -117,6 +136,26 @@ export const handlers = [
       return HttpResponse.json(validatedRequest.error, { status: 400 });
     }
 
+    const { OptionName, NewValue } = validatedRequest.data;
+
+    // 実際にデータを更新する
+    for (const category of curValidatedAuMockData) {
+      const option = category.Options.find(o => o.Info.OptionName === OptionName);
+      if (option) {
+        option.Value = NewValue;
+        break;
+      }
+    }
+
     return HttpResponse.json(validatedUpdatedOptions);
+  }),
+
+  /**
+   * モックデータをリセットするハンドラー
+   */
+  http.post('/mock/reset', () => {
+    curValidatedExRMockData = structuredClone(masterValidatedExRMockData);
+    curValidatedAuMockData = structuredClone(masterValidatedAuMockData);
+    return new HttpResponse(null, { status: 200 });
   }),
 ];

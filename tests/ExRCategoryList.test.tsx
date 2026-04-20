@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
@@ -156,12 +156,27 @@ describe("ExRCategoryList Component Selection", () => {
 		expect(screen.getByText("レート")).toBeInTheDocument();
 	});
 
-	it("filters out 50 and 51 from role category body", () => {
+	it("filters out 50 and 51 from role category body", async () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+
+		// Mock updateExROptionSelection to update the store manually
+		vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		).mockImplementation(async (uId, selection) => {
+			useStore.getState().setExROptions(
+				{
+					...useStore.getState().valueData,
+					[uId]: { selection, values: [0, 100] },
+				},
+				useStore.getState().isOptionActive,
+			);
+		});
+
 		// Set a non-zero spawn rate so the accordion is enabled
-		useStore
+		await useStore
 			.getState()
-			.TEMP_updateExROptionSelection(
+			.updateExROptionSelection(
 				getUniqueOptionId(OptionTab.CrewmateTab, 2, SPAWN_RATE_OPTION_ID),
 				1,
 			); // Category 2, Option 50, Index 1 (Value 100)

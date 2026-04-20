@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// モックサーバーの状態をリセット
+	await page.request.post("/mock/reset");
 	// すべてのテストで API の遅延を設定可能にする
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property
@@ -41,7 +43,7 @@ test("Options interaction behavior", async ({ page }) => {
 	await shuffleCategory.click();
 
 	const shuffleOption = page.getByText("強力なシャッフルを使用する");
-	await expect(shuffleOption).toBeVisible();
+	await expect(shuffleOption).toBeVisible({ timeout: 3000 });
 
 	// トグルスイッチに変更されたので、トグルを操作する
 	const toggle = page.getByTestId("option-toggle").first();

@@ -1,9 +1,18 @@
 import type { StateCreator } from "zustand";
+import { exrOptionMetaData, updateExrOption } from "../logics/api";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
-import type { ExROptionValueData, OptionTab, UniqueOptionId } from "../type";
+import { getUniqueOptionId, parseUniqueOptionId } from "../logics/optionUtils";
+import type {
+	ExRCategoryDto,
+	ExROptionDto,
+	ExROptionValueData,
+	OptionTab,
+	UniqueOptionId,
+	UpdateExRArg,
+} from "../type";
 
 /**
  * オプション表示エリア（ExR オプションのタブなど）の状態を管理するスライスのインターフェース
@@ -13,7 +22,6 @@ export interface OptionViewerSlice {
 	isTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<number, boolean>;
-	effectiveSelections: Record<number, number>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
 	valueData: Record<UniqueOptionId, ExROptionValueData>;
@@ -22,10 +30,7 @@ export interface OptionViewerSlice {
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
-	TEMP_updateExROptionSelection: (
-		uniqueOptionId: UniqueOptionId,
-		selection: number,
-	) => void;
+	updateExROptionSelection: (...updateInfos: UpdateExRArg[]) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -46,7 +51,6 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 		isTabPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
-		effectiveSelections: {},
 		valueData: {},
 		isOptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
@@ -63,7 +67,6 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				isTabPending: false,
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
-				effectiveSelections: {},
 				isPresetDropdownOpen: false,
 			});
 		},
@@ -87,18 +90,112 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		TEMP_updateExROptionSelection: (
-			uniqueOptionId: number,
-			selection: number,
-		) => {
-			set((state) => {
-				return {
-					effectiveSelections: {
-						...state.effectiveSelections,
-						[uniqueOptionId]: selection,
-					},
-				};
-			});
+		updateExROptionSelection: async (...updateInfos: UpdateExRArg[]) => {
+			try {
+				const updateResult = await Promise.all(
+					updateInfos.map(async (info) => {
+						const { tabId, categoryId, optionId } = parseUniqueOptionId(
+							info.uniqueOptionId,
+						);
+						const result = await updateExrOption(
+							tabId,
+							categoryId,
+							optionId,
+							info.selection,
+						);
+						return result;
+					}),
+				);
+
+				set((state) => {
+					let nextValueData = state.valueData;
+					let nextIsOptionActive = state.isOptionActive;
+
+					let valueDataChanged = false;
+					let isOptionActiveChanged = false;
+
+					const processOption = (
+						opt: ExROptionDto,
+						catId: number,
+						tId: number,
+					) => {
+						const uId = getUniqueOptionId(tId, catId, opt.Id);
+
+						// values
+						const currentValData = nextValueData[uId];
+						if (
+							!currentValData ||
+							currentValData.selection !== opt.Selection ||
+							currentValData.values.length !== opt.RangeMeta.Values.length ||
+							currentValData.values.some(
+								(v, i) => v !== opt.RangeMeta.Values[i],
+							)
+						) {
+							if (!valueDataChanged) {
+								nextValueData = { ...nextValueData };
+								valueDataChanged = true;
+							}
+							nextValueData[uId] = {
+								selection: opt.Selection,
+								values: opt.RangeMeta.Values,
+							};
+						}
+
+						// isOptionActive
+						if (nextIsOptionActive[uId] !== opt.IsActive) {
+							if (!isOptionActiveChanged) {
+								nextIsOptionActive = { ...nextIsOptionActive };
+								isOptionActiveChanged = true;
+							}
+							nextIsOptionActive[uId] = opt.IsActive;
+						}
+
+						if (opt.Childs) {
+							for (const child of opt.Childs) {
+								processOption(child, catId, tId);
+							}
+						}
+					};
+
+					const processCategory = (cat: ExRCategoryDto) => {
+						const tId = exrOptionMetaData.categoryTabMap[cat.Id];
+						for (const opt of cat.Options) {
+							processOption(opt, cat.Id, tId);
+						}
+					};
+
+					updateResult.forEach((x) => {
+						if (x.UpdatedCategory) {
+							processCategory(x.UpdatedCategory);
+						}
+
+						for (const chain of x.ChainUpdatedOption) {
+							const tId = exrOptionMetaData.categoryTabMap[chain.Id];
+							for (const opt of chain.Options) {
+								processOption(opt, chain.Id, tId);
+							}
+						}
+					});
+
+					if (!valueDataChanged && !isOptionActiveChanged) {
+						return state;
+					}
+
+					const patch: Partial<OptionViewerSlice> = {};
+					if (valueDataChanged) {
+						patch.valueData = nextValueData;
+					}
+					if (isOptionActiveChanged) {
+						patch.isOptionActive = nextIsOptionActive;
+					}
+					return {
+						...state,
+						...patch,
+					};
+				});
+			} catch (error) {
+				console.error("Error updating ExR option:", error);
+			}
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {

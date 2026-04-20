@@ -1,11 +1,12 @@
 import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
-import { useOptionData } from "../logics/optionUtils";
+import { useOptionData } from "../hooks/useOptionData";
+import type { UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
 interface ExROptionControlProps {
-	uniqueOptionId: number;
+	uniqueOptionId: UniqueOptionId;
 	format: string;
 	type: string;
 }
@@ -18,18 +19,14 @@ export function ExROptionControl({
 	format,
 	type,
 }: ExROptionControlProps) {
-	const effectiveSelection = useStore((state) => {
-		return state.effectiveSelections[uniqueOptionId];
-	});
 	const optionValue = useOptionData(uniqueOptionId);
-
-	const currentSelection = effectiveSelection ?? optionValue.selection;
-	const TEMP_updateExROptionSelection = useStore((state) => {
-		return state.TEMP_updateExROptionSelection;
+	const currentSelection = optionValue.selection ?? 0;
+	const updateExROptionSelection = useStore((state) => {
+		return state.updateExROptionSelection;
 	});
 
-	const handleChange = (newSelection: number) => {
-		TEMP_updateExROptionSelection(uniqueOptionId, newSelection);
+	const handleChange = async (selection: number) => {
+		await updateExROptionSelection({ uniqueOptionId, selection });
 	};
 
 	if (type === "String") {
