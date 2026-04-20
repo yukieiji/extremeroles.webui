@@ -67,3 +67,12 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 
 	return auOptionsPromise;
 }
+
+/**
+ * データを再取得して同期する
+ */
+export async function syncOptions(): Promise<void> {
+	resetApiCache();
+	await Promise.all([getExrOptions(), getAuOptions()]);
+	useStore.getState().validateOpenedIds();
+}

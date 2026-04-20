@@ -1,4 +1,4 @@
-import { Suspense, use, useTransition } from "react";
+import { Suspense, use } from "react";
 import { LoadingView } from "./components/parts/LoadingView";
 import { SyncButton } from "./components/parts/SyncButton";
 import { SyncLoadingOverlay } from "./components/parts/SyncLoadingOverlay";
@@ -6,7 +6,7 @@ import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
-import { getAuOptions, getExrOptions, resetApiCache } from "./logics/api.store";
+import { getAuOptions, getExrOptions, syncOptions } from "./logics/api.store";
 import { useStore } from "./useStore";
 
 /**
@@ -49,18 +49,20 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
-	const validateOpenedIds = useStore((state) => {
-		return state.validateOpenedIds;
+	const isSyncPending = useStore((state) => {
+		return state.isSyncPending;
+	});
+	const setIsSyncPending = useStore((state) => {
+		return state.setIsSyncPending;
 	});
 
-	const [isSyncPending, startSyncTransition] = useTransition();
-
-	const handleSync = () => {
-		startSyncTransition(async () => {
-			resetApiCache();
-			await Promise.all([getExrOptions(), getAuOptions()]);
-			validateOpenedIds();
-		});
+	const handleSync = async () => {
+		setIsSyncPending(true);
+		try {
+			await syncOptions();
+		} finally {
+			setIsSyncPending(false);
+		}
 	};
 
 	return (

@@ -20,6 +20,7 @@ import type {
 export interface ExROptionViewerSlice {
 	selectedExRTabId: OptionTab;
 	isExRTabPending: boolean;
+	isSyncPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
@@ -28,6 +29,7 @@ export interface ExROptionViewerSlice {
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
+	setIsSyncPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
 	updateExROptionSelection: (...updateInfos: UpdateExRArg[]) => Promise<void>;
@@ -50,6 +52,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 	return {
 		selectedExRTabId: 0,
 		isExRTabPending: false,
+		isSyncPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
 		exrValue: {},
@@ -62,10 +65,14 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		setIsExRTabPending: (isPending: boolean) => {
 			set({ isExRTabPending: isPending });
 		},
+		setIsSyncPending: (isPending: boolean) => {
+			set({ isSyncPending: isPending });
+		},
 		resetViewer: () => {
 			set({
 				selectedExRTabId: 0,
 				isExRTabPending: false,
+				isSyncPending: false,
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
 				isPresetDropdownOpen: false,
@@ -166,6 +173,10 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 					};
 
 					updateResult.forEach((x) => {
+						if (x === null) {
+							return;
+						}
+
 						if (x.UpdatedCategory) {
 							processCategory(x.UpdatedCategory);
 						}

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useOptionData } from "../hooks/useOptionData";
+import { syncOptions } from "../logics/api.store";
 import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 
@@ -32,6 +33,9 @@ export function PresetSelector() {
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
 	});
+	const setIsSyncPending = useStore((state) => {
+		return state.setIsSyncPending;
+	});
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -63,11 +67,25 @@ export function PresetSelector() {
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = async (index: number) => {
-		await updateExROptionSelection({
-			uniqueOptionId: PRESET_OPTION_UNIQUE_ID,
-			selection: index,
-		});
 		setPresetDropdownOpen(false);
+
+		const name =
+			presetNames[index] ?? String((presetOption.values as number[])[index]);
+
+		if (!window.confirm(`プリセットを「${name}」に切り替えますか？`)) {
+			return;
+		}
+
+		setIsSyncPending(true);
+		try {
+			await updateExROptionSelection({
+				uniqueOptionId: PRESET_OPTION_UNIQUE_ID,
+				selection: index,
+			});
+			await syncOptions();
+		} finally {
+			setIsSyncPending(false);
+		}
 	};
 
 	/**
