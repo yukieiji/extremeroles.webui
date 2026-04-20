@@ -1,17 +1,18 @@
 import { describe, expect, it } from "vitest";
 import { create } from "zustand";
-import type { OptionViewerSlice } from "../src/slices/optionViewerSlice";
-import { createOptionViewerSlice } from "../src/slices/optionViewerSlice";
+import type { ExROptionViewerSlice } from "../src/slices/exrOptionViewerSlice";
+import { createExROptionViewerSlice } from "../src/slices/exrOptionViewerSlice";
+import type { UniqueOptionId } from "../src/type";
 
 describe("optionViewerSlice", () => {
-	const useStore = create<OptionViewerSlice>()((...a) => ({
-		...createOptionViewerSlice(...a),
+	const useStore = create<ExROptionViewerSlice>()((...a) => ({
+		...createExROptionViewerSlice(...a),
 	}));
 
 	it("should have initial state", () => {
 		const state = useStore.getState();
 		expect(state.selectedExRTabId).toBe(0);
-		expect(state.isTabPending).toBe(false);
+		expect(state.isExRTabPending).toBe(false);
 		expect(state.openedExRCategoryIds).toEqual({});
 	});
 
@@ -37,13 +38,13 @@ describe("optionViewerSlice", () => {
 	});
 
 	it("should set isTabPending", () => {
-		const { setIsTabPending } = useStore.getState();
+		const { setIsExRTabPending } = useStore.getState();
 
-		setIsTabPending(true);
-		expect(useStore.getState().isTabPending).toBe(true);
+		setIsExRTabPending(true);
+		expect(useStore.getState().isExRTabPending).toBe(true);
 
-		setIsTabPending(false);
-		expect(useStore.getState().isTabPending).toBe(false);
+		setIsExRTabPending(false);
+		expect(useStore.getState().isExRTabPending).toBe(false);
 	});
 
 	it("should update and delete preset name", () => {
@@ -62,10 +63,10 @@ describe("optionViewerSlice", () => {
 	it("should toggle option open state with numeric ID", () => {
 		const { toggleExROption } = useStore.getState();
 
-		toggleExROption(10001);
+		toggleExROption(10001 as UniqueOptionId);
 		expect(useStore.getState().openedExROptionIds[10001]).toBe(true);
 
-		toggleExROption(10001);
+		toggleExROption(10001 as UniqueOptionId);
 		expect(useStore.getState().openedExROptionIds[10001]).toBe(false);
 	});
 
@@ -81,7 +82,7 @@ describe("optionViewerSlice", () => {
 		setExROptions(valueData, isOptionActive);
 
 		const state = useStore.getState();
-		expect(state.valueData[10001].selection).toBe(1);
-		expect(state.isOptionActive[10001]).toBe(true);
+		expect(state.exrValue[10001 as UniqueOptionId].selection).toBe(1);
+		expect(state.isExROptionActive[10001 as UniqueOptionId]).toBe(true);
 	});
 });

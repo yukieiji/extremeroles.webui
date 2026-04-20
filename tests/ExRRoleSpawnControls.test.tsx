@@ -20,10 +20,10 @@ function setUpudateExROptionSelectionSpawnRateMock(): void {
 				const currentStore = useStore.getState();
 				currentStore.setExROptions(
 					{
-						...currentStore.valueData,
+						...currentStore.exrValue,
 						[x.uniqueOptionId]: { selection: x.selection, values },
 					},
-					currentStore.isOptionActive,
+					currentStore.isExROptionActive,
 				);
 			});
 		},
@@ -132,9 +132,8 @@ describe("ExRRoleSpawnControls", () => {
 
 		const state = useStore.getState();
 		expect(
-			state.valueData[
-				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)
-			].selection,
+			state.exrValue[getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(0); // Rate 0%
 	});
 
@@ -156,9 +155,8 @@ describe("ExRRoleSpawnControls", () => {
 
 		const state = useStore.getState();
 		expect(
-			state.valueData[
-				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)
-			].selection,
+			state.exrValue[getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)]
+				.selection,
 		).toBe(1); // Rate index 1 is 10%
 	});
 

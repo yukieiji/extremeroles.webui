@@ -12,10 +12,10 @@ function setUpudateExROptionSelectionMock(values: (number | string)[]): void {
 			args.forEach((x) => {
 				useStore.getState().setExROptions(
 					{
-						...useStore.getState().valueData,
+						...useStore.getState().exrValue,
 						[x.uniqueOptionId]: { selection: x.selection, values: values },
 					},
-					useStore.getState().isOptionActive,
+					useStore.getState().isExROptionActive,
 				);
 			});
 		},
@@ -75,7 +75,7 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+			state.exrValue[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
 				.selection,
 		).toBe(1);
 	});
@@ -104,7 +104,7 @@ describe("ExRHeaderOptionControl", () => {
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
 		expect(
-			state.valueData[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
+			state.exrValue[getUniqueOptionId(tabId, 1, SPAWN_RATE_OPTION_ID)]
 				.selection,
 		).toBe(2); // 100 is at index 2
 	});

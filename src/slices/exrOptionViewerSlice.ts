@@ -43,7 +43,7 @@ export interface ExROptionViewerSlice {
 /**
  * ExR オプションの状態管理を行うスライスの生成
  */
-export const exrOptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
+export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 	set,
 ) => {
 	return {

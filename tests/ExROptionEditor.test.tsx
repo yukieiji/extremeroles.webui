@@ -118,8 +118,8 @@ describe("ExROptionEditor", () => {
 		const state = useStore.getState();
 
 		// 1. isOptionActive を optionId でも引けるようにする（ExRStandardCategoryList 用）
-		const newActive = { ...state.isOptionActive };
-		for (const [uId, active] of Object.entries(state.isOptionActive)) {
+		const newActive = { ...state.isExROptionActive };
+		for (const [uId, active] of Object.entries(state.isExROptionActive)) {
 			const oId = Number(uId) % 10000;
 			newActive[oId] = active;
 		}
@@ -133,7 +133,7 @@ describe("ExROptionEditor", () => {
 		}
 		exrOptionMetaData.childOptionMap = newChildMap;
 
-		useStore.setState({ isOptionActive: newActive });
+		useStore.setState({ isExROptionActive: newActive });
 	});
 
 	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {

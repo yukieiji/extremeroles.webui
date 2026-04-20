@@ -86,7 +86,7 @@ describe("ExRCategoryList Component Selection", () => {
 				exrOptionMetaData.categoryInfo[cat.Id] = cat.Name;
 				if (tab.Id === OptionTab.GeneralTab) {
 					exrOptionMetaData.globalCategoryIdTopLevelMap[cat.Id] =
-						cat.Options.map((o) => o.Id);
+						cat.Options.map((o) => getUniqueOptionId(tab.Id, cat.Id, o.Id));
 				}
 
 				for (const opt of cat.Options) {
@@ -98,14 +98,14 @@ describe("ExRCategoryList Component Selection", () => {
 					};
 					useStore.getState().setExROptions(
 						{
-							...useStore.getState().valueData,
+							...useStore.getState().exrValue,
 							[uniqueId]: {
 								selection: opt.Selection,
 								values: opt.RangeMeta.Values,
 							},
 						},
 						{
-							...useStore.getState().isOptionActive,
+							...useStore.getState().isExROptionActive,
 							[uniqueId]: opt.IsActive,
 							// バグ回避用の optionId での登録
 							[opt.Id]: opt.IsActive,
@@ -163,23 +163,27 @@ describe("ExRCategoryList Component Selection", () => {
 		vi.spyOn(
 			useStore.getState(),
 			"updateExROptionSelection",
-		).mockImplementation(async (uId, selection) => {
-			useStore.getState().setExROptions(
-				{
-					...useStore.getState().valueData,
-					[uId]: { selection, values: [0, 100] },
-				},
-				useStore.getState().isOptionActive,
-			);
+		).mockImplementation(async (...args) => {
+			args.forEach((x) => {
+				useStore.getState().setExROptions(
+					{
+						...useStore.getState().exrValue,
+						[x.uniqueOptionId]: { selection: x.selection, values: [0, 100] },
+					},
+					useStore.getState().isExROptionActive,
+				);
+			});
 		});
 
 		// Set a non-zero spawn rate so the accordion is enabled
-		await useStore
-			.getState()
-			.updateExROptionSelection(
-				getUniqueOptionId(OptionTab.CrewmateTab, 2, SPAWN_RATE_OPTION_ID),
-				1,
-			); // Category 2, Option 50, Index 1 (Value 100)
+		await useStore.getState().updateExROptionSelection({
+			uniqueOptionId: getUniqueOptionId(
+				OptionTab.CrewmateTab,
+				2,
+				SPAWN_RATE_OPTION_ID,
+			),
+			selection: 1,
+		}); // Category 2, Option 50, Index 1 (Value 100)
 		render(<ExRCategoryList />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
