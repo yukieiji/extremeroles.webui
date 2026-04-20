@@ -57,8 +57,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		isExROptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
-		isConfirmDialogOpen: false,
-		isGlobalSyncing: false,
 		pendingPresetIndex: null,
 		setSelectedExRTabId: (id: OptionTab) => {
 			set({ selectedExRTabId: id });
