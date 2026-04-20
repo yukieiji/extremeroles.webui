@@ -39,7 +39,7 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await selectButton.click();
 
 	// TODO: プリセットを切り替えた時にデータを再リロードする必要があるため追加の修正が必要になります
-	// 仕様: プリセット切り替え => 200番成功 => ExR側のデータ再取得をして再構築 => 再表示
+	// 仕様: プリセット切り替え => 202成功 => ExR側のデータ再取得をして再構築 => 再表示
 	/* 
 	// プリセット 2 (index 1) に切り替える
 	const preset2Button = page.getByRole("button", { name: "2", exact: true });
