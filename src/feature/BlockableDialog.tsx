@@ -10,7 +10,10 @@ export function BlockableDialog() {
 			<ConfirmDialog
 				title={blockDialog.title}
 				message={blockDialog.message}
-				onConfirm={blockDialog.onConfirm}
+				onConfirm={() => {
+					blockDialog.onConfirm()
+					closeDialog()
+				}}
 				onCancel={closeDialog}
 			/>
 		</div>
