@@ -117,7 +117,7 @@ export async function updateExrOption(
 	categoryId: number,
 	optionId: number,
 	selection: number,
-): Promise<UpdatedOptions> {
+): Promise<UpdatedOptions | null> {
 	const request = {
 		TabId: tabId,
 		CategoryId: categoryId,
@@ -134,6 +134,10 @@ export async function updateExrOption(
 
 	if (!res.ok) {
 		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	if (res.status === 202) {
+		return null;
 	}
 
 	const jsonData = await res.json();

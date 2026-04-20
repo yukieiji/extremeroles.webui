@@ -38,13 +38,22 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await expect(selectButton).toBeVisible();
 	await selectButton.click();
 
-	// TODO: プリセットを切り替えた時にデータを再リロードする必要があるため追加の修正が必要になります
-	// 仕様: プリセット切り替え => 200番成功 => ExR側のデータ再取得をして再構築 => 再表示
-	/* 
 	// プリセット 2 (index 1) に切り替える
 	const preset2Button = page.getByRole("button", { name: "2", exact: true });
 	await expect(preset2Button).toBeVisible();
 	await preset2Button.click();
+
+	// 確認ダイアログが表示されることを確認
+	const dialog = page.getByRole("dialog");
+	await expect(dialog).toBeVisible();
+	await expect(dialog).toContainText("プリセットの切り替え");
+	await dialog.getByRole("button", { name: "OK" }).click();
+
+	// ローディング画面が表示され、その後消えることを確認
+	await expect(page.getByText("Synchronizing...")).toBeVisible();
+	await expect(page.getByText("Synchronizing...")).not.toBeVisible({
+		timeout: 30000,
+	});
 
 	// 入力欄が index 1 のデフォルト値 "2" になっていることを確認
 	await expect(presetInput).toHaveValue("2");
@@ -77,6 +86,14 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 
 	// index 1 (Casual Fun) に切り替える
 	await casualFunButton.click();
+
+	// 再度ダイアログを確認してOK
+	await expect(dialog).toBeVisible();
+	await dialog.getByRole("button", { name: "OK" }).click();
+
+	await expect(page.getByText("Synchronizing...")).not.toBeVisible({
+		timeout: 30000,
+	});
+
 	await expect(presetInput).toHaveValue("Casual Fun");
-	*/
 });

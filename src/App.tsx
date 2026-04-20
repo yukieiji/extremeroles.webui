@@ -6,7 +6,7 @@ import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
-import { getAuOptions, getExrOptions, resetApiCache } from "./logics/api.store";
+import { getAuOptions, getExrOptions, syncAllData } from "./logics/api.store";
 import { useStore } from "./useStore";
 
 /**
@@ -49,17 +49,23 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
-	const validateOpenedIds = useStore((state) => {
-		return state.validateOpenedIds;
+	const isSyncPending = useStore((state) => {
+		return state.isSyncPending;
+	});
+	const setIsSyncPending = useStore((state) => {
+		return state.setIsSyncPending;
 	});
 
-	const [isSyncPending, startSyncTransition] = useTransition();
+	const [, startSyncTransition] = useTransition();
 
 	const handleSync = () => {
 		startSyncTransition(async () => {
-			resetApiCache();
-			await Promise.all([getExrOptions(), getAuOptions()]);
-			validateOpenedIds();
+			setIsSyncPending(true);
+			try {
+				await syncAllData();
+			} finally {
+				setIsSyncPending(false);
+			}
 		});
 	};
 

@@ -73,6 +73,17 @@ export const handlers = [
 
     // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
     if (CategoryId === 0 && OptionId === 0) {
+      // 実際にデータを更新する
+      const tab = curValidatedExRMockData.find(t => t.Id === TabId);
+      if (tab) {
+        const category = tab.Categories.find(c => c.Id === CategoryId);
+        if (category) {
+          const option = category.Options.find(o => o.Id === OptionId);
+          if (option) {
+            option.Selection = Selection;
+          }
+        }
+      }
       return new HttpResponse(null, { status: 202 });
     }
 

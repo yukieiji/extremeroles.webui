@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { ConfirmDialog } from "../components/parts/ConfirmDialog";
 import { useOptionData } from "../hooks/useOptionData";
+import { syncAllData } from "../logics/api.store";
 import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 
@@ -32,6 +34,12 @@ export function PresetSelector() {
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
 	});
+	const setIsSyncPending = useStore((state) => {
+		return state.setIsSyncPending;
+	});
+
+	const [pendingSelection, setPendingSelection] = useState<number | null>(null);
+	const [, startTransition] = useTransition();
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -62,12 +70,36 @@ export function PresetSelector() {
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
-	const handlePresetSelect = async (index: number) => {
-		await updateExROptionSelection({
-			uniqueOptionId: PRESET_OPTION_UNIQUE_ID,
-			selection: index,
-		});
+	const handlePresetSelect = (index: number) => {
+		if (index === currentSelection) {
+			setPresetDropdownOpen(false);
+			return;
+		}
+		setPendingSelection(index);
 		setPresetDropdownOpen(false);
+	};
+
+	const confirmPresetChange = () => {
+		if (pendingSelection === null) {
+			return;
+		}
+
+		const selectionToUpdate = pendingSelection;
+		setPendingSelection(null);
+
+		startTransition(async () => {
+			setIsSyncPending(true);
+			try {
+				await updateExROptionSelection({
+					uniqueOptionId: PRESET_OPTION_UNIQUE_ID,
+					selection: selectionToUpdate,
+				});
+				// プリセット切り替え成功時にデータを再取得して再構築
+				await syncAllData();
+			} finally {
+				setIsSyncPending(false);
+			}
+		});
 	};
 
 	/**
@@ -101,6 +133,16 @@ export function PresetSelector() {
 
 	return (
 		<div className="relative flex items-center gap-2" ref={dropdownRef}>
+			{pendingSelection !== null && (
+				<ConfirmDialog
+					title="プリセットの切り替え"
+					message={`プリセットを「${presetNames[pendingSelection] ?? String(presetValues[pendingSelection])}」に切り替えますか？`}
+					onConfirm={confirmPresetChange}
+					onCancel={() => {
+						setPendingSelection(null);
+					}}
+				/>
+			)}
 			<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:border-blue-500">
 				<input
 					ref={inputRef}
