@@ -24,6 +24,9 @@ export interface ExROptionViewerSlice {
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
+	isConfirmDialogOpen: boolean;
+	isGlobalSyncing: boolean;
+	pendingPresetIndex: number | null;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	setSelectedExRTabId: (id: OptionTab) => void;
@@ -33,6 +36,9 @@ export interface ExROptionViewerSlice {
 	updateExROptionSelection: (...updateInfos: UpdateExRArg[]) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
+	setConfirmDialogOpen: (isOpen: boolean) => void;
+	setIsGlobalSyncing: (isSyncing: boolean) => void;
+	setPendingPresetIndex: (index: number | null) => void;
 	resetViewer: () => void;
 	setExROptions: (
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
@@ -56,11 +62,23 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		isExROptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
+		isConfirmDialogOpen: false,
+		isGlobalSyncing: false,
+		pendingPresetIndex: null,
 		setSelectedExRTabId: (id: OptionTab) => {
 			set({ selectedExRTabId: id });
 		},
 		setIsExRTabPending: (isPending: boolean) => {
 			set({ isExRTabPending: isPending });
+		},
+		setConfirmDialogOpen: (isOpen: boolean) => {
+			set({ isConfirmDialogOpen: isOpen });
+		},
+		setIsGlobalSyncing: (isSyncing: boolean) => {
+			set({ isGlobalSyncing: isSyncing });
+		},
+		setPendingPresetIndex: (index: number | null) => {
+			set({ pendingPresetIndex: index });
 		},
 		resetViewer: () => {
 			set({
@@ -69,6 +87,9 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
 				isPresetDropdownOpen: false,
+				isConfirmDialogOpen: false,
+				isGlobalSyncing: false,
+				pendingPresetIndex: null,
 			});
 		},
 		toggleExRCategory: (categoryId: number) => {
@@ -166,6 +187,9 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 					};
 
 					updateResult.forEach((x) => {
+						if (!x) {
+							return;
+						}
 						if (x.UpdatedCategory) {
 							processCategory(x.UpdatedCategory);
 						}

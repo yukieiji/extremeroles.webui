@@ -26,11 +26,14 @@ export function PresetSelector() {
 	const updatePresetName = useStore((state) => {
 		return state.updatePresetName;
 	});
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
-	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
+	});
+	const setConfirmDialogOpen = useStore((state) => {
+		return state.setConfirmDialogOpen;
+	});
+	const setPendingPresetIndex = useStore((state) => {
+		return state.setPendingPresetIndex;
 	});
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,11 +65,9 @@ export function PresetSelector() {
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
-	const handlePresetSelect = async (index: number) => {
-		await updateExROptionSelection({
-			uniqueOptionId: PRESET_OPTION_UNIQUE_ID,
-			selection: index,
-		});
+	const handlePresetSelect = (index: number) => {
+		setPendingPresetIndex(index);
+		setConfirmDialogOpen(true);
 		setPresetDropdownOpen(false);
 	};
 
