@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset");
+	await page.request.post("/mock/reset", { maxRetries: 5 });
 	// すべてのテストで API の遅延を設定可能にする
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property

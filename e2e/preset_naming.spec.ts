@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset");
+	await page.request.post("/mock/reset", { maxRetries: 5 });
 	// タイムアウトを延長
 	test.setTimeout(60000);
 
