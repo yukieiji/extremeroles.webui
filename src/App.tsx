@@ -1,10 +1,12 @@
-import { Suspense, use } from "react";
+import { Suspense, use, useTransition } from "react";
 import { LoadingView } from "./components/parts/LoadingView";
+import { SyncButton } from "./components/parts/SyncButton";
+import { SyncLoadingOverlay } from "./components/parts/SyncLoadingOverlay";
 import { AuOptionEditor } from "./feature/AuOptionEditor";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
-import { getAuOptions, getExrOptions } from "./logics/api.store";
+import { getAuOptions, getExrOptions, resetApiCache } from "./logics/api.store";
 import { useStore } from "./useStore";
 
 /**
@@ -47,29 +49,46 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
+	const validateOpenedIds = useStore((state) => {
+		return state.validateOpenedIds;
+	});
+
+	const [isSyncPending, startSyncTransition] = useTransition();
+
+	const handleSync = () => {
+		startSyncTransition(async () => {
+			resetApiCache();
+			await Promise.all([getExrOptions(), getAuOptions()]);
+			validateOpenedIds();
+		});
+	};
 
 	return (
 		<section
 			data-testid="main-content-section"
-			className={`flex flex-col gap-4 transition-opacity duration-200 ${isSidebarPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
-			data-is-pending={isSidebarPending ? "true" : "false"}
+			className={`flex flex-col gap-4 transition-opacity duration-200 ${isSidebarPending || isSyncPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
+			data-is-pending={isSidebarPending || isSyncPending ? "true" : "false"}
 		>
+			{isSyncPending && <SyncLoadingOverlay />}
 			<div className="flex items-center gap-4">
-				<h2 className="text-2xl font-bold whitespace-nowrap">
-					{selectedTab === "ExR" ? "ExR Options" : "Au Options"}
-				</h2>
-				{selectedTab === "ExR" && (
-					<Suspense
-						fallback={
-							<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />
-						}
-					>
-						<PresetSelectorContainer />
-					</Suspense>
-				)}
-				{isSidebarPending && (
-					<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-				)}
+				<div className="flex items-center gap-4 flex-1">
+					<h2 className="text-2xl font-bold whitespace-nowrap">
+						{selectedTab === "ExR" ? "ExR Options" : "Au Options"}
+					</h2>
+					{selectedTab === "ExR" && (
+						<Suspense
+							fallback={
+								<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />
+							}
+						>
+							<PresetSelectorContainer />
+						</Suspense>
+					)}
+					{isSidebarPending && (
+						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+					)}
+				</div>
+				<SyncButton onClick={handleSync} disabled={isSyncPending} />
 			</div>
 			<Suspense
 				fallback={
