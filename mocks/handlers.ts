@@ -71,11 +71,6 @@ export const handlers = [
 
     const { TabId, CategoryId, OptionId, Selection } = result.data;
 
-    // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
-    if (CategoryId === 0 && OptionId === 0) {
-      return new HttpResponse(null, { status: 202 });
-    }
-
     // 実際にデータを更新する
     let updatedCategory: ExRCategoryDto | null = null;
     const chainUpdatedOptions: CategoryOptionDto[] = [];
@@ -103,6 +98,11 @@ export const handlers = [
         updateAllMatchingOptions(category.Options, OptionId, Selection);
         updatedCategory = category;
       }
+    }
+
+    // CategoryIdとOptionIdが0のときは202を返す（ボディなし）
+    if (CategoryId === 0 && OptionId === 0) {
+      return new HttpResponse(null, { status: 202 });
     }
 
     // それ以外はUpdatedOptionsを返す

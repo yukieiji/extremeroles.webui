@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset");
+	await page.request.post("/mock/reset", { maxRetries: 5 });
 	test.setTimeout(60000);
 
 	// すべてのテストで API の遅延を設定可能にする

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset");
+	await page.request.post("/mock/reset", { maxRetries: 5 });
 	// タイムアウトを延長
 	test.setTimeout(60000);
 
@@ -38,13 +38,20 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await expect(selectButton).toBeVisible();
 	await selectButton.click();
 
-	// TODO: プリセットを切り替えた時にデータを再リロードする必要があるため追加の修正が必要になります
-	// 仕様: プリセット切り替え => 202成功 => ExR側のデータ再取得をして再構築 => 再表示
-	/* 
 	// プリセット 2 (index 1) に切り替える
 	const preset2Button = page.getByRole("button", { name: "2", exact: true });
 	await expect(preset2Button).toBeVisible();
 	await preset2Button.click();
+
+	// 確認ダイアログが表示されることを確認
+	await expect(page.getByText("プリセットの切り替え")).toBeVisible();
+	await page.getByRole("button", { name: "OK" }).click();
+
+	// ローディングが表示され、消えるのを待つ
+	await expect(page.getByText("Synchronizing...")).toBeVisible();
+	await expect(page.getByText("Synchronizing...")).not.toBeVisible({
+		timeout: 10000,
+	});
 
 	// 入力欄が index 1 のデフォルト値 "2" になっていることを確認
 	await expect(presetInput).toHaveValue("2");
@@ -77,6 +84,13 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 
 	// index 1 (Casual Fun) に切り替える
 	await casualFunButton.click();
+	// 確認ダイアログで OK
+	await page.getByRole("button", { name: "OK" }).click();
+
+	// ローディング待ち
+	await expect(page.getByText("Synchronizing...")).not.toBeVisible({
+		timeout: 10000,
+	});
+
 	await expect(presetInput).toHaveValue("Casual Fun");
-	*/
 });

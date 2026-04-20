@@ -1,12 +1,14 @@
-import { Suspense, use, useTransition } from "react";
+import { Suspense, use } from "react";
 import { LoadingView } from "./components/parts/LoadingView";
 import { SyncButton } from "./components/parts/SyncButton";
-import { SyncLoadingOverlay } from "./components/parts/SyncLoadingOverlay";
 import { AuOptionEditor } from "./feature/AuOptionEditor";
+import { BlockableDialog } from "./feature/BlockableDialog";
+import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
-import { getAuOptions, getExrOptions, resetApiCache } from "./logics/api.store";
+import { useSyncBackend } from "./hooks/useBackend";
+import { getAuOptions, getExrOptions } from "./logics/api.store";
 import { useStore } from "./useStore";
 
 /**
@@ -49,27 +51,14 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
-	const validateOpenedIds = useStore((state) => {
-		return state.validateOpenedIds;
-	});
 
-	const [isSyncPending, startSyncTransition] = useTransition();
-
-	const handleSync = () => {
-		startSyncTransition(async () => {
-			resetApiCache();
-			await Promise.all([getExrOptions(), getAuOptions()]);
-			validateOpenedIds();
-		});
-	};
+	const syncer = useSyncBackend();
 
 	return (
 		<section
 			data-testid="main-content-section"
-			className={`flex flex-col gap-4 transition-opacity duration-200 ${isSidebarPending || isSyncPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
-			data-is-pending={isSidebarPending || isSyncPending ? "true" : "false"}
+			className="flex flex-col gap-4 transition-opacity duration-200"
 		>
-			{isSyncPending && <SyncLoadingOverlay />}
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-4 flex-1">
 					<h2 className="text-2xl font-bold whitespace-nowrap">
@@ -88,7 +77,7 @@ function MainContent() {
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
-				<SyncButton onClick={handleSync} disabled={isSyncPending} />
+				<SyncButton onClick={syncer} />
 			</div>
 			<Suspense
 				fallback={
@@ -113,6 +102,8 @@ function App() {
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex">
+			<BlockableLoading />
+			<BlockableDialog />
 			<Suspense fallback={<LoadingView />}>
 				<OptionGroupToggleSidebar />
 				<main
