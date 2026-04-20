@@ -5,5 +5,5 @@ import { useStore } from "../useStore";
 export function useOptionData(
 	uniqueOptionId: UniqueOptionId,
 ): ExROptionValueData {
-	return useStore(useShallow((state) => state.valueData[uniqueOptionId]));
+	return useStore(useShallow((state) => state.exrValue[uniqueOptionId]));
 }

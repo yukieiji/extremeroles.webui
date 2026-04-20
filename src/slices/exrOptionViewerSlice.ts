@@ -24,7 +24,7 @@ export interface ExROptionViewerSlice {
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
-	value: Record<UniqueOptionId, ExROptionValueData>;
+	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
@@ -51,7 +51,7 @@ export const exrOptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		isExRTabPending: false,
 		openedExRCategoryIds: {},
 		openedExROptionIds: {},
-		value: {},
+		exrValue: {},
 		isExROptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
@@ -108,7 +108,7 @@ export const exrOptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				);
 
 				set((state) => {
-					let nextValueData = state.value;
+					let nextValueData = state.exrValue;
 					let nextIsOptionActive = state.isExROptionActive;
 
 					let valueDataChanged = false;
@@ -183,7 +183,7 @@ export const exrOptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 
 					const patch: Partial<ExROptionViewerSlice> = {};
 					if (valueDataChanged) {
-						patch.value = nextValueData;
+						patch.exrValue = nextValueData;
 					}
 					if (isOptionActiveChanged) {
 						patch.isExROptionActive = nextIsOptionActive;
@@ -220,7 +220,7 @@ export const exrOptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 			optionActiveData: Record<number, boolean>,
 		) => {
 			set({
-				value: valueData,
+				exrValue: valueData,
 				isExROptionActive: optionActiveData,
 			});
 		},
