@@ -24,8 +24,6 @@ export interface ExROptionViewerSlice {
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
-	isConfirmDialogOpen: boolean;
-	isGlobalSyncing: boolean;
 	pendingPresetIndex: number | null;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
@@ -36,9 +34,6 @@ export interface ExROptionViewerSlice {
 	updateExROptionSelection: (...updateInfos: UpdateExRArg[]) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
-	setConfirmDialogOpen: (isOpen: boolean) => void;
-	setIsGlobalSyncing: (isSyncing: boolean) => void;
-	setPendingPresetIndex: (index: number | null) => void;
 	resetViewer: () => void;
 	setExROptions: (
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
@@ -71,15 +66,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		setIsExRTabPending: (isPending: boolean) => {
 			set({ isExRTabPending: isPending });
 		},
-		setConfirmDialogOpen: (isOpen: boolean) => {
-			set({ isConfirmDialogOpen: isOpen });
-		},
-		setIsGlobalSyncing: (isSyncing: boolean) => {
-			set({ isGlobalSyncing: isSyncing });
-		},
-		setPendingPresetIndex: (index: number | null) => {
-			set({ pendingPresetIndex: index });
-		},
 		resetViewer: () => {
 			set({
 				selectedExRTabId: 0,
@@ -87,8 +73,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
 				isPresetDropdownOpen: false,
-				isConfirmDialogOpen: false,
-				isGlobalSyncing: false,
 				pendingPresetIndex: null,
 			});
 		},

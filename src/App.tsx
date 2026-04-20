@@ -1,15 +1,14 @@
-import { Suspense, use, useTransition } from "react";
-import { ConfirmDialog } from "./components/parts/ConfirmDialog";
+import { Suspense, use } from "react";
 import { LoadingView } from "./components/parts/LoadingView";
 import { SyncButton } from "./components/parts/SyncButton";
-import { SyncLoadingOverlay } from "./components/parts/SyncLoadingOverlay";
 import { AuOptionEditor } from "./feature/AuOptionEditor";
+import { BlockableDialog } from "./feature/BlockableDialog";
+import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
+import { useSyncBackend } from "./hooks/useBackend";
 import { getAuOptions, getExrOptions } from "./logics/api.store";
-import { PRESET_OPTION_UNIQUE_ID } from "./logics/optionUtils";
-import { performGlobalSync } from "./logics/syncLogic";
 import { useStore } from "./useStore";
 
 /**
@@ -52,85 +51,11 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
-	const isConfirmDialogOpen = useStore((state) => {
-		return state.isConfirmDialogOpen;
-	});
-	const isGlobalSyncing = useStore((state) => {
-		return state.isGlobalSyncing;
-	});
-	const pendingPresetIndex = useStore((state) => {
-		return state.pendingPresetIndex;
-	});
-	const presetNames = useStore((state) => {
-		return state.presetNames;
-	});
-	const setConfirmDialogOpen = useStore((state) => {
-		return state.setConfirmDialogOpen;
-	});
-	const setIsGlobalSyncing = useStore((state) => {
-		return state.setIsGlobalSyncing;
-	});
-	const setPendingPresetIndex = useStore((state) => {
-		return state.setPendingPresetIndex;
-	});
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
-	});
-
-	const [isPending, startTransition] = useTransition();
-
-	const handleSync = () => {
-		setIsGlobalSyncing(true);
-		startTransition(async () => {
-			try {
-				await performGlobalSync();
-			} finally {
-				setIsGlobalSyncing(false);
-			}
-		});
-	};
-
-	const handleConfirmPreset = async () => {
-		if (pendingPresetIndex === null) {
-			return;
-		}
-
-		setIsGlobalSyncing(true);
-		try {
-			await updateExROptionSelection({
-				uniqueOptionId: PRESET_OPTION_UNIQUE_ID,
-				selection: pendingPresetIndex,
-			});
-			await performGlobalSync();
-		} finally {
-			setIsGlobalSyncing(false);
-			setConfirmDialogOpen(false);
-			setPendingPresetIndex(null);
-		}
-	};
-
-	const handleCancelPreset = () => {
-		setConfirmDialogOpen(false);
-		setPendingPresetIndex(null);
-	};
-
-	const isProcessing = isSidebarPending || isPending || isGlobalSyncing;
-
 	return (
 		<section
 			data-testid="main-content-section"
-			className={`flex flex-col gap-4 transition-opacity duration-200 ${isProcessing ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
-			data-is-pending={isProcessing ? "true" : "false"}
+			className="flex flex-col gap-4 transition-opacity duration-200"
 		>
-			{isProcessing && <SyncLoadingOverlay />}
-			{isConfirmDialogOpen && pendingPresetIndex !== null && (
-				<ConfirmDialog
-					title="プリセットの切り替え"
-					message={`プリセットを「${presetNames[pendingPresetIndex] ?? pendingPresetIndex + 1}」に切り替えますか？`}
-					onConfirm={handleConfirmPreset}
-					onCancel={handleCancelPreset}
-				/>
-			)}
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-4 flex-1">
 					<h2 className="text-2xl font-bold whitespace-nowrap">
@@ -149,7 +74,7 @@ function MainContent() {
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
-				<SyncButton onClick={handleSync} disabled={isProcessing} />
+				<SyncButton onClick={useSyncBackend} />
 			</div>
 			<Suspense
 				fallback={
@@ -174,6 +99,8 @@ function App() {
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex">
+			<BlockableLoading />
+			<BlockableDialog />
 			<Suspense fallback={<LoadingView />}>
 				<OptionGroupToggleSidebar />
 				<main

@@ -290,3 +290,9 @@ export interface UpdateExRArg {
 	uniqueOptionId: UniqueOptionId;
 	selection: number;
 }
+
+export interface BlockDialog {
+	title: string;
+	message: string;
+	onConfirm: () => void;
+}

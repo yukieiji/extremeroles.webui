@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
+import { useBackendUpdate } from "../hooks/useBackend";
 import { useOptionData } from "../hooks/useOptionData";
+import { updateExrOption } from "../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
 import { useStore } from "../useStore";
 
@@ -29,12 +31,7 @@ export function PresetSelector() {
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
 	});
-	const setConfirmDialogOpen = useStore((state) => {
-		return state.setConfirmDialogOpen;
-	});
-	const setPendingPresetIndex = useStore((state) => {
-		return state.setPendingPresetIndex;
-	});
+	const setBlockDialog = useStore((state) => state.openBlockDialog);
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -55,6 +52,22 @@ export function PresetSelector() {
 		};
 	}, [setPresetDropdownOpen]);
 
+	const backendUpdator = useBackendUpdate();
+
+	const handlePresetSelect = (index: number) => {
+		setPresetDropdownOpen(false);
+		const newPreset = presetNames[index] ?? String(index);
+
+		setBlockDialog({
+			title: "プリセット切り替え",
+			message: `プリセットを「${currentPresetName}」から「${newPreset}}」に切り替えます`,
+			onConfirm: () =>
+				backendUpdator(async () => {
+					await updateExrOption(0, 0, 0, index);
+				}),
+		});
+	};
+
 	if (!presetOption) {
 		return null;
 	}
@@ -64,12 +77,6 @@ export function PresetSelector() {
 	const currentPresetValue = presetValues[currentSelection];
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
-
-	const handlePresetSelect = (index: number) => {
-		setPendingPresetIndex(index);
-		setConfirmDialogOpen(true);
-		setPresetDropdownOpen(false);
-	};
 
 	/**
 	 * ストアと Cookie を更新する
