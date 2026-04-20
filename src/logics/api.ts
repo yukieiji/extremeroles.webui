@@ -40,8 +40,7 @@ export const exrOptionMetaData: ExROptionMetaDataRecords = {
 export const auOptionMetaData: AuOptionMetaDataRecords = {
 	tabNames: [],
 	tabCategoryMap: {},
-	categoryInfo: {},
-	categoryOptionMap: {},
+	categoryMetaData: {},
 	options: {},
 };
 
@@ -64,8 +63,7 @@ export function resetExrOptionMetaData() {
 export function resetAuOptionMetaData() {
 	auOptionMetaData.tabNames = [];
 	auOptionMetaData.tabCategoryMap = {};
-	auOptionMetaData.categoryInfo = {};
-	auOptionMetaData.categoryOptionMap = {};
+	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
 }
 
@@ -158,8 +156,7 @@ export async function createAuOptionMetaData(): Promise<{
 	const initialValueData: Record<number, number> = {};
 	auOptionMetaData.tabNames = ["0", "1", "2"];
 	auOptionMetaData.tabCategoryMap = { 0: [], 1: [], 2: [] };
-	auOptionMetaData.categoryInfo = {};
-	auOptionMetaData.categoryOptionMap = {};
+	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
 
 	let currentTab = 0;
@@ -182,8 +179,10 @@ export async function createAuOptionMetaData(): Promise<{
 		}
 
 		auOptionMetaData.tabCategoryMap[currentTab].push(categoryId);
-		auOptionMetaData.categoryInfo[categoryId] = category.TranslatedTitle;
-		auOptionMetaData.categoryOptionMap[categoryId] = [];
+		auOptionMetaData.categoryMetaData[categoryId] = {
+			name: category.TranslatedTitle,
+			options: [],
+		};
 
 		for (const opt of category.Options) {
 			const valueType = opt.Info.ValueType;
@@ -198,7 +197,7 @@ export async function createAuOptionMetaData(): Promise<{
 					valueType,
 					AU_PREFIX.MAX_COUNT,
 				);
-				auOptionMetaData.categoryOptionMap[categoryId].push(maxCountId);
+				auOptionMetaData.categoryMetaData[categoryId].options.push(maxCountId);
 				auOptionMetaData.options[maxCountId] = {
 					title: opt.TranslatedTitle,
 					format: opt.TranslatedFormat,
@@ -212,7 +211,7 @@ export async function createAuOptionMetaData(): Promise<{
 					valueType,
 					AU_PREFIX.CHANCE,
 				);
-				auOptionMetaData.categoryOptionMap[categoryId].push(chanceId);
+				auOptionMetaData.categoryMetaData[categoryId].options.push(chanceId);
 				auOptionMetaData.options[chanceId] = {
 					title: opt.TranslatedTitle,
 					format: opt.TranslatedFormat,
@@ -221,7 +220,7 @@ export async function createAuOptionMetaData(): Promise<{
 				initialValueData[chanceId] = Math.floor(roleValue.Chance / 10);
 			} else {
 				const auOptionId = getAuOptionId(optionName, valueType);
-				auOptionMetaData.categoryOptionMap[categoryId].push(auOptionId);
+				auOptionMetaData.categoryMetaData[categoryId].options.push(auOptionId);
 
 				let range = opt.Range || [];
 				let index = 0;

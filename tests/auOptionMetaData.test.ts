@@ -62,7 +62,7 @@ describe('createAuOptionMetaData', () => {
         expect(auOptionMetaData.tabCategoryMap[2]).toContain(2);
 
         // Check category info
-        expect(auOptionMetaData.categoryInfo[0]).toBe("Tab0Category");
+        expect(auOptionMetaData.categoryMetaData[0].name).toBe("Tab0Category");
 
         // Check options
         // NormalOption: Name 1, Type 2 (Int), Prefix 0 => 10200

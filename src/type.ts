@@ -157,11 +157,15 @@ export interface AuOptionMeta {
 	range: (number | string)[];
 }
 
+export interface AuOptionCategoryMetaData {
+	name: string;
+	options: AuOptionId[];
+}
+
 export interface AuOptionMetaDataRecords {
 	tabNames: string[]; // タブの名前
 	tabCategoryMap: Record<number, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
-	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
-	categoryOptionMap: Record<number, AuOptionId[]>; // カテゴリIDとそのカテゴリに属するオプションIDの対応
+	categoryMetaData: Record<number, AuOptionCategoryMetaData>; // カテゴリIDとカテゴリメタデータの対応
 	options: Record<AuOptionId, AuOptionMeta>; // 全オプションのメタデータ
 }
 
