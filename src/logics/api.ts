@@ -1,11 +1,12 @@
 import type {
+	AuOptionMetaDataRecords,
 	ExROptionDto,
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	UniqueOptionId,
 	UpdatedOptions,
 } from "../type";
-import { ExRTabDtoArraySchema, OptionTab, UpdatedOptionsSchema } from "../type";
+import { AuOptionCategoryDtoArraySchema, ExRTabDtoArraySchema, OptionTab, UpdatedOptionsSchema } from "../type";
 
 import { getUniqueOptionId } from "./optionUtils";
 
@@ -25,6 +26,13 @@ export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	optionMetaData: {},
 	childOptionMap: {},
 };
+
+export const auOptionMetaData: AuOptionMetaDataRecords = {
+	tabNames: [],
+	tabCategoryMap: {},
+	categoryOptionMap: {},
+	options: {}
+}
 
 /**
  * ExRオプションのメタデータをリセットする（テスト用）
@@ -110,6 +118,16 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		}
 	}
 	return { valueData, isOptionActive };
+}
+
+export async function createAuOptionMetaData(): Record<AuOptionId, number> {
+	const res = await fetch(EXR_OPTION_URL);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	const data = await AuOptionCategoryDtoArraySchema.parseAsync(jsonData);
 }
 
 export async function updateExrOption(

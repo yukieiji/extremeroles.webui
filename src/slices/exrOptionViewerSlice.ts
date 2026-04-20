@@ -24,7 +24,6 @@ export interface ExROptionViewerSlice {
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
-	pendingPresetIndex: number | null;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	setSelectedExRTabId: (id: OptionTab) => void;
@@ -57,7 +56,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		isExROptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
-		pendingPresetIndex: null,
 		setSelectedExRTabId: (id: OptionTab) => {
 			set({ selectedExRTabId: id });
 		},
@@ -71,7 +69,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
 				isPresetDropdownOpen: false,
-				pendingPresetIndex: null,
 			});
 		},
 		toggleExRCategory: (categoryId: number) => {

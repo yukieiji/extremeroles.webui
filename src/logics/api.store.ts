@@ -1,7 +1,7 @@
 import type { AuOptionCategoryDto } from "../type";
 
 import { useStore } from "../useStore";
-import { AU_OPTION_URL, createExROptionMetaData } from "./api";
+import { AU_OPTION_URL, createAuOptionMetaData, createExROptionMetaData } from "./api";
 
 /**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
@@ -18,12 +18,17 @@ export function resetApiCache() {
 	auOptionsPromise = null;
 }
 
-async function createExROptionMetaDataWithStore(delay: number): Promise<void> {
-	if (delay > 0) {
-		await new Promise((resolve) => {
-			return setTimeout(resolve, delay);
-		});
+async function waitDelay(delay: number): Promise<void> {
+	if (delay <= 0) {
+		return;
 	}
+	await new Promise((resolve) => {
+		return setTimeout(resolve, delay);
+	});
+}
+
+async function createExROptionMetaDataWithStore(delay: number): Promise<void> {
+	await waitDelay(delay);
 	const { valueData, isOptionActive } = await createExROptionMetaData();
 	useStore.getState().setExROptions(valueData, isOptionActive);
 }
@@ -39,6 +44,12 @@ export function getExrOptions(): Promise<void> {
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 	exrOptionsPromise = createExROptionMetaDataWithStore(delay);
 	return exrOptionsPromise;
+}
+
+async function createAuOptionMetaDataWithStore(delay: number): Promise<void> {
+	await waitDelay(delay);
+	const auValue = await createAuOptionMetaData();
+	useStore.getState().setAuValue(auValue);
 }
 
 /**
