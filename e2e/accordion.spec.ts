@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// モックサーバーの状態をリセット
+	await page.request.post("/mock/reset");
 	// すべてのテストで API の遅延を設定可能にする
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property
@@ -21,6 +23,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("ExR Option Accordion behavior", async ({ page }) => {
+	// 【失敗の原因】
+	// アプリケーションの起動待ちタイムアウト、または特定のカテゴリが表示される条件
+	// （isActiveなど）がモックデータと一致していない。
 	const sidebar = page.getByLabel("オプションサイドバー");
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();
 

@@ -54,7 +54,7 @@ export function ExRRoleSpawnControls({
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = async (newSelection: number) => {
-		await updateExROptionSelection(uniqueRateId, newSelection);
+		await updateExROptionSelection({uniqueOptionId: uniqueRateId, selection: newSelection });
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
@@ -64,36 +64,35 @@ export function ExRRoleSpawnControls({
 		}
 	};
 
-	const handleRateInputChange = (val: number) => {
-		handleRateChange(findClosestIndex(rateValues, val));
+	const handleRateInputChange = async (val: number) => {
+		await handleRateChange(findClosestIndex(rateValues, val));
 	};
 
 	const handleCountUIChange = async (newUISelection: number) => {
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
-			const rateUpdatePromise = updateExROptionSelection(
-				uniqueRateId,
-				findClosestIndex(rateValues, 0),
+			await updateExROptionSelection(
+				{ uniqueOptionId: uniqueRateId, selection: findClosestIndex(rateValues, 0) },
+				{ uniqueOptionId: uniqueCountId, selection: 1 } // 表示上は0だけど、実際の選択肢は1（最小値）にする
 			);
-			const countUpdatePromise = updateExROptionSelection(uniqueCountId, 1); // 表示上は0だけど、実際の選択肢は1（最小値）にする
-			await Promise.all([rateUpdatePromise, countUpdatePromise]); // 両方の更新が完了するのを待つ
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
+			const updateArg = { uniqueOptionId: uniqueCountId, selection: newUISelection - 1 }
 			if (isSpawnRateZero) {
 				await updateExROptionSelection(
-					uniqueRateId,
-					findClosestIndex(rateValues, 10),
+					{ uniqueOptionId: uniqueRateId, selection: findClosestIndex(rateValues, 10) },
+					updateArg,
 				);
 			}
-			await updateExROptionSelection(uniqueCountId, newUISelection - 1);
+			await updateExROptionSelection(updateArg);
 		}
 	};
 
-	const handleCountUIInputChange = (val: number) => {
-		handleCountUIChange(findClosestIndex(virtualCountValues, val));
+	const handleCountUIInputChange = async (val: number) => {
+		await handleCountUIChange(findClosestIndex(virtualCountValues, val));
 	};
 
 	return (

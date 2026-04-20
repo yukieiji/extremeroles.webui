@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// モックサーバーの状態をリセット
+	await page.request.post("/mock/reset");
 	// API遅延を最小限にしてテストを高速化
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property
@@ -39,6 +41,11 @@ test.describe("ExR Role Spawn Options in Header", () => {
 	});
 
 	test("should synchronize spawn rate and count", async ({ page }) => {
+		// 【失敗の原因】
+		// 1. モックサーバー（MSW）の仕様により、PUTリクエスト後のレスポンスで
+		//    連動するオプション（レートに対する数など）の更新が完全に再現されていない。
+		// 2. フロントエンド側で currentCountUISelection が計算される際、
+		//    ストアの最新状態が反映されるタイミングとテストの期待値確認にズレが生じている。
 		await page
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
 			.click();
@@ -82,6 +89,10 @@ test.describe("ExR Role Spawn Options in Header", () => {
 	test("interacting with header controls should not toggle accordion", async ({
 		page,
 	}) => {
+		// 【失敗の原因】
+		// スポーンレートが0の時、アコーディオンのボタンが disabled になり、
+		// Playwright の .click() がタイムアウトする。
+		// モックデータの初期値や連動状態がテストの想定と一致していない。
 		await page
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
 			.click();
@@ -118,6 +129,9 @@ test.describe("ExR Role Spawn Options in Header", () => {
 	test("spawn rate and count should be filtered out from accordion body", async ({
 		page,
 	}) => {
+		// 【失敗の原因】
+		// スポーンレートが0の時、アコーディオンを開くボタンが disabled であり、
+		// 操作できないため、その後のフィルタリング確認まで到達できない。
 		await page
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
 			.click();

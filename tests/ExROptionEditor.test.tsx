@@ -4,10 +4,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
 import {
 	exrOptionMetaData,
-	getExrOptions,
-	resetApiCache,
 	resetExrOptionMetaData,
 } from "../src/logics/api";
+import { getExrOptions, resetApiCache } from "../src/logics/api.store";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
 

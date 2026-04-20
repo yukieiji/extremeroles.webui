@@ -2,10 +2,11 @@ import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
 import { OptionSliderControl } from "../components/parts/OptionSliderControl";
 import { useOptionData } from "../hooks/useOptionData";
+import type { UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
 interface ExROptionControlProps {
-	uniqueOptionId: number;
+	uniqueOptionId: UniqueOptionId;
 	format: string;
 	type: string;
 }
@@ -24,8 +25,8 @@ export function ExROptionControl({
 		return state.updateExROptionSelection;
 	});
 
-	const handleChange = async (newSelection: number) => {
-		await updateExROptionSelection(uniqueOptionId, newSelection);
+	const handleChange = async (selection: number) => {
+		await updateExROptionSelection({ uniqueOptionId, selection });
 	};
 
 	if (type === "String") {

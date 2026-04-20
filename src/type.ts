@@ -281,7 +281,12 @@ export const PresetNamesSchema = z
 export type PresetNames = z.infer<typeof PresetNamesSchema>;
 
 export interface OptionData {
-	uniqueOptionId: number;
+	uniqueOptionId: UniqueOptionId;
 	metaData: ExROptionMetaData;
 	label: string;
+}
+
+export interface UpdateExRArg {
+	uniqueOptionId: UniqueOptionId;
+	selection: number
 }

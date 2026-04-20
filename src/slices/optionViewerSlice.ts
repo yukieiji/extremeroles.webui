@@ -11,6 +11,7 @@ import type {
 	ExROptionValueData,
 	OptionTab,
 	UniqueOptionId,
+	UpdateExRArg,
 } from "../type";
 
 /**
@@ -30,8 +31,7 @@ export interface OptionViewerSlice {
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
 	updateExROptionSelection: (
-		uniqueOptionId: UniqueOptionId,
-		selection: number,
+		...updateInfos: UpdateExRArg[]
 	) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
@@ -93,18 +93,21 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 			});
 		},
 		updateExROptionSelection: async (
-			uniqueOptionId: UniqueOptionId,
-			selection: number,
+			...updateInfos: UpdateExRArg[]
 		) => {
-			const { tabId, categoryId, optionId } =
-				parseUniqueOptionId(uniqueOptionId);
 			try {
-				const result = await updateExrOption(
-					tabId,
-					categoryId,
-					optionId,
-					selection,
-				);
+
+				const updateResult = await Promise.all(updateInfos.map(async (info)=> {
+					const { tabId, categoryId, optionId } = parseUniqueOptionId(info.uniqueOptionId);
+					const result = await updateExrOption(
+						tabId,
+						categoryId,
+						optionId,
+						info.selection,
+					);
+					return result;
+				}))
+
 
 				set((state) => {
 					let nextValueData = state.valueData;
@@ -160,17 +163,19 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 							processOption(opt, cat.Id, tId);
 						}
 					};
-
-					if (result.UpdatedCategory) {
-						processCategory(result.UpdatedCategory);
-					}
-
-					for (const chain of result.ChainUpdatedOption) {
-						const tId = exrOptionMetaData.categoryTabMap[chain.Id];
-						for (const opt of chain.Options) {
-							processOption(opt, chain.Id, tId);
+					
+					updateResult.forEach(x => {
+						if (x.UpdatedCategory) {
+							processCategory(x.UpdatedCategory);
 						}
-					}
+
+						for (const chain of x.ChainUpdatedOption) {
+							const tId = exrOptionMetaData.categoryTabMap[chain.Id];
+							for (const opt of chain.Options) {
+								processOption(opt, chain.Id, tId);
+							}
+						}
+					})
 
 					if (!valueDataChanged && !isOptionActiveChanged) {
 						return state;

@@ -63,7 +63,7 @@ export function PresetSelector() {
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = async (index: number) => {
-		await updateExROptionSelection(PRESET_OPTION_UNIQUE_ID, index);
+		await updateExROptionSelection({ uniqueOptionId: PRESET_OPTION_UNIQUE_ID, selection: index});
 		setPresetDropdownOpen(false);
 	};
 

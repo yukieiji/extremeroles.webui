@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// モックサーバーの状態をリセット
+	await page.request.post("/mock/reset");
 	// すべてのテストで API の遅延を設定可能にする
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property
@@ -21,6 +23,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("has sidebar and json viewer", async ({ page }) => {
+	// 【失敗の原因】
+	// アプリケーションの起動（Vite dev server）が間に合わず、タイムアウトが発生している。
 	// サイドバーが表示されていることを確認
 	const sidebar = page.getByLabel("オプションサイドバー");
 

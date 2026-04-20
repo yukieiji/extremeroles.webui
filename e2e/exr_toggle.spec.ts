@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// モックサーバーの状態をリセット
+	await page.request.post("/mock/reset");
 	await page.addInitScript(() => {
 		// @ts-expect-error - window has no __API_DELAY__ property
 		window.__API_DELAY__ = 100;
@@ -15,6 +17,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("ExR toggle switch should be visible and functional", async ({ page }) => {
+	// 【失敗の原因】
+	// モックサーバー（MSW）がPUTリクエストに対して適切なレスポンス（更新された値）を返していない、
+	// またはフロントエンドがレスポンスを正しく処理してトグルの状態を更新できていない。
 	const sidebar = page.getByLabel("オプションサイドバー");
 
 	// ExR Options に切り替え
