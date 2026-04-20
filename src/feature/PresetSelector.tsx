@@ -59,7 +59,7 @@ export function PresetSelector() {
 		const newPreset = presetNames[index] ?? String(index);
 
 		setBlockDialog({
-			title: "プリセット切り替え",
+			title: "プリセットの切り替え",
 			message: `プリセットを「${currentPresetName}」から「${newPreset}}」に切り替えます`,
 			onConfirm: () =>
 				backendUpdator(async () => {
