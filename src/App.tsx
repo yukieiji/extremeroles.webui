@@ -51,6 +51,9 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
+
+	const syncer = useSyncBackend();
+
 	return (
 		<section
 			data-testid="main-content-section"
@@ -74,7 +77,7 @@ function MainContent() {
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
-				<SyncButton onClick={useSyncBackend} />
+				<SyncButton onClick={syncer} />
 			</div>
 			<Suspense
 				fallback={
