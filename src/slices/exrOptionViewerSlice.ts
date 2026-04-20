@@ -38,6 +38,7 @@ export interface ExROptionViewerSlice {
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
 		optionActiveData: Record<UniqueOptionId, boolean>,
 	) => void;
+	validateOpenedIds: () => void;
 }
 
 /**
@@ -222,6 +223,38 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 			set({
 				exrValue: valueData,
 				isExROptionActive: optionActiveData,
+			});
+		},
+		validateOpenedIds: () => {
+			set((state) => {
+				const nextOpenedExRCategoryIds = { ...state.openedExRCategoryIds };
+				let categoryChanged = false;
+				for (const id in nextOpenedExRCategoryIds) {
+					const categoryId = Number(id);
+					if (!exrOptionMetaData.categoryInfo[categoryId]) {
+						delete nextOpenedExRCategoryIds[categoryId];
+						categoryChanged = true;
+					}
+				}
+
+				const nextOpenedExROptionIds = { ...state.openedExROptionIds };
+				let optionChanged = false;
+				for (const id in nextOpenedExROptionIds) {
+					const uniqueOptionId = Number(id) as UniqueOptionId;
+					if (!exrOptionMetaData.optionMetaData[uniqueOptionId]) {
+						delete nextOpenedExROptionIds[uniqueOptionId];
+						optionChanged = true;
+					}
+				}
+
+				if (!categoryChanged && !optionChanged) {
+					return state;
+				}
+
+				return {
+					openedExRCategoryIds: nextOpenedExRCategoryIds,
+					openedExROptionIds: nextOpenedExROptionIds,
+				};
 			});
 		},
 	};
