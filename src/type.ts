@@ -157,10 +157,15 @@ export interface AuOptionMeta {
 	range: (number | string)[];
 }
 
+export interface AuOptionCategoryMetaData {
+	name: string;
+	options: AuOptionId[];
+}
+
 export interface AuOptionMetaDataRecords {
 	tabNames: string[]; // タブの名前
-	tabCategoryMap: Record<number, string[]>; // 1タブにしてゲーム設定はそれぞれでカテゴリ、役職は陣営毎に1タブ役職ごとのカテゴリとして保存
-	categoryOptionMap: Record<string, AuOptionId>; // カテゴリーとオプションの紐づけ
+	tabCategoryMap: Record<number, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
+	categoryMetaData: Record<number, AuOptionCategoryMetaData>; // カテゴリIDとカテゴリメタデータの対応
 	options: Record<AuOptionId, AuOptionMeta>; // 全オプションのメタデータ
 }
 

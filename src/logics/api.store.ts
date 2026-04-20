@@ -1,7 +1,7 @@
 import type { AuOptionCategoryDto } from "../type";
 
 import { useStore } from "../useStore";
-import { AU_OPTION_URL, createAuOptionMetaData, createExROptionMetaData } from "./api";
+import { createAuOptionMetaData, createExROptionMetaData } from "./api";
 
 /**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
@@ -46,10 +46,13 @@ export function getExrOptions(): Promise<void> {
 	return exrOptionsPromise;
 }
 
-async function createAuOptionMetaDataWithStore(delay: number): Promise<void> {
+async function createAuOptionMetaDataWithStore(
+	delay: number,
+): Promise<AuOptionCategoryDto[]> {
 	await waitDelay(delay);
-	const auValue = await createAuOptionMetaData();
-	useStore.getState().setAuValue(auValue);
+	const { initialValueData, rawData } = await createAuOptionMetaData();
+	useStore.getState().setAuValue(initialValueData);
+	return rawData as AuOptionCategoryDto[];
 }
 
 /**
@@ -63,18 +66,6 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 	// @ts-expect-error - テスト用
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 
-	auOptionsPromise = (async () => {
-		if (delay > 0) {
-			await new Promise((resolve) => {
-				return setTimeout(resolve, delay);
-			});
-		}
-		const res = await fetch(AU_OPTION_URL);
-		if (!res.ok) {
-			throw new Error(`Failed to fetch Au options: ${res.statusText}`);
-		}
-		return res.json();
-	})();
-
+	auOptionsPromise = createAuOptionMetaDataWithStore(delay);
 	return auOptionsPromise;
 }

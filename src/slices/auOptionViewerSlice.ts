@@ -1,13 +1,5 @@
 import type { StateCreator } from "zustand";
-import { exrOptionMetaData, updateExrOption } from "../logics/api";
-import {
-	loadPresetNamesFromCookie,
-	savePresetNamesToCookie,
-} from "../logics/cookieUtils";
-import { getUniqueOptionId, parseUniqueOptionId } from "../logics/optionUtils";
-import type {
-	AuOptionId
-} from "../type";
+import type { AuOptionId } from "../type";
 
 /**
  * ExR オプションの状態を管理するスライスのインターフェース
