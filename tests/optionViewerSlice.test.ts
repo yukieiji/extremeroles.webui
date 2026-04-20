@@ -72,13 +72,12 @@ describe("optionViewerSlice", () => {
 	it("should set ExR options", () => {
 		const { setExROptions } = useStore.getState();
 		const valueData = {
-			[10001]: { selection: 1, values: [0, 1] },
+			10001: { selection: 1, values: [0, 1] },
 		};
 		const isOptionActive = {
-			[10001]: true,
+			10001: true,
 		};
 
-		// @ts-expect-error - testing internal state
 		setExROptions(valueData, isOptionActive);
 
 		const state = useStore.getState();

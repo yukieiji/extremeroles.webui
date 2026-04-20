@@ -9,6 +9,27 @@ import {
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
+function setUpudateExROptionSelectionSpawnRateMock(): void {
+	// Mock updateExROptionSelection to update the store
+	vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
+		async (...args) => {
+			args.forEach((x) => {
+				const { optionId } = parseUniqueOptionId(x.uniqueOptionId);
+				const values =
+					optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
+				const currentStore = useStore.getState();
+				currentStore.setExROptions(
+					{
+						...currentStore.valueData,
+						[x.uniqueOptionId]: { selection: x.selection, values },
+					},
+					currentStore.isOptionActive,
+				);
+			});
+		},
+	);
+}
+
 describe("ExRRoleSpawnControls", () => {
 	const setupTestData = (tabId: number, categoryId: number) => {
 		const rateUniqueId = getUniqueOptionId(
@@ -88,30 +109,17 @@ describe("ExRRoleSpawnControls", () => {
 		const categoryId = 1;
 		setupTestData(tabId, categoryId);
 
-		// Mock updateExROptionSelection to update the store
-		const mockUpdate = vi
-			.spyOn(useStore.getState(), "updateExROptionSelection")
-			.mockImplementation(async (uId, selection) => {
-				const { optionId } = parseUniqueOptionId(uId as any);
-				const values =
-					optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-				const currentStore = useStore.getState();
-				currentStore.setExROptions(
-					{
-						...currentStore.valueData,
-						[uId]: { selection, values },
-					},
-					currentStore.isOptionActive,
-				);
-			});
+		setUpudateExROptionSelectionSpawnRateMock();
 
 		// Set initial rate to 10%
-		await useStore
-			.getState()
-			.updateExROptionSelection(
-				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID),
-				1,
-			);
+		await useStore.getState().updateExROptionSelection({
+			uniqueOptionId: getUniqueOptionId(
+				tabId,
+				categoryId,
+				SPAWN_RATE_OPTION_ID,
+			),
+			selection: 1,
+		});
 
 		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
@@ -135,22 +143,7 @@ describe("ExRRoleSpawnControls", () => {
 		const categoryId = 1;
 		setupTestData(tabId, categoryId);
 
-		// Mock updateExROptionSelection to update the store
-		vi.spyOn(
-			useStore.getState(),
-			"updateExROptionSelection",
-		).mockImplementation(async (uId, selection) => {
-			const { optionId } = parseUniqueOptionId(uId as any);
-			const values =
-				optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-			useStore.getState().setExROptions(
-				{
-					...useStore.getState().valueData,
-					[uId]: { selection, values },
-				},
-				useStore.getState().isOptionActive,
-			);
-		});
+		setUpudateExROptionSelectionSpawnRateMock();
 
 		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
@@ -174,36 +167,25 @@ describe("ExRRoleSpawnControls", () => {
 		const categoryId = 1;
 		setupTestData(tabId, categoryId);
 
-		// Mock updateExROptionSelection
-		vi.spyOn(
-			useStore.getState(),
-			"updateExROptionSelection",
-		).mockImplementation(async (uId, selection) => {
-			const { optionId } = parseUniqueOptionId(uId as any);
-			const values =
-				optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-			useStore.getState().setExROptions(
-				{
-					...useStore.getState().valueData,
-					[uId]: { selection, values },
-				},
-				useStore.getState().isOptionActive,
-			);
-		});
+		setUpudateExROptionSelectionSpawnRateMock();
 
 		// Set initial rate to 10% and count to 2 (selection 1)
-		await useStore
-			.getState()
-			.updateExROptionSelection(
-				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID),
-				1,
-			);
-		await useStore
-			.getState()
-			.updateExROptionSelection(
-				getUniqueOptionId(tabId, categoryId, SPAWN_COUNT_OPTION_ID),
-				1,
-			);
+		await useStore.getState().updateExROptionSelection({
+			uniqueOptionId: getUniqueOptionId(
+				tabId,
+				categoryId,
+				SPAWN_RATE_OPTION_ID,
+			),
+			selection: 1,
+		});
+		await useStore.getState().updateExROptionSelection({
+			uniqueOptionId: getUniqueOptionId(
+				tabId,
+				categoryId,
+				SPAWN_COUNT_OPTION_ID,
+			),
+			selection: 1,
+		});
 
 		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
@@ -218,8 +200,6 @@ describe("ExRRoleSpawnControls", () => {
 		await new Promise((resolve) => {
 			return setTimeout(resolve, 100);
 		});
-
-		const state = useStore.getState();
 
 		// UIが0を表示していることを確認
 		const countDisplay = screen

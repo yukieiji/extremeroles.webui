@@ -6,6 +6,25 @@ import type { ExROptionDto } from "../src/type";
 import { SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
+function setUpudateExROptionSelectionMock( values: (number|string)[] ): void {
+
+	vi.spyOn(
+		useStore.getState(),
+		"updateExROptionSelection",
+	).mockImplementation(async (...args) => {
+		args.forEach((x) => {
+			useStore.getState().setExROptions(
+				{
+					...useStore.getState().valueData,
+					[x.uniqueOptionId]: { selection: x.selection, values: values },
+				},
+				useStore.getState().isOptionActive,
+			);
+
+		});
+	});
+}
+
 describe("ExRHeaderOptionControl", () => {
 	const mockOption: ExROptionDto = {
 		Id: SPAWN_RATE_OPTION_ID,
@@ -42,19 +61,7 @@ describe("ExRHeaderOptionControl", () => {
 
 	it("updates selection when slider is moved", async () => {
 		// Mock updateExROptionSelection to update the store manually since there is no real API
-		const originalUpdate = useStore.getState().updateExROptionSelection;
-		vi.spyOn(
-			useStore.getState(),
-			"updateExROptionSelection",
-		).mockImplementation(async (uId, selection) => {
-			useStore.getState().setExROptions(
-				{
-					...useStore.getState().valueData,
-					[uId]: { selection, values: mockOption.RangeMeta.Values },
-				},
-				useStore.getState().isOptionActive,
-			);
-		});
+		setUpudateExROptionSelectionMock(mockOption.RangeMeta.Values);
 
 		render(
 			<ExRHeaderOptionControl
@@ -77,18 +84,7 @@ describe("ExRHeaderOptionControl", () => {
 	});
 
 	it("updates selection when input is changed", async () => {
-		vi.spyOn(
-			useStore.getState(),
-			"updateExROptionSelection",
-		).mockImplementation(async (uId, selection) => {
-			useStore.getState().setExROptions(
-				{
-					...useStore.getState().valueData,
-					[uId]: { selection, values: mockOption.RangeMeta.Values },
-				},
-				useStore.getState().isOptionActive,
-			);
-		});
+		setUpudateExROptionSelectionMock(mockOption.RangeMeta.Values);
 
 		render(
 			<ExRHeaderOptionControl

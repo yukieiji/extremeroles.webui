@@ -2,10 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import {
-	getUniqueOptionId,
-	parseUniqueOptionId,
-} from "../src/logics/optionUtils";
+import { getUniqueOptionId } from "../src/logics/optionUtils";
 import {
 	type ExRTabDto,
 	OptionTab,
