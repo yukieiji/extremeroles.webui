@@ -22,7 +22,9 @@ function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
 			if (!childs) {
 				return false;
 			}
-			return childs.length > 0 && childs.some((id) => state.isExROptionActive[id]);
+			return (
+				childs.length > 0 && childs.some((id) => state.isExROptionActive[id])
+			);
 		}),
 	);
 
