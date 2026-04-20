@@ -6,23 +6,20 @@ import type { ExROptionDto } from "../src/type";
 import { SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
-function setUpudateExROptionSelectionMock( values: (number|string)[] ): void {
-
-	vi.spyOn(
-		useStore.getState(),
-		"updateExROptionSelection",
-	).mockImplementation(async (...args) => {
-		args.forEach((x) => {
-			useStore.getState().setExROptions(
-				{
-					...useStore.getState().valueData,
-					[x.uniqueOptionId]: { selection: x.selection, values: values },
-				},
-				useStore.getState().isOptionActive,
-			);
-
-		});
-	});
+function setUpudateExROptionSelectionMock(values: (number | string)[]): void {
+	vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
+		async (...args) => {
+			args.forEach((x) => {
+				useStore.getState().setExROptions(
+					{
+						...useStore.getState().valueData,
+						[x.uniqueOptionId]: { selection: x.selection, values: values },
+					},
+					useStore.getState().isOptionActive,
+				);
+			});
+		},
+	);
 }
 
 describe("ExRHeaderOptionControl", () => {
