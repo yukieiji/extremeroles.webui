@@ -2,7 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUniqueOptionId, parseUniqueOptionId } from "../src/logics/optionUtils";
+import {
+	getUniqueOptionId,
+	parseUniqueOptionId,
+} from "../src/logics/optionUtils";
 import {
 	type ExRTabDto,
 	OptionTab,
@@ -160,17 +163,18 @@ describe("ExRCategoryList Component Selection", () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
 
 		// Mock updateExROptionSelection to update the store manually
-		vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
-			async (uId, selection) => {
-				useStore.getState().setExROptions(
-					{
-						...useStore.getState().valueData,
-						[uId]: { selection, values: [0, 100] },
-					},
-					useStore.getState().isOptionActive,
-				);
-			},
-		);
+		vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		).mockImplementation(async (uId, selection) => {
+			useStore.getState().setExROptions(
+				{
+					...useStore.getState().valueData,
+					[uId]: { selection, values: [0, 100] },
+				},
+				useStore.getState().isOptionActive,
+			);
+		});
 
 		// Set a non-zero spawn rate so the accordion is enabled
 		await useStore

@@ -2,7 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUniqueOptionId, parseUniqueOptionId } from "../src/logics/optionUtils";
+import {
+	getUniqueOptionId,
+	parseUniqueOptionId,
+} from "../src/logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -100,8 +103,7 @@ describe("ExRRoleSpawnControls", () => {
 					},
 					currentStore.isOptionActive,
 				);
-			},
-		);
+			});
 
 		// Set initial rate to 10%
 		await useStore
@@ -122,8 +124,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		const state = useStore.getState();
 		expect(
-			state.valueData[getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)]
-				.selection,
+			state.valueData[
+				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)
+			].selection,
 		).toBe(0); // Rate 0%
 	});
 
@@ -133,20 +136,21 @@ describe("ExRRoleSpawnControls", () => {
 		setupTestData(tabId, categoryId);
 
 		// Mock updateExROptionSelection to update the store
-		vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
-			async (uId, selection) => {
-				const { optionId } = parseUniqueOptionId(uId as any);
-				const values =
-					optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-				useStore.getState().setExROptions(
-					{
-						...useStore.getState().valueData,
-						[uId]: { selection, values },
-					},
-					useStore.getState().isOptionActive,
-				);
-			},
-		);
+		vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		).mockImplementation(async (uId, selection) => {
+			const { optionId } = parseUniqueOptionId(uId as any);
+			const values =
+				optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
+			useStore.getState().setExROptions(
+				{
+					...useStore.getState().valueData,
+					[uId]: { selection, values },
+				},
+				useStore.getState().isOptionActive,
+			);
+		});
 
 		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
 
@@ -159,8 +163,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		const state = useStore.getState();
 		expect(
-			state.valueData[getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)]
-				.selection,
+			state.valueData[
+				getUniqueOptionId(tabId, categoryId, SPAWN_RATE_OPTION_ID)
+			].selection,
 		).toBe(1); // Rate index 1 is 10%
 	});
 
@@ -170,19 +175,21 @@ describe("ExRRoleSpawnControls", () => {
 		setupTestData(tabId, categoryId);
 
 		// Mock updateExROptionSelection
-		vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
-			async (uId, selection) => {
-				const { optionId } = parseUniqueOptionId(uId as any);
-				const values =
-					optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-				useStore.getState().setExROptions(
-					{
-						...useStore.getState().valueData,
-						[uId]: { selection, values },
-					},
-					useStore.getState().isOptionActive,
-				);
-			});
+		vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		).mockImplementation(async (uId, selection) => {
+			const { optionId } = parseUniqueOptionId(uId as any);
+			const values =
+				optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
+			useStore.getState().setExROptions(
+				{
+					...useStore.getState().valueData,
+					[uId]: { selection, values },
+				},
+				useStore.getState().isOptionActive,
+			);
+		});
 
 		// Set initial rate to 10% and count to 2 (selection 1)
 		await useStore

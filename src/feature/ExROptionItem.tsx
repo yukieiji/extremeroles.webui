@@ -37,7 +37,10 @@ function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
 	);
 }
 
-export function ExROptionItem({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
+export function ExROptionItem({
+	uniqueOptionId,
+	depth = 0,
+}: ExROptionItemProps) {
 	const isActive = useStore(
 		useCallback(
 			(state) => {

@@ -54,7 +54,10 @@ export function ExRRoleSpawnControls({
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = async (newSelection: number) => {
-		await updateExROptionSelection({uniqueOptionId: uniqueRateId, selection: newSelection });
+		await updateExROptionSelection({
+			uniqueOptionId: uniqueRateId,
+			selection: newSelection,
+		});
 
 		// スポーンレートが0%なら、スポーン数も0としてリセット
 		if (rateValues[newSelection] === 0) {
@@ -72,18 +75,27 @@ export function ExRRoleSpawnControls({
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
 			await updateExROptionSelection(
-				{ uniqueOptionId: uniqueRateId, selection: findClosestIndex(rateValues, 0) },
-				{ uniqueOptionId: uniqueCountId, selection: 1 } // 表示上は0だけど、実際の選択肢は1（最小値）にする
+				{
+					uniqueOptionId: uniqueRateId,
+					selection: findClosestIndex(rateValues, 0),
+				},
+				{ uniqueOptionId: uniqueCountId, selection: 1 }, // 表示上は0だけど、実際の選択肢は1（最小値）にする
 			);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);
 			}
 		} else {
 			// 数が0以外に変更されたとき、現在レートが0%なら10%に上げる
-			const updateArg = { uniqueOptionId: uniqueCountId, selection: newUISelection - 1 }
+			const updateArg = {
+				uniqueOptionId: uniqueCountId,
+				selection: newUISelection - 1,
+			};
 			if (isSpawnRateZero) {
 				await updateExROptionSelection(
-					{ uniqueOptionId: uniqueRateId, selection: findClosestIndex(rateValues, 10) },
+					{
+						uniqueOptionId: uniqueRateId,
+						selection: findClosestIndex(rateValues, 10),
+					},
 					updateArg,
 				);
 			}

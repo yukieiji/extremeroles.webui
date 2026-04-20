@@ -30,9 +30,7 @@ export interface OptionViewerSlice {
 	setIsTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
-	updateExROptionSelection: (
-		...updateInfos: UpdateExRArg[]
-	) => Promise<void>;
+	updateExROptionSelection: (...updateInfos: UpdateExRArg[]) => Promise<void>;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -92,22 +90,22 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 				};
 			});
 		},
-		updateExROptionSelection: async (
-			...updateInfos: UpdateExRArg[]
-		) => {
+		updateExROptionSelection: async (...updateInfos: UpdateExRArg[]) => {
 			try {
-
-				const updateResult = await Promise.all(updateInfos.map(async (info)=> {
-					const { tabId, categoryId, optionId } = parseUniqueOptionId(info.uniqueOptionId);
-					const result = await updateExrOption(
-						tabId,
-						categoryId,
-						optionId,
-						info.selection,
-					);
-					return result;
-				}))
-
+				const updateResult = await Promise.all(
+					updateInfos.map(async (info) => {
+						const { tabId, categoryId, optionId } = parseUniqueOptionId(
+							info.uniqueOptionId,
+						);
+						const result = await updateExrOption(
+							tabId,
+							categoryId,
+							optionId,
+							info.selection,
+						);
+						return result;
+					}),
+				);
 
 				set((state) => {
 					let nextValueData = state.valueData;
@@ -163,8 +161,8 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 							processOption(opt, cat.Id, tId);
 						}
 					};
-					
-					updateResult.forEach(x => {
+
+					updateResult.forEach((x) => {
 						if (x.UpdatedCategory) {
 							processCategory(x.UpdatedCategory);
 						}
@@ -175,7 +173,7 @@ export const createOptionViewerSlice: StateCreator<OptionViewerSlice> = (
 								processOption(opt, chain.Id, tId);
 							}
 						}
-					})
+					});
 
 					if (!valueDataChanged && !isOptionActiveChanged) {
 						return state;

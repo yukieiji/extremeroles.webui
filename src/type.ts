@@ -288,5 +288,5 @@ export interface OptionData {
 
 export interface UpdateExRArg {
 	uniqueOptionId: UniqueOptionId;
-	selection: number
+	selection: number;
 }

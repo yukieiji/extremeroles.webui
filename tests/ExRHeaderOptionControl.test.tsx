@@ -43,17 +43,18 @@ describe("ExRHeaderOptionControl", () => {
 	it("updates selection when slider is moved", async () => {
 		// Mock updateExROptionSelection to update the store manually since there is no real API
 		const originalUpdate = useStore.getState().updateExROptionSelection;
-		vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
-			async (uId, selection) => {
-				useStore.getState().setExROptions(
-					{
-						...useStore.getState().valueData,
-						[uId]: { selection, values: mockOption.RangeMeta.Values },
-					},
-					useStore.getState().isOptionActive,
-				);
-			},
-		);
+		vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		).mockImplementation(async (uId, selection) => {
+			useStore.getState().setExROptions(
+				{
+					...useStore.getState().valueData,
+					[uId]: { selection, values: mockOption.RangeMeta.Values },
+				},
+				useStore.getState().isOptionActive,
+			);
+		});
 
 		render(
 			<ExRHeaderOptionControl
@@ -76,17 +77,18 @@ describe("ExRHeaderOptionControl", () => {
 	});
 
 	it("updates selection when input is changed", async () => {
-		vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
-			async (uId, selection) => {
-				useStore.getState().setExROptions(
-					{
-						...useStore.getState().valueData,
-						[uId]: { selection, values: mockOption.RangeMeta.Values },
-					},
-					useStore.getState().isOptionActive,
-				);
-			},
-		);
+		vi.spyOn(
+			useStore.getState(),
+			"updateExROptionSelection",
+		).mockImplementation(async (uId, selection) => {
+			useStore.getState().setExROptions(
+				{
+					...useStore.getState().valueData,
+					[uId]: { selection, values: mockOption.RangeMeta.Values },
+				},
+				useStore.getState().isOptionActive,
+			);
+		});
 
 		render(
 			<ExRHeaderOptionControl
