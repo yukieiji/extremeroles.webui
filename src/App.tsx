@@ -31,13 +31,13 @@ function EditorContainer() {
 
 	// React 19 の use() フックを使用してデータを取得
 	use(getExrOptions());
-	const auData = use(getAuOptions());
+	use(getAuOptions());
 
 	if (selectedTab === "ExR") {
 		return <ExROptionEditor />;
 	}
 
-	return <AuOptionEditor data={auData} />;
+	return <AuOptionEditor />;
 }
 
 /**

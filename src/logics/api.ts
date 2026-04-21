@@ -254,7 +254,6 @@ export async function createAuOptionMetaData(): Promise<{
 
 	return {
 		initialValueData: initialValueData as unknown as Record<AuOptionId, number>,
-		rawData: data,
 	};
 }
 

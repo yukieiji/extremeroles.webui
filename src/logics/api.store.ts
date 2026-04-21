@@ -1,5 +1,3 @@
-import type { AuOptionCategoryDto } from "../type";
-
 import { useStore } from "../useStore";
 import { createAuOptionMetaData, createExROptionMetaData } from "./api";
 
@@ -7,7 +5,7 @@ import { createAuOptionMetaData, createExROptionMetaData } from "./api";
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
-let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
+let auOptionsPromise: Promise<void> | null = null;
 let exrOptionsPromise: Promise<void> | null = null;
 
 /**
@@ -48,17 +46,16 @@ export function getExrOptions(): Promise<void> {
 
 async function createAuOptionMetaDataWithStore(
 	delay: number,
-): Promise<AuOptionCategoryDto[]> {
+): Promise<void> {
 	await waitDelay(delay);
-	const { initialValueData, rawData } = await createAuOptionMetaData();
+	const { initialValueData } = await createAuOptionMetaData();
 	useStore.getState().setAuValue(initialValueData);
-	return rawData as AuOptionCategoryDto[];
 }
 
 /**
  * Auオプションを取得する
  */
-export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
+export function getAuOptions(): Promise<void> {
 	if (auOptionsPromise) {
 		return auOptionsPromise;
 	}
