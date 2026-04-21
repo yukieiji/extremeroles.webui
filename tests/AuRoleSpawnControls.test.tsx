@@ -79,6 +79,27 @@ describe("AuRoleSpawnControls", () => {
 		expect(state.auValue[maxCountId]).toBe(0);
 	});
 
+	it("syncs max count to 0 when chance is set to 0%", () => {
+		// Initial state: Chance 50% (index 5), Max Count 2 (index 2)
+		useStore.getState().setAuValue({
+			[chanceId]: 5,
+			[maxCountId]: 2,
+		});
+
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
+
+		const chanceControl = screen.getByTestId("au-chance-control");
+		const slider = chanceControl.querySelector(
+			'input[type="range"]',
+		) as HTMLInputElement;
+
+		fireEvent.change(slider, { target: { value: "0" } });
+
+		const state = useStore.getState();
+		expect(state.auValue[chanceId]).toBe(0);
+		expect(state.auValue[maxCountId]).toBe(0);
+	});
+
 	it("closes accordion when chance becomes 0%", () => {
 		// Initial state: Open and Chance 10%
 		useStore.getState().setAuValue({ [chanceId]: 1, [maxCountId]: 1 });

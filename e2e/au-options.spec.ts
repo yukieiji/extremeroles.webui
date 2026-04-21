@@ -82,18 +82,17 @@ test.describe("Au Option Interactions", () => {
 		await expect(countInput).toHaveValue("1");
 		await expect(chanceInput).toHaveValue("10");
 
-		// 2. Set chance to 0, should set count to 0 (Wait, in AuRoleSpawnControls.tsx handleChanceChange doesn't zero count)
-		// Actually, in handleMaxCountChange(0), it zeros chance. But in handleChanceChange(0), it only closes accordion.
-		// Let's re-verify the requirement. "ExRと同じように"
-		// In ExRRoleSpawnControls.tsx, handleRateChange(0) does NOT zero count.
-		// But handleCountUIChange(0) DOES zero rate.
-		// So my test #2 was wrong if it's mirroring ExR exactly.
+		// 2. Set chance to 0, should set count to 0
 		await chanceSlider.fill("0");
 		await expect(chanceInput).toHaveValue("0");
-		// Count stays 1 in ExR logic if only rate is zeroed
-		await expect(countInput).toHaveValue("1");
+		await expect(countInput).toHaveValue("0");
 
-		// 3. Set count to 0, should set chance to 0%
+		// 3. Set count to 1, should set chance to 10%
+		await countSlider.fill("1");
+		await expect(countInput).toHaveValue("1");
+		await expect(chanceInput).toHaveValue("10");
+
+		// 4. Set count to 0, should set chance to 0%
 		await countSlider.fill("0");
 		await expect(countInput).toHaveValue("0");
 		await expect(chanceInput).toHaveValue("0");

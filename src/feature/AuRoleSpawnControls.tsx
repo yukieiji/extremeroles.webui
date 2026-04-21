@@ -45,16 +45,26 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const isChanceZero = (chanceValues[chanceSelection] ?? 0) === 0;
 
 	const handleChanceChange = (newSelection: number) => {
-		updateAuOptionSelection({
-			auOptionId: chanceOptionId,
-			selection: newSelection,
-		});
-
-		// Chanceが0%になったら、アコーディオンを閉じる
+		// Chanceが0%になったら、スポーン数も0にしてアコーディオンを閉じる
 		if (chanceValues[newSelection] === 0) {
+			updateAuOptionSelection(
+				{
+					auOptionId: chanceOptionId,
+					selection: newSelection,
+				},
+				{
+					auOptionId: maxCountOptionId,
+					selection: 0,
+				},
+			);
 			if (isOpenedCategory) {
 				toggleAuCategory(categoryId);
 			}
+		} else {
+			updateAuOptionSelection({
+				auOptionId: chanceOptionId,
+				selection: newSelection,
+			});
 		}
 	};
 
