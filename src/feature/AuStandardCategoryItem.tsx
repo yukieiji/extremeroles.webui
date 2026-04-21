@@ -19,7 +19,9 @@ export function AuStandardCategoryItem({
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	if (!categoryMeta) return null;
+	if (!categoryMeta) {
+		return null;
+	}
 
 	return (
 		<div data-testid={`au-category-${categoryId}`}>

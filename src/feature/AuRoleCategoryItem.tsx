@@ -18,7 +18,9 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	const auValue = useStore((state) => state.auValue);
 
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	if (!categoryMeta) return null;
+	if (!categoryMeta) {
+		return null;
+	}
 
 	// 各カテゴリの最初(0)がChance、次(1)がMaxCount
 	const chanceOptionId = categoryMeta.options[0];

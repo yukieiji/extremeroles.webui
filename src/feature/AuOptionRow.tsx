@@ -17,7 +17,9 @@ export function AuOptionRow({ optionId }: AuOptionRowProps) {
 		(state) => state.updateAuOptionSelection,
 	);
 
-	if (!optionMeta) return null;
+	if (!optionMeta) {
+		return null;
+	}
 
 	return (
 		<div className="flex items-center justify-between py-2 border-b border-gray-800 last:border-0 hover:bg-gray-800/50 transition-colors px-2 rounded">

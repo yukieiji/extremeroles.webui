@@ -29,8 +29,9 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 		!categoryMeta ||
 		chanceOptionId === undefined ||
 		maxCountOptionId === undefined
-	)
+	) {
 		return null;
+	}
 
 	const chanceSelection = auValue[chanceOptionId] ?? 0;
 	const maxCountSelection = auValue[maxCountOptionId] ?? 0;
