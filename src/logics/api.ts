@@ -87,13 +87,13 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
 
-			exrOptionMetaData.options[uniqueId] = {
+exrOptionMetaData.options[uniqueId] = {
 				metaData: {
 					translatedName: opt.TranslatedName,
 					format: opt.Format,
 					type: opt.RangeMeta.Type,
 				},
-				childOptionIds: [],
+				childOptionIds: exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
 			};
 
 			valueData[uniqueId] = {
