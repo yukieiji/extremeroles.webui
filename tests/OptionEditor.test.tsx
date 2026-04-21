@@ -1,21 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AuOptionEditor } from "../src/feature/AuOptionEditor";
-import type { AuOptionCategoryDto } from "../src/type";
+import { auOptionMetaData } from "../src/logics/api";
 
 describe("OptionEditor Components", () => {
 	it("AuOptionEditor がデータを正しく表示すること", () => {
-		const mockData: AuOptionCategoryDto[] = [
-			{
-				TranslatedTitle: "Test Category",
-				Options: [],
+		auOptionMetaData.categoryMetaData = {
+			0: {
+				name: "Test Category",
+				options: [],
 			},
-		];
+		};
+		auOptionMetaData.tabCategoryMap = { 0: [0] };
 
-		render(<AuOptionEditor data={mockData} />);
+		render(<AuOptionEditor />);
 
 		const pre = screen.getByText((content) => {
-			return content.includes('"TranslatedTitle": "Test Category"');
+			return content.includes('"categoryName": "Test Category"');
 		});
 		expect(pre).toBeTruthy();
 	});
