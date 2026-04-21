@@ -12,8 +12,9 @@ interface AuRoleSpawnControlsProps {
  */
 export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	const chanceOptionId = categoryMeta.options[0];
-	const maxCountOptionId = categoryMeta.options[1];
+
+	const chanceOptionId = categoryMeta?.options[0];
+	const maxCountOptionId = categoryMeta?.options[1];
 
 	const auValue = useStore((state) => state.auValue);
 	const updateAuOptionSelection = useStore(
@@ -24,6 +25,13 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 		(state) => state.openedAuCategoryIds[categoryId] ?? false,
 	);
 
+	if (
+		!categoryMeta ||
+		chanceOptionId === undefined ||
+		maxCountOptionId === undefined
+	)
+		return null;
+
 	const chanceSelection = auValue[chanceOptionId] ?? 0;
 	const maxCountSelection = auValue[maxCountOptionId] ?? 0;
 
@@ -33,7 +41,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const chanceValues = (chanceMeta?.range as number[]) ?? [];
 	const maxCountValues = (maxCountMeta?.range as number[]) ?? [];
 
-	const isChanceZero = chanceValues[chanceSelection] === 0;
+	const isChanceZero = (chanceValues[chanceSelection] ?? 0) === 0;
 
 	const handleChanceChange = (newSelection: number) => {
 		updateAuOptionSelection({
@@ -55,7 +63,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 
 	const handleMaxCountChange = (newSelection: number) => {
 		// 数が0以外に変更されたとき、現在Chanceが0%なら10%に上げる
-		if (maxCountValues[newSelection] > 0 && isChanceZero) {
+		if ((maxCountValues[newSelection] ?? 0) > 0 && isChanceZero) {
 			updateAuOptionSelection(
 				{
 					auOptionId: chanceOptionId,
@@ -66,7 +74,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 					selection: newSelection,
 				},
 			);
-		} else if (maxCountValues[newSelection] === 0) {
+		} else if ((maxCountValues[newSelection] ?? 0) === 0) {
 			// 数を0にすると、Chanceも0%にする
 			updateAuOptionSelection(
 				{

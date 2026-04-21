@@ -26,7 +26,7 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	const chanceOptionMeta = auOptionMetaData.options[chanceOptionId];
 
 	// Chanceの実際の値（%）を取得
-	const chanceActualValue = chanceOptionMeta?.range[chanceValueIndex];
+	const chanceActualValue = chanceOptionMeta?.range?.[chanceValueIndex] ?? 0;
 	const isChanceZero = chanceActualValue === 0;
 
 	const isOpenFinal = !isChanceZero && isOpen;
