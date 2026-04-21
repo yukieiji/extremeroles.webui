@@ -10,8 +10,12 @@ interface AuStandardCategoryItemProps {
 /**
  * Auの一般タブ（Tab 0）で使用される標準的なカテゴリ表示コンポーネント
  */
-export function AuStandardCategoryItem({ categoryId }: AuStandardCategoryItemProps) {
-	const isOpen = useStore((state) => state.openedAuCategoryIds[categoryId] ?? false);
+export function AuStandardCategoryItem({
+	categoryId,
+}: AuStandardCategoryItemProps) {
+	const isOpen = useStore(
+		(state) => state.openedAuCategoryIds[categoryId] ?? false,
+	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
@@ -24,9 +28,7 @@ export function AuStandardCategoryItem({ categoryId }: AuStandardCategoryItemPro
 				isOpen={isOpen}
 				onToggle={() => toggleAuCategory(categoryId)}
 			>
-				<AuCategoryOptionList
-					optionIds={categoryMeta.options}
-				/>
+				<AuCategoryOptionList optionIds={categoryMeta.options} />
 			</Accordion>
 		</div>
 	);

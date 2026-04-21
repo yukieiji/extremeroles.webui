@@ -1,5 +1,5 @@
-import { useStore } from "../useStore";
 import { auOptionMetaData } from "../logics/api";
+import { useStore } from "../useStore";
 import { AuRoleCategoryItem } from "./AuRoleCategoryItem";
 import { AuStandardCategoryItem } from "./AuStandardCategoryItem";
 
@@ -23,13 +23,13 @@ export function AuCategoryList() {
 					<div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 				</div>
 			)}
-			{tabCategoryIds.map((categoryId) => (
+			{tabCategoryIds.map((categoryId) =>
 				isRoleTab ? (
 					<AuRoleCategoryItem key={categoryId} categoryId={categoryId} />
 				) : (
 					<AuStandardCategoryItem key={categoryId} categoryId={categoryId} />
-				)
-			))}
+				),
+			)}
 		</div>
 	);
 }

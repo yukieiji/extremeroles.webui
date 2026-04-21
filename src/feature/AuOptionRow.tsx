@@ -13,7 +13,9 @@ interface AuOptionRowProps {
 export function AuOptionRow({ optionId }: AuOptionRowProps) {
 	const optionMeta = auOptionMetaData.options[optionId];
 	const selection = useStore((state) => state.auValue[optionId] ?? 0);
-	const updateAuOptionSelection = useStore((state) => state.updateAuOptionSelection);
+	const updateAuOptionSelection = useStore(
+		(state) => state.updateAuOptionSelection,
+	);
 
 	if (!optionMeta) return null;
 
@@ -29,7 +31,10 @@ export function AuOptionRow({ optionId }: AuOptionRowProps) {
 					optionMeta={optionMeta}
 					selection={selection}
 					onSelectionChange={(newSelection) => {
-						updateAuOptionSelection({ auOptionId: optionId, selection: newSelection });
+						updateAuOptionSelection({
+							auOptionId: optionId,
+							selection: newSelection,
+						});
 					}}
 				/>
 			</div>

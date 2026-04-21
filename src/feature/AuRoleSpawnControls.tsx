@@ -16,9 +16,13 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const maxCountOptionId = categoryMeta.options[1];
 
 	const auValue = useStore((state) => state.auValue);
-	const updateAuOptionSelection = useStore((state) => state.updateAuOptionSelection);
+	const updateAuOptionSelection = useStore(
+		(state) => state.updateAuOptionSelection,
+	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
-	const isOpenedCategory = useStore((state) => state.openedAuCategoryIds[categoryId] ?? false);
+	const isOpenedCategory = useStore(
+		(state) => state.openedAuCategoryIds[categoryId] ?? false,
+	);
 
 	const chanceSelection = auValue[chanceOptionId] ?? 0;
 	const maxCountSelection = auValue[maxCountOptionId] ?? 0;
@@ -60,7 +64,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 				{
 					auOptionId: maxCountOptionId,
 					selection: newSelection,
-				}
+				},
 			);
 		} else if (maxCountValues[newSelection] === 0) {
 			// 数を0にすると、Chanceも0%にする
@@ -72,7 +76,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 				{
 					auOptionId: maxCountOptionId,
 					selection: newSelection,
-				}
+				},
 			);
 			if (isOpenedCategory) {
 				toggleAuCategory(categoryId);

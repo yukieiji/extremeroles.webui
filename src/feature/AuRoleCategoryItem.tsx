@@ -1,7 +1,7 @@
-import { useStore } from "../useStore";
 import { auOptionMetaData } from "../logics/api";
-import { AuRoleSpawnControls } from "./AuRoleSpawnControls";
+import { useStore } from "../useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
+import { AuRoleSpawnControls } from "./AuRoleSpawnControls";
 
 interface AuRoleCategoryItemProps {
 	categoryId: number;
@@ -11,7 +11,9 @@ interface AuRoleCategoryItemProps {
  * Auの役職タブ（Tab 1, 2）で使用される、スポーン設定をヘッダーに持つカテゴリ表示コンポーネント
  */
 export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
-	const isOpen = useStore((state) => state.openedAuCategoryIds[categoryId] ?? false);
+	const isOpen = useStore(
+		(state) => state.openedAuCategoryIds[categoryId] ?? false,
+	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const auValue = useStore((state) => state.auValue);
 
@@ -89,10 +91,7 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 				<div className="min-h-0">
 					{isOpenFinal && otherOptionIds.length > 0 && (
 						<div className="p-4 bg-gray-900 border-t border-gray-700">
-							<AuCategoryOptionList
-								categoryId={categoryId}
-								optionIds={otherOptionIds}
-							/>
+							<AuCategoryOptionList optionIds={otherOptionIds} />
 						</div>
 					)}
 				</div>
