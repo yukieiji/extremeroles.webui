@@ -43,15 +43,21 @@ describe("ExRRoleSpawnControls", () => {
 			SPAWN_COUNT_OPTION_ID,
 		);
 
-		exrOptionMetaData.optionMetaData[rateUniqueId] = {
-			translatedName: "レート",
-			format: "{0}%",
-			type: "Int32",
+		exrOptionMetaData.options[rateUniqueId] = {
+			metaData: {
+				translatedName: "レート",
+				format: "{0}%",
+				type: "Int32",
+			},
+			childOptionIds: [],
 		};
-		exrOptionMetaData.optionMetaData[countUniqueId] = {
-			translatedName: "数",
-			format: "{0}",
-			type: "Int32",
+		exrOptionMetaData.options[countUniqueId] = {
+			metaData: {
+				translatedName: "数",
+				format: "{0}",
+				type: "Int32",
+			},
+			childOptionIds: [],
 		};
 
 		useStore.getState().setExROptions(

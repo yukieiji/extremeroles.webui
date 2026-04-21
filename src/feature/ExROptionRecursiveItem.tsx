@@ -28,7 +28,7 @@ export function ExROptionRecursiveItem({
 		toggleExROption(uniqueOptionId);
 	};
 
-	const childs = exrOptionMetaData.childOptionMap[uniqueOptionId];
+	const childs = exrOptionMetaData.options[uniqueOptionId]?.childOptionIds;
 
 	return (
 		<OptionAccordion

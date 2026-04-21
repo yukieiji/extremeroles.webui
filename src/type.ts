@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+// 内部的にはnumber型ですが、ブランド型を使用して区別しています
+type Branded<T, Brand extends string> = T & {
+	readonly [K in Brand]: never; // neverなので実行時に存在しない
+};
+
+// ExR向け
+
 /**
  * 特別な意味を持つオプションIDの定数
  */
@@ -7,10 +14,6 @@ export const SPAWN_RATE_OPTION_ID = 50;
 export const SPAWN_COUNT_OPTION_ID = 51;
 
 // ユニークオプションIDは、タブID、カテゴリID、オプションIDの組み合わせを一意に識別するための型
-// 内部的にはnumber型ですが、ブランド型を使用して区別しています
-type Branded<T, Brand extends string> = T & {
-	readonly [K in Brand]: never; // neverなので実行時に存在しない
-};
 export type UniqueOptionId = Branded<number, "UniqueOptionId">;
 
 export interface ExROptionMetaData {
@@ -24,14 +27,26 @@ export interface ExROptionValueData {
 	values: number[] | string[];
 }
 
+export interface ExRTabMetaData {
+	name: string;
+	categoryIds: number[];
+}
+
+export interface ExRCategoryMetaData {
+	name: string;
+	tabId: OptionTab;
+}
+
+export interface ExROptionMetaDataDetail {
+	metaData: ExROptionMetaData;
+	childOptionIds: UniqueOptionId[];
+}
+
 export interface ExROptionMetaDataRecords {
-	tabInfo: Record<OptionTab, string>; // タブIDとタブ名の対応
-	tabIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
-	categoryTabMap: Record<number, OptionTab>; // カテゴリIDとタブIDの対応
-	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
-	globalCategoryIdTopLevelMap: Record<number, UniqueOptionId[]>; // グローバル設定のカテゴリIDとそのカテゴリに属するトップレベルオプションのユニークオプションIDの対応
-	optionMetaData: Record<UniqueOptionId, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
-	childOptionMap: Record<UniqueOptionId, UniqueOptionId[]>; // 親ユニークオプションIDとその子ユニークオプションIDの対応
+	tabs: Record<OptionTab, ExRTabMetaData>;
+	categories: Record<number, ExRCategoryMetaData>;
+	options: Record<UniqueOptionId, ExROptionMetaDataDetail>;
+	globalCategoryIdTopLevelMap: Record<number, UniqueOptionId[]>;
 }
 
 /**
@@ -128,9 +143,43 @@ export const ExRTabDtoSchema = z.object({
 
 export const ExRTabDtoArraySchema = z.array(ExRTabDtoSchema);
 
+// AmongUs本体
+
 /**
  * Au系のオプション設定に関連する型定義
  */
+
+export const AU_PREFIX = {
+	MAX_COUNT: 1,
+	CHANCE: 2,
+} as const;
+
+// 全ての値（1 | 2）を型として抽出
+export type AuOptionPrefix = (typeof AU_PREFIX)[keyof typeof AU_PREFIX];
+
+// 基本的には名前で分かるんだけど一部特殊なことをしないといけないので
+// 1～2桁: 予備用プレフィックスコード、基本0
+// 3～4桁: OptionValueType
+// 5桁より上: OptionName
+export type AuOptionId = Branded<number, "AuOptionName">;
+
+export interface AuOptionMeta {
+	title: string;
+	format: string;
+	range: (number | string)[];
+}
+
+export interface AuOptionCategoryMetaData {
+	name: string;
+	options: AuOptionId[];
+}
+
+export interface AuOptionMetaDataRecords {
+	tabNames: string[]; // タブの名前
+	tabCategoryMap: Record<number, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
+	categoryMetaData: Record<number, AuOptionCategoryMetaData>; // カテゴリIDとカテゴリメタデータの対応
+	options: Record<AuOptionId, AuOptionMeta>; // 全オプションのメタデータ
+}
 
 export const OptionValueType = {
 	Bool: 0,
@@ -204,6 +253,8 @@ export const AuOptionCategoryDtoArraySchema = z.array(
 	AuOptionCategoryDtoSchema,
 );
 
+// 以下レスポンス向け
+
 /**
  * オプション更新リクエスト
  */
@@ -234,7 +285,7 @@ export const VanillaOptionPutRequestSchema = z.object({
 });
 
 /**
- * カテゴリごとのオプションリスト
+ * リザルトのカテゴリごとのオプションリスト
  */
 export interface CategoryOptionDto {
 	Id: number;
@@ -258,6 +309,8 @@ export const UpdatedOptionsSchema = z.object({
 	UpdatedCategory: ExRCategoryDtoSchema.nullable(),
 	ChainUpdatedOption: z.array(CategoryOptionDtoSchema),
 });
+
+// 内部データ向け
 
 /**
  * プリセット名管理用のスキーマ

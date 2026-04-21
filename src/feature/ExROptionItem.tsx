@@ -16,7 +16,7 @@ interface ExROptionItemProps {
 }
 
 function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
-	const childs = exrOptionMetaData.childOptionMap[uniqueOptionId];
+	const childs = exrOptionMetaData.options[uniqueOptionId]?.childOptionIds;
 	const hasActiveChildren = useStore(
 		useShallow((state) => {
 			if (!childs) {

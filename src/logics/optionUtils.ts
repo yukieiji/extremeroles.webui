@@ -1,4 +1,4 @@
-import type { OptionData, UniqueOptionId } from "../type";
+import type { AuOptionId, OptionData, UniqueOptionId } from "../type";
 import { exrOptionMetaData } from "./api";
 
 const TAB_ID_MULTIPLIER = 1_000_000_000_000;
@@ -16,6 +16,20 @@ export function getUniqueOptionId(
 	const uniqueId =
 		tabId * TAB_ID_MULTIPLIER + categoryId * CATEGORY_ID_MULTIPLIER + optionId;
 	return uniqueId as UniqueOptionId;
+}
+
+/**
+ * Au系のオプションIDを生成します。
+ * 1～2桁: 予備用プレフィックスコード
+ * 3～4桁: OptionValueType
+ * 5桁より上: OptionName
+ */
+export function getAuOptionId(
+	optionName: number,
+	valueType: number,
+	prefix = 0,
+): AuOptionId {
+	return (optionName * 10000 + valueType * 100 + prefix) as AuOptionId;
 }
 
 export function parseUniqueOptionId(uniqueOptionId: UniqueOptionId): {
@@ -159,7 +173,7 @@ export function groupOptionPairs(
 
 	for (let i = 0; i < uniqueOptionIds.length; i++) {
 		const currentUniqueId = uniqueOptionIds[i];
-		const currentMeta = exrOptionMetaData.optionMetaData[currentUniqueId];
+		const currentMeta = exrOptionMetaData.options[currentUniqueId]?.metaData;
 		if (!currentMeta) {
 			continue;
 		}
@@ -170,8 +184,8 @@ export function groupOptionPairs(
 			continue;
 		}
 
-		const nextMeta = exrOptionMetaData.optionMetaData[nextUniqueId];
-		if (!currentMeta || !nextMeta) {
+		const nextMeta = exrOptionMetaData.options[nextUniqueId]?.metaData;
+		if (!nextMeta) {
 			result.push(currentUniqueId);
 			continue;
 		}

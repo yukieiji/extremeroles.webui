@@ -19,7 +19,7 @@ export function ExROptionRow({
 	depth = 0,
 	isLeaf = false,
 }: ExROptionRowProps) {
-	const optionData = exrOptionMetaData.optionMetaData[uniqueOptionId];
+	const optionData = exrOptionMetaData.options[uniqueOptionId]?.metaData;
 	if (!optionData) {
 		return null;
 	}

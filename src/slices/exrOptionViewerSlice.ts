@@ -24,7 +24,6 @@ export interface ExROptionViewerSlice {
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
-	pendingPresetIndex: number | null;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	setSelectedExRTabId: (id: OptionTab) => void;
@@ -57,7 +56,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		isExROptionActive: {},
 		presetNames: loadPresetNamesFromCookie(),
 		isPresetDropdownOpen: false,
-		pendingPresetIndex: null,
 		setSelectedExRTabId: (id: OptionTab) => {
 			set({ selectedExRTabId: id });
 		},
@@ -71,7 +69,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
 				isPresetDropdownOpen: false,
-				pendingPresetIndex: null,
 			});
 		},
 		toggleExRCategory: (categoryId: number) => {
@@ -162,7 +159,10 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 					};
 
 					const processCategory = (cat: ExRCategoryDto) => {
-						const tId = exrOptionMetaData.categoryTabMap[cat.Id];
+						const tId = exrOptionMetaData.categories[cat.Id]?.tabId;
+						if (tId === undefined) {
+							return;
+						}
 						for (const opt of cat.Options) {
 							processOption(opt, cat.Id, tId);
 						}
@@ -177,7 +177,10 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 						}
 
 						for (const chain of x.ChainUpdatedOption) {
-							const tId = exrOptionMetaData.categoryTabMap[chain.Id];
+							const tId = exrOptionMetaData.categories[chain.Id]?.tabId;
+							if (tId === undefined) {
+								continue;
+							}
 							for (const opt of chain.Options) {
 								processOption(opt, chain.Id, tId);
 							}
@@ -237,7 +240,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				let categoryChanged = false;
 				for (const id in nextOpenedExRCategoryIds) {
 					const categoryId = Number(id);
-					if (!exrOptionMetaData.categoryInfo[categoryId]) {
+					if (!exrOptionMetaData.categories[categoryId]) {
 						delete nextOpenedExRCategoryIds[categoryId];
 						categoryChanged = true;
 					}
@@ -247,7 +250,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				let optionChanged = false;
 				for (const id in nextOpenedExROptionIds) {
 					const uniqueOptionId = Number(id) as UniqueOptionId;
-					if (!exrOptionMetaData.optionMetaData[uniqueOptionId]) {
+					if (!exrOptionMetaData.options[uniqueOptionId]) {
 						delete nextOpenedExROptionIds[uniqueOptionId];
 						optionChanged = true;
 					}

@@ -10,7 +10,7 @@ import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRC
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
-import auOptionData from './get/au/setting-webui-dev_20260321.json';
+import auOptionData from './get/au/setting-webui-dev_20260421.json';
 
 /**
  * Zodを使用してロードしたデータのバリデーションを実施

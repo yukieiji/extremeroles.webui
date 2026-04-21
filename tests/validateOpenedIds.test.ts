@@ -20,9 +20,9 @@ describe("validateOpenedIds", () => {
 
 	it("should remove non-existent category IDs", () => {
 		// Mock metadata
-		exrOptionMetaData.categoryInfo = {
-			1: "Category 1",
-			2: "Category 2",
+		exrOptionMetaData.categories = {
+			1: { name: "Category 1", tabId: 0 },
+			2: { name: "Category 2", tabId: 0 },
 		};
 
 		// Set initial state
@@ -46,8 +46,11 @@ describe("validateOpenedIds", () => {
 		// Mock metadata
 		const uId1 = 101 as UniqueOptionId;
 		const uId2 = 102 as UniqueOptionId;
-		exrOptionMetaData.optionMetaData = {
-			[uId1]: { translatedName: "Opt 1", format: "", type: "Single" },
+		exrOptionMetaData.options = {
+			[uId1]: {
+				metaData: { translatedName: "Opt 1", format: "", type: "Single" },
+				childOptionIds: [],
+			},
 		};
 
 		// Set initial state
@@ -68,10 +71,13 @@ describe("validateOpenedIds", () => {
 	});
 
 	it("should do nothing if all IDs are valid", () => {
-		exrOptionMetaData.categoryInfo = { 1: "Cat 1" };
+		exrOptionMetaData.categories = { 1: { name: "Cat 1", tabId: 0 } };
 		const uId = 101 as UniqueOptionId;
-		exrOptionMetaData.optionMetaData = {
-			[uId]: { translatedName: "Opt 1", format: "", type: "Single" },
+		exrOptionMetaData.options = {
+			[uId]: {
+				metaData: { translatedName: "Opt 1", format: "", type: "Single" },
+				childOptionIds: [],
+			},
 		};
 
 		const initialState = {

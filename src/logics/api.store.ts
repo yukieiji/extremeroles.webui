@@ -1,13 +1,11 @@
-import type { AuOptionCategoryDto } from "../type";
-
 import { useStore } from "../useStore";
-import { AU_OPTION_URL, createExROptionMetaData } from "./api";
+import { createAuOptionMetaData, createExROptionMetaData } from "./api";
 
 /**
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
-let auOptionsPromise: Promise<AuOptionCategoryDto[]> | null = null;
+let auOptionsPromise: Promise<void> | null = null;
 let exrOptionsPromise: Promise<void> | null = null;
 
 /**
@@ -18,12 +16,17 @@ export function resetApiCache() {
 	auOptionsPromise = null;
 }
 
-async function createExROptionMetaDataWithStore(delay: number): Promise<void> {
-	if (delay > 0) {
-		await new Promise((resolve) => {
-			return setTimeout(resolve, delay);
-		});
+async function waitDelay(delay: number): Promise<void> {
+	if (delay <= 0) {
+		return;
 	}
+	await new Promise((resolve) => {
+		return setTimeout(resolve, delay);
+	});
+}
+
+async function createExROptionMetaDataWithStore(delay: number): Promise<void> {
+	await waitDelay(delay);
 	const { valueData, isOptionActive } = await createExROptionMetaData();
 	useStore.getState().setExROptions(valueData, isOptionActive);
 }
@@ -41,10 +44,16 @@ export function getExrOptions(): Promise<void> {
 	return exrOptionsPromise;
 }
 
+async function createAuOptionMetaDataWithStore(delay: number): Promise<void> {
+	await waitDelay(delay);
+	const initialValueData = await createAuOptionMetaData();
+	useStore.getState().setAuValue(initialValueData);
+}
+
 /**
  * Auオプションを取得する
  */
-export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
+export function getAuOptions(): Promise<void> {
 	if (auOptionsPromise) {
 		return auOptionsPromise;
 	}
@@ -52,18 +61,6 @@ export function getAuOptions(): Promise<AuOptionCategoryDto[]> {
 	// @ts-expect-error - テスト用
 	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 
-	auOptionsPromise = (async () => {
-		if (delay > 0) {
-			await new Promise((resolve) => {
-				return setTimeout(resolve, delay);
-			});
-		}
-		const res = await fetch(AU_OPTION_URL);
-		if (!res.ok) {
-			throw new Error(`Failed to fetch Au options: ${res.statusText}`);
-		}
-		return res.json();
-	})();
-
+	auOptionsPromise = createAuOptionMetaDataWithStore(delay);
 	return auOptionsPromise;
 }
