@@ -185,7 +185,7 @@ export function groupOptionPairs(
 		}
 
 		const nextMeta = exrOptionMetaData.options[nextUniqueId]?.metaData;
-if (!nextMeta) {
+		if (!nextMeta) {
 			result.push(currentUniqueId);
 			continue;
 		}

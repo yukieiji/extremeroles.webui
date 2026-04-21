@@ -1,11 +1,11 @@
 import type {
-	AuOptionCategoryDto,
 	AuOptionId,
 	AuOptionMetaDataRecords,
 	AuRoleOption,
 	ExROptionDto,
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
+	ExRTabMetaData,
 	UniqueOptionId,
 	UpdatedOptions,
 } from "../type";
@@ -87,13 +87,14 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
 
-exrOptionMetaData.options[uniqueId] = {
+			exrOptionMetaData.options[uniqueId] = {
 				metaData: {
 					translatedName: opt.TranslatedName,
 					format: opt.Format,
 					type: opt.RangeMeta.Type,
 				},
-				childOptionIds: exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
+				childOptionIds:
+					exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
 			};
 
 			valueData[uniqueId] = {
@@ -157,10 +158,9 @@ exrOptionMetaData.options[uniqueId] = {
 	return { valueData, isOptionActive };
 }
 
-export async function createAuOptionMetaData(): Promise<{
-	initialValueData: Record<AuOptionId, number>;
-	rawData: AuOptionCategoryDto[];
-}> {
+export async function createAuOptionMetaData(): Promise<
+	Record<AuOptionId, number>
+> {
 	const res = await fetch(AU_OPTION_URL);
 	if (!res.ok) {
 		throw new Error(`Failed to fetch Au options: ${res.statusText}`);
@@ -252,9 +252,7 @@ export async function createAuOptionMetaData(): Promise<{
 		}
 	}
 
-	return {
-		initialValueData: initialValueData as unknown as Record<AuOptionId, number>,
-	};
+	return initialValueData;
 }
 
 export async function updateExrOption(

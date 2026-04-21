@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
-	AU_OPTION_URL,
 	auOptionMetaData,
 	createAuOptionMetaData,
 	resetAuOptionMetaData,

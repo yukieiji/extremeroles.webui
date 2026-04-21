@@ -44,11 +44,9 @@ export function getExrOptions(): Promise<void> {
 	return exrOptionsPromise;
 }
 
-async function createAuOptionMetaDataWithStore(
-	delay: number,
-): Promise<void> {
+async function createAuOptionMetaDataWithStore(delay: number): Promise<void> {
 	await waitDelay(delay);
-	const { initialValueData } = await createAuOptionMetaData();
+	const initialValueData = await createAuOptionMetaData();
 	useStore.getState().setAuValue(initialValueData);
 }
 
