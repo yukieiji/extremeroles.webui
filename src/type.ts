@@ -166,7 +166,7 @@ export type AuOptionId = Branded<number, "AuOptionName">;
 export interface AuOptionMeta {
 	title: string;
 	format: string;
-	range: (number | string)[];
+	range: number[] | string[] | boolean[];
 }
 
 export interface AuOptionCategoryMetaData {
@@ -225,7 +225,7 @@ export interface AuOptionDto {
 	TranslatedFormat: string;
 	Value: number | boolean | AuRoleOption;
 	Info: AuOptionInfo;
-	Range?: (number | string)[] | null;
+	Range?: number[] | string[] | null;
 }
 
 export const AuOptionDtoSchema: z.ZodType<AuOptionDto> = z.object({
@@ -234,7 +234,7 @@ export const AuOptionDtoSchema: z.ZodType<AuOptionDto> = z.object({
 	Value: z.union([z.number(), z.boolean(), AuRoleOptionSchema]),
 	Info: AuOptionInfoSchema,
 	Range: z
-		.array(z.union([z.number(), z.string()]))
+		.union([z.array(z.number()), z.array(z.string())])
 		.nullable()
 		.optional(),
 });

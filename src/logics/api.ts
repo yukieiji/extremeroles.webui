@@ -227,26 +227,27 @@ export async function createAuOptionMetaData(): Promise<
 					range: Array.from({ length: 16 }, (_, i) => i), // 0～15を1刻みで用意するため
 				};
 				initialValueData[maxCountId] = roleValue.MaxCount;
-
 			} else {
 				const auOptionId = getAuOptionId(optionName, valueType);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(auOptionId);
 
-				let range = opt.Range || [];
+				let range: number[] | string[] | boolean[] = opt.Range || [];
 				let index = 0;
 
 				if (valueType === OptionValueType.Bool) {
-					range = [0, 1]; // number[] として扱う
+					range = [false, true];
 					index = opt.Value ? 1 : 0;
 				} else if (range.length > 0) {
-					index = range.indexOf(opt.Value as string | number);
-					if (index === -1) index = 0;
+					index = (range as (number | string)[]).indexOf(opt.Value as string | number);
+					if (index === -1) {
+						index = 0;
+					}
 				}
 
 				auOptionMetaData.options[auOptionId] = {
 					title: opt.TranslatedTitle,
 					format: opt.TranslatedFormat,
-					range: range as (string | number)[],
+					range,
 				};
 				initialValueData[auOptionId] = index;
 			}
