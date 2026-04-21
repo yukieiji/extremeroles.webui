@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
+import { resetExrOptionMetaData } from "../src/logics/api";
 import { getExrOptions, resetApiCache } from "../src/logics/api.store";
 import type { ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
@@ -108,33 +108,10 @@ describe("ExROptionEditor", () => {
 			vi.fn().mockResolvedValue({
 				ok: true,
 				json: vi.fn().mockResolvedValue(mockData),
-			}),
+			} as Response),
 		);
 
 		await getExrOptions();
-
-		// プロダクトコードのバグ（uniqueId ではなく optionId でストアを参照している箇所など）を
-		// 回避するために、テストコード側でグローバル状態を調整する
-		const state = useStore.getState();
-
-		// 1. isOptionActive を optionId でも引けるようにする（ExRStandardCategoryList 用）
-		const newActive = { ...state.isExROptionActive };
-		for (const [uId, active] of Object.entries(state.isExROptionActive)) {
-			const oId = Number(uId) % 10000;
-			newActive[oId] = active;
-		}
-
-		// 2. childOptionIds を uniqueId ではなく optionId の配列にする（ExRRoleCategoryItem 用）
-		for (const uId in exrOptionMetaData.options) {
-			const option = exrOptionMetaData.options[Number(uId)];
-			if (option) {
-				option.childOptionIds = option.childOptionIds.map(
-					(cid) => (Number(cid) % 10000) as any,
-				);
-			}
-		}
-
-		useStore.setState({ isExROptionActive: newActive });
 	});
 
 	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
