@@ -238,7 +238,9 @@ export async function createAuOptionMetaData(): Promise<
 					range = [false, true];
 					index = opt.Value ? 1 : 0;
 				} else if (range.length > 0) {
-					index = (range as (number | string)[]).indexOf(opt.Value as string | number);
+					index = (range as (number | string)[]).indexOf(
+						opt.Value as string | number,
+					);
 					if (index === -1) {
 						index = 0;
 					}
