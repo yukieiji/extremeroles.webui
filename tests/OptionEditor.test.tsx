@@ -1,9 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { AuOptionEditor } from "../src/feature/AuOptionEditor";
-import { auOptionMetaData } from "../src/logics/api";
+import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
 
 describe("OptionEditor Components", () => {
+	beforeEach(() => {
+		resetAuOptionMetaData();
+	});
+
 	it("AuOptionEditor がデータを正しく表示すること", () => {
 		auOptionMetaData.categoryMetaData = {
 			0: {
