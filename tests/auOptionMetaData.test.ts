@@ -45,7 +45,7 @@ describe("createAuOptionMetaData", () => {
 				Options: [
 					{
 						TranslatedTitle: "DefaultOption",
-						TranslatedFormat: "Shapeshifter",
+						TranslatedFormat: "ShapeshifterRole",
 						Value: { MaxCount: 1, Chance: 50 },
 						Info: { ValueType: OptionValueType.RoleBase, OptionName: 3 },
 					},
