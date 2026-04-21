@@ -186,7 +186,7 @@ export async function createAuOptionMetaData(): Promise<
 		} else if (
 			currentTab === 1 &&
 			firstOption?.TranslatedTitle === "DefaultOption" &&
-			firstOption?.TranslatedFormat === "Shapeshifter"
+			firstOption?.TranslatedFormat === "ShapeshifterRole"
 		) {
 			currentTab = 2;
 		}
