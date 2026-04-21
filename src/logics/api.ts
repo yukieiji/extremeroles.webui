@@ -204,6 +204,16 @@ export async function createAuOptionMetaData(): Promise<
 			if (valueType === OptionValueType.RoleBase) {
 				const roleValue = opt.Value as AuRoleOption;
 
+				// Chance
+				const chanceId = getAuOptionId(optionName, valueType, AU_PREFIX.CHANCE);
+				auOptionMetaData.categoryMetaData[categoryId].options.push(chanceId);
+				auOptionMetaData.options[chanceId] = {
+					title: opt.TranslatedTitle,
+					format: opt.TranslatedFormat,
+					range: Array.from({ length: 11 }, (_, i) => i * 10), // 0～100％を10％刻みで用意するため
+				};
+				initialValueData[chanceId] = Math.floor(roleValue.Chance / 10);
+
 				// MaxCount
 				const maxCountId = getAuOptionId(
 					optionName,
@@ -214,19 +224,10 @@ export async function createAuOptionMetaData(): Promise<
 				auOptionMetaData.options[maxCountId] = {
 					title: opt.TranslatedTitle,
 					format: opt.TranslatedFormat,
-					range: Array.from({ length: 16 }, (_, i) => i),
+					range: Array.from({ length: 16 }, (_, i) => i), // 0～15を1刻みで用意するため
 				};
 				initialValueData[maxCountId] = roleValue.MaxCount;
 
-				// Chance
-				const chanceId = getAuOptionId(optionName, valueType, AU_PREFIX.CHANCE);
-				auOptionMetaData.categoryMetaData[categoryId].options.push(chanceId);
-				auOptionMetaData.options[chanceId] = {
-					title: opt.TranslatedTitle,
-					format: opt.TranslatedFormat,
-					range: Array.from({ length: 11 }, (_, i) => i * 10),
-				};
-				initialValueData[chanceId] = Math.floor(roleValue.Chance / 10);
 			} else {
 				const auOptionId = getAuOptionId(optionName, valueType);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(auOptionId);
