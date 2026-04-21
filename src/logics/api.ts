@@ -28,13 +28,10 @@ export const AU_OPTION_URL = "/au/option/";
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
-	tabInfo: {} as Record<OptionTab, string>,
-	tabIdMap: {} as Record<OptionTab, number[]>,
-	categoryTabMap: {} as Record<number, OptionTab>,
-	categoryInfo: {},
+	tabs: {} as Record<OptionTab, ExRTabMetaData>,
+	categories: {},
+	options: {},
 	globalCategoryIdTopLevelMap: {},
-	optionMetaData: {},
-	childOptionMap: {},
 };
 
 export const auOptionMetaData: AuOptionMetaDataRecords = {
@@ -48,13 +45,10 @@ export const auOptionMetaData: AuOptionMetaDataRecords = {
  * ExRオプションのメタデータをリセットする（テスト用）
  */
 export function resetExrOptionMetaData() {
-	exrOptionMetaData.tabInfo = {} as Record<OptionTab, string>;
-	exrOptionMetaData.tabIdMap = {} as Record<OptionTab, number[]>;
-	exrOptionMetaData.categoryInfo = {};
-	exrOptionMetaData.categoryTabMap = {} as Record<number, OptionTab>;
+	exrOptionMetaData.tabs = {} as Record<OptionTab, ExRTabMetaData>;
+	exrOptionMetaData.categories = {};
+	exrOptionMetaData.options = {};
 	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
-	exrOptionMetaData.optionMetaData = {};
-	exrOptionMetaData.childOptionMap = {};
 }
 
 /**
@@ -93,10 +87,13 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
 
-			exrOptionMetaData.optionMetaData[uniqueId] = {
-				translatedName: opt.TranslatedName,
-				format: opt.Format,
-				type: opt.RangeMeta.Type,
+exrOptionMetaData.options[uniqueId] = {
+				metaData: {
+					translatedName: opt.TranslatedName,
+					format: opt.Format,
+					type: opt.RangeMeta.Type,
+				},
+				childOptionIds: exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
 			};
 
 			valueData[uniqueId] = {
@@ -110,10 +107,25 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 					categoryId,
 					parentOptionId,
 				);
-				if (!exrOptionMetaData.childOptionMap[parentUniqueId]) {
-					exrOptionMetaData.childOptionMap[parentUniqueId] = [];
+				if (!exrOptionMetaData.options[parentUniqueId]) {
+					exrOptionMetaData.options[parentUniqueId] = {
+						metaData: {
+							translatedName: "",
+							format: "",
+							type: "",
+						},
+						childOptionIds: [],
+					};
 				}
-				exrOptionMetaData.childOptionMap[parentUniqueId].push(uniqueId);
+				if (
+					!exrOptionMetaData.options[parentUniqueId].childOptionIds.includes(
+						uniqueId,
+					)
+				) {
+					exrOptionMetaData.options[parentUniqueId].childOptionIds.push(
+						uniqueId,
+					);
+				}
 			}
 
 			if (opt.Childs && opt.Childs.length > 0) {
@@ -123,11 +135,15 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 	};
 
 	for (const tab of data) {
-		exrOptionMetaData.tabInfo[tab.Id] = tab.Name;
-		exrOptionMetaData.tabIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
+		exrOptionMetaData.tabs[tab.Id] = {
+			name: tab.Name,
+			categoryIds: tab.Categories.map((c) => c.Id),
+		};
 		for (const category of tab.Categories) {
-			exrOptionMetaData.categoryInfo[category.Id] = category.Name;
-			exrOptionMetaData.categoryTabMap[category.Id] = tab.Id;
+			exrOptionMetaData.categories[category.Id] = {
+				name: category.Name,
+				tabId: tab.Id,
+			};
 			if (tab.Id === OptionTab.GeneralTab) {
 				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
 				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
@@ -165,10 +181,7 @@ export async function createAuOptionMetaData(): Promise<{
 		const category = data[i];
 		const categoryId = i;
 		const firstOption = category.Options[0];
-		if (
-			currentTab === 0 &&
-			firstOption?.TranslatedTitle === "DefaultOption"
-		) {
+		if (currentTab === 0 && firstOption?.TranslatedTitle === "DefaultOption") {
 			currentTab = 1;
 		} else if (
 			currentTab === 1 &&
@@ -206,11 +219,7 @@ export async function createAuOptionMetaData(): Promise<{
 				initialValueData[maxCountId] = roleValue.MaxCount;
 
 				// Chance
-				const chanceId = getAuOptionId(
-					optionName,
-					valueType,
-					AU_PREFIX.CHANCE,
-				);
+				const chanceId = getAuOptionId(optionName, valueType, AU_PREFIX.CHANCE);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(chanceId);
 				auOptionMetaData.options[chanceId] = {
 					title: opt.TranslatedTitle,

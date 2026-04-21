@@ -173,7 +173,7 @@ export function groupOptionPairs(
 
 	for (let i = 0; i < uniqueOptionIds.length; i++) {
 		const currentUniqueId = uniqueOptionIds[i];
-		const currentMeta = exrOptionMetaData.optionMetaData[currentUniqueId];
+		const currentMeta = exrOptionMetaData.options[currentUniqueId]?.metaData;
 		if (!currentMeta) {
 			continue;
 		}
@@ -184,8 +184,8 @@ export function groupOptionPairs(
 			continue;
 		}
 
-		const nextMeta = exrOptionMetaData.optionMetaData[nextUniqueId];
-		if (!currentMeta || !nextMeta) {
+		const nextMeta = exrOptionMetaData.options[nextUniqueId]?.metaData;
+if (!nextMeta) {
 			result.push(currentUniqueId);
 			continue;
 		}

@@ -81,9 +81,15 @@ describe("ExRCategoryList Component Selection", () => {
 
 		// exrOptionMetaData のセットアップ
 		for (const tab of mockTabs) {
-			exrOptionMetaData.tabIdMap[tab.Id] = tab.Categories.map((c) => c.Id);
+			exrOptionMetaData.tabs[tab.Id] = {
+				name: tab.Name,
+				categoryIds: tab.Categories.map((c) => c.Id),
+			};
 			for (const cat of tab.Categories) {
-				exrOptionMetaData.categoryInfo[cat.Id] = cat.Name;
+				exrOptionMetaData.categories[cat.Id] = {
+					name: cat.Name,
+					tabId: tab.Id,
+				};
 				if (tab.Id === OptionTab.GeneralTab) {
 					exrOptionMetaData.globalCategoryIdTopLevelMap[cat.Id] =
 						cat.Options.map((o) => getUniqueOptionId(tab.Id, cat.Id, o.Id));
@@ -91,10 +97,13 @@ describe("ExRCategoryList Component Selection", () => {
 
 				for (const opt of cat.Options) {
 					const uniqueId = getUniqueOptionId(tab.Id, cat.Id, opt.Id);
-					exrOptionMetaData.optionMetaData[uniqueId] = {
-						translatedName: opt.TranslatedName,
-						format: opt.Format,
-						type: opt.RangeMeta.Type,
+					exrOptionMetaData.options[uniqueId] = {
+						metaData: {
+							translatedName: opt.TranslatedName,
+							format: opt.Format,
+							type: opt.RangeMeta.Type,
+						},
+						childOptionIds: [],
 					};
 					useStore.getState().setExROptions(
 						{
@@ -119,14 +128,21 @@ describe("ExRCategoryList Component Selection", () => {
 							cat.Id,
 							SPAWN_RATE_OPTION_ID,
 						);
-						if (!exrOptionMetaData.childOptionMap[rateUniqueId]) {
-							exrOptionMetaData.childOptionMap[rateUniqueId] = [];
+						if (!exrOptionMetaData.options[rateUniqueId]) {
+							exrOptionMetaData.options[rateUniqueId] = {
+								metaData: { translatedName: "", format: "", type: "" },
+								childOptionIds: [],
+							};
 						}
 						if (
 							opt.Id !== SPAWN_RATE_OPTION_ID &&
-							!exrOptionMetaData.childOptionMap[rateUniqueId].includes(uniqueId)
+							!exrOptionMetaData.options[rateUniqueId].childOptionIds.includes(
+								uniqueId,
+							)
 						) {
-							exrOptionMetaData.childOptionMap[rateUniqueId].push(uniqueId);
+							exrOptionMetaData.options[rateUniqueId].childOptionIds.push(
+								uniqueId,
+							);
 						}
 					}
 				}

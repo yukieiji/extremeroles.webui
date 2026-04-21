@@ -27,14 +27,26 @@ export interface ExROptionValueData {
 	values: number[] | string[];
 }
 
+export interface ExRTabMetaData {
+	name: string;
+	categoryIds: number[];
+}
+
+export interface ExRCategoryMetaData {
+	name: string;
+	tabId: OptionTab;
+}
+
+export interface ExROptionMetaDataDetail {
+	metaData: ExROptionMetaData;
+	childOptionIds: UniqueOptionId[];
+}
+
 export interface ExROptionMetaDataRecords {
-	tabInfo: Record<OptionTab, string>; // タブIDとタブ名の対応
-	tabIdMap: Record<OptionTab, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
-	categoryTabMap: Record<number, OptionTab>; // カテゴリIDとタブIDの対応
-	categoryInfo: Record<number, string>; // カテゴリIDとカテゴリ名の対応
-	globalCategoryIdTopLevelMap: Record<number, UniqueOptionId[]>; // グローバル設定のカテゴリIDとそのカテゴリに属するトップレベルオプションのユニークオプションIDの対応
-	optionMetaData: Record<UniqueOptionId, ExROptionMetaData>; // ユニークオプションIDとそのオプションメタデータの対応
-	childOptionMap: Record<UniqueOptionId, UniqueOptionId[]>; // 親ユニークオプションIDとその子ユニークオプションIDの対応
+	tabs: Record<OptionTab, ExRTabMetaData>;
+	categories: Record<number, ExRCategoryMetaData>;
+	options: Record<UniqueOptionId, ExROptionMetaDataDetail>;
+	globalCategoryIdTopLevelMap: Record<number, UniqueOptionId[]>;
 }
 
 /**
