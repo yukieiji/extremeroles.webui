@@ -10,15 +10,16 @@ import { useStore } from "../src/useStore";
 function setUpudateExROptionSelectionMock(values: (number | string)[]): void {
 	vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
 		async (...args) => {
-			args.forEach((x) => {
-				useStore.getState().setExROptions(
-					{
-						...useStore.getState().exrValue,
-						[x.uniqueOptionId]: { selection: x.selection, values: values },
-					},
-					useStore.getState().isExROptionActive,
-				);
-			});
+			const nextExrValue = { ...useStore.getState().exrValue };
+			for (const x of args) {
+				nextExrValue[x.uniqueOptionId] = {
+					selection: x.selection,
+					values: values,
+				};
+			}
+			useStore
+				.getState()
+				.setExROptions(nextExrValue, useStore.getState().isExROptionActive);
 		},
 	);
 }

@@ -14,19 +14,15 @@ function setUpudateExROptionSelectionSpawnRateMock(): void {
 	// Mock useUpdateExROptionSelection to update the store
 	vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
 		async (...args) => {
-			args.forEach((x) => {
+			const currentStore = useStore.getState();
+			const nextExrValue = { ...currentStore.exrValue };
+			for (const x of args) {
 				const { optionId } = parseUniqueOptionId(x.uniqueOptionId);
 				const values =
 					optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-				const currentStore = useStore.getState();
-				currentStore.setExROptions(
-					{
-						...currentStore.exrValue,
-						[x.uniqueOptionId]: { selection: x.selection, values },
-					},
-					currentStore.isExROptionActive,
-				);
-			});
+				nextExrValue[x.uniqueOptionId] = { selection: x.selection, values };
+			}
+			currentStore.setExROptions(nextExrValue, currentStore.isExROptionActive);
 		},
 	);
 }

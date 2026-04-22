@@ -179,15 +179,16 @@ describe("ExRCategoryList Component Selection", () => {
 		// Mock useUpdateExROptionSelection to update the store manually
 		vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
 			async (...args) => {
-				args.forEach((x) => {
-					useStore.getState().setExROptions(
-						{
-							...useStore.getState().exrValue,
-							[x.uniqueOptionId]: { selection: x.selection, values: [0, 100] },
-						},
-						useStore.getState().isExROptionActive,
-					);
-				});
+				const nextExrValue = { ...useStore.getState().exrValue };
+				for (const x of args) {
+					nextExrValue[x.uniqueOptionId] = {
+						selection: x.selection,
+						values: [0, 100],
+					};
+				}
+				useStore
+					.getState()
+					.setExROptions(nextExrValue, useStore.getState().isExROptionActive);
 			},
 		);
 
