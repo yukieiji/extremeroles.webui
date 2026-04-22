@@ -112,7 +112,7 @@ export function useUpdateAuOptionSelection(): (
 		let updateResult: UpdatedOptions;
 		try {
 			const updateNewValue =
-				typeof newValue === "boolean" ? (newValue ? 0.0 : 1.0) : newValue;
+				typeof newValue === "boolean" ? (newValue ? 1.0 : 0.0) : newValue;
 
 			updateResult = await updateAuOption({
 				OptionName: optionName,
