@@ -1,4 +1,5 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
+import { useUpdateExROptionSelection } from "../logics/api.store";
 import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
 import type { ExROptionDto } from "../type";
 import { useStore } from "../useStore";
@@ -23,21 +24,19 @@ export function ExRHeaderOptionControl({
 	});
 	const uniqueId = getUniqueOptionId(selectedExRTabId, categoryId, option.Id);
 	const currentSelection = option.Selection ?? 0;
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
-	});
+	const updateExRSelection = useUpdateExROptionSelection();
 
 	const values = option.RangeMeta.Values as number[];
 
 	const handleSelectionChange = async (newSelection: number) => {
-		await updateExROptionSelection({
+		await updateExRSelection({
 			uniqueOptionId: uniqueId,
 			selection: newSelection,
 		});
 	};
 
 	const handleInputChange = async (val: number) => {
-		await updateExROptionSelection({
+		await updateExRSelection({
 			uniqueOptionId: uniqueId,
 			selection: findClosestIndex(values, val),
 		});

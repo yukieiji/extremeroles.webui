@@ -12,7 +12,7 @@ export function AuCategoryOptionList({ optionIds }: AuCategoryOptionListProps) {
 	return (
 		<div className="flex flex-col gap-2">
 			{optionIds.map((optionId) => (
-				<AuOptionRow key={optionId} optionId={optionId} />
+				<AuOptionRow key={optionId} auOptionId={optionId} />
 			))}
 		</div>
 	);

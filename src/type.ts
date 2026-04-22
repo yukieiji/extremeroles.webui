@@ -344,6 +344,11 @@ export interface UpdateExRArg {
 	selection: number;
 }
 
+export interface UpdateAuArg {
+	auOptionId: AuOptionId;
+	selection: number;
+}
+
 export interface BlockDialog {
 	title: string;
 	message: string;

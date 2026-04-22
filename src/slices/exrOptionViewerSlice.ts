@@ -1,16 +1,15 @@
 import type { StateCreator } from "zustand";
-import { exrOptionMetaData, updateExrOption } from "../logics/api";
+import { exrOptionMetaData } from "../logics/api";
 import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
 import { getUpdatedExRState } from "../logics/exrStateLogic";
-import { parseUniqueOptionId } from "../logics/optionUtils";
 import type {
 	ExROptionValueData,
 	OptionTab,
 	UniqueOptionId,
-	UpdateExRArg,
+	UpdatedOptions,
 } from "../type";
 
 /**
@@ -29,7 +28,7 @@ export interface ExROptionViewerSlice {
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
-	updateExROptionSelection: (...updateInfos: UpdateExRArg[]) => Promise<void>;
+	updateExROption: (updateOptions: (UpdatedOptions | null)[]) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
 	resetViewer: () => void;
@@ -90,54 +89,35 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				};
 			});
 		},
-		updateExROptionSelection: async (...updateInfos: UpdateExRArg[]) => {
-			try {
-				const updateResult = await Promise.all(
-					updateInfos.map(async (info) => {
-						const { tabId, categoryId, optionId } = parseUniqueOptionId(
-							info.uniqueOptionId,
-						);
-						const result = await updateExrOption(
-							tabId,
-							categoryId,
-							optionId,
-							info.selection,
-						);
-						return result;
-					}),
+		updateExROption: (updateOptions: (UpdatedOptions | null)[]) => {
+			set((state) => {
+				const {
+					nextValueData,
+					nextIsOptionActive,
+					valueDataChanged,
+					isOptionActiveChanged,
+				} = getUpdatedExRState(
+					updateOptions,
+					state.exrValue,
+					state.isExROptionActive,
 				);
 
-				set((state) => {
-					const {
-						nextValueData,
-						nextIsOptionActive,
-						valueDataChanged,
-						isOptionActiveChanged,
-					} = getUpdatedExRState(
-						updateResult,
-						state.exrValue,
-						state.isExROptionActive,
-					);
+				if (!valueDataChanged && !isOptionActiveChanged) {
+					return state;
+				}
 
-					if (!valueDataChanged && !isOptionActiveChanged) {
-						return state;
-					}
-
-					const patch: Partial<ExROptionViewerSlice> = {};
-					if (valueDataChanged) {
-						patch.exrValue = nextValueData;
-					}
-					if (isOptionActiveChanged) {
-						patch.isExROptionActive = nextIsOptionActive;
-					}
-					return {
-						...state,
-						...patch,
-					};
-				});
-			} catch (error) {
-				console.error("Error updating ExR option:", error);
-			}
+				const patch: Partial<ExROptionViewerSlice> = {};
+				if (valueDataChanged) {
+					patch.exrValue = nextValueData;
+				}
+				if (isOptionActiveChanged) {
+					patch.isExROptionActive = nextIsOptionActive;
+				}
+				return {
+					...state,
+					...patch,
+				};
+			});
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {

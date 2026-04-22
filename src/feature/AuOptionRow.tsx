@@ -1,19 +1,21 @@
 import { auOptionMetaData } from "../logics/api";
+import { useUpdateAuOptionSelection } from "../logics/api.store";
 import type { AuOptionId } from "../type";
 import { useStore } from "../useStore";
 import { AuOptionControl } from "./AuOptionControl";
 
 interface AuOptionRowProps {
-	optionId: AuOptionId;
+	auOptionId: AuOptionId;
 }
 
 /**
  * Auの各オプション行を表示するコンポーネント
  */
-export function AuOptionRow({ optionId }: AuOptionRowProps) {
-	const optionMeta = auOptionMetaData.options[optionId];
-	const selection = useStore((state) => state.auValue[optionId] ?? 0);
-	const updateAuOption = useStore((state) => state.updateAuOption);
+export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
+	const optionMeta = auOptionMetaData.options[auOptionId];
+	const selection = useStore((state) => state.auValue[auOptionId] ?? 0);
+
+	const updateAuOption = useUpdateAuOptionSelection();
 
 	if (!optionMeta) {
 		return null;
@@ -26,12 +28,12 @@ export function AuOptionRow({ optionId }: AuOptionRowProps) {
 					{optionMeta.title}
 				</span>
 			</div>
-			<div className="flex-shrink-0">
+			<div className="shrink-0">
 				<AuOptionControl
 					optionMeta={optionMeta}
 					selection={selection}
-					onSelectionChange={(newSelection) => {
-						updateAuOption(optionId, newSelection);
+					onSelectionChange={(selection) => {
+						updateAuOption({ auOptionId, selection });
 					}}
 				/>
 			</div>
