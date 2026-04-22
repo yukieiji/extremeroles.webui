@@ -37,10 +37,15 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const displayValues = optionMeta.range.map((_, index) => index.toString());
 
 	return (
-		<div className="mb-4" data-testid={`au-category-${categoryId}`}>
-			<div className="flex items-center justify-between py-3 px-4 bg-gray-800/30 rounded-lg mb-2 border border-gray-700/50">
-				<div className="flex flex-col">
-					<span className="text-gray-200 text-sm font-semibold">
+		<div
+			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
+			data-testid={`au-category-${categoryId}`}
+		>
+			<div className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700">
+				<div className="flex items-center gap-3">
+					{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
+					<div className="w-5 h-5" />
+					<span className="font-semibold text-gray-200">
 						{optionMeta.title}
 					</span>
 				</div>
@@ -57,11 +62,13 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 					/>
 				</div>
 			</div>
-			<div className="space-y-1">
-				{otherOptionIds.map((optionId) => (
-					<AuOptionRow key={optionId} auOptionId={optionId} />
-				))}
-			</div>
+			{otherOptionIds.length > 0 && (
+				<div className="p-4 bg-gray-900 space-y-1">
+					{otherOptionIds.map((optionId) => (
+						<AuOptionRow key={optionId} auOptionId={optionId} />
+					))}
+				</div>
+			)}
 		</div>
 	);
 }
