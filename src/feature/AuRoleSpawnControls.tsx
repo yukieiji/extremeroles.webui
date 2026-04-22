@@ -17,9 +17,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const maxCountOptionId = categoryMeta?.options[1];
 
 	const auValue = useStore((state) => state.auValue);
-	const updateAuOptionSelection = useStore(
-		(state) => state.updateAuOptionSelection,
-	);
+	const updateAuRoleOption = useStore((state) => state.updateAuRoleOption);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const isOpenedCategory = useStore(
 		(state) => state.openedAuCategoryIds[categoryId] ?? false,
@@ -46,28 +44,27 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const isMaxCountZero = (maxCountValues[maxCountSelection] ?? 0) === 0;
 
 	const handleChanceChange = (newSelection: number) => {
-		const chanceOptionUpdate = {
-			auOptionId: chanceOptionId,
-			selection: newSelection,
-		};
-
 		// Chanceが0%以外に変更されたとき、数が0なら1にあげる
 		if (isMaxCountZero && (chanceValues[newSelection] ?? 0) > 0) {
-			updateAuOptionSelection(chanceOptionUpdate, {
-				auOptionId: maxCountOptionId,
-				selection: findClosestIndex(maxCountValues, 1),
-			});
+			updateAuRoleOption(
+				chanceOptionId,
+				newSelection,
+				maxCountOptionId,
+				findClosestIndex(maxCountValues, 1),
+			);
 		} else if (chanceValues[newSelection] === 0) {
 			// Chanceが0%になったら、スポーン数も0にしてアコーディオンを閉じる
-			updateAuOptionSelection(chanceOptionUpdate, {
-				auOptionId: maxCountOptionId,
-				selection: 0,
-			});
+			updateAuRoleOption(chanceOptionId, newSelection, maxCountOptionId, 0);
 			if (isOpenedCategory) {
 				toggleAuCategory(categoryId);
 			}
 		} else {
-			updateAuOptionSelection(chanceOptionUpdate);
+			updateAuRoleOption(
+				chanceOptionId,
+				newSelection,
+				maxCountOptionId,
+				maxCountSelection,
+			);
 		}
 	};
 
@@ -76,34 +73,32 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	};
 
 	const handleMaxCountChange = (newSelection: number) => {
-		const countOptionUpdate = {
-			auOptionId: maxCountOptionId,
-			selection: newSelection,
-		};
-
 		// 数が0以外に変更されたとき、現在Chanceが0%なら10%に上げる
 		if (isChanceZero && (maxCountValues[newSelection] ?? 0) > 0) {
-			updateAuOptionSelection(
-				{
-					auOptionId: chanceOptionId,
-					selection: findClosestIndex(chanceValues, 10),
-				},
-				countOptionUpdate,
+			updateAuRoleOption(
+				chanceOptionId,
+				findClosestIndex(chanceValues, 10),
+				maxCountOptionId,
+				newSelection,
 			);
 		} else if ((maxCountValues[newSelection] ?? 0) === 0) {
 			// 数を0にすると、Chanceも0%にする
-			updateAuOptionSelection(
-				{
-					auOptionId: chanceOptionId,
-					selection: findClosestIndex(chanceValues, 0),
-				},
-				countOptionUpdate,
+			updateAuRoleOption(
+				chanceOptionId,
+				findClosestIndex(chanceValues, 0),
+				maxCountOptionId,
+				newSelection,
 			);
 			if (isOpenedCategory) {
 				toggleAuCategory(categoryId);
 			}
 		} else {
-			updateAuOptionSelection(countOptionUpdate);
+			updateAuRoleOption(
+				chanceOptionId,
+				chanceSelection,
+				maxCountOptionId,
+				newSelection,
+			);
 		}
 	};
 

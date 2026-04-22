@@ -290,3 +290,26 @@ export async function updateExrOption(
 	const jsonData = await res.json();
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
+
+export async function updateAuOption(
+	request: VanillaOptionPutRequest,
+): Promise<UpdatedOptions | null> {
+	const res = await fetch(AU_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (res.status === 202) {
+		return null;
+	}
+
+	if (!res.ok) {
+		throw new Error(`Failed to update AU option: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	return await UpdatedOptionsSchema.parseAsync(jsonData);
+}

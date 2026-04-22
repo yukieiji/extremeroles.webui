@@ -7,11 +7,33 @@ import {
 	getOptionPairType,
 	getUniqueOptionId,
 	groupOptionPairs,
+	parseAuOptionId,
 } from "../src/logics/optionUtils";
 
 describe("optionUtils", () => {
 	beforeEach(() => {
 		resetExrOptionMetaData();
+	});
+
+	describe("parseAuOptionId", () => {
+		it("should parse AuOptionId correctly", () => {
+			const optionName = 123;
+			const valueType = 5;
+			const prefix = 2;
+			// 123 * 10000 + 5 * 100 + 2 = 1230502
+			const id = optionName * 10000 + valueType * 100 + prefix;
+			const result = parseAuOptionId(id);
+			expect(result.optionName).toBe(optionName);
+			expect(result.valueType).toBe(valueType);
+			expect(result.prefix).toBe(prefix);
+		});
+
+		it("should handle zero values", () => {
+			const result = parseAuOptionId(0);
+			expect(result.optionName).toBe(0);
+			expect(result.valueType).toBe(0);
+			expect(result.prefix).toBe(0);
+		});
 	});
 
 	describe("getUniqueOptionId", () => {
