@@ -1,8 +1,8 @@
 import type { StateCreator } from "zustand";
 import { auOptionMetaData, updateAuOption } from "../logics/api";
-import { getUpdatedExRState } from "../logics/exrStateLogic";
+import { applyUpdatedOptions } from "../logics/exrStateLogic";
 import { parseAuOptionId } from "../logics/optionUtils";
-import type { AuOptionId, AuRoleOption } from "../type";
+import type { AuOptionId, AuRoleOption, UpdatedOptions } from "../type";
 import { OptionValueType } from "../type";
 import type { ExROptionViewerSlice } from "./exrOptionViewerSlice";
 
@@ -39,6 +39,27 @@ export const createAuOptionViewerSlice: StateCreator<
 	[],
 	AuOptionViewerSlice
 > = (set, get) => {
+	const syncExrState = (result: UpdatedOptions | null) => {
+		if (result) {
+			set((state) => {
+				const patch = applyUpdatedOptions(
+					[result],
+					state.exrValue,
+					state.isExROptionActive,
+				);
+
+				if (!patch) {
+					return state;
+				}
+
+				return {
+					...state,
+					...patch,
+				};
+			});
+		}
+	};
+
 	return {
 		selectedAuTabId: 0,
 		isAuTabPending: false,
@@ -87,30 +108,7 @@ export const createAuOptionViewerSlice: StateCreator<
 					ValueType: valueType,
 					NewValue: newValue as number | boolean | AuRoleOption,
 				});
-
-				if (result) {
-					set((state) => {
-						const {
-							nextValueData,
-							nextIsOptionActive,
-							valueDataChanged,
-							isOptionActiveChanged,
-						} = getUpdatedExRState(
-							[result],
-							state.exrValue,
-							state.isExROptionActive,
-						);
-
-						const patch: Partial<ExROptionViewerSlice> = {};
-						if (valueDataChanged) {
-							patch.exrValue = nextValueData;
-						}
-						if (isOptionActiveChanged) {
-							patch.isExROptionActive = nextIsOptionActive;
-						}
-						return patch;
-					});
-				}
+				syncExrState(result);
 			} catch (error) {
 				console.error("Error updating AU option:", error);
 			}
@@ -147,30 +145,7 @@ export const createAuOptionViewerSlice: StateCreator<
 						MaxCount: maxCountValue,
 					},
 				});
-
-				if (result) {
-					set((state) => {
-						const {
-							nextValueData,
-							nextIsOptionActive,
-							valueDataChanged,
-							isOptionActiveChanged,
-						} = getUpdatedExRState(
-							[result],
-							state.exrValue,
-							state.isExROptionActive,
-						);
-
-						const patch: Partial<ExROptionViewerSlice> = {};
-						if (valueDataChanged) {
-							patch.exrValue = nextValueData;
-						}
-						if (isOptionActiveChanged) {
-							patch.isExROptionActive = nextIsOptionActive;
-						}
-						return patch;
-					});
-				}
+				syncExrState(result);
 			} catch (error) {
 				console.error("Error updating AU RoleBase option:", error);
 			}

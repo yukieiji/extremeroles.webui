@@ -95,3 +95,43 @@ export function getUpdatedExRState(
 		isOptionActiveChanged,
 	};
 }
+
+/**
+ * APIの戻り値を元にExRの状態を更新するパッチを生成します。
+ * 変更がない場合はnullを返します。
+ */
+export function applyUpdatedOptions(
+	updateResults: (UpdatedOptions | null)[],
+	currentExrValue: Record<UniqueOptionId, ExROptionValueData>,
+	currentIsExROptionActive: Record<UniqueOptionId, boolean>,
+): {
+	exrValue?: Record<UniqueOptionId, ExROptionValueData>;
+	isExROptionActive?: Record<UniqueOptionId, boolean>;
+} | null {
+	const {
+		nextValueData,
+		nextIsOptionActive,
+		valueDataChanged,
+		isOptionActiveChanged,
+	} = getUpdatedExRState(
+		updateResults,
+		currentExrValue,
+		currentIsExROptionActive,
+	);
+
+	if (!valueDataChanged && !isOptionActiveChanged) {
+		return null;
+	}
+
+	const patch: {
+		exrValue?: Record<UniqueOptionId, ExROptionValueData>;
+		isExROptionActive?: Record<UniqueOptionId, boolean>;
+	} = {};
+	if (valueDataChanged) {
+		patch.exrValue = nextValueData;
+	}
+	if (isOptionActiveChanged) {
+		patch.isExROptionActive = nextIsOptionActive;
+	}
+	return patch;
+}

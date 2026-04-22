@@ -4,7 +4,7 @@ import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
-import { getUpdatedExRState } from "../logics/exrStateLogic";
+import { applyUpdatedOptions } from "../logics/exrStateLogic";
 import { parseUniqueOptionId } from "../logics/optionUtils";
 import type {
 	ExROptionValueData,
@@ -108,28 +108,16 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				);
 
 				set((state) => {
-					const {
-						nextValueData,
-						nextIsOptionActive,
-						valueDataChanged,
-						isOptionActiveChanged,
-					} = getUpdatedExRState(
+					const patch = applyUpdatedOptions(
 						updateResult,
 						state.exrValue,
 						state.isExROptionActive,
 					);
 
-					if (!valueDataChanged && !isOptionActiveChanged) {
+					if (!patch) {
 						return state;
 					}
 
-					const patch: Partial<ExROptionViewerSlice> = {};
-					if (valueDataChanged) {
-						patch.exrValue = nextValueData;
-					}
-					if (isOptionActiveChanged) {
-						patch.isExROptionActive = nextIsOptionActive;
-					}
 					return {
 						...state,
 						...patch,
