@@ -4,8 +4,8 @@ import {
 	loadPresetNamesFromCookie,
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
-import { parseUniqueOptionId } from "../logics/optionUtils";
 import { getUpdatedExRState } from "../logics/exrStateLogic";
+import { parseUniqueOptionId } from "../logics/optionUtils";
 import type {
 	ExROptionValueData,
 	OptionTab,

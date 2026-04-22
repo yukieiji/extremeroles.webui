@@ -1,5 +1,3 @@
-import { exrOptionMetaData } from "./api";
-import { getUniqueOptionId } from "./optionUtils";
 import type {
 	ExRCategoryDto,
 	ExROptionDto,
@@ -7,6 +5,8 @@ import type {
 	UniqueOptionId,
 	UpdatedOptions,
 } from "../type";
+import { exrOptionMetaData } from "./api";
+import { getUniqueOptionId } from "./optionUtils";
 
 /**
  * UpdatedOptionsの情報を元に、ExRのオプション状態を更新するための情報を生成します
