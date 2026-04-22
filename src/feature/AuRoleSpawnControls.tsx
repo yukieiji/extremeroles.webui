@@ -43,28 +43,31 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const maxCountValues = (maxCountMeta?.range as number[]) ?? [];
 
 	const isChanceZero = (chanceValues[chanceSelection] ?? 0) === 0;
+	const isMaxCountZero = (maxCountValues[maxCountSelection] ?? 0) === 0;
 
 	const handleChanceChange = (newSelection: number) => {
-		// Chanceが0%になったら、スポーン数も0にしてアコーディオンを閉じる
-		if (chanceValues[newSelection] === 0) {
-			updateAuOptionSelection(
-				{
-					auOptionId: chanceOptionId,
-					selection: newSelection,
-				},
-				{
-					auOptionId: maxCountOptionId,
-					selection: 0,
-				},
-			);
+		const chanceOptionUpdate = {
+			auOptionId: chanceOptionId,
+			selection: newSelection,
+		};
+
+		// Chanceが0%以外に変更されたとき、数が0なら1にあげる
+		if (isMaxCountZero && (chanceValues[newSelection] ?? 0) > 0) {
+			updateAuOptionSelection(chanceOptionUpdate, {
+				auOptionId: maxCountOptionId,
+				selection: findClosestIndex(maxCountValues, 1),
+			});
+		} else if (chanceValues[newSelection] === 0) {
+			// Chanceが0%になったら、スポーン数も0にしてアコーディオンを閉じる
+			updateAuOptionSelection(chanceOptionUpdate, {
+				auOptionId: maxCountOptionId,
+				selection: 0,
+			});
 			if (isOpenedCategory) {
 				toggleAuCategory(categoryId);
 			}
 		} else {
-			updateAuOptionSelection({
-				auOptionId: chanceOptionId,
-				selection: newSelection,
-			});
+			updateAuOptionSelection(chanceOptionUpdate);
 		}
 	};
 
@@ -73,17 +76,19 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	};
 
 	const handleMaxCountChange = (newSelection: number) => {
+		const countOptionUpdate = {
+			auOptionId: maxCountOptionId,
+			selection: newSelection,
+		};
+
 		// 数が0以外に変更されたとき、現在Chanceが0%なら10%に上げる
-		if ((maxCountValues[newSelection] ?? 0) > 0 && isChanceZero) {
+		if (isChanceZero && (maxCountValues[newSelection] ?? 0) > 0) {
 			updateAuOptionSelection(
 				{
 					auOptionId: chanceOptionId,
 					selection: findClosestIndex(chanceValues, 10),
 				},
-				{
-					auOptionId: maxCountOptionId,
-					selection: newSelection,
-				},
+				countOptionUpdate,
 			);
 		} else if ((maxCountValues[newSelection] ?? 0) === 0) {
 			// 数を0にすると、Chanceも0%にする
@@ -92,19 +97,13 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 					auOptionId: chanceOptionId,
 					selection: findClosestIndex(chanceValues, 0),
 				},
-				{
-					auOptionId: maxCountOptionId,
-					selection: newSelection,
-				},
+				countOptionUpdate,
 			);
 			if (isOpenedCategory) {
 				toggleAuCategory(categoryId);
 			}
 		} else {
-			updateAuOptionSelection({
-				auOptionId: maxCountOptionId,
-				selection: newSelection,
-			});
+			updateAuOptionSelection(countOptionUpdate);
 		}
 	};
 
