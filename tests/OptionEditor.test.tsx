@@ -12,14 +12,19 @@ describe("OptionEditor Components", () => {
 		auOptionMetaData.categoryMetaData = {
 			0: {
 				name: "Test Category",
-				options: [],
+				options: [100 as any],
 			},
+		};
+		auOptionMetaData.options[100 as any] = {
+			title: "Map",
+			format: "",
+			range: ["The Skeld"],
 		};
 		auOptionMetaData.tabCategoryMap = { 0: [0] };
 
 		render(<AuOptionEditor />);
 
-		const category = screen.getByText("Test Category");
-		expect(category).toBeTruthy();
+		const mapLabel = screen.getByText("Map");
+		expect(mapLabel).toBeTruthy();
 	});
 });

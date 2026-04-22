@@ -11,17 +11,42 @@ describe("AuCategoryList", () => {
 		useStore.getState().resetViewer();
 	});
 
-	it("renders standard category items for Tab 0", () => {
+	it("renders MapDropDown for the first category of Tab 0", () => {
+		const mapOptionId = 100 as unknown as AuOptionId;
 		auOptionMetaData.tabCategoryMap = { 0: [1], 1: [], 2: [] };
 		auOptionMetaData.categoryMetaData = {
-			1: { name: "General Settings", options: [] },
+			1: { name: "Map Category", options: [mapOptionId] },
+		};
+		auOptionMetaData.options[mapOptionId] = {
+			title: "Map",
+			format: "",
+			range: ["The Skeld", "Mira HQ"],
 		};
 		useStore.getState().setSelectedAuTabId(0);
 
 		render(<AuCategoryList />);
 
-		expect(screen.getByText("General Settings")).toBeInTheDocument();
-		expect(screen.getByTestId("au-category-1")).toBeInTheDocument();
+		expect(screen.getByText("Map")).toBeInTheDocument();
+		expect(screen.queryByTestId("au-category-1")).not.toBeInTheDocument();
+	});
+
+	it("renders standard category items for Tab 0 other than the first", () => {
+		auOptionMetaData.tabCategoryMap = { 0: [1, 2], 1: [], 2: [] };
+		auOptionMetaData.categoryMetaData = {
+			1: { name: "Map Category", options: [100 as unknown as AuOptionId] },
+			2: { name: "Other Category", options: [] },
+		};
+		auOptionMetaData.options[100 as unknown as AuOptionId] = {
+			title: "Map",
+			format: "",
+			range: ["The Skeld"],
+		};
+		useStore.getState().setSelectedAuTabId(0);
+
+		render(<AuCategoryList />);
+
+		expect(screen.getByText("Other Category")).toBeInTheDocument();
+		expect(screen.getByTestId("au-category-2")).toBeInTheDocument();
 	});
 
 	it("renders role category items for Tab 1", () => {
