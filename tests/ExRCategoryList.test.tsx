@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "../src/feature/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
+import * as apiStore from "../src/logics/api.store";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import {
 	type ExRTabDto,
@@ -175,24 +176,25 @@ describe("ExRCategoryList Component Selection", () => {
 	it("filters out 50 and 51 from role category body", async () => {
 		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
 
-		// Mock updateExROptionSelection to update the store manually
-		vi.spyOn(
-			useStore.getState(),
-			"updateExROptionSelection",
-		).mockImplementation(async (...args) => {
-			args.forEach((x) => {
-				useStore.getState().setExROptions(
-					{
-						...useStore.getState().exrValue,
-						[x.uniqueOptionId]: { selection: x.selection, values: [0, 100] },
-					},
-					useStore.getState().isExROptionActive,
-				);
-			});
-		});
+		// Mock useUpdateExROptionSelection to update the store manually
+		vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
+			async (...args) => {
+				args.forEach((x) => {
+					useStore.getState().setExROptions(
+						{
+							...useStore.getState().exrValue,
+							[x.uniqueOptionId]: { selection: x.selection, values: [0, 100] },
+						},
+						useStore.getState().isExROptionActive,
+					);
+				});
+			},
+		);
+
+		const updateExRSelection = apiStore.useUpdateExROptionSelection();
 
 		// Set a non-zero spawn rate so the accordion is enabled
-		await useStore.getState().updateExROptionSelection({
+		await updateExRSelection({
 			uniqueOptionId: getUniqueOptionId(
 				OptionTab.CrewmateTab,
 				2,

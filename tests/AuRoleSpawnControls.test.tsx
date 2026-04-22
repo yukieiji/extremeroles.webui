@@ -1,7 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuRoleSpawnControls } from "../src/feature/AuRoleSpawnControls";
 import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
+import * as apiStore from "../src/logics/api.store";
 import { useStore } from "../src/useStore";
 
 describe("AuRoleSpawnControls", () => {
@@ -12,6 +13,13 @@ describe("AuRoleSpawnControls", () => {
 	beforeEach(() => {
 		resetAuOptionMetaData();
 		useStore.getState().resetViewer();
+
+		// Mock useUpdateAuRoleOptionSelection to update the store
+		vi.spyOn(apiStore, "useUpdateAuRoleOptionSelection").mockReturnValue(
+			async (chance, maxCount) => {
+				useStore.getState().updateAuOptionSelection(chance, maxCount);
+			},
+		);
 
 		auOptionMetaData.categoryMetaData[categoryId] = {
 			name: "Test Role",
@@ -43,7 +51,7 @@ describe("AuRoleSpawnControls", () => {
 		expect(screen.getByTestId("au-max-count-control")).toBeInTheDocument();
 	});
 
-	it("syncs chance to 10% when max count is set to non-zero from zero", () => {
+	it("syncs chance to 10% when max count is set to non-zero from zero", async () => {
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		const countControl = screen.getByTestId("au-max-count-control");
@@ -53,12 +61,14 @@ describe("AuRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "1" } }); // Select 1
 
-		const state = useStore.getState();
-		expect(state.auValue[chanceId]).toBe(1); // Index 1 is 10%
-		expect(state.auValue[maxCountId]).toBe(1); // Index 1 is 1
+		await waitFor(() => {
+			const state = useStore.getState();
+			expect(state.auValue[chanceId]).toBe(1); // Index 1 is 10%
+			expect(state.auValue[maxCountId]).toBe(1); // Index 1 is 1
+		});
 	});
 
-	it("syncs chance to 0% when max count is set to 0", () => {
+	it("syncs chance to 0% when max count is set to 0", async () => {
 		// Initial state: Chance 50% (index 5), Max Count 2 (index 2)
 		useStore.getState().setAuValue({
 			[chanceId]: 5,
@@ -74,12 +84,14 @@ describe("AuRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		const state = useStore.getState();
-		expect(state.auValue[chanceId]).toBe(0); // Index 0 is 0%
-		expect(state.auValue[maxCountId]).toBe(0);
+		await waitFor(() => {
+			const state = useStore.getState();
+			expect(state.auValue[chanceId]).toBe(0); // Index 0 is 0%
+			expect(state.auValue[maxCountId]).toBe(0);
+		});
 	});
 
-	it("syncs max count to 0 when chance is set to 0%", () => {
+	it("syncs max count to 0 when chance is set to 0%", async () => {
 		// Initial state: Chance 50% (index 5), Max Count 2 (index 2)
 		useStore.getState().setAuValue({
 			[chanceId]: 5,
@@ -95,9 +107,11 @@ describe("AuRoleSpawnControls", () => {
 
 		fireEvent.change(slider, { target: { value: "0" } });
 
-		const state = useStore.getState();
-		expect(state.auValue[chanceId]).toBe(0);
-		expect(state.auValue[maxCountId]).toBe(0);
+		await waitFor(() => {
+			const state = useStore.getState();
+			expect(state.auValue[chanceId]).toBe(0);
+			expect(state.auValue[maxCountId]).toBe(0);
+		});
 	});
 
 	it("closes accordion when chance becomes 0%", () => {

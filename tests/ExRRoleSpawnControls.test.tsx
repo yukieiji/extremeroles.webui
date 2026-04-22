@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
+import * as apiStore from "../src/logics/api.store";
 import {
 	getUniqueOptionId,
 	parseUniqueOptionId,
@@ -10,8 +11,8 @@ import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
 import { useStore } from "../src/useStore";
 
 function setUpudateExROptionSelectionSpawnRateMock(): void {
-	// Mock updateExROptionSelection to update the store
-	vi.spyOn(useStore.getState(), "updateExROptionSelection").mockImplementation(
+	// Mock useUpdateExROptionSelection to update the store
+	vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
 		async (...args) => {
 			args.forEach((x) => {
 				const { optionId } = parseUniqueOptionId(x.uniqueOptionId);
@@ -116,9 +117,10 @@ describe("ExRRoleSpawnControls", () => {
 		setupTestData(tabId, categoryId);
 
 		setUpudateExROptionSelectionSpawnRateMock();
+		const updateExRSelection = apiStore.useUpdateExROptionSelection();
 
 		// Set initial rate to 10%
-		await useStore.getState().updateExROptionSelection({
+		await updateExRSelection({
 			uniqueOptionId: getUniqueOptionId(
 				tabId,
 				categoryId,
@@ -172,9 +174,10 @@ describe("ExRRoleSpawnControls", () => {
 		setupTestData(tabId, categoryId);
 
 		setUpudateExROptionSelectionSpawnRateMock();
+		const updateExRSelection = apiStore.useUpdateExROptionSelection();
 
 		// Set initial rate to 10% and count to 2 (selection 1)
-		await useStore.getState().updateExROptionSelection({
+		await updateExRSelection({
 			uniqueOptionId: getUniqueOptionId(
 				tabId,
 				categoryId,
@@ -182,7 +185,7 @@ describe("ExRRoleSpawnControls", () => {
 			),
 			selection: 1,
 		});
-		await useStore.getState().updateExROptionSelection({
+		await updateExRSelection({
 			uniqueOptionId: getUniqueOptionId(
 				tabId,
 				categoryId,
