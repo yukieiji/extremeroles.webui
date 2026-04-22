@@ -12,6 +12,10 @@ export interface AuOptionViewerSlice {
 	setSelectedAuTabId: (id: number) => void;
 	setIsAuTabPending: (isPending: boolean) => void;
 	setAuValue: (value: Record<AuOptionId, number>) => void;
+	toggleAuCategory: (categoryId: number) => void;
+	updateAuOptionSelection: (
+		...args: { auOptionId: AuOptionId; selection: number }[]
+	) => void;
 }
 
 /**
@@ -33,6 +37,22 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 		},
 		setAuValue(value) {
 			set({ auValue: value });
+		},
+		toggleAuCategory: (categoryId) => {
+			set((state) => {
+				const next = { ...state.openedAuCategoryIds };
+				next[categoryId] = !next[categoryId];
+				return { openedAuCategoryIds: next };
+			});
+		},
+		updateAuOptionSelection: (...args) => {
+			set((state) => {
+				const nextAuValue = { ...state.auValue };
+				for (const arg of args) {
+					nextAuValue[arg.auOptionId] = arg.selection;
+				}
+				return { auValue: nextAuValue };
+			});
 		},
 	};
 };

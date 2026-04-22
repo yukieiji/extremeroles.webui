@@ -19,9 +19,7 @@ describe("OptionEditor Components", () => {
 
 		render(<AuOptionEditor />);
 
-		const pre = screen.getByText((content) => {
-			return content.includes('"categoryName": "Test Category"');
-		});
-		expect(pre).toBeTruthy();
+		const category = screen.getByText("Test Category");
+		expect(category).toBeTruthy();
 	});
 });

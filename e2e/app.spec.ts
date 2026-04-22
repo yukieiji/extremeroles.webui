@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
 	});
 });
 
-test("has sidebar and json viewer", async ({ page }) => {
+test("has sidebar and au option editor", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
 
 	// サイドバー内のボタンを明示的に指定
@@ -35,10 +35,9 @@ test("has sidebar and json viewer", async ({ page }) => {
 
 	// Au Options が初期で表示されることを確認する
 	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
-	// 以前のデータには "ゲーム設定" があったが、新しいデータには "インポスター" などがある
-	await expect(page.getByTestId("au-json-pre")).toContainText(
-		'"TranslatedTitle": "インポスター"',
-	);
+
+	// アコーディオンが表示されていることを確認 (JSON preはなくなった)
+	await expect(page.getByTestId("au-category-list")).toBeVisible();
 
 	// ExR Options に切り替え
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();
