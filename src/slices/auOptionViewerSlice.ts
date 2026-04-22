@@ -1,5 +1,5 @@
 import type { StateCreator } from "zustand";
-import type { AuOptionId } from "../type";
+import type { AuOptionId, UpdateAuArg } from "../type";
 
 /**
  * ExR オプションの状態を管理するスライスのインターフェース
@@ -13,9 +13,7 @@ export interface AuOptionViewerSlice {
 	setIsAuTabPending: (isPending: boolean) => void;
 	setAuValue: (value: Record<AuOptionId, number>) => void;
 	toggleAuCategory: (categoryId: number) => void;
-	updateAuOptionSelection: (
-		...args: { auOptionId: AuOptionId; selection: number }[]
-	) => void;
+	updateAuOptionSelection: (...args: UpdateAuArg[]) => void;
 }
 
 /**

@@ -1,5 +1,6 @@
 import { CompactSlider } from "../components/parts/CompactSlider";
 import { useOptionData } from "../hooks/useOptionData";
+import { useUpdateExROptionSelection } from "../logics/api.store";
 import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
 import { useStore } from "../useStore";
@@ -27,9 +28,7 @@ export function ExRRoleSpawnControls({
 		SPAWN_COUNT_OPTION_ID,
 	);
 
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
-	});
+	const updateExROptionSelection = useUpdateExROptionSelection();
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});

@@ -3,8 +3,8 @@ import { OptionItem } from "../components/parts/OptionItem";
 import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
 import { OptionRowContainer } from "../components/parts/OptionRowContainer";
 import { useOptionData } from "../hooks/useOptionData";
+import { useUpdateExROptionSelection } from "../logics/api.store";
 import type { OptionData } from "../type";
-import { useStore } from "../useStore";
 
 interface ExRPairedOptionRowProps {
 	baseName: string;
@@ -25,9 +25,7 @@ export function ExRPairedOptionRow({
 	const minValueData = useOptionData(minUniqueOptionId);
 	const maxValueData = useOptionData(maxUniqueOptionId);
 
-	const updateExROptionSelection = useStore((state) => {
-		return state.updateExROptionSelection;
-	});
+	const updateExROptionSelection = useUpdateExROptionSelection();
 
 	const handleMinChange = async (newSelection: number) => {
 		await updateExROptionSelection({

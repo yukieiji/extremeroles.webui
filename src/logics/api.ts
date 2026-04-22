@@ -8,6 +8,7 @@ import type {
 	ExRTabMetaData,
 	UniqueOptionId,
 	UpdatedOptions,
+	VanillaOptionPutRequest,
 } from "../type";
 import {
 	AU_PREFIX,
@@ -285,6 +286,25 @@ export async function updateExrOption(
 
 	if (!res.ok) {
 		throw new Error(`Failed to update ExR option: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	return await UpdatedOptionsSchema.parseAsync(jsonData);
+}
+
+export async function updateAuOption(
+	request: VanillaOptionPutRequest,
+): Promise<UpdatedOptions> {
+	const res = await fetch(AU_OPTION_URL, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update AU option: ${res.statusText}`);
 	}
 
 	const jsonData = await res.json();
