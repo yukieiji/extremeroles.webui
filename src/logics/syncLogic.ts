@@ -1,14 +1,5 @@
-import type {
-	ExRCategoryDto,
-	ExROptionDto,
-	ExROptionValueData,
-	UniqueOptionId,
-	UpdatedOptions,
-} from "../type";
 import { useStore } from "../useStore";
-import { exrOptionMetaData } from "./api";
 import { getAuOptions, getExrOptions, resetApiCache } from "./api.store";
-import { getUniqueOptionId } from "./optionUtils";
 
 /**
  * 全データの再取得と同期を行う
@@ -20,92 +11,4 @@ export async function performGlobalSync() {
 	resetApiCache();
 	await Promise.all([getExrOptions(), getAuOptions()]);
 	validateOpenedIds();
-}
-
-/**
- * UpdatedOptionsの情報を元に、ExRのオプション状態を更新するための情報を生成します
- */
-export function getUpdatedExRState(
-	updateResults: (UpdatedOptions | null)[],
-	currentExrValue: Record<UniqueOptionId, ExROptionValueData>,
-	currentIsExROptionActive: Record<UniqueOptionId, boolean>,
-) {
-	let nextValueData = currentExrValue;
-	let nextIsOptionActive = currentIsExROptionActive;
-
-	let valueDataChanged = false;
-	let isOptionActiveChanged = false;
-
-	const processOption = (opt: ExROptionDto, catId: number, tId: number) => {
-		const uId = getUniqueOptionId(tId, catId, opt.Id);
-
-		// values
-		const currentValData = nextValueData[uId];
-		if (
-			!currentValData ||
-			currentValData.selection !== opt.Selection ||
-			currentValData.values.length !== opt.RangeMeta.Values.length ||
-			currentValData.values.some((v, i) => v !== opt.RangeMeta.Values[i])
-		) {
-			if (!valueDataChanged) {
-				nextValueData = { ...nextValueData };
-				valueDataChanged = true;
-			}
-			nextValueData[uId] = {
-				selection: opt.Selection,
-				values: opt.RangeMeta.Values,
-			};
-		}
-
-		// isOptionActive
-		if (nextIsOptionActive[uId] !== opt.IsActive) {
-			if (!isOptionActiveChanged) {
-				nextIsOptionActive = { ...nextIsOptionActive };
-				isOptionActiveChanged = true;
-			}
-			nextIsOptionActive[uId] = opt.IsActive;
-		}
-
-		if (opt.Childs) {
-			for (const child of opt.Childs) {
-				processOption(child, catId, tId);
-			}
-		}
-	};
-
-	const processCategory = (cat: ExRCategoryDto) => {
-		const tId = exrOptionMetaData.categories[cat.Id]?.tabId;
-		if (tId === undefined) {
-			return;
-		}
-		for (const opt of cat.Options) {
-			processOption(opt, cat.Id, tId);
-		}
-	};
-
-	for (const x of updateResults) {
-		if (!x) {
-			continue;
-		}
-		if (x.UpdatedCategory) {
-			processCategory(x.UpdatedCategory);
-		}
-
-		for (const chain of x.ChainUpdatedOption) {
-			const tId = exrOptionMetaData.categories[chain.Id]?.tabId;
-			if (tId === undefined) {
-				continue;
-			}
-			for (const opt of chain.Options) {
-				processOption(opt, chain.Id, tId);
-			}
-		}
-	}
-
-	return {
-		nextValueData,
-		nextIsOptionActive,
-		valueDataChanged,
-		isOptionActiveChanged,
-	};
 }

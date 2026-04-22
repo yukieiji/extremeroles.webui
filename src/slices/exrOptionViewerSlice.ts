@@ -5,7 +5,7 @@ import {
 	savePresetNamesToCookie,
 } from "../logics/cookieUtils";
 import { parseUniqueOptionId } from "../logics/optionUtils";
-import { getUpdatedExRState } from "../logics/syncLogic";
+import { getUpdatedExRState } from "../logics/exrStateLogic";
 import type {
 	ExROptionValueData,
 	OptionTab,
