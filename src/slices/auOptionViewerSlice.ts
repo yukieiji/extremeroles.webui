@@ -2,8 +2,8 @@ import type { StateCreator } from "zustand";
 import { auOptionMetaData, updateAuOption } from "../logics/api";
 import { parseAuOptionId } from "../logics/optionUtils";
 import { getUpdatedExRState } from "../logics/syncLogic";
-import { OptionValueType } from "../type";
 import type { AuOptionId, AuRoleOption } from "../type";
+import { OptionValueType } from "../type";
 import type { ExROptionViewerSlice } from "./exrOptionViewerSlice";
 
 /**
