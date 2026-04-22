@@ -27,7 +27,12 @@ describe("AuCategoryList", () => {
 		render(<AuCategoryList />);
 
 		expect(screen.getByText("Map")).toBeInTheDocument();
-		expect(screen.queryByTestId("au-category-1")).not.toBeInTheDocument();
+		// MapDropDown also uses data-testid="au-category-1" now
+		expect(screen.getByTestId("au-category-1")).toBeInTheDocument();
+		// But it should not be an accordion (standard items use Accordion which has role button for the title)
+		expect(
+			screen.queryByRole("button", { name: "Map Category" }),
+		).not.toBeInTheDocument();
 	});
 
 	it("renders standard category items for Tab 0 other than the first", () => {

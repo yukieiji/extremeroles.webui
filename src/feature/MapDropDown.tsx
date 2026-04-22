@@ -37,7 +37,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const displayValues = optionMeta.range.map((_, index) => index.toString());
 
 	return (
-		<div className="mb-4">
+		<div className="mb-4" data-testid={`au-category-${categoryId}`}>
 			<div className="flex items-center justify-between py-3 px-4 bg-gray-800/30 rounded-lg mb-2 border border-gray-700/50">
 				<div className="flex flex-col">
 					<span className="text-gray-200 text-sm font-semibold">
