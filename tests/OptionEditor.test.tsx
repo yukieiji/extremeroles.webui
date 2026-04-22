@@ -12,10 +12,10 @@ describe("OptionEditor Components", () => {
 		auOptionMetaData.categoryMetaData = {
 			0: {
 				name: "Test Category",
-				options: [100 as any],
+				options: [100 as unknown as AuOptionId],
 			},
 		};
-		auOptionMetaData.options[100 as any] = {
+		auOptionMetaData.options[100 as unknown as AuOptionId] = {
 			title: "Map",
 			format: "",
 			range: ["The Skeld"],

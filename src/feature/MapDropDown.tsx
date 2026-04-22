@@ -16,14 +16,18 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 	const updateAuOption = useUpdateAuOptionSelection();
 
+	// 最初のオプションがマップであることを想定
+	const mapOptionId = categoryMeta?.options[0];
+	const selection = useStore((state) =>
+		mapOptionId ? (state.auValue[mapOptionId] ?? 0) : 0,
+	);
+
 	if (!categoryMeta || categoryMeta.options.length === 0) {
 		return null;
 	}
 
-	// 最初のオプションがマップであることを想定
-	const [mapOptionId, ...otherOptionIds] = categoryMeta.options;
+	const [_, ...otherOptionIds] = categoryMeta.options;
 	const optionMeta = auOptionMetaData.options[mapOptionId];
-	const selection = useStore((state) => state.auValue[mapOptionId] ?? 0);
 
 	if (!optionMeta) {
 		return null;
@@ -45,7 +49,10 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 						values={displayValues}
 						selection={selection}
 						onChange={(newSelection) => {
-							updateAuOption({ auOptionId: mapOptionId, selection: newSelection });
+							updateAuOption({
+								auOptionId: mapOptionId,
+								selection: newSelection,
+							});
 						}}
 					/>
 				</div>
