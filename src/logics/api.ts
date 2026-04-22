@@ -24,7 +24,7 @@ import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
  * API エンドポイントの定数定義
  */
 const EXR_OPTION_URL = "/exr/option/";
-export const AU_OPTION_URL = "/au/option/";
+const AU_OPTION_URL = "/au/option/";
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
