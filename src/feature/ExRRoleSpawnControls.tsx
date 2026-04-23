@@ -105,8 +105,9 @@ export function ExRRoleSpawnControls({
 					},
 					updateArg,
 				);
+			} else {
+				await updateExROptionSelection(updateArg);
 			}
-			await updateExROptionSelection(updateArg);
 		}
 
 		if (isBecomingEnabled && !isOpenedCategory) {
