@@ -30,7 +30,10 @@ export function resetApiCache() {
 }
 
 async function waitDelay(): Promise<void> {
-	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
+	const delay =
+		typeof window !== "undefined"
+			? (window as unknown as { __API_DELAY__?: number }).__API_DELAY__ || 0
+			: 0;
 	if (delay <= 0) {
 		return;
 	}

@@ -371,4 +371,7 @@ export const GetTranslationResponseArraySchema = z.array(
 	GetTranslationResponseSchema,
 );
 
-export type TranslationMetaDataRecords = Record<string | number, string>;
+export interface TranslationMetaDataRecords {
+	booleanTransData: string[];
+	[key: string | number]: string | string[] | undefined;
+}

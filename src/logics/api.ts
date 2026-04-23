@@ -29,8 +29,11 @@ import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
 const EXR_OPTION_URL = "/exr/option/";
 const AU_OPTION_URL = "/au/option/";
 const TRANSLATION_BATCH_URL = "/au/translation/batch/optionunit/";
+const TRANSLATION_BATCH_BASE_URL = "/au/translation/batch/";
 
-export const translationMetaData: TranslationMetaDataRecords = {};
+export const translationMetaData: TranslationMetaDataRecords = {
+	booleanTransData: [],
+};
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
@@ -73,17 +76,46 @@ interface ExRinitializeData {
 }
 
 export async function fetchTranslationMetaData(): Promise<void> {
-	const res = await fetch(TRANSLATION_BATCH_URL);
-	if (!res.ok) {
-		throw new Error(`Failed to fetch translation data: ${res.statusText}`);
+	const [resOptionUnit, resBatch] = await Promise.all([
+		fetch(TRANSLATION_BATCH_URL),
+		fetch(TRANSLATION_BATCH_BASE_URL, {
+			method: "GET",
+			body: JSON.stringify([{ Key: "optionOff" }, { Key: "optionOn" }]),
+		}),
+	]);
+
+	if (!resOptionUnit.ok) {
+		throw new Error(
+			`Failed to fetch translation data (optionunit): ${resOptionUnit.statusText}`,
+		);
+	}
+	if (!resBatch.ok) {
+		throw new Error(
+			`Failed to fetch translation data (batch): ${resBatch.statusText}`,
+		);
 	}
 
-	const jsonData = await res.json();
-	const parseData =
-		await GetTranslationResponseArraySchema.parseAsync(jsonData);
-	for (const item of parseData) {
+	const [jsonOptionUnit, jsonBatch] = await Promise.all([
+		resOptionUnit.json(),
+		resBatch.json(),
+	]);
+
+	const parseOptionUnit =
+		await GetTranslationResponseArraySchema.parseAsync(jsonOptionUnit);
+	for (const item of parseOptionUnit) {
 		translationMetaData[item.Key] = item.Result;
 	}
+
+	const parseBatch =
+		await GetTranslationResponseArraySchema.parseAsync(jsonBatch);
+	const booleanMap: Record<string, string> = {};
+	for (const item of parseBatch) {
+		booleanMap[item.Key.toString()] = item.Result;
+	}
+	translationMetaData.booleanTransData = [
+		booleanMap.optionOff ?? "",
+		booleanMap.optionOn ?? "",
+	];
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {
@@ -107,7 +139,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
 
-			const format = translationMetaData[opt.Format] ?? "";
+			const format = (translationMetaData[opt.Format] as string) ?? "";
 
 			exrOptionMetaData.options[uniqueId] = {
 				metaData: {

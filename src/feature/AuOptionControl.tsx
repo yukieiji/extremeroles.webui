@@ -1,6 +1,7 @@
 import { OptionSliderControl } from "../components/blocks/OptionSliderControl";
 import { OptionToggleControl } from "../components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "../components/parts/OptionDropdownControl";
+import { translationMetaData } from "../logics/api";
 import type { AuOptionMeta } from "../type";
 
 interface AuOptionControlProps {
@@ -24,7 +25,7 @@ export function AuOptionControl({
 		return (
 			<OptionToggleControl
 				selection={selection}
-				values={["<color=#ff0000>OFF</color>", "<color=#00ff00>ON</color>"]}
+				values={translationMetaData.booleanTransData}
 				onChange={onSelectionChange}
 			/>
 		);
