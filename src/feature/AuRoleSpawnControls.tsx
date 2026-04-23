@@ -47,15 +47,15 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 
 	const handleChanceChange = (newSelection: number) => {
 		const newChanceValue = chanceValues[newSelection] ?? 0;
-		const isBecomingEnabled = isChanceZero && newChanceValue > 0;
+		const isBecomingEnabled = isMaxCountZero && newChanceValue > 0;
 
-		// Chanceが0%以外に変更されたとき、数が0なら1にあげる
 		const chanceUpdate = {
 			auOptionId: chanceOptionId,
 			selection: newSelection,
 		};
 
-		if (isMaxCountZero && newChanceValue > 0) {
+		// Chanceが0%以外に変更されたとき、数が0なら1にあげる
+		if (isBecomingEnabled) {
 			updateAuOption(chanceUpdate, {
 				auOptionId: maxCountOptionId,
 				selection: findClosestIndex(maxCountValues, 1),
@@ -95,7 +95,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 		};
 
 		// 数が0以外に変更されたとき、現在Chanceが0%なら10%に上げる
-		if (isChanceZero && newMaxCountValue > 0) {
+		if (isBecomingEnabled) {
 			updateAuOption(
 				{
 					auOptionId: chanceOptionId,
