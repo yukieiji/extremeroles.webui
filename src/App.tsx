@@ -8,7 +8,7 @@ import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
 import { useSyncBackend } from "./hooks/useBackend";
-import { getAuOptions, getExrOptions } from "./logics/api.store";
+import { getAllOptions } from "./logics/api.store";
 import { useStore } from "./useStore";
 
 /**
@@ -16,7 +16,7 @@ import { useStore } from "./useStore";
  * データを取得し、Suspense境界内で動作します
  */
 function PresetSelectorContainer() {
-	use(getExrOptions());
+	use(getAllOptions());
 	return <PresetSelector />;
 }
 
@@ -30,14 +30,8 @@ function EditorContainer() {
 	});
 
 	// React 19 の use() フックを使用してデータを取得
-	use(getExrOptions());
-	use(getAuOptions());
-
-	if (selectedTab === "ExR") {
-		return <ExROptionEditor />;
-	}
-
-	return <AuOptionEditor />;
+	use(getAllOptions());
+	return selectedTab === "ExR" ? <ExROptionEditor /> : <AuOptionEditor />;
 }
 
 /**

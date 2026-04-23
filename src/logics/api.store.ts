@@ -19,18 +19,17 @@ import { parseAuOptionId, parseUniqueOptionId } from "./optionUtils";
  * APIからデータを取得するPromiseをキャッシュするためのグローバル変数
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
-let auOptionsPromise: Promise<void> | null = null;
-let exrOptionsPromise: Promise<void> | null = null;
+let allOptionsPromise: Promise<void> | null = null;
 
 /**
  * キャッシュをリセットする（テスト用）
  */
 export function resetApiCache() {
-	exrOptionsPromise = null;
-	auOptionsPromise = null;
+	allOptionsPromise = null;
 }
 
-async function waitDelay(delay: number): Promise<void> {
+async function waitDelay(): Promise<void> {
+	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
 	if (delay <= 0) {
 		return;
 	}
@@ -39,23 +38,11 @@ async function waitDelay(delay: number): Promise<void> {
 	});
 }
 
-async function createExROptionMetaDataWithStore(delay: number): Promise<void> {
-	await waitDelay(delay);
+async function createExROptionMetaDataWithStore(): Promise<void> {
+	await waitDelay();
+
 	const { valueData, isOptionActive } = await createExROptionMetaData();
 	useStore.getState().setExROptions(valueData, isOptionActive);
-}
-
-/**
- * ExRオプションを取得する
- */
-export function getExrOptions(): Promise<void> {
-	if (exrOptionsPromise) {
-		return exrOptionsPromise;
-	}
-	// @ts-expect-error - テスト用
-	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
-	exrOptionsPromise = createExROptionMetaDataWithStore(delay);
-	return exrOptionsPromise;
 }
 
 export function useUpdateExROptionSelection(): (
@@ -89,8 +76,8 @@ export function useUpdateExROptionSelection(): (
 	};
 }
 
-async function createAuOptionMetaDataWithStore(delay: number): Promise<void> {
-	await waitDelay(delay);
+async function createAuOptionMetaDataWithStore(): Promise<void> {
+	await waitDelay();
 	const initialValueData = await createAuOptionMetaData();
 	useStore.getState().setAuValue(initialValueData);
 }
@@ -166,17 +153,17 @@ export function useUpdateAuRoleOptionSelection(): (
 	};
 }
 
-/**
- * Auオプションを取得する
- */
-export function getAuOptions(): Promise<void> {
-	if (auOptionsPromise) {
-		return auOptionsPromise;
+export async function refechAll(): Promise<void> {
+	await Promise.all([
+		createExROptionMetaDataWithStore(),
+		createAuOptionMetaDataWithStore(),
+	]);
+}
+
+export function getAllOptions(): Promise<void> {
+	if (allOptionsPromise) {
+		return allOptionsPromise;
 	}
-
-	// @ts-expect-error - テスト用
-	const delay = typeof window !== "undefined" ? window.__API_DELAY__ || 0 : 0;
-
-	auOptionsPromise = createAuOptionMetaDataWithStore(delay);
-	return auOptionsPromise;
+	allOptionsPromise = refechAll();
+	return allOptionsPromise;
 }
