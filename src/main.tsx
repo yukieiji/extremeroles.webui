@@ -2,7 +2,23 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
+import faviconRaw from "./assets/favicon.svg?raw";
 import { resetApiCache } from "./logics/api.store.ts";
+
+/**
+ * faviconを埋め込む
+ */
+const embedFavicon = () => {
+	const link =
+		(document.querySelector("link[rel*='icon']") as HTMLLinkElement) ||
+		document.createElement("link");
+	link.type = "image/svg+xml";
+	link.rel = "icon";
+	link.href = `data:image/svg+xml;utf8,${encodeURIComponent(faviconRaw)}`;
+	document.head.appendChild(link);
+};
+
+embedFavicon();
 
 if (import.meta.env.DEV) {
 	// @ts-expect-error - テスト用
