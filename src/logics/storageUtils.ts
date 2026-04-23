@@ -9,7 +9,14 @@ export function savePresetNamesToLocalStorage(names: Record<number, string>) {
 	if (typeof window === "undefined" || !window.localStorage) {
 		return;
 	}
-	window.localStorage.setItem(PRESET_NAMES_STORAGE_KEY, JSON.stringify(names));
+	try {
+		window.localStorage.setItem(
+			PRESET_NAMES_STORAGE_KEY,
+			JSON.stringify(names),
+		);
+	} catch (e) {
+		console.error("Failed to save preset names to local storage", e);
+	}
 }
 
 /**
@@ -19,11 +26,11 @@ export function loadPresetNamesFromLocalStorage(): Record<number, string> {
 	if (typeof window === "undefined" || !window.localStorage) {
 		return {};
 	}
-	const value = window.localStorage.getItem(PRESET_NAMES_STORAGE_KEY);
-	if (!value) {
-		return {};
-	}
 	try {
+		const value = window.localStorage.getItem(PRESET_NAMES_STORAGE_KEY);
+		if (!value) {
+			return {};
+		}
 		const parsed = JSON.parse(value);
 		const result = PresetNamesSchema.safeParse(parsed);
 		if (result.success) {
@@ -35,7 +42,7 @@ export function loadPresetNamesFromLocalStorage(): Record<number, string> {
 		);
 		return {};
 	} catch (e) {
-		console.error("Failed to parse preset names from local storage", e);
+		console.error("Failed to access/parse local storage", e);
 		return {};
 	}
 }
