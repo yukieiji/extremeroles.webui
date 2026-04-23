@@ -361,4 +361,14 @@ export interface GetTranslationResponse {
 	Result: string;
 }
 
+export const GetTranslationResponseSchema = z.object({
+	Key: z.union([z.string(), z.number()]),
+	Param: z.array(z.union([z.string(), z.number()])),
+	Result: z.string(),
+});
+
+export const GetTranslationResponseArraySchema = z.array(
+	GetTranslationResponseSchema,
+);
+
 export type TranslationMetaDataRecords = Record<string | number, string>;
