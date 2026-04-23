@@ -10,6 +10,8 @@ export default defineConfig({
     proxy: {
       '/exr/option/': 'http://localhost:57700',
       '/au/option/': 'http://localhost:57700',
+      '/au/translation/batch/': 'http://localhost:57700',
+      '/au/translation/batch/optionunit/': 'http://localhost:57700',
     },
   },
   test: {
