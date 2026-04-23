@@ -3,12 +3,12 @@ import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "../src/feature/ExROptionEditor";
 import { resetExrOptionMetaData } from "../src/logics/api";
-import { getExrOptions, resetApiCache } from "../src/logics/api.store";
-import type { ExRTabDto } from "../src/type";
+import { getAllOptions, resetApiCache } from "../src/logics/api.store";
+import type { AuOptionCategoryDto, ExRTabDto } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExROptionEditor", () => {
-	const mockData: ExRTabDto[] = [
+	const mockExRData: ExRTabDto[] = [
 		{
 			Id: 0,
 			Name: "Tab 1",
@@ -103,15 +103,41 @@ describe("ExROptionEditor", () => {
 		resetExrOptionMetaData();
 		useStore.getState().resetViewer();
 
+		const mockAuData: AuOptionCategoryDto[] = [
+			{
+				TranslatedTitle: "Au Category",
+				Options: [
+					{
+						TranslatedTitle: "Au Option",
+						TranslatedFormat: "{0}",
+						Value: 0,
+						Info: { ValueType: 2, OptionName: 1 },
+						Range: [0, 1, 2],
+					},
+				],
+			},
+		];
+
 		vi.stubGlobal(
 			"fetch",
-			vi.fn().mockResolvedValue({
-				ok: true,
-				json: vi.fn().mockResolvedValue(mockData),
-			} as Response),
+			vi.fn().mockImplementation((url: string) => {
+				if (url === "/exr/option/") {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue(mockExRData),
+					} as Response);
+				}
+				if (url === "/au/option/") {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue(mockAuData),
+					} as Response);
+				}
+				return Promise.reject(new Error(`Unhandled URL: ${url}`));
+			}),
 		);
 
-		await getExrOptions();
+		await getAllOptions();
 	});
 
 	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
@@ -165,7 +191,7 @@ describe("ExROptionEditor", () => {
 
 		// 現在の値が表示されていることを確認
 		// uniqueOptionId: 0*100M + 1*10k + 101 = 10101
-		// mockDataでは selection: 0 なので "0"
+		// mockExRDataでは selection: 0 なので "0"
 		expect(screen.getAllByDisplayValue("0")).toHaveLength(2);
 
 		unmount();
