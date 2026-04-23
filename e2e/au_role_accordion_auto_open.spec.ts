@@ -13,7 +13,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Au Role Accordion Auto Open", () => {
-	test("should open accordion when role is enabled by chance or max count", async ({ page }) => {
+	test("should open accordion when role is enabled by chance or max count", async ({
+		page,
+	}) => {
 		// Au Options の 役職タブ（タブ 1）に移動
 		await page.getByRole("button", { name: "1", exact: true }).first().click();
 
@@ -21,8 +23,12 @@ test.describe("Au Role Accordion Auto Open", () => {
 		const categoryId = "5";
 		const category = page.getByTestId(`au-category-${categoryId}`);
 		const toggleButton = category.getByRole("button").first();
-		const chanceSlider = category.getByTestId("au-chance-control").locator('input[type="range"]');
-		const countSlider = category.getByTestId("au-max-count-control").locator('input[type="range"]');
+		const chanceSlider = category
+			.getByTestId("au-chance-control")
+			.locator('input[type="range"]');
+		const countSlider = category
+			.getByTestId("au-max-count-control")
+			.locator('input[type="range"]');
 
 		// 初期状態：閉じていて無効
 		await expect(toggleButton).toBeDisabled();
@@ -38,7 +44,9 @@ test.describe("Au Role Accordion Auto Open", () => {
 		// 2. 0% に戻して閉じることを確認
 		await chanceSlider.fill("0");
 		await expect(toggleButton).toBeDisabled();
-		await expect(category.getByText("バイタル画面クールダウン")).not.toBeVisible();
+		await expect(
+			category.getByText("バイタル画面クールダウン"),
+		).not.toBeVisible();
 
 		// 3. 数を 1 に変更して有効化
 		await countSlider.fill("1");
