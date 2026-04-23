@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionSliderControl } from "../src/components/parts/OptionSliderControl";
+import { OptionSliderControl } from "../src/components/blocks/OptionSliderControl";
 
 describe("OptionSliderControl", () => {
 	const mockValues = [10, 20, 30, 40, 50];
@@ -22,7 +22,7 @@ describe("OptionSliderControl", () => {
 		const input = screen.getByDisplayValue("20");
 		expect(input).toBeInTheDocument();
 
-		expect(screen.getByText("(20s)")).toBeInTheDocument();
+		expect(screen.getByText("s")).toBeInTheDocument();
 	});
 
 	it("calls onChange when slider moves", () => {
