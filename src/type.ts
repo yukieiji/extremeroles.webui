@@ -301,7 +301,7 @@ export const CategoryOptionDtoSchema = z.object({
  * 更新されたオプション情報
  */
 export interface UpdatedOptions {
-	UpdatedCategory: ExRCategoryDto | null | undefined;
+	UpdatedCategory?: ExRCategoryDto | null;
 	ChainUpdatedOption: CategoryOptionDto[];
 }
 
