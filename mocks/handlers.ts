@@ -143,6 +143,24 @@ export const handlers = [
   }),
 
   /**
+   * GET /au/translation/batch/ のハンドラー
+   */
+  http.post('/au/translation/batch/', () => {
+    return HttpResponse.json([
+      {
+        Key: 'optionOff',
+        Param: [],
+        Result: '<color=#ff0000>OFF</color>'
+      },
+      {
+        Key: 'optionOn',
+        Param: [],
+        Result: '<color=#00ff00>ON</color>'
+      }
+    ]);
+  }),
+
+  /**
    * PUT /au/option/ のハンドラー
    */
   http.put('/au/option/', async ({ request }) => {
