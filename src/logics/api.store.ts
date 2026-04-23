@@ -10,6 +10,7 @@ import {
 	auOptionMetaData,
 	createAuOptionMetaData,
 	createExROptionMetaData,
+	fetchTranslationMetaData,
 	updateAuOption,
 	updateExrOption,
 } from "./api";
@@ -154,6 +155,7 @@ export function useUpdateAuRoleOptionSelection(): (
 }
 
 export async function refechAll(): Promise<void> {
+	await fetchTranslationMetaData();
 	await Promise.all([
 		createExROptionMetaDataWithStore(),
 		createAuOptionMetaDataWithStore(),

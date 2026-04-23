@@ -6,6 +6,7 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
+	TranslationMetaDataRecords,
 	UniqueOptionId,
 	UpdatedOptions,
 	VanillaOptionPutRequest,
@@ -14,6 +15,7 @@ import {
 	AU_PREFIX,
 	AuOptionCategoryDtoArraySchema,
 	ExRTabDtoArraySchema,
+	GetTranslationResponseArraySchema,
 	OptionTab,
 	OptionValueType,
 	UpdatedOptionsSchema,
@@ -26,6 +28,9 @@ import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
  */
 const EXR_OPTION_URL = "/exr/option/";
 const AU_OPTION_URL = "/au/option/";
+const TRANSLATION_BATCH_URL = "/au/translation/batch/optionunit/";
+
+export const translationMetaData: TranslationMetaDataRecords = {};
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
@@ -67,6 +72,20 @@ interface ExRinitializeData {
 	isOptionActive: Record<UniqueOptionId, boolean>;
 }
 
+export async function fetchTranslationMetaData(): Promise<void> {
+	const res = await fetch(TRANSLATION_BATCH_URL);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch translation data: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	const parseData =
+		await GetTranslationResponseArraySchema.parseAsync(jsonData);
+	for (const item of parseData) {
+		translationMetaData[item.Key] = item.Result;
+	}
+}
+
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 	const res = await fetch(EXR_OPTION_URL);
 	if (!res.ok) {
@@ -88,10 +107,12 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
 
+			const format = translationMetaData[opt.Format] ?? "";
+
 			exrOptionMetaData.options[uniqueId] = {
 				metaData: {
 					translatedName: opt.TranslatedName,
-					format: opt.Format,
+					format: format,
 					type: opt.RangeMeta.Type,
 				},
 				childOptionIds:
