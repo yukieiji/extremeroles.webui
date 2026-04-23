@@ -48,9 +48,11 @@ export function OptionSingleSlider({
 						disabled={disabled}
 						className="w-12 px-1 py-0.5 text-right text-xs bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50"
 					/>
-					<span className="text-[10px] text-gray-500 whitespace-nowrap">
-						({formattedValue})
-					</span>
+					{format !== "" && (
+						<span className="text-[10px] text-gray-500 whitespace-nowrap">
+							({formattedValue})
+						</span>
+					)}
 				</div>
 			</div>
 			<input

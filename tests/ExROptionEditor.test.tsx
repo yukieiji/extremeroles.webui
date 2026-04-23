@@ -133,6 +133,12 @@ describe("ExROptionEditor", () => {
 						json: vi.fn().mockResolvedValue(mockAuData),
 					} as Response);
 				}
+				if (url.endsWith("/au/translation/batch/optionunit/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue([]),
+					} as Response);
+				}
 				return Promise.reject(new Error(`Unhandled URL: ${url}`));
 			}),
 		);

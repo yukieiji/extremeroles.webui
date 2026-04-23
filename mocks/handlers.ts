@@ -125,6 +125,24 @@ export const handlers = [
   }),
 
   /**
+   * GET /au/translation/batch/optionunit/ のハンドラー
+   */
+  http.get('/au/translation/batch/optionunit/', () => {
+    return HttpResponse.json([
+      {
+        Key: 'Multiplier',
+        Param: [],
+        Result: '倍率: {0}'
+      },
+      {
+        Key: 'EmptyFormat',
+        Param: [],
+        Result: ''
+      }
+    ]);
+  }),
+
+  /**
    * PUT /au/option/ のハンドラー
    */
   http.put('/au/option/', async ({ request }) => {

@@ -354,3 +354,11 @@ export interface BlockDialog {
 	message: string;
 	onConfirm: () => void;
 }
+
+export interface GetTranslationResponse {
+	Key: string | number;
+	Param: (string | number)[];
+	Result: string;
+}
+
+export type TranslationMetaDataRecords = Record<string | number, string>;

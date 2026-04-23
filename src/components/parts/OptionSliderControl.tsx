@@ -57,9 +57,11 @@ export function OptionSliderControl({
 					disabled={disabled}
 					className="w-16 px-2 py-1 text-right text-sm bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50"
 				/>
-				<span className="text-xs text-gray-400 whitespace-nowrap">
-					({formattedValue})
-				</span>
+				{format !== "" && (
+					<span className="text-xs text-gray-400 whitespace-nowrap">
+						({formattedValue})
+					</span>
+				)}
 			</div>
 		</div>
 	);
