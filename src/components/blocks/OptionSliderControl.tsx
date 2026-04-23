@@ -1,4 +1,5 @@
 import { findClosestIndex } from "../../logics/optionUtils";
+import { OptionFormat } from "../parts/OptionFormat";
 
 interface OptionSliderControlProps {
 	selection: number;
@@ -33,10 +34,6 @@ export function OptionSliderControl({
 		onChange(findClosestIndex(values, val));
 	};
 
-	const formattedValue = format.includes("{0}")
-		? format.replace("{0}", currentValue.toString())
-		: `${format} ${currentValue}`.trim();
-
 	return (
 		<div className="flex items-center gap-4 w-full sm:w-64">
 			<input
@@ -49,7 +46,7 @@ export function OptionSliderControl({
 				disabled={disabled}
 				className="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 			/>
-			<div className="flex items-center gap-2 min-w-[5rem]">
+			<div className="flex items-center gap-2 min-w-20">
 				<input
 					type="text"
 					value={currentValue}
@@ -57,11 +54,7 @@ export function OptionSliderControl({
 					disabled={disabled}
 					className="w-16 px-2 py-1 text-right text-sm bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50"
 				/>
-				{format !== "" && (
-					<span className="text-xs text-gray-400 whitespace-nowrap">
-						({formattedValue})
-					</span>
-				)}
+				<OptionFormat format={format} />
 			</div>
 		</div>
 	);

@@ -10,9 +10,9 @@ import {
 	auOptionMetaData,
 	createAuOptionMetaData,
 	createExROptionMetaData,
+	fetchTranslationMetaData,
 	updateAuOption,
 	updateExrOption,
-	fetchTranslationMetaData,
 } from "./api";
 import { parseAuOptionId, parseUniqueOptionId } from "./optionUtils";
 

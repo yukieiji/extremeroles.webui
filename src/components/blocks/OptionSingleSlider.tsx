@@ -1,4 +1,5 @@
 import { findClosestIndex } from "../../logics/optionUtils";
+import { OptionFormat } from "../parts/OptionFormat";
 
 interface OptionSingleSliderProps {
 	label: string;
@@ -32,10 +33,6 @@ export function OptionSingleSlider({
 		onChange(findClosestIndex(values, val));
 	};
 
-	const formattedValue = format.includes("{0}")
-		? format.replace("{0}", currentValue.toString())
-		: `${format} ${currentValue}`.trim();
-
 	return (
 		<div className="flex flex-col gap-1 w-full">
 			<div className="flex items-center justify-between gap-2 px-1">
@@ -48,11 +45,7 @@ export function OptionSingleSlider({
 						disabled={disabled}
 						className="w-12 px-1 py-0.5 text-right text-xs bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50"
 					/>
-					{format !== "" && (
-						<span className="text-[10px] text-gray-500 whitespace-nowrap">
-							({formattedValue})
-						</span>
-					)}
+					<OptionFormat format={format} />
 				</div>
 			</div>
 			<input

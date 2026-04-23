@@ -79,14 +79,14 @@ export async function fetchTranslationMetaData(): Promise<void> {
 	}
 
 	const jsonData = await res.json();
-	const parseData = await GetTranslationResponseArraySchema.parseAsync(jsonData);
+	const parseData =
+		await GetTranslationResponseArraySchema.parseAsync(jsonData);
 	for (const item of parseData) {
 		translationMetaData[item.Key] = item.Result;
 	}
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {
-
 	const res = await fetch(EXR_OPTION_URL);
 	if (!res.ok) {
 		throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
