@@ -81,7 +81,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 		await expect(rateInput).toHaveValue("0");
 	});
 
-	test("interacting with header controls should not toggle accordion", async ({
+	test("interacting with header controls should not toggle accordion when already enabled", async ({
 		page,
 	}) => {
 		await page
@@ -94,13 +94,21 @@ test.describe("ExR Role Spawn Options in Header", () => {
 		// 最初は閉じている
 		await expect(content).not.toBeVisible();
 
-		// レートを 0% から 10% に変更（アコーディオンを有効化）
+		// レートを 0% から 10% に変更（アコーディオンを有効化 -> 自動で開く）
 		const rateSlider = sheriffCategory
 			.getByTestId("spawn-rate-control")
 			.locator('input[type="range"]');
 		await rateSlider.fill("1");
 
-		// まだ閉じているはず（stopPropagationが効いている）
+		// 自動で開くことを確認
+		await expect(content).toBeVisible();
+
+		// 一旦手動で閉じる
+		await sheriffCategory.getByRole("button", { name: "シェリフ" }).click();
+		await expect(content).not.toBeVisible();
+
+		// 既に有効な状態でレートを変更しても、アコーディオンがトグル（勝手に開く）されないことを確認
+		await rateSlider.fill("2");
 		await expect(content).not.toBeVisible();
 
 		// 数も操作してみる
@@ -126,14 +134,12 @@ test.describe("ExR Role Spawn Options in Header", () => {
 
 		const sheriffCategory = page.getByTestId(`exr-category-${SHERIFF_ID}`);
 
-		// レートを 10% に変更（アコーディオンを有効化）
+		// レートを 10% に変更（アコーディオンを有効化 -> 自動で開く）
 		await sheriffCategory
 			.getByTestId("spawn-rate-control")
 			.locator('input[type="range"]')
 			.fill("1");
 
-		// アコーディオンを開く
-		await sheriffCategory.getByRole("button", { name: "シェリフ" }).click();
 		const content = sheriffCategory.locator(".bg-gray-900");
 		await expect(content).toBeVisible();
 

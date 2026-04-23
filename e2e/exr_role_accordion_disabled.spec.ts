@@ -35,9 +35,8 @@ test.describe("ExR Role Accordion Disabled State", () => {
 			.getByTestId("spawn-rate-control")
 			.locator('input[type="range"]');
 
-		// 1. まずレートを 10% にしてアコーディオンを開く
+		// 1. まずレートを 10% にすると、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
-		await toggleButton.click();
 		const content = sheriffCategory.getByTestId("exr-category-list-container");
 		await expect(content).toBeVisible();
 
@@ -50,16 +49,30 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await expect(toggleButton.getByText("・")).toBeVisible();
 		await expect(toggleButton.locator("svg")).not.toBeVisible();
 
-		// 4. レートを 10% に戻すと再度有効化されることを確認
+		// 4. レートを 10% に戻すと再度有効化され、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
 		await expect(toggleButton).toBeEnabled();
 		await expect(toggleButton.locator("svg")).toBeVisible();
 		await expect(toggleButton.getByText("・")).not.toBeVisible();
-
-		// 5. 再度開けることを確認
-		// 少し待ってからクリック（状態遷移後の安定を待つ）
-		await page.waitForTimeout(100);
-		await toggleButton.click();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
+		await expect(content).toBeVisible();
+
+		// 5. 一旦閉じてから数を変更しても自動的に開くことを確認
+		await toggleButton.click();
+		await expect(toggleButton).toHaveAttribute("aria-expanded", "false");
+
+		const countSlider = sheriffCategory
+			.getByTestId("spawn-count-control")
+			.locator('input[type="range"]');
+
+		// 既にレートが10%なので、数を変更しても自動では開かないはず（今回の要件は「0から有効になった時」）
+		// 念の為0にしてから動かす
+		await rateSlider.fill("0");
+		await expect(toggleButton).toBeDisabled();
+
+		await countSlider.fill("2"); // 数を2にする（0から0以外へ）
+		await expect(toggleButton).toBeEnabled();
+		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
+		await expect(content).toBeVisible();
 	});
 });
