@@ -301,12 +301,12 @@ export const CategoryOptionDtoSchema = z.object({
  * 更新されたオプション情報
  */
 export interface UpdatedOptions {
-	UpdatedCategory: ExRCategoryDto | null;
+	UpdatedCategory: ExRCategoryDto | null | undefined;
 	ChainUpdatedOption: CategoryOptionDto[];
 }
 
 export const UpdatedOptionsSchema = z.object({
-	UpdatedCategory: ExRCategoryDtoSchema.nullable(),
+	UpdatedCategory: ExRCategoryDtoSchema.nullish(),
 	ChainUpdatedOption: z.array(CategoryOptionDtoSchema),
 });
 
