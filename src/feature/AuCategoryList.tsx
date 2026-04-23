@@ -2,6 +2,7 @@ import { auOptionMetaData } from "../logics/api";
 import { useStore } from "../useStore";
 import { AuRoleCategoryItem } from "./AuRoleCategoryItem";
 import { AuStandardCategoryItem } from "./AuStandardCategoryItem";
+import { MapDropDown } from "./MapDropDown";
 
 /**
  * Auの選択されたタブのカテゴリ一覧を表示するコンポーネント
@@ -23,13 +24,19 @@ export function AuCategoryList() {
 					<div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 				</div>
 			)}
-			{tabCategoryIds.map((categoryId) =>
-				isRoleTab ? (
-					<AuRoleCategoryItem key={categoryId} categoryId={categoryId} />
-				) : (
+			{tabCategoryIds.map((categoryId, index) => {
+				if (isRoleTab) {
+					return (
+						<AuRoleCategoryItem key={categoryId} categoryId={categoryId} />
+					);
+				}
+				if (selectedAuTabId === 0 && index === 0) {
+					return <MapDropDown key={categoryId} categoryId={categoryId} />;
+				}
+				return (
 					<AuStandardCategoryItem key={categoryId} categoryId={categoryId} />
-				),
-			)}
+				);
+			})}
 		</div>
 	);
 }

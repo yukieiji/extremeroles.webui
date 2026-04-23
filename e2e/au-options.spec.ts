@@ -17,28 +17,35 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Au Option Interactions", () => {
-	test("should display accordion for general tab categories", async ({
+	test("should display dropdown for map category in general tab", async ({
 		page,
 	}) => {
 		// Tab 0 (General)
 		await page.getByRole("button", { name: "0", exact: true }).click();
 
 		const category = page.getByTestId("au-category-0");
+		// In our new MapDropDown component, the title is displayed directly
 		await expect(category.getByText("map")).toBeVisible();
 
-		// Initially closed
-		// AuOptionControl uses OptionDropdownControl which has a role of "combobox" when using StringSelector
-		// But map category first option is a string selector
-		await expect(category.getByRole("button", { name: "map" })).toBeVisible();
+		// Map is now a direct dropdown (select element)
+		await expect(category.getByRole("combobox")).toBeVisible();
+	});
 
-		// Open it
-		await category.getByRole("button", { name: "map" }).click();
-		// In Accordion.tsx, the content is inside a div with data-testid="accordion-content"
-		const content = category.getByTestId("accordion-content");
-		await expect(content).toBeVisible();
-		// map category has a numeric range [0, 1, 2, 4, 5], so it uses OptionSliderControl
-		await expect(content.locator('input[type="range"]')).toBeVisible();
-		await expect(content.locator('input[type="text"]')).toBeVisible();
+	test("should display accordion for other general tab categories", async ({
+		page,
+	}) => {
+		// Tab 0 (General)
+		await page.getByRole("button", { name: "0", exact: true }).click();
+
+		// index 1 category should still be an accordion
+		const category = page.getByTestId("au-category-1");
+		// "インポスター" is the title of the second category in mock data
+		await expect(category.getByText("インポスター")).toBeVisible();
+
+		// Should be an accordion (button)
+		await expect(
+			category.getByRole("button", { name: "インポスター" }),
+		).toBeVisible();
 	});
 
 	test("should display role controls in header for role tabs", async ({
