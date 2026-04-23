@@ -53,6 +53,8 @@ export function ExRRoleSpawnControls({
 	const currentCountUISelection = isSpawnRateZero ? 0 : spawnCountSelection + 1;
 
 	const handleRateChange = async (newSelection: number) => {
+		const isBecomingEnabled = isSpawnRateZero && rateValues[newSelection] > 0;
+
 		await updateExROptionSelection({
 			uniqueOptionId: uniqueRateId,
 			selection: newSelection,
@@ -64,6 +66,10 @@ export function ExRRoleSpawnControls({
 				toggleExRCategory(categoryId);
 			}
 		}
+
+		if (isBecomingEnabled && !isOpenedCategory) {
+			toggleExRCategory(categoryId);
+		}
 	};
 
 	const handleRateInputChange = async (val: number) => {
@@ -71,6 +77,8 @@ export function ExRRoleSpawnControls({
 	};
 
 	const handleCountUIChange = async (newUISelection: number) => {
+		const isBecomingEnabled = isSpawnRateZero && newUISelection > 0;
+
 		if (newUISelection === 0) {
 			// 数を0にすると、レートも0%にする
 			await updateExROptionSelection(
@@ -97,8 +105,13 @@ export function ExRRoleSpawnControls({
 					},
 					updateArg,
 				);
+			} else {
+				await updateExROptionSelection(updateArg);
 			}
-			await updateExROptionSelection(updateArg);
+		}
+
+		if (isBecomingEnabled && !isOpenedCategory) {
+			toggleExRCategory(categoryId);
 		}
 	};
 

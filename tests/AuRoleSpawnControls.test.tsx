@@ -131,4 +131,39 @@ describe("AuRoleSpawnControls", () => {
 
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(false);
 	});
+
+	it("opens accordion when chance becomes non-zero from 0%", async () => {
+		// Initial state: Closed and Chance 0%
+		useStore.getState().setAuValue({ [chanceId]: 0, [maxCountId]: 0 });
+		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBeFalsy();
+
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
+
+		const chanceControl = screen.getByTestId("au-chance-control");
+		const slider = chanceControl.querySelector(
+			'input[type="range"]',
+		) as HTMLInputElement;
+
+		fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
+
+		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
+	});
+
+	it("opens accordion when max count becomes non-zero from 0", async () => {
+		// Initial state: Closed and Chance 0%
+		useStore.getState().setAuValue({ [chanceId]: 0, [maxCountId]: 0 });
+		useStore.getState().setOpenedAuCategoryIds({}); // Ensure it's empty
+		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBeFalsy();
+
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
+
+		const countControl = screen.getByTestId("au-max-count-control");
+		const slider = countControl.querySelector(
+			'input[type="range"]',
+		) as HTMLInputElement;
+
+		fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+
+		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
+	});
 });

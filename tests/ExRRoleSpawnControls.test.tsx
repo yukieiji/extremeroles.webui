@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
@@ -209,5 +209,56 @@ describe("ExRRoleSpawnControls", () => {
 			.getByTestId("spawn-count-control")
 			.querySelector('input[type="text"]');
 		expect(countDisplay).toHaveValue("0");
+	});
+
+	it("opens accordion when rate becomes non-zero from 0%", async () => {
+		const tabId = 1;
+		const categoryId = 1;
+		setupTestData(tabId, categoryId);
+
+		setUpudateExROptionSelectionSpawnRateMock();
+
+		useStore.getState().resetViewer();
+		setupTestData(tabId, categoryId);
+
+		expect(useStore.getState().openedExRCategoryIds[categoryId]).toBeFalsy();
+
+		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+
+		const rateControl = screen.getByTestId("spawn-rate-control");
+		const slider = rateControl.querySelector(
+			'input[type="range"]',
+		) as HTMLInputElement;
+
+		await fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
+
+		expect(useStore.getState().openedExRCategoryIds[categoryId]).toBe(true);
+	});
+
+	it("opens accordion when count becomes non-zero from 0 rate", async () => {
+		const tabId = 1;
+		const categoryId = 1;
+		setupTestData(tabId, categoryId);
+
+		setUpudateExROptionSelectionSpawnRateMock();
+
+		useStore.getState().resetViewer();
+		setupTestData(tabId, categoryId);
+
+		expect(useStore.getState().openedExRCategoryIds[categoryId]).toBeFalsy();
+
+		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+
+		const countControl = screen.getByTestId("spawn-count-control");
+		const slider = countControl.querySelector(
+			'input[type="range"]',
+		) as HTMLInputElement;
+
+		await fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+
+		await waitFor(() => {
+			const state = useStore.getState();
+			expect(state.openedExRCategoryIds[categoryId]).toBe(true);
+		});
 	});
 });
