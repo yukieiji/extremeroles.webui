@@ -1,10 +1,10 @@
 import type { StateCreator } from "zustand";
 import { exrOptionMetaData } from "../logics/api";
-import {
-	loadPresetNamesFromCookie,
-	savePresetNamesToCookie,
-} from "../logics/cookieUtils";
 import { getUpdatedExRState } from "../logics/exrStateLogic";
+import {
+	loadPresetNamesFromLocalStorage,
+	savePresetNamesToLocalStorage,
+} from "../logics/storageUtils";
 import type {
 	ExROptionValueData,
 	OptionTab,
@@ -52,7 +52,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		openedExROptionIds: {},
 		exrValue: {},
 		isExROptionActive: {},
-		presetNames: loadPresetNamesFromCookie(),
+		presetNames: loadPresetNamesFromLocalStorage(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
 			set({ selectedExRTabId: id });
@@ -128,7 +128,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				} else {
 					newPresetNames[presetIndex] = trimmedName;
 				}
-				savePresetNamesToCookie(newPresetNames);
+				savePresetNamesToLocalStorage(newPresetNames);
 				return {
 					presetNames: newPresetNames,
 				};

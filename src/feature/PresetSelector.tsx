@@ -11,7 +11,7 @@ import { useStore } from "../useStore";
  * AGENT.md のガイドラインに従い、useState を使用せず、グローバルストアで状態を管理します。
  *
  * 入力更新の最適化:
- * ユーザー入力ごとの Cookie 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
+ * ユーザー入力ごとの LocalStorage 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
 
 export function PresetSelector() {
@@ -79,7 +79,7 @@ export function PresetSelector() {
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	/**
-	 * ストアと Cookie を更新する
+	 * ストアと LocalStorage を更新する
 	 */
 	const commitNameChange = () => {
 		if (inputRef.current) {

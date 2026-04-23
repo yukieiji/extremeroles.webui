@@ -60,7 +60,7 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await presetInput.fill("Casual Fun");
 	await presetInput.blur(); // onBlur での保存をテスト
 
-	// ページをリロードして Cookie から復元されるか確認
+	// ページをリロードして LocalStorage から復元されるか確認
 	await page.goto("/");
 
 	// ローディング画面が消えるのを待つ
