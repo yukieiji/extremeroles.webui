@@ -121,13 +121,13 @@ describe("ExROptionEditor", () => {
 		vi.stubGlobal(
 			"fetch",
 			vi.fn().mockImplementation((url: string) => {
-				if (url === "/exr/option/") {
+				if (url.endsWith("/exr/option/")) {
 					return Promise.resolve({
 						ok: true,
 						json: vi.fn().mockResolvedValue(mockExRData),
 					} as Response);
 				}
-				if (url === "/au/option/") {
+				if (url.endsWith("/au/option/")) {
 					return Promise.resolve({
 						ok: true,
 						json: vi.fn().mockResolvedValue(mockAuData),
