@@ -41,6 +41,8 @@
     "msw": "^2.13.4",
     "typescript": "~6.0.3",
     "vite": "^8.0.9",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vite-svg-loader": "^5.1.1",
     "vitest": "^4.1.0"
   },
   "msw": {
