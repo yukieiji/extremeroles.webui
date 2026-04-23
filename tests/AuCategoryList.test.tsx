@@ -33,6 +33,10 @@ describe("AuCategoryList", () => {
 		expect(
 			screen.queryByRole("button", { name: "Map Category" }),
 		).not.toBeInTheDocument();
+
+		// Should show actual map names in dropdown
+		expect(screen.getByText("The Skeld")).toBeInTheDocument();
+		expect(screen.getByText("Mira HQ")).toBeInTheDocument();
 	});
 
 	it("renders standard category items for Tab 0 other than the first", () => {

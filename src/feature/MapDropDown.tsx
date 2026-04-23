@@ -33,8 +33,8 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 		return null;
 	}
 
-	// 後で翻訳を適用するためのプレースホルダーとして、現在は数値または既存の値を表示
-	const displayValues = optionMeta.range.map((_, index) => index.toString());
+	// 後で翻訳を適用するが、それまでは一旦 range に含まれる値をそのまま表示する
+	const displayValues = optionMeta.range.map((v) => v.toString());
 
 	return (
 		<div
