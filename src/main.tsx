@@ -15,7 +15,7 @@ const embedFavicon = () => {
 	link.type = "image/svg+xml";
 	link.rel = "icon";
 	link.href = `data:image/svg+xml;utf8,${encodeURIComponent(faviconRaw)}`;
-	document.getElementsByTagName("head")[0].appendChild(link);
+	document.head.appendChild(link);
 };
 
 embedFavicon();
