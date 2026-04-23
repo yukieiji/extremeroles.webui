@@ -46,18 +46,21 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const isMaxCountZero = (maxCountValues[maxCountSelection] ?? 0) === 0;
 
 	const handleChanceChange = (newSelection: number) => {
+		const newChanceValue = chanceValues[newSelection] ?? 0;
+		const isBecomingEnabled = isChanceZero && newChanceValue > 0;
+
 		// Chanceが0%以外に変更されたとき、数が0なら1にあげる
 		const chanceUpdate = {
 			auOptionId: chanceOptionId,
 			selection: newSelection,
 		};
 
-		if (isMaxCountZero && (chanceValues[newSelection] ?? 0) > 0) {
+		if (isMaxCountZero && newChanceValue > 0) {
 			updateAuOption(chanceUpdate, {
 				auOptionId: maxCountOptionId,
 				selection: findClosestIndex(maxCountValues, 1),
 			});
-		} else if (chanceValues[newSelection] === 0) {
+		} else if (newChanceValue === 0) {
 			// Chanceが0%になったら、スポーン数も0にしてアコーディオンを閉じる
 			updateAuOption(chanceUpdate, {
 				auOptionId: maxCountOptionId,
@@ -72,6 +75,10 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 				selection: maxCountSelection,
 			});
 		}
+
+		if (isBecomingEnabled && !isOpenedCategory) {
+			toggleAuCategory(categoryId);
+		}
 	};
 
 	const handleChanceInputChange = (val: number) => {
@@ -79,13 +86,16 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	};
 
 	const handleMaxCountChange = (newSelection: number) => {
+		const newMaxCountValue = maxCountValues[newSelection] ?? 0;
+		const isBecomingEnabled = isChanceZero && newMaxCountValue > 0;
+
 		const maxCountUpdate = {
 			auOptionId: maxCountOptionId,
 			selection: newSelection,
 		};
 
 		// 数が0以外に変更されたとき、現在Chanceが0%なら10%に上げる
-		if (isChanceZero && (maxCountValues[newSelection] ?? 0) > 0) {
+		if (isChanceZero && newMaxCountValue > 0) {
 			updateAuOption(
 				{
 					auOptionId: chanceOptionId,
@@ -93,7 +103,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 				},
 				maxCountUpdate,
 			);
-		} else if ((maxCountValues[newSelection] ?? 0) === 0) {
+		} else if (newMaxCountValue === 0) {
 			// 数を0にすると、Chanceも0%にする
 			updateAuOption(
 				{
@@ -113,6 +123,10 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 				},
 				maxCountUpdate,
 			);
+		}
+
+		if (isBecomingEnabled && !isOpenedCategory) {
+			toggleAuCategory(categoryId);
 		}
 	};
 
