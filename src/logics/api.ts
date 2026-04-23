@@ -79,7 +79,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 	const [resOptionUnit, resBatch] = await Promise.all([
 		fetch(TRANSLATION_BATCH_URL),
 		fetch(TRANSLATION_BATCH_BASE_URL, {
-			method: "GET",
+			method: "POST",
 			body: JSON.stringify([{ Key: "optionOff" }, { Key: "optionOn" }]),
 		}),
 	]);

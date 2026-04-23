@@ -145,7 +145,7 @@ export const handlers = [
   /**
    * GET /au/translation/batch/ のハンドラー
    */
-  http.get('/au/translation/batch/', () => {
+  http.post('/au/translation/batch/', () => {
     return HttpResponse.json([
       {
         Key: 'optionOff',
