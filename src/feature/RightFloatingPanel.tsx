@@ -13,23 +13,6 @@ export function RightFloatingPanel() {
 
 	return (
 		<>
-			{/* トグルボタン */}
-			<button
-				type="button"
-				onClick={toggleRightPanel}
-				className={`
-          fixed right-4 bottom-4 z-50 p-3 rounded-full bg-blue-600 text-white shadow-lg
-          hover:bg-blue-700 transition-transform active:scale-95 flex items-center justify-center
-          ${isRightPanelOpen ? "rotate-90" : ""}
-        `}
-				aria-label={isRightPanelOpen ? "パネルを閉じる" : "パネルを開く"}
-				style={{ width: "48px", height: "48px" }}
-			>
-				<span className="text-2xl font-bold">
-					{isRightPanelOpen ? "×" : "☰"}
-				</span>
-			</button>
-
 			{/* パネル本体 */}
 			<aside
 				className={`
@@ -39,16 +22,27 @@ export function RightFloatingPanel() {
         `}
 				aria-label="右フローティングパネル"
 			>
+				{/* トグルボタン (パネルの左側に配置) */}
+				<button
+					type="button"
+					onClick={toggleRightPanel}
+					className={`
+            absolute -left-14 bottom-4 z-50 p-3 rounded-full bg-blue-600 text-white shadow-lg
+            hover:bg-blue-700 transition-transform active:scale-95 flex items-center justify-center
+            ${isRightPanelOpen ? "rotate-90" : "-translate-x-full"}
+          `}
+					aria-label={isRightPanelOpen ? "パネルを閉じる" : "パネルを開く"}
+					style={{ width: "48px", height: "48px" }}
+				>
+					<span className="text-2xl font-bold">
+						{isRightPanelOpen ? "×" : "☰"}
+					</span>
+				</button>
+
 				<div className="flex flex-col h-full">
 					<div className="flex items-center justify-between p-4 border-b border-gray-100">
 						<h2 className="text-lg font-semibold">Right Panel</h2>
-						<button
-							type="button"
-							onClick={toggleRightPanel}
-							className="p-1 hover:bg-gray-100 rounded-md transition-colors w-8 h-8 flex items-center justify-center"
-						>
-							<span className="text-xl">×</span>
-						</button>
+						{/* ヘッダーの閉じるボタンは削除するか、残すか。ユーザーは「左のフローティングボタン」と言ったので、そちらを主役にする */}
 					</div>
 					<div className="flex-1 overflow-y-auto p-4">
 						{/* 中身はまだ書かなくて良い */}
