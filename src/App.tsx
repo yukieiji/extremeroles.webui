@@ -7,6 +7,7 @@ import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { PresetSelector } from "./feature/PresetSelector";
+import { RightFloatingPanel } from "./feature/RightFloatingPanel";
 import { useSyncBackend } from "./hooks/useBackend";
 import { getAllOptions } from "./logics/api.store";
 import { useStore } from "./useStore";
@@ -108,6 +109,7 @@ function App() {
 				>
 					<MainContent />
 				</main>
+				<RightFloatingPanel />
 			</Suspense>
 		</div>
 	);
