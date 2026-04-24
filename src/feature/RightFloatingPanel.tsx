@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useStore } from "../useStore";
 
 /**
@@ -10,6 +11,23 @@ export function RightFloatingPanel() {
 	const toggleRightPanel = useStore((state) => {
 		return state.toggleRightPanel;
 	});
+	const setRightPanelOpen = useStore((state) => {
+		return state.setRightPanelOpen;
+	});
+
+	// Escapeキーでパネルを閉じるためのグローバルリスナー
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape" && isRightPanelOpen) {
+				setRightPanelOpen(false);
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [isRightPanelOpen, setRightPanelOpen]);
 
 	return (
 		<>
@@ -55,11 +73,8 @@ export function RightFloatingPanel() {
 			{isRightPanelOpen && (
 				<button
 					type="button"
-					className="fixed inset-0 bg-black/20 z-30 cursor-default"
+					className="fixed inset-0 bg-black/20 z-30 cursor-pointer"
 					onClick={toggleRightPanel}
-					onKeyDown={(e) => {
-						if (e.key === "Escape") toggleRightPanel();
-					}}
 					aria-label="閉じる"
 				/>
 			)}
