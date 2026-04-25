@@ -38,6 +38,7 @@ export function RightFloatingPanel() {
 				className={`
           fixed top-0 z-50 h-full w-6 bg-blue-600 text-white shadow-md
           hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center
+          cursor-pointer
           ${isRightPanelOpen ? "right-80" : "right-0"}
         `}
 				aria-label={isRightPanelOpen ? "パネルを閉じる" : "パネルを開く"}
@@ -73,7 +74,7 @@ export function RightFloatingPanel() {
 			{isRightPanelOpen && (
 				<button
 					type="button"
-					className="fixed inset-0 bg-black/20 z-30 cursor-pointer"
+					className="fixed inset-0 bg-black/20 z-30 cursor-default"
 					onClick={toggleRightPanel}
 					aria-label="閉じる"
 				/>
