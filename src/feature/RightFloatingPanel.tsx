@@ -75,7 +75,7 @@ export function RightFloatingPanel() {
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
 						>
-							<div className="flex flex-col gap-2">
+							<div className="flex flex-col">
 								<Accordion
 									title="AmongUsの設定"
 									isOpen={isAuSettingsOpen}
