@@ -78,7 +78,9 @@ export function RightFloatingPanel() {
 									isOpen={isAuSettingsOpen}
 									onToggle={() => setIsAuSettingsOpen(!isAuSettingsOpen)}
 								>
-									<p className="text-gray-400 text-sm">AmongUsの設定コンテンツ</p>
+									<p className="text-gray-400 text-sm">
+										AmongUsの設定コンテンツ
+									</p>
 								</Accordion>
 								<Accordion
 									title="ExRの設定"
