@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Accordion } from "../components/parts/Accordion";
 import { useStore } from "../useStore";
 
 /**
@@ -14,6 +15,13 @@ export function RightFloatingPanel() {
 	const setRightPanelOpen = useStore((state) => {
 		return state.setRightPanelOpen;
 	});
+
+	const isSettingsOpen = useStore((state) => state.isSettingsOpen);
+	const toggleSettings = useStore((state) => state.toggleSettings);
+	const isAuSettingsOpen = useStore((state) => state.isAuSettingsOpen);
+	const toggleAuSettings = useStore((state) => state.toggleAuSettings);
+	const isExrSettingsOpen = useStore((state) => state.isExrSettingsOpen);
+	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
 
 	// Escapeキーでパネルを閉じるためのグローバルリスナー
 	useEffect(() => {
@@ -62,10 +70,30 @@ export function RightFloatingPanel() {
 						<h2 className="text-lg font-semibold">Right Panel</h2>
 					</div>
 					<div className="flex-1 overflow-y-auto p-4">
-						{/* 中身はまだ書かなくて良い */}
-						<p className="text-gray-500 text-center mt-10">
-							Content will be placed here.
-						</p>
+						<Accordion
+							title="設定値"
+							isOpen={isSettingsOpen}
+							onToggle={toggleSettings}
+						>
+							<div className="flex flex-col">
+								<Accordion
+									title="AmongUsの設定"
+									isOpen={isAuSettingsOpen}
+									onToggle={toggleAuSettings}
+								>
+									<p className="text-gray-400 text-sm">
+										AmongUsの設定コンテンツ
+									</p>
+								</Accordion>
+								<Accordion
+									title="ExRの設定"
+									isOpen={isExrSettingsOpen}
+									onToggle={toggleExrSettings}
+								>
+									<p className="text-gray-400 text-sm">ExRの設定コンテンツ</p>
+								</Accordion>
+							</div>
+						</Accordion>
 					</div>
 				</div>
 			</aside>

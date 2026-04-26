@@ -7,6 +7,12 @@ export interface RightFloatingPanelSlice {
 	isRightPanelOpen: boolean;
 	toggleRightPanel: () => void;
 	setRightPanelOpen: (isOpen: boolean) => void;
+	isSettingsOpen: boolean;
+	toggleSettings: () => void;
+	isAuSettingsOpen: boolean;
+	toggleAuSettings: () => void;
+	isExrSettingsOpen: boolean;
+	toggleExrSettings: () => void;
 }
 
 /**
@@ -24,6 +30,24 @@ export const createRightFloatingPanelSlice: StateCreator<
 		},
 		setRightPanelOpen: (isOpen: boolean) => {
 			set({ isRightPanelOpen: isOpen });
+		},
+		isSettingsOpen: true,
+		toggleSettings: () => {
+			set((state) => {
+				return { isSettingsOpen: !state.isSettingsOpen };
+			});
+		},
+		isAuSettingsOpen: true,
+		toggleAuSettings: () => {
+			set((state) => {
+				return { isAuSettingsOpen: !state.isAuSettingsOpen };
+			});
+		},
+		isExrSettingsOpen: true,
+		toggleExrSettings: () => {
+			set((state) => {
+				return { isExrSettingsOpen: !state.isExrSettingsOpen };
+			});
 		},
 	};
 };
