@@ -8,7 +8,9 @@ test.beforeEach(async ({ page }) => {
 	});
 });
 
-test("right sidebar can be opened and accordions can be toggled", async ({ page }) => {
+test("right sidebar can be opened and accordions can be toggled", async ({
+	page,
+}) => {
 	const rightPanel = page.getByLabel("右フローティングパネル");
 	const toggleButton = page.getByRole("button", { name: "パネルを開く" });
 
