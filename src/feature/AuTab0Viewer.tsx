@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { use } from "react";
 import { Accordion } from "../components/parts/Accordion";
 import { auOptionMetaData, translationMetaData } from "../logics/api";
+import { getAllOptions } from "../logics/api.store";
 import type { AuOptionId } from "../type";
 import { useStore } from "../useStore";
 
@@ -8,6 +9,8 @@ import { useStore } from "../useStore";
  * Auのタブ0の設定内容を表示し、ダブルクリックで該当箇所へ移動するコンポーネント
  */
 export function AuTab0Viewer() {
+	use(getAllOptions());
+
 	const setSelectedTab = useStore((state) => state.setSelectedTab);
 	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
@@ -20,20 +23,7 @@ export function AuTab0Viewer() {
 	const openedAuTab0CategoryIds = useStore(
 		(state) => state.openedAuTab0CategoryIds,
 	);
-	const setOpenedAuTab0CategoryIds = useStore(
-		(state) => state.setOpenedAuTab0CategoryIds,
-	);
 	const toggleAuTab0Category = useStore((state) => state.toggleAuTab0Category);
-
-	// 初期表示時に全てのカテゴリを開く
-	useEffect(() => {
-		const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
-		const initial: Record<number, boolean> = {};
-		for (const id of tab0CategoryIds) {
-			initial[id] = true;
-		}
-		setOpenedAuTab0CategoryIds(initial);
-	}, [setOpenedAuTab0CategoryIds]);
 
 	// タブ0のカテゴリIDを取得
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
@@ -76,7 +66,7 @@ export function AuTab0Viewer() {
 					<Accordion
 						key={categoryId}
 						title={<span className="text-sm">{categoryMeta.name}</span>}
-						isOpen={openedAuTab0CategoryIds[categoryId] ?? false}
+						isOpen={openedAuTab0CategoryIds[categoryId] ?? true}
 						onToggle={() => toggleAuTab0Category(categoryId)}
 					>
 						<div className="flex flex-col gap-1">
@@ -104,6 +94,7 @@ export function AuTab0Viewer() {
 									<button
 										type="button"
 										key={optionId}
+										data-testid={`right-panel-option-${optionId}`}
 										onDoubleClick={() =>
 											handleDoubleClick(categoryId, optionId)
 										}
