@@ -64,7 +64,6 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 
 	return (
 		<RoleCategoryAccordion
-			testId={`exr-category-${categoryId}`}
 			isOpen={isOpen}
 			onClick={() => toggleExRCategory(categoryId)}
 			text={<ColoredText text={category} />}

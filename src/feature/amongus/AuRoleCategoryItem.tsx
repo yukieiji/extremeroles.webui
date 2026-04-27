@@ -39,7 +39,6 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 
 	return (
 		<RoleCategoryAccordion
-			testId={`au-category-${categoryId}`}
 			isOpen={isOpen}
 			onClick={() => toggleAuCategory(categoryId)}
 			text={categoryMeta.name}

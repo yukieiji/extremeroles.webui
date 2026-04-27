@@ -3,7 +3,6 @@ import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 
 interface RoleCategoryAccordionProp {
-	testId: string;
 	isOpen: boolean;
 	onClick: () => void;
 	text: ReactNode;
@@ -13,7 +12,6 @@ interface RoleCategoryAccordionProp {
 }
 
 export function RoleCategoryAccordion({
-	testId,
 	isOpen,
 	onClick,
 	text,
@@ -24,10 +22,10 @@ export function RoleCategoryAccordion({
 	return (
 		<div
 			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
-			data-testid={testId}
+			data-testid="role-category"
 		>
 			<div
-				className={`flex items-center bg-gray-800 ${!isChanceZero ? "hover:bg-gray-700 transition-colors" : ""}`}
+				className={`flex items-center bg-gray-800 ${!disable ? "hover:bg-gray-700 transition-colors" : ""}`}
 			>
 				<button
 					type="button"
@@ -36,7 +34,7 @@ export function RoleCategoryAccordion({
 							onClick();
 						}
 					}}
-					className={`flex-1 flex items-center gap-3 p-4 text-left ${isChanceZero ? "cursor-default" : ""}`}
+					className={`flex-1 flex items-center gap-3 p-4 text-left ${disable ? "cursor-default" : ""}`}
 					aria-expanded={isOpen}
 					disabled={disable}
 				>
