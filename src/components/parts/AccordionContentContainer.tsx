@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-interface AccordionContentContainerProps {
+export interface AccordionContentContainerProps {
 	isOpen: boolean;
 	children: ReactNode;
 }
