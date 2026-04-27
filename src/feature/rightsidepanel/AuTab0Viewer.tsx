@@ -17,6 +17,7 @@ export function AuTab0Viewer() {
 		(state) => state.setHighlightedAuOptionId,
 	);
 	const auValue = useStore((state) => state.auValue);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen)
 
 	const openedAuTab0CategoryIds = useStore(
 		(state) => state.openedAuTab0CategoryIds,
@@ -27,6 +28,10 @@ export function AuTab0Viewer() {
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
 
 	const handleDoubleClick = (categoryId: number, optionId: AuOptionId) => {
+		
+		// 右パネルは閉じる
+		setRightPanelOpen(false);
+
 		// 1. メインタブをAuに切り替え
 		setSelectedTab("Au");
 		// 2. Auタブを0に切り替え
