@@ -28,9 +28,8 @@ export function AuTab0Viewer() {
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
 
 	const handleDoubleClick = (categoryId: number, optionId: AuOptionId) => {
-		// 1. メインタブをAuに切り替え、サイドバーと右パネルを閉じる
+		// 1. メインタブをAuに切り替え
 		setSelectedTab("Au");
-		setRightPanelOpen(false);
 		// 2. Auタブを0に切り替え
 		setSelectedAuTabId(0);
 		// 3. カテゴリを確実に開く
