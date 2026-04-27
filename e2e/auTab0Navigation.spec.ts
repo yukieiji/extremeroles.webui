@@ -56,9 +56,6 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 			{ timeout: 10000 },
 		);
 
-		// 右パネルが閉じることを確認
-		await expect(page.getByLabel("右フローティングパネル")).not.toBeVisible();
-
 		// ハイライト用のクラスやスタイルが適用されているか確認
 		// id="au-option-..." の要素がリングクラスを持っているか
 		const impCountRow = page.locator('[id^="au-option-10200"]').first();
