@@ -37,7 +37,7 @@ test("has sidebar and au option editor", async ({ page }) => {
 	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
 
 	// アコーディオンが表示されていることを確認 (JSON preはなくなった)
-	await expect(page.getByTestId("au-category-list")).toBeVisible();
+	await expect(page.getByTestId("category-list")).toBeVisible();
 
 	// ExR Options に切り替え
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();

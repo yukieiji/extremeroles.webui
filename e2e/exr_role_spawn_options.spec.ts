@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 
 	// ExR Options タブに切り替え
 	await page.getByRole("button", { name: "ExR Options" }).click();
-	await page.waitForSelector('[data-testid="exr-category-list"]');
+	await page.waitForSelector('[data-testid="category-list"]');
 });
 
 test.describe("ExR Role Spawn Options in Header", () => {

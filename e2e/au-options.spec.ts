@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
 
 	// Au Options タブに切り替え
 	await page.getByRole("button", { name: "Au Options" }).click();
-	await page.waitForSelector('[data-testid="au-category-list"]');
+	await page.waitForSelector('[data-testid="category-list"]');
 });
 
 test.describe("Au Option Interactions", () => {
@@ -56,11 +56,11 @@ test.describe("Au Option Interactions", () => {
 
 		// Initially chance is probably 0, so it's disabled
 		const category = page
-			.getByTestId("au-category-list")
+			.getByTestId("category-list")
 			.locator("> div")
 			.first();
-		await expect(category.getByTestId("au-chance-control")).toBeVisible();
-		await expect(category.getByTestId("au-max-count-control")).toBeVisible();
+		await expect(category.getByTestId("spawn-rate-control")).toBeVisible();
+		await expect(category.getByTestId("spawn-count-control")).toBeVisible();
 
 		// Accordion button should be disabled when chance is 0
 		const toggleButton = category.locator("button").first();
@@ -73,11 +73,11 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("button", { name: "1", exact: true }).click();
 
 		const category = page
-			.getByTestId("au-category-list")
+			.getByTestId("category-list")
 			.locator("> div")
 			.first();
-		const chanceControl = category.getByTestId("au-chance-control");
-		const countControl = category.getByTestId("au-max-count-control");
+		const chanceControl = category.getByTestId("spawn-rate-control");
+		const countControl = category.getByTestId("spawn-count-control");
 
 		const chanceInput = chanceControl.locator('input[type="text"]');
 		const countInput = countControl.locator('input[type="text"]');
@@ -111,14 +111,14 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("button", { name: "1", exact: true }).click();
 
 		const category = page
-			.getByTestId("au-category-list")
+			.getByTestId("category-list")
 			.locator("> div")
 			.first();
 		const toggleButton = category.locator("button").first();
 
 		// Set chance to 100% to enable accordion
 		await category
-			.getByTestId("au-chance-control")
+			.getByTestId("spawn-rate-control")
 			.locator('input[type="range"]')
 			.fill("10");
 

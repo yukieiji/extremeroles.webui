@@ -28,7 +28,7 @@ test("synchronization updates data and preserves UI state", async ({
 
 	// Check if category content is visible
 	// Let's use a more robust check for content inside accordion
-	await expect(page.getByTestId("exr-category-list")).toContainText(
+	await expect(page.getByTestId("category-list")).toContainText(
 		"乱数に関する設定",
 	);
 

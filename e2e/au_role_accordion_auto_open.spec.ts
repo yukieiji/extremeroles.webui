@@ -24,10 +24,10 @@ test.describe("Au Role Accordion Auto Open", () => {
 		const category = page.getByTestId(`au-category-${categoryId}`);
 		const toggleButton = category.getByRole("button").first();
 		const chanceSlider = category
-			.getByTestId("au-chance-control")
+			.getByTestId("spawn-rate-control")
 			.locator('input[type="range"]');
 		const countSlider = category
-			.getByTestId("au-max-count-control")
+			.getByTestId("spawn-count-control")
 			.locator('input[type="range"]');
 
 		// 初期状態：閉じていて無効

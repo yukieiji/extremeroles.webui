@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 
 	// ExR Options タブに切り替え
 	await page.getByRole("button", { name: "ExR Options" }).click();
-	await page.waitForSelector('[data-testid="exr-category-list"]');
+	await page.waitForSelector('[data-testid="category-list"]');
 });
 
 test.describe("ExR Role Accordion Disabled State", () => {
@@ -27,7 +27,7 @@ test.describe("ExR Role Accordion Disabled State", () => {
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
 			.click();
 
-		const sheriffCategory = page.getByTestId(`exr-category-${SHERIFF_ID}`);
+		const sheriffCategory = page.getByLabel("シェリフ");
 		const toggleButton = sheriffCategory.getByRole("button", {
 			name: "シェリフ",
 		});
@@ -37,7 +37,7 @@ test.describe("ExR Role Accordion Disabled State", () => {
 
 		// 1. まずレートを 10% にすると、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
-		const content = sheriffCategory.getByTestId("exr-category-list-container");
+		const content = sheriffCategory.getByTestId("category-list-container");
 		await expect(content).toBeVisible();
 
 		// 2. レートを 0% にするとアコーディオンが閉じ、無効化されることを確認
