@@ -1,8 +1,9 @@
-import { CompactSlider } from "../../components/parts/CompactSlider";
+
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuRoleOptionSelection } from "../../logics/api.store";
 import { findClosestIndex } from "../../logics/optionUtils";
 import { useStore } from "../../useStore";
+import { RoleSpawnControls } from "../../components/blocks/RoleSpawnControls";
 
 interface AuRoleSpawnControlsProps {
 	categoryId: number;
@@ -135,23 +136,19 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	};
 
 	return (
-		<div className="flex items-center gap-4">
-			<CompactSlider
-				label="レート"
-				values={chanceValues}
-				currentSelection={chanceSelection}
-				onSelectionChange={handleChanceChange}
-				onInputChange={handleChanceInputChange}
-				testId="au-chance-control"
-			/>
-			<CompactSlider
-				label="数"
-				values={maxCountValues}
-				currentSelection={maxCountSelection}
-				onSelectionChange={handleMaxCountChange}
-				onInputChange={handleMaxCountInputChange}
-				testId="au-max-count-control"
-			/>
-		</div>
+		<RoleSpawnControls
+			rate={{
+				values: chanceValues,
+				currentSelection: chanceSelection,
+				onSelectionChange: handleChanceChange,
+				onInputChange: handleChanceInputChange,
+			}}
+			num={{
+				values: maxCountValues,
+				currentSelection: maxCountSelection,
+				onSelectionChange: handleMaxCountChange,
+				onInputChange: handleMaxCountInputChange
+			}}
+		/>
 	);
 }

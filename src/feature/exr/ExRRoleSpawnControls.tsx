@@ -1,4 +1,4 @@
-import { CompactSlider } from "../../components/parts/CompactSlider";
+import { RoleSpawnControls } from "../../components/blocks/RoleSpawnControls";
 import { useOptionData } from "../../hooks/useOptionData";
 import { useUpdateExROptionSelection } from "../../logics/api.store";
 import { findClosestIndex, getUniqueOptionId } from "../../logics/optionUtils";
@@ -120,23 +120,19 @@ export function ExRRoleSpawnControls({
 	};
 
 	return (
-		<div className="flex items-center gap-4">
-			<CompactSlider
-				label="レート"
-				values={rateValues}
-				currentSelection={spawnRateSelection}
-				onSelectionChange={handleRateChange}
-				onInputChange={handleRateInputChange}
-				testId="spawn-rate-control"
-			/>
-			<CompactSlider
-				label="数"
-				values={virtualCountValues}
-				currentSelection={currentCountUISelection}
-				onSelectionChange={handleCountUIChange}
-				onInputChange={handleCountUIInputChange}
-				testId="spawn-count-control"
-			/>
-		</div>
+		<RoleSpawnControls
+			rate={{
+				values: rateValues,
+				currentSelection: spawnRateSelection,
+				onSelectionChange: handleRateChange,
+				onInputChange: handleRateInputChange,
+			}}
+			num={{
+				values: virtualCountValues,
+				currentSelection: currentCountUISelection,
+				onSelectionChange: handleCountUIChange,
+				onInputChange: handleCountUIInputChange,
+			}}
+		/>
 	);
 }
