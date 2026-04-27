@@ -1,5 +1,7 @@
 import { useEffect, useTransition } from "react";
 import { ColoredText } from "../../components/parts/ColoredText";
+import { TabButton } from "../../components/parts/TabButton";
+import { TabButtonContainer } from "../../components/parts/TabButtonContainer";
 import { exrOptionMetaData } from "../../logics/api";
 import type { OptionTab } from "../../type";
 import { useStore } from "../../useStore";
@@ -38,27 +40,21 @@ export function ExRTabSelector() {
 	};
 
 	return (
-		<div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
+		<TabButtonContainer>
 			{Object.keys(exrOptionMetaData.tabs).map((tabId) => {
 				const castedTabId = Number(tabId) as OptionTab;
 				return (
-					<button
+					<TabButton
 						key={tabId}
-						type="button"
-						onClick={() => {
-							handleClick(castedTabId);
-						}}
-						className={`
-              px-4 py-2 rounded-t-lg transition-colors font-medium
-              ${selectedExRTabId === castedTabId ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}
-            `}
+						onClick={() => handleClick(castedTabId)}
+						isSelect={selectedExRTabId === castedTabId}
 					>
 						<ColoredText
 							text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""}
 						/>
-					</button>
+					</TabButton>
 				);
 			})}
-		</div>
+		</TabButtonContainer>
 	);
 }

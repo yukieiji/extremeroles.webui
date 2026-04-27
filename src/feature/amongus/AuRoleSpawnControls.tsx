@@ -1,9 +1,8 @@
-
+import { RoleSpawnControls } from "../../components/blocks/RoleSpawnControls";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuRoleOptionSelection } from "../../logics/api.store";
 import { findClosestIndex } from "../../logics/optionUtils";
 import { useStore } from "../../useStore";
-import { RoleSpawnControls } from "../../components/blocks/RoleSpawnControls";
 
 interface AuRoleSpawnControlsProps {
 	categoryId: number;
@@ -147,7 +146,7 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 				values: maxCountValues,
 				currentSelection: maxCountSelection,
 				onSelectionChange: handleMaxCountChange,
-				onInputChange: handleMaxCountInputChange
+				onInputChange: handleMaxCountInputChange,
 			}}
 		/>
 	);

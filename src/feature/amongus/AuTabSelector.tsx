@@ -1,4 +1,6 @@
 import { useEffect, useTransition } from "react";
+import { TabButton } from "../../components/parts/TabButton";
+import { TabButtonContainer } from "../../components/parts/TabButtonContainer";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 
@@ -36,24 +38,18 @@ export function AuTabSelector() {
 	};
 
 	return (
-		<div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
+		<TabButtonContainer>
 			{auOptionMetaData.tabNames.map((name, index) => {
 				return (
-					<button
+					<TabButton
 						key={name}
-						type="button"
-						onClick={() => {
-							handleClick(index);
-						}}
-						className={`
-              px-4 py-2 rounded-t-lg transition-colors font-medium
-              ${selectedAuTabId === index ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}
-            `}
+						onClick={() => handleClick(index)}
+						isSelect={selectedAuTabId === index}
 					>
 						{name}
-					</button>
+					</TabButton>
 				);
 			})}
-		</div>
+		</TabButtonContainer>
 	);
 }
