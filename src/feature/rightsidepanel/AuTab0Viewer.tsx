@@ -9,7 +9,6 @@ import { useStore } from "../../useStore";
  * Auのタブ0の設定内容を表示し、ダブルクリックで該当箇所へ移動するコンポーネント
  */
 export function AuTab0Viewer() {
-
 	const setSelectedTab = useStore((state) => state.setSelectedTab);
 	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
