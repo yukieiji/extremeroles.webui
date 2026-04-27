@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Accordion } from "../components/parts/Accordion";
 import { auOptionMetaData } from "../logics/api";
 import type { AuOptionId } from "../type";
@@ -17,24 +17,23 @@ export function AuTab0Viewer() {
 	);
 	const auValue = useStore((state) => state.auValue);
 
-	// 右パネル内での各カテゴリの開閉状態（デフォルトすべて真）
-	const [localOpenedCategories, setLocalOpenedCategories] = useState<
-		Record<number, boolean>
-	>(() => {
+	const openedAuTab0CategoryIds = useStore(
+		(state) => state.openedAuTab0CategoryIds,
+	);
+	const setOpenedAuTab0CategoryIds = useStore(
+		(state) => state.setOpenedAuTab0CategoryIds,
+	);
+	const toggleAuTab0Category = useStore((state) => state.toggleAuTab0Category);
+
+	// 初期表示時に全てのカテゴリを開く
+	useEffect(() => {
+		const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
 		const initial: Record<number, boolean> = {};
-		const ids = auOptionMetaData.tabCategoryMap[0] || [];
-		for (const id of ids) {
+		for (const id of tab0CategoryIds) {
 			initial[id] = true;
 		}
-		return initial;
-	});
-
-	const toggleLocalCategory = (categoryId: number) => {
-		setLocalOpenedCategories((prev) => ({
-			...prev,
-			[categoryId]: !prev[categoryId],
-		}));
-	};
+		setOpenedAuTab0CategoryIds(initial);
+	}, [setOpenedAuTab0CategoryIds]);
 
 	// タブ0のカテゴリIDを取得
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
@@ -77,8 +76,8 @@ export function AuTab0Viewer() {
 					<Accordion
 						key={categoryId}
 						title={<span className="text-sm">{categoryMeta.name}</span>}
-						isOpen={localOpenedCategories[categoryId] ?? false}
-						onToggle={() => toggleLocalCategory(categoryId)}
+						isOpen={openedAuTab0CategoryIds[categoryId] ?? false}
+						onToggle={() => toggleAuTab0Category(categoryId)}
 					>
 						<div className="flex flex-col gap-1">
 							{categoryMeta.options.map((optionId) => {

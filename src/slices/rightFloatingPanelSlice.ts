@@ -13,6 +13,9 @@ export interface RightFloatingPanelSlice {
 	toggleAuSettings: () => void;
 	isExrSettingsOpen: boolean;
 	toggleExrSettings: () => void;
+	openedAuTab0CategoryIds: Record<number, boolean>;
+	setOpenedAuTab0CategoryIds: (ids: Record<number, boolean>) => void;
+	toggleAuTab0Category: (categoryId: number) => void;
 }
 
 /**
@@ -47,6 +50,17 @@ export const createRightFloatingPanelSlice: StateCreator<
 		toggleExrSettings: () => {
 			set((state) => {
 				return { isExrSettingsOpen: !state.isExrSettingsOpen };
+			});
+		},
+		openedAuTab0CategoryIds: {},
+		setOpenedAuTab0CategoryIds: (ids) => {
+			set({ openedAuTab0CategoryIds: ids });
+		},
+		toggleAuTab0Category: (categoryId) => {
+			set((state) => {
+				const next = { ...state.openedAuTab0CategoryIds };
+				next[categoryId] = !next[categoryId];
+				return { openedAuTab0CategoryIds: next };
 			});
 		},
 	};
