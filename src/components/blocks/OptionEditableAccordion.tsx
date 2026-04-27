@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
+import { AccordionSvg } from "../parts/AccordionSvg";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
 
-interface OptionAccordionProps {
+interface OptionEditableAccordionProps {
 	optionItem: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
@@ -13,14 +14,14 @@ interface OptionAccordionProps {
 /**
  * 設定可能なオプション自体をヘッダーに持つ、階層構造用の専用アコーディオン
  */
-export function OptionAccordion({
+export function OptionEditableAccordion({
 	optionItem,
 	isOpen,
 	onToggle,
 	children,
 	showArrow = true,
 	className = "",
-}: OptionAccordionProps) {
+}: OptionEditableAccordionProps) {
 	return (
 		<div className={`flex flex-col ${className}`}>
 			<OptionRowContainer
@@ -34,20 +35,7 @@ export function OptionAccordion({
 								aria-expanded={isOpen}
 								aria-label={isOpen ? "閉じる" : "開く"}
 							>
-								<svg
-									className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									aria-hidden="true"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M19 9l-7 7-7-7"
-									/>
-								</svg>
+								<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
 							</button>
 						) : (
 							<span className="text-gray-500 select-none text-xs">・</span>

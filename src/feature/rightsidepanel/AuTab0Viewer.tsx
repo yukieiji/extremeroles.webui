@@ -1,4 +1,4 @@
-import { Accordion } from "../../components/parts/Accordion";
+import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
 import { ColoredText } from "../../components/parts/ColoredText";
 import { OptionFormat } from "../../components/parts/OptionFormat";
 import { auOptionMetaData, translationMetaData } from "../../logics/api";
@@ -151,7 +151,7 @@ export function AuTab0Viewer() {
 				}
 
 				return (
-					<Accordion
+					<OptionEditorAccordion
 						key={categoryId}
 						title={<span className="text-sm">{categoryMeta.name}</span>}
 						isOpen={openedAuTab0CategoryIds[categoryId] ?? true}
@@ -206,7 +206,7 @@ export function AuTab0Viewer() {
 								);
 							})}
 						</div>
-					</Accordion>
+					</OptionEditorAccordion>
 				);
 			})}
 		</div>

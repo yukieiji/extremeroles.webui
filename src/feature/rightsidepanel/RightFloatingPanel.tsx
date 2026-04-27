@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from "react";
-import { Accordion } from "../../components/parts/Accordion";
+import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
 import { useStore } from "../../useStore";
 import { AuTab0Viewer } from "./AuTab0Viewer";
 
@@ -71,13 +71,13 @@ export function RightFloatingPanel() {
 						<h2 className="text-lg font-semibold">Right Panel</h2>
 					</div>
 					<div className="flex-1 overflow-y-auto p-4">
-						<Accordion
+						<OptionEditorAccordion
 							title="設定値"
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
 						>
 							<div className="flex flex-col">
-								<Accordion
+								<OptionEditorAccordion
 									title="AmongUsの設定"
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
@@ -91,16 +91,16 @@ export function RightFloatingPanel() {
 									>
 										<AuTab0Viewer />
 									</Suspense>
-								</Accordion>
-								<Accordion
+								</OptionEditorAccordion>
+								<OptionEditorAccordion
 									title="ExRの設定"
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
 								>
 									<p className="text-gray-400 text-sm">ExRの設定コンテンツ</p>
-								</Accordion>
+								</OptionEditorAccordion>
 							</div>
-						</Accordion>
+						</OptionEditorAccordion>
 					</div>
 				</div>
 			</aside>

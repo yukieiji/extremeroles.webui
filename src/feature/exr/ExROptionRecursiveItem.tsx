@@ -1,4 +1,4 @@
-import { OptionAccordion } from "../../components/blocks/OptionAccordion";
+import { OptionEditableAccordion } from "../../components/blocks/OptionEditableAccordion";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
@@ -31,7 +31,7 @@ export function ExROptionRecursiveItem({
 	const childs = exrOptionMetaData.options[uniqueOptionId]?.childOptionIds;
 
 	return (
-		<OptionAccordion
+		<OptionEditableAccordion
 			optionItem={
 				<ExROptionRow
 					uniqueOptionId={uniqueOptionId}
@@ -53,6 +53,6 @@ export function ExROptionRecursiveItem({
 					/>
 				))}
 			</div>
-		</OptionAccordion>
+		</OptionEditableAccordion>
 	);
 }

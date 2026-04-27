@@ -1,4 +1,4 @@
-import { Accordion } from "../../components/parts/Accordion";
+import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
@@ -25,13 +25,13 @@ export function AuStandardCategoryItem({
 
 	return (
 		<div data-testid={`au-category-${categoryId}`}>
-			<Accordion
+			<OptionEditorAccordion
 				title={categoryMeta.name}
 				isOpen={isOpen}
 				onToggle={() => toggleAuCategory(categoryId)}
 			>
 				<AuCategoryOptionList optionIds={categoryMeta.options} />
-			</Accordion>
+			</OptionEditorAccordion>
 		</div>
 	);
 }

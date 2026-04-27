@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
+import { AccordionSvg } from "../parts/AccordionSvg";
 
-interface AccordionProps {
+interface OptionEditorAccordionProps {
 	title: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
@@ -10,12 +11,12 @@ interface AccordionProps {
 /**
  * ステートレスなアコーディオンコンポーネント
  */
-export function Accordion({
+export function OptionEditorAccordion({
 	title,
 	isOpen,
 	onToggle,
 	children,
-}: AccordionProps) {
+}: OptionEditorAccordionProps) {
 	return (
 		<div className="border border-gray-700 rounded-lg overflow-hidden mb-2">
 			<button
@@ -24,20 +25,7 @@ export function Accordion({
 				className="w-full flex items-center gap-3 p-4 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
 				aria-expanded={isOpen}
 			>
-				<svg
-					className={`w-5 h-5 transition-transform duration-200 text-gray-400 ${isOpen ? "rotate-180" : ""}`}
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-				>
-					<title>{isOpen ? "Collapse" : "Expand"}</title>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={2}
-						d="M19 9l-7 7-7-7"
-					/>
-				</svg>
+				<AccordionSvg className={"w-5 h-5 text-gray-400 "} isOpen={isOpen} />
 				<span className="font-semibold text-gray-200">{title}</span>
 			</button>
 			<div

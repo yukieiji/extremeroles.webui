@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Accordion } from "../../components/parts/Accordion";
+import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
 import { ColoredText } from "../../components/parts/ColoredText";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
@@ -40,7 +40,7 @@ export function ExRStandardCategoryItem({
 
 	return (
 		<div data-testid={`exr-category-${categoryId}`}>
-			<Accordion
+			<OptionEditorAccordion
 				title={
 					<ColoredText
 						text={exrOptionMetaData.categories[categoryId]?.name ?? ""}
@@ -55,7 +55,7 @@ export function ExRStandardCategoryItem({
 					categoryId={categoryId}
 					uniqueOptionIds={filteredOptions}
 				/>
-			</Accordion>
+			</OptionEditorAccordion>
 		</div>
 	);
 }
