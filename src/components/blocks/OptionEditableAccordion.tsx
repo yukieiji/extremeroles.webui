@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
 
@@ -46,16 +47,11 @@ export function OptionEditableAccordion({
 			/>
 
 			{/* 子要素（ネストされたオプション） */}
-			<div
-				data-testid="option-accordion-content"
-				className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden ${
-					isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-				}`}
-			>
+			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0 bg-black/10">
 					{isOpen && <div className="flex flex-col">{children}</div>}
 				</div>
-			</div>
+			</AccordionContentContainer>
 		</div>
 	);
 }
