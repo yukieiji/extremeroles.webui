@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { RightFloatingPanel } from "../src/feature/RightFloatingPanel";
+import { RightFloatingPanel } from "../src/feature/rightsidepanel/RightFloatingPanel";
 import { getAllOptions, resetApiCache } from "../src/logics/api.store";
 import { useStore } from "../src/useStore";
 

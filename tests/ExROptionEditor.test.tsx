@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExROptionEditor } from "../src/feature/ExROptionEditor";
+import { ExROptionEditor } from "../src/feature/exr/ExROptionEditor";
 import { resetExrOptionMetaData } from "../src/logics/api";
 import { getAllOptions, resetApiCache } from "../src/logics/api.store";
 import type { AuOptionCategoryDto, ExRTabDto } from "../src/type";

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRRoleSpawnControls } from "../src/feature/ExRRoleSpawnControls";
+import { ExRRoleSpawnControls } from "../src/feature/exr/ExRRoleSpawnControls";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import * as apiStore from "../src/logics/api.store";
 import {

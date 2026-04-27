@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AuTab0Viewer } from "../src/feature/AuTab0Viewer";
+import { AuTab0Viewer } from "../src/feature/rightsidepanel/AuTab0Viewer";
 import {
 	auOptionMetaData,
 	resetAuOptionMetaData,

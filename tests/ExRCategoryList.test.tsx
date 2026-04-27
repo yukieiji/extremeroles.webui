@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRCategoryList } from "../src/feature/ExRCategoryList";
+import { ExRCategoryList } from "../src/feature/exr/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import * as apiStore from "../src/logics/api.store";
 import { getUniqueOptionId } from "../src/logics/optionUtils";

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
-import { AuCategoryList } from "../src/feature/AuCategoryList";
+import { AuCategoryList } from "../src/feature/amongus/AuCategoryList";
 import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
 import type { AuOptionId } from "../src/type";
 import { useStore } from "../src/useStore";
