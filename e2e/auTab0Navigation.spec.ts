@@ -48,7 +48,8 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 5. 右パネルの項目をダブルクリック
 		// 再び開く
 		await page.getByRole("button", { name: "パネルを開く" }).click();
-		await impCountSetting.dblclick();
+		await impCountSetting.scrollIntoViewIfNeeded();
+		await impCountSetting.dblclick({ force: true });
 
 		// 6. 自動的に Au Options に戻り、項目が表示されていることを確認
 		await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible(

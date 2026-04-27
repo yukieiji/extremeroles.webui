@@ -1,5 +1,7 @@
 import { use } from "react";
 import { Accordion } from "../components/parts/Accordion";
+import { ColoredText } from "../components/parts/ColoredText";
+import { OptionFormat } from "../components/parts/OptionFormat";
 import { auOptionMetaData, translationMetaData } from "../logics/api";
 import { getAllOptions } from "../logics/api.store";
 import type { AuOptionId } from "../type";
@@ -81,20 +83,8 @@ export function AuTab0Viewer() {
 									return null;
 								}
 
-								let valueDisplay = "";
 								const value = optionMeta.range[selection];
-								if (typeof value === "boolean") {
-									valueDisplay =
-										translationMetaData.booleanTransData[value ? 1 : 0] ||
-										(value ? "ON" : "OFF");
-								} else if (optionMeta.format.includes("{0}")) {
-									valueDisplay = optionMeta.format.replace(
-										"{0}",
-										value.toString(),
-									);
-								} else {
-									valueDisplay = value.toString();
-								}
+								const isBoolean = typeof value === "boolean";
 
 								return (
 									<button
@@ -104,15 +94,32 @@ export function AuTab0Viewer() {
 										onDoubleClick={() =>
 											handleDoubleClick(categoryId, optionId)
 										}
-										className="w-full flex justify-between items-center py-1 px-2 hover:bg-gray-700/50 rounded cursor-pointer select-none"
+										className="w-full flex justify-between items-center py-1 px-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2"
 										title="ダブルクリックで設定場所へ移動"
 									>
-										<span className="text-xs text-gray-300">
+										<span className="text-xs text-gray-300 truncate flex-1 text-left">
 											{optionMeta.title}
 										</span>
-										<span className="text-xs text-blue-400 font-medium text-right">
-											{valueDisplay}
-										</span>
+										<div className="flex items-center gap-1 shrink-0">
+											<span className="text-xs text-blue-400 font-medium text-right">
+												{isBoolean ? (
+													<ColoredText
+														text={
+															translationMetaData.booleanTransData[
+																value ? 1 : 0
+															] || (value ? "ON" : "OFF")
+														}
+													/>
+												) : (
+													value.toString()
+												)}
+											</span>
+											{!isBoolean && (
+												<div className="text-[10px] scale-90 origin-right">
+													<OptionFormat format={optionMeta.format} />
+												</div>
+											)}
+										</div>
 									</button>
 								);
 							})}
