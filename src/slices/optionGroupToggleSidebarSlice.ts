@@ -10,6 +10,7 @@ export interface OptionGroupToggleSidebarSlice {
 	selectedTab: SelectedTab;
 	isSidebarPending: boolean;
 	toggleSidebar: () => void;
+	setIsSidebarOpen: (isOpen: boolean) => void;
 	setSelectedTab: (tab: SelectedTab) => void;
 	setIsSidebarPending: (isPending: boolean) => void;
 	resetAll: () => void;
@@ -29,6 +30,9 @@ export const createOptionGroupToggleSidebarSlice: StateCreator<
 			set((state) => {
 				return { isSidebarOpen: !state.isSidebarOpen };
 			});
+		},
+		setIsSidebarOpen: (isOpen: boolean) => {
+			set({ isSidebarOpen: isOpen });
 		},
 		setSelectedTab: (tab: SelectedTab) => {
 			set({ selectedTab: tab });

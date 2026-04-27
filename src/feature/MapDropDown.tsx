@@ -21,6 +21,9 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const selection = useStore((state) =>
 		mapOptionId ? (state.auValue[mapOptionId] ?? 0) : 0,
 	);
+	const highlightedAuOptionId = useStore(
+		(state) => state.highlightedAuOptionId,
+	);
 
 	if (!categoryMeta || categoryMeta.options.length === 0) {
 		return null;
@@ -36,12 +39,19 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	// 後で翻訳を適用するが、それまでは一旦 range に含まれる値をそのまま表示する
 	const displayValues = optionMeta.range.map((v) => v.toString());
 
+	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
+
 	return (
 		<div
 			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
 			data-testid={`au-category-${categoryId}`}
 		>
-			<div className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700">
+			<div
+				id={`au-option-${mapOptionId}`}
+				className={`flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 transition-all duration-500 ${
+					isHighlighted ? "ring-2 ring-blue-500 bg-blue-500/10" : ""
+				}`}
+			>
 				<div className="flex items-center gap-3">
 					{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
 					<div className="w-5 h-5" />

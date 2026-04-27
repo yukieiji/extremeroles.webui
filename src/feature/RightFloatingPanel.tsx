@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Accordion } from "../components/parts/Accordion";
 import { useStore } from "../useStore";
+import { AuTab0Viewer } from "./AuTab0Viewer";
 
 /**
  * 右フローティングパネルコンポーネント
@@ -81,9 +82,15 @@ export function RightFloatingPanel() {
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
 								>
-									<p className="text-gray-400 text-sm">
-										AmongUsの設定コンテンツ
-									</p>
+									<Suspense
+										fallback={
+											<div className="flex items-center justify-center p-4">
+												<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+											</div>
+										}
+									>
+										<AuTab0Viewer />
+									</Suspense>
 								</Accordion>
 								<Accordion
 									title="ExRの設定"
