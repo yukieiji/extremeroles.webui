@@ -87,11 +87,13 @@ export function AuTab0Viewer() {
 									valueDisplay =
 										translationMetaData.booleanTransData[value ? 1 : 0] ||
 										(value ? "ON" : "OFF");
-								} else {
+								} else if (optionMeta.format.includes("{0}")) {
 									valueDisplay = optionMeta.format.replace(
 										"{0}",
 										value.toString(),
 									);
+								} else {
+									valueDisplay = value.toString();
 								}
 
 								return (

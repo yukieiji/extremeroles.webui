@@ -34,6 +34,9 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await expect(impCountSetting).toBeVisible({ timeout: 15000 });
 
+		// 値が表示されていることを確認（モックデータでは1のはず）
+		await expect(impCountSetting.locator("span").last()).toHaveText("1");
+
 		// 4. メインエディタで一旦 ExR Options に切り替えておく
 		// 右パネルのオーバーレイが邪魔をする可能性があるので、一旦右パネルを閉じる
 		await page.getByRole("button", { name: "閉じる", exact: true }).click();
