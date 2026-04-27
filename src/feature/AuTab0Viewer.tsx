@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Accordion } from "../components/parts/Accordion";
-import { auOptionMetaData } from "../logics/api";
+import { auOptionMetaData, translationMetaData } from "../logics/api";
 import type { AuOptionId } from "../type";
 import { useStore } from "../useStore";
 
@@ -90,7 +90,9 @@ export function AuTab0Viewer() {
 								let valueDisplay = "";
 								const value = optionMeta.range[selection];
 								if (typeof value === "boolean") {
-									valueDisplay = value ? "ON" : "OFF";
+									valueDisplay =
+										translationMetaData.booleanTransData[value ? 1 : 0] ||
+										(value ? "ON" : "OFF");
 								} else {
 									valueDisplay = optionMeta.format.replace(
 										"{0}",
