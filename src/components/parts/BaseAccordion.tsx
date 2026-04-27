@@ -27,7 +27,9 @@ export function BaseAccordion({
 	titleClassName = "",
 }: BaseAccordionProps) {
 	return (
-		<div className={`border border-gray-700 rounded-lg overflow-hidden ${containerClassName}`}>
+		<div
+			className={`border border-gray-700 rounded-lg overflow-hidden ${containerClassName}`}
+		>
 			<button
 				type="button"
 				onClick={onToggle}
@@ -57,7 +59,9 @@ export function BaseAccordion({
 			>
 				<div className="min-h-0">
 					{isOpen && (
-						<div className={`bg-gray-900 border-t border-gray-700 ${contentClassName}`}>
+						<div
+							className={`bg-gray-900 border-t border-gray-700 ${contentClassName}`}
+						>
 							{children}
 						</div>
 					)}
