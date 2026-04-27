@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { EditorContainer } from "../../components/blocks/EditorContainer";
 import { ExRCategoryList } from "./ExRCategoryList";
 import { ExRTabSelector } from "./ExRTabSelector";
 
@@ -8,17 +8,9 @@ import { ExRTabSelector } from "./ExRTabSelector";
  */
 export function ExROptionEditor() {
 	return (
-		<div className="flex flex-col gap-4">
-			<ExRTabSelector />
-			<Suspense
-				fallback={
-					<div className="flex items-center justify-center h-full min-h-50">
-						<div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-					</div>
-				}
-			>
-				<ExRCategoryList />
-			</Suspense>
-		</div>
+		<EditorContainer
+			selector={<ExRTabSelector />}
+			mainView={<ExRCategoryList />}
+		/>
 	);
 }

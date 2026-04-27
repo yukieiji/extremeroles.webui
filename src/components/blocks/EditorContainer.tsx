@@ -1,0 +1,25 @@
+import type { ReactNode } from "react";
+import { Suspense } from "react";
+import { LoadingCycle } from "../parts/LoadingCycle";
+
+interface EditorContainerProp {
+	selector: ReactNode;
+	mainView: ReactNode;
+}
+
+export function EditorContainer({ selector, mainView }: EditorContainerProp) {
+	return (
+		<div className="flex flex-col gap-4">
+			{selector}
+			<Suspense
+				fallback={
+					<div className="flex items-center justify-center h-full min-h-50">
+						<LoadingCycle />
+					</div>
+				}
+			>
+				{mainView}
+			</Suspense>
+		</div>
+	);
+}

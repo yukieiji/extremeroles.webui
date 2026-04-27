@@ -1,3 +1,4 @@
+import { EditorContainer } from "../../components/blocks/EditorContainer";
 import { AuCategoryList } from "./AuCategoryList";
 import { AuTabSelector } from "./AuTabSelector";
 
@@ -6,9 +7,9 @@ import { AuTabSelector } from "./AuTabSelector";
  */
 export function AuOptionEditor() {
 	return (
-		<div className="flex flex-col gap-4">
-			<AuTabSelector />
-			<AuCategoryList />
-		</div>
+		<EditorContainer
+			selector={<AuTabSelector />}
+			mainView={<AuCategoryList />}
+		/>
 	);
 }
