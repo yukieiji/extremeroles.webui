@@ -1,7 +1,7 @@
-import { auOptionMetaData } from "../logics/api";
-import { useUpdateAuOptionSelection } from "../logics/api.store";
-import type { AuOptionId } from "../type";
-import { useStore } from "../useStore";
+import { auOptionMetaData } from "../../logics/api";
+import { useUpdateAuOptionSelection } from "../../logics/api.store";
+import type { AuOptionId } from "../../type";
+import { useStore } from "../../useStore";
 import { AuOptionControl } from "./AuOptionControl";
 
 interface AuOptionRowProps {

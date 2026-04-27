@@ -1,5 +1,5 @@
-import { auOptionMetaData } from "../logics/api";
-import { useStore } from "../useStore";
+import { auOptionMetaData } from "../../logics/api";
+import { useStore } from "../../useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
 import { AuRoleSpawnControls } from "./AuRoleSpawnControls";
 

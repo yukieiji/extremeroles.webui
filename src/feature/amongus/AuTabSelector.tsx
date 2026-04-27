@@ -1,6 +1,6 @@
 import { useEffect, useTransition } from "react";
-import { auOptionMetaData } from "../logics/api";
-import { useStore } from "../useStore";
+import { auOptionMetaData } from "../../logics/api";
+import { useStore } from "../../useStore";
 
 /**
  * Auオプションのタブ選択コンポーネント

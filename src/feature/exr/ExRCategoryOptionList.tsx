@@ -1,5 +1,5 @@
-import { groupOptionPairs } from "../logics/optionUtils";
-import type { UniqueOptionId } from "../type";
+import { groupOptionPairs } from "../../logics/optionUtils";
+import type { UniqueOptionId } from "../../type";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExRPairedOptionRow } from "./ExRPairedOptionRow";
 

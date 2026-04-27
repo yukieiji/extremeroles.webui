@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { useBackendUpdate } from "../hooks/useBackend";
-import { useOptionData } from "../hooks/useOptionData";
-import { updateExrOption } from "../logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
-import { useStore } from "../useStore";
+import { useBackendUpdate } from "../../hooks/useBackend";
+import { useOptionData } from "../../hooks/useOptionData";
+import { updateExrOption } from "../../logics/api";
+import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import { useStore } from "../../useStore";
 
 /**
  * プリセットを選択・編集するためのコンポーネント。

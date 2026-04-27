@@ -1,4 +1,4 @@
-import type { AuOptionId } from "../type";
+import type { AuOptionId } from "../../type";
 import { AuOptionRow } from "./AuOptionRow";
 
 interface AuCategoryOptionListProps {

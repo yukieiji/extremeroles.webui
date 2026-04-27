@@ -1,8 +1,8 @@
-import { OptionItem } from "../components/parts/OptionItem";
-import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
-import { OptionRowContainer } from "../components/parts/OptionRowContainer";
-import { exrOptionMetaData } from "../logics/api";
-import type { UniqueOptionId } from "../type";
+import { OptionItem } from "../../components/parts/OptionItem";
+import { OptionNameDisplay } from "../../components/parts/OptionNameDisplay";
+import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
+import { exrOptionMetaData } from "../../logics/api";
+import type { UniqueOptionId } from "../../type";
 import { ExROptionControl } from "./ExROptionControl";
 
 interface ExROptionRowProps {

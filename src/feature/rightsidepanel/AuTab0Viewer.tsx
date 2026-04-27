@@ -1,20 +1,16 @@
-import { use } from "react";
-import { Accordion } from "../components/parts/Accordion";
-import { ColoredText } from "../components/parts/ColoredText";
-import { OptionFormat } from "../components/parts/OptionFormat";
-import { auOptionMetaData, translationMetaData } from "../logics/api";
-import { getAllOptions } from "../logics/api.store";
-import type { AuOptionId } from "../type";
-import { useStore } from "../useStore";
+import { Accordion } from "../../components/parts/Accordion";
+import { ColoredText } from "../../components/parts/ColoredText";
+import { OptionFormat } from "../../components/parts/OptionFormat";
+import { auOptionMetaData, translationMetaData } from "../../logics/api";
+import type { AuOptionId } from "../../type";
+import { useStore } from "../../useStore";
 
 /**
  * Auのタブ0の設定内容を表示し、ダブルクリックで該当箇所へ移動するコンポーネント
  */
 export function AuTab0Viewer() {
-	use(getAllOptions());
 
 	const setSelectedTab = useStore((state) => state.setSelectedTab);
-	const setIsSidebarOpen = useStore((state) => state.setIsSidebarOpen);
 	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
@@ -35,7 +31,6 @@ export function AuTab0Viewer() {
 	const handleDoubleClick = (categoryId: number, optionId: AuOptionId) => {
 		// 1. メインタブをAuに切り替え、サイドバーと右パネルを閉じる
 		setSelectedTab("Au");
-		setIsSidebarOpen(false);
 		setRightPanelOpen(false);
 		// 2. Auタブを0に切り替え
 		setSelectedAuTabId(0);

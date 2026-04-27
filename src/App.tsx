@@ -1,13 +1,13 @@
 import { Suspense, use } from "react";
 import { LoadingView } from "./components/parts/LoadingView";
 import { SyncButton } from "./components/parts/SyncButton";
-import { AuOptionEditor } from "./feature/AuOptionEditor";
+import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
 import { BlockableLoading } from "./feature/BlockableLoading";
-import { ExROptionEditor } from "./feature/ExROptionEditor";
+import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
-import { PresetSelector } from "./feature/PresetSelector";
-import { RightFloatingPanel } from "./feature/RightFloatingPanel";
+import { PresetSelector } from "./feature/exr/PresetSelector";
+import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
 import { useSyncBackend } from "./hooks/useBackend";
 import { getAllOptions } from "./logics/api.store";
 import { useStore } from "./useStore";

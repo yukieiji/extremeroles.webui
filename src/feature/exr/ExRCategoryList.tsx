@@ -1,8 +1,8 @@
 import { useShallow } from "zustand/react/shallow";
-import { exrOptionMetaData } from "../logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
-import { OptionTab } from "../type";
-import { useStore } from "../useStore";
+import { exrOptionMetaData } from "../../logics/api";
+import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import { OptionTab } from "../../type";
+import { useStore } from "../../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
 import { ExRStandardCategoryItem } from "./ExRStandardCategoryItem";
 

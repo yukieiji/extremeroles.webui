@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from "react";
-import { Accordion } from "../components/parts/Accordion";
-import { useStore } from "../useStore";
+import { Accordion } from "../../components/parts/Accordion";
+import { useStore } from "../../useStore";
 import { AuTab0Viewer } from "./AuTab0Viewer";
 
 /**

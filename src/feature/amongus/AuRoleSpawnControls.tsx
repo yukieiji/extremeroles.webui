@@ -1,8 +1,8 @@
-import { CompactSlider } from "../components/parts/CompactSlider";
-import { auOptionMetaData } from "../logics/api";
-import { useUpdateAuRoleOptionSelection } from "../logics/api.store";
-import { findClosestIndex } from "../logics/optionUtils";
-import { useStore } from "../useStore";
+import { CompactSlider } from "../../components/parts/CompactSlider";
+import { auOptionMetaData } from "../../logics/api";
+import { useUpdateAuRoleOptionSelection } from "../../logics/api.store";
+import { findClosestIndex } from "../../logics/optionUtils";
+import { useStore } from "../../useStore";
 
 interface AuRoleSpawnControlsProps {
 	categoryId: number;

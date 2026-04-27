@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { Accordion } from "../components/parts/Accordion";
-import { ColoredText } from "../components/parts/ColoredText";
-import { exrOptionMetaData } from "../logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
-import { useStore } from "../useStore";
+import { Accordion } from "../../components/parts/Accordion";
+import { ColoredText } from "../../components/parts/ColoredText";
+import { exrOptionMetaData } from "../../logics/api";
+import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import { useStore } from "../../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 
 interface ExRStandardCategoryItemProps {

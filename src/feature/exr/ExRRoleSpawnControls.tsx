@@ -1,9 +1,9 @@
-import { CompactSlider } from "../components/parts/CompactSlider";
-import { useOptionData } from "../hooks/useOptionData";
-import { useUpdateExROptionSelection } from "../logics/api.store";
-import { findClosestIndex, getUniqueOptionId } from "../logics/optionUtils";
-import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../type";
-import { useStore } from "../useStore";
+import { CompactSlider } from "../../components/parts/CompactSlider";
+import { useOptionData } from "../../hooks/useOptionData";
+import { useUpdateExROptionSelection } from "../../logics/api.store";
+import { findClosestIndex, getUniqueOptionId } from "../../logics/optionUtils";
+import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../../type";
+import { useStore } from "../../useStore";
 
 interface ExRRoleSpawnControlsProps {
 	tabId: number;

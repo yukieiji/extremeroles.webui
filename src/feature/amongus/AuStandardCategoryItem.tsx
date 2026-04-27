@@ -1,6 +1,6 @@
-import { Accordion } from "../components/parts/Accordion";
-import { auOptionMetaData } from "../logics/api";
-import { useStore } from "../useStore";
+import { Accordion } from "../../components/parts/Accordion";
+import { auOptionMetaData } from "../../logics/api";
+import { useStore } from "../../useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
 
 interface AuStandardCategoryItemProps {

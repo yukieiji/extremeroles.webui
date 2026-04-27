@@ -1,10 +1,10 @@
-import { OptionPairedSliderControl } from "../components/blocks/OptionPairedSliderControl";
-import { OptionItem } from "../components/parts/OptionItem";
-import { OptionNameDisplay } from "../components/parts/OptionNameDisplay";
-import { OptionRowContainer } from "../components/parts/OptionRowContainer";
-import { useOptionData } from "../hooks/useOptionData";
-import { useUpdateExROptionSelection } from "../logics/api.store";
-import type { OptionData } from "../type";
+import { OptionPairedSliderControl } from "../../components/blocks/OptionPairedSliderControl";
+import { OptionItem } from "../../components/parts/OptionItem";
+import { OptionNameDisplay } from "../../components/parts/OptionNameDisplay";
+import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
+import { useOptionData } from "../../hooks/useOptionData";
+import { useUpdateExROptionSelection } from "../../logics/api.store";
+import type { OptionData } from "../../type";
 
 interface ExRPairedOptionRowProps {
 	baseName: string;

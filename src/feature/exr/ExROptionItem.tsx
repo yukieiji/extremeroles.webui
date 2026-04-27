@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { exrOptionMetaData } from "../logics/api";
-import type { UniqueOptionId } from "../type";
-import { useStore } from "../useStore";
+import { exrOptionMetaData } from "../../logics/api";
+import type { UniqueOptionId } from "../../type";
+import { useStore } from "../../useStore";
 import { ExROptionRecursiveItem } from "./ExROptionRecursiveItem";
 import { ExROptionRow } from "./ExROptionRow";
 

@@ -1,8 +1,8 @@
 import { useEffect, useTransition } from "react";
-import { ColoredText } from "../components/parts/ColoredText";
-import { exrOptionMetaData } from "../logics/api";
-import type { OptionTab } from "../type";
-import { useStore } from "../useStore";
+import { ColoredText } from "../../components/parts/ColoredText";
+import { exrOptionMetaData } from "../../logics/api";
+import type { OptionTab } from "../../type";
+import { useStore } from "../../useStore";
 
 /**
  * ExRオプションのタブ選択コンポーネント

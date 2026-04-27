@@ -1,7 +1,7 @@
-import { OptionAccordion } from "../components/blocks/OptionAccordion";
-import { exrOptionMetaData } from "../logics/api";
-import type { UniqueOptionId } from "../type";
-import { useStore } from "../useStore";
+import { OptionAccordion } from "../../components/blocks/OptionAccordion";
+import { exrOptionMetaData } from "../../logics/api";
+import type { UniqueOptionId } from "../../type";
+import { useStore } from "../../useStore";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExROptionRow } from "./ExROptionRow";
 
