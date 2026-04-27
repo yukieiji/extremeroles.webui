@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Accordion } from "../components/parts/Accordion";
 import { useStore } from "../useStore";
+import { AuTab0Viewer } from "./AuTab0Viewer";
 
 /**
  * 右フローティングパネルコンポーネント
@@ -81,9 +82,7 @@ export function RightFloatingPanel() {
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
 								>
-									<p className="text-gray-400 text-sm">
-										AmongUsの設定コンテンツ
-									</p>
+									<AuTab0Viewer />
 								</Accordion>
 								<Accordion
 									title="ExRの設定"

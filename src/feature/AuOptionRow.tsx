@@ -14,6 +14,9 @@ interface AuOptionRowProps {
 export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 	const optionMeta = auOptionMetaData.options[auOptionId];
 	const selection = useStore((state) => state.auValue[auOptionId] ?? 0);
+	const highlightedAuOptionId = useStore(
+		(state) => state.highlightedAuOptionId,
+	);
 
 	const updateAuOption = useUpdateAuOptionSelection();
 
@@ -21,8 +24,15 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 		return null;
 	}
 
+	const isHighlighted = highlightedAuOptionId === auOptionId;
+
 	return (
-		<div className="flex items-center justify-between py-2 border-b border-gray-800 last:border-0 hover:bg-gray-800/50 transition-colors px-2 rounded">
+		<div
+			id={`au-option-${auOptionId}`}
+			className={`flex items-center justify-between py-2 border-b border-gray-800 last:border-0 hover:bg-gray-800/50 transition-all duration-500 px-2 rounded ${
+				isHighlighted ? "ring-2 ring-blue-500 bg-blue-500/10" : ""
+			}`}
+		>
 			<div className="flex flex-col flex-1 min-w-0 mr-4">
 				<span className="text-gray-200 text-sm font-medium truncate">
 					{optionMeta.title}
