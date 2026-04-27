@@ -12,6 +12,8 @@ export function AuTab0Viewer() {
 	use(getAllOptions());
 
 	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setIsSidebarOpen = useStore((state) => state.setIsSidebarOpen);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const openedAuCategoryIds = useStore((state) => state.openedAuCategoryIds);
@@ -29,8 +31,10 @@ export function AuTab0Viewer() {
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
 
 	const handleDoubleClick = (categoryId: number, optionId: AuOptionId) => {
-		// 1. メインタブをAuに切り替え
+		// 1. メインタブをAuに切り替え、サイドバーと右パネルを閉じる
 		setSelectedTab("Au");
+		setIsSidebarOpen(false);
+		setRightPanelOpen(false);
 		// 2. Auタブを0に切り替え
 		setSelectedAuTabId(0);
 		// 3. カテゴリを確実に開く

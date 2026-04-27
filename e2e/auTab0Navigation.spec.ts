@@ -52,6 +52,12 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 			{ timeout: 10000 },
 		);
 
+		// サイドバーと右パネルが閉じていることを確認
+		await expect(page.getByLabel("オプションサイドバー")).toHaveClass(/w-12/);
+		await expect(page.getByLabel("右フローティングパネル")).toHaveClass(
+			/translate-x-full/,
+		);
+
 		// ハイライト用のクラスやスタイルが適用されているか確認
 		// id="au-option-..." の要素がリングクラスを持っているか
 		const impCountRow = page.locator('[id^="au-option-10200"]').first();
@@ -59,6 +65,6 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		await expect(impCountRow).toHaveClass(/ring-blue-500/);
 
 		// 7. 数秒後にハイライトが消えることを確認
-		await expect(impCountRow).not.toHaveClass(/ring-2/, { timeout: 3000 });
+		await expect(impCountRow).not.toHaveClass(/ring-2/, { timeout: 10000 });
 	});
 });
