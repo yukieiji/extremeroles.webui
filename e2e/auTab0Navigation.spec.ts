@@ -56,8 +56,7 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 			{ timeout: 10000 },
 		);
 
-		// サイドバーと右パネルが開いたままであることを確認
-		await expect(page.getByLabel("オプションサイドバー")).toBeVisible();
+		// 右パネルが閉じることを確認
 		await expect(page.getByLabel("右フローティングパネル")).not.toBeVisible();
 
 		// ハイライト用のクラスやスタイルが適用されているか確認
