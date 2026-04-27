@@ -31,6 +31,12 @@ describe("AuTab0Viewer", () => {
 						Info: { ValueType: 2, OptionName: 1 },
 						Range: ["The Skeld", "Mira HQ"],
 					},
+					{
+						TranslatedTitle: "Anonymous Voting",
+						TranslatedFormat: "{0}",
+						Value: true,
+						Info: { ValueType: 0, OptionName: 2 },
+					},
 				],
 			},
 		];
@@ -60,7 +66,10 @@ describe("AuTab0Viewer", () => {
 				if (url.includes("/au/translation/batch/")) {
 					return Promise.resolve({
 						ok: true,
-						json: vi.fn().mockResolvedValue([]),
+						json: vi.fn().mockResolvedValue([
+							{ Key: "optionOff", Result: "OFF", Param: [] },
+							{ Key: "optionOn", Result: "ON", Param: [] },
+						]),
 					} as unknown as Response);
 				}
 				return Promise.reject(new Error(`Unhandled URL: ${url}`));
@@ -91,22 +100,14 @@ describe("AuTab0Viewer", () => {
 			);
 		});
 
-		expect(screen.getByText("Game Settings")).toBeInTheDocument();
+		// マップカテゴリ（index 0）はカテゴリ名ではなくオプション名が表示される
 		expect(screen.getByText("Map")).toBeInTheDocument();
 		expect(screen.getByText("The Skeld")).toBeInTheDocument();
 	});
 
 	it("uses translation data for boolean values", async () => {
-		const boolOptionId = 101 as unknown as AuOptionId;
-		auOptionMetaData.tabCategoryMap = { 0: [1] };
-		auOptionMetaData.categoryMetaData = {
-			1: { name: "Settings", options: [boolOptionId] },
-		};
-		auOptionMetaData.options[boolOptionId] = {
-			title: "Anonymous Voting",
-			format: "{0}",
-			range: [false, true],
-		};
+		// mockAuData の 2番目のオプション (Anonymous Voting, ValueType 0) を使用
+		const boolOptionId = auOptionMetaData.categoryMetaData[0].options[1];
 
 		// 翻訳テキストを設定
 		translationMetaData.booleanTransData = ["無効", "有効"];
@@ -120,6 +121,7 @@ describe("AuTab0Viewer", () => {
 			);
 		});
 
+		// Boolean値はColoredText経由で表示される
 		expect(screen.getByText("有効")).toBeInTheDocument();
 	});
 
