@@ -19,9 +19,10 @@ test.describe("Au Role Accordion Auto Open", () => {
 		// Au Options の 役職タブ（タブ 1）に移動
 		await page.getByRole("button", { name: "1", exact: true }).first().click();
 
-		// 科学者 (Scientist) カテゴリ ID=5
-		const categoryId = "5";
-		const category = page.getByTestId(`au-category-${categoryId}`);
+		// 科学者 (Scientist)
+		const category = page
+			.getByTestId("role-category")
+			.filter({ hasText: "科学者" });
 		const toggleButton = category.getByRole("button").first();
 		const chanceSlider = category
 			.getByTestId("spawn-rate-control")

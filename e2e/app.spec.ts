@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 
 	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
 	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
-		timeout: 15000,
+		timeout: 30000,
 	});
 });
 

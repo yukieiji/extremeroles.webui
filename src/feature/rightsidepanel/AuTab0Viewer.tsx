@@ -10,7 +10,6 @@ import { useStore } from "../../useStore";
  */
 export function AuTab0Viewer() {
 	const setSelectedTab = useStore((state) => state.setSelectedTab);
-	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const openedAuCategoryIds = useStore((state) => state.openedAuCategoryIds);
@@ -28,9 +27,8 @@ export function AuTab0Viewer() {
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
 
 	const handleDoubleClick = (categoryId: number, optionId: AuOptionId) => {
-		// 1. メインタブをAuに切り替え、サイドバーと右パネルを閉じる
+		// 1. メインタブをAuに切り替え
 		setSelectedTab("Au");
-		setRightPanelOpen(false);
 		// 2. Auタブを0に切り替え
 		setSelectedAuTabId(0);
 		// 3. カテゴリを確実に開く

@@ -20,14 +20,14 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("ExR Role Accordion Disabled State", () => {
-	const SHERIFF_ID = "270";
-
 	test("should disable accordion when spawn rate is 0", async ({ page }) => {
 		await page
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
 			.click();
 
-		const sheriffCategory = page.getByLabel("シェリフ");
+		const sheriffCategory = page
+			.getByTestId("role-category")
+			.filter({ hasText: "シェリフ" });
 		const toggleButton = sheriffCategory.getByRole("button", {
 			name: "シェリフ",
 		});
@@ -37,8 +37,9 @@ test.describe("ExR Role Accordion Disabled State", () => {
 
 		// 1. まずレートを 10% にすると、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
-		const content = sheriffCategory.getByTestId("category-list-container");
+		const content = sheriffCategory.getByTestId("accordion-content");
 		await expect(content).toBeVisible();
+		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
 
 		// 2. レートを 0% にするとアコーディオンが閉じ、無効化されることを確認
 		await rateSlider.fill("0"); // 0%
@@ -56,6 +57,7 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await expect(toggleButton.getByText("・")).not.toBeVisible();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
 		await expect(content).toBeVisible();
+		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
 
 		// 5. 一旦閉じてから数を変更しても自動的に開くことを確認
 		await toggleButton.click();
@@ -74,5 +76,6 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await expect(toggleButton).toBeEnabled();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
 		await expect(content).toBeVisible();
+		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
 	});
 });
