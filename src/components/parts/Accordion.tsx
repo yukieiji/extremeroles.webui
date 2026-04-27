@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { BaseAccordion } from "./BaseAccordion";
 
 interface AccordionProps {
 	title: ReactNode;
@@ -8,52 +9,17 @@ interface AccordionProps {
 }
 
 /**
- * ステートレスなアコーディオンコンポーネント
+ * 標準的なアコーディオンコンポーネント
  */
-export function Accordion({
-	title,
-	isOpen,
-	onToggle,
-	children,
-}: AccordionProps) {
+export function Accordion(props: AccordionProps) {
 	return (
-		<div className="border border-gray-700 rounded-lg overflow-hidden mb-2">
-			<button
-				type="button"
-				onClick={onToggle}
-				className="w-full flex items-center gap-3 p-4 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
-				aria-expanded={isOpen}
-			>
-				<svg
-					className={`w-5 h-5 transition-transform duration-200 text-gray-400 ${isOpen ? "rotate-180" : ""}`}
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-				>
-					<title>{isOpen ? "Collapse" : "Expand"}</title>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={2}
-						d="M19 9l-7 7-7-7"
-					/>
-				</svg>
-				<span className="font-semibold text-gray-200">{title}</span>
-			</button>
-			<div
-				data-testid="accordion-content"
-				className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden ${
-					isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-				}`}
-			>
-				<div className="min-h-0">
-					{isOpen && (
-						<div className="p-4 bg-gray-900 border-t border-gray-700">
-							{children}
-						</div>
-					)}
-				</div>
-			</div>
-		</div>
+		<BaseAccordion
+			{...props}
+			containerClassName="mb-2"
+			headerClassName="gap-3 p-4 bg-gray-800 hover:bg-gray-700"
+			iconClassName="w-5 h-5"
+			titleClassName="font-semibold text-gray-200"
+			contentClassName="p-4"
+		/>
 	);
 }
