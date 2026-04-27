@@ -20,8 +20,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("ExR Role Accordion Disabled State", () => {
-	const SHERIFF_ID = "270";
-
 	test("should disable accordion when spawn rate is 0", async ({ page }) => {
 		await page
 			.getByRole("button", { name: "クルーメイト役職設定", exact: true })

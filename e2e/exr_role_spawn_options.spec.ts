@@ -20,8 +20,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("ExR Role Spawn Options in Header", () => {
-	const SHERIFF_ID = "270";
-
 	test("should display both spawn rate and count in category header of role tabs", async ({
 		page,
 	}) => {

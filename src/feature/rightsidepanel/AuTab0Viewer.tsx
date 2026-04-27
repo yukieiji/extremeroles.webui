@@ -10,7 +10,6 @@ import { useStore } from "../../useStore";
  */
 export function AuTab0Viewer() {
 	const setSelectedTab = useStore((state) => state.setSelectedTab);
-	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const openedAuCategoryIds = useStore((state) => state.openedAuCategoryIds);
