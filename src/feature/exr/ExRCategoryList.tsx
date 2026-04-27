@@ -1,4 +1,5 @@
 import { useShallow } from "zustand/react/shallow";
+import { CategoryContainer } from "../../components/blocks/CategoryContainer";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
 import { OptionTab } from "../../type";
@@ -72,21 +73,12 @@ export function ExRCategoryList() {
 	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
 
 	return (
-		<div
-			data-testid="exr-category-list"
-			className={`flex flex-col relative transition-opacity duration-200 ${isTabPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
-			data-is-pending={isTabPending ? "true" : "false"}
-		>
-			{isTabPending && (
-				<div className="absolute inset-0 flex items-center justify-center z-10">
-					<div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-				</div>
-			)}
+		<CategoryContainer isPending={isTabPending}>
 			{isRoleTab ? (
 				<ExRRoleCategoryList categoryIds={tabCategory || []} />
 			) : (
 				<ExRStandardCategoryList categoryIds={tabCategory || []} />
 			)}
-		</div>
+		</CategoryContainer>
 	);
 }

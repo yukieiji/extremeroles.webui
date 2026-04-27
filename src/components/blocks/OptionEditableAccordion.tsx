@@ -19,10 +19,12 @@ export function OptionEditableAccordion({
 	isOpen,
 	onToggle,
 	children,
-	depth
+	depth,
 }: OptionEditableAccordionProps) {
 	return (
-		<div className={`flex flex-col ${depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}`}>
+		<div
+			className={`flex flex-col ${depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}`}
+		>
 			<OptionRowContainer
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
