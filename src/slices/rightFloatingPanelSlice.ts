@@ -46,20 +46,20 @@ export const createRightFloatingPanelSlice: StateCreator<
 				return { isAuSettingsOpen: !state.isAuSettingsOpen };
 			});
 		},
+		openedAuTab0CategoryIds: {},
 		isExrSettingsOpen: true,
 		toggleExrSettings: () => {
 			set((state) => {
 				return { isExrSettingsOpen: !state.isExrSettingsOpen };
 			});
 		},
-		openedAuTab0CategoryIds: {},
 		setOpenedAuTab0CategoryIds: (ids) => {
 			set({ openedAuTab0CategoryIds: ids });
 		},
 		toggleAuTab0Category: (categoryId) => {
 			set((state) => {
 				const next = { ...state.openedAuTab0CategoryIds };
-				next[categoryId] = !next[categoryId];
+				next[categoryId] = !(next[categoryId] ?? true);
 				return { openedAuTab0CategoryIds: next };
 			});
 		},

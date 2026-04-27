@@ -53,6 +53,7 @@ export function BaseAccordion({
 				<div className={`flex-1 ${titleClassName}`}>{title}</div>
 			</button>
 			<div
+				data-testid="accordion-content"
 				className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden ${
 					isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
 				}`}
