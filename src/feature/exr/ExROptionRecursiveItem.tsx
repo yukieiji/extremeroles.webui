@@ -41,8 +41,7 @@ export function ExROptionRecursiveItem({
 			}
 			isOpen={isOpen ?? false}
 			onToggle={handleToggle}
-			showArrow={true} // このコンポーネントが呼ばれている時点で子要素が存在するはずなので、常に矢印を表示
-			className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
+			depth={depth}
 		>
 			<div className="flex flex-col">
 				{childs?.map((childId) => (

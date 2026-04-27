@@ -8,8 +8,7 @@ interface OptionEditableAccordionProps {
 	isOpen: boolean;
 	onToggle: () => void;
 	children: ReactNode;
-	showArrow?: boolean;
-	className?: string;
+	depth: number;
 }
 
 /**
@@ -20,27 +19,22 @@ export function OptionEditableAccordion({
 	isOpen,
 	onToggle,
 	children,
-	showArrow = true,
-	className = "",
+	depth
 }: OptionEditableAccordionProps) {
 	return (
-		<div className={`flex flex-col ${className}`}>
+		<div className={`flex flex-col ${depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}`}>
 			<OptionRowContainer
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
-						{showArrow ? (
-							<button
-								type="button"
-								onClick={onToggle}
-								className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full"
-								aria-expanded={isOpen}
-								aria-label={isOpen ? "閉じる" : "開く"}
-							>
-								<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
-							</button>
-						) : (
-							<span className="text-gray-500 select-none text-xs">・</span>
-						)}
+						<button
+							type="button"
+							onClick={onToggle}
+							className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full"
+							aria-expanded={isOpen}
+							aria-label={isOpen ? "閉じる" : "開く"}
+						>
+							<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
+						</button>
 					</div>
 				}
 				content={optionItem}
