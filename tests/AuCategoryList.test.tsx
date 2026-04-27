@@ -82,8 +82,8 @@ describe("AuCategoryList", () => {
 		render(<AuCategoryList />);
 
 		expect(screen.getByText("Scientist")).toBeInTheDocument();
-		expect(screen.getByTestId("au-chance-control")).toBeInTheDocument();
-		expect(screen.getByTestId("au-max-count-control")).toBeInTheDocument();
+		expect(screen.getByTestId("spawn-rate-control")).toBeInTheDocument();
+		expect(screen.getByTestId("spawn-count-control")).toBeInTheDocument();
 	});
 
 	it("disables accordion button when chance is 0", () => {

@@ -1,15 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
-import { Accordion } from "../src/components/parts/Accordion";
+import { AccordionBody } from "../src/components/blocks/AccordionBody";
 
-describe("Accordion", () => {
+describe("AccordionBody", () => {
 	it("should display title and content when open", () => {
 		const onToggle = vi.fn();
 		render(
-			<Accordion title="Test Title" isOpen={true} onToggle={onToggle}>
+			<AccordionBody title="Test Title" isOpen={true} onToggle={onToggle}>
 				<div>Test Content</div>
-			</Accordion>,
+			</AccordionBody>,
 		);
 
 		expect(screen.getByText("Test Title")).toBeInTheDocument();
@@ -23,13 +23,13 @@ describe("Accordion", () => {
 		const TestWrapper = () => {
 			const [isOpen, setIsOpen] = React.useState(false);
 			return (
-				<Accordion
+				<AccordionBody
 					title="Test Title"
 					isOpen={isOpen}
 					onToggle={() => setIsOpen(!isOpen)}
 				>
 					<div>Test Content</div>
-				</Accordion>
+				</AccordionBody>
 			);
 		};
 

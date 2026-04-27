@@ -47,14 +47,14 @@ describe("AuRoleSpawnControls", () => {
 	it("renders both controls", () => {
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
-		expect(screen.getByTestId("au-chance-control")).toBeInTheDocument();
-		expect(screen.getByTestId("au-max-count-control")).toBeInTheDocument();
+		expect(screen.getByTestId("spawn-rate-control")).toBeInTheDocument();
+		expect(screen.getByTestId("spawn-count-control")).toBeInTheDocument();
 	});
 
 	it("syncs chance to 10% when max count is set to non-zero from zero", async () => {
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
-		const countControl = screen.getByTestId("au-max-count-control");
+		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
@@ -77,7 +77,7 @@ describe("AuRoleSpawnControls", () => {
 
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
-		const countControl = screen.getByTestId("au-max-count-control");
+		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
@@ -100,7 +100,7 @@ describe("AuRoleSpawnControls", () => {
 
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
-		const chanceControl = screen.getByTestId("au-chance-control");
+		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
@@ -122,7 +122,7 @@ describe("AuRoleSpawnControls", () => {
 
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
-		const chanceControl = screen.getByTestId("au-chance-control");
+		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
@@ -139,7 +139,7 @@ describe("AuRoleSpawnControls", () => {
 
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
-		const chanceControl = screen.getByTestId("au-chance-control");
+		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
@@ -157,7 +157,7 @@ describe("AuRoleSpawnControls", () => {
 
 		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
-		const countControl = screen.getByTestId("au-max-count-control");
+		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;

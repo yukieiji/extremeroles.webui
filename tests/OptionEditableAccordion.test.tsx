@@ -1,18 +1,19 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionAccordion } from "../src/components/blocks/OptionAccordion";
+import { OptionEditableAccordion } from "../src/components/blocks/OptionEditableAccordion";
 
-describe("OptionAccordion", () => {
+describe("OptionEditableAccordion", () => {
 	it("renders optionItem and handles toggle", () => {
 		const onToggle = vi.fn();
 		render(
-			<OptionAccordion
+			<OptionEditableAccordion
 				optionItem={<span>Parent Option</span>}
 				isOpen={false}
 				onToggle={onToggle}
+				depth={0}
 			>
 				<div>Child Content</div>
-			</OptionAccordion>,
+			</OptionEditableAccordion>,
 		);
 
 		expect(screen.getByText("Parent Option")).toBeInTheDocument();
@@ -24,25 +25,27 @@ describe("OptionAccordion", () => {
 
 	it("shows/hides children based on isOpen", () => {
 		const { rerender } = render(
-			<OptionAccordion
+			<OptionEditableAccordion
 				optionItem={<span>Parent</span>}
 				isOpen={false}
 				onToggle={() => {}}
+				depth={0}
 			>
 				<div>Child Content</div>
-			</OptionAccordion>,
+			</OptionEditableAccordion>,
 		);
 
 		expect(screen.queryByText("Child Content")).not.toBeInTheDocument();
 
 		rerender(
-			<OptionAccordion
+			<OptionEditableAccordion
 				optionItem={<span>Parent</span>}
 				isOpen={true}
 				onToggle={() => {}}
+				depth={0}
 			>
 				<div>Child Content</div>
-			</OptionAccordion>,
+			</OptionEditableAccordion>,
 		);
 
 		expect(screen.getByText("Child Content")).toBeInTheDocument();
