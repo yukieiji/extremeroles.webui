@@ -1,5 +1,5 @@
 import { Suspense, use } from "react";
-import { LoadingView } from "./components/parts/LoadingView";
+import { LoadingView } from "./components/blocks/LoadingView";
 import { SyncButton } from "./components/parts/SyncButton";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
