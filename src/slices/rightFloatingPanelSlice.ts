@@ -59,7 +59,8 @@ export const createRightFloatingPanelSlice: StateCreator<
 		toggleAuTab0Category: (categoryId) => {
 			set((state) => {
 				const next = { ...state.openedAuTab0CategoryIds };
-				next[categoryId] = !next[categoryId];
+				const current = next[categoryId] ?? true;
+				next[categoryId] = !current;
 				return { openedAuTab0CategoryIds: next };
 			});
 		},

@@ -70,25 +70,25 @@ export function RightFloatingPanel() {
 					<div className="flex items-center justify-between p-4 border-b border-gray-100">
 						<h2 className="text-lg font-semibold">Right Panel</h2>
 					</div>
-					<div className="flex-1 overflow-y-auto p-2">
+					<div className="flex-1 overflow-y-auto p-2 bg-gray-900">
 						<Accordion
 							title="設定値"
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
-							className="border border-gray-200 rounded-lg overflow-hidden mb-2"
-							headerClassName="w-full flex items-center gap-2 p-2 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
-							titleClassName="font-semibold text-gray-700 text-sm"
-							contentClassName="p-2 bg-white border-t border-gray-100"
+							className="border border-gray-700 rounded-lg overflow-hidden mb-2"
+							headerClassName="w-full flex items-center gap-2 p-2 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
+							titleClassName="font-semibold text-gray-200 text-sm"
+							contentClassName="p-2 bg-gray-900 border-t border-gray-700"
 						>
 							<div className="flex flex-col gap-1">
 								<Accordion
 									title="AmongUsの設定"
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
-									className="border border-gray-200 rounded-lg overflow-hidden"
-									headerClassName="w-full flex items-center gap-2 p-2 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
-									titleClassName="font-semibold text-gray-700 text-sm"
-									contentClassName="p-2 bg-white border-t border-gray-100"
+									className="border border-gray-700 rounded-lg overflow-hidden"
+									headerClassName="w-full flex items-center gap-2 p-2 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
+									titleClassName="font-semibold text-gray-200 text-sm"
+									contentClassName="p-2 bg-gray-900 border-t border-gray-700"
 								>
 									<Suspense
 										fallback={
@@ -104,10 +104,10 @@ export function RightFloatingPanel() {
 									title="ExRの設定"
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
-									className="border border-gray-200 rounded-lg overflow-hidden"
-									headerClassName="w-full flex items-center gap-2 p-2 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
-									titleClassName="font-semibold text-gray-700 text-sm"
-									contentClassName="p-2 bg-white border-t border-gray-100"
+									className="border border-gray-700 rounded-lg overflow-hidden"
+									headerClassName="w-full flex items-center gap-2 p-2 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
+									titleClassName="font-semibold text-gray-200 text-sm"
+									contentClassName="p-2 bg-gray-900 border-t border-gray-700"
 								>
 									<p className="text-gray-400 text-sm">ExRの設定コンテンツ</p>
 								</Accordion>
