@@ -75,8 +75,8 @@ describe("ExRPairedOptionItem", () => {
 		// 2nd index of [0,1,2,3,4,5] is 2, formatted as "2s"
 		// 4th index is 4, formatted as "4s"
 		// Both text input and range input have the same value, so we use getAllByDisplayValue
-		expect(screen.getAllByDisplayValue("2").length).toBeGreaterThan(0);
-		expect(screen.getAllByDisplayValue("4").length).toBeGreaterThan(0);
+		expect(screen.getAllByDisplayValue("2")).toHaveLength(2);
+		expect(screen.getAllByDisplayValue("4")).toHaveLength(2);
 	});
 
 	it("calls updateExROptionSelection when min value changes", async () => {
