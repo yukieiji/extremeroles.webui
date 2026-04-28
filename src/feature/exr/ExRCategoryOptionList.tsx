@@ -1,7 +1,9 @@
+import { LargePoint } from "../../components/parts/LargePoint";
+import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
 import { groupOptionPairs } from "../../logics/optionUtils";
 import type { UniqueOptionId } from "../../type";
 import { ExROptionItem } from "./ExROptionItem";
-import { ExRPairedOptionRow } from "./ExRPairedOptionRow";
+import { ExRPairedOptionItem } from "./ExRPairedOptionItem";
 
 const GROUPED_CATEGORY_IDS = [5, 6];
 
@@ -34,11 +36,16 @@ export function ExRCategoryOptionList({
 				}
 
 				return (
-					<ExRPairedOptionRow
+					<OptionRowContainer
 						key={`pair-${item.baseName}`}
-						baseName={item.baseName}
-						minData={item.minData}
-						maxData={item.maxData}
+						leading={<LargePoint />}
+						content={
+							<ExRPairedOptionItem
+								baseName={item.baseName}
+								minData={item.minData}
+								maxData={item.maxData}
+							/>
+						}
 					/>
 				);
 			})}

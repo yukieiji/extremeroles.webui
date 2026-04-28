@@ -15,16 +15,16 @@
     "e2e": "pnpm exec playwright test"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindcss/vite": "^4.2.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "tailwindcss": "^4.2.2",
+    "tailwindcss": "^4.2.4",
     "zod": "^4.3.6",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
-    "@biomejs/biome": "^2.4.12",
+    "@biomejs/biome": "^2.4.13",
     "@playwright/test": "^1.59.1",
     "@rolldown/plugin-babel": "^0.2.3",
     "@testing-library/jest-dom": "^6.9.1",
@@ -37,10 +37,10 @@
     "@vitest/ui": "^4.1.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "cross-env": "^10.1.0",
-    "jsdom": "^29.0.2",
-    "msw": "^2.13.4",
+    "jsdom": "^29.1.0",
+    "msw": "^2.13.6",
     "typescript": "~6.0.3",
-    "vite": "^8.0.9",
+    "vite": "^8.0.10",
     "vite-plugin-singlefile": "^2.3.3",
     "vite-svg-loader": "^5.1.1",
     "vitest": "^4.1.0"

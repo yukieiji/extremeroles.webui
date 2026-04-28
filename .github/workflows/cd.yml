@@ -18,7 +18,7 @@ jobs:
 
       - uses: pnpm/action-setup@v6
         with:
-          version: 9
+          version: 10
 
       - uses: actions/setup-node@v6
         with:
@@ -26,7 +26,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm i --frozen-lockfile
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
@@ -52,7 +52,7 @@ jobs:
 
       - uses: pnpm/action-setup@v6
         with:
-          version: 9
+          version: 10
 
       - uses: actions/setup-node@v6
         with:
@@ -60,7 +60,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm i --frozen-lockfile
 
       - name: Build
         run: pnpm build
@@ -70,7 +70,7 @@ jobs:
         run: echo "tag=$(date +'%Y.%m.%d').${{ github.run_number }}" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: ${{ steps.version.outputs.tag }}

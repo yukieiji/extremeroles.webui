@@ -1,12 +1,11 @@
 import { OptionPairedSliderControl } from "../../components/blocks/OptionPairedSliderControl";
 import { OptionItem } from "../../components/parts/OptionItem";
 import { OptionNameDisplay } from "../../components/parts/OptionNameDisplay";
-import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
 import { useOptionData } from "../../hooks/useOptionData";
 import { useUpdateExROptionSelection } from "../../logics/api.store";
 import type { OptionData } from "../../type";
 
-interface ExRPairedOptionRowProps {
+interface ExRPairedOptionItemProps {
 	baseName: string;
 	minData: OptionData;
 	maxData: OptionData;
@@ -15,11 +14,11 @@ interface ExRPairedOptionRowProps {
 /**
  * 最小・最大ペアのオプションを1行で表示するコンポーネント
  */
-export function ExRPairedOptionRow({
+export function ExRPairedOptionItem({
 	baseName,
 	minData,
 	maxData,
-}: ExRPairedOptionRowProps) {
+}: ExRPairedOptionItemProps) {
 	const minUniqueOptionId = minData.uniqueOptionId;
 	const maxUniqueOptionId = maxData.uniqueOptionId;
 	const minValueData = useOptionData(minUniqueOptionId);
@@ -41,7 +40,7 @@ export function ExRPairedOptionRow({
 		});
 	};
 
-	const content = (
+	return (
 		<OptionItem className="min-h-18">
 			<div className="flex-1 min-w-0">
 				<span className="text-sm font-medium text-gray-200 wrap-break-words">
@@ -62,12 +61,5 @@ export function ExRPairedOptionRow({
 				/>
 			</div>
 		</OptionItem>
-	);
-
-	return (
-		<OptionRowContainer
-			leading={<span className="text-gray-500 select-none text-xs">・</span>}
-			content={content}
-		/>
 	);
 }
