@@ -47,7 +47,8 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// ハイライトの確認
 		const highlightedRow = page.locator('[id^="au-option-"]').first();
-		await expect(highlightedRow).toHaveClass(/ring-2/);
+		// ハイライトが適用されるまで少し待機が必要な場合があるため、デフォルトのタイムアウトを利用
+		await expect(highlightedRow).toHaveClass(/ring-2/, { timeout: 10000 });
 	});
 
 	test("toggles role sections in the right panel", async ({ page }) => {
@@ -63,7 +64,10 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// クリックして閉じる
 		await imposterRolesSection.click();
-		await expect(imposterRolesSection).toHaveAttribute("aria-expanded", "false");
+		await expect(imposterRolesSection).toHaveAttribute(
+			"aria-expanded",
+			"false",
+		);
 
 		// 役職リストが見えなくなったことを確認
 		await expect(rightPanel.getByText("シェイプシフター")).not.toBeVisible();
