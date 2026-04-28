@@ -1,0 +1,37 @@
+import type { ReactNode } from "react";
+
+interface ViewerOptionRowProps {
+	title: string;
+	value: ReactNode;
+	onDoubleClick: () => void;
+	testId?: string;
+}
+
+/**
+ * 閲覧モード用のコンパクトな設定項目行
+ */
+export function ViewerOptionRow({
+	title,
+	value,
+	onDoubleClick,
+	testId,
+}: ViewerOptionRowProps) {
+	return (
+		<button
+			type="button"
+			data-testid={testId}
+			onDoubleClick={onDoubleClick}
+			className="w-full flex justify-between items-center py-1 px-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2 group"
+			title="ダブルクリックで設定場所へ移動"
+		>
+			<span className="text-xs text-gray-300 truncate flex-1 text-left group-hover:text-white transition-colors">
+				{title}
+			</span>
+			<div className="flex items-center gap-1 shrink-0">
+				<div className="text-xs text-blue-400 font-medium text-right">
+					{value}
+				</div>
+			</div>
+		</button>
+	);
+}
