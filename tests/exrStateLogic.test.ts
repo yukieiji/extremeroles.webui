@@ -460,7 +460,7 @@ describe("exrStateLogic", () => {
 		expect(result.valueDataChanged).toBe(false);
 	});
 
-	it("should not crash when Childs is missing or null", () => {
+	it("should not crash when Childs is missing", () => {
 		const catId = 1000;
 		const tabId = OptionTab.CrewmateTab;
 		exrOptionMetaData.categories[catId] = { name: "Cat", tabId };
@@ -480,15 +480,6 @@ describe("exrStateLogic", () => {
 							RangeMeta: { Type: "Int32", Values: [0] },
 							// Childs is explicitly missing here
 						} as ExROptionDto,
-						{
-							Id: 2,
-							IsActive: true,
-							TranslatedName: "",
-							Selection: 0,
-							Format: "",
-							RangeMeta: { Type: "Int32", Values: [0] },
-							Childs: null,
-						} as ExROptionDto,
 					],
 				},
 				ChainUpdatedOption: [],
@@ -498,9 +489,6 @@ describe("exrStateLogic", () => {
 		const result = getUpdatedExRState(updateResults, {}, {});
 		expect(
 			result.nextValueData[getUniqueOptionId(tabId, catId, 1)],
-		).toBeDefined();
-		expect(
-			result.nextValueData[getUniqueOptionId(tabId, catId, 2)],
 		).toBeDefined();
 	});
 });

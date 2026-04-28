@@ -95,7 +95,7 @@ export interface ExROptionDto {
 	Selection: number;
 	Format: string;
 	RangeMeta: IOptionRangeMeta;
-	Childs?: ExROptionDto[] | null;
+	Childs?: ExROptionDto[];
 }
 
 // 再帰的な定義のため z.lazy を使用
@@ -107,7 +107,7 @@ export const ExROptionDtoSchema: z.ZodType<ExROptionDto> = z.lazy(() =>
 		Selection: z.number(),
 		Format: z.string(),
 		RangeMeta: IOptionRangeMetaSchema,
-		Childs: z.array(ExROptionDtoSchema).nullish(),
+		Childs: z.array(ExROptionDtoSchema).optional(),
 	}),
 );
 
