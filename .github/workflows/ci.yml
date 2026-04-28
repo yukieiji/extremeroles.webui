@@ -39,7 +39,7 @@ jobs:
       if: always() 
       uses: davelosert/vitest-coverage-report-action@v2
       with:
-        json-summary-path: coverage/vitest/coverage-summary.json
+        json-summary-path: coverage/coverage-summary.json
 
   e2e:
     timeout-minutes: 60
