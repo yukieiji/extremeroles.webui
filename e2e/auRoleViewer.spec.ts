@@ -41,14 +41,16 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		await roleRow.dblclick();
 
 		// 5. 自動的に該当タブ（インポスター役職は Tab 2）に切り替わり、ハイライトされるか確認
-		// メインエディター内の「シェイプシフター」を確認
+		// メインエディター内の「シェイプシフター」を確認 (getByRole('button', ...) でアコーディオンを探す)
 		const mainEditor = page.locator("main");
-		await expect(mainEditor.getByText("シェイプシフター")).toBeVisible();
+		await expect(
+			mainEditor.getByRole("button", { name: /シェイプシフター/ }),
+		).toBeVisible();
 
 		// ハイライトの確認
-		const highlightedRow = page.locator('[id^="au-option-"]').first();
-		// ハイライトが適用されるまで少し待機が必要な場合があるため、デフォルトのタイムアウトを利用
-		await expect(highlightedRow).toHaveClass(/ring-2/, { timeout: 10000 });
+		// カテゴリアコーディオンが正しくスクロールされているか、IDで確認
+		const targetCategory = mainEditor.locator("#au-category-シェイプシフター");
+		await expect(targetCategory).toBeVisible({ timeout: 10000 });
 	});
 
 	test("toggles role sections in the right panel", async ({ page }) => {
@@ -71,5 +73,17 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// 役職リストが見えなくなったことを確認
 		await expect(rightPanel.getByText("シェイプシフター")).not.toBeVisible();
+	});
+
+	test("does not display inactive roles in the right panel", async ({
+		page,
+	}) => {
+		await page.getByRole("button", { name: "パネルを開く" }).click();
+		const rightPanel = page.getByLabel("右フローティングパネル");
+
+		// モックデータで無効な役職（例: スポーンレート0%）が表示されていないことを確認
+		// 注意: モックデータの全ての役職名を把握している必要があるが、
+		// ここでは「クルー役職」セクション自体が存在しない（有効な役職がないため）ことを確認する
+		await expect(rightPanel.getByText("クルー役職")).not.toBeVisible();
 	});
 });

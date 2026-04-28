@@ -21,6 +21,7 @@ export function RoleCategoryAccordion({
 }: RoleCategoryAccordionProp) {
 	return (
 		<div
+			id={typeof text === "string" ? `au-category-${text}` : undefined}
 			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
 			data-testid="role-category"
 		>
