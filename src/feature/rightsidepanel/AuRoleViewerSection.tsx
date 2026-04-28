@@ -42,6 +42,10 @@ export function AuRoleViewerSection({
 		const chanceValue = chanceMeta.range[auValue[chanceOptionId] ?? 0];
 		const maxCountValue = maxCountMeta.range[auValue[maxCountOptionId] ?? 0];
 
+		if (chanceValue === undefined || maxCountValue === undefined) {
+			return false;
+		}
+
 		// スポーンレートが0%より大きく、かつスポーン数が0より大きいもの
 		return Number(chanceValue) > 0 && Number(maxCountValue) > 0;
 	});

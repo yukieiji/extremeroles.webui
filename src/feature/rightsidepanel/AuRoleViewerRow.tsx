@@ -1,7 +1,6 @@
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
-import type { AuOptionId } from "../../type";
 import { useStore } from "../../useStore";
 
 interface AuRoleViewerRowProps {
@@ -35,6 +34,10 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 
 	const chanceValue = chanceMeta.range[auValue[chanceOptionId] ?? 0];
 	const maxCountValue = maxCountMeta.range[auValue[maxCountOptionId] ?? 0];
+
+	if (chanceValue === undefined || maxCountValue === undefined) {
+		return null;
+	}
 
 	return (
 		<div className="border-white border-b">

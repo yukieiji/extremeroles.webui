@@ -9,10 +9,18 @@ import { AuTab0MapCategory } from "./AuTab0MapCategory";
  */
 export function AuOptionViewer() {
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
-	const isAuCrewmateRolesOpen = useStore((state) => state.isAuCrewmateRolesOpen);
-	const toggleAuCrewmateRoles = useStore((state) => state.toggleAuCrewmateRoles);
-	const isAuImpostorRolesOpen = useStore((state) => state.isAuImpostorRolesOpen);
-	const toggleAuImpostorRoles = useStore((state) => state.toggleAuImpostorRoles);
+	const isAuCrewmateRolesOpen = useStore(
+		(state) => state.isAuCrewmateRolesOpen,
+	);
+	const toggleAuCrewmateRoles = useStore(
+		(state) => state.toggleAuCrewmateRoles,
+	);
+	const isAuImpostorRolesOpen = useStore(
+		(state) => state.isAuImpostorRolesOpen,
+	);
+	const toggleAuImpostorRoles = useStore(
+		(state) => state.toggleAuImpostorRoles,
+	);
 
 	return (
 		<div className="flex flex-col gap-1">
