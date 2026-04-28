@@ -25,7 +25,9 @@ export function AuRoleViewerSection({
 
 	const activeRoleCategoryIds = tabCategoryIds.filter((categoryId) => {
 		const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-		if (!categoryMeta) return false;
+		if (!categoryMeta) {
+			return false;
+		}
 
 		const chanceOptionId = categoryMeta.options[0];
 		const maxCountOptionId = categoryMeta.options[1];
@@ -33,7 +35,9 @@ export function AuRoleViewerSection({
 		const chanceMeta = auOptionMetaData.options[chanceOptionId];
 		const maxCountMeta = auOptionMetaData.options[maxCountOptionId];
 
-		if (!chanceMeta || !maxCountMeta) return false;
+		if (!chanceMeta || !maxCountMeta) {
+			return false;
+		}
 
 		const chanceValue = chanceMeta.range[auValue[chanceOptionId] ?? 0];
 		const maxCountValue = maxCountMeta.range[auValue[maxCountOptionId] ?? 0];

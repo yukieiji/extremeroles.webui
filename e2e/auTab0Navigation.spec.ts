@@ -34,7 +34,7 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		const imposterCategory = page
 			.getByLabel("右フローティングパネル")
 			.getByRole("button", {
-				name: /Collapse インポスター|Expand インポスター/,
+				name: /^(Collapse|Expand) インポスター$/,
 			});
 		if ((await imposterCategory.getAttribute("aria-expanded")) === "false") {
 			await imposterCategory.click();

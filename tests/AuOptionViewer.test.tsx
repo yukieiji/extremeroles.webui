@@ -16,7 +16,7 @@ describe("AuOptionViewer", () => {
 		resetApiCache();
 		resetAuOptionMetaData();
 		useStore.getState().resetAll();
-		// useStore.getState().resetViewer(); // もし resetViewer がない場合は削除または修正が必要
+		useStore.getState().resetViewer();
 		// 翻訳データの初期化
 		translationMetaData.booleanTransData = ["OFF", "ON"];
 
@@ -156,7 +156,9 @@ describe("AuOptionViewer", () => {
 		});
 
 		const row = screen.getByText("Map").closest("button");
-		if (!row) throw new Error("Row not found");
+		if (!row) {
+			throw new Error("Row not found");
+		}
 
 		fireEvent.doubleClick(row);
 
