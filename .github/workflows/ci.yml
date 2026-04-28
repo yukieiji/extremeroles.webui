@@ -27,7 +27,11 @@ jobs:
       run: pnpm check
 
     - name: Run unit tests
-      run: pnpm test -- --run
+      run: pnpm test -- --run --coverage
+    - name: 'Report Coverage'
+      uses: davelosert/vitest-coverage-report-action@v2
+      with:
+        json-summary-path: coverage/vitest/coverage-summary.json
 
   e2e:
     timeout-minutes: 60

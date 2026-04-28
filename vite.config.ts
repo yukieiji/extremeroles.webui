@@ -24,6 +24,12 @@ export default defineConfig({
     restoreMocks: true,
     unstubGlobals: true,
     unstubEnvs: true,
+    coverage: {
+      reporter: ['text', 'html', 'json-summary'],
+      thresholds: {
+        statements: 80,
+      },
+    }
   },
   plugins: [
     react(),
