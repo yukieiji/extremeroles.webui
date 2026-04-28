@@ -1,3 +1,5 @@
+import { SIDEBAR_CLOSE_ARIA, SIDEBAR_OPEN_ARIA } from "../../noTrans";
+
 interface OptionGroupToggleSidebarToggleButtonProps {
 	onClick: () => void;
 	isOpen: boolean;
@@ -15,7 +17,7 @@ export function OptionGroupToggleSidebarToggleButton({
 			type="button"
 			onClick={onClick}
 			className="p-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
-			aria-label={isOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
+			aria-label={isOpen ? SIDEBAR_CLOSE_ARIA : SIDEBAR_OPEN_ARIA}
 		>
 			{isOpen ? "◀" : "▶"}
 		</button>

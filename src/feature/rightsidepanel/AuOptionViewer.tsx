@@ -1,3 +1,4 @@
+import { CREW_ROLES_TITLE, IMPOSTOR_ROLES_TITLE } from "../../noTrans";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuRoleViewerSection } from "./AuRoleViewerSection";
@@ -35,13 +36,13 @@ export function AuOptionViewer() {
 			})}
 			<AuRoleViewerSection
 				tabId={1}
-				title="クルー役職"
+				title={CREW_ROLES_TITLE}
 				isOpen={isAuCrewmateRolesOpen}
 				onToggle={toggleAuCrewmateRoles}
 			/>
 			<AuRoleViewerSection
 				tabId={2}
-				title="インポスター役職"
+				title={IMPOSTOR_ROLES_TITLE}
 				isOpen={isAuImpostorRolesOpen}
 				onToggle={toggleAuImpostorRoles}
 			/>

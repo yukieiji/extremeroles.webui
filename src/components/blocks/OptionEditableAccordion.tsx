@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { CLOSE, OPEN } from "../../noTrans";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
@@ -33,7 +34,7 @@ export function OptionEditableAccordion({
 							onClick={onToggle}
 							className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full"
 							aria-expanded={isOpen}
-							aria-label={isOpen ? "閉じる" : "開く"}
+							aria-label={isOpen ? CLOSE : OPEN}
 						>
 							<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
 						</button>

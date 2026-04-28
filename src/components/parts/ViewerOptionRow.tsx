@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { VIEWER_ROW_TITLE } from "../../noTrans";
 
 interface ViewerOptionRowProps {
 	title: string;
@@ -22,7 +23,7 @@ export function ViewerOptionRow({
 			data-testid={testId}
 			onDoubleClick={onDoubleClick}
 			className="w-full flex justify-between items-center py-1 px-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2 group"
-			title="ダブルクリックで設定場所へ移動"
+			title={VIEWER_ROW_TITLE}
 		>
 			<span className="text-sm text-gray-300 truncate flex-1 text-left group-hover:text-white transition-colors">
 				{title}

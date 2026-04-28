@@ -1,3 +1,5 @@
+import { CANCEL } from "../../noTrans";
+
 interface ConfirmDialogProps {
 	title: string;
 	message: string;
@@ -28,7 +30,7 @@ export function ConfirmDialog({
 					onClick={onCancel}
 					className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
 				>
-					キャンセル
+					{CANCEL}
 				</button>
 				<button
 					type="button"

@@ -1,4 +1,14 @@
 import { use, useEffect } from "react";
+import {
+	AU_SETTINGS_TITLE,
+	CLOSE,
+	EXR_CONTENT_TEMP,
+	EXR_SETTINGS_TITLE,
+	PANEL_CLOSE_ARIA,
+	PANEL_OPEN_ARIA,
+	RIGHT_PANEL_ARIA,
+	SETTING_VALUES_TITLE,
+} from "../../noTrans";
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { getAllOptions } from "../../logics/api.store";
 import { useStore } from "../../useStore";
@@ -52,7 +62,7 @@ export function RightFloatingPanel() {
           cursor-pointer
           ${isRightPanelOpen ? "right-80" : "right-0"}
         `}
-				aria-label={isRightPanelOpen ? "パネルを閉じる" : "パネルを開く"}
+				aria-label={isRightPanelOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
 			>
 				<span className="text-sm font-bold">
 					{isRightPanelOpen ? "▶" : "◀"}
@@ -66,7 +76,7 @@ export function RightFloatingPanel() {
           transition-transform duration-300 ease-in-out transform
           ${isRightPanelOpen ? "translate-x-0" : "translate-x-full"}
         `}
-				aria-label="右フローティングパネル"
+				aria-label={RIGHT_PANEL_ARIA}
 			>
 				<div className="flex flex-col h-full">
 					<div className="flex items-center justify-between p-4 border-b border-gray-100">
@@ -74,24 +84,24 @@ export function RightFloatingPanel() {
 					</div>
 					<div className="flex-1 overflow-y-auto p-3">
 						<CompactAccordion
-							title="設定値"
+							title={SETTING_VALUES_TITLE}
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
 						>
 							<div className="flex flex-col">
 								<CompactAccordion
-									title="AmongUsの設定"
+									title={AU_SETTINGS_TITLE}
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
 								>
 									<AuOptionViewer />
 								</CompactAccordion>
 								<CompactAccordion
-									title="ExRの設定"
+									title={EXR_SETTINGS_TITLE}
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
 								>
-									<p className="text-gray-400 text-sm">ExRの設定コンテンツ</p>
+									<p className="text-gray-400 text-sm">{EXR_CONTENT_TEMP}</p>
 								</CompactAccordion>
 							</div>
 						</CompactAccordion>
@@ -105,7 +115,7 @@ export function RightFloatingPanel() {
 					type="button"
 					className="fixed inset-0 bg-black/20 z-30 cursor-default"
 					onClick={toggleRightPanel}
-					aria-label="閉じる"
+					aria-label={CLOSE}
 				/>
 			)}
 		</>
