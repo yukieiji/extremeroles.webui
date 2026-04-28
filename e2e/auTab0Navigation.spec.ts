@@ -33,11 +33,10 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 右パネル内のアコーディオンを指定する
 		const imposterCategory = page
 			.getByLabel("右フローティングパネル")
-			.getByRole("button", { name: "インポスター", exact: true });
-		if (
-			(await imposterCategory.isVisible()) &&
-			(await imposterCategory.getAttribute("aria-expanded")) === "false"
-		) {
+			.getByRole("button", {
+				name: /Collapse インポスター|Expand インポスター/,
+			});
+		if ((await imposterCategory.getAttribute("aria-expanded")) === "false") {
 			await imposterCategory.click();
 		}
 
