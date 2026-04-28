@@ -83,15 +83,7 @@ export function RightFloatingPanel() {
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
 								>
-									<Suspense
-										fallback={
-											<div className="flex items-center justify-center p-4">
-												<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-											</div>
-										}
-									>
-										<AuTab0Viewer />
-									</Suspense>
+									<AuTab0Viewer />
 								</CompactAccordion>
 								<CompactAccordion
 									title="ExRの設定"
