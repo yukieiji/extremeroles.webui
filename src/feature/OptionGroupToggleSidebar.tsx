@@ -34,12 +34,6 @@ export function OptionGroupToggleSidebar() {
 	const setSelectedTab = useStore((state) => {
 		return state.setSelectedTab;
 	});
-	const resetAll = useStore((state) => {
-		return state.resetAll;
-	});
-	const resetViewer = useStore((state) => {
-		return state.resetViewer;
-	});
 	const setIsSidebarPending = useStore((state) => {
 		return state.setIsSidebarPending;
 	});

@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
-import {
-	PRESET_INPUT_PLACEHOLDER,
-	PRESET_SELECT_ARIA,
-	PRESET_SWITCH_MESSAGE,
-	PRESET_SWITCH_TITLE,
-	format,
-} from "../../noTrans";
 import { useBackendUpdate } from "../../hooks/useBackend";
 import { useOptionData } from "../../hooks/useOptionData";
 import { updateExrOption } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import {
+	format,
+	PRESET_INPUT_PLACEHOLDER,
+	PRESET_SELECT_ARIA,
+	PRESET_SWITCH_MESSAGE,
+	PRESET_SWITCH_TITLE,
+} from "../../noTrans";
 import { useStore } from "../../useStore";
 
 /**

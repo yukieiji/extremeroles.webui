@@ -1,4 +1,6 @@
 import { use, useEffect } from "react";
+import { CompactAccordion } from "../../components/blocks/CompactAccordion";
+import { getAllOptions } from "../../logics/api.store";
 import {
 	AU_SETTINGS_TITLE,
 	CLOSE,
@@ -9,8 +11,6 @@ import {
 	RIGHT_PANEL_ARIA,
 	SETTING_VALUES_TITLE,
 } from "../../noTrans";
-import { CompactAccordion } from "../../components/blocks/CompactAccordion";
-import { getAllOptions } from "../../logics/api.store";
 import { useStore } from "../../useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 

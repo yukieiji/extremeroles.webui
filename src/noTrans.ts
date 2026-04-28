@@ -13,7 +13,8 @@ export const ROLE_SPAWN_COUNT = "数";
 export const CLOSE = "閉じる";
 export const OPEN = "開く";
 export const PRESET_SWITCH_TITLE = "プリセットの切り替え";
-export const PRESET_SWITCH_MESSAGE = "プリセットを「{0}」から「{1}」に切り替えます";
+export const PRESET_SWITCH_MESSAGE =
+	"プリセットを「{0}」から「{1}」に切り替えます";
 export const PRESET_INPUT_PLACEHOLDER = "プリセット名を入力...";
 export const PRESET_SELECT_ARIA = "プリセットを選択";
 export const PANEL_CLOSE_ARIA = "パネルを閉じる";
