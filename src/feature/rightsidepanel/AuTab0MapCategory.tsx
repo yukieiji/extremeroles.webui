@@ -2,28 +2,48 @@ import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
 
+interface AuTab0MapCategoryProps {
+	categoryId: number;
+}
+
 /**
  * Map用カテゴリコンポーネント (最初の項目がヘッダーに統合される)
  */
-export function AuTab0MapCategory({ categoryId }: { categoryId: number }) {
+export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	const auValue = useStore((state) => state.auValue);
-	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
-	const setSelectedTab = useStore((state) => state.setSelectedTab);
-	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
-	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
-	const openedAuCategoryIds = useStore((state) => state.openedAuCategoryIds);
-	const setHighlightedAuOptionId = useStore(
-		(state) => state.setHighlightedAuOptionId,
-	);
+	const auValue = useStore((state) => {
+		return state.auValue;
+	});
+	const setRightPanelOpen = useStore((state) => {
+		return state.setRightPanelOpen;
+	});
+	const setSelectedTab = useStore((state) => {
+		return state.setSelectedTab;
+	});
+	const setSelectedAuTabId = useStore((state) => {
+		return state.setSelectedAuTabId;
+	});
+	const toggleAuCategory = useStore((state) => {
+		return state.toggleAuCategory;
+	});
+	const openedAuCategoryIds = useStore((state) => {
+		return state.openedAuCategoryIds;
+	});
+	const setHighlightedAuOptionId = useStore((state) => {
+		return state.setHighlightedAuOptionId;
+	});
 
-	if (!categoryMeta) return null;
+	if (!categoryMeta) {
+		return null;
+	}
 
 	const mapOptionId = categoryMeta.options[0];
 	const otherOptionIds = categoryMeta.options.slice(1);
 	const mapOptionMeta = auOptionMetaData.options[mapOptionId];
 
-	if (!mapOptionMeta) return null;
+	if (!mapOptionMeta) {
+		return null;
+	}
 
 	const mapValue = mapOptionMeta.range[auValue[mapOptionId] ?? 0];
 
@@ -67,13 +87,15 @@ export function AuTab0MapCategory({ categoryId }: { categoryId: number }) {
 			</button>
 			{otherOptionIds.length > 0 && (
 				<div className="p-1 bg-gray-900 space-y-0.5">
-					{otherOptionIds.map((optionId) => (
-						<AuTab0OptionRow
-							key={optionId}
-							optionId={optionId}
-							categoryId={categoryId}
-						/>
-					))}
+					{otherOptionIds.map((optionId) => {
+						return (
+							<AuTab0OptionRow
+								key={optionId}
+								optionId={optionId}
+								categoryId={categoryId}
+							/>
+						);
+					})}
 				</div>
 			)}
 		</div>

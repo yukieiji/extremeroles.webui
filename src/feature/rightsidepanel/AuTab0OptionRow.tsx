@@ -1,9 +1,13 @@
-import { ColoredText } from "../../components/parts/ColoredText";
-import { OptionFormat } from "../../components/parts/OptionFormat";
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { auOptionMetaData, translationMetaData } from "../../logics/api";
+import { auOptionMetaData } from "../../logics/api";
 import type { AuOptionId } from "../../type";
 import { useStore } from "../../useStore";
+import { AuTab0OptionValue } from "./AuTab0OptionValue";
+
+interface AuTab0OptionRowProps {
+	optionId: AuOptionId;
+	categoryId: number;
+}
 
 /**
  * 各設定項目の行コンポーネント
@@ -11,23 +15,36 @@ import { useStore } from "../../useStore";
 export function AuTab0OptionRow({
 	optionId,
 	categoryId,
-}: { optionId: AuOptionId; categoryId: number }) {
-	const setSelectedTab = useStore((state) => state.setSelectedTab);
-	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
-	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
-	const openedAuCategoryIds = useStore((state) => state.openedAuCategoryIds);
-	const setHighlightedAuOptionId = useStore(
-		(state) => state.setHighlightedAuOptionId,
-	);
-	const auValue = useStore((state) => state.auValue);
-	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
+}: AuTab0OptionRowProps) {
+	const setSelectedTab = useStore((state) => {
+		return state.setSelectedTab;
+	});
+	const setSelectedAuTabId = useStore((state) => {
+		return state.setSelectedAuTabId;
+	});
+	const toggleAuCategory = useStore((state) => {
+		return state.toggleAuCategory;
+	});
+	const openedAuCategoryIds = useStore((state) => {
+		return state.openedAuCategoryIds;
+	});
+	const setHighlightedAuOptionId = useStore((state) => {
+		return state.setHighlightedAuOptionId;
+	});
+	const auValue = useStore((state) => {
+		return state.auValue;
+	});
+	const setRightPanelOpen = useStore((state) => {
+		return state.setRightPanelOpen;
+	});
 
 	const optionMeta = auOptionMetaData.options[optionId];
-	if (!optionMeta) return null;
+	if (!optionMeta) {
+		return null;
+	}
 
 	const selection = auValue[optionId] ?? 0;
 	const value = optionMeta.range[selection];
-	const isBoolean = typeof value === "boolean";
 
 	const handleDoubleClick = () => {
 		setRightPanelOpen(false);
@@ -49,32 +66,10 @@ export function AuTab0OptionRow({
 		}, 100);
 	};
 
-	const valueDisplay = (
-		<div className="flex items-center gap-1 shrink-0">
-			<span className="text-xs text-blue-400 font-medium text-right">
-				{isBoolean ? (
-					<ColoredText
-						text={
-							translationMetaData.booleanTransData[value ? 1 : 0] ||
-							(value ? "ON" : "OFF")
-						}
-					/>
-				) : (
-					value.toString()
-				)}
-			</span>
-			{!isBoolean && (
-				<div className="text-[10px] scale-90 origin-right">
-					<OptionFormat format={optionMeta.format} />
-				</div>
-			)}
-		</div>
-	);
-
 	return (
 		<ViewerOptionRow
 			title={optionMeta.title}
-			value={valueDisplay}
+			value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
 			onDoubleClick={handleDoubleClick}
 			testId={`right-panel-option-${optionId}`}
 		/>

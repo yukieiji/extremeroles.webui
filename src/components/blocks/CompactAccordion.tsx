@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 
-export interface CompactAccordionProps {
+interface CompactAccordionProps {
 	title: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
