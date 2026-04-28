@@ -4,6 +4,13 @@ on:
     branches: main
   pull_request:
     branches: main
+
+permissions:
+  # Required to checkout the code
+  contents: read
+  # Required to put a comment into the pull-request
+  pull-requests: write
+
 jobs:
   test:
     timeout-minutes: 10
@@ -27,8 +34,9 @@ jobs:
       run: pnpm check
 
     - name: Run unit tests
-      run: pnpm test -- --run --coverage
+      run: pnpm test --coverage
     - name: 'Report Coverage'
+      if: always() 
       uses: davelosert/vitest-coverage-report-action@v2
       with:
         json-summary-path: coverage/vitest/coverage-summary.json
