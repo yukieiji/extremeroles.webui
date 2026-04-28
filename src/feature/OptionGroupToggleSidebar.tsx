@@ -1,6 +1,6 @@
 import { useEffect, useTransition } from "react";
-import { OPTION_SIDEBAR_ARIA } from "../noTrans";
 import { OptionGroupToggleSidebarToggleButton } from "../components/parts/OptionGroupToggleSidebarToggleButton";
+import { OPTION_SIDEBAR_ARIA } from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
 import { useStore } from "../useStore";
 
@@ -63,18 +63,6 @@ export function OptionGroupToggleSidebar() {
 		}
 	}, [isPending, setIsSidebarPending]);
 
-	const handleReset = () => {
-		// 実際にはAPI側でキャッシュリセットする必要があるが
-		// ここではグローバルに公開されたリセット関数を呼ぶ想定
-		// @ts-expect-error - テスト用
-		if (window.resetApp) {
-			// @ts-expect-error - テスト用
-			window.resetApp();
-		}
-		resetAll();
-		resetViewer();
-	};
-
 	return (
 		<aside
 			className={`
@@ -84,16 +72,6 @@ export function OptionGroupToggleSidebar() {
 			aria-label={OPTION_SIDEBAR_ARIA}
 		>
 			<div className="flex justify-between items-center p-2 border-b border-gray-200">
-				{import.meta.env.DEV && (
-					<button
-						type="button"
-						onClick={handleReset}
-						className="text-[10px] bg-red-100 text-red-600 px-1 rounded hover:bg-red-200"
-						data-testid="reset-button"
-					>
-						Reset
-					</button>
-				)}
 				<div className={isSidebarOpen ? "" : "flex-1"} />
 				<OptionGroupToggleSidebarToggleButton
 					onClick={toggleSidebar}
