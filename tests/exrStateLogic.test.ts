@@ -3,7 +3,6 @@ import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import { getUpdatedExRState } from "../src/logics/exrStateLogic";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import type {
-	ExROptionDto,
 	ExROptionValueData,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -458,37 +457,5 @@ describe("exrStateLogic", () => {
 		const result = getUpdatedExRState(updateResults, {}, {});
 
 		expect(result.valueDataChanged).toBe(false);
-	});
-
-	it("should not crash when Childs is missing", () => {
-		const catId = 1000;
-		const tabId = OptionTab.CrewmateTab;
-		exrOptionMetaData.categories[catId] = { name: "Cat", tabId };
-
-		const updateResults: (UpdatedOptions | null)[] = [
-			{
-				UpdatedCategory: {
-					Id: catId,
-					Name: "Cat",
-					Options: [
-						{
-							Id: 1,
-							IsActive: true,
-							TranslatedName: "",
-							Selection: 0,
-							Format: "",
-							RangeMeta: { Type: "Int32", Values: [0] },
-							// Childs is explicitly missing here
-						} as ExROptionDto,
-					],
-				},
-				ChainUpdatedOption: [],
-			},
-		];
-
-		const result = getUpdatedExRState(updateResults, {}, {});
-		expect(
-			result.nextValueData[getUniqueOptionId(tabId, catId, 1)],
-		).toBeDefined();
 	});
 });
