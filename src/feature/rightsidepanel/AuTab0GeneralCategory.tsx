@@ -27,7 +27,7 @@ export function AuTab0GeneralCategory({
 
 	return (
 		<CompactAccordion
-			title={<span className="text-sm">{categoryMeta.name}</span>}
+			title={<span className="text-base">{categoryMeta.name}</span>}
 			isOpen={openedAuTab0CategoryIds[categoryId] ?? true}
 			onToggle={() => {
 				toggleAuTab0Category(categoryId);

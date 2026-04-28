@@ -43,11 +43,11 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 			>
 				<div className="flex items-center gap-2">
 					<div className="w-4 h-4" />
-					<span className="font-semibold text-gray-200 text-sm">
+					<span className="font-semibold text-gray-200 text-base">
 						{mapOptionMeta.title}
 					</span>
 				</div>
-				<span className="text-sm text-blue-400 font-medium">
+				<span className="text-sm text-blue-400 font-medium px-2">
 					{mapValue.toString()}
 				</span>
 			</button>

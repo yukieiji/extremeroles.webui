@@ -19,7 +19,7 @@ export function CompactAccordion({
 	children,
 }: CompactAccordionProps) {
 	return (
-		<div className="border border-gray-700 rounded-lg overflow-hidden mb-1">
+		<div className="border-gray-700 rounded-lg border overflow-hidden mb-1">
 			<button
 				type="button"
 				onClick={onToggle}
@@ -27,12 +27,12 @@ export function CompactAccordion({
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg className="w-4 h-4 text-gray-400" isOpen={isOpen} />
-				<div className="font-semibold text-gray-200 flex-1">{title}</div>
+				<div className="font-semibold text-gray-200 flex-1 text-lg">{title}</div>
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
 					{isOpen && (
-						<div className="p-2 bg-gray-900 border-t border-gray-700">
+						<div className="py-2 px-1.5 bg-gray-900 border-gray-700">
 							{children}
 						</div>
 					)}

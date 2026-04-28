@@ -2,6 +2,7 @@ import { Suspense, useEffect } from "react";
 import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
 import { useStore } from "../../useStore";
 import { AuTab0Viewer } from "./AuTab0Viewer";
+import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 
 /**
  * 右フローティングパネルコンポーネント
@@ -70,14 +71,14 @@ export function RightFloatingPanel() {
 					<div className="flex items-center justify-between p-4 border-b border-gray-100">
 						<h2 className="text-lg font-semibold">Right Panel</h2>
 					</div>
-					<div className="flex-1 overflow-y-auto p-4">
-						<OptionEditorAccordion
+					<div className="flex-1 overflow-y-auto p-3">
+						<CompactAccordion
 							title="設定値"
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
 						>
 							<div className="flex flex-col">
-								<OptionEditorAccordion
+								<CompactAccordion
 									title="AmongUsの設定"
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
@@ -91,16 +92,16 @@ export function RightFloatingPanel() {
 									>
 										<AuTab0Viewer />
 									</Suspense>
-								</OptionEditorAccordion>
-								<OptionEditorAccordion
+								</CompactAccordion>
+								<CompactAccordion
 									title="ExRの設定"
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
 								>
 									<p className="text-gray-400 text-sm">ExRの設定コンテンツ</p>
-								</OptionEditorAccordion>
+								</CompactAccordion>
 							</div>
-						</OptionEditorAccordion>
+						</CompactAccordion>
 					</div>
 				</div>
 			</aside>
