@@ -56,6 +56,7 @@ export function OptionSingleSlider({
 				value={selection}
 				onChange={handleSliderChange}
 				disabled={disabled}
+				aria-label={label}
 				className="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 			/>
 		</div>

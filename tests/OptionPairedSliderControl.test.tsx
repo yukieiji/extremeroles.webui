@@ -48,7 +48,7 @@ describe("OptionPairedSliderControl", () => {
 			/>,
 		);
 
-		const minSlider = screen.getAllByRole("slider")[0];
+		const minSlider = screen.getByRole("slider", { name: "Min" });
 		// Move min to index 4 (value 20), which is greater than max (index 3, value 15)
 		fireEvent.change(minSlider, { target: { value: "4" } });
 
@@ -71,7 +71,7 @@ describe("OptionPairedSliderControl", () => {
 			/>,
 		);
 
-		const maxSlider = screen.getAllByRole("slider")[1];
+		const maxSlider = screen.getByRole("slider", { name: "Max" });
 		// Move max to index 0 (value 0), which is less than min (index 1, value 5)
 		fireEvent.change(maxSlider, { target: { value: "0" } });
 

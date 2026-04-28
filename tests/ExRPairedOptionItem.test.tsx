@@ -93,9 +93,8 @@ describe("ExRPairedOptionItem", () => {
 			/>,
 		);
 
-		// Find the min slider. In OptionPairedSliderControl, there are two ranges.
-		const sliders = screen.getAllByRole("slider");
-		const minSlider = sliders[0];
+		// Find the min slider by its label
+		const minSlider = screen.getByRole("slider", { name: "最小" });
 
 		fireEvent.change(minSlider, { target: { value: "3" } });
 
@@ -119,8 +118,8 @@ describe("ExRPairedOptionItem", () => {
 			/>,
 		);
 
-		const sliders = screen.getAllByRole("slider");
-		const maxSlider = sliders[1];
+		// Find the max slider by its label
+		const maxSlider = screen.getByRole("slider", { name: "最大" });
 
 		fireEvent.change(maxSlider, { target: { value: "5" } });
 
