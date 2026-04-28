@@ -12,6 +12,20 @@
 			"recommended": true,
 			"correctness": {
 				"noReactPropAssignments": "error"
+			},
+			"style": {
+				"useBlockStatements": "error",
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"react": {
+								"importNames": ["useState", "useReducer", "useContext"],
+								"message": "Do not use useState/useReducer/useContext, plese use src/useStore"
+							}
+						}
+					}
+				}
 			}
 		}
 	}
