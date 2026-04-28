@@ -18,7 +18,9 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const auValue = useStore((state) => state.auValue);
-	const highlightedAuOptionId = useStore((state) => state.highlightedAuOptionId);
+	const highlightedAuOptionId = useStore(
+		(state) => state.highlightedAuOptionId,
+	);
 
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 	if (!categoryMeta) {

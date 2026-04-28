@@ -18,7 +18,9 @@ export function AuStandardCategoryItem({
 		(state) => state.openedAuCategoryIds[categoryId] ?? false,
 	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
-	const highlightedAuOptionId = useStore((state) => state.highlightedAuOptionId);
+	const highlightedAuOptionId = useStore(
+		(state) => state.highlightedAuOptionId,
+	);
 
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 	if (!categoryMeta) {
