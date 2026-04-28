@@ -25,6 +25,7 @@ export default defineConfig({
     unstubGlobals: true,
     unstubEnvs: true,
     coverage: {
+      provider: 'v8',
       reporter: ['text', 'html', 'json-summary'],
       thresholds: {
         statements: 80,

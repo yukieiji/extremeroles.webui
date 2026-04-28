@@ -34,7 +34,7 @@ jobs:
       run: pnpm check
 
     - name: Run unit tests
-      run: pnpm test --coverage
+      run: pnpm test --coverage --reporter=default --reporter=github-actions
     - name: 'Report Coverage'
       if: always() 
       uses: davelosert/vitest-coverage-report-action@v2
