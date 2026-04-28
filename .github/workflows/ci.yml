@@ -42,6 +42,7 @@ jobs:
         json-summary-path: coverage/coverage-summary.json
 
   e2e:
+    needs: test
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
