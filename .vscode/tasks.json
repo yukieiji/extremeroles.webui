@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "check:fix",
+            "type": "shell",
+            "command": "pnpm run check --write"
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "pnpm run test --coverage"
+        },
+        {
+            "label": "e2e",
+            "type": "shell",
+            "command": "pnpm run e2e"
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "pnpm run build"
+        },
+    ]
+}
