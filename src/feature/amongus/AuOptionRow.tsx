@@ -1,3 +1,4 @@
+import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
 import type { AuOptionId } from "../../type";
@@ -27,11 +28,10 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 	const isHighlighted = highlightedAuOptionId === auOptionId;
 
 	return (
-		<div
+		<HighlightWrapper
 			id={`au-option-${auOptionId}`}
-			className={`flex items-center justify-between py-2 border-b border-gray-800 last:border-0 hover:bg-gray-800/50 transition-all duration-500 px-2 rounded ${
-				isHighlighted ? "ring-2 ring-blue-500 bg-blue-500/10" : ""
-			}`}
+			isHighlighted={isHighlighted}
+			className="flex items-center justify-between py-2 border-b border-gray-800 last:border-0 hover:bg-gray-800/50 px-2"
 		>
 			<div className="flex flex-col flex-1 min-w-0 mr-4">
 				<span className="text-gray-200 text-sm font-medium truncate">
@@ -47,6 +47,6 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 					}}
 				/>
 			</div>
-		</div>
+		</HighlightWrapper>
 	);
 }

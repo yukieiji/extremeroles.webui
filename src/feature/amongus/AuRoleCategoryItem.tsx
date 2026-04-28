@@ -1,4 +1,5 @@
 import { RoleCategoryAccordion } from "../../components/blocks/RoleCategoryAccordion";
+import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
@@ -17,6 +18,7 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const auValue = useStore((state) => state.auValue);
+	const highlightedAuOptionId = useStore((state) => state.highlightedAuOptionId);
 
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 	if (!categoryMeta) {
@@ -37,15 +39,30 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	// 残りのオプション
 	const otherOptionIds = categoryMeta.options.slice(2);
 
+	const isHighlighted =
+		highlightedAuOptionId !== null &&
+		categoryMeta.options.includes(highlightedAuOptionId);
+
 	return (
-		<RoleCategoryAccordion
-			isOpen={isOpen}
-			onClick={() => toggleAuCategory(categoryId)}
-			text={categoryMeta.name}
-			spawnControl={<AuRoleSpawnControls categoryId={categoryId} />}
-			disable={isChanceZero}
+		<HighlightWrapper
+			isHighlighted={isHighlighted}
+			id={
+				highlightedAuOptionId === chanceOptionId ||
+				highlightedAuOptionId === categoryMeta.options[1]
+					? `au-option-${highlightedAuOptionId}`
+					: undefined
+			}
+			className="mb-2"
 		>
-			<AuCategoryOptionList optionIds={otherOptionIds} />
-		</RoleCategoryAccordion>
+			<RoleCategoryAccordion
+				isOpen={isOpen}
+				onClick={() => toggleAuCategory(categoryId)}
+				text={categoryMeta.name}
+				spawnControl={<AuRoleSpawnControls categoryId={categoryId} />}
+				disable={isChanceZero}
+			>
+				<AuCategoryOptionList optionIds={otherOptionIds} />
+			</RoleCategoryAccordion>
+		</HighlightWrapper>
 	);
 }

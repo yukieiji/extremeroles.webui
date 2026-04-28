@@ -1,4 +1,5 @@
 import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
+import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
@@ -17,14 +18,23 @@ export function AuStandardCategoryItem({
 		(state) => state.openedAuCategoryIds[categoryId] ?? false,
 	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
+	const highlightedAuOptionId = useStore((state) => state.highlightedAuOptionId);
 
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 	if (!categoryMeta) {
 		return null;
 	}
 
+	const isHighlighted =
+		highlightedAuOptionId !== null &&
+		categoryMeta.options.includes(highlightedAuOptionId);
+
 	return (
-		<div data-testid={`au-category-${categoryId}`}>
+		<HighlightWrapper
+			isHighlighted={isHighlighted}
+			data-testid={`au-category-${categoryId}`}
+			className="mb-2"
+		>
 			<OptionEditorAccordion
 				title={categoryMeta.name}
 				isOpen={isOpen}
@@ -32,6 +42,6 @@ export function AuStandardCategoryItem({
 			>
 				<AuCategoryOptionList optionIds={categoryMeta.options} />
 			</OptionEditorAccordion>
-		</div>
+		</HighlightWrapper>
 	);
 }

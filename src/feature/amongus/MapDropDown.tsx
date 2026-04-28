@@ -1,4 +1,5 @@
 import { OptionDropdownControl } from "../../components/parts/OptionDropdownControl";
+import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
 import { useStore } from "../../useStore";
@@ -46,11 +47,10 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
 			data-testid={`au-category-${categoryId}`}
 		>
-			<div
+			<HighlightWrapper
 				id={`au-option-${mapOptionId}`}
-				className={`flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 transition-all duration-500 ${
-					isHighlighted ? "ring-2 ring-blue-500 bg-blue-500/10" : ""
-				}`}
+				isHighlighted={!!isHighlighted}
+				className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700"
 			>
 				<div className="flex items-center gap-3">
 					{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
@@ -71,7 +71,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 						}}
 					/>
 				</div>
-			</div>
+			</HighlightWrapper>
 			{otherOptionIds.length > 0 && (
 				<div className="p-4 bg-gray-900 space-y-1">
 					{otherOptionIds.map((optionId) => (
