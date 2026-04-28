@@ -1,3 +1,4 @@
+import { useAuTab0Navigation } from "../../hooks/useAuTab0Navigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
@@ -14,24 +15,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const auValue = useStore((state) => {
 		return state.auValue;
 	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
-	const setSelectedTab = useStore((state) => {
-		return state.setSelectedTab;
-	});
-	const setSelectedAuTabId = useStore((state) => {
-		return state.setSelectedAuTabId;
-	});
-	const toggleAuCategory = useStore((state) => {
-		return state.toggleAuCategory;
-	});
-	const openedAuCategoryIds = useStore((state) => {
-		return state.openedAuCategoryIds;
-	});
-	const setHighlightedAuOptionId = useStore((state) => {
-		return state.setHighlightedAuOptionId;
-	});
+	const { navigateToOption } = useAuTab0Navigation();
 
 	if (!categoryMeta) {
 		return null;
@@ -47,32 +31,14 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 
 	const mapValue = mapOptionMeta.range[auValue[mapOptionId] ?? 0];
 
-	const handleHeaderDoubleClick = () => {
-		setRightPanelOpen(false);
-		setSelectedTab("Au");
-		setSelectedAuTabId(0);
-		if (!openedAuCategoryIds[categoryId]) {
-			toggleAuCategory(categoryId);
-		}
-		setHighlightedAuOptionId(mapOptionId);
-
-		setTimeout(() => {
-			const element = document.getElementById(`au-option-${mapOptionId}`);
-			if (element) {
-				element.scrollIntoView({ behavior: "smooth", block: "center" });
-			}
-			setTimeout(() => {
-				setHighlightedAuOptionId(null);
-			}, 2000);
-		}, 100);
-	};
-
 	return (
 		<div className="border border-gray-700 rounded-lg overflow-hidden mb-1">
 			<button
 				type="button"
 				data-testid={`right-panel-option-${mapOptionId}`}
-				onDoubleClick={handleHeaderDoubleClick}
+				onDoubleClick={() => {
+					navigateToOption(categoryId, mapOptionId);
+				}}
 				className="w-full flex items-center justify-between p-2 bg-gray-800 border-b border-gray-700 hover:bg-gray-700 transition-colors"
 			>
 				<div className="flex items-center gap-2">
