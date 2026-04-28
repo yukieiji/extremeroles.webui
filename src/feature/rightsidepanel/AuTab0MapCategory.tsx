@@ -1,4 +1,4 @@
-import { useAuTab0Navigation } from "../../hooks/useAuTab0Navigation";
+import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
@@ -15,7 +15,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const auValue = useStore((state) => {
 		return state.auValue;
 	});
-	const { navigateToOption } = useAuTab0Navigation();
+	const { navigateToOption } = useAuNavigation();
 
 	if (!categoryMeta) {
 		return null;
@@ -37,7 +37,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 				type="button"
 				data-testid={`right-panel-option-${mapOptionId}`}
 				onDoubleClick={() => {
-					navigateToOption(categoryId, mapOptionId);
+					navigateToOption(0, categoryId, mapOptionId);
 				}}
 				className="w-full flex items-center justify-between p-2 bg-gray-800 border-b border-gray-700 hover:bg-gray-700 transition-colors"
 			>

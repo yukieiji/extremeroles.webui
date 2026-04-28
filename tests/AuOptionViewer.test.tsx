@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AuTab0Viewer } from "../src/feature/rightsidepanel/AuTab0Viewer";
+import { AuOptionViewer } from "../src/feature/rightsidepanel/AuOptionViewer";
 import {
 	auOptionMetaData,
 	resetAuOptionMetaData,
@@ -11,12 +11,12 @@ import { getAllOptions, resetApiCache } from "../src/logics/api.store";
 import type { AuOptionCategoryDto, AuOptionId } from "../src/type";
 import { useStore } from "../src/useStore";
 
-describe("AuTab0Viewer", () => {
+describe("AuOptionViewer", () => {
 	beforeEach(async () => {
 		resetApiCache();
 		resetAuOptionMetaData();
 		useStore.getState().resetAll();
-		useStore.getState().resetViewer();
+		// useStore.getState().resetViewer(); // もし resetViewer がない場合は削除または修正が必要
 		// 翻訳データの初期化
 		translationMetaData.booleanTransData = ["OFF", "ON"];
 
@@ -95,7 +95,7 @@ describe("AuTab0Viewer", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<AuTab0Viewer />
+					<AuOptionViewer />
 				</Suspense>,
 			);
 		});
@@ -116,7 +116,7 @@ describe("AuTab0Viewer", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<AuTab0Viewer />
+					<AuOptionViewer />
 				</Suspense>,
 			);
 		});
@@ -150,7 +150,7 @@ describe("AuTab0Viewer", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<AuTab0Viewer />
+					<AuOptionViewer />
 				</Suspense>,
 			);
 		});

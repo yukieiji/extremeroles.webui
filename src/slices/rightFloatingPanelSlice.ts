@@ -16,6 +16,10 @@ export interface RightFloatingPanelSlice {
 	openedAuTab0CategoryIds: Record<number, boolean>;
 	setOpenedAuTab0CategoryIds: (ids: Record<number, boolean>) => void;
 	toggleAuTab0Category: (categoryId: number) => void;
+	isAuCrewmateRolesOpen: boolean;
+	toggleAuCrewmateRoles: () => void;
+	isAuImpostorRolesOpen: boolean;
+	toggleAuImpostorRoles: () => void;
 }
 
 /**
@@ -62,6 +66,14 @@ export const createRightFloatingPanelSlice: StateCreator<
 				next[categoryId] = !next[categoryId];
 				return { openedAuTab0CategoryIds: next };
 			});
+		},
+		isAuCrewmateRolesOpen: true,
+		toggleAuCrewmateRoles: () => {
+			set((state) => ({ isAuCrewmateRolesOpen: !state.isAuCrewmateRolesOpen }));
+		},
+		isAuImpostorRolesOpen: true,
+		toggleAuImpostorRoles: () => {
+			set((state) => ({ isAuImpostorRolesOpen: !state.isAuImpostorRolesOpen }));
 		},
 	};
 };

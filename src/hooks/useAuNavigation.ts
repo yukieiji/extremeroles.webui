@@ -2,9 +2,9 @@ import type { AuOptionId } from "../type";
 import { useStore } from "../useStore";
 
 /**
- * Auのタブ0の設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
+ * Auの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
  */
-export function useAuTab0Navigation() {
+export function useAuNavigation() {
 	const setSelectedTab = useStore((state) => {
 		return state.setSelectedTab;
 	});
@@ -24,10 +24,14 @@ export function useAuTab0Navigation() {
 		return state.setRightPanelOpen;
 	});
 
-	const navigateToOption = (categoryId: number, optionId: AuOptionId) => {
+	const navigateToOption = (
+		tabId: number,
+		categoryId: number,
+		optionId: AuOptionId,
+	) => {
 		setRightPanelOpen(false);
 		setSelectedTab("Au");
-		setSelectedAuTabId(0);
+		setSelectedAuTabId(tabId);
 		if (!openedAuCategoryIds[categoryId]) {
 			toggleAuCategory(categoryId);
 		}
