@@ -1,6 +1,7 @@
 import { use } from "react";
 import { auOptionMetaData } from "../../logics/api";
 import { getAllOptions } from "../../logics/api.store";
+import { useStore } from "../../useStore";
 import { AuTab0GeneralCategory } from "./AuTab0GeneralCategory";
 import { AuTab0MapCategory } from "./AuTab0MapCategory";
 
@@ -9,6 +10,10 @@ import { AuTab0MapCategory } from "./AuTab0MapCategory";
  */
 export function AuTab0Viewer() {
 	use(getAllOptions());
+	// auValueを購読することで、データがロードされた際に再レンダリングを走らせる
+	useStore((state) => {
+		return state.auValue;
+	});
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
 
 	return (
