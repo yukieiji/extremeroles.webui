@@ -49,7 +49,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 		>
 			<HighlightWrapper
 				id={`au-option-${mapOptionId}`}
-				isHighlighted={!!isHighlighted}
+				isHighlighted={isHighlighted}
 				className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700"
 			>
 				<div className="flex items-center gap-3">
