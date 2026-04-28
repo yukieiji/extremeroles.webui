@@ -1,0 +1,21 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://lefthook.dev/configuration/
+#
+pre-push:
+   jobs:
+     - name: lint check
+       run: pnpm run check --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {push_files}
+       glob: "*.{js,ts,jsx,tsx}"
+       stage_fixed: true
+
+     - name: tests
+       run: pnpm run test -- --run --silent
+
+pre-commit:
+   parallel: true
+   jobs:
+     - run: pnpm run check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+       glob: "*.{js,ts,jsx,tsx}"
+       stage_fixed: true
