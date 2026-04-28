@@ -60,7 +60,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm i --frozen-lockfile -P
+        run: pnpm i --frozen-lockfile
 
       - name: Build
         run: pnpm build
