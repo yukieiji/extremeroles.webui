@@ -1,4 +1,5 @@
 import { useEffect, useTransition } from "react";
+import { OPTION_SIDEBAR_ARIA } from "../noTrans";
 import { OptionGroupToggleSidebarToggleButton } from "../components/parts/OptionGroupToggleSidebarToggleButton";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
 import { useStore } from "../useStore";
@@ -80,7 +81,7 @@ export function OptionGroupToggleSidebar() {
         fixed left-0 top-0 h-full bg-gray-100 border-r border-gray-300 transition-all duration-300 z-10
         ${isSidebarOpen ? "w-64" : "w-12"}
       `}
-			aria-label="オプションサイドバー"
+			aria-label={OPTION_SIDEBAR_ARIA}
 		>
 			<div className="flex justify-between items-center p-2 border-b border-gray-200">
 				{import.meta.env.DEV && (

@@ -1,3 +1,4 @@
+import { ROLE_SPAWN_COUNT, ROLE_SPAWN_RATE } from "../../noTrans";
 import { CompactSlider } from "../parts/CompactSlider";
 
 interface ControlProps {
@@ -16,7 +17,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 	return (
 		<div className="flex items-center gap-4">
 			<CompactSlider
-				label="レート"
+				label={ROLE_SPAWN_RATE}
 				values={rate.values}
 				currentSelection={rate.currentSelection}
 				onSelectionChange={rate.onSelectionChange}
@@ -24,7 +25,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				testId="spawn-rate-control"
 			/>
 			<CompactSlider
-				label="数"
+				label={ROLE_SPAWN_COUNT}
 				values={num.values}
 				currentSelection={num.currentSelection}
 				onSelectionChange={num.onSelectionChange}

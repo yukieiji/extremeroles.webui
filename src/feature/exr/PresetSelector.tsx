@@ -1,4 +1,11 @@
 import { useEffect, useRef } from "react";
+import {
+	PRESET_INPUT_PLACEHOLDER,
+	PRESET_SELECT_ARIA,
+	PRESET_SWITCH_MESSAGE,
+	PRESET_SWITCH_TITLE,
+	format,
+} from "../../noTrans";
 import { useBackendUpdate } from "../../hooks/useBackend";
 import { useOptionData } from "../../hooks/useOptionData";
 import { updateExrOption } from "../../logics/api";
@@ -59,8 +66,8 @@ export function PresetSelector() {
 		const newPreset = presetNames[index] ?? String(presetValues[index]);
 
 		setBlockDialog({
-			title: "プリセットの切り替え",
-			message: `プリセットを「${currentPresetName}」から「${newPreset}」に切り替えます`,
+			title: PRESET_SWITCH_TITLE,
+			message: format(PRESET_SWITCH_MESSAGE, currentPresetName, newPreset),
 			onConfirm: () =>
 				backendUpdator(async () => {
 					await updateExrOption(0, 0, 0, index);
@@ -118,13 +125,13 @@ export function PresetSelector() {
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
 					className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
-					placeholder="プリセット名を入力..."
+					placeholder={PRESET_INPUT_PLACEHOLDER}
 				/>
 				<button
 					type="button"
 					onClick={toggleDropdown}
 					className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors"
-					aria-label="プリセットを選択"
+					aria-label={PRESET_SELECT_ARIA}
 				>
 					<svg
 						className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}

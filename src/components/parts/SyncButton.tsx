@@ -1,3 +1,5 @@
+import { SYNC_BUTTON_ARIA, SYNC_BUTTON_TITLE } from "../../noTrans";
+
 interface SyncButtonProps {
 	onClick: () => void;
 	disabled?: boolean;
@@ -17,8 +19,8 @@ export function SyncButton({ onClick, disabled }: SyncButtonProps) {
         p-2 rounded-full transition-all duration-200
         ${disabled ? "text-gray-400 cursor-not-allowed" : "text-blue-600 hover:bg-blue-50 active:bg-blue-100 shadow-sm border border-gray-200 bg-white"}
       `}
-			title="同期"
-			aria-label="データを同期"
+			title={SYNC_BUTTON_TITLE}
+			aria-label={SYNC_BUTTON_ARIA}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
