@@ -27,7 +27,9 @@ export function CompactAccordion({
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg className="w-4 h-4 text-gray-400" isOpen={isOpen} />
-				<div className="font-semibold text-gray-200 flex-1 text-lg">{title}</div>
+				<div className="font-semibold text-gray-200 flex-1 text-lg">
+					{title}
+				</div>
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">

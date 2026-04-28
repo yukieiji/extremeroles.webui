@@ -1,8 +1,7 @@
-import { Suspense, useEffect } from "react";
-import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
+import { useEffect } from "react";
+import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { useStore } from "../../useStore";
 import { AuTab0Viewer } from "./AuTab0Viewer";
-import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 
 /**
  * 右フローティングパネルコンポーネント

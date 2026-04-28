@@ -32,14 +32,14 @@ export function AuTab0OptionRow({
 
 	return (
 		<div className="border-white border-b">
-		<ViewerOptionRow
-			title={optionMeta.title}
-			value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
-			onDoubleClick={() => {
-				navigateToOption(categoryId, optionId);
-			}}
-			testId={`right-panel-option-${optionId}`}
-		/>
+			<ViewerOptionRow
+				title={optionMeta.title}
+				value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
+				onDoubleClick={() => {
+					navigateToOption(categoryId, optionId);
+				}}
+				testId={`right-panel-option-${optionId}`}
+			/>
 		</div>
 	);
 }
