@@ -3,6 +3,7 @@ import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import { getUpdatedExRState } from "../src/logics/exrStateLogic";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import type {
+	ExROptionDto,
 	ExROptionValueData,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -478,7 +479,16 @@ describe("exrStateLogic", () => {
 							Format: "",
 							RangeMeta: { Type: "Int32", Values: [0] },
 							// Childs is explicitly missing here
-						} as unknown as UpdatedOptions["ChainUpdatedOption"][0]["Options"][0],
+						} as ExROptionDto,
+						{
+							Id: 2,
+							IsActive: true,
+							TranslatedName: "",
+							Selection: 0,
+							Format: "",
+							RangeMeta: { Type: "Int32", Values: [0] },
+							Childs: null,
+						} as ExROptionDto,
 					],
 				},
 				ChainUpdatedOption: [],
@@ -488,6 +498,9 @@ describe("exrStateLogic", () => {
 		const result = getUpdatedExRState(updateResults, {}, {});
 		expect(
 			result.nextValueData[getUniqueOptionId(tabId, catId, 1)],
+		).toBeDefined();
+		expect(
+			result.nextValueData[getUniqueOptionId(tabId, catId, 2)],
 		).toBeDefined();
 	});
 });
