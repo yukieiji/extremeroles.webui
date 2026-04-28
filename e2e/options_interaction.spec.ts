@@ -36,13 +36,15 @@ test("Options interaction behavior", async ({ page }) => {
 	await page.getByRole("button", { name: "プリセットを選択" }).click();
 	await expect(page.getByText("Test Preset")).toBeVisible();
 
+	const mainEditor = page.locator("main");
+
 	// 別のカテゴリの操作を確認
-	const shuffleCategory = page.getByRole("button", {
+	const shuffleCategory = mainEditor.getByRole("button", {
 		name: "乱数に関する設定",
 	});
 	await shuffleCategory.click();
 
-	const shuffleOption = page.getByText("強力なシャッフルを使用する");
+	const shuffleOption = mainEditor.getByText("強力なシャッフルを使用する");
 	await expect(shuffleOption).toBeVisible({ timeout: 3000 });
 
 	// トグルスイッチに変更されたので、トグルを操作する

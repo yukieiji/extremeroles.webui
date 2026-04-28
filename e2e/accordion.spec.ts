@@ -26,9 +26,13 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();
 
+	const mainEditor = page.locator("main");
+
 	// プリセットカテゴリは非表示になったため、別のカテゴリ「乱数に関する設定」を使用する
 	const categoryName = "乱数に関する設定";
-	const accordionButton = page.getByRole("button", { name: categoryName });
+	const accordionButton = mainEditor.getByRole("button", {
+		name: categoryName,
+	});
 	await expect(accordionButton).toBeVisible();
 
 	// 初期状態では閉じている
