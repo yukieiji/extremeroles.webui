@@ -39,17 +39,17 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 
 	// 初期状態は オフ (Selection 0)
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
+	await expect(mainEditor.getByText("オフ")).toBeVisible();
 
 	// クリックして オン にする
 	await toggle.click();
 
 	// 状態が オン (Selection 1) になったことを確認
 	await expect(toggle).toHaveAttribute("aria-checked", "true");
-	await expect(page.getByText("オン", { exact: true })).toBeVisible();
+	await expect(mainEditor.getByText("オン", { exact: true })).toBeVisible();
 
 	// 再度クリックして オフ に戻す
 	await toggle.click();
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
+	await expect(mainEditor.getByText("オフ")).toBeVisible();
 });

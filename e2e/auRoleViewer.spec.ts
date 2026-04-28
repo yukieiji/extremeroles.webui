@@ -21,9 +21,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		// 2. 「インポスター役職」セクションが表示されていることを確認
 		// モックデータでは「シェイプシフター」が有効なはず
 		// 複数ヒットを避けるため、AmongUsの設定コンテナ内に限定する
-		const auSettingsContainer = rightPanel.locator("div", {
-			hasText: "AmongUsの設定",
-		});
+		const auSettingsContainer = rightPanel.getByTestId("au-settings-accordion");
 		const imposterRolesSection = auSettingsContainer.getByRole("button", {
 			name: /^(Collapse|Expand) インポスター役職$/,
 		});
@@ -61,9 +59,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		await page.getByRole("button", { name: "パネルを開く" }).click();
 
 		const rightPanel = page.getByLabel("右フローティングパネル");
-		const auSettingsContainer = rightPanel.locator("div", {
-			hasText: "AmongUsの設定",
-		});
+		const auSettingsContainer = rightPanel.getByTestId("au-settings-accordion");
 		const imposterRolesSection = auSettingsContainer.getByRole("button", {
 			name: /^(Collapse|Expand) インポスター役職$/,
 		});

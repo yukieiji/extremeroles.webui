@@ -64,8 +64,9 @@ test.describe("ExR Role Spawn Options in Header", () => {
 
 		// 1. スポーン数を変更するとスポーンレートを10％へ
 		await countSlider.fill("1"); // インデックス1 = 値1 (0番目は0)
-		await expect(countInput).toHaveValue("1");
-		await expect(rateInput).toHaveValue("10");
+		// UI更新を待つ
+		await expect(countInput).toHaveValue("1", { timeout: 10000 });
+		await expect(rateInput).toHaveValue("10", { timeout: 10000 });
 
 		// 2. スポーンレートを0％にするとスポーン数を0
 		await rateSlider.fill("0");

@@ -7,6 +7,7 @@ interface CompactAccordionProps {
 	isOpen: boolean;
 	onToggle: () => void;
 	children: ReactNode;
+	testId?: string;
 }
 
 /**
@@ -17,12 +18,14 @@ export function CompactAccordion({
 	isOpen,
 	onToggle,
 	children,
+	testId,
 }: CompactAccordionProps) {
 	return (
 		<div className="border-gray-700 rounded-lg border overflow-hidden mb-1">
 			<button
 				type="button"
 				onClick={onToggle}
+				data-testid={testId}
 				className="w-full flex items-center gap-2 p-2 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
 				aria-expanded={isOpen}
 			>

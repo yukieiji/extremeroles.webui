@@ -84,6 +84,7 @@ export function RightFloatingPanel() {
 									title="AmongUsの設定"
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
+									testId="au-settings-accordion"
 								>
 									<AuOptionViewer />
 								</CompactAccordion>
@@ -91,6 +92,7 @@ export function RightFloatingPanel() {
 									title="ExRの設定"
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
+									testId="exr-settings-accordion"
 								>
 									<ExROptionViewer />
 								</CompactAccordion>
