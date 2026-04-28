@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { ExROptionRow } from "../../components/blocks/ExROptionRow";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
 import { ExROptionRecursiveItem } from "./ExROptionRecursiveItem";
-import { ExROptionRow } from "./ExROptionRow";
 
 /**
  * ExRオプションの個別の項目を表示・管理するエントリーポイント
