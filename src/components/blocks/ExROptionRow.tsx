@@ -1,4 +1,5 @@
 import type { UniqueOptionId } from "../../type";
+import { LargePoint } from "../parts/LargePoint";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
 import { ExROptionRowContent } from "./ExROptionRowContent";
 
@@ -18,7 +19,7 @@ export function ExROptionRow({
 }: ExROptionRowProps) {
 	return isLeaf ? (
 		<OptionRowContainer
-			leading={<span className="text-gray-500 select-none text-xs">・</span>}
+			leading={<LargePoint />}
 			content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
 			className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
 		/>
