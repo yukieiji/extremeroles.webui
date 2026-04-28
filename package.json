@@ -12,7 +12,9 @@
     "check": "biome check",
     "preview": "vite preview",
     "test": "vitest",
-    "e2e": "pnpm exec playwright test"
+    "e2e": "pnpm exec playwright test",
+    "setup:browser": "pnpm exec playwright install --with-deps",
+    "setup:dev": "pnpm lefthook install"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
