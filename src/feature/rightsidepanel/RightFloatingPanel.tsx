@@ -2,7 +2,7 @@ import { use, useEffect } from "react";
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { getAllOptions } from "../../logics/api.store";
 import { useStore } from "../../useStore";
-import { AuTab0Viewer } from "./AuTab0Viewer";
+import { AuOptionViewer } from "./AuOptionViewer";
 
 /**
  * 右フローティングパネルコンポーネント
@@ -84,7 +84,7 @@ export function RightFloatingPanel() {
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
 								>
-									<AuTab0Viewer />
+									<AuOptionViewer />
 								</CompactAccordion>
 								<CompactAccordion
 									title="ExRの設定"

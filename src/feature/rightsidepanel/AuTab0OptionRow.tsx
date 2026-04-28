@@ -1,5 +1,5 @@
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { useAuTab0Navigation } from "../../hooks/useAuTab0Navigation";
+import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import type { AuOptionId } from "../../type";
 import { useStore } from "../../useStore";
@@ -20,7 +20,7 @@ export function AuTab0OptionRow({
 	const auValue = useStore((state) => {
 		return state.auValue;
 	});
-	const { navigateToOption } = useAuTab0Navigation();
+	const { navigateToOption } = useAuNavigation();
 
 	const optionMeta = auOptionMetaData.options[optionId];
 	if (!optionMeta) {
@@ -36,7 +36,7 @@ export function AuTab0OptionRow({
 				title={optionMeta.title}
 				value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
 				onDoubleClick={() => {
-					navigateToOption(categoryId, optionId);
+					navigateToOption(0, categoryId, optionId);
 				}}
 				testId={`right-panel-option-${optionId}`}
 			/>
