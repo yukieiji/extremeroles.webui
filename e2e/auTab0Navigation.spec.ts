@@ -29,6 +29,18 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		}
 
 		// 3. Tab 0の内容が表示されていることを確認 (インポスター数 = right-panel-option-10200)
+		// インポスターカテゴリを展開する必要がある
+		// 右パネル内のアコーディオンを指定する
+		const imposterCategory = page
+			.getByLabel("右フローティングパネル")
+			.getByRole("button", { name: "インポスター", exact: true });
+		if (
+			(await imposterCategory.isVisible()) &&
+			(await imposterCategory.getAttribute("aria-expanded")) === "false"
+		) {
+			await imposterCategory.click();
+		}
+
 		const impCountSetting = page.getByTestId("right-panel-option-10200");
 		// スクロールが必要な場合がある
 		await impCountSetting.scrollIntoViewIfNeeded();
