@@ -28,12 +28,14 @@ export function AuOptionViewer() {
 				title="クルー役職"
 				isOpen={isAuTabOpen[1] ?? true}
 				onToggle={() => toggleAuTab(1)}
+				testId="au-role-section-1"
 			/>
 			<AuRoleViewerSection
 				tabId={2}
 				title="インポスター役職"
 				isOpen={isAuTabOpen[2] ?? true}
 				onToggle={() => toggleAuTab(2)}
+				testId="au-role-section-2"
 			/>
 		</div>
 	);

@@ -22,9 +22,9 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		// モックデータでは「シェイプシフター」が有効なはず
 		// 複数ヒットを避けるため、AmongUsの設定コンテナ内に限定する
 		const auSettingsContainer = rightPanel.getByTestId("au-settings-accordion");
-		const imposterRolesSection = auSettingsContainer.getByRole("button", {
-			name: /^(Collapse|Expand) インポスター役職$/,
-		});
+		const imposterRolesSection = auSettingsContainer.getByTestId("au-role-section-2");
+		// auSettingsContainer自体が開いていることを確認（初期状態は開いているはずだが念のため）
+		await expect(auSettingsContainer.getByRole("button", { name: /AmongUsの設定/ })).toHaveAttribute("aria-expanded", "true");
 		await expect(imposterRolesSection).toBeVisible();
 
 		// 3. 役職の内容を確認
@@ -60,16 +60,17 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		const rightPanel = page.getByLabel("右フローティングパネル");
 		const auSettingsContainer = rightPanel.getByTestId("au-settings-accordion");
-		const imposterRolesSection = auSettingsContainer.getByRole("button", {
+		const imposterRolesSection = auSettingsContainer.getByTestId("au-role-section-2");
+		const imposterRolesButton = imposterRolesSection.getByRole("button", {
 			name: /^(Collapse|Expand) インポスター役職$/,
 		});
 
 		// 最初は開いている（初期値 true）
-		await expect(imposterRolesSection).toHaveAttribute("aria-expanded", "true");
+		await expect(imposterRolesButton).toHaveAttribute("aria-expanded", "true");
 
 		// クリックして閉じる
-		await imposterRolesSection.click();
-		await expect(imposterRolesSection).toHaveAttribute(
+		await imposterRolesButton.click();
+		await expect(imposterRolesButton).toHaveAttribute(
 			"aria-expanded",
 			"false",
 		);
@@ -87,6 +88,8 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		// モックデータで無効な役職（例: スポーンレート0%）が表示されていないことを確認
 		// 注意: モックデータの全ての役職名を把握している必要があるが、
 		// ここでは「クルー役職」セクション自体が存在しない（有効な役職がないため）ことを確認する
-		await expect(rightPanel.getByText("クルー役職")).not.toBeVisible();
+		// Auの設定配下であることを限定する
+		const auSettingsContainer = rightPanel.getByTestId("au-settings-accordion");
+		await expect(auSettingsContainer.getByText("クルー役職")).not.toBeVisible();
 	});
 });

@@ -8,6 +8,7 @@ interface AuRoleViewerSectionProps {
 	title: string;
 	isOpen: boolean;
 	onToggle: () => void;
+	testId?: string;
 }
 
 /**
@@ -19,6 +20,7 @@ export function AuRoleViewerSection({
 	title,
 	isOpen,
 	onToggle,
+	testId,
 }: AuRoleViewerSectionProps) {
 	const auValue = useStore((state) => state.auValue);
 	const tabCategoryIds = auOptionMetaData.tabCategoryMap[tabId] || [];
@@ -55,7 +57,12 @@ export function AuRoleViewerSection({
 	}
 
 	return (
-		<CompactAccordion title={title} isOpen={isOpen} onToggle={onToggle}>
+		<CompactAccordion
+			title={title}
+			isOpen={isOpen}
+			onToggle={onToggle}
+			testId={testId}
+		>
 			<div className="flex flex-col gap-0.5">
 				{activeRoleCategoryIds.map((categoryId) => (
 					<AuRoleViewerRow

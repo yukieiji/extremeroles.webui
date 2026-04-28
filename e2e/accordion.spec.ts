@@ -36,14 +36,14 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	await expect(accordionButton).toBeVisible();
 
 	// 初期状態では閉じている
-	const accordionItem = page
+	const accordionItem = mainEditor
 		.locator("div.border.border-gray-700")
 		.filter({ hasText: categoryName });
 	const contentContainer = accordionItem.getByTestId("accordion-content");
 	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
 	// 閉じているときはオプション名が表示されていない（lazy rendering）
-	const optionName = page.getByText("強力なシャッフルを使用する");
+	const optionName = mainEditor.getByText("強力なシャッフルを使用する");
 	await expect(optionName).not.toBeAttached();
 
 	// アコーディオンを開く

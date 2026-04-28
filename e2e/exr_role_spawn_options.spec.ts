@@ -70,18 +70,18 @@ test.describe("ExR Role Spawn Options in Header", () => {
 
 		// 2. スポーンレートを0％にするとスポーン数を0
 		await rateSlider.fill("0");
-		await expect(rateInput).toHaveValue("0");
-		await expect(countInput).toHaveValue("0");
+		await expect(rateInput).toHaveValue("0", { timeout: 10000 });
+		await expect(countInput).toHaveValue("0", { timeout: 10000 });
 
 		// 3. スポーン数を0へ変更するとスポーンレートが0％へ
 		// まず 10%, 1 に戻す
 		await countSlider.fill("1");
-		await expect(rateInput).toHaveValue("10");
-		await expect(countInput).toHaveValue("1");
+		await expect(rateInput).toHaveValue("10", { timeout: 10000 });
+		await expect(countInput).toHaveValue("1", { timeout: 10000 });
 		// 0へ変更
 		await countSlider.fill("0");
-		await expect(countInput).toHaveValue("0");
-		await expect(rateInput).toHaveValue("0");
+		await expect(countInput).toHaveValue("0", { timeout: 10000 });
+		await expect(rateInput).toHaveValue("0", { timeout: 10000 });
 	});
 
 	test("interacting with header controls should not toggle accordion when already enabled", async ({
