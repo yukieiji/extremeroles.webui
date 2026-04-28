@@ -9,18 +9,8 @@ import { AuTab0MapCategory } from "./AuTab0MapCategory";
  */
 export function AuOptionViewer() {
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
-	const isAuCrewmateRolesOpen = useStore(
-		(state) => state.isAuCrewmateRolesOpen,
-	);
-	const toggleAuCrewmateRoles = useStore(
-		(state) => state.toggleAuCrewmateRoles,
-	);
-	const isAuImpostorRolesOpen = useStore(
-		(state) => state.isAuImpostorRolesOpen,
-	);
-	const toggleAuImpostorRoles = useStore(
-		(state) => state.toggleAuImpostorRoles,
-	);
+	const isAuTabOpen = useStore((state) => state.isAuTabOpen);
+	const toggleAuTab = useStore((state) => state.toggleAuTab);
 
 	return (
 		<div className="flex flex-col gap-1">
@@ -36,14 +26,14 @@ export function AuOptionViewer() {
 			<AuRoleViewerSection
 				tabId={1}
 				title="クルー役職"
-				isOpen={isAuCrewmateRolesOpen}
-				onToggle={toggleAuCrewmateRoles}
+				isOpen={isAuTabOpen[1] ?? true}
+				onToggle={() => toggleAuTab(1)}
 			/>
 			<AuRoleViewerSection
 				tabId={2}
 				title="インポスター役職"
-				isOpen={isAuImpostorRolesOpen}
-				onToggle={toggleAuImpostorRoles}
+				isOpen={isAuTabOpen[2] ?? true}
+				onToggle={() => toggleAuTab(2)}
 			/>
 		</div>
 	);

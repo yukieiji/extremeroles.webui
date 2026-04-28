@@ -24,6 +24,7 @@ export interface ExROptionViewerSlice {
 	isPresetDropdownOpen: boolean;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
+	highlightedExROptionId: UniqueOptionId | null;
 	setSelectedExRTabId: (id: OptionTab) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
@@ -36,6 +37,7 @@ export interface ExROptionViewerSlice {
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
 		optionActiveData: Record<UniqueOptionId, boolean>,
 	) => void;
+	setHighlightedExROptionId: (id: UniqueOptionId | null) => void;
 	validateOpenedIds: () => void;
 }
 
@@ -52,6 +54,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		openedExROptionIds: {},
 		exrValue: {},
 		isExROptionActive: {},
+		highlightedExROptionId: null,
 		presetNames: loadPresetNamesFromLocalStorage(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: OptionTab) => {
@@ -145,6 +148,9 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				exrValue: valueData,
 				isExROptionActive: optionActiveData,
 			});
+		},
+		setHighlightedExROptionId: (id) => {
+			set({ highlightedExROptionId: id });
 		},
 		validateOpenedIds: () => {
 			set((state) => {

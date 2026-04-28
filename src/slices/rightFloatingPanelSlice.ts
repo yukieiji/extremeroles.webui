@@ -16,10 +16,13 @@ export interface RightFloatingPanelSlice {
 	openedAuTab0CategoryIds: Record<number, boolean>;
 	setOpenedAuTab0CategoryIds: (ids: Record<number, boolean>) => void;
 	toggleAuTab0Category: (categoryId: number) => void;
-	isAuCrewmateRolesOpen: boolean;
-	toggleAuCrewmateRoles: () => void;
-	isAuImpostorRolesOpen: boolean;
-	toggleAuImpostorRoles: () => void;
+	openedExrGeneralCategoryIds: Record<number, boolean>;
+	setOpenedExrGeneralCategoryIds: (ids: Record<number, boolean>) => void;
+	toggleExrGeneralCategory: (categoryId: number) => void;
+	isAuTabOpen: Record<number, boolean>;
+	toggleAuTab: (tabId: number) => void;
+	isExrTabOpen: Record<number, boolean>;
+	toggleExrTab: (tabId: number) => void;
 }
 
 /**
@@ -67,13 +70,40 @@ export const createRightFloatingPanelSlice: StateCreator<
 				return { openedAuTab0CategoryIds: next };
 			});
 		},
-		isAuCrewmateRolesOpen: true,
-		toggleAuCrewmateRoles: () => {
-			set((state) => ({ isAuCrewmateRolesOpen: !state.isAuCrewmateRolesOpen }));
+		openedExrGeneralCategoryIds: {},
+		setOpenedExrGeneralCategoryIds: (ids) => {
+			set({ openedExrGeneralCategoryIds: ids });
 		},
-		isAuImpostorRolesOpen: true,
-		toggleAuImpostorRoles: () => {
-			set((state) => ({ isAuImpostorRolesOpen: !state.isAuImpostorRolesOpen }));
+		toggleExrGeneralCategory: (categoryId) => {
+			set((state) => {
+				const next = { ...state.openedExrGeneralCategoryIds };
+				next[categoryId] = !next[categoryId];
+				return { openedExrGeneralCategoryIds: next };
+			});
+		},
+		isAuTabOpen: { 1: true, 2: true },
+		toggleAuTab: (tabId) => {
+			set((state) => {
+				const next = { ...state.isAuTabOpen };
+				next[tabId] = !next[tabId];
+				return { isAuTabOpen: next };
+			});
+		},
+		isExrTabOpen: {
+			1: true,
+			2: true,
+			3: true,
+			4: true,
+			5: true,
+			6: true,
+			7: true,
+		},
+		toggleExrTab: (tabId) => {
+			set((state) => {
+				const next = { ...state.isExrTabOpen };
+				next[tabId] = !next[tabId];
+				return { isExrTabOpen: next };
+			});
 		},
 	};
 };

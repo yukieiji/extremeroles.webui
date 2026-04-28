@@ -3,6 +3,7 @@ import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { getAllOptions } from "../../logics/api.store";
 import { useStore } from "../../useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
+import { ExROptionViewer } from "./ExROptionViewer";
 
 /**
  * 右フローティングパネルコンポーネント
@@ -91,7 +92,7 @@ export function RightFloatingPanel() {
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
 								>
-									<p className="text-gray-400 text-sm">ExRの設定コンテンツ</p>
+									<ExROptionViewer />
 								</CompactAccordion>
 							</div>
 						</CompactAccordion>
