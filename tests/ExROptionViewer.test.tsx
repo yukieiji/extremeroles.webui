@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ExROptionViewer } from "../src/feature/rightsidepanel/ExROptionViewer";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
+import { getUniqueOptionId } from "../src/logics/optionUtils";
 import type { OptionTab } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -20,15 +21,11 @@ describe("ExROptionViewer Component", () => {
 			const categoryId = i * 100;
 			exrOptionMetaData.categories[categoryId] = {
 				name: `Role ${i}`,
-				tabId: i as OptionTab,
+				tabId: tabId,
 			};
 
-			const rateId = (i * 1_000_000_000_000 +
-				categoryId * 1_000_000 +
-				50) as any;
-			const countId = (i * 1_000_000_000_000 +
-				categoryId * 1_000_000 +
-				51) as any;
+			const rateId = getUniqueOptionId(tabId, categoryId, 50);
+			const countId = getUniqueOptionId(tabId, categoryId, 51);
 
 			useStore.setState((state) => ({
 				exrValue: {

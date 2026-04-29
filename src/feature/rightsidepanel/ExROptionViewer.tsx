@@ -1,5 +1,5 @@
 import { exrOptionMetaData } from "../../logics/api";
-import type { OptionTab } from "../../type";
+import { OptionTab } from "../../type";
 import { useStore } from "../../useStore";
 import { ExRRoleViewerSection } from "./ExRRoleViewerSection";
 
@@ -11,12 +11,20 @@ export function ExROptionViewer() {
 	const toggleExRRoleTab = useStore((state) => state.toggleExRRoleTab);
 
 	// 役職タブ1～7を表示対象とする
-	const roleTabIds = [1, 2, 3, 4, 5, 6, 7] as const;
+	const roleTabIds: OptionTab[] = [
+		OptionTab.CrewmateTab,
+		OptionTab.ImpostorTab,
+		OptionTab.NeutralTab,
+		OptionTab.CombinationTab,
+		OptionTab.GhostCrewmateTab,
+		OptionTab.GhostImpostorTab,
+		OptionTab.GhostNeutralTab,
+	];
 
 	return (
 		<div className="flex flex-col gap-1">
 			{roleTabIds.map((tabId) => {
-				const tabMeta = exrOptionMetaData.tabs[tabId as OptionTab];
+				const tabMeta = exrOptionMetaData.tabs[tabId];
 				if (!tabMeta) {
 					return null;
 				}

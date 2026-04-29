@@ -26,7 +26,7 @@ export function ExRRoleViewerSection({
 	onToggle,
 }: ExRRoleViewerSectionProps) {
 	const exrValue = useStore((state) => state.exrValue);
-	const tabMetaData = exrOptionMetaData.tabs[tabId as OptionTab];
+	const tabMetaData = exrOptionMetaData.tabs[tabId];
 	const tabCategoryIds = tabMetaData?.categoryIds || [];
 
 	const activeRoleCategoryIds = tabCategoryIds.filter((categoryId: number) => {

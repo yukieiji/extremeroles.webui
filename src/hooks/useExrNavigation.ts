@@ -28,7 +28,7 @@ export function useExrNavigation() {
 	) => {
 		setRightPanelOpen(false);
 		setSelectedTab("ExR");
-		setSelectedExRTabId(tabId as OptionTab);
+		setSelectedExRTabId(tabId);
 		if (!openedExRCategoryIds[categoryId]) {
 			toggleExRCategory(categoryId);
 		}
