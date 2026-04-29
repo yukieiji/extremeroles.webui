@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { ExRTabDtoArraySchema, OptionTab } from "../src/type";
+import { ExRTabDtoArraySchema, ExRTabId } from "../src/type";
 
 describe("ExRTabDto Validation", () => {
 	it("should validate a correct ExRTabDto array", () => {
 		const data = [
 			{
-				Id: OptionTab.GeneralTab,
+				Id: ExRTabId.GeneralTab,
 				Name: "Test Tab",
 				Categories: [
 					{
@@ -37,7 +37,7 @@ describe("ExRTabDto Validation", () => {
 	it("should fail validation if data is incorrect", () => {
 		const invalidData = [
 			{
-				Id: 999, // Invalid OptionTab
+				Id: 999, // Invalid ExRTabId
 				Name: "Invalid Tab",
 				Categories: [],
 			},
@@ -50,7 +50,7 @@ describe("ExRTabDto Validation", () => {
 	it("should fail validation if RangeMeta Values are mixed types", () => {
 		const data = [
 			{
-				Id: OptionTab.GeneralTab,
+				Id: ExRTabId.GeneralTab,
 				Name: "T",
 				Categories: [
 					{
@@ -81,7 +81,7 @@ describe("ExRTabDto Validation", () => {
 	it("should validate recursive Childs in ExROptionDto", () => {
 		const data = [
 			{
-				Id: OptionTab.GeneralTab,
+				Id: ExRTabId.GeneralTab,
 				Name: "Tab",
 				Categories: [
 					{

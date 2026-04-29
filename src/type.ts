@@ -34,7 +34,7 @@ export interface ExRTabMetaData {
 
 export interface ExRCategoryMetaData {
 	name: string;
-	tabId: OptionTab;
+	tabId: ExRTabId;
 }
 
 export interface ExROptionMetaDataDetail {
@@ -43,7 +43,7 @@ export interface ExROptionMetaDataDetail {
 }
 
 export interface ExROptionMetaDataRecords {
-	tabs: Record<OptionTab, ExRTabMetaData>;
+	tabs: Record<ExRTabId, ExRTabMetaData>;
 	categories: Record<number, ExRCategoryMetaData>;
 	options: Record<UniqueOptionId, ExROptionMetaDataDetail>;
 	globalCategoryIdTopLevelMap: Record<number, UniqueOptionId[]>;
@@ -52,7 +52,7 @@ export interface ExROptionMetaDataRecords {
 /**
  * タブの種類を表す定数
  */
-export const OptionTab = {
+export const ExRTabId = {
 	GeneralTab: 0,
 	CrewmateTab: 1,
 	ImpostorTab: 2,
@@ -63,14 +63,14 @@ export const OptionTab = {
 	GhostNeutralTab: 7,
 } as const;
 
-export type OptionTab = (typeof OptionTab)[keyof typeof OptionTab];
+export type ExRTabId = (typeof ExRTabId)[keyof typeof ExRTabId];
 
-export const OptionTabSchema = z.preprocess((val) => {
-	if (typeof val === "string" && val in OptionTab) {
-		return OptionTab[val as keyof typeof OptionTab];
+export const ExRTabIdSchema = z.preprocess((val) => {
+	if (typeof val === "string" && val in ExRTabId) {
+		return ExRTabId[val as keyof typeof ExRTabId];
 	}
 	return val;
-}, z.enum(OptionTab));
+}, z.enum(ExRTabId));
 
 /**
  * オプションの範囲メタデータ
@@ -130,13 +130,13 @@ export const ExRCategoryDtoSchema = z.object({
  * タブDTO
  */
 export interface ExRTabDto {
-	Id: OptionTab;
+	Id: ExRTabId;
 	Name: string;
 	Categories: ExRCategoryDto[];
 }
 
 export const ExRTabDtoSchema = z.object({
-	Id: OptionTabSchema,
+	Id: ExRTabIdSchema,
 	Name: z.string(),
 	Categories: z.array(ExRCategoryDtoSchema),
 });

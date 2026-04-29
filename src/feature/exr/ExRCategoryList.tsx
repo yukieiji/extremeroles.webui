@@ -2,7 +2,7 @@ import { useShallow } from "zustand/react/shallow";
 import { CategoryContainer } from "../../components/blocks/CategoryContainer";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
-import { OptionTab } from "../../type";
+import { ExRTabId } from "../../type";
 import { useStore } from "../../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
 import { ExRStandardCategoryItem } from "./ExRStandardCategoryItem";
@@ -70,7 +70,7 @@ export function ExRCategoryList() {
 	});
 
 	const tabCategory = exrOptionMetaData.tabs[selectedExRTabId]?.categoryIds;
-	const isRoleTab = selectedExRTabId !== OptionTab.GeneralTab;
+	const isRoleTab = selectedExRTabId !== ExRTabId.GeneralTab;
 
 	return (
 		<CategoryContainer isPending={isTabPending}>

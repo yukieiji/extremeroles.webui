@@ -15,8 +15,8 @@ import {
 	AU_PREFIX,
 	AuOptionCategoryDtoArraySchema,
 	ExRTabDtoArraySchema,
+	ExRTabId,
 	GetTranslationResponseArraySchema,
-	OptionTab,
 	OptionValueType,
 	UpdatedOptionsSchema,
 } from "../type";
@@ -36,8 +36,8 @@ export const translationMetaData: TranslationMetaDataRecords = {
 };
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
-	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
-	tabs: {} as Record<OptionTab, ExRTabMetaData>,
+	// ExRTabIdはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
+	tabs: {} as Record<ExRTabId, ExRTabMetaData>,
 	categories: {},
 	options: {},
 	globalCategoryIdTopLevelMap: {},
@@ -54,7 +54,7 @@ export const auOptionMetaData: AuOptionMetaDataRecords = {
  * ExRオプションのメタデータをリセットする（テスト用）
  */
 export function resetExrOptionMetaData() {
-	exrOptionMetaData.tabs = {} as Record<OptionTab, ExRTabMetaData>;
+	exrOptionMetaData.tabs = {} as Record<ExRTabId, ExRTabMetaData>;
 	exrOptionMetaData.categories = {};
 	exrOptionMetaData.options = {};
 	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
@@ -132,7 +132,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 
 	const processOptions = (
 		options: ExROptionDto[],
-		tabId: OptionTab,
+		tabId: ExRTabId,
 		categoryId: number,
 		parentOptionId: number | null,
 	) => {
@@ -199,7 +199,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				name: category.Name,
 				tabId: tab.Id,
 			};
-			if (tab.Id === OptionTab.GeneralTab) {
+			if (tab.Id === ExRTabId.GeneralTab) {
 				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
 				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
 					category.Options.map((o) =>

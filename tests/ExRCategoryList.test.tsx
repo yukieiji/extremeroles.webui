@@ -6,7 +6,7 @@ import * as apiStore from "../src/logics/api.store";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
 import {
 	type ExRTabDto,
-	OptionTab,
+	ExRTabId,
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
 } from "../src/type";
@@ -15,7 +15,7 @@ import { useStore } from "../src/useStore";
 describe("ExRCategoryList Component Selection", () => {
 	const mockTabs: ExRTabDto[] = [
 		{
-			Id: OptionTab.GeneralTab, // Tab 0
+			Id: ExRTabId.GeneralTab, // Tab 0
 			Name: "General",
 			Categories: [
 				{
@@ -36,7 +36,7 @@ describe("ExRCategoryList Component Selection", () => {
 			],
 		},
 		{
-			Id: OptionTab.CrewmateTab, // Tab 1
+			Id: ExRTabId.CrewmateTab, // Tab 1
 			Name: "Crewmate",
 			Categories: [
 				{
@@ -91,7 +91,7 @@ describe("ExRCategoryList Component Selection", () => {
 					name: cat.Name,
 					tabId: tab.Id,
 				};
-				if (tab.Id === OptionTab.GeneralTab) {
+				if (tab.Id === ExRTabId.GeneralTab) {
 					exrOptionMetaData.globalCategoryIdTopLevelMap[cat.Id] =
 						cat.Options.map((o) => getUniqueOptionId(tab.Id, cat.Id, o.Id));
 				}
@@ -123,7 +123,7 @@ describe("ExRCategoryList Component Selection", () => {
 					);
 
 					// Role Tab の場合は SPAWN_RATE_OPTION_ID の子として登録
-					if (tab.Id !== OptionTab.GeneralTab) {
+					if (tab.Id !== ExRTabId.GeneralTab) {
 						const rateUniqueId = getUniqueOptionId(
 							tab.Id,
 							cat.Id,
@@ -152,7 +152,7 @@ describe("ExRCategoryList Component Selection", () => {
 	});
 
 	it("renders ExRStandardCategoryItem for General Tab", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.GeneralTab);
+		useStore.getState().setSelectedExRTabId(ExRTabId.GeneralTab);
 		render(<ExRCategoryList />);
 
 		// General Tab: Should render standard category
@@ -163,7 +163,7 @@ describe("ExRCategoryList Component Selection", () => {
 	});
 
 	it("renders ExRRoleCategoryItem for Role Tab", () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+		useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
 		render(<ExRCategoryList />);
 
 		// Role Tab: Should render specialized category item
@@ -174,7 +174,7 @@ describe("ExRCategoryList Component Selection", () => {
 	});
 
 	it("filters out 50 and 51 from role category body", async () => {
-		useStore.getState().setSelectedExRTabId(OptionTab.CrewmateTab);
+		useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
 
 		// Mock useUpdateExROptionSelection to update the store manually
 		vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
@@ -197,7 +197,7 @@ describe("ExRCategoryList Component Selection", () => {
 		// Set a non-zero spawn rate so the accordion is enabled
 		await updateExRSelection({
 			uniqueOptionId: getUniqueOptionId(
-				OptionTab.CrewmateTab,
+				ExRTabId.CrewmateTab,
 				2,
 				SPAWN_RATE_OPTION_ID,
 			),

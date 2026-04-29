@@ -11,13 +11,13 @@ A TypeScript setting (often in `tsconfig.json`) that restricts the use of syntax
 Use a `const` object with `as const` and a type alias:
 
 ```typescript
-export const OptionTab = {
+export const ExRTabId = {
   GeneralTab: 0,
   CrewmateTab: 1,
   // ...
 } as const;
 
-export type OptionTab = (typeof OptionTab)[keyof typeof OptionTab];
+export type ExRTabId = (typeof ExRTabId)[keyof typeof ExRTabId];
 ```
 
 This code remains valid JavaScript once the `type` alias is removed.

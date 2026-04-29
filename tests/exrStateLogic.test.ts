@@ -7,7 +7,7 @@ import type {
 	UniqueOptionId,
 	UpdatedOptions,
 } from "../src/type";
-import { OptionTab } from "../src/type";
+import { ExRTabId } from "../src/type";
 
 describe("exrStateLogic", () => {
 	beforeEach(() => {
@@ -45,7 +45,7 @@ describe("exrStateLogic", () => {
 
 	it("should update state from UpdatedCategory", () => {
 		const catId = 100;
-		const tabId = OptionTab.CrewmateTab;
+		const tabId = ExRTabId.CrewmateTab;
 		const optId = 1;
 		const uId = getUniqueOptionId(tabId, catId, optId);
 
@@ -92,7 +92,7 @@ describe("exrStateLogic", () => {
 
 	it("should update state from ChainUpdatedOption", () => {
 		const catId = 200;
-		const tabId = OptionTab.ImpostorTab;
+		const tabId = ExRTabId.ImpostorTab;
 		const optId = 2;
 		const uId = getUniqueOptionId(tabId, catId, optId);
 
@@ -141,7 +141,7 @@ describe("exrStateLogic", () => {
 
 	it("should process child options recursively", () => {
 		const catId = 300;
-		const tabId = OptionTab.NeutralTab;
+		const tabId = ExRTabId.NeutralTab;
 		const parentOptId = 10;
 		const childOptId = 11;
 		const parentUId = getUniqueOptionId(tabId, catId, parentOptId);
@@ -189,7 +189,7 @@ describe("exrStateLogic", () => {
 
 	it("should not mark as changed if values are the same", () => {
 		const catId = 400;
-		const tabId = OptionTab.CombinationTab;
+		const tabId = ExRTabId.CombinationTab;
 		const optId = 40;
 		const uId = getUniqueOptionId(tabId, catId, optId);
 
@@ -260,11 +260,11 @@ describe("exrStateLogic", () => {
 
 	it("should handle mixed updates and multiple results", () => {
 		const catId1 = 501;
-		const tabId1 = OptionTab.CrewmateTab;
+		const tabId1 = ExRTabId.CrewmateTab;
 		const uId1 = getUniqueOptionId(tabId1, catId1, 1);
 
 		const catId2 = 502;
-		const tabId2 = OptionTab.ImpostorTab;
+		const tabId2 = ExRTabId.ImpostorTab;
 		const uId2 = getUniqueOptionId(tabId2, catId2, 2);
 
 		exrOptionMetaData.categories[catId1] = { name: "Cat 1", tabId: tabId1 };
@@ -322,7 +322,7 @@ describe("exrStateLogic", () => {
 
 	it("should mark valueDataChanged only once when multiple values change", () => {
 		const catId = 600;
-		const tabId = OptionTab.CrewmateTab;
+		const tabId = ExRTabId.CrewmateTab;
 		const uId1 = getUniqueOptionId(tabId, catId, 1);
 		const uId2 = getUniqueOptionId(tabId, catId, 2);
 
@@ -367,7 +367,7 @@ describe("exrStateLogic", () => {
 
 	it("should detect changes in values array length or content", () => {
 		const catId = 700;
-		const tabId = OptionTab.CrewmateTab;
+		const tabId = ExRTabId.CrewmateTab;
 		const uId = getUniqueOptionId(tabId, catId, 1);
 
 		exrOptionMetaData.categories[catId] = { name: "Cat", tabId };
