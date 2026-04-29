@@ -1,10 +1,11 @@
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
+import { type AuTab } from "../../type";
 import { useStore } from "../../useStore";
 
 interface AuRoleViewerRowProps {
-	tabId: number;
+	tabId: AuTab;
 	categoryId: number;
 }
 

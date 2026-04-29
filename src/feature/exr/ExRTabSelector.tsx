@@ -3,7 +3,7 @@ import { ColoredText } from "../../components/parts/ColoredText";
 import { TabButton } from "../../components/parts/TabButton";
 import { TabButtonContainer } from "../../components/parts/TabButtonContainer";
 import { exrOptionMetaData } from "../../logics/api";
-import type { TabId } from "../../type";
+import { OptionTab, type TabId } from "../../type";
 import { useStore } from "../../useStore";
 
 /**
@@ -41,17 +41,19 @@ export function ExRTabSelector() {
 
 	return (
 		<TabButtonContainer>
-			{Object.keys(exrOptionMetaData.tabs).map((tabId) => {
-				const castedTabId = Number(tabId) as TabId;
+			{Object.values(OptionTab).map((tabId) => {
+				const tabMeta = exrOptionMetaData.tabs[tabId];
+				if (!tabMeta) {
+					return null;
+				}
+
 				return (
 					<TabButton
 						key={tabId}
-						onClick={() => handleClick(castedTabId)}
-						isSelect={selectedExRTabId === castedTabId}
+						onClick={() => handleClick(tabId)}
+						isSelect={selectedExRTabId === tabId}
 					>
-						<ColoredText
-							text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""}
-						/>
+						<ColoredText text={tabMeta.name} />
 					</TabButton>
 				);
 			})}

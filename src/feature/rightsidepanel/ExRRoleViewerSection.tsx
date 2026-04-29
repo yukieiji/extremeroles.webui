@@ -1,4 +1,5 @@
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
+import { ColoredText } from "../../components/parts/ColoredText";
 import { exrOptionMetaData } from "../../logics/api";
 import { getUniqueOptionId } from "../../logics/optionUtils";
 import {
@@ -60,7 +61,11 @@ export function ExRRoleViewerSection({
 	}
 
 	return (
-		<CompactAccordion title={title} isOpen={isOpen} onToggle={onToggle}>
+		<CompactAccordion
+			title={<ColoredText text={title} />}
+			isOpen={isOpen}
+			onToggle={onToggle}
+		>
 			<div className="flex flex-col gap-0.5">
 				{activeRoleCategoryIds.map((categoryId: number) => (
 					<ExRRoleViewerRow

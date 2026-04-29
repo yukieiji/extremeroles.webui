@@ -1,10 +1,11 @@
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { auOptionMetaData } from "../../logics/api";
+import { type AuTab } from "../../type";
 import { useStore } from "../../useStore";
 import { AuRoleViewerRow } from "./AuRoleViewerRow";
 
 interface AuRoleViewerSectionProps {
-	tabId: number;
+	tabId: AuTab;
 	title: string;
 	isOpen: boolean;
 	onToggle: () => void;

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { VIEWER_ROW_TITLE } from "../../noTrans";
+import { ColoredText } from "./ColoredText";
 
 interface ViewerOptionRowProps {
 	title: string;
@@ -26,7 +27,7 @@ export function ViewerOptionRow({
 			title={VIEWER_ROW_TITLE}
 		>
 			<span className="text-sm text-gray-300 truncate flex-1 text-left group-hover:text-white transition-colors">
-				{title}
+				<ColoredText text={title} />
 			</span>
 			<div className="flex items-center gap-1 shrink-0">
 				<div className="text-sm text-blue-400 font-medium text-right">

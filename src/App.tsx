@@ -99,16 +99,18 @@ function App() {
 		<div className="min-h-screen bg-gray-50 flex">
 			<BlockableLoading />
 			<BlockableDialog />
-			<Suspense fallback={<LoadingView />}>
-				<OptionGroupToggleSidebar />
-				<main
-					className={`
-            flex-1 p-8 transition-all duration-300
-            ${isSidebarOpen ? "ml-64" : "ml-12"}
-          `}
-				>
+			<OptionGroupToggleSidebar />
+			<main
+				className={`
+          flex-1 p-8 transition-all duration-300
+          ${isSidebarOpen ? "ml-64" : "ml-12"}
+        `}
+			>
+				<Suspense fallback={<LoadingView />}>
 					<MainContent />
-				</main>
+				</Suspense>
+			</main>
+			<Suspense fallback={null}>
 				<RightFloatingPanel />
 			</Suspense>
 		</div>

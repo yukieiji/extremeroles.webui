@@ -67,10 +67,10 @@ export type TabId = (typeof OptionTab)[keyof typeof OptionTab];
 
 export const TabIdSchema = z.preprocess((val) => {
 	if (typeof val === "string" && val in OptionTab) {
-		return TabId[val as keyof typeof OptionTab];
+		return OptionTab[val as keyof typeof OptionTab];
 	}
 	return val;
-}, z.enum(OptionTab));
+}, z.nativeEnum(OptionTab));
 
 /**
  * オプションの範囲メタデータ
@@ -206,7 +206,7 @@ export const OptionValueTypeSchema = z.preprocess((val) => {
 		return OptionValueType[val as keyof typeof OptionValueType];
 	}
 	return val;
-}, z.enum(OptionValueType));
+}, z.nativeEnum(OptionValueType));
 
 export interface AuRoleOption {
 	MaxCount: number;

@@ -1,5 +1,5 @@
 import type { StateCreator } from "zustand";
-import type { AuOptionId, UpdateAuArg } from "../type";
+import type { AuOptionId, AuTab, UpdateAuArg } from "../type";
 
 /**
  * ExR オプションの状態を管理するスライスのインターフェース

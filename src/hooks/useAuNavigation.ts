@@ -1,4 +1,4 @@
-import type { AuOptionId } from "../type";
+import type { AuOptionId, AuTab } from "../type";
 import { useStore } from "../useStore";
 
 /**
@@ -25,7 +25,7 @@ export function useAuNavigation() {
 	});
 
 	const navigateToOption = (
-		tabId: number,
+		tabId: AuTab,
 		categoryId: number,
 		optionId: AuOptionId,
 	) => {

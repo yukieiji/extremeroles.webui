@@ -2,6 +2,7 @@ import { useEffect, useTransition } from "react";
 import { TabButton } from "../../components/parts/TabButton";
 import { TabButtonContainer } from "../../components/parts/TabButtonContainer";
 import { auOptionMetaData } from "../../logics/api";
+import { type AuTab } from "../../type";
 import { useStore } from "../../useStore";
 
 /**
@@ -26,7 +27,7 @@ export function AuTabSelector() {
 		}
 	}, [isPending, setIsTabPending]);
 
-	const handleClick = (id: number) => {
+	const handleClick = (id: AuTab) => {
 		if (id === selectedAuTabId) {
 			return;
 		}
@@ -40,11 +41,12 @@ export function AuTabSelector() {
 	return (
 		<TabButtonContainer>
 			{auOptionMetaData.tabNames.map((name, index) => {
+				const tabId = index as AuTab;
 				return (
 					<TabButton
 						key={name}
-						onClick={() => handleClick(index)}
-						isSelect={selectedAuTabId === index}
+						onClick={() => handleClick(tabId)}
+						isSelect={selectedAuTabId === tabId}
 					>
 						{name}
 					</TabButton>
