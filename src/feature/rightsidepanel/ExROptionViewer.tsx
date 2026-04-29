@@ -1,5 +1,5 @@
 import { exrOptionMetaData } from "../../logics/api";
-import { type OptionTab } from "../../type";
+import type { OptionTab } from "../../type";
 import { useStore } from "../../useStore";
 import { ExRRoleViewerSection } from "./ExRRoleViewerSection";
 
@@ -17,7 +17,9 @@ export function ExROptionViewer() {
 		<div className="flex flex-col gap-1">
 			{roleTabIds.map((tabId) => {
 				const tabMeta = exrOptionMetaData.tabs[tabId as OptionTab];
-				if (!tabMeta) return null;
+				if (!tabMeta) {
+					return null;
+				}
 
 				return (
 					<ExRRoleViewerSection

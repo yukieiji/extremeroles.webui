@@ -1,4 +1,4 @@
-import type { UniqueOptionId } from "../type";
+import type { OptionTab, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
 /**
@@ -28,15 +28,17 @@ export function useExrNavigation() {
 	) => {
 		setRightPanelOpen(false);
 		setSelectedTab("ExR");
-		setSelectedExRTabId(tabId as any); // OptionTab type
+		setSelectedExRTabId(tabId as OptionTab);
 		if (!openedExRCategoryIds[categoryId]) {
 			toggleExRCategory(categoryId);
 		}
 
 		setTimeout(() => {
-			const element = document.getElementById(`exr-option-${uniqueOptionId}`);
-			if (element) {
-				element.scrollIntoView({ behavior: "smooth", block: "center" });
+			if (typeof document !== "undefined") {
+				const element = document.getElementById(`exr-option-${uniqueOptionId}`);
+				if (element) {
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
+				}
 			}
 		}, 100);
 	};

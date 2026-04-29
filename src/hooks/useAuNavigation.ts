@@ -38,13 +38,15 @@ export function useAuNavigation() {
 		setHighlightedAuOptionId(optionId);
 
 		setTimeout(() => {
-			const element = document.getElementById(`au-option-${optionId}`);
-			if (element) {
-				element.scrollIntoView({ behavior: "smooth", block: "center" });
+			if (typeof document !== "undefined") {
+				const element = document.getElementById(`au-option-${optionId}`);
+				if (element) {
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
+				}
+				setTimeout(() => {
+					setHighlightedAuOptionId(null);
+				}, 2000);
 			}
-			setTimeout(() => {
-				setHighlightedAuOptionId(null);
-			}, 2000);
 		}, 100);
 	};
 
