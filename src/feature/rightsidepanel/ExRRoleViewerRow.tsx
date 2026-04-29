@@ -2,11 +2,15 @@ import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useExrNavigation } from "../../hooks/useExrNavigation";
 import { exrOptionMetaData } from "../../logics/api";
 import { getUniqueOptionId } from "../../logics/optionUtils";
-import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../../type";
+import {
+	type OptionTab,
+	SPAWN_COUNT_OPTION_ID,
+	SPAWN_RATE_OPTION_ID,
+} from "../../type";
 import { useStore } from "../../useStore";
 
 interface ExRRoleViewerRowProps {
-	tabId: number;
+	tabId: OptionTab;
 	categoryId: number;
 }
 

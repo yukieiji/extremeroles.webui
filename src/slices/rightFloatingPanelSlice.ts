@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import type { OptionTab } from "../type";
 
 /**
  * 右フローティングパネルの状態管理を行うスライスのインターフェース
@@ -20,8 +21,8 @@ export interface RightFloatingPanelSlice {
 	toggleAuCrewmateRoles: () => void;
 	isAuImpostorRolesOpen: boolean;
 	toggleAuImpostorRoles: () => void;
-	openedExRRoleTabIds: Record<number, boolean>;
-	toggleExRRoleTab: (tabId: number) => void;
+	openedExRRoleTabIds: Record<OptionTab, boolean>;
+	toggleExRRoleTab: (tabId: OptionTab) => void;
 }
 
 /**
@@ -78,6 +79,7 @@ export const createRightFloatingPanelSlice: StateCreator<
 			set((state) => ({ isAuImpostorRolesOpen: !state.isAuImpostorRolesOpen }));
 		},
 		openedExRRoleTabIds: {
+			0: true,
 			1: true,
 			2: true,
 			3: true,

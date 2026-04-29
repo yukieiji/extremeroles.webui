@@ -22,7 +22,7 @@ export function useExrNavigation() {
 	});
 
 	const navigateToOption = (
-		tabId: number,
+		tabId: OptionTab,
 		categoryId: number,
 		uniqueOptionId: UniqueOptionId,
 	) => {

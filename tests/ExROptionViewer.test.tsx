@@ -11,7 +11,8 @@ describe("ExROptionViewer Component", () => {
 
 		// Setup metadata for all 7 tabs
 		for (let i = 1; i <= 7; i++) {
-			exrOptionMetaData.tabs[i as OptionTab] = {
+			const tabId = i as OptionTab;
+			exrOptionMetaData.tabs[tabId] = {
 				name: `Tab ${i}`,
 				categoryIds: [i * 100],
 			};

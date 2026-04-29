@@ -10,7 +10,7 @@ import { useStore } from "../../useStore";
 import { ExRRoleViewerRow } from "./ExRRoleViewerRow";
 
 interface ExRRoleViewerSectionProps {
-	tabId: number;
+	tabId: OptionTab;
 	title: string;
 	isOpen: boolean;
 	onToggle: () => void;
