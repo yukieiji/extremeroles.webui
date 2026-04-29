@@ -40,17 +40,20 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 		return null;
 	}
 
+	const valueColorClass = tabId === 1 ? "text-blue-400" : "text-red-400";
+
 	return (
 		<div className="border-white border-b">
 			<ViewerOptionRow
 				title={categoryMeta.name}
 				value={
 					<div className="flex items-center gap-2">
-						<span className="text-blue-400">{chanceValue.toString()}%</span>
+						<span>{chanceValue.toString()}%</span>
 						<span className="text-gray-500">/</span>
-						<span className="text-blue-400">{maxCountValue.toString()}</span>
+						<span>{maxCountValue.toString()}</span>
 					</div>
 				}
+				valueColorClass={valueColorClass}
 				onDoubleClick={() => {
 					navigateToOption(tabId, categoryId, chanceOptionId);
 				}}

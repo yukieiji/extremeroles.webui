@@ -47,17 +47,25 @@ export function ExRRoleViewerRow({ tabId, categoryId }: ExRRoleViewerRowProps) {
 	const rateValue = rateData.values[rateData.selection];
 	const countValue = countData.values[countData.selection];
 
+	const tabMeta = exrOptionMetaData.tabs[tabId];
+	const colorMatch = tabMeta?.name.match(/#[0-9A-F]{6,8}/i);
+	const hexColor = colorMatch ? colorMatch[0] : null;
+
 	return (
 		<div className="border-white border-b">
 			<ViewerOptionRow
 				title={categoryMeta.name}
 				value={
-					<div className="flex items-center gap-2">
-						<span className="text-blue-400">{rateValue.toString()}%</span>
+					<div
+						className="flex items-center gap-2"
+						style={{ color: hexColor ?? "inherit" }}
+					>
+						<span>{rateValue.toString()}%</span>
 						<span className="text-gray-500">/</span>
-						<span className="text-blue-400">{countValue.toString()}</span>
+						<span>{countValue.toString()}</span>
 					</div>
 				}
+				valueColorClass=""
 				onDoubleClick={() => {
 					navigateToOption(tabId, categoryId, uniqueRateId);
 				}}

@@ -7,6 +7,7 @@ interface ViewerOptionRowProps {
 	value: ReactNode;
 	onDoubleClick: () => void;
 	testId?: string;
+	valueColorClass?: string;
 }
 
 /**
@@ -17,6 +18,7 @@ export function ViewerOptionRow({
 	value,
 	onDoubleClick,
 	testId,
+	valueColorClass = "text-blue-400",
 }: ViewerOptionRowProps) {
 	return (
 		<button
@@ -30,7 +32,7 @@ export function ViewerOptionRow({
 				<ColoredText text={title} />
 			</span>
 			<div className="flex items-center gap-1 shrink-0">
-				<div className="text-sm text-blue-400 font-medium text-right">
+				<div className={`text-sm font-medium text-right ${valueColorClass}`}>
 					{value}
 				</div>
 			</div>
