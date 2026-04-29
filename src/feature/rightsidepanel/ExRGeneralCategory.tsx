@@ -30,21 +30,21 @@ export function ExRGeneralCategory({ categoryId }: ExRGeneralCategoryProps) {
 		<div data-testid={`right-panel-exr-category-${categoryId}`}>
 			<CompactAccordion
 				title={<span className="text-base">{categoryMeta.name}</span>}
-			isOpen={openedExRCategoryIds[categoryId] ?? true}
-			onToggle={() => {
-				toggleExRCategory(categoryId);
-			}}
-		>
-			<div className="flex flex-col gap-0.5">
-				{topLevelOptionIds.map((uniqueOptionId) => (
-					<ExRViewerOptionRow
-						key={uniqueOptionId}
-						uniqueOptionId={uniqueOptionId}
-						categoryId={categoryId}
-					/>
-				))}
-			</div>
-		</CompactAccordion>
+				isOpen={openedExRCategoryIds[categoryId] ?? true}
+				onToggle={() => {
+					toggleExRCategory(categoryId);
+				}}
+			>
+				<div className="flex flex-col gap-0.5">
+					{topLevelOptionIds.map((uniqueOptionId) => (
+						<ExRViewerOptionRow
+							key={uniqueOptionId}
+							uniqueOptionId={uniqueOptionId}
+							categoryId={categoryId}
+						/>
+					))}
+				</div>
+			</CompactAccordion>
 		</div>
 	);
 }
