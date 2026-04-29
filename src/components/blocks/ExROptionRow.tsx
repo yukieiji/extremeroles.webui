@@ -17,16 +17,17 @@ export function ExROptionRow({
 	depth = 0,
 	isLeaf = false,
 }: ExROptionRowProps) {
-	return isLeaf ? (
-		<OptionRowContainer
-			id={`exr-option-${uniqueOptionId}`}
-			leading={<LargePoint />}
-			content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
-			className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
-		/>
-	) : (
+	return (
 		<div id={`exr-option-${uniqueOptionId}`}>
-			<ExROptionRowContent uniqueOptionId={uniqueOptionId} />
+			{isLeaf ? (
+				<OptionRowContainer
+					leading={<LargePoint />}
+					content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
+					className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
+				/>
+			) : (
+				<ExROptionRowContent uniqueOptionId={uniqueOptionId} />
+			)}
 		</div>
 	);
 }

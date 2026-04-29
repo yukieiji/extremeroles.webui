@@ -7,7 +7,7 @@ import {
 } from "../logics/storageUtils";
 import type {
 	ExROptionValueData,
-	OptionTab,
+	TabId,
 	UniqueOptionId,
 	UpdatedOptions,
 } from "../type";
@@ -16,7 +16,7 @@ import type {
  * ExR オプションの状態を管理するスライスのインターフェース
  */
 export interface ExROptionViewerSlice {
-	selectedExRTabId: OptionTab;
+	selectedExRTabId: TabId;
 	isExRTabPending: boolean;
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<number, boolean>;
@@ -24,7 +24,7 @@ export interface ExROptionViewerSlice {
 	isPresetDropdownOpen: boolean;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
-	setSelectedExRTabId: (id: OptionTab) => void;
+	setSelectedExRTabId: (id: TabId) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
@@ -54,7 +54,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		isExROptionActive: {},
 		presetNames: loadPresetNamesFromLocalStorage(),
 		isPresetDropdownOpen: false,
-		setSelectedExRTabId: (id: OptionTab) => {
+		setSelectedExRTabId: (id: TabId) => {
 			set({ selectedExRTabId: id });
 		},
 		setIsExRTabPending: (isPending: boolean) => {

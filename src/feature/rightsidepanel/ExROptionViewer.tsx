@@ -1,5 +1,5 @@
 import { exrOptionMetaData } from "../../logics/api";
-import { OptionTab } from "../../type";
+import { OptionTab, type TabId } from "../../type";
 import { useStore } from "../../useStore";
 import { ExRRoleViewerSection } from "./ExRRoleViewerSection";
 
@@ -7,11 +7,11 @@ import { ExRRoleViewerSection } from "./ExRRoleViewerSection";
  * ExRの設定内容を表示するコンポーネント
  */
 export function ExROptionViewer() {
-	const openedExRRoleTabIds = useStore((state) => state.openedExRRoleTabIds);
-	const toggleExRRoleTab = useStore((state) => state.toggleExRRoleTab);
+	const openedExRTabIds = useStore((state) => state.openedExRTabIds);
+	const toggleExRTab = useStore((state) => state.toggleExRTab);
 
 	// 役職タブ1～7を表示対象とする
-	const roleTabIds: OptionTab[] = [
+	const roleTabIds: TabId[] = [
 		OptionTab.CrewmateTab,
 		OptionTab.ImpostorTab,
 		OptionTab.NeutralTab,
@@ -34,8 +34,8 @@ export function ExROptionViewer() {
 						key={tabId}
 						tabId={tabId}
 						title={tabMeta.name}
-						isOpen={openedExRRoleTabIds[tabId] ?? false}
-						onToggle={() => toggleExRRoleTab(tabId)}
+						isOpen={openedExRTabIds[tabId] ?? false}
+						onToggle={() => toggleExRTab(tabId)}
 					/>
 				);
 			})}

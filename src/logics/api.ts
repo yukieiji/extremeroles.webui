@@ -18,6 +18,7 @@ import {
 	GetTranslationResponseArraySchema,
 	OptionTab,
 	OptionValueType,
+	type TabId,
 	UpdatedOptionsSchema,
 } from "../type";
 
@@ -36,8 +37,8 @@ export const translationMetaData: TranslationMetaDataRecords = {
 };
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
-	// OptionTabはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
-	tabs: {} as Record<OptionTab, ExRTabMetaData>,
+	// TabIdはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
+	tabs: {} as Record<TabId, ExRTabMetaData>,
 	categories: {},
 	options: {},
 	globalCategoryIdTopLevelMap: {},
@@ -54,7 +55,7 @@ export const auOptionMetaData: AuOptionMetaDataRecords = {
  * ExRオプションのメタデータをリセットする（テスト用）
  */
 export function resetExrOptionMetaData() {
-	exrOptionMetaData.tabs = {} as Record<OptionTab, ExRTabMetaData>;
+	exrOptionMetaData.tabs = {} as Record<TabId, ExRTabMetaData>;
 	exrOptionMetaData.categories = {};
 	exrOptionMetaData.options = {};
 	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
@@ -132,7 +133,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 
 	const processOptions = (
 		options: ExROptionDto[],
-		tabId: OptionTab,
+		tabId: TabId,
 		categoryId: number,
 		parentOptionId: number | null,
 	) => {

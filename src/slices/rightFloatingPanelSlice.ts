@@ -1,5 +1,5 @@
 import type { StateCreator } from "zustand";
-import type { OptionTab } from "../type";
+import { OptionTab, type TabId } from "../type";
 
 /**
  * 右フローティングパネルの状態管理を行うスライスのインターフェース
@@ -21,8 +21,8 @@ export interface RightFloatingPanelSlice {
 	toggleAuCrewmateRoles: () => void;
 	isAuImpostorRolesOpen: boolean;
 	toggleAuImpostorRoles: () => void;
-	openedExRRoleTabIds: Record<OptionTab, boolean>;
-	toggleExRRoleTab: (tabId: OptionTab) => void;
+	openedExRTabIds: Record<TabId, boolean>;
+	toggleExRTab: (tabId: TabId) => void;
 }
 
 /**
@@ -78,21 +78,21 @@ export const createRightFloatingPanelSlice: StateCreator<
 		toggleAuImpostorRoles: () => {
 			set((state) => ({ isAuImpostorRolesOpen: !state.isAuImpostorRolesOpen }));
 		},
-		openedExRRoleTabIds: {
-			0: true,
-			1: true,
-			2: true,
-			3: true,
-			4: true,
-			5: true,
-			6: true,
-			7: true,
+		openedExRTabIds: {
+			[OptionTab.GeneralTab]: true,
+			[OptionTab.CrewmateTab]: true,
+			[OptionTab.ImpostorTab]: true,
+			[OptionTab.NeutralTab]: true,
+			[OptionTab.CombinationTab]: true,
+			[OptionTab.GhostCrewmateTab]: true,
+			[OptionTab.GhostImpostorTab]: true,
+			[OptionTab.GhostNeutralTab]: true,
 		},
-		toggleExRRoleTab: (tabId) => {
+		toggleExRTab: (tabId) => {
 			set((state) => {
-				const next = { ...state.openedExRRoleTabIds };
+				const next = { ...state.openedExRTabIds };
 				next[tabId] = !next[tabId];
-				return { openedExRRoleTabIds: next };
+				return { openedExRTabIds: next };
 			});
 		},
 	};

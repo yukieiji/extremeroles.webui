@@ -34,7 +34,7 @@ export interface ExRTabMetaData {
 
 export interface ExRCategoryMetaData {
 	name: string;
-	tabId: OptionTab;
+	tabId: TabId;
 }
 
 export interface ExROptionMetaDataDetail {
@@ -43,7 +43,7 @@ export interface ExROptionMetaDataDetail {
 }
 
 export interface ExROptionMetaDataRecords {
-	tabs: Record<OptionTab, ExRTabMetaData>;
+	tabs: Record<TabId, ExRTabMetaData>;
 	categories: Record<number, ExRCategoryMetaData>;
 	options: Record<UniqueOptionId, ExROptionMetaDataDetail>;
 	globalCategoryIdTopLevelMap: Record<number, UniqueOptionId[]>;
@@ -63,11 +63,11 @@ export const OptionTab = {
 	GhostNeutralTab: 7,
 } as const;
 
-export type OptionTab = (typeof OptionTab)[keyof typeof OptionTab];
+export type TabId = (typeof OptionTab)[keyof typeof OptionTab];
 
-export const OptionTabSchema = z.preprocess((val) => {
+export const TabIdSchema = z.preprocess((val) => {
 	if (typeof val === "string" && val in OptionTab) {
-		return OptionTab[val as keyof typeof OptionTab];
+		return TabId[val as keyof typeof OptionTab];
 	}
 	return val;
 }, z.enum(OptionTab));
@@ -130,13 +130,13 @@ export const ExRCategoryDtoSchema = z.object({
  * タブDTO
  */
 export interface ExRTabDto {
-	Id: OptionTab;
+	Id: TabId;
 	Name: string;
 	Categories: ExRCategoryDto[];
 }
 
 export const ExRTabDtoSchema = z.object({
-	Id: OptionTabSchema,
+	Id: TabIdSchema,
 	Name: z.string(),
 	Categories: z.array(ExRCategoryDtoSchema),
 });
@@ -153,6 +153,14 @@ export const AU_PREFIX = {
 	MAX_COUNT: 1,
 	CHANCE: 2,
 } as const;
+
+export const AuTab = {
+	GeneralTab: 0,
+	CrewmateTab: 1,
+	ImpostorTab: 2,
+} as const;
+
+export type AuTab = (typeof AuTab)[keyof typeof AuTab];
 
 // 全ての値（1 | 2）を型として抽出
 export type AuOptionPrefix = (typeof AU_PREFIX)[keyof typeof AU_PREFIX];

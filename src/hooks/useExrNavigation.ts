@@ -1,4 +1,4 @@
-import type { OptionTab, UniqueOptionId } from "../type";
+import type { TabId, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
 /**
@@ -22,7 +22,7 @@ export function useExrNavigation() {
 	});
 
 	const navigateToOption = (
-		tabId: OptionTab,
+		tabId: TabId,
 		categoryId: number,
 		uniqueOptionId: UniqueOptionId,
 	) => {

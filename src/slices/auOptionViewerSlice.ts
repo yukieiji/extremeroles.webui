@@ -5,12 +5,12 @@ import type { AuOptionId, UpdateAuArg } from "../type";
  * ExR オプションの状態を管理するスライスのインターフェース
  */
 export interface AuOptionViewerSlice {
-	selectedAuTabId: number;
+	selectedAuTabId: AuTab;
 	isAuTabPending: boolean;
 	openedAuCategoryIds: Record<number, boolean>;
 	highlightedAuOptionId: AuOptionId | null;
 	auValue: Record<AuOptionId, number>; // セレクション
-	setSelectedAuTabId: (id: number) => void;
+	setSelectedAuTabId: (id: AuTab) => void;
 	setIsAuTabPending: (isPending: boolean) => void;
 	setAuValue: (value: Record<AuOptionId, number>) => void;
 	setOpenedAuCategoryIds: (ids: Record<number, boolean>) => void;
@@ -31,7 +31,7 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 		openedAuCategoryIds: {},
 		highlightedAuOptionId: null,
 		auValue: {},
-		setSelectedAuTabId: (id: number) => {
+		setSelectedAuTabId: (id: AuTab) => {
 			set({ selectedAuTabId: id });
 		},
 		setIsAuTabPending: (isPending: boolean) => {

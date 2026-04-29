@@ -2,15 +2,15 @@ import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { exrOptionMetaData } from "../../logics/api";
 import { getUniqueOptionId } from "../../logics/optionUtils";
 import {
-	type OptionTab,
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
+	type TabId,
 } from "../../type";
 import { useStore } from "../../useStore";
 import { ExRRoleViewerRow } from "./ExRRoleViewerRow";
 
 interface ExRRoleViewerSectionProps {
-	tabId: OptionTab;
+	tabId: TabId;
 	title: string;
 	isOpen: boolean;
 	onToggle: () => void;

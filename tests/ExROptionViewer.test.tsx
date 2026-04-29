@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ExROptionViewer } from "../src/feature/rightsidepanel/ExROptionViewer";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
-import type { OptionTab } from "../src/type";
+import type { TabId } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExROptionViewer Component", () => {
@@ -12,7 +12,7 @@ describe("ExROptionViewer Component", () => {
 
 		// Setup metadata for all 7 tabs
 		for (let i = 1; i <= 7; i++) {
-			const tabId = i as OptionTab;
+			const tabId = i as TabId;
 			exrOptionMetaData.tabs[tabId] = {
 				name: `Tab ${i}`,
 				categoryIds: [i * 100],
