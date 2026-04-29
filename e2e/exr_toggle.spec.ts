@@ -28,8 +28,11 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 		.click();
 
 	// '乱数に関する設定' アコーディオンを開く
-	const categoryAccordion = page.getByText("乱数に関する設定");
+	const categoryAccordion = page
+		.getByTestId("main-content-section")
+		.getByText("乱数に関する設定");
 	await categoryAccordion.click();
+	await page.waitForTimeout(500);
 
 	// '強力なシャッフルを使用する' オプションの横にあるトグルを確認
 	const toggle = page.getByTestId("option-toggle").first(); // 最初のトグルを取得
@@ -37,17 +40,23 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 
 	// 初期状態は オフ (Selection 0)
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
+	await expect(
+		page.getByTestId("main-content-section").getByText("オフ"),
+	).toBeVisible();
 
 	// クリックして オン にする
 	await toggle.click();
 
 	// 状態が オン (Selection 1) になったことを確認
 	await expect(toggle).toHaveAttribute("aria-checked", "true");
-	await expect(page.getByText("オン", { exact: true })).toBeVisible();
+	await expect(
+		page.getByTestId("main-content-section").getByText("オン", { exact: true }),
+	).toBeVisible();
 
 	// 再度クリックして オフ に戻す
 	await toggle.click();
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
+	await expect(
+		page.getByTestId("main-content-section").getByText("オフ"),
+	).toBeVisible();
 });

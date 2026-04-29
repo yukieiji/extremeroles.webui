@@ -27,8 +27,9 @@ export function ExRGeneralCategory({ categoryId }: ExRGeneralCategoryProps) {
 	}
 
 	return (
-		<CompactAccordion
-			title={<span className="text-base">{categoryMeta.name}</span>}
+		<div data-testid={`right-panel-exr-category-${categoryId}`}>
+			<CompactAccordion
+				title={<span className="text-base">{categoryMeta.name}</span>}
 			isOpen={openedExRCategoryIds[categoryId] ?? true}
 			onToggle={() => {
 				toggleExRCategory(categoryId);
@@ -44,5 +45,6 @@ export function ExRGeneralCategory({ categoryId }: ExRGeneralCategoryProps) {
 				))}
 			</div>
 		</CompactAccordion>
+		</div>
 	);
 }

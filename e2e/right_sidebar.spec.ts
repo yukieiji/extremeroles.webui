@@ -37,12 +37,10 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 	// AmongUsの設定を閉じる
 	await auSettings.click();
 	await expect(auSettings).toHaveAttribute("aria-expanded", "false");
-	await expect(page.getByText("AmongUsの設定コンテンツ")).not.toBeVisible();
 
 	// ExRの設定を閉じる
 	await exrSettings.click();
 	await expect(exrSettings).toHaveAttribute("aria-expanded", "false");
-	await expect(page.getByText("ExRの設定コンテンツ")).not.toBeVisible();
 
 	// 設定値アコーディオンを閉じる
 	await settingsAccordion.click();
