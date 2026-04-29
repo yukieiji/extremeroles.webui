@@ -4,6 +4,7 @@ interface OptionRowContainerProps {
 	leading: ReactNode;
 	content: ReactNode;
 	className?: string;
+	id?: string;
 }
 
 /**
@@ -14,9 +15,11 @@ export function OptionRowContainer({
 	leading,
 	content,
 	className = "",
+	id,
 }: OptionRowContainerProps) {
 	return (
 		<div
+			id={id}
 			className={`flex items-stretch bg-gray-900/50 hover:bg-gray-800/50 transition-colors border-b border-gray-800 last:border-0 ${className}`}
 		>
 			{/* 左側領域（トグルボタンやスペーサー） */}

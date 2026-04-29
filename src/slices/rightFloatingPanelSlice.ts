@@ -20,6 +20,8 @@ export interface RightFloatingPanelSlice {
 	toggleAuCrewmateRoles: () => void;
 	isAuImpostorRolesOpen: boolean;
 	toggleAuImpostorRoles: () => void;
+	openedExRRoleTabIds: Record<number, boolean>;
+	toggleExRRoleTab: (tabId: number) => void;
 }
 
 /**
@@ -74,6 +76,22 @@ export const createRightFloatingPanelSlice: StateCreator<
 		isAuImpostorRolesOpen: true,
 		toggleAuImpostorRoles: () => {
 			set((state) => ({ isAuImpostorRolesOpen: !state.isAuImpostorRolesOpen }));
+		},
+		openedExRRoleTabIds: {
+			1: true,
+			2: true,
+			3: true,
+			4: true,
+			5: true,
+			6: true,
+			7: true,
+		},
+		toggleExRRoleTab: (tabId) => {
+			set((state) => {
+				const next = { ...state.openedExRRoleTabIds };
+				next[tabId] = !next[tabId];
+				return { openedExRRoleTabIds: next };
+			});
 		},
 	};
 };
