@@ -41,13 +41,13 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
 
 	return (
-		<HighlightWrapper
-			id={`au-option-${mapOptionId}`}
-			isHighlighted={isHighlighted}
+		<div
+			className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden mb-2"
+			data-testid={`au-category-${categoryId}`}
 		>
-			<div
-				className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden mb-2"
-				data-testid={`au-category-${categoryId}`}
+			<HighlightWrapper
+				id={`au-option-${mapOptionId}`}
+				isHighlighted={isHighlighted}
 			>
 				<div className="flex items-center justify-between p-4">
 					<div className="flex items-center gap-3">
@@ -70,7 +70,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 						/>
 					</div>
 				</div>
-			</div>
-		</HighlightWrapper>
+			</HighlightWrapper>
+		</div>
 	);
 }
