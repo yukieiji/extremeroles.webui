@@ -103,7 +103,7 @@ function App() {
 				<OptionGroupToggleSidebar />
 				<main
 					className={`
-            flex-1 p-8 transition-all duration-300
+            flex-1 pr-8 pl-2 transition-all duration-300
             ${isSidebarOpen ? "ml-64" : "ml-12"}
           `}
 				>
