@@ -17,9 +17,7 @@ export function AuTab0OptionRow({
 	optionId,
 	categoryId,
 }: AuTab0OptionRowProps) {
-	const auValue = useStore((state) => {
-		return state.auValue;
-	});
+	const selection = useStore((state) => state.auValue[optionId]);
 	const { navigateToOption } = useAuNavigation();
 
 	const optionMeta = auOptionMetaData.options[optionId];
@@ -27,8 +25,7 @@ export function AuTab0OptionRow({
 		return null;
 	}
 
-	const selection = auValue[optionId] ?? 0;
-	const value = optionMeta.range[selection];
+	const value = optionMeta.range[selection ?? 0];
 
 	return (
 		<div className="border-white border-b">
