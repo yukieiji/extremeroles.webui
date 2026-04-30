@@ -60,6 +60,8 @@
     - バックエンドからのデータ取得は`Suspose`を使うこと、`useEffect`は基本使用しない
     - 状態管理は`zustand`を使用し、`useState`は使用しない
         - 必ずグローバルの`useStore`からデータを取得すること
+    - data-testidの使用は限りなく避け、role => label => placeholder => text => alt => titleの順で検討しそれでも駄目な時にdata-testidを使用する
+        - 特にpropを渡してtestidを構築するとかはもってのほか
     - 記載例:
     ```ts
 
