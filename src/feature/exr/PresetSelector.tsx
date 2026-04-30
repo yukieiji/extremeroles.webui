@@ -116,7 +116,7 @@ export function PresetSelector() {
 
 	return (
 		<div className="relative flex items-center gap-2" ref={dropdownRef}>
-			<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:border-blue-500">
+			<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
 				<input
 					ref={inputRef}
 					type="text"
@@ -151,7 +151,7 @@ export function PresetSelector() {
 			</div>
 
 			{isDropdownOpen && (
-				<div className="absolute top-full left-0 mt-1 w-full bg-gray-800 border border-gray-700 rounded shadow-xl z-50 max-h-60 overflow-y-auto">
+				<div className="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded shadow-xl z-50 max-h-60 overflow-y-auto">
 					{presetValues.map((val, index) => {
 						const name = presetNames[index] ?? String(val);
 						const isSelected = index === currentSelection;
