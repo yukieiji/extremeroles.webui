@@ -33,10 +33,6 @@ test.describe("ExR Tab 0 Navigation from Right Panel", () => {
 			.getByText("Preset");
 		await expect(presetDisplay).toBeVisible();
 
-		await page
-			.getByLabel("右フローティングパネル")
-			.screenshot({ path: "exr_viewer_screenshot.png" });
-
 		// 4. Expand a category (e.g., "一般")
 		// Based on mock data in the real app, "一般" should be a category in GeneralTab
 		const generalCategory = page
