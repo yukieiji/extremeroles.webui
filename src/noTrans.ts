@@ -27,6 +27,8 @@ export const EXR_CONTENT_TEMP = "ExRの設定コンテンツ";
 export const CREW_ROLES_TITLE = "クルー役職";
 export const IMPOSTOR_ROLES_TITLE = "インポスター役職";
 export const OPTION_SIDEBAR_ARIA = "オプションサイドバー";
+export const AU_OPTION_ROW_ARIA = "{0}の設定";
+export const AU_ROLE_ROW_ARIA = "{0}の役職";
 
 /**
  * プレースホルダーを含む文字列を置換します。

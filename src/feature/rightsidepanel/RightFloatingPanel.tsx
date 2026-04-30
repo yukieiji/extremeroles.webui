@@ -88,7 +88,7 @@ export function RightFloatingPanel() {
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
 						>
-							<div className="flex flex-col">
+							<div className="flex flex-col gap-2">
 								<CompactAccordion
 									title={AU_SETTINGS_TITLE}
 									isOpen={isAuSettingsOpen}

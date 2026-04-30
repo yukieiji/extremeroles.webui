@@ -13,7 +13,7 @@ export function CategoryContainer({
 	return (
 		<div
 			data-testid="category-list"
-			className={`flex flex-col relative transition-opacity duration-200 ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
+			className={`flex flex-col relative transition-opacity duration-200 gap-2 ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
 		>
 			{isPending && (
 				<div className="absolute inset-0 flex items-center justify-center z-10">

@@ -1,3 +1,5 @@
+import { CLOSE, OPEN } from "../../noTrans";
+
 interface AccordionSvgProp {
 	className: string;
 	isOpen: boolean;
@@ -11,7 +13,7 @@ export function AccordionSvg({ className, isOpen }: AccordionSvgProp) {
 			viewBox="0 0 24 24"
 			stroke="currentColor"
 		>
-			<title>{isOpen ? "Collapse" : "Expand"}</title>
+			<title>{isOpen ? CLOSE : OPEN}</title>
 			<path
 				strokeLinecap="round"
 				strokeLinejoin="round"

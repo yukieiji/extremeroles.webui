@@ -53,7 +53,6 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 				onDoubleClick={() => {
 					navigateToOption(tabId, categoryId, chanceOptionId);
 				}}
-				testId={`right-panel-role-${categoryId}`}
 			/>
 		</div>
 	);

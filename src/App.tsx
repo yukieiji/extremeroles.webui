@@ -55,7 +55,7 @@ function MainContent() {
 			className="flex flex-col gap-4 transition-opacity duration-200"
 		>
 			<div className="flex items-center gap-4">
-				<div className="flex items-center gap-4 flex-1">
+				<div className="flex items-center gap-5 flex-1 p-4">
 					<h2 className="text-2xl font-bold whitespace-nowrap">
 						{selectedTab === "ExR" ? "ExR Options" : "Au Options"}
 					</h2>
@@ -103,7 +103,7 @@ function App() {
 				<OptionGroupToggleSidebar />
 				<main
 					className={`
-            flex-1 p-8 transition-all duration-300
+            flex-1 pr-8 pl-2 transition-all duration-300
             ${isSidebarOpen ? "ml-64" : "ml-12"}
           `}
 				>

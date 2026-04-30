@@ -19,7 +19,7 @@ export function CompactAccordion({
 	children,
 }: CompactAccordionProps) {
 	return (
-		<div className="border-gray-700 rounded-lg border overflow-hidden mb-1">
+		<div className="border-gray-700 rounded-lg border overflow-hidden">
 			<button
 				type="button"
 				onClick={onToggle}

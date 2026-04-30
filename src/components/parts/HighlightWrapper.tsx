@@ -1,30 +1,29 @@
 import type { ReactNode } from "react";
 
 interface HighlightWrapperProps {
+	id: string;
 	isHighlighted: boolean;
 	children: ReactNode;
-	id?: string;
-	className?: string;
-	"data-testid"?: string;
+	isInset: boolean;
 }
 
 /**
  * ハイライト状態を表示するためのラッパーコンポーネント
  */
 export function HighlightWrapper({
+	id,
 	isHighlighted,
 	children,
-	id,
-	className = "",
-	"data-testid": testId,
+	isInset,
 }: HighlightWrapperProps) {
+	const highlightClass = isHighlighted
+		? `ring-2 ring-blue-500 ${isInset ? "ring-inset" : ""}`
+		: "";
+
 	return (
 		<div
 			id={id}
-			data-testid={testId}
-			className={`transition-all duration-500 rounded ${
-				isHighlighted ? "ring-2 ring-blue-500 bg-blue-500/10" : ""
-			} ${className}`}
+			className={`transition-all duration-500 rounded ${highlightClass}`}
 		>
 			{children}
 		</div>

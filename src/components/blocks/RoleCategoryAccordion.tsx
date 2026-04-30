@@ -22,7 +22,7 @@ export function RoleCategoryAccordion({
 	return (
 		<div
 			id={typeof text === "string" ? `au-category-${text}` : undefined}
-			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
+			className="border border-gray-700 rounded-lg overflow-hidden"
 			data-testid="role-category"
 		>
 			<div
@@ -54,7 +54,7 @@ export function RoleCategoryAccordion({
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
 					{isOpen && (
-						<div className="p-4 bg-gray-900 border-t border-gray-700">
+						<div className="bg-gray-900 border-t border-gray-700">
 							{children}
 						</div>
 					)}

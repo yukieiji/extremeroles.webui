@@ -32,10 +32,9 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const mapValue = mapOptionMeta.range[auValue[mapOptionId] ?? 0];
 
 	return (
-		<div className="border border-gray-700 rounded-lg overflow-hidden mb-1">
+		<div className="border border-gray-700 rounded-lg overflow-hidden">
 			<button
 				type="button"
-				data-testid={`right-panel-option-${mapOptionId}`}
 				onDoubleClick={() => {
 					navigateToOption(0, categoryId, mapOptionId);
 				}}

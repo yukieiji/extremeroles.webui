@@ -13,7 +13,9 @@ test.beforeEach(async ({ page }) => {
 
 	// Au Options タブに切り替え
 	await page.getByRole("button", { name: "Au Options" }).click();
-	await page.waitForSelector('[data-testid="category-list"]');
+	await expect(page.getByTestId("category-list")).toBeVisible({
+		timeout: 10000,
+	});
 });
 
 test.describe("Au Option Interactions", () => {
@@ -23,12 +25,17 @@ test.describe("Au Option Interactions", () => {
 		// Tab 0 (General)
 		await page.getByRole("button", { name: "0", exact: true }).click();
 
-		const category = page.getByTestId("au-category-0");
-		// In our new MapDropDown component, the title is displayed directly
-		await expect(category.getByText("map")).toBeVisible();
-
 		// Map is now a direct dropdown (select element)
-		await expect(category.getByRole("combobox")).toBeVisible();
+		// モックデータでは "map" (小文字)
+		// "map" というテキストと combobox の両方を含む行要素を特定する
+		const mapCategoryRow = page
+			.locator("main")
+			.locator("div")
+			.filter({ hasText: "map" })
+			.filter({ has: page.getByRole("combobox") })
+			.first();
+		await expect(mapCategoryRow).toBeVisible();
+		await expect(mapCategoryRow.getByRole("combobox")).toBeVisible();
 	});
 
 	test("should display accordion for other general tab categories", async ({
@@ -38,14 +45,12 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("button", { name: "0", exact: true }).click();
 
 		// index 1 category should still be an accordion
-		const category = page.getByTestId("au-category-1");
-		// "インポスター" is the title of the second category in mock data
-		await expect(category.getByText("インポスター")).toBeVisible();
-
-		// Should be an accordion (button)
-		await expect(
-			category.getByRole("button", { name: "インポスター" }),
-		).toBeVisible();
+		// メインコンテンツエリアのアコーディオンボタンを探す
+		// 日本語環境なので「開く」または「閉じる」と「インポスター」の組み合わせ
+		const category = page
+			.locator("main")
+			.getByRole("button", { name: /^(開く|閉じる) インポスター$/ });
+		await expect(category).toBeVisible();
 	});
 
 	test("should display role controls in header for role tabs", async ({

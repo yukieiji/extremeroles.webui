@@ -38,7 +38,6 @@ export function AuTab0OptionRow({
 				onDoubleClick={() => {
 					navigateToOption(0, categoryId, optionId);
 				}}
-				testId={`right-panel-option-${optionId}`}
 			/>
 		</div>
 	);
