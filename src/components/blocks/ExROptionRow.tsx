@@ -18,11 +18,13 @@ export function ExROptionRow({
 	isLeaf = false,
 }: ExROptionRowProps) {
 	return isLeaf ? (
-		<OptionRowContainer
-			leading={<LargePoint />}
-			content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
-			className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
-		/>
+		<div id={`exr-option-${uniqueOptionId}`}>
+			<OptionRowContainer
+				leading={<LargePoint />}
+				content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
+				className={depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}
+			/>
+		</div>
 	) : (
 		<ExROptionRowContent uniqueOptionId={uniqueOptionId} />
 	);

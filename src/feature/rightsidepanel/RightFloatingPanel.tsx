@@ -13,6 +13,7 @@ import {
 } from "../../noTrans";
 import { useStore } from "../../useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
+import { ExROptionViewer } from "./ExROptionViewer";
 
 /**
  * 右フローティングパネルコンポーネント
@@ -101,7 +102,7 @@ export function RightFloatingPanel() {
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
 								>
-									<p className="text-gray-400 text-sm">{EXR_CONTENT_TEMP}</p>
+									<ExROptionViewer />
 								</CompactAccordion>
 							</div>
 						</CompactAccordion>
