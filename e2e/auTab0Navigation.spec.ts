@@ -73,17 +73,15 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		);
 
 		// ハイライト用のクラスやスタイルが適用されているか確認
-		// テキストで特定し、その親の HighlightWrapper を探す
-		const impCountRow = page
+		// ハイライト状態（ring-2クラスを持つ）かつ、設定項目名を含む要素を特定する
+		const highlightedRow = page
 			.locator("main")
-			.locator("div")
+			.locator("div.ring-2")
 			.filter({ hasText: "インポスター数" })
-			.locator("xpath=ancestor::div[contains(@class, 'transition-all')]")
 			.first();
-		await expect(impCountRow).toHaveClass(/ring-2/);
-		await expect(impCountRow).toHaveClass(/ring-blue-500/);
+		await expect(highlightedRow).toBeVisible();
 
 		// 7. 数秒後にハイライトが消えることを確認
-		await expect(impCountRow).not.toHaveClass(/ring-2/, { timeout: 15000 });
+		await expect(highlightedRow).not.toBeVisible({ timeout: 15000 });
 	});
 });

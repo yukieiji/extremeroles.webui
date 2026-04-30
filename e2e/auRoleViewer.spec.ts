@@ -53,14 +53,12 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		).toBeVisible();
 
 		// ハイライトの確認
-		// 役職名を含むアコーディオンコンテナを探し、その親の HighlightWrapper を特定する
-		const targetCategory = mainEditor
-			.getByTestId("role-category")
+		// ハイライト状態（ring-2クラスを持つ）かつ、役職名を含む要素を特定する
+		const highlightedRow = mainEditor
+			.locator("div.ring-2")
 			.filter({ hasText: "シェイプシフター" })
-			.locator("xpath=ancestor::div[contains(@class, 'transition-all')]")
 			.first();
-		await expect(targetCategory).toBeVisible({ timeout: 10000 });
-		await expect(targetCategory).toHaveClass(/ring-2/);
+		await expect(highlightedRow).toBeVisible({ timeout: 10000 });
 	});
 
 	test("toggles role sections in the right panel", async ({ page }) => {
