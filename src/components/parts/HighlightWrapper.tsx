@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 interface HighlightWrapperProps {
 	isHighlighted: boolean;
 	children: ReactNode;
-	id?: string;
 	isInset: boolean;
 }
 
@@ -13,7 +12,6 @@ interface HighlightWrapperProps {
 export function HighlightWrapper({
 	isHighlighted,
 	children,
-	id,
 	isInset,
 }: HighlightWrapperProps) {
 	const highlightClass = isHighlighted
@@ -21,10 +19,7 @@ export function HighlightWrapper({
 		: "";
 
 	return (
-		<div
-			id={id}
-			className={`transition-all duration-500 rounded ${highlightClass}`}
-		>
+		<div className={`transition-all duration-500 rounded ${highlightClass}`}>
 			{children}
 		</div>
 	);
