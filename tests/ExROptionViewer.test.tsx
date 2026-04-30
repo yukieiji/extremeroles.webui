@@ -9,7 +9,7 @@ import {
 } from "../src/logics/api";
 import { getAllOptions, resetApiCache } from "../src/logics/api.store";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
-import { ExRTabId, type UniqueOptionId } from "../src/type";
+import { ExRTabId } from "../src/type";
 import { useStore } from "../src/useStore";
 
 describe("ExROptionViewer", () => {
@@ -83,7 +83,7 @@ describe("ExROptionViewer", () => {
 	});
 
 	it("renders General Tab categories and options", async () => {
-		const uniqueId = getUniqueOptionId(ExRTabId.GeneralTab, 1, 10);
+		const _uniqueId = getUniqueOptionId(ExRTabId.GeneralTab, 1, 10);
 
 		await act(async () => {
 			render(
@@ -121,7 +121,10 @@ describe("ExROptionViewer", () => {
 			},
 			childOptionIds: [],
 		};
-		exrOptionMetaData.globalCategoryIdTopLevelMap[1] = [minUniqueId, maxUniqueId];
+		exrOptionMetaData.globalCategoryIdTopLevelMap[1] = [
+			minUniqueId,
+			maxUniqueId,
+		];
 
 		useStore.getState().setExROptions(
 			{
@@ -167,10 +170,12 @@ describe("ExROptionViewer", () => {
 			childOptionIds: [],
 		};
 
-		useStore.getState().setExROptions(
-			{ [presetUniqueId]: { selection: 1, values: [1, 2] } },
-			{ [presetUniqueId]: true },
-		);
+		useStore
+			.getState()
+			.setExROptions(
+				{ [presetUniqueId]: { selection: 1, values: [1, 2] } },
+				{ [presetUniqueId]: true },
+			);
 		useStore.getState().updatePresetName(1, "My Custom Preset");
 
 		await act(async () => {
