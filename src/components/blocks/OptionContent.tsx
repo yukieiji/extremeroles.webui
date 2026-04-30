@@ -5,11 +5,18 @@ import { OptionNameDisplay } from "../parts/OptionNameDisplay";
 interface OptionRowContent {
 	name: string;
 	children: ReactNode;
+	id?: string;
+	className?: string;
 }
 
-export function OptionRowContent({ name, children }: OptionRowContent) {
+export function OptionRowContent({
+	name,
+	children,
+	id,
+	className,
+}: OptionRowContent) {
 	return (
-		<OptionItem className="min-h-10">
+		<OptionItem className={`min-h-10 ${className ?? ""}`} id={id}>
 			<div className="flex-1 min-w-0">
 				<span className="text-base font-normal text-gray-200 wrap-break-words">
 					<OptionNameDisplay name={name} />

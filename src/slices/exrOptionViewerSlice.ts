@@ -22,6 +22,7 @@ export interface ExROptionViewerSlice {
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
 	isPresetDropdownOpen: boolean;
+	highlightedExROptionId: UniqueOptionId | null;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	setSelectedExRTabId: (id: ExRTabId) => void;
@@ -31,6 +32,7 @@ export interface ExROptionViewerSlice {
 	updateExROption: (updateOptions: (UpdatedOptions | null)[]) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
+	setHighlightedExROptionId: (id: UniqueOptionId | null) => void;
 	resetViewer: () => void;
 	setExROptions: (
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
@@ -52,6 +54,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		openedExROptionIds: {},
 		exrValue: {},
 		isExROptionActive: {},
+		highlightedExROptionId: null,
 		presetNames: loadPresetNamesFromLocalStorage(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: ExRTabId) => {
@@ -136,6 +139,9 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		},
 		setPresetDropdownOpen: (isOpen: boolean) => {
 			set({ isPresetDropdownOpen: isOpen });
+		},
+		setHighlightedExROptionId: (id) => {
+			set({ highlightedExROptionId: id });
 		},
 		setExROptions: (
 			valueData: Record<number, ExROptionValueData>,
