@@ -13,10 +13,10 @@ export function AuCategoryOptionList({ optionIds }: AuCategoryOptionListProps) {
 	return (
 		<div className="flex flex-col">
 			{optionIds.map((optionId, index) => (
-				<>
-					{index !== 0 && <BorderLine key={optionId} />}
-					<AuOptionRow key={optionId} auOptionId={optionId} />
-				</>
+				<div key={optionId}>
+					{index !== 0 && <BorderLine />}
+					<AuOptionRow auOptionId={optionId} />
+				</div>
 			))}
 		</div>
 	);

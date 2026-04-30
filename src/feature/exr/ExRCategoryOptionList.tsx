@@ -31,18 +31,16 @@ export function ExRCategoryOptionList({
 			{groupedItems.map((item, index) => {
 				if (typeof item === "number") {
 					return (
-						<>
-							{index !== 0 && <BorderLine key={item} />}
-							<ExROptionItem key={item} uniqueOptionId={item} />
-						</>
+						<div key={item}>
+							{index !== 0 && <BorderLine />}
+							<ExROptionItem uniqueOptionId={item} />
+						</div>
 					);
 				}
-				const key = `pair-${item.baseName}`;
 				return (
-					<>
-						{index !== 0 && <BorderLine key={key} />}
+					<div key={`pair-${item.baseName}`}>
+						{index !== 0 && <BorderLine />}
 						<OptionRowContainer
-							key={key}
 							leading={<LargePoint />}
 							content={
 								<ExRPairedOptionItem
@@ -52,7 +50,7 @@ export function ExRCategoryOptionList({
 								/>
 							}
 						/>
-					</>
+					</div>
 				);
 			})}
 		</div>
