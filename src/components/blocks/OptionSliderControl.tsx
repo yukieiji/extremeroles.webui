@@ -35,7 +35,7 @@ export function OptionSliderControl({
 	};
 
 	return (
-		<div className="flex items-center gap-4 w-full sm:w-64">
+		<div className="flex items-center gap-4 w-full h-12 sm:w-64">
 			<input
 				type="range"
 				min={0}
