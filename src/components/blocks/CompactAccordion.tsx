@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { CLOSE, OPEN, format } from "../../noTrans";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 
@@ -18,6 +19,11 @@ export function CompactAccordion({
 	onToggle,
 	children,
 }: CompactAccordionProps) {
+	const ariaLabel =
+		typeof title === "string"
+			? format(isOpen ? CLOSE : OPEN, title)
+			: undefined;
+
 	return (
 		<div className="border-gray-700 rounded-lg border overflow-hidden">
 			<button
@@ -25,6 +31,7 @@ export function CompactAccordion({
 				onClick={onToggle}
 				className="w-full flex items-center gap-2 p-2 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
 				aria-expanded={isOpen}
+				aria-label={ariaLabel}
 			>
 				<AccordionSvg className="w-4 h-4 text-gray-400" isOpen={isOpen} />
 				<div className="font-semibold text-gray-200 flex-1 text-lg">

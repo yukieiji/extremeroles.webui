@@ -9,10 +9,11 @@ import { ExRTab0GeneralCategory } from "./ExRTab0GeneralCategory";
 export function ExROptionViewer() {
 	const tab0CategoryIds = exrOptionMetaData.tabs[0]?.categoryIds || [];
 	const presetNames = useStore((state) => state.presetNames);
-	const exrValue = useStore((state) => state.exrValue);
+	const presetValueData = useStore(
+		(state) => state.exrValue[PRESET_OPTION_UNIQUE_ID],
+	);
 
 	// プリセット情報の取得
-	const presetValueData = exrValue[PRESET_OPTION_UNIQUE_ID];
 	const currentSelection = presetValueData?.selection ?? 0;
 	const presetValues = presetValueData?.values || [];
 	const currentPresetValue = presetValues[currentSelection];
