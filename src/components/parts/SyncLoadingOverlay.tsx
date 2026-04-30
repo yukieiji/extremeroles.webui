@@ -5,7 +5,7 @@
 export function SyncLoadingOverlay() {
 	return (
 		<div
-			className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] z-[100]"
+			className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] z-100"
 			aria-busy="true"
 			role="status"
 		>

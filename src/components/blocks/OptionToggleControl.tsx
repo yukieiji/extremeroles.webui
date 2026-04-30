@@ -25,7 +25,7 @@ export function OptionToggleControl({
 	};
 
 	return (
-		<div className="flex items-center gap-3 h-12">
+		<div className="flex items-center gap-3 h-10">
 			<button
 				type="button"
 				onClick={handleToggle}
