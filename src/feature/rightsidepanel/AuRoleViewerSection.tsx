@@ -24,38 +24,37 @@ export function AuRoleViewerSection({
 	const tabCategoryIds = auOptionMetaData.tabCategoryMap[tabId];
 
 	const activeRoleCategoryIds = useStore(
-		useShallow((state) => {
-			if (!tabCategoryIds) {
-				return [];
-			}
-			return tabCategoryIds.filter((categoryId) => {
-				const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-				if (!categoryMeta) {
-					return false;
-				}
+		useShallow((state) =>
+			tabCategoryIds
+				? tabCategoryIds.filter((categoryId) => {
+						const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
+						if (!categoryMeta) {
+							return false;
+						}
 
-				const chanceOptionId = categoryMeta.options[0];
-				const maxCountOptionId = categoryMeta.options[1];
+						const chanceOptionId = categoryMeta.options[0];
+						const maxCountOptionId = categoryMeta.options[1];
 
-				const chanceMeta = auOptionMetaData.options[chanceOptionId];
-				const maxCountMeta = auOptionMetaData.options[maxCountOptionId];
+						const chanceMeta = auOptionMetaData.options[chanceOptionId];
+						const maxCountMeta = auOptionMetaData.options[maxCountOptionId];
 
-				if (!chanceMeta || !maxCountMeta) {
-					return false;
-				}
+						if (!chanceMeta || !maxCountMeta) {
+							return false;
+						}
 
-				const chanceValue =
-					chanceMeta.range[state.auValue[chanceOptionId] ?? 0];
-				const maxCountValue =
-					maxCountMeta.range[state.auValue[maxCountOptionId] ?? 0];
+						const chanceValue =
+							chanceMeta.range[state.auValue[chanceOptionId] ?? 0];
+						const maxCountValue =
+							maxCountMeta.range[state.auValue[maxCountOptionId] ?? 0];
 
-				if (chanceValue === undefined || maxCountValue === undefined) {
-					return false;
-				}
-				// スポーンレートが0%より大きく、かつスポーン数が0より大きいもの
-				return Number(chanceValue) > 0 && Number(maxCountValue) > 0;
-			});
-		}),
+						if (chanceValue === undefined || maxCountValue === undefined) {
+							return false;
+						}
+						// スポーンレートが0%より大きく、かつスポーン数が0より大きいもの
+						return Number(chanceValue) > 0 && Number(maxCountValue) > 0;
+					})
+				: [],
+		),
 	);
 
 	if (activeRoleCategoryIds.length === 0) {

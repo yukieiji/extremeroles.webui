@@ -17,29 +17,28 @@ interface CategoryListProps {
 
 function ExRStandardCategoryList({ categoryIds }: CategoryListProps) {
 	const visibleCategories = useStore(
-		useShallow((state) => {
-			if (!categoryIds) {
-				return [];
-			}
-			return categoryIds.filter((categoryId) => {
-				const categoryUniqueOptions =
-					exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
-				if (!categoryUniqueOptions) {
-					return false;
-				}
+		useShallow((state) =>
+			categoryIds
+				? categoryIds.filter((categoryId) => {
+						const categoryUniqueOptions =
+							exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
+						if (!categoryUniqueOptions) {
+							return false;
+						}
 
-				const filterdUniqueOptions =
-					categoryId === 0
-						? categoryUniqueOptions.filter((optionId) => {
-								return optionId !== PRESET_OPTION_UNIQUE_ID; // プリセット設定（OptionId 0）を除外
-							})
-						: categoryUniqueOptions;
-				return (
-					filterdUniqueOptions.length > 0 &&
-					filterdUniqueOptions.some((id) => state.isExROptionActive[id])
-				);
-			});
-		}),
+						const filterdUniqueOptions =
+							categoryId === 0
+								? categoryUniqueOptions.filter((optionId) => {
+										return optionId !== PRESET_OPTION_UNIQUE_ID; // プリセット設定（OptionId 0）を除外
+									})
+								: categoryUniqueOptions;
+						return (
+							filterdUniqueOptions.length > 0 &&
+							filterdUniqueOptions.some((id) => state.isExROptionActive[id])
+						);
+					})
+				: [],
+		),
 	);
 
 	return (
