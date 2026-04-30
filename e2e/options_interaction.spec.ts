@@ -34,12 +34,15 @@ test("Options interaction behavior", async ({ page }) => {
 
 	// ドロップダウンを開いて名前が反映されているか確認
 	await page.getByRole("button", { name: "プリセットを選択" }).click();
-	await expect(page.getByText("Test Preset")).toBeVisible();
+	// ドロップダウン内の項目をターゲットにする
+	await expect(
+		page.locator("button", { hasText: "Test Preset" }),
+	).toBeVisible();
 
 	// 別のカテゴリの操作を確認
-	const shuffleCategory = page.getByRole("button", {
-		name: "乱数に関する設定",
-	});
+	const shuffleCategory = page
+		.locator("main")
+		.getByRole("button", { name: /^(開|閉)じる 乱数に関する設定$/ });
 	await shuffleCategory.click();
 
 	const shuffleOption = page.getByText("強力なシャッフルを使用する");

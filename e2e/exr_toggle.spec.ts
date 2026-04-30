@@ -28,7 +28,9 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 		.click();
 
 	// '乱数に関する設定' アコーディオンを開く
-	const categoryAccordion = page.getByText("乱数に関する設定");
+	const categoryAccordion = page
+		.locator("main")
+		.getByRole("button", { name: /^(開|閉)じる 乱数に関する設定$/ });
 	await categoryAccordion.click();
 
 	// '強力なシャッフルを使用する' オプションの横にあるトグルを確認

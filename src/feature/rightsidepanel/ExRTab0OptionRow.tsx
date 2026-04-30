@@ -18,16 +18,11 @@ export function ExRTab0OptionRow({
 	uniqueOptionId,
 	categoryId,
 }: ExRTab0OptionRowProps) {
-	const exrValue = useStore((state) => state.exrValue);
+	const valueData = useStore((state) => state.exrValue[uniqueOptionId]);
 	const { navigateToOption } = useExrNavigation();
 
 	const option = exrOptionMetaData.options[uniqueOptionId];
-	if (!option) {
-		return null;
-	}
-
-	const valueData = exrValue[uniqueOptionId];
-	if (!valueData) {
+	if (!option || !valueData) {
 		return null;
 	}
 
@@ -62,20 +57,14 @@ export function ExRTab0OptionPairRow({
 	maxUniqueId,
 	categoryId,
 }: ExRTab0OptionPairRowProps) {
-	const exrValue = useStore((state) => state.exrValue);
+	const minValueData = useStore((state) => state.exrValue[minUniqueId]);
+	const maxValueData = useStore((state) => state.exrValue[maxUniqueId]);
 	const { navigateToOption } = useExrNavigation();
 
 	const minOption = exrOptionMetaData.options[minUniqueId];
 	const maxOption = exrOptionMetaData.options[maxUniqueId];
 
-	if (!minOption || !maxOption) {
-		return null;
-	}
-
-	const minValueData = exrValue[minUniqueId];
-	const maxValueData = exrValue[maxUniqueId];
-
-	if (!minValueData || !maxValueData) {
+	if (!minOption || !maxOption || !minValueData || !maxValueData) {
 		return null;
 	}
 

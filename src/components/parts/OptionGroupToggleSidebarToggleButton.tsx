@@ -1,8 +1,8 @@
 import {
+	format,
 	OPTION_SIDEBAR_ARIA,
 	SIDEBAR_CLOSE_ARIA,
 	SIDEBAR_OPEN_ARIA,
-	format,
 } from "../../noTrans";
 
 interface OptionGroupToggleSidebarToggleButtonProps {
