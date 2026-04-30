@@ -42,12 +42,13 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 
 	return (
 		<div
-			className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden mb-2"
+			className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden"
 			data-testid={`au-category-${categoryId}`}
 		>
 			<HighlightWrapper
 				id={`au-option-${mapOptionId}`}
 				isHighlighted={isHighlighted}
+				isInset={true}
 			>
 				<div className="flex items-center justify-between p-4">
 					<div className="flex items-center gap-3">
