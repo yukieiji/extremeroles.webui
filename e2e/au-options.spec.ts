@@ -30,7 +30,7 @@ test.describe("Au Option Interactions", () => {
 		await expect(page.locator("main").getByText("map")).toBeVisible();
 
 		// Map is now a direct dropdown (select element)
-		await expect(page.getByRole("combobox")).toBeVisible();
+await expect(page.locator("main").getByRole("combobox")).toBeVisible();
 	});
 
 	test("should display accordion for other general tab categories", async ({
