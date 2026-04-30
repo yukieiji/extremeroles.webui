@@ -17,10 +17,10 @@ export function OptionRowContainer({
 }: OptionRowContainerProps) {
 	return (
 		<div
-			className={`flex items-stretch bg-gray-900/50 hover:bg-gray-800/50 transition-colors border-b border-gray-800 last:border-0 ${className}`}
+			className={`flex items-stretch hover:bg-gray-800/50 transition-colors ${className}`}
 		>
 			{/* 左側領域（トグルボタンやスペーサー） */}
-			<div className="flex items-center justify-center w-10 shrink-0 border-r border-gray-800/50">
+			<div className="flex items-center justify-center w-10 shrink-0">
 				{leading}
 			</div>
 

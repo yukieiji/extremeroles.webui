@@ -28,7 +28,7 @@ export function ExRCategoryOptionList({
 	return (
 		<div
 			data-testid="exr-category-list-container"
-			className="flex flex-col gap-px bg-gray-800 rounded-lg overflow-hidden border border-gray-700"
+			className="flex flex-col overflow-hidden"
 		>
 			{groupedItems.map((item) => {
 				if (typeof item === "number") {
