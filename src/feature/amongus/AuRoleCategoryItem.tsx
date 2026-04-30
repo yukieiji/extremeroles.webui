@@ -29,7 +29,6 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 
 	// 各カテゴリの最初(0)がChance、次(1)がMaxCount
 	const chanceOptionId = categoryMeta.options[0];
-	const maxCountOptionId = categoryMeta.options[1];
 	const chanceValueIndex = auValue[chanceOptionId] ?? 0;
 	const chanceOptionMeta = auOptionMetaData.options[chanceOptionId];
 
