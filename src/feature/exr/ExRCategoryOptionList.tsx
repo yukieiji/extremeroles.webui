@@ -32,17 +32,17 @@ export function ExRCategoryOptionList({
 				if (typeof item === "number") {
 					return (
 						<>
-							{index !== 0 && <BorderLine />}
+							{index !== 0 && <BorderLine key={item} />}
 							<ExROptionItem key={item} uniqueOptionId={item} />
 						</>
 					);
 				}
-
+				const key = `pair-${item.baseName}`;
 				return (
 					<>
-						{index !== 0 && <BorderLine />}
+						{index !== 0 && <BorderLine key={key} />}
 						<OptionRowContainer
-							key={`pair-${item.baseName}`}
+							key={key}
 							leading={<LargePoint />}
 							content={
 								<ExRPairedOptionItem

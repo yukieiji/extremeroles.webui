@@ -14,7 +14,7 @@ export function AuCategoryOptionList({ optionIds }: AuCategoryOptionListProps) {
 		<div className="flex flex-col">
 			{optionIds.map((optionId, index) => (
 				<>
-					{index !== 0 && <BorderLine />}
+					{index !== 0 && <BorderLine key={optionId} />}
 					<AuOptionRow key={optionId} auOptionId={optionId} />
 				</>
 			))}
