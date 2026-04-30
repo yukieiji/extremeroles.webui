@@ -26,10 +26,7 @@ export function ExRCategoryOptionList({
 
 	// gropedItemsはOptionIdの配列か、ペアオプションの情報を持つオブジェクトの配列になる
 	return (
-		<div
-			data-testid="exr-category-list-container"
-			className="flex flex-col overflow-hidden"
-		>
+		<div data-testid="exr-category-list-container" className="flex flex-col">
 			{groupedItems.map((item) => {
 				if (typeof item === "number") {
 					return <ExROptionItem key={item} uniqueOptionId={item} />;

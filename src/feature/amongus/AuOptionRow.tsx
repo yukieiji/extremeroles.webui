@@ -1,4 +1,8 @@
+import { OptionRowContent } from "../../components/blocks/OptionContent";
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
+import { LargePoint } from "../../components/parts/LargePoint";
+import { OptionItem } from "../../components/parts/OptionItem";
+import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
 import type { AuOptionId } from "../../type";
@@ -32,14 +36,10 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 			id={`au-option-${auOptionId}`}
 			isHighlighted={isHighlighted}
 		>
-			<div className="p-4 border-b last:border-0 hover:bg-gray-800/50 ">
-				<div className="flex items-center justify-between ">
-					<div className="flex flex-col flex-1 min-w-0 mr-4">
-						<span className="mx-2 text-gray-200 text-sm font-medium truncate">
-							{optionMeta.title}
-						</span>
-					</div>
-					<div className="shrink-0">
+			<OptionRowContainer
+				leading={<LargePoint />}
+				content={
+					<OptionRowContent name={optionMeta.title}>
 						<AuOptionControl
 							optionMeta={optionMeta}
 							selection={selection}
@@ -47,9 +47,9 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 								updateAuOption({ auOptionId, selection });
 							}}
 						/>
-					</div>
-				</div>
-			</div>
+					</OptionRowContent>
+				}
+			/>
 		</HighlightWrapper>
 	);
 }

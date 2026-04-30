@@ -21,7 +21,7 @@ export function HighlightWrapper({
 			id={id}
 			data-testid={testId}
 			className={`transition-all duration-500 rounded ${
-				isHighlighted ? "ring-2 ring-blue-500 bg-blue-500/10" : ""
+				isHighlighted ? "outline-2 outline-blue-500" : ""
 			}`}
 		>
 			{children}

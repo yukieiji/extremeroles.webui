@@ -1,8 +1,7 @@
 import { ExROptionControl } from "../../feature/exr/ExROptionControl";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
-import { OptionItem } from "../parts/OptionItem";
-import { OptionNameDisplay } from "../parts/OptionNameDisplay";
+import { OptionRowContent } from "./OptionContent";
 
 interface ExROptionRowContentProps {
 	uniqueOptionId: UniqueOptionId;
@@ -16,19 +15,12 @@ export function ExROptionRowContent({
 		return null;
 	}
 	return (
-		<OptionItem className="min-h-12">
-			<div className="flex-1 min-w-0">
-				<span className="text-sm font-medium text-gray-200 wrap-break-words">
-					<OptionNameDisplay name={optionData.translatedName} />
-				</span>
-			</div>
-			<div className="shrink-0 flex items-center gap-2">
-				<ExROptionControl
-					uniqueOptionId={uniqueOptionId}
-					format={optionData.format}
-					type={optionData.type}
-				/>
-			</div>
-		</OptionItem>
+		<OptionRowContent name={optionData.translatedName}>
+			<ExROptionControl
+				uniqueOptionId={uniqueOptionId}
+				format={optionData.format}
+				type={optionData.type}
+			/>
+		</OptionRowContent>
 	);
 }

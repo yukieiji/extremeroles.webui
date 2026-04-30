@@ -16,16 +16,16 @@ export function OptionRowContainer({
 	className = "",
 }: OptionRowContainerProps) {
 	return (
-		<div
-			className={`flex items-stretch hover:bg-gray-800/50 transition-colors ${className}`}
-		>
-			{/* 左側領域（トグルボタンやスペーサー） */}
-			<div className="flex items-center justify-center w-10 shrink-0">
-				{leading}
-			</div>
+		<div className="pl-1.5 pb-0.5 hover:bg-gray-800/50 transition-colors">
+			<div className={`flex items-stretch ${className}`}>
+				{/* 左側領域（トグルボタンやスペーサー） */}
+				<div className="flex items-center justify-center w-10 shrink-0">
+					{leading}
+				</div>
 
-			{/* 右側領域（OptionItem を含む内容） */}
-			<div className="flex-1 min-w-0">{content}</div>
+				{/* 右側領域（OptionItem を含む内容） */}
+				<div className="flex-1 min-w-0">{content}</div>
+			</div>
 		</div>
 	);
 }
