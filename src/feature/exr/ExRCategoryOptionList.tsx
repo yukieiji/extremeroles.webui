@@ -1,3 +1,4 @@
+import { BorderLine } from "../../components/parts/BorderLine";
 import { LargePoint } from "../../components/parts/LargePoint";
 import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
 import { groupOptionPairs } from "../../logics/optionUtils";
@@ -27,23 +28,31 @@ export function ExRCategoryOptionList({
 	// gropedItemsはOptionIdの配列か、ペアオプションの情報を持つオブジェクトの配列になる
 	return (
 		<div data-testid="exr-category-list-container" className="flex flex-col">
-			{groupedItems.map((item) => {
+			{groupedItems.map((item, index) => {
 				if (typeof item === "number") {
-					return <ExROptionItem key={item} uniqueOptionId={item} />;
+					return (
+						<>
+							{index !== 0 && <BorderLine />}
+							<ExROptionItem key={item} uniqueOptionId={item} />
+						</>
+					);
 				}
 
 				return (
-					<OptionRowContainer
-						key={`pair-${item.baseName}`}
-						leading={<LargePoint />}
-						content={
-							<ExRPairedOptionItem
-								baseName={item.baseName}
-								minData={item.minData}
-								maxData={item.maxData}
-							/>
-						}
-					/>
+					<>
+						{index !== 0 && <BorderLine />}
+						<OptionRowContainer
+							key={`pair-${item.baseName}`}
+							leading={<LargePoint />}
+							content={
+								<ExRPairedOptionItem
+									baseName={item.baseName}
+									minData={item.minData}
+									maxData={item.maxData}
+								/>
+							}
+						/>
+					</>
 				);
 			})}
 		</div>
