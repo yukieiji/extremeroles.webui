@@ -3,7 +3,6 @@ import { OptionDropdownControl } from "../../components/parts/OptionDropdownCont
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
 import { useStore } from "../../useStore";
-import { AuOptionRow } from "./AuOptionRow";
 
 interface MapDropDownProps {
 	categoryId: number;

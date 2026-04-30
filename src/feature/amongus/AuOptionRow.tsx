@@ -1,7 +1,6 @@
 import { OptionRowContent } from "../../components/blocks/OptionContent";
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { LargePoint } from "../../components/parts/LargePoint";
-import { OptionItem } from "../../components/parts/OptionItem";
 import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
