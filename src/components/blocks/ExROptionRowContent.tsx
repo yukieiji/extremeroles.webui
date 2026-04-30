@@ -19,16 +19,17 @@ export function ExROptionRowContent({
 		return null;
 	}
 	return (
-		<OptionRowContent
-			name={optionData.translatedName}
+		<div
 			id={`exr-option-${uniqueOptionId}`}
-			className={isHighlighted ? "bg-blue-600/30" : ""}
+			className={isHighlighted ? "bg-blue-600/30 rounded" : ""}
 		>
-			<ExROptionControl
-				uniqueOptionId={uniqueOptionId}
-				format={optionData.format}
-				type={optionData.type}
-			/>
-		</OptionRowContent>
+			<OptionRowContent name={optionData.translatedName}>
+				<ExROptionControl
+					uniqueOptionId={uniqueOptionId}
+					format={optionData.format}
+					type={optionData.type}
+				/>
+			</OptionRowContent>
+		</div>
 	);
 }
