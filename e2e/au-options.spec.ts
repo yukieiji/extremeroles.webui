@@ -23,9 +23,9 @@ test.describe("Au Option Interactions", () => {
 		// Tab 0 (General)
 		await page.getByRole("button", { name: "0", exact: true }).click();
 
-		const category = page.getByTestId("au-category-0");
+		const category = page.getByText("Map");
 		// In our new MapDropDown component, the title is displayed directly
-		await expect(category.getByText("map")).toBeVisible();
+		await expect(category).toBeVisible();
 
 		// Map is now a direct dropdown (select element)
 		await expect(category.getByRole("combobox")).toBeVisible();
@@ -38,9 +38,9 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("button", { name: "0", exact: true }).click();
 
 		// index 1 category should still be an accordion
-		const category = page.getByTestId("au-category-1");
+		const category = page.getByText("インポスター");
 		// "インポスター" is the title of the second category in mock data
-		await expect(category.getByText("インポスター")).toBeVisible();
+		await expect(category).toBeVisible();
 
 		// Should be an accordion (button)
 		await expect(

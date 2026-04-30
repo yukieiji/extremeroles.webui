@@ -26,10 +26,8 @@ describe("AuCategoryList", () => {
 
 		render(<AuCategoryList />);
 
-		expect(screen.getByText("Map")).toBeInTheDocument();
-		// MapDropDown also uses data-testid="au-category-1" now
-		expect(screen.getByTestId("au-category-1")).toBeInTheDocument();
-		// But it should not be an accordion (standard items use Accordion which has role button for the title)
+		const map = screen.getByText("Map");
+		expect(map).toBeInTheDocument();
 		expect(
 			screen.queryByRole("button", { name: "Map Category" }),
 		).not.toBeInTheDocument();

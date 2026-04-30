@@ -41,10 +41,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
 
 	return (
-		<div
-			className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden"
-			data-testid={`au-category-${categoryId}`}
-		>
+		<div className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden">
 			<HighlightWrapper
 				id={`au-option-${mapOptionId}`}
 				isHighlighted={isHighlighted}
