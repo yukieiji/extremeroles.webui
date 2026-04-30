@@ -16,7 +16,9 @@ test.beforeEach(async ({ page }) => {
 
 	// ExR Options タブに切り替え
 	await page.getByRole("button", { name: "ExR Options" }).click();
-	await page.waitForSelector('[data-testid="category-list"]');
+	await expect(
+		page.getByRole("button", { name: "グローバル設定" }),
+	).toBeVisible();
 });
 
 test.describe("ExR Role Accordion Disabled State", () => {
@@ -26,24 +28,23 @@ test.describe("ExR Role Accordion Disabled State", () => {
 			.click();
 
 		const sheriffCategory = page
-			.getByTestId("role-category")
+			.locator("div.border.border-gray-700")
 			.filter({ hasText: "シェリフ" });
 		const toggleButton = sheriffCategory.getByRole("button", {
 			name: "シェリフ",
 		});
 		const rateSlider = sheriffCategory
-			.getByTestId("spawn-rate-control")
+			.getByLabel("レート")
 			.locator('input[type="range"]');
 
 		// 1. まずレートを 10% にすると、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
-		const content = sheriffCategory.getByTestId("accordion-content");
-		await expect(content).toBeVisible();
-		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
+		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
+		await expect(sheriffCategory.locator(".bg-gray-900")).toBeVisible();
 
 		// 2. レートを 0% にするとアコーディオンが閉じ、無効化されることを確認
 		await rateSlider.fill("0"); // 0%
-		await expect(content).not.toBeVisible();
+		await expect(toggleButton).toHaveAttribute("aria-expanded", "false");
 		await expect(toggleButton).toBeDisabled();
 
 		// 3. アイコンがドット「・」になっていることを確認
@@ -56,15 +57,14 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await expect(toggleButton.locator("svg")).toBeVisible();
 		await expect(toggleButton.getByText("・")).not.toBeVisible();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
-		await expect(content).toBeVisible();
-		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
+		await expect(sheriffCategory.locator(".bg-gray-900")).toBeVisible();
 
 		// 5. 一旦閉じてから数を変更しても自動的に開くことを確認
 		await toggleButton.click();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "false");
 
 		const countSlider = sheriffCategory
-			.getByTestId("spawn-count-control")
+			.getByLabel("数")
 			.locator('input[type="range"]');
 
 		// 既にレートが10%なので、数を変更しても自動では開かないはず（今回の要件は「0から有効になった時」）
@@ -75,7 +75,6 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await countSlider.fill("2"); // 数を2にする（0から0以外へ）
 		await expect(toggleButton).toBeEnabled();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
-		await expect(content).toBeVisible();
-		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
+		await expect(sheriffCategory.locator(".bg-gray-900")).toBeVisible();
 	});
 });

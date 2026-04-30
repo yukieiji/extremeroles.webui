@@ -16,19 +16,23 @@ test.describe("Au Role Accordion Auto Open", () => {
 	test("should open accordion when role is enabled by chance or max count", async ({
 		page,
 	}) => {
-		// Au Options の 役職タブ（タブ 1）に移動
-		await page.getByRole("button", { name: "1", exact: true }).first().click();
+		// Au Options の 役職タブ（インポスター）に移動
+		await page
+			.locator("main")
+			.getByRole("button", { name: "1", exact: true })
+			.click();
 
 		// 科学者 (Scientist)
 		const category = page
-			.getByTestId("role-category")
+			.locator("main")
+			.locator("div.border.border-gray-700")
 			.filter({ hasText: "科学者" });
 		const toggleButton = category.getByRole("button").first();
 		const chanceSlider = category
-			.getByTestId("spawn-rate-control")
+			.getByLabel("レート")
 			.locator('input[type="range"]');
 		const countSlider = category
-			.getByTestId("spawn-count-control")
+			.getByLabel("数")
 			.locator('input[type="range"]');
 
 		// 初期状態：閉じていて無効

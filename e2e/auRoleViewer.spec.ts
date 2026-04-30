@@ -26,8 +26,10 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		await expect(imposterRolesSection).toBeVisible();
 
 		// 3. 役職の内容を確認
-		const roleRow = rightPanel.getByTestId(/^right-panel-role-/).first();
-		await expect(roleRow).toContainText("シェイプシフター");
+		const roleRow = rightPanel.getByRole("button", {
+			name: /シェイプシフター/,
+		});
+		await expect(roleRow).toBeVisible();
 		// 50% / 15 のような表示形式
 		await expect(roleRow).toContainText("50%");
 		await expect(roleRow).toContainText("15");

@@ -32,7 +32,7 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 	await categoryAccordion.click();
 
 	// '強力なシャッフルを使用する' オプションの横にあるトグルを確認
-	const toggle = page.getByTestId("option-toggle").first(); // 最初のトグルを取得
+	const toggle = page.getByRole("switch").first(); // 最初のトグルを取得
 	await expect(toggle).toBeVisible();
 
 	// 初期状態は オフ (Selection 0)

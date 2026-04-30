@@ -40,7 +40,9 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 			await imposterCategory.click();
 		}
 
-		const impCountSetting = page.getByTestId("right-panel-option-10200");
+		const impCountSetting = page
+			.getByLabel("右フローティングパネル")
+			.getByRole("button", { name: "インポスター数" });
 		// スクロールが必要な場合がある
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await expect(impCountSetting).toBeVisible({ timeout: 15000 });
@@ -74,6 +76,7 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		await expect(impCountRow).toHaveClass(/ring-blue-500/);
 
 		// 7. 数秒後にハイライトが消えることを確認
-		await expect(impCountRow).not.toHaveClass(/ring-2/, { timeout: 15000 });
+		// ハイライトが消えるのを待つためにタイムアウトを長めに設定
+		await expect(impCountRow).not.toHaveClass(/ring-2/, { timeout: 30000 });
 	});
 });

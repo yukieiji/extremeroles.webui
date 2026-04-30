@@ -13,38 +13,41 @@ test.beforeEach(async ({ page }) => {
 
 	// Au Options タブに切り替え
 	await page.getByRole("button", { name: "Au Options" }).click();
-	await page.waitForSelector('[data-testid="category-list"]');
+	await expect(page.locator("main").getByText("map")).toBeVisible();
 });
 
 test.describe("Au Option Interactions", () => {
 	test("should display dropdown for map category in general tab", async ({
 		page,
 	}) => {
-		// Tab 0 (General)
-		await page.getByRole("button", { name: "0", exact: true }).click();
+		// Tab 0
+		await page
+			.locator("main")
+			.getByRole("button", { name: "0", exact: true })
+			.click();
 
-		const category = page.getByTestId("au-category-0");
-		// In our new MapDropDown component, the title is displayed directly
-		await expect(category.getByText("map")).toBeVisible();
+		// "map" option title should be visible
+		await expect(page.locator("main").getByText("map")).toBeVisible();
 
 		// Map is now a direct dropdown (select element)
-		await expect(category.getByRole("combobox")).toBeVisible();
+		await expect(page.getByRole("combobox")).toBeVisible();
 	});
 
 	test("should display accordion for other general tab categories", async ({
 		page,
 	}) => {
-		// Tab 0 (General)
-		await page.getByRole("button", { name: "0", exact: true }).click();
+		// Tab 0
+		await page
+			.locator("main")
+			.getByRole("button", { name: "0", exact: true })
+			.click();
 
-		// index 1 category should still be an accordion
-		const category = page.getByTestId("au-category-1");
 		// "インポスター" is the title of the second category in mock data
-		await expect(category.getByText("インポスター")).toBeVisible();
+		await expect(page.locator("main").getByText("インポスター")).toBeVisible();
 
 		// Should be an accordion (button)
 		await expect(
-			category.getByRole("button", { name: "インポスター" }),
+			page.locator("main").getByRole("button", { name: "インポスター" }),
 		).toBeVisible();
 	});
 
@@ -52,26 +55,38 @@ test.describe("Au Option Interactions", () => {
 		page,
 	}) => {
 		// Tab 1
-		await page.getByRole("button", { name: "1", exact: true }).click();
+		await page
+			.locator("main")
+			.getByRole("button", { name: "1", exact: true })
+			.click();
 
-		// Initially chance is probably 0, so it's disabled
-		const category = page.getByTestId("category-list").locator("> div").first();
-		await expect(category.getByTestId("spawn-rate-control")).toBeVisible();
-		await expect(category.getByTestId("spawn-count-control")).toBeVisible();
+		// First category container (科学者)
+		const category = page
+			.locator("main")
+			.locator("div.border.border-gray-700")
+			.filter({ hasText: "科学者" });
+		await expect(category.getByLabel("レート")).toBeVisible();
+		await expect(category.getByLabel("数")).toBeVisible();
 
 		// Accordion button should be disabled when chance is 0
-		const toggleButton = category.locator("button").first();
+		const toggleButton = category.getByRole("button").first();
 		await expect(toggleButton).toBeDisabled();
 	});
 
 	test("should synchronize chance and max count in Au roles", async ({
 		page,
 	}) => {
-		await page.getByRole("button", { name: "1", exact: true }).click();
+		await page
+			.locator("main")
+			.getByRole("button", { name: "1", exact: true })
+			.click();
 
-		const category = page.getByTestId("category-list").locator("> div").first();
-		const chanceControl = category.getByTestId("spawn-rate-control");
-		const countControl = category.getByTestId("spawn-count-control");
+		const category = page
+			.locator("main")
+			.locator("div.border.border-gray-700")
+			.filter({ hasText: "科学者" });
+		const chanceControl = category.getByLabel("レート");
+		const countControl = category.getByLabel("数");
 
 		const chanceInput = chanceControl.locator('input[type="text"]');
 		const countInput = countControl.locator('input[type="text"]');
@@ -102,14 +117,20 @@ test.describe("Au Option Interactions", () => {
 	test("expanding role accordion should show other options", async ({
 		page,
 	}) => {
-		await page.getByRole("button", { name: "1", exact: true }).click();
+		await page
+			.locator("main")
+			.getByRole("button", { name: "1", exact: true })
+			.click();
 
-		const category = page.getByTestId("category-list").locator("> div").first();
-		const toggleButton = category.locator("button").first();
+		const category = page
+			.locator("main")
+			.locator("div.border.border-gray-700")
+			.filter({ hasText: "科学者" });
+		const toggleButton = category.getByRole("button").first();
 
 		// Set chance to 100% to enable accordion
 		await category
-			.getByTestId("spawn-rate-control")
+			.getByLabel("レート")
 			.locator('input[type="range"]')
 			.fill("10");
 

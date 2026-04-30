@@ -16,7 +16,9 @@ test.beforeEach(async ({ page }) => {
 
 	// ExR Options タブに切り替え
 	await page.getByRole("button", { name: "ExR Options" }).click();
-	await page.waitForSelector('[data-testid="category-list"]');
+	await expect(
+		page.getByRole("button", { name: "グローバル設定" }),
+	).toBeVisible();
 });
 
 test.describe("ExR Role Spawn Options in Header", () => {
@@ -30,14 +32,10 @@ test.describe("ExR Role Spawn Options in Header", () => {
 
 		// カテゴリ（シェリフ）のヘッダーに「レート」と「数」が表示されていることを確認
 		const sheriffCategory = page
-			.getByTestId("role-category")
+			.locator("div.border.border-gray-700")
 			.filter({ hasText: "シェリフ" });
-		await expect(
-			sheriffCategory.getByTestId("spawn-rate-control"),
-		).toBeVisible();
-		await expect(
-			sheriffCategory.getByTestId("spawn-count-control"),
-		).toBeVisible();
+		await expect(sheriffCategory.getByLabel("レート")).toBeVisible();
+		await expect(sheriffCategory.getByLabel("数")).toBeVisible();
 	});
 
 	test("should synchronize spawn rate and count", async ({ page }) => {
@@ -46,10 +44,10 @@ test.describe("ExR Role Spawn Options in Header", () => {
 			.click();
 
 		const sheriffCategory = page
-			.getByTestId("role-category")
+			.locator("div.border.border-gray-700")
 			.filter({ hasText: "シェリフ" });
-		const rateControl = sheriffCategory.getByTestId("spawn-rate-control");
-		const countControl = sheriffCategory.getByTestId("spawn-count-control");
+		const rateControl = sheriffCategory.getByLabel("レート");
+		const countControl = sheriffCategory.getByLabel("数");
 
 		const rateInput = rateControl.locator('input[type="text"]');
 		const countInput = countControl.locator('input[type="text"]');
@@ -91,7 +89,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 			.click();
 
 		const sheriffCategory = page
-			.getByTestId("role-category")
+			.locator("div.border.border-gray-700")
 			.filter({ hasText: "シェリフ" });
 		const content = sheriffCategory.locator(".bg-gray-900"); // Body area
 
@@ -100,7 +98,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 
 		// レートを 0% から 10% に変更（アコーディオンを有効化 -> 自動で開く）
 		const rateSlider = sheriffCategory
-			.getByTestId("spawn-rate-control")
+			.getByLabel("レート")
 			.locator('input[type="range"]');
 		await rateSlider.fill("1");
 
@@ -117,7 +115,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 
 		// 数も操作してみる
 		const countSlider = sheriffCategory
-			.getByTestId("spawn-count-control")
+			.getByLabel("数")
 			.locator('input[type="range"]');
 		await countSlider.fill("2");
 
@@ -137,12 +135,12 @@ test.describe("ExR Role Spawn Options in Header", () => {
 			.click();
 
 		const sheriffCategory = page
-			.getByTestId("role-category")
+			.locator("div.border.border-gray-700")
 			.filter({ hasText: "シェリフ" });
 
 		// レートを 10% に変更（アコーディオンを有効化 -> 自動で開く）
 		await sheriffCategory
-			.getByTestId("spawn-rate-control")
+			.getByLabel("レート")
 			.locator('input[type="range"]')
 			.fill("1");
 

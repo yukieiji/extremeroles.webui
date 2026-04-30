@@ -32,11 +32,8 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	await expect(accordionButton).toBeVisible();
 
 	// 初期状態では閉じている
-	const accordionItem = page
-		.locator("div.border.border-gray-700")
-		.filter({ hasText: categoryName });
-	const contentContainer = accordionItem.getByTestId("accordion-content");
-	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
+	// aria-expandedで状態を確認する
+	await expect(accordionButton).toHaveAttribute("aria-expanded", "false");
 
 	// 閉じているときはオプション名が表示されていない（lazy rendering）
 	const optionName = page.getByText("強力なシャッフルを使用する");
@@ -44,7 +41,7 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 
 	// アコーディオンを開く
 	await accordionButton.click();
-	await expect(contentContainer).toHaveClass(/grid-rows-\[1fr\]/);
+	await expect(accordionButton).toHaveAttribute("aria-expanded", "true");
 	await expect(optionName).toBeVisible();
 
 	// タブを切り替えてもアコーディオンの状態が維持されることを確認
@@ -69,6 +66,6 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 
 	// アコーディオンを閉じる
 	await accordionButton.click();
-	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
+	await expect(accordionButton).toHaveAttribute("aria-expanded", "false");
 	await expect(optionName).not.toBeAttached();
 });

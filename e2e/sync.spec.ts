@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
 	await page.goto("/");
 	// wait for main content instead of just "Loading data..." absence
-	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
+	await expect(page.getByText("map")).toBeVisible({
 		timeout: 15000,
 	});
 });
@@ -21,16 +21,14 @@ test("synchronization updates data and preserves UI state", async ({
 		page.getByRole("heading", { name: "ExR Options" }),
 	).toBeVisible();
 
-	// Use test-id which seems more stable
-	const category = page.getByTestId("exr-category-1");
+	// Use category button
+	const category = page.getByRole("button", { name: "乱数に関する設定" });
 	await expect(category).toBeVisible();
 	await category.click();
 
 	// Check if category content is visible
 	// Let's use a more robust check for content inside accordion
-	await expect(page.getByTestId("category-list")).toContainText(
-		"乱数に関する設定",
-	);
+	await expect(page.getByText("強力なシャッフルを使用する")).toBeVisible();
 
 	// 3. Perform synchronization
 	// Set artificial delay for sync to see the loading overlay

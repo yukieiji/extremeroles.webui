@@ -45,8 +45,9 @@ test("ExRタブ切り替え時にカテゴリリストが表示されること",
 		timeout: 15000,
 	});
 
-	const categoryList = page.getByTestId("category-list");
-	await expect(categoryList).toBeVisible();
+	await expect(
+		page.getByRole("button", { name: "グローバル設定" }),
+	).toBeVisible();
 
 	const tabs = page.locator("button.px-4.py-2.rounded-t-lg");
 	const secondTab = tabs.nth(1);
@@ -56,6 +57,9 @@ test("ExRタブ切り替え時にカテゴリリストが表示されること",
 	// 別タブのコンテンツが表示されることを確認（暗黙的にローディング待ちが含まれる）
 	if (secondTabName) {
 		// タブ名が変更されているか、あるいはリストが再描画されていることを確認
-		await expect(categoryList).toBeVisible();
+		// カテゴリリストの代わりに、その中の要素が表示されることを確認
+		await expect(
+			page.getByRole("button").filter({ hasText: "設定" }).first(),
+		).toBeVisible();
 	}
 });

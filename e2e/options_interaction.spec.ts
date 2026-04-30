@@ -46,7 +46,7 @@ test("Options interaction behavior", async ({ page }) => {
 	await expect(shuffleOption).toBeVisible({ timeout: 3000 });
 
 	// トグルスイッチに変更されたので、トグルを操作する
-	const toggle = page.getByTestId("option-toggle").first();
+	const toggle = page.getByRole("switch").first();
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
 	await expect(page.getByText("オフ")).toBeVisible();
 
