@@ -69,7 +69,7 @@ test.describe("Au Option Interactions", () => {
 		await expect(category.getByLabel("数")).toBeVisible();
 
 		// Accordion button should be disabled when chance is 0
-		const toggleButton = category.getByRole("button").first();
+const toggleButton = category.getByRole("button", { name: "科学者" });
 		await expect(toggleButton).toBeDisabled();
 	});
 
