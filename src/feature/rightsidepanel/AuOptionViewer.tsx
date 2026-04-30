@@ -24,7 +24,7 @@ export function AuOptionViewer() {
 	);
 
 	return (
-		<div className="flex flex-col gap-1">
+		<div className="flex flex-col gap-2">
 			{tab0CategoryIds.map((categoryId, index) => {
 				const isMapCategory = index === 0;
 				if (isMapCategory) {
