@@ -12,16 +12,16 @@ interface AuTab0MapCategoryProps {
  */
 export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
+	const auValue = useStore((state) => {
+		return state.auValue;
+	});
 	const { navigateToOption } = useAuNavigation();
 
-	const mapOptionId = categoryMeta?.options[0];
-	const mapSelection = useStore((state) =>
-		mapOptionId ? state.auValue[mapOptionId] : undefined,
-	);
-
-	if (!categoryMeta || !mapOptionId) {
+	if (!categoryMeta) {
 		return null;
 	}
+
+	const mapOptionId = categoryMeta.options[0];
 	const otherOptionIds = categoryMeta.options.slice(1);
 	const mapOptionMeta = auOptionMetaData.options[mapOptionId];
 
@@ -29,7 +29,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 		return null;
 	}
 
-	const mapValue = mapOptionMeta.range[mapSelection ?? 0];
+	const mapValue = mapOptionMeta.range[auValue[mapOptionId] ?? 0];
 
 	return (
 		<div className="border border-gray-700 rounded-lg overflow-hidden">
