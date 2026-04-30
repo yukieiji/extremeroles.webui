@@ -5,7 +5,6 @@ interface ViewerOptionRowProps {
 	title: string;
 	value: ReactNode;
 	onDoubleClick: () => void;
-	testId?: string;
 }
 
 /**
@@ -15,12 +14,10 @@ export function ViewerOptionRow({
 	title,
 	value,
 	onDoubleClick,
-	testId,
 }: ViewerOptionRowProps) {
 	return (
 		<button
 			type="button"
-			data-testid={testId}
 			onDoubleClick={onDoubleClick}
 			className="w-full flex justify-between items-center py-1 px-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2 group"
 			title={VIEWER_ROW_TITLE}
