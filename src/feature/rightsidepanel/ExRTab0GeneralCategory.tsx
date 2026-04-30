@@ -16,8 +16,8 @@ export function ExRTab0GeneralCategory({
 	categoryId,
 }: ExRTab0GeneralCategoryProps) {
 	const categoryMeta = exrOptionMetaData.categories[categoryId];
-	const openedExrTab0CategoryIds = useStore((state) => {
-		return state.openedExrTab0CategoryIds;
+	const isOpen = useStore((state) => {
+		return state.openedExrTab0CategoryIds[categoryId];
 	});
 	const toggleExrTab0Category = useStore((state) => {
 		return state.toggleExrTab0Category;
@@ -51,7 +51,7 @@ export function ExRTab0GeneralCategory({
 	return (
 		<CompactAccordion
 			title={<span className="text-base">{categoryMeta.name}</span>}
-			isOpen={openedExrTab0CategoryIds[categoryId] ?? true}
+			isOpen={isOpen ?? true}
 			onToggle={() => {
 				toggleExrTab0Category(categoryId);
 			}}
