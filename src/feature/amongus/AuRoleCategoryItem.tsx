@@ -46,7 +46,11 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 		categoryMeta.options.includes(highlightedAuOptionId);
 
 	return (
-		<HighlightWrapper isHighlighted={isHighlighted} isInset={false}>
+		<HighlightWrapper
+			isHighlighted={isHighlighted}
+			isInset={false}
+			id={`au-option-${chanceOptionId}`}
+		>
 			<RoleCategoryAccordion
 				isOpen={isOpen}
 				onClick={() => toggleAuCategory(categoryId)}

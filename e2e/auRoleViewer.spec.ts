@@ -20,13 +20,18 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// 2. 「インポスター役職」セクションが表示されていることを確認
 		// モックデータでは「シェイプシフター」が有効なはず
+		// 日本語環境なので「開く」または「閉じる」を使用
 		const imposterRolesSection = rightPanel.getByRole("button", {
-			name: /^(Collapse|Expand) インポスター役職$/,
+			name: /^(開|閉)じる インポスター役職$/,
 		});
 		await expect(imposterRolesSection).toBeVisible();
 
 		// 3. 役職の内容を確認
-		const roleRow = rightPanel.getByTestId(/^right-panel-role-/).first();
+		// aria-label ではなく、テキストとタイトルの組み合わせで特定する (右パネル内)
+		const roleRow = rightPanel
+			.getByTitle("ダブルクリックで設定場所へ移動")
+			.filter({ hasText: "シェイプシフター" });
+		await expect(roleRow).toBeVisible();
 		await expect(roleRow).toContainText("シェイプシフター");
 		// 50% / 15 のような表示形式
 		await expect(roleRow).toContainText("50%");
@@ -48,9 +53,12 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		).toBeVisible();
 
 		// ハイライトの確認
-		// カテゴリアコーディオンが正しくスクロールされているか、IDで確認
-		const targetCategory = mainEditor.locator("#au-category-シェイプシフター");
-		await expect(targetCategory).toBeVisible({ timeout: 10000 });
+		// ハイライト状態（ring-2クラスを持つ）かつ、役職名を含む要素を特定する
+		const highlightedRow = mainEditor
+			.locator("div.ring-2")
+			.filter({ hasText: "シェイプシフター" })
+			.first();
+		await expect(highlightedRow).toBeVisible({ timeout: 10000 });
 	});
 
 	test("toggles role sections in the right panel", async ({ page }) => {
@@ -58,7 +66,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		const rightPanel = page.getByLabel("右フローティングパネル");
 		const imposterRolesSection = rightPanel.getByRole("button", {
-			name: /^(Collapse|Expand) インポスター役職$/,
+			name: /^(開|閉)じる インポスター役職$/,
 		});
 
 		// 最初は開いている（初期値 true）
@@ -66,10 +74,13 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// クリックして閉じる
 		await imposterRolesSection.click();
-		await expect(imposterRolesSection).toHaveAttribute(
-			"aria-expanded",
-			"false",
-		);
+
+		// ラベルが「開く インポスター役職」に変わることを確認
+		const collapsedSection = rightPanel.getByRole("button", {
+			name: "開く インポスター役職",
+		});
+		await expect(collapsedSection).toBeVisible();
+		await expect(collapsedSection).toHaveAttribute("aria-expanded", "false");
 
 		// 役職リストが見えなくなったことを確認
 		await expect(rightPanel.getByText("シェイプシフター")).not.toBeVisible();
