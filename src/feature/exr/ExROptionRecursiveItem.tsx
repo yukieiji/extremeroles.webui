@@ -1,5 +1,6 @@
 import { ExROptionRow } from "../../components/blocks/ExROptionRow";
 import { OptionEditableAccordion } from "../../components/blocks/OptionEditableAccordion";
+import { BorderLine } from "../../components/parts/BorderLine";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
@@ -45,11 +46,14 @@ export function ExROptionRecursiveItem({
 		>
 			<div className="flex flex-col">
 				{childs?.map((childId) => (
-					<ExROptionItem
-						key={childId}
-						uniqueOptionId={childId}
-						depth={depth + 1}
-					/>
+					<>
+						<BorderLine />
+						<ExROptionItem
+							key={childId}
+							uniqueOptionId={childId}
+							depth={depth + 1}
+						/>
+					</>
 				))}
 			</div>
 		</OptionEditableAccordion>
