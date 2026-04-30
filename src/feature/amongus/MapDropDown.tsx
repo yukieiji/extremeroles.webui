@@ -30,7 +30,6 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 		return null;
 	}
 
-	const [_, ...otherOptionIds] = categoryMeta.options;
 	const optionMeta = auOptionMetaData.options[mapOptionId];
 
 	if (!optionMeta) {
@@ -43,42 +42,36 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
 
 	return (
-		<div
-			className="border border-gray-700 rounded-lg overflow-hidden mb-2"
-			data-testid={`au-category-${categoryId}`}
+		<HighlightWrapper
+			id={`au-option-${mapOptionId}`}
+			isHighlighted={isHighlighted}
 		>
-			<HighlightWrapper
-				id={`au-option-${mapOptionId}`}
-				isHighlighted={isHighlighted}
-				className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700"
+			<div
+				className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden mb-2"
+				data-testid={`au-category-${categoryId}`}
 			>
-				<div className="flex items-center gap-3">
-					{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
-					<div className="w-5 h-5" />
-					<span className="font-semibold text-gray-200">
-						{optionMeta.title}
-					</span>
+				<div className="flex items-center justify-between p-4">
+					<div className="flex items-center gap-3">
+						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
+						<div className="w-5 h-5" />
+						<span className="font-semibold text-gray-200">
+							{optionMeta.title}
+						</span>
+					</div>
+					<div className="w-48">
+						<OptionDropdownControl
+							values={displayValues}
+							selection={selection}
+							onChange={(newSelection) => {
+								updateAuOption({
+									auOptionId: mapOptionId,
+									selection: newSelection,
+								});
+							}}
+						/>
+					</div>
 				</div>
-				<div className="w-48">
-					<OptionDropdownControl
-						values={displayValues}
-						selection={selection}
-						onChange={(newSelection) => {
-							updateAuOption({
-								auOptionId: mapOptionId,
-								selection: newSelection,
-							});
-						}}
-					/>
-				</div>
-			</HighlightWrapper>
-			{otherOptionIds.length > 0 && (
-				<div className="p-4 bg-gray-900 space-y-1">
-					{otherOptionIds.map((optionId) => (
-						<AuOptionRow key={optionId} auOptionId={optionId} />
-					))}
-				</div>
-			)}
-		</div>
+			</div>
+		</HighlightWrapper>
 	);
 }

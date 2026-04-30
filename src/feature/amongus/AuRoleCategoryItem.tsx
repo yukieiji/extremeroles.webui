@@ -55,7 +55,6 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 					? `au-option-${highlightedAuOptionId}`
 					: undefined
 			}
-			className="mb-2"
 		>
 			<RoleCategoryAccordion
 				isOpen={isOpen}

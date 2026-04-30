@@ -4,7 +4,6 @@ interface HighlightWrapperProps {
 	isHighlighted: boolean;
 	children: ReactNode;
 	id?: string;
-	className?: string;
 	"data-testid"?: string;
 }
 
@@ -15,7 +14,6 @@ export function HighlightWrapper({
 	isHighlighted,
 	children,
 	id,
-	className = "",
 	"data-testid": testId,
 }: HighlightWrapperProps) {
 	return (
@@ -24,7 +22,7 @@ export function HighlightWrapper({
 			data-testid={testId}
 			className={`transition-all duration-500 rounded ${
 				isHighlighted ? "ring-2 ring-blue-500 bg-blue-500/10" : ""
-			} ${className}`}
+			}`}
 		>
 			{children}
 		</div>
