@@ -14,8 +14,8 @@ export function AuTab0GeneralCategory({
 	categoryId,
 }: AuTab0GeneralCategoryProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	const openedAuTab0CategoryIds = useStore((state) => {
-		return state.openedAuTab0CategoryIds;
+	const isOpen = useStore((state) => {
+		return state.openedAuTab0CategoryIds[categoryId] ?? true;
 	});
 	const toggleAuTab0Category = useStore((state) => {
 		return state.toggleAuTab0Category;
@@ -28,7 +28,7 @@ export function AuTab0GeneralCategory({
 	return (
 		<CompactAccordion
 			title={<span className="text-base">{categoryMeta.name}</span>}
-			isOpen={openedAuTab0CategoryIds[categoryId] ?? true}
+			isOpen={isOpen}
 			onToggle={() => {
 				toggleAuTab0Category(categoryId);
 			}}
