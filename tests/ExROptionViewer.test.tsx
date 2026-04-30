@@ -8,8 +8,10 @@ import {
 	translationMetaData,
 } from "../src/logics/api";
 import { getAllOptions, resetApiCache } from "../src/logics/api.store";
-import { getUniqueOptionId, PRESET_OPTION_UNIQUE_ID } from "../src/logics/optionUtils";
-import { ExRTabId, type UniqueOptionId } from "../src/type";
+import {
+	getUniqueOptionId,
+	PRESET_OPTION_UNIQUE_ID,
+} from "../src/logics/optionUtils";
 import { useStore } from "../src/useStore";
 
 describe("ExROptionViewer", () => {
@@ -65,10 +67,18 @@ describe("ExROptionViewer", () => {
 		const categoryId = 1;
 		const optionId = getUniqueOptionId(0, categoryId, 10);
 
-		exrOptionMetaData.tabs[0] = { name: "General", categoryIds: [0, categoryId] };
+		exrOptionMetaData.tabs[0] = {
+			name: "General",
+			categoryIds: [0, categoryId],
+		};
 		exrOptionMetaData.categories[0] = { name: "Presets", tabId: 0 };
-		exrOptionMetaData.categories[categoryId] = { name: "Test Category", tabId: 0 };
-		exrOptionMetaData.globalCategoryIdTopLevelMap[0] = [PRESET_OPTION_UNIQUE_ID];
+		exrOptionMetaData.categories[categoryId] = {
+			name: "Test Category",
+			tabId: 0,
+		};
+		exrOptionMetaData.globalCategoryIdTopLevelMap[0] = [
+			PRESET_OPTION_UNIQUE_ID,
+		];
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [optionId];
 
 		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID] = {
@@ -88,14 +98,14 @@ describe("ExROptionViewer", () => {
 			{
 				[PRESET_OPTION_UNIQUE_ID]: true,
 				[optionId]: true,
-			}
+			},
 		);
 
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionViewer />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
@@ -110,10 +120,18 @@ describe("ExROptionViewer", () => {
 		const categoryId = 1;
 		const optionId = getUniqueOptionId(0, categoryId, 10);
 
-		exrOptionMetaData.tabs[0] = { name: "General", categoryIds: [0, categoryId] };
+		exrOptionMetaData.tabs[0] = {
+			name: "General",
+			categoryIds: [0, categoryId],
+		};
 		exrOptionMetaData.categories[0] = { name: "Presets", tabId: 0 };
-		exrOptionMetaData.categories[categoryId] = { name: "Test Category", tabId: 0 };
-		exrOptionMetaData.globalCategoryIdTopLevelMap[0] = [PRESET_OPTION_UNIQUE_ID];
+		exrOptionMetaData.categories[categoryId] = {
+			name: "Test Category",
+			tabId: 0,
+		};
+		exrOptionMetaData.globalCategoryIdTopLevelMap[0] = [
+			PRESET_OPTION_UNIQUE_ID,
+		];
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [optionId];
 
 		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID] = {
@@ -133,7 +151,7 @@ describe("ExROptionViewer", () => {
 			{
 				[PRESET_OPTION_UNIQUE_ID]: true,
 				[optionId]: true,
-			}
+			},
 		);
 		useStore.getState().updatePresetName(1, "My Custom Preset");
 
@@ -141,7 +159,7 @@ describe("ExROptionViewer", () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionViewer />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
@@ -157,15 +175,26 @@ describe("ExROptionViewer", () => {
 		const maxId = getUniqueOptionId(0, categoryId, 11);
 
 		exrOptionMetaData.tabs[0] = { name: "General", categoryIds: [categoryId] };
-		exrOptionMetaData.categories[categoryId] = { name: "Role Settings", tabId: 0 };
+		exrOptionMetaData.categories[categoryId] = {
+			name: "Role Settings",
+			tabId: 0,
+		};
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [minId, maxId];
 
 		exrOptionMetaData.options[minId] = {
-			metaData: { translatedName: "Role Count 最小", format: "{0}", type: "Int32" },
+			metaData: {
+				translatedName: "Role Count 最小",
+				format: "{0}",
+				type: "Int32",
+			},
 			childOptionIds: [],
 		};
 		exrOptionMetaData.options[maxId] = {
-			metaData: { translatedName: "Role Count 最大", format: "{0}", type: "Int32" },
+			metaData: {
+				translatedName: "Role Count 最大",
+				format: "{0}",
+				type: "Int32",
+			},
 			childOptionIds: [],
 		};
 
@@ -177,14 +206,14 @@ describe("ExROptionViewer", () => {
 			{
 				[minId]: true,
 				[maxId]: true,
-			}
+			},
 		);
 
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionViewer />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
@@ -199,7 +228,10 @@ describe("ExROptionViewer", () => {
 		const optionId = getUniqueOptionId(0, categoryId, 10);
 
 		exrOptionMetaData.tabs[0] = { name: "General", categoryIds: [categoryId] };
-		exrOptionMetaData.categories[categoryId] = { name: "Test Category", tabId: 0 };
+		exrOptionMetaData.categories[categoryId] = {
+			name: "Test Category",
+			tabId: 0,
+		};
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [optionId];
 
 		exrOptionMetaData.options[optionId] = {
@@ -208,16 +240,18 @@ describe("ExROptionViewer", () => {
 		};
 
 		// Option is inactive
-		useStore.getState().setExROptions(
-			{ [optionId]: { selection: 0, values: [100] } },
-			{ [optionId]: false }
-		);
+		useStore
+			.getState()
+			.setExROptions(
+				{ [optionId]: { selection: 0, values: [100] } },
+				{ [optionId]: false },
+			);
 
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionViewer />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
@@ -230,20 +264,28 @@ describe("ExROptionViewer", () => {
 		const optionId = getUniqueOptionId(0, categoryId, 10);
 
 		exrOptionMetaData.tabs[0] = { name: "General", categoryIds: [categoryId] };
-		exrOptionMetaData.categories[categoryId] = { name: "Test Category", tabId: 0 };
+		exrOptionMetaData.categories[categoryId] = {
+			name: "Test Category",
+			tabId: 0,
+		};
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [optionId];
 		exrOptionMetaData.options[optionId] = {
 			metaData: { translatedName: "Test Option", format: "{0}", type: "Int32" },
 			childOptionIds: [],
 		};
 
-		useStore.getState().setExROptions(
-			{ [optionId]: { selection: 0, values: [100] } },
-			{ [optionId]: true }
-		);
+		useStore
+			.getState()
+			.setExROptions(
+				{ [optionId]: { selection: 0, values: [100] } },
+				{ [optionId]: true },
+			);
 
 		const setSelectedTabSpy = vi.spyOn(useStore.getState(), "setSelectedTab");
-		const setSelectedExRTabIdSpy = vi.spyOn(useStore.getState(), "setSelectedExRTabId");
+		const setSelectedExRTabIdSpy = vi.spyOn(
+			useStore.getState(),
+			"setSelectedExRTabId",
+		);
 
 		// scrollIntoView mock
 		const scrollIntoViewMock = vi.fn();
@@ -257,12 +299,14 @@ describe("ExROptionViewer", () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
 					<ExROptionViewer />
-				</Suspense>
+				</Suspense>,
 			);
 		});
 
 		const row = screen.getByText("Test Option").closest("button");
-		if (!row) throw new Error("Row not found");
+		if (!row) {
+			throw new Error("Row not found");
+		}
 
 		fireEvent.doubleClick(row);
 

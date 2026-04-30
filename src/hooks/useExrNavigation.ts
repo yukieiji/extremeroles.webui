@@ -1,4 +1,4 @@
-import { type ExRTabId, type UniqueOptionId } from "../type";
+import type { ExRTabId, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
 /**

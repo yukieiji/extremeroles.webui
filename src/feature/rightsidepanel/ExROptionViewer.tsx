@@ -1,6 +1,6 @@
-import { useStore } from "../../useStore";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import { useStore } from "../../useStore";
 import { ExRTab0GeneralCategory } from "./ExRTab0GeneralCategory";
 
 /**
@@ -25,7 +25,9 @@ export function ExROptionViewer() {
 			{presetValueData && (
 				<div className="px-2 py-1 bg-gray-100 rounded text-sm flex justify-between items-center">
 					<span className="text-gray-500">Preset</span>
-					<span className="font-semibold text-gray-700">{currentPresetName}</span>
+					<span className="font-semibold text-gray-700">
+						{currentPresetName}
+					</span>
 				</div>
 			)}
 

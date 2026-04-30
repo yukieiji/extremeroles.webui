@@ -21,15 +21,21 @@ test.describe("ExR Tab 0 Navigation from Right Panel", () => {
 		});
 		await expect(exrSettingsAccordion).toBeVisible();
 
-		if ((await exrSettingsAccordion.getAttribute("aria-expanded")) === "false") {
+		if (
+			(await exrSettingsAccordion.getAttribute("aria-expanded")) === "false"
+		) {
 			await exrSettingsAccordion.click();
 		}
 
 		// 3. Verify Preset is visible
-		const presetDisplay = page.getByLabel("右フローティングパネル").getByText("Preset");
+		const presetDisplay = page
+			.getByLabel("右フローティングパネル")
+			.getByText("Preset");
 		await expect(presetDisplay).toBeVisible();
 
-		await page.getByLabel("右フローティングパネル").screenshot({ path: "exr_viewer_screenshot.png" });
+		await page
+			.getByLabel("右フローティングパネル")
+			.screenshot({ path: "exr_viewer_screenshot.png" });
 
 		// 4. Expand a category (e.g., "一般")
 		// Based on mock data in the real app, "一般" should be a category in GeneralTab
@@ -56,14 +62,18 @@ test.describe("ExR Tab 0 Navigation from Right Panel", () => {
 			// Switch main view to Au Options first to verify it switches back
 			await page.getByRole("button", { name: "閉じる", exact: true }).click();
 			await page.getByRole("button", { name: "Au Options" }).click();
-			await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
+			await expect(
+				page.getByRole("heading", { name: "Au Options" }),
+			).toBeVisible();
 
 			// Open right panel again and double-click
 			await page.getByRole("button", { name: "パネルを開く" }).click();
 			await optionRow.dblclick({ force: true });
 
 			// 6. Verify it switched back to ExR Options
-			await expect(page.getByRole("heading", { name: "ExR Options" })).toBeVisible({ timeout: 10000 });
+			await expect(
+				page.getByRole("heading", { name: "ExR Options" }),
+			).toBeVisible({ timeout: 10000 });
 		}
 	});
 });
