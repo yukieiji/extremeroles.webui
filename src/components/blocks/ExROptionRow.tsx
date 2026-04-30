@@ -21,7 +21,7 @@ export function ExROptionRow({
 		<OptionRowContainer
 			leading={<LargePoint />}
 			content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
-			className={depth > 0 ? "border-blue-500/30 pl-4" : ""}
+			className={depth > 0 ? "pl-4" : ""}
 		/>
 	) : (
 		<ExROptionRowContent uniqueOptionId={uniqueOptionId} />
