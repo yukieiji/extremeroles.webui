@@ -6,7 +6,7 @@ interface TabButtonContainerProp {
 
 export function TabButtonContainer({ children }: TabButtonContainerProp) {
 	return (
-		<div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
+		<div className="flex flex-wrap gap-2 border-b-4 border-gray-200">
 			{children}
 		</div>
 	);
