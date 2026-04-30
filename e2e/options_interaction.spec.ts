@@ -53,9 +53,7 @@ test("Options interaction behavior", async ({ page }) => {
 	// トグルスイッチに変更されたので、トグルを操作する
 	const toggle = page.locator("main").getByTestId("option-toggle").first();
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(
-		page.locator("main").getByText("オフ").first(),
-	).toBeVisible();
+	await expect(page.locator("main").getByText("オフ").first()).toBeVisible();
 
 	// トグルを切り替え
 	await toggle.click();

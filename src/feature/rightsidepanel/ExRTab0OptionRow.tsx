@@ -1,3 +1,4 @@
+import { useShallow } from "zustand/react/shallow";
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useExrNavigation } from "../../hooks/useExrNavigation";
 import { exrOptionMetaData } from "../../logics/api";
@@ -106,8 +107,11 @@ export function ExRTab0OptionList({
 	categoryId,
 	uniqueOptionIds,
 }: ExRTab0OptionListProps) {
-	const isExROptionActive = useStore((state) => state.isExROptionActive);
-	const activeOptions = uniqueOptionIds.filter((id) => isExROptionActive[id]);
+	const activeOptions = useStore(
+		useShallow((state) =>
+			uniqueOptionIds.filter((id) => state.isExROptionActive[id]),
+		),
+	);
 
 	if (activeOptions.length === 0) {
 		return null;
