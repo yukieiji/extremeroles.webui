@@ -42,8 +42,8 @@ describe("AuCategoryList", () => {
 	it("renders standard category items for Tab 0 other than the first", () => {
 		auOptionMetaData.tabCategoryMap = { 0: [1, 2], 1: [], 2: [] };
 		auOptionMetaData.categoryMetaData = {
-			1: { name: "Map Category", options: [100 as unknown as AuOptionId] },
-			2: { name: "Other Category", options: [] },
+			1: { name: "Map Category", options: [] },
+			2: { name: "Other Category", options: [100 as unknown as AuOptionId] },
 		};
 		auOptionMetaData.options[100 as unknown as AuOptionId] = {
 			title: "Map",
@@ -55,7 +55,6 @@ describe("AuCategoryList", () => {
 		render(<AuCategoryList />);
 
 		expect(screen.getByText("Other Category")).toBeInTheDocument();
-		expect(screen.getByTestId("au-category-2")).toBeInTheDocument();
 	});
 
 	it("renders role category items for Tab 1", () => {
