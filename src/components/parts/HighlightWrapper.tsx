@@ -1,20 +1,20 @@
 import type { ReactNode } from "react";
 
 interface HighlightWrapperProps {
+	id: string;
 	isHighlighted: boolean;
 	children: ReactNode;
 	isInset: boolean;
-	id?: string;
 }
 
 /**
  * ハイライト状態を表示するためのラッパーコンポーネント
  */
 export function HighlightWrapper({
+	id,
 	isHighlighted,
 	children,
 	isInset,
-	id,
 }: HighlightWrapperProps) {
 	const highlightClass = isHighlighted
 		? `ring-2 ring-blue-500 ${isInset ? "ring-inset" : ""}`

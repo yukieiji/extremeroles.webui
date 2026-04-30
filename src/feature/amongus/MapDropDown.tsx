@@ -42,7 +42,11 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 
 	return (
 		<div className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden">
-			<HighlightWrapper isHighlighted={isHighlighted} isInset={true}>
+			<HighlightWrapper
+				id={`au-option-${mapOptionId}`}
+				isHighlighted={isHighlighted}
+				isInset={true}
+			>
 				<div className="flex items-center justify-between py-2 px-4">
 					<div className="flex items-center gap-3">
 						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}

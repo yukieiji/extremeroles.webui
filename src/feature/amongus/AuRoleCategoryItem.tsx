@@ -47,9 +47,9 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 
 	return (
 		<HighlightWrapper
+			id={`au-option-${chanceOptionId}`}
 			isHighlighted={isHighlighted}
 			isInset={false}
-			id={`au-option-${chanceOptionId}`}
 		>
 			<RoleCategoryAccordion
 				isOpen={isOpen}
