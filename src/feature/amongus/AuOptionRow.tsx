@@ -31,7 +31,11 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 	const isHighlighted = highlightedAuOptionId === auOptionId;
 
 	return (
-		<HighlightWrapper isHighlighted={isHighlighted} isInset={true}>
+		<HighlightWrapper
+			isHighlighted={isHighlighted}
+			isInset={true}
+			id={`au-option-${auOptionId}`}
+		>
 			<OptionRowContainer
 				leading={<LargePoint />}
 				content={

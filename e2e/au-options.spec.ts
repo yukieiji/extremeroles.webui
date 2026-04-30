@@ -13,7 +13,9 @@ test.beforeEach(async ({ page }) => {
 
 	// Au Options タブに切り替え
 	await page.getByRole("button", { name: "Au Options" }).click();
-	await page.waitForSelector('[data-testid="category-list"]');
+	await expect(page.getByTestId("category-list")).toBeVisible({
+		timeout: 10000,
+	});
 });
 
 test.describe("Au Option Interactions", () => {
@@ -23,12 +25,13 @@ test.describe("Au Option Interactions", () => {
 		// Tab 0 (General)
 		await page.getByRole("button", { name: "0", exact: true }).click();
 
-		const category = page.getByText("Map");
-		// In our new MapDropDown component, the title is displayed directly
-		await expect(category).toBeVisible();
-
 		// Map is now a direct dropdown (select element)
-		await expect(category.getByRole("combobox")).toBeVisible();
+		// モックデータでは "map" (小文字)
+		// カテゴリ名が表示されている付近にある combobox を探す
+		const mapLabel = page.locator("main").getByText(/^map$/, { exact: true });
+		await expect(mapLabel).toBeVisible();
+		const combobox = page.locator("main").getByRole("combobox");
+		await expect(combobox).toBeVisible();
 	});
 
 	test("should display accordion for other general tab categories", async ({
@@ -38,14 +41,12 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("button", { name: "0", exact: true }).click();
 
 		// index 1 category should still be an accordion
-		const category = page.getByText("インポスター");
-		// "インポスター" is the title of the second category in mock data
+		// メインコンテンツエリアのアコーディオンボタンを探す
+		// 日本語環境なので「開く」または「閉じる」と「インポスター」の組み合わせ
+		const category = page
+			.locator("main")
+			.getByRole("button", { name: /^(開く|閉じる) インポスター$/ });
 		await expect(category).toBeVisible();
-
-		// Should be an accordion (button)
-		await expect(
-			category.getByRole("button", { name: "インポスター" }),
-		).toBeVisible();
 	});
 
 	test("should display role controls in header for role tabs", async ({

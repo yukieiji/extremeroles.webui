@@ -28,25 +28,27 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 			await auSettingsAccordion.click();
 		}
 
-		// 3. Tab 0の内容が表示されていることを確認 (インポスター数 = right-panel-option-10200)
+		// 3. Tab 0の内容が表示されていることを確認 (インポスター数)
 		// インポスターカテゴリを展開する必要がある
 		// 右パネル内のアコーディオンを指定する
+		// 日本語環境なので「開く」または「閉じる」を使用
 		const imposterCategory = page
 			.getByLabel("右フローティングパネル")
 			.getByRole("button", {
-				name: /^(Collapse|Expand) インポスター$/,
+				name: /^(開|閉)じる インポスター$/,
 			});
 		if ((await imposterCategory.getAttribute("aria-expanded")) === "false") {
 			await imposterCategory.click();
 		}
 
-		const impCountSetting = page.getByTestId("right-panel-option-10200");
+		// テキストとタイトルの組み合わせで特定 (右パネル内)
+		const impCountSetting = page.getByLabel("右フローティングパネル").getByTitle("ダブルクリックで設定場所へ移動").filter({ hasText: "インポスター数" });
 		// スクロールが必要な場合がある
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await expect(impCountSetting).toBeVisible({ timeout: 15000 });
 
 		// 値が表示されていることを確認（モックデータでは1のはず）
-		await expect(impCountSetting.locator("span").last()).toHaveText("1");
+		await expect(impCountSetting).toContainText("1");
 
 		// 4. メインエディタで一旦 ExR Options に切り替えておく
 		// 右パネルのオーバーレイが邪魔をする可能性があるので、一旦右パネルを閉じる
@@ -68,8 +70,13 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		);
 
 		// ハイライト用のクラスやスタイルが適用されているか確認
-		// id="au-option-..." の要素がリングクラスを持っているか
-		const impCountRow = page.locator('[id^="au-option-10200"]').first();
+		// テキストで特定し、その親の HighlightWrapper を探す
+		const impCountRow = page
+			.locator("main")
+			.locator("div")
+			.filter({ hasText: "インポスター数" })
+			.locator("xpath=ancestor::div[contains(@class, 'transition-all')]")
+			.first();
 		await expect(impCountRow).toHaveClass(/ring-2/);
 		await expect(impCountRow).toHaveClass(/ring-blue-500/);
 

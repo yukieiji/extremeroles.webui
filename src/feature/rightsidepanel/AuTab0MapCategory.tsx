@@ -1,5 +1,6 @@
 import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
+import { AU_OPTION_ROW_ARIA, format } from "../../noTrans";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
 
@@ -35,7 +36,6 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 		<div className="border border-gray-700 rounded-lg overflow-hidden">
 			<button
 				type="button"
-				data-testid={`right-panel-option-${mapOptionId}`}
 				onDoubleClick={() => {
 					navigateToOption(0, categoryId, mapOptionId);
 				}}

@@ -1,6 +1,7 @@
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
+import { AU_ROLE_ROW_ARIA, format } from "../../noTrans";
 import { useStore } from "../../useStore";
 
 interface AuRoleViewerRowProps {
