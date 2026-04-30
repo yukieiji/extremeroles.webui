@@ -62,6 +62,7 @@
         - 必ずグローバルの`useStore`からデータを取得すること
     - テストの為にid, className, data-testidの使用は限りなく避け、role => label => placeholder => text => alt => titleの順で検討しそれでも駄目な時にdata-testidを使用する
         - 特にpropを渡してidやtestidを構築するとかはもってのほか
+        - xPathも使用しない
     - 記載例:
     ```ts
 
