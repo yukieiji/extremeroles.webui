@@ -22,7 +22,7 @@ describe("AuOptionViewer", () => {
 
 		const mockAuData: AuOptionCategoryDto[] = [
 			{
-				TranslatedTitle: "Game Settings",
+				TranslatedTitle: "Map",
 				Options: [
 					{
 						TranslatedTitle: "Map",
@@ -31,6 +31,11 @@ describe("AuOptionViewer", () => {
 						Info: { ValueType: 2, OptionName: 1 },
 						Range: ["The Skeld", "Mira HQ"],
 					},
+				],
+			},
+			{
+				TranslatedTitle: "Game Settings",
+				Options: [
 					{
 						TranslatedTitle: "Anonymous Voting",
 						TranslatedFormat: "{0}",
@@ -107,7 +112,7 @@ describe("AuOptionViewer", () => {
 
 	it("uses translation data for boolean values", async () => {
 		// mockAuData の 2番目のオプション (Anonymous Voting, ValueType 0) を使用
-		const boolOptionId = auOptionMetaData.categoryMetaData[0].options[1];
+		const boolOptionId = auOptionMetaData.categoryMetaData[1].options[0];
 
 		// 翻訳テキストを設定
 		translationMetaData.booleanTransData = ["無効", "有効"];

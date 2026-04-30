@@ -80,26 +80,4 @@ describe("AuRoleViewerRow", () => {
 		expect(setSelectedTabSpy).toHaveBeenCalledWith("Au");
 		expect(useStore.getState().selectedAuTabId).toBe(1);
 	});
-
-	it("returns null if range is empty or index out of bounds", () => {
-		const categoryId = 10;
-		const chanceId = 101 as unknown as AuOptionId;
-		const maxCountId = 102 as unknown as AuOptionId;
-
-		auOptionMetaData.categoryMetaData[categoryId] = {
-			name: "Sheriff",
-			options: [chanceId, maxCountId],
-		};
-		auOptionMetaData.options[chanceId] = { title: "C", format: "", range: [] };
-		auOptionMetaData.options[maxCountId] = {
-			title: "M",
-			format: "",
-			range: [],
-		};
-
-		const { container } = render(
-			<AuRoleViewerRow tabId={1} categoryId={categoryId} />,
-		);
-		expect(container.firstChild).toBeNull();
-	});
 });

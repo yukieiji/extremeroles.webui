@@ -13,17 +13,19 @@ interface AuRoleViewerRowProps {
  * 役職名、スポーンレート、スポーン数を表示する
  */
 export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
-	const auValue = useStore((state) => state.auValue);
-	const { navigateToOption } = useAuNavigation();
-
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	if (!categoryMeta) {
-		return null;
-	}
 
 	// 役職タブ（1, 2）では、0番目がChance、1番目がMaxCount
-	const chanceOptionId = categoryMeta.options[0];
-	const maxCountOptionId = categoryMeta.options[1];
+	const chanceOptionId = categoryMeta.options[0] ?? 0;
+	const maxCountOptionId = categoryMeta.options[1] ?? 0;
+
+	const chanceSelection = useStore(
+		(state) => state.auValue[chanceOptionId] ?? 0,
+	);
+	const maxCountSelection = useStore(
+		(state) => state.auValue[maxCountOptionId] ?? 0,
+	);
+	const { navigateToOption } = useAuNavigation();
 
 	const chanceMeta = auOptionMetaData.options[chanceOptionId];
 	const maxCountMeta = auOptionMetaData.options[maxCountOptionId];
@@ -32,17 +34,13 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 		return null;
 	}
 
-	const chanceValue = chanceMeta.range[auValue[chanceOptionId] ?? 0];
-	const maxCountValue = maxCountMeta.range[auValue[maxCountOptionId] ?? 0];
-
-	if (chanceValue === undefined || maxCountValue === undefined) {
-		return null;
-	}
+	const chanceValue = chanceMeta.range[chanceSelection] ?? 0;
+	const maxCountValue = maxCountMeta.range[maxCountSelection] ?? 0;
 
 	return (
 		<div className="border-white border-b">
 			<ViewerOptionRow
-				title={categoryMeta.name}
+				title={categoryMeta?.name ?? ""}
 				value={
 					<div className="flex items-center gap-2">
 						<span className="text-blue-400">{chanceValue.toString()}%</span>

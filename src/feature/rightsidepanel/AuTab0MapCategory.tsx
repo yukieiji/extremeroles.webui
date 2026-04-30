@@ -1,7 +1,6 @@
 import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
-import { AuTab0OptionRow } from "./AuTab0OptionRow";
 
 interface AuTab0MapCategoryProps {
 	categoryId: number;
@@ -12,24 +11,21 @@ interface AuTab0MapCategoryProps {
  */
 export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	const auValue = useStore((state) => {
-		return state.auValue;
-	});
+	const mapOptionId = categoryMeta?.options[0] ?? 0;
+	const mapOptionMeta = auOptionMetaData.options[mapOptionId];
+	const mapSelection = useStore((state) => state.auValue[mapOptionId] ?? 0);
+
 	const { navigateToOption } = useAuNavigation();
 
 	if (!categoryMeta) {
 		return null;
 	}
 
-	const mapOptionId = categoryMeta.options[0];
-	const otherOptionIds = categoryMeta.options.slice(1);
-	const mapOptionMeta = auOptionMetaData.options[mapOptionId];
-
 	if (!mapOptionMeta) {
 		return null;
 	}
 
-	const mapValue = mapOptionMeta.range[auValue[mapOptionId] ?? 0];
+	const mapValue = mapOptionMeta.range[mapSelection];
 
 	return (
 		<div className="border border-gray-700 rounded-lg overflow-hidden">
@@ -50,19 +46,6 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 					{mapValue.toString()}
 				</span>
 			</button>
-			{otherOptionIds.length > 0 && (
-				<div className="p-1 bg-gray-900 space-y-0.5">
-					{otherOptionIds.map((optionId) => {
-						return (
-							<AuTab0OptionRow
-								key={optionId}
-								optionId={optionId}
-								categoryId={categoryId}
-							/>
-						);
-					})}
-				</div>
-			)}
 		</div>
 	);
 }
