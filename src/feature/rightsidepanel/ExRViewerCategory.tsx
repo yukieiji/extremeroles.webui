@@ -2,10 +2,7 @@ import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { exrOptionMetaData } from "../../logics/api";
 import { groupOptionPairs } from "../../logics/optionUtils";
 import { useStore } from "../../useStore";
-import {
-	ExRViewerMinMaxRow,
-	ExRViewerOptionRow,
-} from "./ExRViewerOptionRow";
+import { ExRViewerMinMaxRow, ExRViewerOptionRow } from "./ExRViewerOptionRow";
 
 interface ExRViewerCategoryProps {
 	categoryId: number;
@@ -43,7 +40,7 @@ export function ExRViewerCategory({ categoryId }: ExRViewerCategoryProps) {
 			}}
 		>
 			<div className="flex flex-col gap-0.5">
-				{groupedOptions.map((item, idx) => {
+				{groupedOptions.map((item, _idx) => {
 					if (typeof item === "number") {
 						return <ExRViewerOptionRow key={item} uniqueOptionId={item} />;
 					}

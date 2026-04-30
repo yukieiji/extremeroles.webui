@@ -1,8 +1,8 @@
-import { HighlightWrapper } from "../parts/HighlightWrapper";
 import { ExROptionControl } from "../../feature/exr/ExROptionControl";
 import { exrOptionMetaData } from "../../logics/api";
-import { useStore } from "../../useStore";
 import type { UniqueOptionId } from "../../type";
+import { useStore } from "../../useStore";
+import { HighlightWrapper } from "../parts/HighlightWrapper";
 import { OptionItem } from "../parts/OptionItem";
 import { OptionNameDisplay } from "../parts/OptionNameDisplay";
 

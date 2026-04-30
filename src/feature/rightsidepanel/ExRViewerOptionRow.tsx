@@ -2,12 +2,7 @@ import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useExRNavigation } from "../../hooks/useExRNavigation";
 import { useOptionData } from "../../hooks/useOptionData";
 import { exrOptionMetaData } from "../../logics/api";
-import {
-	getBaseOptionName,
-	getOptionLabel,
-	isPresetOption,
-	parseUniqueOptionId,
-} from "../../logics/optionUtils";
+import { isPresetOption, parseUniqueOptionId } from "../../logics/optionUtils";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
 import { AuTab0OptionValue } from "./AuTab0OptionValue";
@@ -19,7 +14,9 @@ interface ExRViewerOptionRowProps {
 /**
  * ExRの各設定項目の行コンポーネント
  */
-export function ExRViewerOptionRow({ uniqueOptionId }: ExRViewerOptionRowProps) {
+export function ExRViewerOptionRow({
+	uniqueOptionId,
+}: ExRViewerOptionRowProps) {
 	const optionValue = useOptionData(uniqueOptionId);
 	const { navigateToExROption } = useExRNavigation();
 	const presetNames = useStore((state) => state.presetNames);

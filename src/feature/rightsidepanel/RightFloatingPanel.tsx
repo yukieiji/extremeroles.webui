@@ -4,7 +4,6 @@ import { getAllOptions } from "../../logics/api.store";
 import {
 	AU_SETTINGS_TITLE,
 	CLOSE,
-	EXR_CONTENT_TEMP,
 	EXR_SETTINGS_TITLE,
 	PANEL_CLOSE_ARIA,
 	PANEL_OPEN_ARIA,
