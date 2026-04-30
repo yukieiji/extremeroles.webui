@@ -18,7 +18,7 @@ export function HighlightWrapper({
 		<div
 			id={id}
 			className={`transition-all duration-500 rounded ${
-				isHighlighted ? "outline-2 outline-blue-500" : ""
+				isHighlighted ? "ring-2 ring-blue-500" : ""
 			}`}
 		>
 			{children}
