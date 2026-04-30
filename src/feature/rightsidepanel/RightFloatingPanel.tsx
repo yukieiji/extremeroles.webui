@@ -62,11 +62,7 @@ export function RightFloatingPanel() {
           cursor-pointer
           ${isRightPanelOpen ? "right-80" : "right-0"}
         `}
-				aria-label={
-					isRightPanelOpen
-						? format(PANEL_CLOSE_ARIA, RIGHT_PANEL_ARIA)
-						: format(PANEL_OPEN_ARIA, RIGHT_PANEL_ARIA)
-				}
+				aria-label={isRightPanelOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
 			>
 				<span className="text-sm font-bold">
 					{isRightPanelOpen ? "▶" : "◀"}
@@ -119,7 +115,7 @@ export function RightFloatingPanel() {
 					type="button"
 					className="fixed inset-0 bg-black/20 z-30 cursor-default"
 					onClick={toggleRightPanel}
-					aria-label={format(CLOSE, RIGHT_PANEL_ARIA)}
+					aria-label={CLOSE}
 				/>
 			)}
 		</>

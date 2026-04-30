@@ -1,9 +1,4 @@
-import {
-	format,
-	OPTION_SIDEBAR_ARIA,
-	SIDEBAR_CLOSE_ARIA,
-	SIDEBAR_OPEN_ARIA,
-} from "../../noTrans";
+import { SIDEBAR_CLOSE_ARIA, SIDEBAR_OPEN_ARIA } from "../../noTrans";
 
 interface OptionGroupToggleSidebarToggleButtonProps {
 	onClick: () => void;
@@ -22,11 +17,7 @@ export function OptionGroupToggleSidebarToggleButton({
 			type="button"
 			onClick={onClick}
 			className="p-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
-			aria-label={
-				isOpen
-					? format(SIDEBAR_CLOSE_ARIA, OPTION_SIDEBAR_ARIA)
-					: format(SIDEBAR_OPEN_ARIA, OPTION_SIDEBAR_ARIA)
-			}
+			aria-label={isOpen ? SIDEBAR_CLOSE_ARIA : SIDEBAR_OPEN_ARIA}
 		>
 			{isOpen ? "◀" : "▶"}
 		</button>

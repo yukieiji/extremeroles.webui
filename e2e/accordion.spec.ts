@@ -30,7 +30,7 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	const categoryName = "乱数に関する設定";
 	const accordionButton = page
 		.locator("main")
-		.getByRole("button", { name: new RegExp(`(開|閉)じる ${categoryName}`) });
+		.getByRole("button", { name: categoryName });
 	await expect(accordionButton).toBeVisible();
 
 	// 初期状態では閉じている
@@ -42,7 +42,9 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
 	// 閉じているときはオプション名が表示されていない（lazy rendering）
-	const optionName = page.getByText("強力なシャッフルを使用する");
+	const optionName = page
+		.locator("main")
+		.getByText("強力なシャッフルを使用する");
 	await expect(optionName).not.toBeAttached();
 
 	// アコーディオンを開く

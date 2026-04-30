@@ -5,20 +5,20 @@
 export const SYNC_BUTTON_TITLE = "同期";
 export const SYNC_BUTTON_ARIA = "データを同期";
 export const CANCEL = "キャンセル";
-export const SIDEBAR_CLOSE_ARIA = "サイドバーを閉じる {0}";
-export const SIDEBAR_OPEN_ARIA = "サイドバーを開く {0}";
+export const SIDEBAR_CLOSE_ARIA = "サイドバーを閉じる";
+export const SIDEBAR_OPEN_ARIA = "サイドバーを開く";
 export const VIEWER_ROW_TITLE = "ダブルクリックで設定場所へ移動";
 export const ROLE_SPAWN_RATE = "レート";
 export const ROLE_SPAWN_COUNT = "数";
-export const CLOSE = "閉じる {0}";
-export const OPEN = "開く {0}";
+export const CLOSE = "閉じる";
+export const OPEN = "開く";
 export const PRESET_SWITCH_TITLE = "プリセットの切り替え";
 export const PRESET_SWITCH_MESSAGE =
 	"プリセットを「{0}」から「{1}」に切り替えます";
 export const PRESET_INPUT_PLACEHOLDER = "プリセット名を入力...";
 export const PRESET_SELECT_ARIA = "プリセットを選択";
-export const PANEL_CLOSE_ARIA = "パネルを閉じる {0}";
-export const PANEL_OPEN_ARIA = "パネルを開く {0}";
+export const PANEL_CLOSE_ARIA = "パネルを閉じる";
+export const PANEL_OPEN_ARIA = "パネルを開く";
 export const RIGHT_PANEL_ARIA = "右フローティングパネル";
 export const SETTING_VALUES_TITLE = "設定値";
 export const AU_SETTINGS_TITLE = "AmongUsの設定";
