@@ -73,6 +73,9 @@
 
     function Greeting({ name }: GreetingProps) {
 
+        const a = useStore((state) => state.a); // DO NOT a = useStore()
+        const index = useStore((state) => state.indexs[a] ?? 0); // DO NOT indexs = useStore((state) => state.indexs)
+
         const func = () => {
             console.log('hello')
         }
