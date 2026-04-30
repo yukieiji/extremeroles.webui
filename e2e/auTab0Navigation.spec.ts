@@ -42,7 +42,10 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		}
 
 		// テキストとタイトルの組み合わせで特定 (右パネル内)
-		const impCountSetting = page.getByLabel("右フローティングパネル").getByTitle("ダブルクリックで設定場所へ移動").filter({ hasText: "インポスター数" });
+		const impCountSetting = page
+			.getByLabel("右フローティングパネル")
+			.getByTitle("ダブルクリックで設定場所へ移動")
+			.filter({ hasText: "インポスター数" });
 		// スクロールが必要な場合がある
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await expect(impCountSetting).toBeVisible({ timeout: 15000 });

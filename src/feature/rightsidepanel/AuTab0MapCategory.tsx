@@ -1,6 +1,5 @@
 import { useAuNavigation } from "../../hooks/useAuNavigation";
 import { auOptionMetaData } from "../../logics/api";
-import { AU_OPTION_ROW_ARIA, format } from "../../noTrans";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
 

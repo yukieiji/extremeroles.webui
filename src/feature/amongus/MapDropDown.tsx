@@ -2,7 +2,6 @@ import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { OptionDropdownControl } from "../../components/parts/OptionDropdownControl";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
-import { AU_OPTION_ROW_ARIA, format } from "../../noTrans";
 import { useStore } from "../../useStore";
 
 interface MapDropDownProps {

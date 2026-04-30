@@ -27,11 +27,15 @@ test.describe("Au Option Interactions", () => {
 
 		// Map is now a direct dropdown (select element)
 		// モックデータでは "map" (小文字)
-		// カテゴリ名が表示されている付近にある combobox を探す
-		const mapLabel = page.locator("main").getByText(/^map$/, { exact: true });
-		await expect(mapLabel).toBeVisible();
-		const combobox = page.locator("main").getByRole("combobox");
-		await expect(combobox).toBeVisible();
+		// "map" というテキストと combobox の両方を含む行要素を特定する
+		const mapCategoryRow = page
+			.locator("main")
+			.locator("div")
+			.filter({ hasText: "map" })
+			.filter({ has: page.getByRole("combobox") })
+			.first();
+		await expect(mapCategoryRow).toBeVisible();
+		await expect(mapCategoryRow.getByRole("combobox")).toBeVisible();
 	});
 
 	test("should display accordion for other general tab categories", async ({

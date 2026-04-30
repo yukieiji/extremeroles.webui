@@ -28,7 +28,9 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// 3. 役職の内容を確認
 		// aria-label ではなく、テキストとタイトルの組み合わせで特定する (右パネル内)
-		const roleRow = rightPanel.getByTitle("ダブルクリックで設定場所へ移動").filter({ hasText: "シェイプシフター" });
+		const roleRow = rightPanel
+			.getByTitle("ダブルクリックで設定場所へ移動")
+			.filter({ hasText: "シェイプシフター" });
 		await expect(roleRow).toBeVisible();
 		await expect(roleRow).toContainText("シェイプシフター");
 		// 50% / 15 のような表示形式
@@ -80,10 +82,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 			name: "開く インポスター役職",
 		});
 		await expect(collapsedSection).toBeVisible();
-		await expect(collapsedSection).toHaveAttribute(
-			"aria-expanded",
-			"false",
-		);
+		await expect(collapsedSection).toHaveAttribute("aria-expanded", "false");
 
 		// 役職リストが見えなくなったことを確認
 		await expect(rightPanel.getByText("シェイプシフター")).not.toBeVisible();
