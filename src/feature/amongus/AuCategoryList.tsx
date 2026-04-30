@@ -17,21 +17,19 @@ export function AuCategoryList() {
 
 	return (
 		<CategoryContainer isPending={isTabPending}>
-			<div className="flex flex-col gap-2">
-				{tabCategoryIds.map((categoryId, index) => {
-					if (isRoleTab) {
-						return (
-							<AuRoleCategoryItem key={categoryId} categoryId={categoryId} />
-						);
-					}
-					if (selectedAuTabId === 0 && index === 0) {
-						return <MapDropDown key={categoryId} categoryId={categoryId} />;
-					}
+			{tabCategoryIds.map((categoryId, index) => {
+				if (isRoleTab) {
 					return (
-						<AuStandardCategoryItem key={categoryId} categoryId={categoryId} />
+						<AuRoleCategoryItem key={categoryId} categoryId={categoryId} />
 					);
-				})}
-			</div>
+				}
+				if (selectedAuTabId === 0 && index === 0) {
+					return <MapDropDown key={categoryId} categoryId={categoryId} />;
+				}
+				return (
+					<AuStandardCategoryItem key={categoryId} categoryId={categoryId} />
+				);
+			})}
 		</CategoryContainer>
 	);
 }
