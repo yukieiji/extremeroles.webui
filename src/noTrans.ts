@@ -30,6 +30,15 @@ export const OPTION_SIDEBAR_ARIA = "オプションサイドバー";
 export const AU_OPTION_ROW_ARIA = "{0}の設定";
 export const AU_ROLE_ROW_ARIA = "{0}の役職";
 
+export const SYNCHRONIZING = "Synchronizing...";
+export const RIGHT_PANEL_TITLE = "Right Panel";
+export const AU_OPTIONS_TITLE = "Au Options";
+export const EXR_OPTIONS_TITLE = "ExR Options";
+export const AU_SHORT_LABEL = "A";
+export const EXR_SHORT_LABEL = "E";
+export const ON = "ON";
+export const OFF = "OFF";
+
 /**
  * プレースホルダーを含む文字列を置換します。
  * @param template テンプレート文字列（例: "こんにちは {0} さん"）
