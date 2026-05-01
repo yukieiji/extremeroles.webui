@@ -38,9 +38,11 @@ export function useExRNavigation() {
 		setHighlightedExROptionId(uniqueOptionId);
 
 		setTimeout(() => {
-			const element = document.getElementById(`exr-option-${uniqueOptionId}`);
-			if (element) {
-				element.scrollIntoView({ behavior: "smooth", block: "center" });
+			if (typeof document !== "undefined") {
+				const element = document.getElementById(`exr-option-${uniqueOptionId}`);
+				if (element) {
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
+				}
 			}
 			setTimeout(() => {
 				setHighlightedExROptionId(null);
