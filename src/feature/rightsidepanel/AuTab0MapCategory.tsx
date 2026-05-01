@@ -34,7 +34,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 				onDoubleClick={() => {
 					navigateToOption(0, categoryId, mapOptionId);
 				}}
-				className="w-full flex items-center justify-between p-2 bg-gray-800 border-b border-gray-700 hover:bg-gray-700 transition-colors"
+				className="w-full flex items-center justify-between p-2 bg-gray-800 hover:bg-gray-700 transition-colors"
 			>
 				<div className="flex items-center gap-2">
 					<div className="w-4 h-4" />

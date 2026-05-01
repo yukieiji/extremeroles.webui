@@ -30,14 +30,12 @@ export function AuTab0OptionRow({
 	const value = optionMeta.range[selection] ?? 0;
 
 	return (
-		<div className="border-white border-b">
-			<ViewerOptionRow
-				title={optionMeta.title}
-				value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
-				onDoubleClick={() => {
-					navigateToOption(0, categoryId, optionId);
-				}}
-			/>
-		</div>
+		<ViewerOptionRow
+			title={optionMeta.title}
+			value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
+			onDoubleClick={() => {
+				navigateToOption(0, categoryId, optionId);
+			}}
+		/>
 	);
 }

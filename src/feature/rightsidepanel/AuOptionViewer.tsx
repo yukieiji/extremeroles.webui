@@ -1,3 +1,4 @@
+import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { auOptionMetaData } from "../../logics/api";
 import { CREW_ROLES_TITLE, IMPOSTOR_ROLES_TITLE } from "../../noTrans";
 import { useStore } from "../../useStore";
@@ -24,7 +25,7 @@ export function AuOptionViewer() {
 	);
 
 	return (
-		<div className="flex flex-col gap-2">
+		<RightPanelGroupColumnLayout>
 			{tab0CategoryIds.map((categoryId, index) => {
 				const isMapCategory = index === 0;
 				if (isMapCategory) {
@@ -46,6 +47,6 @@ export function AuOptionViewer() {
 				isOpen={isAuImpostorRolesOpen}
 				onToggle={toggleAuImpostorRoles}
 			/>
-		</div>
+		</RightPanelGroupColumnLayout>
 	);
 }

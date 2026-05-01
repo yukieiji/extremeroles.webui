@@ -1,5 +1,6 @@
 import { useShallow } from "zustand/react/shallow";
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
+import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuRoleViewerRow } from "./AuRoleViewerRow";
@@ -63,15 +64,11 @@ export function AuRoleViewerSection({
 
 	return (
 		<CompactAccordion title={title} isOpen={isOpen} onToggle={onToggle}>
-			<div className="flex flex-col gap-0.5">
-				{activeRoleCategoryIds.map((categoryId) => (
-					<AuRoleViewerRow
-						key={categoryId}
-						tabId={tabId}
-						categoryId={categoryId}
-					/>
-				))}
-			</div>
+			<RightPanelContainer arr={activeRoleCategoryIds}>
+				{(categoryId) => (
+					<AuRoleViewerRow tabId={tabId} categoryId={categoryId} />
+				)}
+			</RightPanelContainer>
 		</CompactAccordion>
 	);
 }

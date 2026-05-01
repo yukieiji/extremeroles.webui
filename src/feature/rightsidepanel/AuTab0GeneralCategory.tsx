@@ -1,4 +1,5 @@
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
+import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
@@ -33,17 +34,11 @@ export function AuTab0GeneralCategory({
 				toggleAuTab0Category(categoryId);
 			}}
 		>
-			<div className="flex flex-col gap-0.5">
-				{categoryMeta.options.map((optionId) => {
-					return (
-						<AuTab0OptionRow
-							key={optionId}
-							optionId={optionId}
-							categoryId={categoryId}
-						/>
-					);
-				})}
-			</div>
+			<RightPanelContainer arr={categoryMeta.options}>
+				{(optionId) => (
+					<AuTab0OptionRow optionId={optionId} categoryId={categoryId} />
+				)}
+			</RightPanelContainer>
 		</CompactAccordion>
 	);
 }

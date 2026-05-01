@@ -1,3 +1,4 @@
+import { RightPanelItemColumnLayout } from "../../components/parts/RightPanelItemColumnLayout";
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useExRNavigation } from "../../hooks/useExRNavigation";
 import { useOptionData } from "../../hooks/useOptionData";
@@ -27,16 +28,14 @@ export function ExROptionViewer() {
 		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID]?.metaData;
 
 	return (
-		<div className="flex flex-col gap-0.5">
-			<div className="border-white border-b">
-				<ViewerOptionRow
-					title={optionMeta?.translatedName ?? "Preset"}
-					value={currentPresetName}
-					onDoubleClick={() => {
-						navigateToExROption(0, 0, PRESET_OPTION_UNIQUE_ID);
-					}}
-				/>
-			</div>
-		</div>
+		<RightPanelItemColumnLayout>
+			<ViewerOptionRow
+				title={optionMeta?.translatedName ?? "Preset"}
+				value={currentPresetName}
+				onDoubleClick={() => {
+					navigateToExROption(0, 0, PRESET_OPTION_UNIQUE_ID);
+				}}
+			/>
+		</RightPanelItemColumnLayout>
 	);
 }

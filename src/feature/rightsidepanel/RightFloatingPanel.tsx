@@ -1,5 +1,6 @@
 import { use, useEffect } from "react";
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
+import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { getAllOptions } from "../../logics/api.store";
 import {
 	AU_SETTINGS_TITLE,
@@ -89,7 +90,7 @@ export function RightFloatingPanel() {
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
 						>
-							<div className="flex flex-col gap-2">
+							<RightPanelGroupColumnLayout>
 								<CompactAccordion
 									title={AU_SETTINGS_TITLE}
 									isOpen={isAuSettingsOpen}
@@ -104,7 +105,7 @@ export function RightFloatingPanel() {
 								>
 									<ExROptionViewer />
 								</CompactAccordion>
-							</div>
+							</RightPanelGroupColumnLayout>
 						</CompactAccordion>
 					</div>
 				</div>

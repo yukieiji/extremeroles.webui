@@ -38,20 +38,18 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 	const maxCountValue = maxCountMeta.range[maxCountSelection] ?? 0;
 
 	return (
-		<div className="border-white border-b">
-			<ViewerOptionRow
-				title={categoryMeta?.name ?? ""}
-				value={
-					<div className="flex items-center gap-2">
-						<span className="text-blue-400">{chanceValue.toString()}%</span>
-						<span className="text-gray-500">/</span>
-						<span className="text-blue-400">{maxCountValue.toString()}</span>
-					</div>
-				}
-				onDoubleClick={() => {
-					navigateToOption(tabId, categoryId, chanceOptionId);
-				}}
-			/>
-		</div>
+		<ViewerOptionRow
+			title={categoryMeta?.name ?? ""}
+			value={
+				<div className="flex items-center gap-2">
+					<span className="text-blue-400">{chanceValue.toString()}%</span>
+					<span className="text-gray-500">/</span>
+					<span className="text-blue-400">{maxCountValue.toString()}</span>
+				</div>
+			}
+			onDoubleClick={() => {
+				navigateToOption(tabId, categoryId, chanceOptionId);
+			}}
+		/>
 	);
 }
