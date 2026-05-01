@@ -17,17 +17,11 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const updateAuOption = useUpdateAuOptionSelection();
 
 	// 最初のオプションがマップであることを想定
-	const mapOptionId = categoryMeta?.options[0];
-	const selection = useStore((state) =>
-		mapOptionId ? (state.auValue[mapOptionId] ?? 0) : 0,
-	);
+	const mapOptionId = categoryMeta?.options[0] ?? 0;
+	const selection = useStore((state) => state.auValue[mapOptionId] ?? 0);
 	const highlightedAuOptionId = useStore(
 		(state) => state.highlightedAuOptionId,
 	);
-
-	if (!categoryMeta || categoryMeta.options.length === 0) {
-		return null;
-	}
 
 	const optionMeta = auOptionMetaData.options[mapOptionId];
 
