@@ -23,5 +23,10 @@
             "type": "shell",
             "command": "pnpm run build"
         },
+        {
+            "label": "run-dev",
+            "type": "shell",
+            "command": "pnpm run dev"
+        },
     ]
 }
