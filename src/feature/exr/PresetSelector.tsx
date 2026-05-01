@@ -122,7 +122,7 @@ export function PresetSelector() {
 		<HighlightWrapper
 			id={`exr-option-${PRESET_OPTION_UNIQUE_ID}`}
 			isHighlighted={isHighlighted}
-			className="rounded"
+			isInset={false}
 		>
 			<div className="relative flex items-center gap-2" ref={dropdownRef}>
 				<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
