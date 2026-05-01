@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { filterVisibleCategoryIds, filterVisibleTopLevelOptionIds } from "../src/logics/exrOptionUtils";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUniqueOptionId, PRESET_OPTION_UNIQUE_ID } from "../src/logics/optionUtils";
+import {
+	filterVisibleCategoryIds,
+	filterVisibleTopLevelOptionIds,
+} from "../src/logics/exrOptionUtils";
+import {
+	getUniqueOptionId,
+	PRESET_OPTION_UNIQUE_ID,
+} from "../src/logics/optionUtils";
 
 describe("exrOptionUtils", () => {
 	describe("filterVisibleCategoryIds", () => {

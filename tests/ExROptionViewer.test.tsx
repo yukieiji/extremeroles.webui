@@ -2,7 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExROptionViewer } from "../src/feature/rightsidepanel/ExROptionViewer";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUniqueOptionId, PRESET_OPTION_UNIQUE_ID } from "../src/logics/optionUtils";
+import {
+	getUniqueOptionId,
+	PRESET_OPTION_UNIQUE_ID,
+} from "../src/logics/optionUtils";
 import { ExRTabId } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -36,7 +39,10 @@ describe("ExROptionViewer Component", () => {
 		};
 
 		// Category 1: Active
-		exrOptionMetaData.categories[1] = { name: "Active Cat", tabId: ExRTabId.GeneralTab };
+		exrOptionMetaData.categories[1] = {
+			name: "Active Cat",
+			tabId: ExRTabId.GeneralTab,
+		};
 		const opt1 = getUniqueOptionId(ExRTabId.GeneralTab, 1, 101);
 		exrOptionMetaData.globalCategoryIdTopLevelMap[1] = [opt1];
 		exrOptionMetaData.options[opt1] = {
@@ -45,7 +51,10 @@ describe("ExROptionViewer Component", () => {
 		};
 
 		// Category 2: Inactive
-		exrOptionMetaData.categories[2] = { name: "Inactive Cat", tabId: ExRTabId.GeneralTab };
+		exrOptionMetaData.categories[2] = {
+			name: "Inactive Cat",
+			tabId: ExRTabId.GeneralTab,
+		};
 		const opt2 = getUniqueOptionId(ExRTabId.GeneralTab, 2, 102);
 		exrOptionMetaData.globalCategoryIdTopLevelMap[2] = [opt2];
 		exrOptionMetaData.options[opt2] = {

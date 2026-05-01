@@ -1,6 +1,6 @@
+import type { UniqueOptionId } from "../type";
 import { exrOptionMetaData } from "./api";
 import { PRESET_OPTION_UNIQUE_ID } from "./optionUtils";
-import type { UniqueOptionId } from "../type";
 
 /**
  * 表示対象のカテゴリIDをフィルタリングします。

@@ -26,7 +26,9 @@ test("ExR options are displayed in the right sidebar", async ({ page }) => {
 test("ExR category can be toggled in the right sidebar", async ({ page }) => {
 	await page.getByRole("button", { name: "パネルを開く" }).click();
 
-	const categoryAccordion = page.getByRole("button", { name: "乱数に関する設定" });
+	const categoryAccordion = page.getByRole("button", {
+		name: "乱数に関する設定",
+	});
 	await expect(categoryAccordion).toBeVisible();
 
 	// Click to open

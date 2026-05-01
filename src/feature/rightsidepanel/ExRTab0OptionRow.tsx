@@ -32,7 +32,7 @@ export function ExRTab0OptionRow({ uniqueOptionId }: ExRTab0OptionRowProps) {
 		return null;
 	}
 
-	const { tabId, categoryId, optionId } = parseUniqueOptionId(uniqueOptionId);
+	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
 	const value = values[selection] ?? 0;
 
 	return (
