@@ -17,19 +17,18 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 		(state) => state.openedAuCategoryIds[categoryId] ?? false,
 	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
-	const auValue = useStore((state) => state.auValue);
+
+	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
+
+	// 各カテゴリの最初(0)がChance、次(1)がMaxCount
+	const chanceOptionId = categoryMeta?.options[0] ?? 0;
+	const chanceValueIndex = useStore(
+		(state) => state.auValue[chanceOptionId] ?? 0,
+	);
 	const highlightedAuOptionId = useStore(
 		(state) => state.highlightedAuOptionId,
 	);
 
-	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	if (!categoryMeta) {
-		return null;
-	}
-
-	// 各カテゴリの最初(0)がChance、次(1)がMaxCount
-	const chanceOptionId = categoryMeta.options[0];
-	const chanceValueIndex = auValue[chanceOptionId] ?? 0;
 	const chanceOptionMeta = auOptionMetaData.options[chanceOptionId];
 
 	// Chanceの実際の値（%）を取得

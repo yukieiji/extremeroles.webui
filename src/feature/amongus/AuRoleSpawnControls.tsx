@@ -14,27 +14,22 @@ interface AuRoleSpawnControlsProps {
 export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 
-	const chanceOptionId = categoryMeta?.options[0];
-	const maxCountOptionId = categoryMeta?.options[1];
+	const chanceOptionId = categoryMeta?.options[0] ?? 0;
+	const maxCountOptionId = categoryMeta?.options[1] ?? 0;
 
-	const auValue = useStore((state) => state.auValue);
+	const chanceSelection = useStore(
+		(state) => state.auValue[chanceOptionId] ?? 0,
+	);
+	const maxCountSelection = useStore(
+		(state) => state.auValue[maxCountOptionId] ?? 0,
+	);
+
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const isOpenedCategory = useStore(
 		(state) => state.openedAuCategoryIds[categoryId] ?? false,
 	);
 
 	const updateAuOption = useUpdateAuRoleOptionSelection();
-
-	if (
-		!categoryMeta ||
-		chanceOptionId === undefined ||
-		maxCountOptionId === undefined
-	) {
-		return null;
-	}
-
-	const chanceSelection = auValue[chanceOptionId] ?? 0;
-	const maxCountSelection = auValue[maxCountOptionId] ?? 0;
 
 	const chanceMeta = auOptionMetaData.options[chanceOptionId];
 	const maxCountMeta = auOptionMetaData.options[maxCountOptionId];
