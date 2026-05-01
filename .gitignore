@@ -33,3 +33,7 @@ dist-ssr
 /playwright/.auth/
 
 /temp/*
+
+
+# APM dependencies
+apm_modules/
