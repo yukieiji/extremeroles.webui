@@ -1,6 +1,6 @@
 import { ExROptionRow } from "../../components/blocks/ExROptionRow";
 import { OptionEditableAccordion } from "../../components/blocks/OptionEditableAccordion";
-import { BorderLine } from "../../components/parts/BorderLine";
+import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
@@ -29,7 +29,8 @@ export function ExROptionRecursiveItem({
 		toggleExROption(uniqueOptionId);
 	};
 
-	const childs = exrOptionMetaData.options[uniqueOptionId]?.childOptionIds;
+	const childs =
+		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
 
 	return (
 		<OptionEditableAccordion
@@ -44,18 +45,11 @@ export function ExROptionRecursiveItem({
 			onToggle={handleToggle}
 			depth={depth}
 		>
-			<div className="flex flex-col">
-				{childs?.map((childId) => (
-					<>
-						<BorderLine />
-						<ExROptionItem
-							key={childId}
-							uniqueOptionId={childId}
-							depth={depth + 1}
-						/>
-					</>
-				))}
-			</div>
+			<OptionEditorCategoryOptionLayout arr={childs}>
+				{(childId) => (
+					<ExROptionItem uniqueOptionId={childId} depth={depth + 1} />
+				)}
+			</OptionEditorCategoryOptionLayout>
 		</OptionEditableAccordion>
 	);
 }

@@ -1,4 +1,4 @@
-import { BorderLine } from "../../components/parts/BorderLine";
+import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
 import type { AuOptionId } from "../../type";
 import { AuOptionRow } from "./AuOptionRow";
 
@@ -11,13 +11,8 @@ interface AuCategoryOptionListProps {
  */
 export function AuCategoryOptionList({ optionIds }: AuCategoryOptionListProps) {
 	return (
-		<div className="flex flex-col">
-			{optionIds.map((optionId, index) => (
-				<div key={optionId}>
-					{index !== 0 && <BorderLine />}
-					<AuOptionRow auOptionId={optionId} />
-				</div>
-			))}
-		</div>
+		<OptionEditorCategoryOptionLayout arr={optionIds}>
+			{(optionId) => <AuOptionRow auOptionId={optionId} />}
+		</OptionEditorCategoryOptionLayout>
 	);
 }
