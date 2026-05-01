@@ -28,18 +28,23 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 
 	// プリセットカテゴリは非表示になったため、別のカテゴリ「乱数に関する設定」を使用する
 	const categoryName = "乱数に関する設定";
-	const accordionButton = page.getByRole("button", { name: categoryName });
+	const accordionButton = page
+		.getByTestId("category-list")
+		.getByRole("button", { name: categoryName });
 	await expect(accordionButton).toBeVisible();
 
 	// 初期状態では閉じている
 	const accordionItem = page
+		.getByTestId("category-list")
 		.locator("div.border.border-gray-700")
 		.filter({ hasText: categoryName });
 	const contentContainer = accordionItem.getByTestId("accordion-content");
 	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
 	// 閉じているときはオプション名が表示されていない（lazy rendering）
-	const optionName = page.getByText("強力なシャッフルを使用する");
+	const optionName = page
+		.getByTestId("category-list")
+		.getByText("強力なシャッフルを使用する");
 	await expect(optionName).not.toBeAttached();
 
 	// アコーディオンを開く
@@ -50,12 +55,14 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	// タブを切り替えてもアコーディオンの状態が維持されることを確認
 	await page
 		.getByRole("button", { name: "ゴーストニュートラル役職設定", exact: false })
+		.filter({ hasText: "ゴーストニュートラル役職設定" }) // タブボタンを特定
 		.click();
 	await expect(page.getByRole("button", { name: "フォラス" })).toBeVisible();
 
 	// グローバル設定タブに戻る
 	await page
 		.getByRole("button", { name: "グローバル設定", exact: false })
+		.filter({ hasText: "グローバル設定" }) // タブボタンを特定
 		.click();
 	// アコーディオンがまだ開いていることを確認
 	await expect(optionName).toBeVisible();

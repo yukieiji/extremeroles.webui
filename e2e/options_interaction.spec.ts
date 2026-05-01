@@ -40,21 +40,29 @@ test("Options interaction behavior", async ({ page }) => {
 	).toBeVisible();
 
 	// 別のカテゴリの操作を確認
-	const shuffleCategory = page.getByRole("button", {
-		name: "乱数に関する設定",
-	});
+	const shuffleCategory = page
+		.getByTestId("category-list")
+		.getByRole("button", {
+			name: "乱数に関する設定",
+		});
 	await shuffleCategory.click();
 
-	const shuffleOption = page.getByText("強力なシャッフルを使用する");
+	const shuffleOption = page
+		.getByTestId("category-list")
+		.getByText("強力なシャッフルを使用する");
 	await expect(shuffleOption).toBeVisible({ timeout: 3000 });
 
 	// トグルスイッチに変更されたので、トグルを操作する
 	const toggle = page.getByTestId("option-toggle").first();
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
+	await expect(
+		page.getByTestId("category-list").getByText("オフ"),
+	).toBeVisible();
 
 	// トグルを切り替え
 	await toggle.click();
 	await expect(toggle).toHaveAttribute("aria-checked", "true");
-	await expect(page.getByText("オン", { exact: true })).toBeVisible();
+	await expect(
+		page.getByTestId("category-list").getByText("オン", { exact: true }),
+	).toBeVisible();
 });

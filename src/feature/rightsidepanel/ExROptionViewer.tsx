@@ -25,7 +25,11 @@ export function ExROptionViewer() {
 		useShallow((state) => {
 			const categoryIds =
 				exrOptionMetaData.tabs[ExRTabId.GeneralTab]?.categoryIds ?? [];
-			return filterVisibleCategoryIds(categoryIds, state.isExROptionActive);
+			// カテゴリ0（プリセット）は手動でレンダリングするため、リストからは除外する
+			return filterVisibleCategoryIds(
+				categoryIds,
+				state.isExROptionActive,
+			).filter((id) => id !== 0);
 		}),
 	);
 	const isPresetOpen = useStore(

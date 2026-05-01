@@ -46,9 +46,17 @@ test("ExR option double-click navigates to main settings", async ({ page }) => {
 	const presetRow = page.getByText("使用するプリセット");
 	await presetRow.dblclick();
 
-	// Navigation should happen. In the main view, the ExR tab should be selected.
-	// Since we are already in ExR tab (likely), let's check if the option is highlighted.
-	// The navigation logic usually sets the highlighted option.
+	// Navigation should happen. The right sidebar should be closed.
+	// Since the sidebar uses translate-x-full to hide, we check for that class.
+	await expect(page.getByLabel("右フローティングパネル")).toHaveClass(
+		/translate-x-full/,
+	);
 
-	// We can check if the main view's category is expanded or if it's visible.
+	// In the main view, the ExR option should be visible.
+	// PRESET_OPTION_UNIQUE_ID is 0.
+	const mainOption = page.locator("#exr-option-0");
+	await expect(mainOption).toBeVisible();
+
+	// Check if it's highlighted (has ring-blue-500 class)
+	await expect(mainOption).toHaveClass(/ring-blue-500/);
 });
