@@ -34,7 +34,10 @@ test("Options interaction behavior", async ({ page }) => {
 
 	// ドロップダウンを開いて名前が反映されているか確認
 	await page.getByRole("button", { name: "プリセットを選択" }).click();
-	await expect(page.getByText("Test Preset")).toBeVisible();
+	// ドロップダウン内の項目を特定するため、より具体的なロケータを使用（サイドバーにも同じテキストが表示されるため）
+	await expect(
+		page.getByRole("button", { name: "Test Preset" }).first(),
+	).toBeVisible();
 
 	// 別のカテゴリの操作を確認
 	const shuffleCategory = page.getByRole("button", {
