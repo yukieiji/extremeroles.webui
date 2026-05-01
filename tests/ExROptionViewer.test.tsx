@@ -35,7 +35,13 @@ describe("ExROptionViewer Component", () => {
 		// Setup General Tab
 		exrOptionMetaData.tabs[ExRTabId.GeneralTab] = {
 			name: "General",
-			categoryIds: [1, 2],
+			categoryIds: [0, 1, 2],
+		};
+
+		// Category 0: Preset
+		exrOptionMetaData.categories[0] = {
+			name: "Preset Category",
+			tabId: ExRTabId.GeneralTab,
 		};
 
 		// Category 1: Active
@@ -79,7 +85,10 @@ describe("ExROptionViewer Component", () => {
 	it("renders preset and active categories from General Tab", () => {
 		render(<ExROptionViewer />);
 
-		// Should render Preset
+		// Should render Preset Category title
+		expect(screen.getByText("Preset Category")).toBeInTheDocument();
+
+		// Should render Preset Option
 		expect(screen.getByText("Preset")).toBeInTheDocument();
 		expect(screen.getByText("Default")).toBeInTheDocument();
 

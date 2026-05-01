@@ -1,10 +1,11 @@
 import { ColoredText } from "../../components/parts/ColoredText";
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useExRNavigation } from "../../hooks/useExRNavigation";
+import { useExROptionActive } from "../../hooks/useExROptionActive";
+import { useOptionData } from "../../hooks/useOptionData";
 import { exrOptionMetaData } from "../../logics/api";
 import { parseUniqueOptionId } from "../../logics/optionUtils";
 import type { UniqueOptionId } from "../../type";
-import { useStore } from "../../useStore";
 import { ExRTab0OptionValue } from "./ExRTab0OptionValue";
 
 interface ExRTab0OptionRowProps {
@@ -15,30 +16,24 @@ interface ExRTab0OptionRowProps {
  * ExR各設定項目の行コンポーネント
  */
 export function ExRTab0OptionRow({ uniqueOptionId }: ExRTab0OptionRowProps) {
-	const selection = useStore((state) => {
-		return state.exrValue[uniqueOptionId]?.selection ?? 0;
-	});
-	const isActive = useStore((state) => {
-		return state.isExROptionActive[uniqueOptionId];
-	});
+	const optionData = useOptionData(uniqueOptionId);
+	const isActive = useExROptionActive(uniqueOptionId);
 	const { navigateToExROption } = useExRNavigation();
 
-	const optionMeta = exrOptionMetaData.options[uniqueOptionId]?.metaData;
-	const values = exrOptionMetaData.options[uniqueOptionId]
-		? useStore.getState().exrValue[uniqueOptionId]?.values
-		: null;
+	const meta = exrOptionMetaData.options[uniqueOptionId]?.metaData;
 
-	if (!optionMeta || !isActive || !values) {
+	if (!meta || !isActive || !optionData) {
 		return null;
 	}
 
 	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
-	const value = values[selection] ?? 0;
+	const selection = optionData.selection ?? 0;
+	const value = optionData.values[selection] ?? 0;
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={optionMeta.translatedName} />}
-			value={<ExRTab0OptionValue value={value} format={optionMeta.format} />}
+			title={<ColoredText text={meta.translatedName} />}
+			value={<ExRTab0OptionValue value={value} format={meta.format} />}
 			onDoubleClick={() => {
 				navigateToExROption(tabId, categoryId, uniqueOptionId);
 			}}

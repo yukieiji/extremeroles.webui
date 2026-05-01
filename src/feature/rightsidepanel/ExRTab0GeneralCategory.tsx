@@ -4,7 +4,7 @@ import { ColoredText } from "../../components/parts/ColoredText";
 import { exrOptionMetaData } from "../../logics/api";
 import { filterVisibleTopLevelOptionIds } from "../../logics/exrOptionUtils";
 import { useStore } from "../../useStore";
-import { ExRTab0OptionRow } from "./ExRTab0OptionRow";
+import { ExRTab0OptionItem } from "./ExRTab0OptionItem";
 
 interface ExRTab0GeneralCategoryProps {
 	categoryId: number;
@@ -53,7 +53,7 @@ export function ExRTab0GeneralCategory({
 		>
 			<RightPanelContainer arr={filteredOptions}>
 				{(uniqueOptionId) => (
-					<ExRTab0OptionRow uniqueOptionId={uniqueOptionId} />
+					<ExRTab0OptionItem uniqueOptionId={uniqueOptionId} />
 				)}
 			</RightPanelContainer>
 		</CompactAccordion>
