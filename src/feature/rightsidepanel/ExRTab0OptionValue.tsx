@@ -1,0 +1,41 @@
+import { ColoredText } from "../../components/parts/ColoredText";
+import { OptionFormat } from "../../components/parts/OptionFormat";
+import { translationMetaData } from "../../logics/api";
+import { OFF, ON } from "../../noTrans";
+
+interface ExRTab0OptionValueProps {
+	value: string | number | boolean;
+	format: string;
+}
+
+/**
+ * ExRのタブ0の設定値を表示するコンポーネント
+ */
+export function ExRTab0OptionValue({ value, format }: ExRTab0OptionValueProps) {
+	const isBoolean = typeof value === "boolean";
+	const isString = typeof value === "string";
+
+	return (
+		<div className="flex items-center gap-1 shrink-0">
+			<span className="text-sm text-blue-400 font-medium text-right">
+				{isBoolean ? (
+					<ColoredText
+						text={
+							translationMetaData.booleanTransData[value ? 1 : 0] ||
+							(value ? ON : OFF)
+						}
+					/>
+				) : isString ? (
+					<ColoredText text={value} />
+				) : (
+					value.toString()
+				)}
+			</span>
+			{!isBoolean && !isString && (
+				<div className="text-[10px] scale-90 origin-right">
+					<OptionFormat format={format} />
+				</div>
+			)}
+		</div>
+	);
+}

@@ -1,10 +1,15 @@
+import { useShallow } from "zustand/react/shallow";
+import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { RightPanelItemColumnLayout } from "../../components/parts/RightPanelItemColumnLayout";
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useExRNavigation } from "../../hooks/useExRNavigation";
 import { useOptionData } from "../../hooks/useOptionData";
 import { exrOptionMetaData } from "../../logics/api";
+import { filterVisibleCategoryIds } from "../../logics/exrOptionUtils";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import { ExRTabId } from "../../type";
 import { useStore } from "../../useStore";
+import { ExRTab0GeneralCategory } from "./ExRTab0GeneralCategory";
 
 /**
  * ExRの設定内容を右パネルに表示するコンポーネント
@@ -13,6 +18,14 @@ export function ExROptionViewer() {
 	const presetOption = useOptionData(PRESET_OPTION_UNIQUE_ID);
 	const presetNames = useStore((state) => state.presetNames);
 	const { navigateToExROption } = useExRNavigation();
+
+	const visibleCategoryIds = useStore(
+		useShallow((state) => {
+			const categoryIds =
+				exrOptionMetaData.tabs[ExRTabId.GeneralTab]?.categoryIds ?? [];
+			return filterVisibleCategoryIds(categoryIds, state.isExROptionActive);
+		}),
+	);
 
 	if (!presetOption) {
 		return null;
@@ -28,14 +41,19 @@ export function ExROptionViewer() {
 		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID]?.metaData;
 
 	return (
-		<RightPanelItemColumnLayout>
-			<ViewerOptionRow
-				title={optionMeta?.translatedName ?? "Preset"}
-				value={currentPresetName}
-				onDoubleClick={() => {
-					navigateToExROption(0, 0, PRESET_OPTION_UNIQUE_ID);
-				}}
-			/>
-		</RightPanelItemColumnLayout>
+		<RightPanelGroupColumnLayout>
+			<RightPanelItemColumnLayout>
+				<ViewerOptionRow
+					title={optionMeta?.translatedName ?? "Preset"}
+					value={currentPresetName}
+					onDoubleClick={() => {
+						navigateToExROption(0, 0, PRESET_OPTION_UNIQUE_ID);
+					}}
+				/>
+			</RightPanelItemColumnLayout>
+			{visibleCategoryIds.map((categoryId) => (
+				<ExRTab0GeneralCategory key={categoryId} categoryId={categoryId} />
+			))}
+		</RightPanelGroupColumnLayout>
 	);
 }

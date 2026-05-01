@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
 import { ColoredText } from "../../components/parts/ColoredText";
 import { exrOptionMetaData } from "../../logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import { filterVisibleTopLevelOptionIds } from "../../logics/exrOptionUtils";
 import { useStore } from "../../useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 
@@ -29,10 +29,8 @@ export function ExRStandardCategoryItem({
 		if (!uniqueOptions) {
 			return [];
 		}
-		return uniqueOptions.filter((uniqueId) => {
-			return uniqueId !== PRESET_OPTION_UNIQUE_ID;
-		});
-	}, [uniqueOptions]);
+		return filterVisibleTopLevelOptionIds(categoryId, uniqueOptions);
+	}, [categoryId, uniqueOptions]);
 
 	if (filteredOptions.length === 0) {
 		return null;

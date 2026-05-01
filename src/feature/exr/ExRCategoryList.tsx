@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { CategoryContainer } from "../../components/blocks/CategoryContainer";
 import { exrOptionMetaData } from "../../logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
+import { filterVisibleCategoryIds } from "../../logics/exrOptionUtils";
 import { ExRTabId } from "../../type";
 import { useStore } from "../../useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
@@ -19,24 +19,7 @@ function ExRStandardCategoryList({ categoryIds }: CategoryListProps) {
 	const visibleCategories = useStore(
 		useShallow((state) =>
 			categoryIds
-				? categoryIds.filter((categoryId) => {
-						const categoryUniqueOptions =
-							exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
-						if (!categoryUniqueOptions) {
-							return false;
-						}
-
-						const filterdUniqueOptions =
-							categoryId === 0
-								? categoryUniqueOptions.filter((optionId) => {
-										return optionId !== PRESET_OPTION_UNIQUE_ID; // プリセット設定（OptionId 0）を除外
-									})
-								: categoryUniqueOptions;
-						return (
-							filterdUniqueOptions.length > 0 &&
-							filterdUniqueOptions.some((id) => state.isExROptionActive[id])
-						);
-					})
+				? filterVisibleCategoryIds(categoryIds, state.isExROptionActive)
 				: [],
 		),
 	);
