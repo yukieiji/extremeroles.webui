@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { useBackendUpdate } from "../../hooks/useBackend";
 import { useOptionData } from "../../hooks/useOptionData";
 import { updateExrOption } from "../../logics/api";
@@ -39,6 +40,9 @@ export function PresetSelector() {
 		return state.setPresetDropdownOpen;
 	});
 	const setBlockDialog = useStore((state) => state.openBlockDialog);
+	const isHighlighted = useStore((state) => {
+		return state.highlightedExROptionId === PRESET_OPTION_UNIQUE_ID;
+	});
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -115,69 +119,75 @@ export function PresetSelector() {
 	};
 
 	return (
-		<div className="relative flex items-center gap-2" ref={dropdownRef}>
-			<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
-				<input
-					ref={inputRef}
-					type="text"
-					key={currentSelection}
-					defaultValue={currentPresetName}
-					onBlur={handleBlur}
-					onKeyDown={handleKeyDown}
-					className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
-					placeholder={PRESET_INPUT_PLACEHOLDER}
-				/>
-				<button
-					type="button"
-					onClick={toggleDropdown}
-					className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors"
-					aria-label={PRESET_SELECT_ARIA}
-				>
-					<svg
-						className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						aria-hidden="true"
+		<HighlightWrapper
+			id={`exr-option-${PRESET_OPTION_UNIQUE_ID}`}
+			isHighlighted={isHighlighted}
+			isInset={false}
+		>
+			<div className="relative flex items-center gap-2" ref={dropdownRef}>
+				<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
+					<input
+						ref={inputRef}
+						type="text"
+						key={currentSelection}
+						defaultValue={currentPresetName}
+						onBlur={handleBlur}
+						onKeyDown={handleKeyDown}
+						className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
+						placeholder={PRESET_INPUT_PLACEHOLDER}
+					/>
+					<button
+						type="button"
+						onClick={toggleDropdown}
+						className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors"
+						aria-label={PRESET_SELECT_ARIA}
 					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
-				</button>
-			</div>
+						<svg
+							className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M19 9l-7 7-7-7"
+							/>
+						</svg>
+					</button>
+				</div>
 
-			{isDropdownOpen && (
-				<div className="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded shadow-xl z-50 max-h-60 overflow-y-auto">
-					{presetValues.map((val, index) => {
-						const name = presetNames[index] ?? String(val);
-						const isSelected = index === currentSelection;
-						return (
-							<button
-								key={`preset-${val}`}
-								type="button"
-								onClick={() => {
-									handlePresetSelect(index);
-								}}
-								className={`
+				{isDropdownOpen && (
+					<div className="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded shadow-xl z-50 max-h-60 overflow-y-auto">
+						{presetValues.map((val, index) => {
+							const name = presetNames[index] ?? String(val);
+							const isSelected = index === currentSelection;
+							return (
+								<button
+									key={`preset-${val}`}
+									type="button"
+									onClick={() => {
+										handlePresetSelect(index);
+									}}
+									className={`
                   w-full text-left px-3 py-2 text-sm transition-colors
                   ${isSelected ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}
                 `}
-							>
-								<div className="flex justify-between items-center">
-									<span>{name}</span>
-									{name !== String(val) && (
-										<span className="text-xs opacity-50 ml-2">({val})</span>
-									)}
-								</div>
-							</button>
-						);
-					})}
-				</div>
-			)}
-		</div>
+								>
+									<div className="flex justify-between items-center">
+										<span>{name}</span>
+										{name !== String(val) && (
+											<span className="text-xs opacity-50 ml-2">({val})</span>
+										)}
+									</div>
+								</button>
+							);
+						})}
+					</div>
+				)}
+			</div>
+		</HighlightWrapper>
 	);
 }

@@ -4,7 +4,6 @@ import { getAllOptions } from "../../logics/api.store";
 import {
 	AU_SETTINGS_TITLE,
 	CLOSE,
-	EXR_CONTENT_TEMP,
 	EXR_SETTINGS_TITLE,
 	PANEL_CLOSE_ARIA,
 	PANEL_OPEN_ARIA,
@@ -14,6 +13,7 @@ import {
 } from "../../noTrans";
 import { useStore } from "../../useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
+import { ExROptionViewer } from "./ExROptionViewer";
 
 /**
  * 右フローティングパネルコンポーネント
@@ -102,7 +102,7 @@ export function RightFloatingPanel() {
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
 								>
-									<p className="text-gray-400 text-sm">{EXR_CONTENT_TEMP}</p>
+									<ExROptionViewer />
 								</CompactAccordion>
 							</div>
 						</CompactAccordion>
