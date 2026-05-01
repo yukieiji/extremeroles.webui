@@ -9,6 +9,7 @@ import {
 	PANEL_CLOSE_ARIA,
 	PANEL_OPEN_ARIA,
 	RIGHT_PANEL_ARIA,
+	RIGHT_PANEL_TITLE,
 	SETTING_VALUES_TITLE,
 } from "../../noTrans";
 import { useStore } from "../../useStore";
@@ -80,7 +81,7 @@ export function RightFloatingPanel() {
 			>
 				<div className="flex flex-col h-full">
 					<div className="flex items-center justify-between p-4 border-b border-gray-100">
-						<h2 className="text-lg font-semibold">Right Panel</h2>
+						<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
 					</div>
 					<div className="flex-1 overflow-y-auto p-3">
 						<CompactAccordion

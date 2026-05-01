@@ -10,6 +10,7 @@ import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
 import { useSyncBackend } from "./hooks/useBackend";
 import { getAllOptions } from "./logics/api.store";
+import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE } from "./noTrans";
 import { useStore } from "./useStore";
 
 /**
@@ -57,7 +58,7 @@ function MainContent() {
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-5 flex-1 p-4">
 					<h2 className="text-2xl font-bold whitespace-nowrap">
-						{selectedTab === "ExR" ? "ExR Options" : "Au Options"}
+						{selectedTab === "ExR" ? EXR_OPTIONS_TITLE : AU_OPTIONS_TITLE}
 					</h2>
 					{selectedTab === "ExR" && (
 						<Suspense

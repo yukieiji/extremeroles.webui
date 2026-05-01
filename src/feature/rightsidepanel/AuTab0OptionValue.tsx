@@ -1,6 +1,7 @@
 import { ColoredText } from "../../components/parts/ColoredText";
 import { OptionFormat } from "../../components/parts/OptionFormat";
 import { translationMetaData } from "../../logics/api";
+import { OFF, ON } from "../../noTrans";
 
 interface AuTab0OptionValueProps {
 	value: string | number | boolean;
@@ -20,7 +21,7 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 					<ColoredText
 						text={
 							translationMetaData.booleanTransData[value ? 1 : 0] ||
-							(value ? "ON" : "OFF")
+							(value ? ON : OFF)
 						}
 					/>
 				) : (

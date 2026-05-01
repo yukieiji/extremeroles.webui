@@ -1,6 +1,12 @@
 import { useEffect, useTransition } from "react";
 import { OptionGroupToggleSidebarToggleButton } from "../components/parts/OptionGroupToggleSidebarToggleButton";
-import { OPTION_SIDEBAR_ARIA } from "../noTrans";
+import {
+	AU_OPTIONS_TITLE,
+	AU_SHORT_LABEL,
+	EXR_OPTIONS_TITLE,
+	EXR_SHORT_LABEL,
+	OPTION_SIDEBAR_ARIA,
+} from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
 import { useStore } from "../useStore";
 
@@ -14,8 +20,8 @@ interface TabItem {
 }
 
 const TABS: TabItem[] = [
-	{ id: "Au", label: "Au Options", shortLabel: "A" },
-	{ id: "ExR", label: "ExR Options", shortLabel: "E" },
+	{ id: "Au", label: AU_OPTIONS_TITLE, shortLabel: AU_SHORT_LABEL },
+	{ id: "ExR", label: EXR_OPTIONS_TITLE, shortLabel: EXR_SHORT_LABEL },
 ];
 
 /**
