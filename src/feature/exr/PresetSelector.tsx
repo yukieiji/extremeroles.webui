@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { useBackendUpdate } from "../../hooks/useBackend";
 import { useOptionData } from "../../hooks/useOptionData";
@@ -40,13 +40,9 @@ export function PresetSelector() {
 		return state.setPresetDropdownOpen;
 	});
 	const setBlockDialog = useStore((state) => state.openBlockDialog);
-	const highlightedExROptionId = useStore(
-		(state) => state.highlightedExROptionId,
-	);
-
-	const isHighlighted = useMemo(() => {
-		return highlightedExROptionId === PRESET_OPTION_UNIQUE_ID;
-	}, [highlightedExROptionId]);
+	const isHighlighted = useStore((state) => {
+		return state.highlightedExROptionId === PRESET_OPTION_UNIQUE_ID;
+	});
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
