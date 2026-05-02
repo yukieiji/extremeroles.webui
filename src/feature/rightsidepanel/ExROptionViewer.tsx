@@ -1,10 +1,11 @@
 import { RightPanelItemColumnLayout } from "../../components/parts/RightPanelItemColumnLayout";
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
 import { useExRNavigation } from "../../hooks/useExRNavigation";
-import { useOptionData } from "../../hooks/useOptionData";
+import { useOptionData } from "../../hooks/useExROptionData";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
 import { useStore } from "../../useStore";
+import { ExRGeneralTabOptionViewer } from "./ExRGeneralTabOptionViewer";
 
 /**
  * ExRの設定内容を右パネルに表示するコンポーネント
@@ -19,8 +20,7 @@ export function ExROptionViewer() {
 	}
 
 	const currentSelection = presetOption.selection ?? 0;
-	const presetValues = presetOption.values as (number | string)[];
-	const currentPresetValue = presetValues[currentSelection];
+	const currentPresetValue = presetOption.values[currentSelection] ?? "";
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
@@ -36,6 +36,7 @@ export function ExROptionViewer() {
 					navigateToExROption(0, 0, PRESET_OPTION_UNIQUE_ID);
 				}}
 			/>
+			<ExRGeneralTabOptionViewer />
 		</RightPanelItemColumnLayout>
 	);
 }

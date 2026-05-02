@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import type { ExRTabId } from "../type";
 
 /**
  * 右フローティングパネルの状態管理を行うスライスのインターフェース
@@ -20,6 +21,10 @@ export interface RightFloatingPanelSlice {
 	toggleAuCrewmateRoles: () => void;
 	isAuImpostorRolesOpen: boolean;
 	toggleAuImpostorRoles: () => void;
+	openedExRTabId: Record<ExRTabId, boolean>;
+	toggleExRTabId: (tabId: ExRTabId) => void;
+	openedCategoryIdRightFloatingPanel: Record<number, boolean>;
+	toggleCategoryIdRightFloatingPanel: (categoryId: number) => void;
 }
 
 /**
@@ -74,6 +79,31 @@ export const createRightFloatingPanelSlice: StateCreator<
 		isAuImpostorRolesOpen: true,
 		toggleAuImpostorRoles: () => {
 			set((state) => ({ isAuImpostorRolesOpen: !state.isAuImpostorRolesOpen }));
+		},
+		openedExRTabId: {
+			0: false,
+			1: false,
+			2: false,
+			3: false,
+			4: false,
+			5: false,
+			6: false,
+			7: false,
+		},
+		toggleExRTabId: (tabId) => {
+			set((state) => {
+				const next = { ...state.openedExRTabId };
+				next[tabId] = !next[tabId];
+				return { openedExRTabId: next };
+			});
+		},
+		openedCategoryIdRightFloatingPanel: {},
+		toggleCategoryIdRightFloatingPanel: (categoryId) => {
+			set((state) => {
+				const next = { ...state.openedCategoryIdRightFloatingPanel };
+				next[categoryId] = !next[categoryId];
+				return { openedCategoryIdRightFloatingPanel: next };
+			});
 		},
 	};
 };
