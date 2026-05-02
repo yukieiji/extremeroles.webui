@@ -1,5 +1,5 @@
 import { RoleSpawnControls } from "../../components/blocks/RoleSpawnControls";
-import { useOptionData } from "../../hooks/useOptionData";
+import { useOptionData } from "../../hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "../../logics/api.store";
 import { findClosestIndex, getUniqueOptionId } from "../../logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../../type";
