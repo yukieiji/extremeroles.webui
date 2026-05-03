@@ -2,7 +2,10 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRGeneralTabOptionViewer } from "../src/feature/rightsidepanel/ExRGeneralTabOptionViewer";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUniqueOptionId } from "../src/logics/optionUtils";
+import {
+	PRESET_OPTION_UNIQUE_ID,
+	getUniqueOptionId,
+} from "../src/logics/optionUtils";
 import { ExRTabId } from "../src/type";
 import { useStore } from "../src/useStore";
 
@@ -111,7 +114,7 @@ describe("ExRGeneralTabOptionViewer", () => {
 		exrOptionMetaData.tabs[TARGET_TAB_ID].categoryIds = [0, 1];
 		exrOptionMetaData.categories[0] = { name: "Cat 0", tabId: TARGET_TAB_ID };
 
-		const presetId = getUniqueOptionId(0, 0, 0);
+		const presetId = PRESET_OPTION_UNIQUE_ID;
 		const otherId = getUniqueOptionId(TARGET_TAB_ID, 0, 999);
 
 		exrOptionMetaData.globalCategoryIdTopLevelMap[0] = [presetId, otherId];
@@ -149,7 +152,7 @@ describe("ExRGeneralTabOptionViewer", () => {
 		exrOptionMetaData.tabs[TARGET_TAB_ID].categoryIds = [0];
 		exrOptionMetaData.categories[0] = { name: "Cat 0", tabId: TARGET_TAB_ID };
 
-		const presetId = getUniqueOptionId(0, 0, 0);
+		const presetId = PRESET_OPTION_UNIQUE_ID;
 		exrOptionMetaData.globalCategoryIdTopLevelMap[0] = [presetId];
 
 		useStore.getState().setExROptions(
