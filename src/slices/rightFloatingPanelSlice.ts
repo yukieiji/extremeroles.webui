@@ -20,6 +20,8 @@ export interface RightFloatingPanelSlice {
 	toggleAuCrewmateRoles: () => void;
 	isAuImpostorRolesOpen: boolean;
 	toggleAuImpostorRoles: () => void;
+	rightPanelWidth: number;
+	setRightPanelWidth: (width: number) => void;
 }
 
 /**
@@ -28,6 +30,9 @@ export interface RightFloatingPanelSlice {
 export const createRightFloatingPanelSlice: StateCreator<
 	RightFloatingPanelSlice
 > = (set) => {
+	const savedWidth = localStorage.getItem("rightPanelWidth");
+	const initialWidth = savedWidth ? Number.parseInt(savedWidth, 10) : 320;
+
 	return {
 		isRightPanelOpen: false, // デフォルトクローズ
 		toggleRightPanel: () => {
@@ -74,6 +79,10 @@ export const createRightFloatingPanelSlice: StateCreator<
 		isAuImpostorRolesOpen: true,
 		toggleAuImpostorRoles: () => {
 			set((state) => ({ isAuImpostorRolesOpen: !state.isAuImpostorRolesOpen }));
+		},
+		rightPanelWidth: initialWidth,
+		setRightPanelWidth: (width) => {
+			set({ rightPanelWidth: width });
 		},
 	};
 };

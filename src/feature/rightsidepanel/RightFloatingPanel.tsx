@@ -1,4 +1,4 @@
-import { use, useEffect } from "react";
+import { use, useEffect, useState, useCallback } from "react";
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { getAllOptions } from "../../logics/api.store";
@@ -30,6 +30,8 @@ export function RightFloatingPanel() {
 	const setRightPanelOpen = useStore((state) => {
 		return state.setRightPanelOpen;
 	});
+	const rightPanelWidth = useStore((state) => state.rightPanelWidth);
+	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);
 
 	const isSettingsOpen = useStore((state) => state.isSettingsOpen);
 	const toggleSettings = useStore((state) => state.toggleSettings);
@@ -37,6 +39,52 @@ export function RightFloatingPanel() {
 	const toggleAuSettings = useStore((state) => state.toggleAuSettings);
 	const isExrSettingsOpen = useStore((state) => state.isExrSettingsOpen);
 	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
+
+	const [isResizing, setIsResizing] = useState(false);
+	const MIN_WIDTH = 320;
+
+	const handleMouseDown = useCallback((e: React.MouseEvent) => {
+		e.preventDefault();
+		setIsResizing(true);
+	}, []);
+
+	const handleMouseMove = useCallback(
+		(e: MouseEvent) => {
+			if (!isResizing) return;
+
+			const newWidth = window.innerWidth - e.clientX;
+			const maxWidth = window.innerWidth * 0.8;
+
+			if (newWidth >= MIN_WIDTH && newWidth <= maxWidth) {
+				setRightPanelWidth(newWidth);
+			}
+		},
+		[isResizing, setRightPanelWidth],
+	);
+
+	const handleMouseUp = useCallback(() => {
+		if (isResizing) {
+			setIsResizing(false);
+			localStorage.setItem("rightPanelWidth", rightPanelWidth.toString());
+		}
+	}, [isResizing, rightPanelWidth]);
+
+	useEffect(() => {
+		if (isResizing) {
+			document.body.style.cursor = "ew-resize";
+			window.addEventListener("mousemove", handleMouseMove);
+			window.addEventListener("mouseup", handleMouseUp);
+		} else {
+			document.body.style.cursor = "";
+			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("mouseup", handleMouseUp);
+		}
+
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("mouseup", handleMouseUp);
+		};
+	}, [isResizing, handleMouseMove, handleMouseUp]);
 
 	// Escapeキーでパネルを閉じるためのグローバルリスナー
 	useEffect(() => {
@@ -60,10 +108,15 @@ export function RightFloatingPanel() {
 				onClick={toggleRightPanel}
 				className={`
           fixed top-0 z-50 h-full w-6 bg-blue-600 text-white shadow-md
-          hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center
+          hover:bg-blue-700 flex items-center justify-center
           cursor-pointer
-          ${isRightPanelOpen ? "right-80" : "right-0"}
         `}
+				style={{
+					right: isRightPanelOpen ? rightPanelWidth : 0,
+					transition: isResizing
+						? "none"
+						: "right 300ms ease-in-out, background-color 300ms ease-in-out",
+				}}
 				aria-label={isRightPanelOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
 			>
 				<span className="text-sm font-bold">
@@ -74,12 +127,26 @@ export function RightFloatingPanel() {
 			{/* パネル本体 */}
 			<aside
 				className={`
-          fixed right-0 top-0 h-full w-80 bg-white border-l border-gray-200 shadow-2xl z-40
-          transition-transform duration-300 ease-in-out transform
+          fixed right-0 top-0 h-full bg-white border-l border-gray-200 shadow-2xl z-40
+          transform
           ${isRightPanelOpen ? "translate-x-0" : "translate-x-full"}
         `}
+				style={{
+					width: rightPanelWidth,
+					transition: isResizing
+						? "none"
+						: "transform 300ms ease-in-out, width 300ms ease-in-out",
+				}}
 				aria-label={RIGHT_PANEL_ARIA}
 			>
+				{/* リサイズハンドル */}
+				{isRightPanelOpen && (
+					<div
+						onMouseDown={handleMouseDown}
+						className="absolute left-0 top-0 h-full w-1 cursor-ew-resize hover:bg-blue-400 transition-colors z-50"
+						aria-hidden="true"
+					/>
+				)}
 				<div className="flex flex-col h-full">
 					<div className="flex items-center justify-between p-4 border-b border-gray-100">
 						<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
