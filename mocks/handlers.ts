@@ -9,7 +9,7 @@ import {
 import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto } from '../src/type';
 
 // JSONファイルのロード
-import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
+import exrOptionData from './get/exr/setting-webui-dev_20260503.json';
 import auOptionData from './get/au/setting-webui-dev_20260421.json';
 
 /**
