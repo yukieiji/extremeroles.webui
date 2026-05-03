@@ -31,6 +31,8 @@ export interface RightFloatingPanelSlice {
 	toggleCategoryIdRightFloatingPanel: (categoryId: number) => void;
 	openedExROptionRightFloatingPanel: Record<UniqueOptionId, boolean>;
 	toggleExROptionRightFloatingPanel: (optionId: UniqueOptionId) => void;
+	shouldRenderRightPanelContent: boolean;
+	setShouldRenderRightPanelContent: (shouldRender: boolean) => void;
 }
 
 /**
@@ -138,6 +140,10 @@ export const createRightFloatingPanelSlice: StateCreator<
 					},
 				};
 			});
+		},
+		shouldRenderRightPanelContent: false,
+		setShouldRenderRightPanelContent: (shouldRender) => {
+			set({ shouldRenderRightPanelContent: shouldRender });
 		},
 	};
 };

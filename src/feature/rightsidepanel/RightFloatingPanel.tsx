@@ -1,4 +1,4 @@
-import { use, useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect } from "react";
 import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
 import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { getAllOptions } from "../../logics/api.store";
@@ -24,7 +24,12 @@ export function RightFloatingPanel() {
 	const isRightPanelOpen = useStore((state) => {
 		return state.isRightPanelOpen;
 	});
-	const [shouldRenderContent, setShouldRenderContent] = useState(isRightPanelOpen);
+	const shouldRenderContent = useStore(
+		(state) => state.shouldRenderRightPanelContent,
+	);
+	const setShouldRenderContent = useStore(
+		(state) => state.setShouldRenderRightPanelContent,
+	);
 
 	useEffect(() => {
 		if (isRightPanelOpen) {
@@ -34,7 +39,7 @@ export function RightFloatingPanel() {
 			const timer = setTimeout(() => setShouldRenderContent(false), 350);
 			return () => clearTimeout(timer);
 		}
-	}, [isRightPanelOpen]);
+	}, [isRightPanelOpen, setShouldRenderContent]);
 
 	const toggleRightPanel = useStore((state) => {
 		return state.toggleRightPanel;
