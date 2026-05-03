@@ -58,6 +58,12 @@ function MainContent() {
 
 	const syncer = useSyncBackend();
 
+	const titleMap = {
+		Au: AU_OPTIONS_TITLE,
+		ExR: EXR_OPTIONS_TITLE,
+		RoleFilter: ROLE_FILTER_TITLE,
+	};
+
 	return (
 		<section
 			data-testid="main-content-section"
@@ -66,11 +72,7 @@ function MainContent() {
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-5 flex-1 p-4">
 					<h2 className="text-2xl font-bold whitespace-nowrap">
-						{selectedTab === "ExR"
-							? EXR_OPTIONS_TITLE
-							: selectedTab === "RoleFilter"
-								? ROLE_FILTER_TITLE
-								: AU_OPTIONS_TITLE}
+						{titleMap[selectedTab]}
 					</h2>
 					{selectedTab === "ExR" && (
 						<Suspense
