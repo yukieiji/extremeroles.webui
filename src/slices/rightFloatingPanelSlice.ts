@@ -96,6 +96,7 @@ export const createRightFloatingPanelSlice: StateCreator<
 		isResizing: false,
 		setIsResizing: (isResizing) => {
 			set({ isResizing });
+		},
 		openedExRTabId: {
 			0: true,
 			1: false,
