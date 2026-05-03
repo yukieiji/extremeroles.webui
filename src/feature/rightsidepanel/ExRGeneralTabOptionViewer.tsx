@@ -14,7 +14,7 @@ export function ExRGeneralTabOptionViewer() {
 	const generalTabName = generalTab?.name ?? "";
 	const visuableGeneralCategory = useVisibleCategories(generalCategory);
 	const isOpen = useStore(
-		(state) => state.openedExRTabId[TARGET_TAB_ID] ?? false,
+		(state) => state.openedExRTabId[TARGET_TAB_ID] ?? true,
 	);
 	const toggleTab = useStore((state) => state.toggleExRTabId);
 
