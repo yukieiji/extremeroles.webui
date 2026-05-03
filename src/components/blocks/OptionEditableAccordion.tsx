@@ -24,7 +24,7 @@ export function OptionEditableAccordion({
 }: OptionEditableAccordionProps) {
 	return (
 		<div
-			className={`flex flex-col ${depth > 0 ? "border-l-2 border-blue-500/30 ml-4" : ""}`}
+			className={`flex flex-col ${depth > 0 ? "border-blue-500/30 pl-4" : ""}`}
 		>
 			<OptionRowContainer
 				leading={

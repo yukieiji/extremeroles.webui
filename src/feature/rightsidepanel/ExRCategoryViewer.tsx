@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
+import { VieweGroupAccordion } from "../../components/blocks/VieweGroupAccordion";
 import { ColoredText } from "../../components/parts/ColoredText";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
@@ -35,7 +35,7 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProp) {
 	}
 
 	return (
-		<CompactAccordion
+		<VieweGroupAccordion
 			title={
 				<ColoredText
 					text={exrOptionMetaData.categories[categoryId]?.name ?? ""}
@@ -49,6 +49,6 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProp) {
 			<RightPanelContainer arr={filteredOptions}>
 				{(optionid) => <ExROptionItemView uniqueOptionId={optionid} />}
 			</RightPanelContainer>
-		</CompactAccordion>
+		</VieweGroupAccordion>
 	);
 }

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 
-interface CompactAccordionProps {
+interface VieweGroupAccordionProps {
 	title: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
@@ -12,12 +12,12 @@ interface CompactAccordionProps {
 /**
  * 閲覧モード用のコンパクトなアコーディオンコンポーネント
  */
-export function CompactAccordion({
+export function VieweGroupAccordion({
 	title,
 	isOpen,
 	onToggle,
 	children,
-}: CompactAccordionProps) {
+}: VieweGroupAccordionProps) {
 	return (
 		<div className="border-gray-700 rounded-lg border overflow-hidden">
 			<button

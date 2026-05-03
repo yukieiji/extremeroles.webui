@@ -1,4 +1,4 @@
-import { CompactAccordion } from "../../components/blocks/CompactAccordion";
+import { VieweGroupAccordion } from "../../components/blocks/VieweGroupAccordion";
 import { ColoredText } from "../../components/parts/ColoredText";
 import { useVisibleCategories } from "../../hooks/useExROptionData";
 import { exrOptionMetaData } from "../../logics/api";
@@ -19,7 +19,7 @@ export function ExRGeneralTabOptionViewer() {
 	const toggleTab = useStore((state) => state.toggleExRTabId);
 
 	return (
-		<CompactAccordion
+		<VieweGroupAccordion
 			title={<ColoredText text={generalTabName} />}
 			isOpen={isOpen}
 			onToggle={() => {
@@ -27,6 +27,6 @@ export function ExRGeneralTabOptionViewer() {
 			}}
 		>
 			<ExRCategoryListViewer categoryIds={visuableGeneralCategory} />
-		</CompactAccordion>
+		</VieweGroupAccordion>
 	);
 }

@@ -17,13 +17,9 @@ interface ExROptionItemProps {
 
 function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
 	const hasActiveChildren = useHasActiveOptiopnChild(uniqueOptionId);
-	if (hasActiveChildren) {
-		return (
-			<ExROptionRecursiveItem uniqueOptionId={uniqueOptionId} depth={depth} />
-		);
-	}
-
-	return (
+	return hasActiveChildren ? (
+		<ExROptionRecursiveItem uniqueOptionId={uniqueOptionId} depth={depth} />
+	) : (
 		<ExROptionRow uniqueOptionId={uniqueOptionId} depth={depth} isLeaf={true} />
 	);
 }

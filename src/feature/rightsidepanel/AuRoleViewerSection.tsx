@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/react/shallow";
-import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
+import { VieweGroupAccordion } from "../../components/blocks/VieweGroupAccordion";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuRoleViewerRow } from "./AuRoleViewerRow";
@@ -63,12 +63,12 @@ export function AuRoleViewerSection({
 	}
 
 	return (
-		<CompactAccordion title={title} isOpen={isOpen} onToggle={onToggle}>
+		<VieweGroupAccordion title={title} isOpen={isOpen} onToggle={onToggle}>
 			<RightPanelContainer arr={activeRoleCategoryIds}>
 				{(categoryId) => (
 					<AuRoleViewerRow tabId={tabId} categoryId={categoryId} />
 				)}
 			</RightPanelContainer>
-		</CompactAccordion>
+		</VieweGroupAccordion>
 	);
 }
