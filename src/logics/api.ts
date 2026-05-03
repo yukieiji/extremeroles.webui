@@ -373,7 +373,14 @@ export async function fetchRoleFilterData(): Promise<RoleAssignFilterDto> {
 	}
 
 	const jsonData = await res.json();
-	return await RoleAssignFilterDtoSchema.parseAsync(jsonData);
+	const data = await RoleAssignFilterDtoSchema.parseAsync(jsonData);
+
+	roleFilterMetaData.FilterRoleId = data.FilterRoleId;
+	roleFilterMetaData.NormalRoleId = data.NormalRoleId;
+	roleFilterMetaData.CombinationId = data.CombinationId;
+	roleFilterMetaData.GhostRoleId = data.GhostRoleId;
+
+	return data;
 }
 
 export async function updateAuOption(

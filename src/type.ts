@@ -417,7 +417,7 @@ export type RoleAssignFilterDto = z.infer<typeof RoleAssignFilterDtoSchema>;
 
 export interface RoleFilterMetaData {
 	FilterRoleId: number[];
-	NormalRoleId: Record<number, number | string>;
-	CombinationId: Record<number, number | string>;
-	GhostRoleId: Record<number, number | string>;
+	NormalRoleId: Record<string, number | string>;
+	CombinationId: Record<string, number | string>;
+	GhostRoleId: Record<string, number | string>;
 }
