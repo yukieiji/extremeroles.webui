@@ -34,7 +34,7 @@ dist-ssr
 /playwright/.auth/
 
 /temp/*
-
+!/temp/.gitkeep
 
 # APM dependencies
 apm_modules/
