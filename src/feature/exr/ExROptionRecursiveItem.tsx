@@ -1,4 +1,5 @@
-import { OptionEditableAccordion } from "../../components/blocks/OptionEditableAccordion";
+import { HighlightableAccordionRow } from "../../components/blocks/HighlightableAccordionRow";
+import { RowCustomizeAccordion } from "../../components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
@@ -28,21 +29,30 @@ export function ExROptionRecursiveItem({
 	const handleToggle = () => {
 		toggleExROption(uniqueOptionId);
 	};
+	const isHighlighted = useStore((state) => {
+		return state.highlightedExROptionId === uniqueOptionId;
+	});
 
 	const childs =
 		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
 
 	return (
-		<OptionEditableAccordion
-			optionItem={
-				<ExROptionRow
-					uniqueOptionId={uniqueOptionId}
-					depth={depth}
-					isLeaf={false}
-				/>
+		<RowCustomizeAccordion
+			row={
+				<HighlightableAccordionRow
+					id={`exr-option-${uniqueOptionId}`}
+					onToggle={handleToggle}
+					isOpen={isOpen}
+					isHighlight={isHighlighted}
+				>
+					<ExROptionRow
+						uniqueOptionId={uniqueOptionId}
+						depth={depth}
+						isLeaf={false}
+					/>
+				</HighlightableAccordionRow>
 			}
 			isOpen={isOpen}
-			onToggle={handleToggle}
 			depth={depth}
 		>
 			<OptionEditorCategoryOptionLayout arr={childs}>
@@ -50,6 +60,6 @@ export function ExROptionRecursiveItem({
 					<ExROptionItem uniqueOptionId={childId} depth={depth + 1} />
 				)}
 			</OptionEditorCategoryOptionLayout>
-		</OptionEditableAccordion>
+		</RowCustomizeAccordion>
 	);
 }
