@@ -376,13 +376,6 @@ export interface TranslationMetaDataRecords {
 	[key: string | number]: string | string[] | undefined;
 }
 
-export interface RoleAssignFilterSetDto {
-	AssignNum: number;
-	FilterNormalId: Record<number, number | string>;
-	FilterCombinationId: Record<number, number | string>;
-	FilterGhostRoleId: Record<number, number | string>;
-}
-
 export const RoleAssignFilterSetDtoSchema = z.object({
 	AssignNum: z.number().int(),
 	FilterNormalId: z.record(
@@ -399,13 +392,7 @@ export const RoleAssignFilterSetDtoSchema = z.object({
 	),
 });
 
-export interface RoleAssignFilterDto {
-	FilterSet: Record<string, RoleAssignFilterSetDto>;
-	FilterRoleId: number[];
-	NormalRoleId: Record<number, number | string>;
-	CombinationId: Record<number, number | string>;
-	GhostRoleId: Record<number, number | string>;
-}
+export type RoleAssignFilterSetDto = z.infer<typeof RoleAssignFilterSetDtoSchema>;
 
 export const RoleAssignFilterDtoSchema = z.object({
 	FilterSet: z.record(z.string(), RoleAssignFilterSetDtoSchema),
@@ -423,3 +410,5 @@ export const RoleAssignFilterDtoSchema = z.object({
 		z.union([z.number().int(), z.string()]),
 	),
 });
+
+export type RoleAssignFilterDto = z.infer<typeof RoleAssignFilterDtoSchema>;
