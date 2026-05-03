@@ -118,10 +118,13 @@ export function RightFloatingPanel() {
           cursor-pointer
         `}
 				style={{
-					right: isRightPanelOpen ? rightPanelWidth : 0,
+					right: 0,
+					transform: isRightPanelOpen
+						? `translateX(-${rightPanelWidth}px)`
+						: "translateX(0)",
 					transition: isResizing
 						? "none"
-						: "right 300ms ease-in-out, background-color 300ms ease-in-out",
+						: "transform 300ms ease-in-out, background-color 300ms ease-in-out",
 				}}
 				aria-label={isRightPanelOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
 			>
@@ -134,7 +137,6 @@ export function RightFloatingPanel() {
 			<aside
 				className={`
           fixed right-0 top-0 h-full bg-white border-l border-gray-200 shadow-2xl z-40
-          transform
           ${isRightPanelOpen ? "translate-x-0" : "translate-x-full"}
         `}
 				style={{
