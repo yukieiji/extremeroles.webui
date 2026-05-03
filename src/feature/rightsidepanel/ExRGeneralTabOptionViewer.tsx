@@ -12,7 +12,7 @@ export function ExRGeneralTabOptionViewer() {
 	const generalTab = exrOptionMetaData.tabs[TARGET_TAB_ID];
 	const generalCategory = generalTab?.categoryIds ?? [];
 	const generalTabName = generalTab?.name ?? "";
-	const visuableGeneralCategory = useVisibleCategories(generalCategory);
+	const visibleGeneralCategory = useVisibleCategories(generalCategory);
 	const isOpen = useStore(
 		(state) => state.openedExRTabId[TARGET_TAB_ID] ?? true,
 	);
@@ -26,7 +26,7 @@ export function ExRGeneralTabOptionViewer() {
 				toggleTab(TARGET_TAB_ID);
 			}}
 		>
-			<ExRCategoryListViewer categoryIds={visuableGeneralCategory} />
+			<ExRCategoryListViewer categoryIds={visibleGeneralCategory} />
 		</ViewerGroupAccordion>
 	);
 }
