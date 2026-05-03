@@ -1,5 +1,5 @@
 import {
-	useHasActiveOptiopnChild,
+	useHasActiveOptionChild,
 	useOptionActive,
 } from "../../hooks/useExROptionData";
 import type { UniqueOptionId } from "../../type";
@@ -16,7 +16,7 @@ interface ExROptionItemProps {
 }
 
 function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
-	const hasActiveChildren = useHasActiveOptiopnChild(uniqueOptionId);
+	const hasActiveChildren = useHasActiveOptionChild(uniqueOptionId);
 	return hasActiveChildren ? (
 		<ExROptionRecursiveItem uniqueOptionId={uniqueOptionId} depth={depth} />
 	) : (

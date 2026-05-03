@@ -22,7 +22,7 @@ export function useOptionActive(uniqueOptionId: UniqueOptionId): boolean {
 	);
 }
 
-export function useHasActiveOptiopnChild(
+export function useHasActiveOptionChild(
 	uniqueOptionId: UniqueOptionId,
 ): boolean {
 	const childs = exrOptionMetaData.options[uniqueOptionId]?.childOptionIds;
