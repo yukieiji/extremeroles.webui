@@ -4,9 +4,10 @@ import {
   ExRTabDtoArraySchema,
   ExROptionPutRequestSchema,
   UpdatedOptionsSchema,
-  VanillaOptionPutRequestSchema
+  VanillaOptionPutRequestSchema,
+  RoleAssignFilterDtoSchema
 } from '../src/type';
-import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto } from '../src/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto, RoleAssignFilterDto } from '../src/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
@@ -18,6 +19,7 @@ import roleFilterData from './get/exr/roleassign-dev_20260503.json';
  */
 const masterValidatedExRMockData: ExRTabDto[] = ExRTabDtoArraySchema.parse(exrOptionData);
 const masterValidatedAuMockData: AuOptionCategoryDto[] = AuOptionCategoryDtoArraySchema.parse(auOptionData);
+const masterRoleFilterData: RoleAssignFilterDto = RoleAssignFilterDtoSchema.parse(roleFilterData);
 
 let curValidatedExRMockData: ExRTabDto[] = structuredClone(masterValidatedExRMockData);
 let curValidatedAuMockData: AuOptionCategoryDto[] = structuredClone(masterValidatedAuMockData);
@@ -129,7 +131,7 @@ export const handlers = [
    * GET /exr/role/filter/ のハンドラー
    */
   http.get('/exr/role/filter/', () => {
-    return HttpResponse.json(roleFilterData);
+    return HttpResponse.json(masterRoleFilterData);
   }),
 
   /**
