@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRGeneralTabOptionViewer } from "../src/feature/rightsidepanel/ExRGeneralTabOptionViewer";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import {
-	PRESET_OPTION_UNIQUE_ID,
 	getUniqueOptionId,
+	PRESET_OPTION_UNIQUE_ID,
 } from "../src/logics/optionUtils";
 import { ExRTabId } from "../src/type";
 import { useStore } from "../src/useStore";
