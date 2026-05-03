@@ -184,7 +184,9 @@ describe("ExRGeneralTabOptionViewer", () => {
 
 	it("uses fallback true when openedExRTabId is missing in store", () => {
 		act(() => {
-			useStore.setState({ openedExRTabId: {} as any });
+			useStore.setState({
+				openedExRTabId: {} as unknown as Record<ExRTabId, boolean>,
+			});
 		});
 		render(<ExRGeneralTabOptionViewer />);
 		const button = screen.getByRole("button", { name: /General Tab Name/i });
