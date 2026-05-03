@@ -3,8 +3,8 @@ import { describe, expect, it, vi } from "vitest";
 import { RolePin } from "../src/components/parts/RolePin";
 import { RoleFilterCard } from "../src/feature/exr/RoleFilterCard";
 import { RoleFilterViewer } from "../src/feature/exr/RoleFilterViewer";
-import { useStore } from "../src/useStore";
 import type { RoleFilterItem } from "../src/type";
+import { useStore } from "../src/useStore";
 
 vi.mock("../src/useStore");
 
