@@ -16,7 +16,7 @@ export function AuTab0GeneralCategory({
 }: AuTab0GeneralCategoryProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 	const isOpen = useStore(
-		(state) => state.openedAuTab0CategoryIds[categoryId] ?? false,
+		(state) => state.openedAuTab0CategoryIds[categoryId] ?? true,
 	);
 	const toggleAuTab0Category = useStore((state) => {
 		return state.toggleAuTab0Category;
