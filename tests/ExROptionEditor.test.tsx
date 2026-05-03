@@ -145,6 +145,18 @@ describe("ExROptionEditor", () => {
 						json: vi.fn().mockResolvedValue([]),
 					} as Response);
 				}
+				if (url.endsWith("/exr/role/filter/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue({
+							FilterSet: {},
+							FilterRoleId: [],
+							NormalRoleId: {},
+							CombinationId: {},
+							GhostRoleId: {},
+						}),
+					} as Response);
+				}
 				return Promise.reject(new Error(`Unhandled URL: ${url}`));
 			}),
 		);

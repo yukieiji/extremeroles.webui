@@ -77,6 +77,18 @@ describe("AuOptionViewer", () => {
 						]),
 					} as unknown as Response);
 				}
+				if (url.includes("/exr/role/filter/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue({
+							FilterSet: {},
+							FilterRoleId: [],
+							NormalRoleId: {},
+							CombinationId: {},
+							GhostRoleId: {},
+						}),
+					} as unknown as Response);
+				}
 				return Promise.reject(new Error(`Unhandled URL: ${url}`));
 			}),
 		);

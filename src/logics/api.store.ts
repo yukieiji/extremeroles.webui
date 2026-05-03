@@ -10,6 +10,7 @@ import {
 	auOptionMetaData,
 	createAuOptionMetaData,
 	createExROptionMetaData,
+	fetchRoleFilterData,
 	fetchTranslationMetaData,
 	updateAuOption,
 	updateExrOption,
@@ -84,6 +85,12 @@ async function createAuOptionMetaDataWithStore(): Promise<void> {
 	await waitDelay();
 	const initialValueData = await createAuOptionMetaData();
 	useStore.getState().setAuValue(initialValueData);
+}
+
+async function fetchRoleFilterDataWithStore(): Promise<void> {
+	await waitDelay();
+	const data = await fetchRoleFilterData();
+	useStore.getState().setRoleFilterData(data);
 }
 
 export function useUpdateAuOptionSelection(): (
@@ -162,6 +169,7 @@ export async function refechAll(): Promise<void> {
 	await Promise.all([
 		createExROptionMetaDataWithStore(),
 		createAuOptionMetaDataWithStore(),
+		fetchRoleFilterDataWithStore(),
 	]);
 }
 

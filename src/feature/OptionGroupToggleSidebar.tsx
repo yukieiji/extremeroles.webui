@@ -6,6 +6,8 @@ import {
 	EXR_OPTIONS_TITLE,
 	EXR_SHORT_LABEL,
 	OPTION_SIDEBAR_ARIA,
+	ROLE_FILTER_SHORT_LABEL,
+	ROLE_FILTER_TITLE,
 } from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
 import { useStore } from "../useStore";
@@ -22,6 +24,11 @@ interface TabItem {
 const TABS: TabItem[] = [
 	{ id: "Au", label: AU_OPTIONS_TITLE, shortLabel: AU_SHORT_LABEL },
 	{ id: "ExR", label: EXR_OPTIONS_TITLE, shortLabel: EXR_SHORT_LABEL },
+	{
+		id: "RoleFilter",
+		label: ROLE_FILTER_TITLE,
+		shortLabel: ROLE_FILTER_SHORT_LABEL,
+	},
 ];
 
 /**

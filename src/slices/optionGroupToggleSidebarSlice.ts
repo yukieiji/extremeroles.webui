@@ -1,6 +1,6 @@
 import type { StateCreator } from "zustand";
 
-export type SelectedTab = "Au" | "ExR";
+export type SelectedTab = "Au" | "ExR" | "RoleFilter";
 
 /**
  * サイドバーの開閉と表示するタブを選択するスライスのインターフェース
