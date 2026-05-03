@@ -1,4 +1,3 @@
-import { ColoredText } from "../../components/parts/ColoredText";
 import type { UniqueOptionId } from "../../type";
 import { ExROptionRowViewContent } from "./ExROptionRowViewContent";
 
