@@ -1,5 +1,6 @@
 import { RoleCategoryAccordion } from "../../components/blocks/RoleCategoryAccordion";
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
+import { createAuNavigateId } from "../../hooks/useOptionNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
@@ -44,9 +45,11 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 		highlightedAuOptionId !== null &&
 		categoryMeta.options.includes(highlightedAuOptionId);
 
+	const navigateId = createAuNavigateId(chanceOptionId);
+
 	return (
 		<HighlightWrapper
-			id={`au-option-${chanceOptionId}`}
+			id={navigateId}
 			isHighlighted={isHighlighted}
 			isInset={false}
 		>
