@@ -20,12 +20,11 @@ test.describe("Role Filter Tab", () => {
 		page,
 	}) => {
 		// Role Filter タブをクリック (ショートカット 'R')
-		const roleFilterTab = page.getByRole("button", { name: "Role Filter" });
-		if (await roleFilterTab.isVisible()) {
-			await roleFilterTab.click();
-		} else {
-			await page.getByTitle("Role Filter").click();
-		}
+		// サイドバーが開いている場合(button)と閉じている場合(titleのみ)の両方に対応
+		await page
+			.getByRole("button", { name: "Role Filter" })
+			.or(page.getByTitle("Role Filter"))
+			.click();
 
 		// Role Filter のタイトルが表示されていることを確認
 		await expect(
