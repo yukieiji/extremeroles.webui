@@ -385,23 +385,23 @@ export interface RoleAssignFilterSetDto {
 
 export const RoleAssignFilterSetDtoSchema = z.object({
 	AssignNum: z.number().int(),
-	FilterNormalId: z.record(z.coerce.number(), z.number().int()),
-	FilterCombinationId: z.record(z.coerce.number(), z.number().int()),
-	FilterGhostRoleId: z.record(z.coerce.number(), z.number().int()),
+	FilterNormalId: z.record(z.coerce.number(), z.union([z.number().int(), z.string()])),
+	FilterCombinationId: z.record(z.coerce.number(), z.union([z.number().int(), z.string()])),
+	FilterGhostRoleId: z.record(z.coerce.number(), z.union([z.number().int(), z.string()])),
 });
 
 export interface RoleAssignFilterDto {
 	FilterSet: Record<string, RoleAssignFilterSetDto>;
 	FilterRoleId: number[];
-	NormalRoleId: Record<number, number>;
-	CombinationId: Record<number, number>;
-	GhostRoleId: Record<number, number>;
+	NormalRoleId: Record<number, number | string>;
+	CombinationId: Record<number, number | string>;
+	GhostRoleId: Record<number, number | string>;
 }
 
 export const RoleAssignFilterDtoSchema = z.object({
 	FilterSet: z.record(z.string(), RoleAssignFilterSetDtoSchema),
 	FilterRoleId: z.array(z.number().int()),
-	NormalRoleId: z.record(z.coerce.number(), z.number().int()),
-	CombinationId: z.record(z.coerce.number(), z.number().int()),
-	GhostRoleId: z.record(z.coerce.number(), z.number().int()),
+	NormalRoleId: z.record(z.coerce.number(), z.union([z.number().int(), z.string()])),
+	CombinationId: z.record(z.coerce.number(), z.union([z.number().int(), z.string()])),
+	GhostRoleId: z.record(z.coerce.number(), z.union([z.number().int(), z.string()])),
 });
