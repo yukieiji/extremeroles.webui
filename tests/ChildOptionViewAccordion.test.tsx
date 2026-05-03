@@ -37,7 +37,7 @@ describe("ChildOptionViewAccordion", () => {
 		const onToggle = vi.fn();
 		render(<ChildOptionViewAccordion {...defaultProps} onToggle={onToggle} />);
 
-		const button = screen.getByRole("button");
+		const button = screen.getByRole("button", { name: OPEN });
 		fireEvent.click(button);
 
 		expect(onToggle).toHaveBeenCalledTimes(1);
@@ -46,7 +46,7 @@ describe("ChildOptionViewAccordion", () => {
 	it("should have correct accessibility attributes when closed", () => {
 		render(<ChildOptionViewAccordion {...defaultProps} isOpen={false} />);
 
-		const button = screen.getByRole("button");
+		const button = screen.getByRole("button", { name: OPEN });
 		expect(button).toHaveAttribute("aria-expanded", "false");
 		expect(button).toHaveAttribute("aria-label", OPEN);
 	});
@@ -54,7 +54,7 @@ describe("ChildOptionViewAccordion", () => {
 	it("should have correct accessibility attributes when open", () => {
 		render(<ChildOptionViewAccordion {...defaultProps} isOpen={true} />);
 
-		const button = screen.getByRole("button");
+		const button = screen.getByRole("button", { name: CLOSE });
 		expect(button).toHaveAttribute("aria-expanded", "true");
 		expect(button).toHaveAttribute("aria-label", CLOSE);
 	});
