@@ -10,7 +10,20 @@ describe("RightFloatingPanel Component", () => {
 		resetApiCache();
 		vi.stubGlobal(
 			"fetch",
-			vi.fn().mockImplementation((_input: RequestInfo | URL) => {
+			vi.fn().mockImplementation((input: RequestInfo | URL) => {
+				const url = typeof input === "string" ? input : input.toString();
+				if (url.includes("/exr/role/filter/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue({
+							FilterSet: {},
+							FilterRoleId: [],
+							NormalRoleId: {},
+							CombinationId: {},
+							GhostRoleId: {},
+						}),
+					} as unknown as Response);
+				}
 				return Promise.resolve({
 					ok: true,
 					json: vi.fn().mockResolvedValue([]),
@@ -38,7 +51,20 @@ describe("RightFloatingPanel Component", () => {
 		resetApiCache();
 		vi.stubGlobal(
 			"fetch",
-			vi.fn().mockImplementation((_input: RequestInfo | URL) => {
+			vi.fn().mockImplementation((input: RequestInfo | URL) => {
+				const url = typeof input === "string" ? input : input.toString();
+				if (url.includes("/exr/role/filter/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue({
+							FilterSet: {},
+							FilterRoleId: [],
+							NormalRoleId: {},
+							CombinationId: {},
+							GhostRoleId: {},
+						}),
+					} as unknown as Response);
+				}
 				return Promise.resolve({
 					ok: true,
 					json: vi.fn().mockResolvedValue([]),
@@ -66,7 +92,20 @@ describe("RightFloatingPanel Component", () => {
 		resetApiCache();
 		vi.stubGlobal(
 			"fetch",
-			vi.fn().mockImplementation((_input: RequestInfo | URL) => {
+			vi.fn().mockImplementation((input: RequestInfo | URL) => {
+				const url = typeof input === "string" ? input : input.toString();
+				if (url.includes("/exr/role/filter/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue({
+							FilterSet: {},
+							FilterRoleId: [],
+							NormalRoleId: {},
+							CombinationId: {},
+							GhostRoleId: {},
+						}),
+					} as unknown as Response);
+				}
 				return Promise.resolve({
 					ok: true,
 					json: vi.fn().mockResolvedValue([]),
@@ -100,7 +139,20 @@ describe("RightFloatingPanel Component", () => {
 		resetApiCache();
 		vi.stubGlobal(
 			"fetch",
-			vi.fn().mockImplementation((_input: RequestInfo | URL) => {
+			vi.fn().mockImplementation((input: RequestInfo | URL) => {
+				const url = typeof input === "string" ? input : input.toString();
+				if (url.includes("/exr/role/filter/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue({
+							FilterSet: {},
+							FilterRoleId: [],
+							NormalRoleId: {},
+							CombinationId: {},
+							GhostRoleId: {},
+						}),
+					} as unknown as Response);
+				}
 				return Promise.resolve({
 					ok: true,
 					json: vi.fn().mockResolvedValue([]),

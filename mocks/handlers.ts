@@ -11,6 +11,7 @@ import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRC
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260321.json';
 import auOptionData from './get/au/setting-webui-dev_20260421.json';
+import roleFilterData from './get/exr/rolefilter.json';
 
 /**
  * Zodを使用してロードしたデータのバリデーションを実施
@@ -122,6 +123,13 @@ export const handlers = [
    */
   http.get('/au/option/', () => {
     return HttpResponse.json(curValidatedAuMockData);
+  }),
+
+  /**
+   * GET /exr/role/filter/ のハンドラー
+   */
+  http.get('/exr/role/filter/', () => {
+    return HttpResponse.json(roleFilterData);
   }),
 
   /**

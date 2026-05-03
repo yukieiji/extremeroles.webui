@@ -1,0 +1,20 @@
+{
+	"FilterSet": {
+		"00000000-0000-0000-0000-000000000000": {
+			"AssignNum": 1,
+			"FilterNormalId": {
+				"1": 101,
+				"2": 102
+			},
+			"FilterCombinationId": {},
+			"FilterGhostRoleId": {}
+		}
+	},
+	"FilterRoleId": [1, 2, 3],
+	"NormalRoleId": {
+		"101": 201,
+		"102": 202
+	},
+	"CombinationId": {},
+	"GhostRoleId": {}
+}

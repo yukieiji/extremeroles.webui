@@ -8,6 +8,7 @@ import type {
 	ExRTabMetaData,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
+	RoleAssignFilterDto,
 	UpdatedOptions,
 	VanillaOptionPutRequest,
 } from "../type";
@@ -18,6 +19,7 @@ import {
 	ExRTabId,
 	GetTranslationResponseArraySchema,
 	OptionValueType,
+	RoleAssignFilterDtoSchema,
 	UpdatedOptionsSchema,
 } from "../type";
 
@@ -28,6 +30,7 @@ import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
  */
 const EXR_OPTION_URL = "/exr/option/";
 const AU_OPTION_URL = "/au/option/";
+const EXR_ROLE_FILTER_URL = "/exr/role/filter/";
 const TRANSLATION_BATCH_URL = "/au/translation/batch/optionunit/";
 const TRANSLATION_BATCH_BASE_URL = "/au/translation/batch/";
 
@@ -343,6 +346,16 @@ export async function updateExrOption(
 
 	const jsonData = await res.json();
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
+}
+
+export async function fetchRoleFilterData(): Promise<RoleAssignFilterDto> {
+	const res = await fetch(EXR_ROLE_FILTER_URL);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch role filter data: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	return await RoleAssignFilterDtoSchema.parseAsync(jsonData);
 }
 
 export async function updateAuOption(

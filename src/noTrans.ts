@@ -34,8 +34,10 @@ export const SYNCHRONIZING = "Synchronizing...";
 export const RIGHT_PANEL_TITLE = "Right Panel";
 export const AU_OPTIONS_TITLE = "Au Options";
 export const EXR_OPTIONS_TITLE = "ExR Options";
+export const ROLE_FILTER_TITLE = "Role Filter";
 export const AU_SHORT_LABEL = "A";
 export const EXR_SHORT_LABEL = "E";
+export const ROLE_FILTER_SHORT_LABEL = "R";
 export const ON = "ON";
 export const OFF = "OFF";
 

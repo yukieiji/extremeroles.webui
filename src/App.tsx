@@ -5,12 +5,17 @@ import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
 import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
+import { RoleFilterViewer } from "./feature/exr/RoleFilterViewer";
 import { PresetSelector } from "./feature/exr/PresetSelector";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
 import { useSyncBackend } from "./hooks/useBackend";
 import { getAllOptions } from "./logics/api.store";
-import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE } from "./noTrans";
+import {
+	AU_OPTIONS_TITLE,
+	EXR_OPTIONS_TITLE,
+	ROLE_FILTER_TITLE,
+} from "./noTrans";
 import { useStore } from "./useStore";
 
 /**
@@ -33,6 +38,9 @@ function EditorContainer() {
 
 	// React 19 の use() フックを使用してデータを取得
 	use(getAllOptions());
+	if (selectedTab === "RoleFilter") {
+		return <RoleFilterViewer />;
+	}
 	return selectedTab === "ExR" ? <ExROptionEditor /> : <AuOptionEditor />;
 }
 
@@ -58,7 +66,11 @@ function MainContent() {
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-5 flex-1 p-4">
 					<h2 className="text-2xl font-bold whitespace-nowrap">
-						{selectedTab === "ExR" ? EXR_OPTIONS_TITLE : AU_OPTIONS_TITLE}
+						{selectedTab === "ExR"
+							? EXR_OPTIONS_TITLE
+							: selectedTab === "RoleFilter"
+								? ROLE_FILTER_TITLE
+								: AU_OPTIONS_TITLE}
 					</h2>
 					{selectedTab === "ExR" && (
 						<Suspense
