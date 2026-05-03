@@ -6,11 +6,20 @@ import type { AuOptionMeta } from "../src/type";
 
 describe("AuOptionControl", () => {
 	const onSelectionChangeMock = vi.fn();
+	let originalBooleanTransData: string[];
+
+	beforeAll(() => {
+		originalBooleanTransData = translationMetaData.booleanTransData;
+	});
 
 	beforeEach(() => {
 		vi.clearAllMocks();
 		// Initialize translationMetaData for Boolean toggle
 		translationMetaData.booleanTransData = ["Off", "On"];
+	});
+
+	afterAll(() => {
+		translationMetaData.booleanTransData = originalBooleanTransData;
 	});
 
 	it("renders OptionToggleControl when range is boolean", () => {
