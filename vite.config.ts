@@ -11,6 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/exr/option/': 'http://localhost:57700',
+      '/exr/role/filter/': 'http://localhost:57700',
       '/au/option/': 'http://localhost:57700',
       '/au/translation/batch/': 'http://localhost:57700',
       '/au/translation/batch/optionunit/': 'http://localhost:57700',
