@@ -2,6 +2,7 @@ import { OptionRowContent } from "../../components/blocks/OptionContent";
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { LargePoint } from "../../components/parts/LargePoint";
 import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
+import { createAuNavigateId } from "../../hooks/useOptionNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
 import type { AuOptionId } from "../../type";
@@ -29,10 +30,11 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 	}
 
 	const isHighlighted = highlightedAuOptionId === auOptionId;
+	const navigateId = createAuNavigateId(auOptionId);
 
 	return (
 		<HighlightWrapper
-			id={`au-option-${auOptionId}`}
+			id={navigateId}
 			isHighlighted={isHighlighted}
 			isInset={true}
 		>

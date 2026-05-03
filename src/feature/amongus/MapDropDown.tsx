@@ -1,5 +1,6 @@
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { OptionDropdownControl } from "../../components/parts/OptionDropdownControl";
+import { createAuNavigateId } from "../../hooks/useOptionNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useUpdateAuOptionSelection } from "../../logics/api.store";
 import { useStore } from "../../useStore";
@@ -34,10 +35,12 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 
 	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
 
+	const navigateId = createAuNavigateId(mapOptionId);
+
 	return (
 		<div className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden">
 			<HighlightWrapper
-				id={`au-option-${mapOptionId}`}
+				id={navigateId}
 				isHighlighted={isHighlighted}
 				isInset={true}
 			>
