@@ -4,7 +4,7 @@ import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
 
-interface OptionEditableAccordionProps {
+interface ChilOptiondViewAccordionProps {
 	optionItem: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
@@ -15,15 +15,15 @@ interface OptionEditableAccordionProps {
 /**
  * 設定可能なオプション自体をヘッダーに持つ、階層構造用の専用アコーディオン
  */
-export function OptionEditableAccordion({
+export function ChilOptiondViewAccordion({
 	optionItem,
 	isOpen,
 	onToggle,
 	children,
 	depth,
-}: OptionEditableAccordionProps) {
+}: ChilOptiondViewAccordionProps) {
 	return (
-		<div className={`flex flex-col ${depth > 0 ? "pl-4" : ""}`}>
+		<div className={`flex flex-col ${depth > 0 ? "pl-2" : ""}`}>
 			<OptionRowContainer
 				leading={
 					<div className="flex items-center justify-center w-full h-full">

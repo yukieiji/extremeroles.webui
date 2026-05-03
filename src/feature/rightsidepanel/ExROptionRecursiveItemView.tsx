@@ -1,12 +1,12 @@
-import { OptionEditableAccordion } from "../../components/blocks/OptionEditableAccordion";
-import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
+import { ChilOptiondViewAccordion } from "../../components/blocks/ExpendableViewAccordion";
+import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
-import { ExROptionItem } from "./ExROptionItem";
-import { ExROptionRow } from "./ExROptionRow";
+import { ExROptionItemView } from "./ExROptionItemView";
+import { ExROptionRowView } from "./ExROptionRowView";
 
-interface ExROptionRecursiveItemProps {
+interface ExROptionRecursiveItemViewProps {
 	uniqueOptionId: UniqueOptionId;
 	depth: number;
 }
@@ -14,15 +14,15 @@ interface ExROptionRecursiveItemProps {
 /**
  * 子要素を持つオプションをアコーディオンとして表示するコンポーネント
  */
-export function ExROptionRecursiveItem({
+export function ExROptionRecursiveItemView({
 	uniqueOptionId,
 	depth = 0,
-}: ExROptionRecursiveItemProps) {
+}: ExROptionRecursiveItemViewProps) {
 	const isOpen = useStore((state) => {
-		return state.openedExROptionIds[uniqueOptionId] ?? false;
+		return state.openedExROptionRightFloatingPanel[uniqueOptionId] ?? false;
 	});
 	const toggleExROption = useStore((state) => {
-		return state.toggleExROption;
+		return state.toggleExROptionRightFloatingPanel;
 	});
 
 	const handleToggle = () => {
@@ -33,9 +33,9 @@ export function ExROptionRecursiveItem({
 		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
 
 	return (
-		<OptionEditableAccordion
+		<ChilOptiondViewAccordion
 			optionItem={
-				<ExROptionRow
+				<ExROptionRowView
 					uniqueOptionId={uniqueOptionId}
 					depth={depth}
 					isLeaf={false}
@@ -45,11 +45,9 @@ export function ExROptionRecursiveItem({
 			onToggle={handleToggle}
 			depth={depth}
 		>
-			<OptionEditorCategoryOptionLayout arr={childs}>
-				{(childId) => (
-					<ExROptionItem uniqueOptionId={childId} depth={depth + 1} />
-				)}
-			</OptionEditorCategoryOptionLayout>
-		</OptionEditableAccordion>
+			<RightPanelContainer arr={childs}>
+				{(optionid) => <ExROptionItemView uniqueOptionId={optionid} />}
+			</RightPanelContainer>
+		</ChilOptiondViewAccordion>
 	);
 }
