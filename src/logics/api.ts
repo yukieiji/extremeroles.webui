@@ -134,7 +134,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		options: ExROptionDto[],
 		tabId: ExRTabId,
 		categoryId: number,
-		parentOptionId: number | null,
+		parentUniqueOptionId: UniqueOptionId | null,
 	) => {
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
@@ -156,14 +156,9 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				values: opt.RangeMeta.Values,
 			};
 			isOptionActive[uniqueId] = opt.IsActive;
-			if (parentOptionId !== null) {
-				const parentUniqueId = getUniqueOptionId(
-					tabId,
-					categoryId,
-					parentOptionId,
-				);
-				if (!exrOptionMetaData.options[parentUniqueId]) {
-					exrOptionMetaData.options[parentUniqueId] = {
+			if (parentUniqueOptionId !== null) {
+				if (!exrOptionMetaData.options[parentUniqueOptionId]) {
+					exrOptionMetaData.options[parentUniqueOptionId] = {
 						metaData: {
 							translatedName: "",
 							format: "",
@@ -173,18 +168,18 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 					};
 				}
 				if (
-					!exrOptionMetaData.options[parentUniqueId].childOptionIds.includes(
-						uniqueId,
-					)
+					!exrOptionMetaData.options[
+						parentUniqueOptionId
+					].childOptionIds.includes(uniqueId)
 				) {
-					exrOptionMetaData.options[parentUniqueId].childOptionIds.push(
+					exrOptionMetaData.options[parentUniqueOptionId].childOptionIds.push(
 						uniqueId,
 					);
 				}
 			}
 
 			if (opt.Childs && opt.Childs.length > 0) {
-				processOptions(opt.Childs, tabId, categoryId, opt.Id);
+				processOptions(opt.Childs, tabId, categoryId, uniqueId);
 			}
 		}
 	};
