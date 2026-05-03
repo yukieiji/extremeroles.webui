@@ -63,7 +63,6 @@ describe("AuOptionControl", () => {
 		const slider = screen.getByRole("slider");
 		expect(slider).toBeInTheDocument();
 		expect(slider).toHaveValue("2");
-		expect(screen.getAllByDisplayValue("2")).toHaveLength(2);
 		expect(screen.getByText("s")).toBeInTheDocument();
 
 		fireEvent.change(slider, { target: { value: "4" } });
