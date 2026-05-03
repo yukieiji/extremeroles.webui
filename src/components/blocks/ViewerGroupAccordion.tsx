@@ -31,7 +31,10 @@ export function ViewerGroupAccordion({
 					{title}
 				</div>
 			</button>
-			<AccordionContentContainer isOpen={isOpen}>
+			<AccordionContentContainer
+				isOpen={isOpen}
+				data-testid="right-panel-accordion-content"
+			>
 				<div className="min-h-0">
 					{isOpen && (
 						<div className="py-2 px-1.5 bg-gray-900 border-gray-700">

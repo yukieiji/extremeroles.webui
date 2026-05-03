@@ -1,4 +1,4 @@
-import { use, useCallback, useEffect } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
 import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { getAllOptions } from "../../logics/api.store";
@@ -24,6 +24,18 @@ export function RightFloatingPanel() {
 	const isRightPanelOpen = useStore((state) => {
 		return state.isRightPanelOpen;
 	});
+	const [shouldRenderContent, setShouldRenderContent] = useState(isRightPanelOpen);
+
+	useEffect(() => {
+		if (isRightPanelOpen) {
+			setShouldRenderContent(true);
+		} else {
+			// アニメーション時間(300ms)より少し長くして、確実にアニメーションが終わってから消す
+			const timer = setTimeout(() => setShouldRenderContent(false), 350);
+			return () => clearTimeout(timer);
+		}
+	}, [isRightPanelOpen]);
+
 	const toggleRightPanel = useStore((state) => {
 		return state.toggleRightPanel;
 	});
@@ -108,45 +120,39 @@ export function RightFloatingPanel() {
 
 	return (
 		<>
-			{/* トグルボタン (縦全体のストリップ) */}
-			<button
-				type="button"
-				onClick={toggleRightPanel}
-				className={`
-          fixed top-0 z-50 h-full w-6 bg-blue-600 text-white shadow-md
-          hover:bg-blue-700 flex items-center justify-center
-          cursor-pointer
-        `}
-				style={{
-					right: 0,
-					transform: isRightPanelOpen
-						? `translateX(-${rightPanelWidth}px)`
-						: "translateX(0)",
-					transition: isResizing
-						? "none"
-						: "transform 300ms ease-in-out, background-color 300ms ease-in-out",
-				}}
-				aria-label={isRightPanelOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
-			>
-				<span className="text-sm font-bold">
-					{isRightPanelOpen ? "▶" : "◀"}
-				</span>
-			</button>
-
 			{/* パネル本体 */}
 			<aside
 				className={`
           fixed right-0 top-0 h-full bg-white border-l border-gray-200 shadow-2xl z-40
-          ${isRightPanelOpen ? "translate-x-0" : "translate-x-full"}
         `}
 				style={{
 					width: rightPanelWidth,
+					transform: isRightPanelOpen ? "translateX(0)" : "translateX(100%)",
 					transition: isResizing
 						? "none"
 						: "transform 300ms ease-in-out, width 300ms ease-in-out",
 				}}
 				aria-label={RIGHT_PANEL_ARIA}
 			>
+				{/* トグルボタン (Asideの子要素にすることで、Asideの移動と完全に同期させる) */}
+				<button
+					type="button"
+					onClick={toggleRightPanel}
+					className={`
+            absolute top-0 right-full h-full w-6 bg-blue-600 text-white shadow-md
+            hover:bg-blue-700 flex items-center justify-center
+            cursor-pointer
+          `}
+					style={{
+						transition: "background-color 300ms ease-in-out",
+					}}
+					aria-label={isRightPanelOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
+				>
+					<span className="text-sm font-bold">
+						{isRightPanelOpen ? "▶" : "◀"}
+					</span>
+				</button>
+
 				{/* リサイズハンドル */}
 				{isRightPanelOpen && (
 					<div
@@ -155,33 +161,35 @@ export function RightFloatingPanel() {
 						aria-hidden="true"
 					/>
 				)}
-				<div className="flex flex-col h-full">
+				<div className="flex flex-col h-full" aria-hidden={!isRightPanelOpen}>
 					<div className="flex items-center justify-between p-4 border-b border-gray-100">
 						<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
 					</div>
 					<div className="flex-1 overflow-y-auto p-3">
-						<ViewerGroupAccordion
-							title={SETTING_VALUES_TITLE}
-							isOpen={isSettingsOpen}
-							onToggle={toggleSettings}
-						>
-							<RightPanelGroupColumnLayout>
-								<ViewerGroupAccordion
-									title={AU_SETTINGS_TITLE}
-									isOpen={isAuSettingsOpen}
-									onToggle={toggleAuSettings}
-								>
-									<AuOptionViewer />
-								</ViewerGroupAccordion>
-								<ViewerGroupAccordion
-									title={EXR_SETTINGS_TITLE}
-									isOpen={isExrSettingsOpen}
-									onToggle={toggleExrSettings}
-								>
-									<ExROptionViewer />
-								</ViewerGroupAccordion>
-							</RightPanelGroupColumnLayout>
-						</ViewerGroupAccordion>
+						{shouldRenderContent && (
+							<ViewerGroupAccordion
+								title={SETTING_VALUES_TITLE}
+								isOpen={isSettingsOpen}
+								onToggle={toggleSettings}
+							>
+								<RightPanelGroupColumnLayout>
+									<ViewerGroupAccordion
+										title={AU_SETTINGS_TITLE}
+										isOpen={isAuSettingsOpen}
+										onToggle={toggleAuSettings}
+									>
+										<AuOptionViewer />
+									</ViewerGroupAccordion>
+									<ViewerGroupAccordion
+										title={EXR_SETTINGS_TITLE}
+										isOpen={isExrSettingsOpen}
+										onToggle={toggleExrSettings}
+									>
+										<ExROptionViewer />
+									</ViewerGroupAccordion>
+								</RightPanelGroupColumnLayout>
+							</ViewerGroupAccordion>
+						)}
 					</div>
 				</div>
 			</aside>
