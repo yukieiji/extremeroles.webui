@@ -6,7 +6,8 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
-	RoleAssignFilterDto,
+	RoleAssignFilterSetDto,
+	RoleFilterMetaData,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -53,6 +54,13 @@ export const auOptionMetaData: AuOptionMetaDataRecords = {
 	options: {},
 };
 
+export const roleFilterMetaData: RoleFilterMetaData = {
+	FilterRoleId: [],
+	NormalRoleId: {},
+	CombinationId: {},
+	GhostRoleId: {},
+};
+
 /**
  * ExRオプションのメタデータをリセットする（テスト用）
  */
@@ -71,6 +79,16 @@ export function resetAuOptionMetaData() {
 	auOptionMetaData.tabCategoryMap = {};
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
+}
+
+/**
+ * RoleFilterのメタデータをリセットする（テスト用）
+ */
+export function resetRoleFilterMetaData() {
+	roleFilterMetaData.FilterRoleId = [];
+	roleFilterMetaData.NormalRoleId = {};
+	roleFilterMetaData.CombinationId = {};
+	roleFilterMetaData.GhostRoleId = {};
 }
 
 interface ExRinitializeData {
@@ -348,14 +366,23 @@ export async function updateExrOption(
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
-export async function fetchRoleFilterData(): Promise<RoleAssignFilterDto> {
+export async function fetchRoleFilterData(): Promise<
+	Record<string, RoleAssignFilterSetDto>
+> {
 	const res = await fetch(EXR_ROLE_FILTER_URL);
 	if (!res.ok) {
 		throw new Error(`Failed to fetch role filter data: ${res.statusText}`);
 	}
 
 	const jsonData = await res.json();
-	return await RoleAssignFilterDtoSchema.parseAsync(jsonData);
+	const data = await RoleAssignFilterDtoSchema.parseAsync(jsonData);
+
+	roleFilterMetaData.FilterRoleId = data.FilterRoleId;
+	roleFilterMetaData.NormalRoleId = data.NormalRoleId;
+	roleFilterMetaData.CombinationId = data.CombinationId;
+	roleFilterMetaData.GhostRoleId = data.GhostRoleId;
+
+	return data.FilterSet;
 }
 
 export async function updateAuOption(

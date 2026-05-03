@@ -414,3 +414,10 @@ export const RoleAssignFilterDtoSchema = z.object({
 });
 
 export type RoleAssignFilterDto = z.infer<typeof RoleAssignFilterDtoSchema>;
+
+export interface RoleFilterMetaData {
+	FilterRoleId: number[];
+	NormalRoleId: Record<string, number | string>;
+	CombinationId: Record<string, number | string>;
+	GhostRoleId: Record<string, number | string>;
+}
