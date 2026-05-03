@@ -1,4 +1,4 @@
-import { ChilOptiondViewAccordion } from "../../components/blocks/ExpendableViewAccordion";
+import { ChildOptionViewAccordion } from "../../components/blocks/ChildOptionViewAccordion";
 import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
@@ -33,7 +33,7 @@ export function ExROptionRecursiveItemView({
 		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
 
 	return (
-		<ChilOptiondViewAccordion
+		<ChildOptionViewAccordion
 			optionItem={
 				<ExROptionRowView
 					uniqueOptionId={uniqueOptionId}
@@ -48,6 +48,6 @@ export function ExROptionRecursiveItemView({
 			<RightPanelContainer arr={childs}>
 				{(optionid) => <ExROptionItemView uniqueOptionId={optionid} />}
 			</RightPanelContainer>
-		</ChilOptiondViewAccordion>
+		</ChildOptionViewAccordion>
 	);
 }
