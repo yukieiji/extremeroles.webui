@@ -5,7 +5,7 @@ import { useOptionData } from "../src/hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "../src/logics/api.store";
 import type { UniqueOptionId } from "../src/type";
 
-vi.mock("../src/hooks/useOptionData");
+vi.mock("../src/hooks/useExROptionData");
 vi.mock("../src/logics/api.store");
 
 describe("ExROptionControl", () => {
