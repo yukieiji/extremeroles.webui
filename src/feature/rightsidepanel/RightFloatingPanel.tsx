@@ -1,4 +1,4 @@
-import { use, useEffect, useState, useCallback } from "react";
+import { use, useCallback, useEffect } from "react";
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { getAllOptions } from "../../logics/api.store";
@@ -32,6 +32,8 @@ export function RightFloatingPanel() {
 	});
 	const rightPanelWidth = useStore((state) => state.rightPanelWidth);
 	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);
+	const isResizing = useStore((state) => state.isResizing);
+	const setIsResizing = useStore((state) => state.setIsResizing);
 
 	const isSettingsOpen = useStore((state) => state.isSettingsOpen);
 	const toggleSettings = useStore((state) => state.toggleSettings);
@@ -40,17 +42,21 @@ export function RightFloatingPanel() {
 	const isExrSettingsOpen = useStore((state) => state.isExrSettingsOpen);
 	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
 
-	const [isResizing, setIsResizing] = useState(false);
 	const MIN_WIDTH = 320;
 
-	const handleMouseDown = useCallback((e: React.MouseEvent) => {
-		e.preventDefault();
-		setIsResizing(true);
-	}, []);
+	const handleMouseDown = useCallback(
+		(e: React.MouseEvent) => {
+			e.preventDefault();
+			setIsResizing(true);
+		},
+		[setIsResizing],
+	);
 
 	const handleMouseMove = useCallback(
 		(e: MouseEvent) => {
-			if (!isResizing) return;
+			if (!isResizing) {
+				return;
+			}
 
 			const newWidth = window.innerWidth - e.clientX;
 			const maxWidth = window.innerWidth * 0.8;
@@ -67,7 +73,7 @@ export function RightFloatingPanel() {
 			setIsResizing(false);
 			localStorage.setItem("rightPanelWidth", rightPanelWidth.toString());
 		}
-	}, [isResizing, rightPanelWidth]);
+	}, [isResizing, rightPanelWidth, setIsResizing]);
 
 	useEffect(() => {
 		if (isResizing) {

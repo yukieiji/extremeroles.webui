@@ -22,6 +22,8 @@ export interface RightFloatingPanelSlice {
 	toggleAuImpostorRoles: () => void;
 	rightPanelWidth: number;
 	setRightPanelWidth: (width: number) => void;
+	isResizing: boolean;
+	setIsResizing: (isResizing: boolean) => void;
 }
 
 /**
@@ -83,6 +85,10 @@ export const createRightFloatingPanelSlice: StateCreator<
 		rightPanelWidth: initialWidth,
 		setRightPanelWidth: (width) => {
 			set({ rightPanelWidth: width });
+		},
+		isResizing: false,
+		setIsResizing: (isResizing) => {
+			set({ isResizing });
 		},
 	};
 };
