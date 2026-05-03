@@ -3,9 +3,17 @@ import { expect, test } from "@playwright/test";
 test.describe("Role Filter Tab", () => {
 	test.beforeEach(async ({ page }) => {
 		// モックを使用する設定でページを開く
-		await page.goto("http://localhost:5173/");
-		// データの読み込みを待つ
-		await page.waitForSelector("text=Au Options");
+		await page.goto("/");
+
+		// ローディング画面が消えるのを待つ
+		await expect(page.getByText("Loading data...")).not.toBeVisible({
+			timeout: 30000,
+		});
+
+		// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
+		await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+			timeout: 30000,
+		});
 	});
 
 	test("should display Role Filter data when the tab is selected", async ({
