@@ -1,9 +1,9 @@
-import { ColoredText } from "../../components/parts/ColoredText";
 import {
 	useHasActiveOptiopnChild,
 	useOptionActive,
 } from "../../hooks/useExROptionData";
 import type { UniqueOptionId } from "../../type";
+import { ExROptionRecursiveItemView } from "./ExROptionRecursiveItemView";
 import { ExROptionRowView } from "./ExROptionRowView";
 
 interface ExROptionItemViewProps {
@@ -16,11 +16,9 @@ function ExROptionItemViewInner({
 	depth = 0,
 }: ExROptionItemViewProps) {
 	const hasActiveChildren = useHasActiveOptiopnChild(uniqueOptionId);
-	if (hasActiveChildren) {
-		return <ColoredText text={String(uniqueOptionId)} />;
-	}
-
-	return (
+	return hasActiveChildren ? (
+		<ExROptionRecursiveItemView uniqueOptionId={uniqueOptionId} depth={depth} />
+	) : (
 		<ExROptionRowView
 			uniqueOptionId={uniqueOptionId}
 			depth={depth}
