@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { VIEWER_ROW_TITLE } from "../../noTrans";
 
 interface ViewerOptionRowProps {
-	title: string;
+	title: ReactNode;
 	value: ReactNode;
 	onDoubleClick: () => void;
 }
@@ -22,7 +22,7 @@ export function ViewerOptionRow({
 			className="w-full flex justify-between items-center py-1 px-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2 group"
 			title={VIEWER_ROW_TITLE}
 		>
-			<span className="text-sm text-gray-300 truncate flex-1 text-left group-hover:text-white transition-colors">
+			<span className="text-sm text-gray-300 flex-1 text-left group-hover:text-white transition-colors">
 				{title}
 			</span>
 			<div className="flex items-center gap-1 shrink-0">

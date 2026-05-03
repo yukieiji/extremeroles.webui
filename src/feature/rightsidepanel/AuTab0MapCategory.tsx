@@ -1,4 +1,4 @@
-import { useAuNavigation } from "../../hooks/useAuNavigation";
+import { useAuNavigation } from "../../hooks/useOptionNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 
@@ -15,7 +15,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const mapOptionMeta = auOptionMetaData.options[mapOptionId];
 	const mapSelection = useStore((state) => state.auValue[mapOptionId] ?? 0);
 
-	const { navigateToOption } = useAuNavigation();
+	const navigateToOption = useAuNavigation(0, categoryId, mapOptionId);
 
 	if (!categoryMeta) {
 		return null;
@@ -31,9 +31,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 		<div className="border border-gray-700 rounded-lg overflow-hidden">
 			<button
 				type="button"
-				onDoubleClick={() => {
-					navigateToOption(0, categoryId, mapOptionId);
-				}}
+				onDoubleClick={navigateToOption}
 				className="w-full flex items-center justify-between p-2 bg-gray-800 hover:bg-gray-700 transition-colors"
 			>
 				<div className="flex items-center gap-2">

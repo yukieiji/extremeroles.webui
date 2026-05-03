@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { exrOptionMetaData } from "../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../logics/optionUtils";
@@ -8,6 +9,31 @@ export function useOptionData(
 	uniqueOptionId: UniqueOptionId,
 ): ExROptionValueData {
 	return useStore(useShallow((state) => state.exrValue[uniqueOptionId]));
+}
+
+export function useOptionActive(uniqueOptionId: UniqueOptionId): boolean {
+	return useStore(
+		useCallback(
+			(state) => {
+				return state.isExROptionActive[uniqueOptionId];
+			},
+			[uniqueOptionId],
+		),
+	);
+}
+
+export function useHasActiveOptiopnChild(
+	uniqueOptionId: UniqueOptionId,
+): boolean {
+	const childs = exrOptionMetaData.options[uniqueOptionId]?.childOptionIds;
+	return useStore(
+		useShallow(
+			(state) =>
+				childs &&
+				childs.length > 0 &&
+				childs.some((id) => state.isExROptionActive[id] ?? false),
+		),
+	);
 }
 
 export function useVisibleCategories(checkCategoryIds: number[]) {

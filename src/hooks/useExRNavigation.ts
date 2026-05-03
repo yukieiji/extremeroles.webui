@@ -1,10 +1,11 @@
+import { parseUniqueOptionId } from "../logics/optionUtils";
 import type { ExRTabId, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
 /**
  * ExRの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
  */
-export function useExRNavigation() {
+export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 	const setSelectedTab = useStore((state) => {
 		return state.setSelectedTab;
 	});
@@ -24,14 +25,12 @@ export function useExRNavigation() {
 		return state.setRightPanelOpen;
 	});
 
-	const navigateToExROption = (
-		tabId: ExRTabId,
-		categoryId: number,
-		uniqueOptionId: UniqueOptionId,
-	) => {
+	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
+
+	const navigateToExROption = () => {
 		setRightPanelOpen(false);
 		setSelectedTab("ExR");
-		setSelectedExRTabId(tabId);
+		setSelectedExRTabId(tabId as ExRTabId);
 		if (!openedExRCategoryIds[categoryId]) {
 			toggleExRCategory(categoryId);
 		}
@@ -50,5 +49,5 @@ export function useExRNavigation() {
 		}, 100);
 	};
 
-	return { navigateToExROption };
+	return navigateToExROption;
 }
