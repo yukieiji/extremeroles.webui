@@ -12,6 +12,7 @@ import {
 	createExROptionMetaData,
 	fetchRoleFilterData,
 	fetchTranslationMetaData,
+	roleFilterMetaData,
 	updateAuOption,
 	updateExrOption,
 } from "./api";
@@ -90,7 +91,11 @@ async function createAuOptionMetaDataWithStore(): Promise<void> {
 async function fetchRoleFilterDataWithStore(): Promise<void> {
 	await waitDelay();
 	const data = await fetchRoleFilterData();
-	useStore.getState().setRoleFilterData(data);
+	roleFilterMetaData.FilterRoleId = data.FilterRoleId;
+	roleFilterMetaData.NormalRoleId = data.NormalRoleId;
+	roleFilterMetaData.CombinationId = data.CombinationId;
+	roleFilterMetaData.GhostRoleId = data.GhostRoleId;
+	useStore.getState().setRoleFilterSet(data.FilterSet);
 }
 
 export function useUpdateAuOptionSelection(): (

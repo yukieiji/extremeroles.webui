@@ -7,6 +7,7 @@ import type {
 	ExROptionValueData,
 	ExRTabMetaData,
 	RoleAssignFilterDto,
+	RoleFilterMetaData,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -53,6 +54,13 @@ export const auOptionMetaData: AuOptionMetaDataRecords = {
 	options: {},
 };
 
+export const roleFilterMetaData: RoleFilterMetaData = {
+	FilterRoleId: [],
+	NormalRoleId: {},
+	CombinationId: {},
+	GhostRoleId: {},
+};
+
 /**
  * ExRオプションのメタデータをリセットする（テスト用）
  */
@@ -71,6 +79,16 @@ export function resetAuOptionMetaData() {
 	auOptionMetaData.tabCategoryMap = {};
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
+}
+
+/**
+ * RoleFilterのメタデータをリセットする（テスト用）
+ */
+export function resetRoleFilterMetaData() {
+	roleFilterMetaData.FilterRoleId = [];
+	roleFilterMetaData.NormalRoleId = {};
+	roleFilterMetaData.CombinationId = {};
+	roleFilterMetaData.GhostRoleId = {};
 }
 
 interface ExRinitializeData {
