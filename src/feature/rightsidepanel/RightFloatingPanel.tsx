@@ -1,5 +1,5 @@
 import { use, useEffect } from "react";
-import { VieweGroupAccordion } from "../../components/blocks/VieweGroupAccordion";
+import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
 import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
 import { getAllOptions } from "../../logics/api.store";
 import {
@@ -85,28 +85,28 @@ export function RightFloatingPanel() {
 						<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
 					</div>
 					<div className="flex-1 overflow-y-auto p-3">
-						<VieweGroupAccordion
+						<ViewerGroupAccordion
 							title={SETTING_VALUES_TITLE}
 							isOpen={isSettingsOpen}
 							onToggle={toggleSettings}
 						>
 							<RightPanelGroupColumnLayout>
-								<VieweGroupAccordion
+								<ViewerGroupAccordion
 									title={AU_SETTINGS_TITLE}
 									isOpen={isAuSettingsOpen}
 									onToggle={toggleAuSettings}
 								>
 									<AuOptionViewer />
-								</VieweGroupAccordion>
-								<VieweGroupAccordion
+								</ViewerGroupAccordion>
+								<ViewerGroupAccordion
 									title={EXR_SETTINGS_TITLE}
 									isOpen={isExrSettingsOpen}
 									onToggle={toggleExrSettings}
 								>
 									<ExROptionViewer />
-								</VieweGroupAccordion>
+								</ViewerGroupAccordion>
 							</RightPanelGroupColumnLayout>
-						</VieweGroupAccordion>
+						</ViewerGroupAccordion>
 					</div>
 				</div>
 			</aside>

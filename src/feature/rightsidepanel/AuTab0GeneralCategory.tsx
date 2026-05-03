@@ -1,5 +1,5 @@
 import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
-import { VieweGroupAccordion } from "../../components/blocks/VieweGroupAccordion";
+import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
@@ -27,7 +27,7 @@ export function AuTab0GeneralCategory({
 	}
 
 	return (
-		<VieweGroupAccordion
+		<ViewerGroupAccordion
 			title={<span className="text-base">{categoryMeta.name}</span>}
 			isOpen={isOpen}
 			onToggle={() => {
@@ -39,6 +39,6 @@ export function AuTab0GeneralCategory({
 					<AuTab0OptionRow optionId={optionId} categoryId={categoryId} />
 				)}
 			</RightPanelContainer>
-		</VieweGroupAccordion>
+		</ViewerGroupAccordion>
 	);
 }
