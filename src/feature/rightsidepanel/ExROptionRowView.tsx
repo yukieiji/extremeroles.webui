@@ -1,4 +1,3 @@
-import { ColoredText } from "../../components/parts/ColoredText";
 import type { UniqueOptionId } from "../../type";
 import { ExROptionRowViewContent } from "./ExROptionRowViewContent";
 
@@ -10,7 +9,6 @@ interface ExROptionRowViewProps {
 
 export function ExROptionRowView({
 	uniqueOptionId,
-	depth = 0,
 	isLeaf = false,
 }: ExROptionRowViewProps) {
 	return isLeaf ? (

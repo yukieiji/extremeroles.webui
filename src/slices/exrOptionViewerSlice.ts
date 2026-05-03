@@ -8,9 +8,9 @@ import {
 import type {
 	ExROptionValueData,
 	ExRTabId,
+	RoleFilterItem,
 	UniqueOptionId,
 	UpdatedOptions,
-	RoleFilterItem,
 } from "../type";
 
 /**
