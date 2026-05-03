@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import { CompactAccordion } from "../../components/blocks/CompactAccordion";
+import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
 import { ColoredText } from "../../components/parts/ColoredText";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
 import { useStore } from "../../useStore";
+import { ExROptionItemView } from "./ExROptionItemView";
 
 interface ExRCategoryViewerProp {
 	categoryId: number;
@@ -11,7 +13,7 @@ interface ExRCategoryViewerProp {
 
 export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProp) {
 	const isOpen = useStore(
-		(state) => state.openedCategoryIdRightFloatingPanel[categoryId] ?? false,
+		(state) => state.openedCategoryIdRightFloatingPanel[categoryId] ?? true,
 	);
 	const toggleCategory = useStore(
 		(state) => state.toggleCategoryIdRightFloatingPanel,
@@ -44,7 +46,9 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProp) {
 				toggleCategory(categoryId);
 			}}
 		>
-			<></>
+			<RightPanelContainer arr={filteredOptions}>
+				{(optionid) => <ExROptionItemView uniqueOptionId={optionid} />}
+			</RightPanelContainer>
 		</CompactAccordion>
 	);
 }

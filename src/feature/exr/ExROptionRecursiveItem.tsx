@@ -1,10 +1,10 @@
-import { ExROptionRow } from "../../components/blocks/ExROptionRow";
 import { OptionEditableAccordion } from "../../components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
 import { ExROptionItem } from "./ExROptionItem";
+import { ExROptionRow } from "./ExROptionRow";
 
 interface ExROptionRecursiveItemProps {
 	uniqueOptionId: UniqueOptionId;
