@@ -104,20 +104,10 @@ describe("ExRCategoryViewer", () => {
 	it("reflects the closed state from the store", () => {
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [1001];
 
-		// component uses `state.openedCategoryIdRightFloatingPanel[categoryId] ?? true`
-		// Initially it is undefined, so it's true.
-		// Toggling it will set it to !undefined which is true? No, !undefined is true.
-		// Wait, toggleCategoryIdRightFloatingPanel:
-		// [categoryId]: !state.openedCategoryIdRightFloatingPanel[categoryId]
-		// if undefined, !undefined is true. So it becomes true.
-		// If we want it to be false, we need to toggle it once (becomes true) then again (becomes false),
-		// OR we can just manually set it in the store if we had a setter, but we don't.
-		// Actually, if it's undefined, it's NOT in the record.
-		// !undefined is true. So the first toggle sets it to true.
-		// The second toggle sets it to false.
-
-		useStore.getState().toggleCategoryIdRightFloatingPanel(categoryId); // becomes true
-		useStore.getState().toggleCategoryIdRightFloatingPanel(categoryId); // becomes false
+		// Set state to closed explicitly
+		useStore.setState({
+			openedCategoryIdRightFloatingPanel: { [categoryId]: false },
+		});
 
 		render(<ExRCategoryViewer categoryId={categoryId} />);
 
@@ -155,22 +145,6 @@ describe("ExRCategoryViewer", () => {
 		const accordionButton = screen.getByRole("button");
 		expect(accordionButton).toBeInTheDocument();
 		// Since ColoredText is used, we might need to check if it's empty
-	});
-
-	it("sets isOpen to false via the store", () => {
-		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [1001];
-
-		// Mock the store state directly for this test
-		useStore.setState({
-			openedCategoryIdRightFloatingPanel: { [categoryId]: false },
-		});
-
-		render(<ExRCategoryViewer categoryId={categoryId} />);
-
-		const accordionButton = screen.getByRole("button", {
-			name: /Test Category/i,
-		});
-		expect(accordionButton).toHaveAttribute("aria-expanded", "false");
 	});
 
 	it("returns null if uniqueOptions is undefined", () => {
