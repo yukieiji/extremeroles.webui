@@ -6,7 +6,7 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
-	RoleAssignFilterDto,
+	RoleAssignFilterSetDto,
 	RoleFilterMetaData,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
@@ -366,7 +366,9 @@ export async function updateExrOption(
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
-export async function fetchRoleFilterData(): Promise<RoleAssignFilterDto> {
+export async function fetchRoleFilterData(): Promise<
+	Record<string, RoleAssignFilterSetDto>
+> {
 	const res = await fetch(EXR_ROLE_FILTER_URL);
 	if (!res.ok) {
 		throw new Error(`Failed to fetch role filter data: ${res.statusText}`);
@@ -380,7 +382,7 @@ export async function fetchRoleFilterData(): Promise<RoleAssignFilterDto> {
 	roleFilterMetaData.CombinationId = data.CombinationId;
 	roleFilterMetaData.GhostRoleId = data.GhostRoleId;
 
-	return data;
+	return data.FilterSet;
 }
 
 export async function updateAuOption(

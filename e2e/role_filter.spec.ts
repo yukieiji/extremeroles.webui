@@ -36,7 +36,7 @@ test.describe("Role Filter Tab", () => {
 		await expect(preElement).toBeVisible();
 
 		const content = await preElement.textContent();
-		expect(content).toContain("FilterSet");
+		expect(content).not.toContain("FilterSet");
 		expect(content).toContain("c521f29a-4a3d-4896-a642-8fc8a22aa8e6");
 		expect(content).toContain("Bakary");
 		expect(content).toContain("Opener");
