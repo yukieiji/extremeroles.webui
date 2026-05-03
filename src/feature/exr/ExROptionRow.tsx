@@ -2,6 +2,7 @@ import { ExROptionRowContent } from "../../components/blocks/ExROptionRowContent
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
 import { LargePoint } from "../../components/parts/LargePoint";
 import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
+import { createExRNavigateId } from "../../hooks/useOptionNavigation";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
 
@@ -24,9 +25,11 @@ function ExROptionRowInner({ uniqueOptionId, depth }: ExROptionRowInnerProps) {
 		return state.highlightedExROptionId === uniqueOptionId;
 	});
 
+	const navigateId = createExRNavigateId(uniqueOptionId);
+
 	return (
 		<HighlightWrapper
-			id={`exr-option-${uniqueOptionId}`}
+			id={navigateId}
 			isHighlighted={isHighlighted}
 			isInset={true}
 		>

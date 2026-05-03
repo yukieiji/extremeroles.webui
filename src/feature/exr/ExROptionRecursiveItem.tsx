@@ -1,6 +1,7 @@
 import { HighlightableAccordionRow } from "../../components/blocks/HighlightableAccordionRow";
 import { RowCustomizeAccordion } from "../../components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
+import { createExRNavigateId } from "../../hooks/useOptionNavigation";
 import { exrOptionMetaData } from "../../logics/api";
 import type { UniqueOptionId } from "../../type";
 import { useStore } from "../../useStore";
@@ -36,11 +37,13 @@ export function ExROptionRecursiveItem({
 	const childs =
 		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
 
+	const navigateId = createExRNavigateId(uniqueOptionId);
+
 	return (
 		<RowCustomizeAccordion
 			row={
 				<HighlightableAccordionRow
-					id={`exr-option-${uniqueOptionId}`}
+					id={navigateId}
 					onToggle={handleToggle}
 					isOpen={isOpen}
 					isHighlight={isHighlighted}

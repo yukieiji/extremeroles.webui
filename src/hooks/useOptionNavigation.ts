@@ -2,6 +2,14 @@ import { parseUniqueOptionId } from "../logics/optionUtils";
 import type { AuOptionId, ExRTabId, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
+export function createExRNavigateId(uniqueOptionId: UniqueOptionId) {
+	return `exr-option-${uniqueOptionId}`;
+}
+
+export function createAuNavigateId(auOptionId: AuOptionId) {
+	return `au-option-${auOptionId}`;
+}
+
 /**
  * Auの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
  */
@@ -28,6 +36,9 @@ export function useAuNavigation(
 	const setRightPanelOpen = useStore((state) => {
 		return state.setRightPanelOpen;
 	});
+
+	const navigateId = createAuNavigateId(optionId);
+
 	const navigateToOption = () => {
 		setRightPanelOpen(false);
 		setSelectedTab("Au");
@@ -39,9 +50,9 @@ export function useAuNavigation(
 
 		setTimeout(() => {
 			if (typeof document !== "undefined") {
-				const element = document.getElementById(`au-option-${optionId}`);
+				const element = document.getElementById(navigateId);
 				if (element) {
-					element.scrollIntoView({ behavior: "smooth" });
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
 			}
 			setTimeout(() => {
@@ -76,6 +87,7 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 	});
 
 	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
+	const navigateId = createExRNavigateId(uniqueOptionId);
 
 	const navigateToOption = () => {
 		setRightPanelOpen(false);
@@ -88,9 +100,9 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 
 		setTimeout(() => {
 			if (typeof document !== "undefined") {
-				const element = document.getElementById(`exr-option-${uniqueOptionId}`);
+				const element = document.getElementById(navigateId);
 				if (element) {
-					element.scrollIntoView({ behavior: "smooth" });
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
 			}
 			setTimeout(() => {
