@@ -6,9 +6,9 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
+	RoleAssignFilterDto,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
-	RoleAssignFilterDto,
 	UpdatedOptions,
 	VanillaOptionPutRequest,
 } from "../type";
