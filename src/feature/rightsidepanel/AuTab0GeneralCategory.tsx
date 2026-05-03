@@ -1,5 +1,5 @@
-import { CompactAccordion } from "../../components/blocks/CompactAccordion";
 import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
+import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
@@ -15,9 +15,9 @@ export function AuTab0GeneralCategory({
 	categoryId,
 }: AuTab0GeneralCategoryProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
-	const isOpen = useStore((state) => {
-		return state.openedAuTab0CategoryIds[categoryId] ?? true;
-	});
+	const isOpen = useStore(
+		(state) => state.openedAuTab0CategoryIds[categoryId] ?? true,
+	);
 	const toggleAuTab0Category = useStore((state) => {
 		return state.toggleAuTab0Category;
 	});
@@ -27,7 +27,7 @@ export function AuTab0GeneralCategory({
 	}
 
 	return (
-		<CompactAccordion
+		<ViewerGroupAccordion
 			title={<span className="text-base">{categoryMeta.name}</span>}
 			isOpen={isOpen}
 			onToggle={() => {
@@ -39,6 +39,6 @@ export function AuTab0GeneralCategory({
 					<AuTab0OptionRow optionId={optionId} categoryId={categoryId} />
 				)}
 			</RightPanelContainer>
-		</CompactAccordion>
+		</ViewerGroupAccordion>
 	);
 }

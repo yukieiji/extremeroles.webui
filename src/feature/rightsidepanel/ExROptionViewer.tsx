@@ -1,10 +1,11 @@
 import { RightPanelItemColumnLayout } from "../../components/parts/RightPanelItemColumnLayout";
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { useExRNavigation } from "../../hooks/useExRNavigation";
-import { useOptionData } from "../../hooks/useOptionData";
+import { useOptionData } from "../../hooks/useExROptionData";
+import { useExRNavigation } from "../../hooks/useOptionNavigation";
 import { exrOptionMetaData } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
 import { useStore } from "../../useStore";
+import { ExRGeneralTabOptionViewer } from "./ExRGeneralTabOptionViewer";
 
 /**
  * ExRの設定内容を右パネルに表示するコンポーネント
@@ -12,15 +13,14 @@ import { useStore } from "../../useStore";
 export function ExROptionViewer() {
 	const presetOption = useOptionData(PRESET_OPTION_UNIQUE_ID);
 	const presetNames = useStore((state) => state.presetNames);
-	const { navigateToExROption } = useExRNavigation();
+	const navigate = useExRNavigation(PRESET_OPTION_UNIQUE_ID);
 
 	if (!presetOption) {
 		return null;
 	}
 
 	const currentSelection = presetOption.selection ?? 0;
-	const presetValues = presetOption.values as (number | string)[];
-	const currentPresetValue = presetValues[currentSelection];
+	const currentPresetValue = presetOption.values[currentSelection] ?? "";
 	const currentPresetName =
 		presetNames[currentSelection] ?? String(currentPresetValue);
 
@@ -32,10 +32,9 @@ export function ExROptionViewer() {
 			<ViewerOptionRow
 				title={optionMeta?.translatedName ?? "Preset"}
 				value={currentPresetName}
-				onDoubleClick={() => {
-					navigateToExROption(0, 0, PRESET_OPTION_UNIQUE_ID);
-				}}
+				onDoubleClick={navigate}
 			/>
+			<ExRGeneralTabOptionViewer />
 		</RightPanelItemColumnLayout>
 	);
 }

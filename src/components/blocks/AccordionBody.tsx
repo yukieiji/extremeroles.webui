@@ -23,7 +23,7 @@ export function AccordionBody({
 			<button
 				type="button"
 				onClick={onToggle}
-				className="w-full flex items-center gap-3 p-4 bg-gray-800 hover:bg-gray-700 transition-colors text-left"
+				className="w-full flex items-center gap-3 p-4 bg-gray-800 hover:bg-gray-700 transition-colors text-left cursor-pointer"
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg className={"w-5 h-5 text-gray-400 "} isOpen={isOpen} />

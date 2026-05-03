@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import type { ExRTabId, UniqueOptionId } from "../type";
 
 /**
  * 右フローティングパネルの状態管理を行うスライスのインターフェース
@@ -24,6 +25,12 @@ export interface RightFloatingPanelSlice {
 	setRightPanelWidth: (width: number) => void;
 	isResizing: boolean;
 	setIsResizing: (isResizing: boolean) => void;
+	openedExRTabId: Record<ExRTabId, boolean>;
+	toggleExRTabId: (tabId: ExRTabId) => void;
+	openedCategoryIdRightFloatingPanel: Record<number, boolean>;
+	toggleCategoryIdRightFloatingPanel: (categoryId: number) => void;
+	openedExROptionRightFloatingPanel: Record<UniqueOptionId, boolean>;
+	toggleExROptionRightFloatingPanel: (optionId: UniqueOptionId) => void;
 }
 
 /**
@@ -89,6 +96,48 @@ export const createRightFloatingPanelSlice: StateCreator<
 		isResizing: false,
 		setIsResizing: (isResizing) => {
 			set({ isResizing });
+		},
+		openedExRTabId: {
+			0: true,
+			1: false,
+			2: false,
+			3: false,
+			4: false,
+			5: false,
+			6: false,
+			7: false,
+		},
+		toggleExRTabId: (tabId) => {
+			set((state) => {
+				return {
+					openedExRTabId: {
+						...state.openedExRTabId,
+						[tabId]: !state.openedExRTabId[tabId],
+					},
+				};
+			});
+		},
+		openedCategoryIdRightFloatingPanel: {},
+		toggleCategoryIdRightFloatingPanel: (categoryId) => {
+			set((state) => {
+				return {
+					openedCategoryIdRightFloatingPanel: {
+						...state.openedCategoryIdRightFloatingPanel,
+						[categoryId]: !state.openedCategoryIdRightFloatingPanel[categoryId],
+					},
+				};
+			});
+		},
+		openedExROptionRightFloatingPanel: {},
+		toggleExROptionRightFloatingPanel: (optionId) => {
+			set((state) => {
+				return {
+					openedExROptionRightFloatingPanel: {
+						...state.openedExROptionRightFloatingPanel,
+						[optionId]: !state.openedExROptionRightFloatingPanel[optionId],
+					},
+				};
+			});
 		},
 	};
 };

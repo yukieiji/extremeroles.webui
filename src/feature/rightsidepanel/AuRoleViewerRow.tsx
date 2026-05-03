@@ -1,5 +1,5 @@
 import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { useAuNavigation } from "../../hooks/useAuNavigation";
+import { useAuNavigation } from "../../hooks/useOptionNavigation";
 import { auOptionMetaData } from "../../logics/api";
 import { useStore } from "../../useStore";
 
@@ -25,7 +25,7 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 	const maxCountSelection = useStore(
 		(state) => state.auValue[maxCountOptionId] ?? 0,
 	);
-	const { navigateToOption } = useAuNavigation();
+	const navigateToOption = useAuNavigation(tabId, categoryId, chanceOptionId);
 
 	const chanceMeta = auOptionMetaData.options[chanceOptionId];
 	const maxCountMeta = auOptionMetaData.options[maxCountOptionId];
@@ -47,9 +47,7 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 					<span className="text-blue-400">{maxCountValue.toString()}</span>
 				</div>
 			}
-			onDoubleClick={() => {
-				navigateToOption(tabId, categoryId, chanceOptionId);
-			}}
+			onDoubleClick={navigateToOption}
 		/>
 	);
 }
