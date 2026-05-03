@@ -392,7 +392,9 @@ export const RoleAssignFilterSetDtoSchema = z.object({
 	),
 });
 
-export type RoleAssignFilterSetDto = z.infer<typeof RoleAssignFilterSetDtoSchema>;
+export type RoleAssignFilterSetDto = z.infer<
+	typeof RoleAssignFilterSetDtoSchema
+>;
 
 export const RoleAssignFilterDtoSchema = z.object({
 	FilterSet: z.record(z.string(), RoleAssignFilterSetDtoSchema),
