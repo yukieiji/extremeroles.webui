@@ -90,7 +90,7 @@ async function createAuOptionMetaDataWithStore(): Promise<void> {
 async function fetchRoleFilterDataWithStore(): Promise<void> {
 	await waitDelay();
 	const data = await fetchRoleFilterData();
-	useStore.getState().setRoleFilterSet(data);
+	useStore.getState().setRoleFilterList(data);
 }
 
 export function useUpdateAuOptionSelection(): (

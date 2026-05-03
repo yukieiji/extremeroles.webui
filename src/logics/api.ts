@@ -6,7 +6,6 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
-	RoleAssignFilterSetDto,
 	RoleFilterMetaData,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
@@ -361,9 +360,9 @@ export async function updateExrOption(
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
-export async function fetchRoleFilterData(): Promise<
-	Record<string, RoleAssignFilterSetDto>
-> {
+import type { RoleFilterItem, RoleFilterRole } from "../type";
+
+export async function fetchRoleFilterData(): Promise<RoleFilterItem[]> {
 	const res = await fetch(EXR_ROLE_FILTER_URL);
 	if (!res.ok) {
 		throw new Error(`Failed to fetch role filter data: ${res.statusText}`);
@@ -377,7 +376,44 @@ export async function fetchRoleFilterData(): Promise<
 	roleFilterMetaData.CombinationId = data.CombinationId;
 	roleFilterMetaData.GhostRoleId = data.GhostRoleId;
 
-	return data.FilterSet;
+	const filterList: RoleFilterItem[] = Object.entries(data.FilterSet).map(
+		([guid, filterSet]) => {
+			const roles: RoleFilterRole[] = [
+				...Object.entries(filterSet.FilterNormalId).map(
+					([id, name]) =>
+						({
+							id: Number(id),
+							name: String(name),
+							type: "Normal",
+						}) as RoleFilterRole,
+				),
+				...Object.entries(filterSet.FilterCombinationId).map(
+					([id, name]) =>
+						({
+							id: Number(id),
+							name: String(name),
+							type: "Combination",
+						}) as RoleFilterRole,
+				),
+				...Object.entries(filterSet.FilterGhostRoleId).map(
+					([id, name]) =>
+						({
+							id: Number(id),
+							name: String(name),
+							type: "Ghost",
+						}) as RoleFilterRole,
+				),
+			];
+
+			return {
+				guid,
+				assignNum: filterSet.AssignNum,
+				roles,
+			};
+		},
+	);
+
+	return filterList;
 }
 
 export async function updateAuOption(

@@ -8,9 +8,9 @@ import {
 import type {
 	ExROptionValueData,
 	ExRTabId,
-	RoleAssignFilterSetDto,
 	UniqueOptionId,
 	UpdatedOptions,
+	RoleFilterItem,
 } from "../type";
 
 /**
@@ -26,7 +26,7 @@ export interface ExROptionViewerSlice {
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	highlightedExROptionId: UniqueOptionId | null;
-	roleFilterSet: Record<string, RoleAssignFilterSetDto> | null;
+	roleFilterList: RoleFilterItem[] | null;
 	setSelectedExRTabId: (id: ExRTabId) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
@@ -40,7 +40,7 @@ export interface ExROptionViewerSlice {
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
 		optionActiveData: Record<UniqueOptionId, boolean>,
 	) => void;
-	setRoleFilterSet: (data: Record<string, RoleAssignFilterSetDto>) => void;
+	setRoleFilterList: (data: RoleFilterItem[]) => void;
 	validateOpenedIds: () => void;
 }
 
@@ -58,7 +58,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		exrValue: {},
 		isExROptionActive: {},
 		highlightedExROptionId: null,
-		roleFilterSet: null,
+		roleFilterList: null,
 		presetNames: loadPresetNamesFromLocalStorage(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: ExRTabId) => {
@@ -156,8 +156,8 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				isExROptionActive: optionActiveData,
 			});
 		},
-		setRoleFilterSet: (data: Record<string, RoleAssignFilterSetDto>) => {
-			set({ roleFilterSet: data });
+		setRoleFilterList: (data: RoleFilterItem[]) => {
+			set({ roleFilterList: data });
 		},
 		validateOpenedIds: () => {
 			set((state) => {

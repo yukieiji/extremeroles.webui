@@ -396,6 +396,24 @@ export type RoleAssignFilterSetDto = z.infer<
 	typeof RoleAssignFilterSetDtoSchema
 >;
 
+/**
+ * 役職フィルターの個別の役職情報
+ */
+export interface RoleFilterRole {
+	id: number;
+	name: string;
+	type: "Normal" | "Combination" | "Ghost";
+}
+
+/**
+ * UIで表示するための役職フィルター項目の情報
+ */
+export interface RoleFilterItem {
+	guid: string;
+	assignNum: number;
+	roles: RoleFilterRole[];
+}
+
 export const RoleAssignFilterDtoSchema = z.object({
 	FilterSet: z.record(z.string(), RoleAssignFilterSetDtoSchema),
 	FilterRoleId: z.array(z.number().int()),
