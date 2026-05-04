@@ -10,13 +10,13 @@ import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { PresetSelector } from "./feature/exr/PresetSelector";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
+import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import {
 	useBackendUpdate,
 	useExportCsv,
 	useSyncBackend,
 } from "./hooks/useBackend";
 import { postExrCsv } from "./logics/api";
-import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import { getAllOptions } from "./logics/api.store";
 import {
 	AU_OPTIONS_TITLE,
