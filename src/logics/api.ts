@@ -30,6 +30,7 @@ import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
  * API エンドポイントの定数定義
  */
 const EXR_OPTION_URL = "/exr/option/";
+const EXR_CSV_URL = "/exr/option/csv/";
 const AU_OPTION_URL = "/au/option/";
 const EXR_ROLE_FILTER_URL = "/exr/role/filter/";
 const TRANSLATION_BATCH_URL = "/au/translation/batch/optionunit/";
@@ -359,6 +360,20 @@ export async function updateExrOption(
 
 	const jsonData = await res.json();
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
+}
+
+export async function postExrCsv(csvBody: string): Promise<void> {
+	const res = await fetch(EXR_CSV_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ CsvBody: csvBody }),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to post ExR CSV: ${res.statusText}`);
+	}
 }
 
 export async function fetchRoleFilterData(): Promise<
