@@ -1,6 +1,6 @@
 import { ConfirmDialog } from "../components/parts/ConfirmDialog";
 import { useStore } from "../useStore";
-import { RoleSelectDialog } from "./exr/RoleSelectDialog";
+import { RoleSelectDialog } from "./rolefilter/RoleSelectDialog";
 
 export function BlockableDialog() {
 	const blockDialog = useStore((state) => state.blockDialog);
@@ -26,8 +26,8 @@ export function BlockableDialog() {
 			{blockDialog.type === "roleSelect" && (
 				<RoleSelectDialog
 					excludeRoleIds={blockDialog.excludeRoleIds}
-					onSelect={(roleId) => {
-						blockDialog.onSelect(roleId);
+					onSelect={async (roleId) => {
+						await blockDialog.onSelect(roleId);
 						closeDialog();
 					}}
 					onCancel={closeDialog}

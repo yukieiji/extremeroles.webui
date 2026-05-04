@@ -15,7 +15,6 @@ export interface GlobalUiSlice {
 	popBlockCount: () => void;
 	openBlockDialog: (dialog: BlockDialog) => void;
 	closeBlockDialog: () => void;
-	setRoleSearchQuery: (query: string) => void;
 }
 
 export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
@@ -44,19 +43,6 @@ export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 		},
 		closeBlockDialog() {
 			set({ blockDialog: undefined });
-		},
-		setRoleSearchQuery: (query: string) => {
-			set((state) => {
-				if (state.blockDialog?.type === "roleSelect") {
-					return {
-						blockDialog: {
-							...state.blockDialog,
-							searchQuery: query,
-						},
-					};
-				}
-				return state;
-			});
 		},
 	};
 };

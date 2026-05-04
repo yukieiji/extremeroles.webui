@@ -8,7 +8,6 @@ import { BlockableDialog } from "./feature/BlockableDialog";
 import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { PresetSelector } from "./feature/exr/PresetSelector";
-import { RoleFilterViewer } from "./feature/exr/RoleFilterViewer";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
 import {
@@ -17,6 +16,7 @@ import {
 	useSyncBackend,
 } from "./hooks/useBackend";
 import { postExrCsv } from "./logics/api";
+import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import { getAllOptions } from "./logics/api.store";
 import {
 	AU_OPTIONS_TITLE,

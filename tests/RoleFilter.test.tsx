@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { RoleFilterViewer } from "../src/feature/exr/RoleFilterViewer";
+import { RoleFilterViewer } from "../src/feature/rolefilter/RoleFilterViewer";
 import { postRoleFilterUpdate } from "../src/logics/api";
 import { useStore } from "../src/useStore";
 
@@ -52,8 +52,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		const deleteButton = screen.getByLabelText("Delete filter");
 		fireEvent.click(deleteButton);
 
-		// Should show block dialog (we can't easily test BlockableDialog here unless we render App,
-		// but we can check the store state)
+		// Should show block dialog
 		const state = useStore.getState();
 		expect(state.blockDialog).toBeDefined();
 		expect(state.blockDialog?.type).toBe("confirm");
