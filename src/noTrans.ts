@@ -9,6 +9,8 @@ export const IMPORT_BUTTON_ARIA = "CSVファイルをインポート";
 export const IMPORT_CONFIRM_TITLE = "インポートの確認";
 export const IMPORT_CONFIRM_MESSAGE =
 	"CSVファイルをインポートして設定を上書きしますか？";
+export const EXPORT_CSV_LABEL = "エクスポート";
+export const EXPORT_CSV_TITLE = "CSVとしてエクスポート";
 export const CANCEL = "キャンセル";
 export const SIDEBAR_CLOSE_ARIA = "サイドバーを閉じる";
 export const SIDEBAR_OPEN_ARIA = "サイドバーを開く";

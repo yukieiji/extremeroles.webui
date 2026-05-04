@@ -27,9 +27,6 @@ export function useAuNavigation(
 	const toggleAuCategory = useStore((state) => {
 		return state.toggleAuCategory;
 	});
-	const openedAuCategoryIds = useStore((state) => {
-		return state.openedAuCategoryIds;
-	});
 	const setHighlightedAuOptionId = useStore((state) => {
 		return state.setHighlightedAuOptionId;
 	});
@@ -40,6 +37,8 @@ export function useAuNavigation(
 	const navigateId = createAuNavigateId(optionId);
 
 	const navigateToOption = () => {
+		const { openedAuCategoryIds } = useStore.getState();
+
 		setRightPanelOpen(false);
 		setSelectedTab("Au");
 		setSelectedAuTabId(tabId);
@@ -76,9 +75,7 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
-	const openedExRCategoryIds = useStore((state) => {
-		return state.openedExRCategoryIds;
-	});
+
 	const setHighlightedExROptionId = useStore((state) => {
 		return state.setHighlightedExROptionId;
 	});
@@ -90,6 +87,8 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 	const navigateId = createExRNavigateId(uniqueOptionId);
 
 	const navigateToOption = () => {
+		const { openedExRCategoryIds } = useStore.getState();
+
 		setRightPanelOpen(false);
 		setSelectedTab("ExR");
 		setSelectedExRTabId(tabId as ExRTabId);

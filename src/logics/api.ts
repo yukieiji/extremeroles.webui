@@ -6,6 +6,7 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
+	GetCsvResult,
 	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
 	TranslationMetaDataRecords,
@@ -18,6 +19,7 @@ import {
 	AuOptionCategoryDtoArraySchema,
 	ExRTabDtoArraySchema,
 	ExRTabId,
+	GetCsvResultSchema,
 	GetTranslationResponseArraySchema,
 	OptionValueType,
 	RoleAssignFilterDtoSchema,
@@ -374,6 +376,15 @@ export async function postExrCsv(csvBody: string): Promise<void> {
 	if (!res.ok) {
 		throw new Error(`Failed to post ExR CSV: ${res.statusText}`);
 	}
+}
+export async function fetchCsvData(): Promise<GetCsvResult> {
+	const res = await fetch(EXR_CSV_URL);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch CSV data: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	return await GetCsvResultSchema.parseAsync(jsonData);
 }
 
 export async function fetchRoleFilterData(): Promise<
