@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const MIN_WIDTH = 320;
+
 test.beforeEach(async ({ page }) => {
 	await page.goto("/");
 	// ローディング画面が消えるのを待つ
@@ -74,7 +76,7 @@ test("right sidebar can be resized", async ({ page }) => {
 		.toBe(page.viewportSize()?.width);
 
 	const initialBox = await rightPanel.boundingBox();
-	expect(initialBox?.width).toBe(320);
+	expect(initialBox?.width).toBe(MIN_WIDTH);
 
 	const handle = page.getByTestId("resize-handle");
 	const handleBox = await handle.boundingBox();
@@ -119,5 +121,6 @@ test("right sidebar can be resized", async ({ page }) => {
 	await page.mouse.up();
 
 	const narrowBox = await rightPanel.boundingBox();
-	expect(narrowBox?.width).toBeLessThanOrEqual(325);
+	// 最小幅付近 (MIN_WIDTH) になっていることを確認
+	expect(narrowBox?.width).toBeLessThanOrEqual(MIN_WIDTH + 5);
 });
