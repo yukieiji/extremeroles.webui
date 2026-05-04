@@ -10,7 +10,9 @@ export function RoleFilterViewer() {
 		return state.roleFilterSet;
 	});
 
-	if (!roleFilterSet) {
+	const filterEntries = Object.entries(roleFilterSet);
+
+	if (filterEntries.length === 0) {
 		return (
 			<div className="p-4 bg-gray-100 rounded-md">
 				<p className="text-gray-500">No role filter data available.</p>
@@ -21,7 +23,7 @@ export function RoleFilterViewer() {
 	return (
 		<div className="p-4 flex flex-col gap-4 max-h-[calc(100vh-200px)] overflow-auto">
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				{Object.entries(roleFilterSet).map(([guid, filterSet]) => {
+				{filterEntries.map(([guid, filterSet]) => {
 					return (
 						<RoleFilterCard key={guid} guid={guid} filterSet={filterSet} />
 					);

@@ -401,7 +401,8 @@ export interface RoleInfo {
 	name: string;
 }
 
-export interface RoleAssignFilterSetUI extends RoleAssignFilterSetDto {
+export interface RoleAssignFilterSetUI {
+	AssignNum: number;
 	Roles: RoleInfo[];
 }
 

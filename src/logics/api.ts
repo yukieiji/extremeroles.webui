@@ -380,7 +380,7 @@ export async function fetchRoleFilterData(): Promise<
 	const filterSetUI: Record<string, RoleAssignFilterSetUI> = {};
 	for (const [guid, set] of Object.entries(data.FilterSet)) {
 		filterSetUI[guid] = {
-			...set,
+			AssignNum: set.AssignNum,
 			Roles: [
 				...Object.entries(set.FilterNormalId).map(([id, name]) => {
 					return {

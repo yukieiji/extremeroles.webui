@@ -26,7 +26,7 @@ export interface ExROptionViewerSlice {
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	highlightedExROptionId: UniqueOptionId | null;
-	roleFilterSet: Record<string, RoleAssignFilterSetUI> | null;
+	roleFilterSet: Record<string, RoleAssignFilterSetUI>;
 	setSelectedExRTabId: (id: ExRTabId) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
@@ -58,7 +58,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		exrValue: {},
 		isExROptionActive: {},
 		highlightedExROptionId: null,
-		roleFilterSet: null,
+		roleFilterSet: {},
 		presetNames: loadPresetNamesFromLocalStorage(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: ExRTabId) => {
