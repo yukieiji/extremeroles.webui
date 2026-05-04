@@ -71,6 +71,7 @@ function MainContent() {
 
 	const handleImport = (csvBody: string) => {
 		openDialog({
+			type: "confirm",
 			title: IMPORT_CONFIRM_TITLE,
 			message: IMPORT_CONFIRM_MESSAGE,
 			onConfirm: () => {
