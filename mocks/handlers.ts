@@ -197,6 +197,16 @@ export const handlers = [
   }),
 
   /**
+   * POST /exr/option/csv/ のハンドラー
+   */
+  http.post('/exr/option/csv/', async ({ request }) => {
+    const body = await request.json() as { CsvBody: string };
+    if (body.CsvBody === 'TRIGGER_ERROR') {
+      return new HttpResponse(null, { status: 500 });
+    }
+    return new HttpResponse(null, { status: 200 });
+  }),
+  
    * GET /exr/option/csv/ のハンドラー
    */
   http.get('/exr/option/csv/', () => {

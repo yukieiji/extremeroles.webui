@@ -364,6 +364,19 @@ export async function updateExrOption(
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
+export async function postExrCsv(csvBody: string): Promise<void> {
+	const res = await fetch(EXR_CSV_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ CsvBody: csvBody }),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to post ExR CSV: ${res.statusText}`);
+	}
+}
 export async function fetchCsvData(): Promise<GetCsvResult> {
 	const res = await fetch(EXR_CSV_URL);
 	if (!res.ok) {

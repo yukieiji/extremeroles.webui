@@ -1,6 +1,7 @@
 import { Suspense, use } from "react";
 import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
+import { ImportButton } from "./components/parts/ImportButton";
 import { SyncButton } from "./components/parts/SyncButton";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
@@ -10,11 +11,18 @@ import { PresetSelector } from "./feature/exr/PresetSelector";
 import { RoleFilterViewer } from "./feature/exr/RoleFilterViewer";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
-import { useExportCsv, useSyncBackend } from "./hooks/useBackend";
+import {
+	useBackendUpdate,
+	useExportCsv,
+	useSyncBackend,
+} from "./hooks/useBackend";
+import { postExrCsv } from "./logics/api";
 import { getAllOptions } from "./logics/api.store";
 import {
 	AU_OPTIONS_TITLE,
 	EXR_OPTIONS_TITLE,
+	IMPORT_CONFIRM_MESSAGE,
+	IMPORT_CONFIRM_TITLE,
 	ROLE_FILTER_TITLE,
 } from "./noTrans";
 import { useStore } from "./useStore";
@@ -58,6 +66,18 @@ function MainContent() {
 	});
 
 	const syncer = useSyncBackend();
+	const backendUpdater = useBackendUpdate();
+	const openDialog = useStore((state) => state.openBlockDialog);
+
+	const handleImport = (csvBody: string) => {
+		openDialog({
+			title: IMPORT_CONFIRM_TITLE,
+			message: IMPORT_CONFIRM_MESSAGE,
+			onConfirm: () => {
+				backendUpdater(() => postExrCsv(csvBody));
+			},
+		});
+	};
 	const exporter = useExportCsv();
 
 	const titleMap = {
@@ -89,6 +109,7 @@ function MainContent() {
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
+				<ImportButton onImport={handleImport} />
 				<ExportButton onClick={exporter} />
 				<SyncButton onClick={syncer} />
 			</div>

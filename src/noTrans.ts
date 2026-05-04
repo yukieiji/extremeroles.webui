@@ -4,6 +4,11 @@
 
 export const SYNC_BUTTON_TITLE = "同期";
 export const SYNC_BUTTON_ARIA = "データを同期";
+export const IMPORT_BUTTON_TITLE = "CSVインポート";
+export const IMPORT_BUTTON_ARIA = "CSVファイルをインポート";
+export const IMPORT_CONFIRM_TITLE = "インポートの確認";
+export const IMPORT_CONFIRM_MESSAGE =
+	"CSVファイルをインポートして設定を上書きしますか？";
 export const EXPORT_CSV_LABEL = "エクスポート";
 export const EXPORT_CSV_TITLE = "CSVとしてエクスポート";
 export const CANCEL = "キャンセル";
