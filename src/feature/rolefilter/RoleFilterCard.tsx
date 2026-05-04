@@ -98,7 +98,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 				onClick={onOpenRoleSelect}
 				className="mt-1 self-start inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none"
 			>
-				<Plus size={12} className="mr-1" aria-label="Add icon" />
+<Plus size={12} className="mr-1" aria-hidden="true" />
 				役職を追加
 			</button>
 		</>
