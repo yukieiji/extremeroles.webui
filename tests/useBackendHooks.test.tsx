@@ -1,6 +1,6 @@
-import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { useSyncBackend, useBackendUpdate } from "../src/hooks/useBackend";
+import { act, renderHook } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { useBackendUpdate, useSyncBackend } from "../src/hooks/useBackend";
 import * as apiStore from "../src/logics/api.store";
 import { useStore } from "../src/useStore";
 
