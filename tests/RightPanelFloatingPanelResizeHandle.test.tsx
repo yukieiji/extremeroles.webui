@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RightPanelFloatingPanelResizeHandle } from "../src/feature/rightsidepanel/RightPanelFloatingPanelResizeHandle";
 import { useStore } from "../src/useStore";
@@ -33,7 +33,10 @@ describe("RightPanelFloatingPanelResizeHandle Component", () => {
 		const { container } = render(<RightPanelFloatingPanelResizeHandle />);
 		const handle = container.querySelector(".cursor-ew-resize");
 
-		fireEvent.mouseDown(handle!);
+		if (!handle) {
+			throw new Error("Handle not found");
+		}
+		fireEvent.mouseDown(handle);
 
 		expect(useStore.getState().isResizing).toBe(true);
 	});

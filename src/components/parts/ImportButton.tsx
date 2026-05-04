@@ -46,7 +46,6 @@ export function ImportButton({ onImport, disabled }: ImportButtonProps) {
 				ref={fileInputRef}
 				onChange={handleFileChange}
 				className="hidden"
-				aria-hidden="true"
 			/>
 			<button
 				type="button"
