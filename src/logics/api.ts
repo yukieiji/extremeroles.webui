@@ -6,7 +6,7 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
-	RoleAssignFilterSetDto,
+	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
@@ -362,7 +362,7 @@ export async function updateExrOption(
 }
 
 export async function fetchRoleFilterData(): Promise<
-	Record<string, RoleAssignFilterSetDto>
+	Record<string, RoleAssignFilterSetUI>
 > {
 	const res = await fetch(EXR_ROLE_FILTER_URL);
 	if (!res.ok) {
@@ -377,7 +377,34 @@ export async function fetchRoleFilterData(): Promise<
 	roleFilterMetaData.CombinationId = data.CombinationId;
 	roleFilterMetaData.GhostRoleId = data.GhostRoleId;
 
-	return data.FilterSet;
+	const filterSetUI: Record<string, RoleAssignFilterSetUI> = {};
+	for (const [guid, set] of Object.entries(data.FilterSet)) {
+		filterSetUI[guid] = {
+			AssignNum: set.AssignNum,
+			Roles: [
+				...Object.entries(set.FilterNormalId).map(([id, name]) => {
+					return {
+						id: Number(id),
+						name: String(name),
+					};
+				}),
+				...Object.entries(set.FilterCombinationId).map(([id, name]) => {
+					return {
+						id: Number(id),
+						name: String(name),
+					};
+				}),
+				...Object.entries(set.FilterGhostRoleId).map(([id, name]) => {
+					return {
+						id: Number(id),
+						name: String(name),
+					};
+				}),
+			],
+		};
+	}
+
+	return filterSetUI;
 }
 
 export async function updateAuOption(
