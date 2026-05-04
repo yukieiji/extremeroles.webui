@@ -32,11 +32,12 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// インポスターカテゴリを展開する必要がある
 		// 右パネル内のアコーディオンを指定する
 		// 日本語環境なので「開く」または「閉じる」を使用
-		const imposterCategory = page
-			.getByLabel("右フローティングパネル")
-			.getByRole("button", {
-				name: /^(開|閉)じる インポスター$/,
-			});
+		const rightPanel = page.getByLabel("右フローティングパネル");
+		await expect(rightPanel).toBeVisible({ timeout: 10000 });
+
+		const imposterCategory = rightPanel.getByRole("button", {
+			name: /^(開|閉)じる インポスター$/,
+		});
 
 		// getAttribute("aria-expanded") は要素が描画されるまで待機しないため、
 		// toBeVisible() で待機してから判定する

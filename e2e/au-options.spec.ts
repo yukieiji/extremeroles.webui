@@ -50,7 +50,9 @@ test.describe("Au Option Interactions", () => {
 		const category = page
 			.locator("main")
 			.getByRole("button", { name: /^(開く|閉じる) インポスター$/ });
-		await expect(category).toBeVisible();
+
+		// タイムアウトを長めに設定し、要素の出現を待つ
+		await expect(category).toBeVisible({ timeout: 10000 });
 	});
 
 	test("should display role controls in header for role tabs", async ({

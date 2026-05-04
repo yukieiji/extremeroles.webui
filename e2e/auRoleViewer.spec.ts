@@ -70,6 +70,8 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		});
 
 		// 最初は開いている（初期値 true）
+		// 要素が表示されるまで待機してから属性を確認
+		await expect(imposterRolesSection).toBeVisible({ timeout: 10000 });
 		await expect(imposterRolesSection).toHaveAttribute("aria-expanded", "true");
 
 		// クリックして閉じる

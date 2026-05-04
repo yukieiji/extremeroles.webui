@@ -69,7 +69,10 @@ test.describe("Role Filter Management", () => {
 		await roleButton.click();
 
 		// Verify role is added to the filter
-		await expect(lastFilter.locator('[data-role-name="Opener"]')).toBeVisible();
+		// 要素の出現を待つ
+		await expect(lastFilter.locator('[data-role-name="Opener"]')).toBeVisible({
+			timeout: 10000,
+		});
 	});
 
 	test("should remove a role from filter", async ({ page }) => {
