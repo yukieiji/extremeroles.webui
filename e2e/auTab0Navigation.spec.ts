@@ -37,6 +37,10 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 			.getByRole("button", {
 				name: /^(開|閉)じる インポスター$/,
 			});
+
+		// getAttribute("aria-expanded") は要素が描画されるまで待機しないため、
+		// toBeVisible() で待機してから判定する
+		await expect(imposterCategory).toBeVisible({ timeout: 15000 });
 		if ((await imposterCategory.getAttribute("aria-expanded")) === "false") {
 			await imposterCategory.click();
 		}
