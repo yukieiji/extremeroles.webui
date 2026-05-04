@@ -1,5 +1,5 @@
-import { useStore } from "../../useStore";
 import type { RoleAssignFilterSetDto } from "../../type";
+import { useStore } from "../../useStore";
 
 /**
  * 個別の役職をピン形式で表示するコンポーネント
@@ -21,7 +21,10 @@ function RolePin({ id, name }: { id: number; name: string }) {
 function RoleFilterCard({
 	guid,
 	filterSet,
-}: { guid: string; filterSet: RoleAssignFilterSetDto }) {
+}: {
+	guid: string;
+	filterSet: RoleAssignFilterSetDto;
+}) {
 	// 全ての役職を一つの配列にまとめる
 	const allRoles = [
 		...Object.entries(filterSet.FilterNormalId).map(([id, name]) => ({
@@ -53,7 +56,9 @@ function RoleFilterCard({
 					<RolePin key={role.id} id={role.id} name={role.name} />
 				))}
 				{allRoles.length === 0 && (
-					<span className="text-sm text-gray-400 italic">No roles selected</span>
+					<span className="text-sm text-gray-400 italic">
+						No roles selected
+					</span>
 				)}
 			</div>
 		</div>
