@@ -62,7 +62,7 @@ test.describe("Role Filter Management", () => {
 		await roleButton.click();
 
 		// Verify role is added to the filter
-		await expect(lastFilter.locator("[data-role-id]")).toContainText("Bakary");
+		await expect(lastFilter.locator(`[data-role-name="Bakary"]`)).toBeVisible();
 	});
 
 	test("should remove a role from filter", async ({ page }) => {

@@ -1,6 +1,6 @@
 import { ConfirmDialog } from "../components/parts/ConfirmDialog";
-import { RoleSelectDialog } from "../components/parts/RoleSelectDialog";
 import { useStore } from "../useStore";
+import { RoleSelectDialog } from "./exr/RoleSelectDialog";
 
 export function BlockableDialog() {
 	const blockDialog = useStore((state) => state.blockDialog);
