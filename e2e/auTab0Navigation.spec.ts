@@ -36,8 +36,8 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		await expect(rightPanel).toBeVisible({ timeout: 10000 });
 
 		const imposterCategory = rightPanel.getByRole("button", {
-			name: /^(開|閉)じる インポスター$/,
-		});
+			name: /インポスター/,
+		}).filter({ hasNotText: "役職" }); // 「インポスター役職」を除外
 
 		// getAttribute("aria-expanded") は要素が描画されるまで待機しないため、
 		// toBeVisible() で待機してから判定する

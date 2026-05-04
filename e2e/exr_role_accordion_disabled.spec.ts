@@ -54,7 +54,7 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await rateSlider.fill("1"); // 10%
 		await expect(toggleButton).toBeEnabled();
 		await expect(toggleButton.locator("svg")).toBeVisible();
-		await expect(toggleButton.getByText("・")).not.toBeVisible();
+		await expect(toggleButton.locator("svg.lucide-dot")).not.toBeVisible();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
 		await expect(content).toBeVisible();
 		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);

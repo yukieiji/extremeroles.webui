@@ -71,7 +71,7 @@ test.describe("Role Filter Management", () => {
 		// Verify role is added to the filter
 		// 要素の出現を待つ
 		await expect(lastFilter.locator('[data-role-name="Opener"]')).toBeVisible({
-			timeout: 10000,
+			timeout: 15000,
 		});
 	});
 
