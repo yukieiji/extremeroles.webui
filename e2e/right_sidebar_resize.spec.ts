@@ -9,12 +9,24 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("isResizing state is correctly managed", async ({ page }) => {
+	const rightPanel = page.getByLabel("右フローティングパネル");
 	const toggleButton = page.getByRole("button", { name: "パネルを開く" });
 
 	await toggleButton.click();
 	// パネルが開くのを待つ（アニメーション完了を待機）
 	await expect(page.getByText("Right Panel")).toBeVisible();
-	await page.waitForTimeout(500); // transition: transform 300ms
+
+	// transition: transform 300ms が完了し、右端に密着するまで待機
+	await expect
+		.poll(async () => {
+			const box = await rightPanel.boundingBox();
+			const viewport = page.viewportSize();
+			if (!box || !viewport) {
+				return -1;
+			}
+			return box.x + box.width;
+		})
+		.toBe(page.viewportSize()?.width);
 
 	const handle = page.getByTestId("resize-handle");
 	await expect(handle).toBeVisible();
@@ -48,7 +60,18 @@ test("right sidebar can be resized", async ({ page }) => {
 	await toggleButton.click();
 	// パネルが開くのを待つ
 	await expect(page.getByText("Right Panel")).toBeVisible();
-	await page.waitForTimeout(500);
+
+	// transition: transform 300ms が完了し、右端に密着するまで待機
+	await expect
+		.poll(async () => {
+			const box = await rightPanel.boundingBox();
+			const viewport = page.viewportSize();
+			if (!box || !viewport) {
+				return -1;
+			}
+			return box.x + box.width;
+		})
+		.toBe(page.viewportSize()?.width);
 
 	const initialBox = await rightPanel.boundingBox();
 	expect(initialBox?.width).toBe(320);

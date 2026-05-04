@@ -54,11 +54,14 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 	await page.keyboard.press("Escape");
 	// 完全に隠れるのを待つ
 	// transform で隠れているため、 boundingBox の x 座標を確認
-	const viewportWidth = page.viewportSize()?.width ?? 1280;
 	await expect
 		.poll(async () => {
 			const box = await rightPanel.boundingBox();
-			return box?.x;
+			const viewport = page.viewportSize();
+			if (!box || !viewport) {
+				return -1;
+			}
+			return box.x;
 		})
-		.toBeGreaterThanOrEqual(viewportWidth);
+		.toBeGreaterThanOrEqual(page.viewportSize()?.width ?? 0);
 });
