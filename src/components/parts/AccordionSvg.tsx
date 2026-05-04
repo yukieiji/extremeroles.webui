@@ -10,7 +10,7 @@ export function AccordionSvg({ className, isOpen }: AccordionSvgProp) {
 	return (
 		<ChevronDown
 			className={`transition-transform duration-200 ${className} ${isOpen ? "rotate-180" : ""}`}
-			aria-label={isOpen ? CLOSE : OPEN}
+aria-hidden="true"
 		/>
 	);
 }
