@@ -3,13 +3,17 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionRecursiveItemView } from "../src/feature/rightsidepanel/ExROptionRecursiveItemView";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
 import { getUniqueOptionId } from "../src/logics/optionUtils";
-import { OPEN, CLOSE } from "../src/noTrans";
+import { CLOSE, OPEN } from "../src/noTrans";
 import type { UniqueOptionId } from "../src/type";
 import { useStore } from "../src/useStore";
 
 // Mock child components to isolate ExROptionRecursiveItemView
 vi.mock("../src/feature/rightsidepanel/ExROptionItemView", () => ({
-	ExROptionItemView: ({ uniqueOptionId }: { uniqueOptionId: UniqueOptionId }) => (
+	ExROptionItemView: ({
+		uniqueOptionId,
+	}: {
+		uniqueOptionId: UniqueOptionId;
+	}) => (
 		<div data-testid={`ex-roption-item-${uniqueOptionId}`}>
 			Item {uniqueOptionId}
 		</div>
@@ -60,13 +64,17 @@ describe("ExROptionRecursiveItemView", () => {
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} />);
 
 		expect(screen.getByTestId("ex-roption-row-view")).toBeInTheDocument();
-		expect(screen.getByText(`Row ${parentId} Depth 0 Leaf false`)).toBeInTheDocument();
+		expect(
+			screen.getByText(`Row ${parentId} Depth 0 Leaf false`),
+		).toBeInTheDocument();
 	});
 
 	it("renders ExROptionRowView with specified depth", () => {
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={2} />);
 
-		expect(screen.getByText(`Row ${parentId} Depth 2 Leaf false`)).toBeInTheDocument();
+		expect(
+			screen.getByText(`Row ${parentId} Depth 2 Leaf false`),
+		).toBeInTheDocument();
 	});
 
 	it("shows children when store state is open", () => {
@@ -76,8 +84,12 @@ describe("ExROptionRecursiveItemView", () => {
 
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={0} />);
 
-		expect(screen.getByTestId(`ex-roption-item-${childId1}`)).toBeInTheDocument();
-		expect(screen.getByTestId(`ex-roption-item-${childId2}`)).toBeInTheDocument();
+		expect(
+			screen.getByTestId(`ex-roption-item-${childId1}`),
+		).toBeInTheDocument();
+		expect(
+			screen.getByTestId(`ex-roption-item-${childId2}`),
+		).toBeInTheDocument();
 	});
 
 	it("hides children when store state is closed", () => {
@@ -87,8 +99,12 @@ describe("ExROptionRecursiveItemView", () => {
 
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={0} />);
 
-		expect(screen.queryByTestId(`ex-roption-item-${childId1}`)).not.toBeInTheDocument();
-		expect(screen.queryByTestId(`ex-roption-item-${childId2}`)).not.toBeInTheDocument();
+		expect(
+			screen.queryByTestId(`ex-roption-item-${childId1}`),
+		).not.toBeInTheDocument();
+		expect(
+			screen.queryByTestId(`ex-roption-item-${childId2}`),
+		).not.toBeInTheDocument();
 	});
 
 	it("toggles the accordion state by calling store action", () => {
@@ -98,15 +114,23 @@ describe("ExROptionRecursiveItemView", () => {
 		fireEvent.click(toggleButton);
 
 		// Check if store state updated
-		expect(useStore.getState().openedExROptionRightFloatingPanel[parentId]).toBe(true);
+		expect(
+			useStore.getState().openedExROptionRightFloatingPanel[parentId],
+		).toBe(true);
 
 		// Re-render happens via useStore, verify children appear
-		expect(screen.getByTestId(`ex-roption-item-${childId1}`)).toBeInTheDocument();
+		expect(
+			screen.getByTestId(`ex-roption-item-${childId1}`),
+		).toBeInTheDocument();
 
 		// Click again to close
 		fireEvent.click(screen.getByRole("button", { name: CLOSE }));
-		expect(useStore.getState().openedExROptionRightFloatingPanel[parentId]).toBe(false);
-		expect(screen.queryByTestId(`ex-roption-item-${childId1}`)).not.toBeInTheDocument();
+		expect(
+			useStore.getState().openedExROptionRightFloatingPanel[parentId],
+		).toBe(false);
+		expect(
+			screen.queryByTestId(`ex-roption-item-${childId1}`),
+		).not.toBeInTheDocument();
 	});
 
 	it("handles case with no children (empty array)", () => {
