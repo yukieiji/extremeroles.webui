@@ -1,3 +1,4 @@
+import { Plus } from "lucide-react";
 import { RoleFilterCardLayout } from "../../components/blocks/RoleFilterCardLayout";
 import { RolePin } from "../../components/parts/RolePin";
 import { postRoleFilterUpdate, roleFilterMetaData } from "../../logics/api";
@@ -97,22 +98,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 				onClick={onOpenRoleSelect}
 				className="mt-1 self-start inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none"
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					className="h-3 w-3 mr-1"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					role="img"
-					aria-label="Add icon"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={2}
-						d="M12 4v16m8-8H4"
-					/>
-				</svg>
+				<Plus size={12} className="mr-1" aria-hidden="true" />
 				役職を追加
 			</button>
 		</>
