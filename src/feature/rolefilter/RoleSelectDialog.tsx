@@ -39,7 +39,7 @@ export function RoleSelectDialog({
 	);
 
 	return (
-		<div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[80vh]">
+		<div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col h-[80vh]">
 			<div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
 				<h3 className="text-xl font-bold text-gray-900">役職の選択</h3>
 				<button
@@ -57,7 +57,7 @@ export function RoleSelectDialog({
 					placeholder="役職を検索..."
 				/>
 			</div>
-			<div className="px-6 py-4 overflow-y-auto">
+			<div className="px-6 py-4 overflow-y-auto flex-1">
 				<RoleGrid
 					items={filteredRoles}
 					onSelect={onSelect}
