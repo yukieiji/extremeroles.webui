@@ -17,7 +17,7 @@ export function RoleSearchInput({
 	return (
 		<div className="relative">
 			<span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-<Search size={20} aria-hidden="true" />
+				<Search size={20} aria-hidden="true" />
 			</span>
 			<input
 				type="text"

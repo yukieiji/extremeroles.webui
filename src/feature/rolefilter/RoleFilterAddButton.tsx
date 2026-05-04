@@ -29,7 +29,7 @@ export function RoleFilterAddButton() {
 			onClick={onAddFilter}
 			className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
 		>
-<Plus size={20} className="mr-1" aria-hidden="true" />
+			<Plus size={20} className="mr-1" aria-hidden="true" />
 			フィルターを追加
 		</button>
 	);

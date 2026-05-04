@@ -28,7 +28,7 @@ export function RoleFilterCardLayout({
 				className="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors"
 				aria-label="Delete filter"
 			>
-<X size={20} aria-hidden="true" />
+				<X size={20} aria-hidden="true" />
 			</button>
 
 			<div className="flex flex-col border-b border-gray-100 pb-2">
