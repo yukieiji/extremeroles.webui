@@ -109,7 +109,7 @@ describe("PresetSelector", () => {
 		expect(mockUpdatePresetName).toHaveBeenCalledWith(0, "Enter Name");
 	});
 
-	it("resets input value if name is empty on blur", () => {
+	it("saves default value to store if name is empty on blur", () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: [100, 200],
@@ -121,8 +121,22 @@ describe("PresetSelector", () => {
 		fireEvent.change(input, { target: { value: "  " } });
 		fireEvent.blur(input);
 
-		expect(mockUpdatePresetName).toHaveBeenCalledWith(0, "");
+		expect(mockUpdatePresetName).toHaveBeenCalledWith(0, "100");
 		expect(input).toHaveValue("100");
+	});
+
+	it("skips update if name is unchanged on blur", () => {
+		vi.mocked(useOptionData).mockReturnValue({
+			selection: 0,
+			values: [0, 1],
+		});
+
+		render(<PresetSelector />);
+
+		const input = screen.getByRole("textbox");
+		fireEvent.blur(input);
+
+		expect(mockUpdatePresetName).not.toHaveBeenCalled();
 	});
 
 	it("handles preset selection from dropdown and confirm dialog", async () => {
@@ -167,7 +181,7 @@ describe("PresetSelector", () => {
 	});
 
 	it("renders nothing if presetOption is missing", () => {
-		vi.mocked(useOptionData).mockReturnValue(null as any);
+		vi.mocked(useOptionData).mockReturnValue(null as never);
 		const { container } = render(<PresetSelector />);
 		expect(container.firstChild).toBeNull();
 	});

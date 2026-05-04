@@ -30,13 +30,20 @@ export function PresetInput({
 	 * ストアと LocalStorage を更新する
 	 */
 	const commitNameChange = () => {
-		if (inputRef.current) {
-			const value = inputRef.current.value.trim();
-			updatePresetName(currentSelection, value);
-			if (value === "") {
-				inputRef.current.value = String(currentPresetValue);
-			}
+		if (!inputRef.current) {
+			return;
 		}
+
+		const newValue = inputRef.current.value.trim();
+		const finalValue = newValue === "" ? String(currentPresetValue) : newValue;
+
+		// 値が変更されている場合のみ更新を行う
+		if (finalValue !== currentPresetName) {
+			updatePresetName(currentSelection, finalValue);
+		}
+
+		// 入力欄の表示を確定後の値に更新する
+		inputRef.current.value = finalValue;
 	};
 
 	const handleBlur = () => {
