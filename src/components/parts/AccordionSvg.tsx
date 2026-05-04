@@ -1,5 +1,4 @@
 import { ChevronDown } from "lucide-react";
-import { CLOSE, OPEN } from "../../noTrans";
 
 interface AccordionSvgProp {
 	className: string;
