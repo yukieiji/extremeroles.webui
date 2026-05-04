@@ -81,3 +81,6 @@ export default defineConfig([
   },
 ])
 ```
+
+## 追加知識
+- [showSaveFilePicker の使用とテスト](.gemini/knowledge/showSaveFilePicker/README.md)

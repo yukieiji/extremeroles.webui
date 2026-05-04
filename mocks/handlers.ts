@@ -206,7 +206,8 @@ export const handlers = [
     }
     return new HttpResponse(null, { status: 200 });
   }),
-  
+
+  /**
    * GET /exr/option/csv/ のハンドラー
    */
   http.get('/exr/option/csv/', () => {
