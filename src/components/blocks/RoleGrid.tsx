@@ -32,7 +32,7 @@ export function RoleGrid({
 	}
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
 			{items.map(({ roleId, roleName }) => {
 				const isExcluded = excludeRoleIds.includes(roleId);
 				const isSelected = selectedRoleIds.includes(roleId);
