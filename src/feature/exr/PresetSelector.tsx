@@ -1,52 +1,32 @@
 import { useEffect, useRef } from "react";
 import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
-import { useBackendUpdate } from "../../hooks/useBackend";
 import { useOptionData } from "../../hooks/useExROptionData";
 import { createExRNavigateId } from "../../hooks/useOptionNavigation";
-import { updateExrOption } from "../../logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
-import {
-	format,
-	PRESET_INPUT_PLACEHOLDER,
-	PRESET_SELECT_ARIA,
-	PRESET_SWITCH_MESSAGE,
-	PRESET_SWITCH_TITLE,
-} from "../../noTrans";
 import { useStore } from "../../useStore";
+import { PresetDropdown } from "./PresetDropdown";
+import { PresetInput } from "./PresetInput";
 
 /**
  * プリセットを選択・編集するためのコンポーネント。
  * CategoryId: 0, OptionId: 0 の設定を操作します。
  * AGENT.md のガイドラインに従い、useState を使用せず、グローバルストアで状態を管理します。
- *
- * 入力更新の最適化:
- * ユーザー入力ごとの LocalStorage 書き込みを避けるため、onBlur または Enter キー入力時に更新を行います。
  */
 
 export function PresetSelector() {
-	// GeneralTab (Id: 0) から プリセットカテゴリ (Id: 0) を探す
-
 	const presetOption = useOptionData(PRESET_OPTION_UNIQUE_ID);
 
-	const presetNames = useStore((state) => {
-		return state.presetNames;
-	});
 	const isDropdownOpen = useStore((state) => {
 		return state.isPresetDropdownOpen;
-	});
-	const updatePresetName = useStore((state) => {
-		return state.updatePresetName;
 	});
 	const setPresetDropdownOpen = useStore((state) => {
 		return state.setPresetDropdownOpen;
 	});
-	const setBlockDialog = useStore((state) => state.openBlockDialog);
 	const isHighlighted = useStore((state) => {
 		return state.highlightedExROptionId === PRESET_OPTION_UNIQUE_ID;
 	});
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
-	const inputRef = useRef<HTMLInputElement>(null);
 
 	// 外部クリックでドロップダウンを閉じる
 	useEffect(() => {
@@ -64,22 +44,6 @@ export function PresetSelector() {
 		};
 	}, [setPresetDropdownOpen]);
 
-	const backendUpdator = useBackendUpdate();
-
-	const handlePresetSelect = (index: number) => {
-		setPresetDropdownOpen(false);
-		const newPreset = presetNames[index] ?? String(presetValues[index]);
-
-		setBlockDialog({
-			title: PRESET_SWITCH_TITLE,
-			message: format(PRESET_SWITCH_MESSAGE, currentPresetName, newPreset),
-			onConfirm: () =>
-				backendUpdator(async () => {
-					await updateExrOption(0, 0, 0, index);
-				}),
-		});
-	};
-
 	if (!presetOption) {
 		return null;
 	}
@@ -87,39 +51,8 @@ export function PresetSelector() {
 	const currentSelection = presetOption.selection ?? 0;
 	const presetValues = presetOption.values as number[];
 	const currentPresetValue = presetValues[currentSelection];
-	const currentPresetName =
-		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const navigateId = createExRNavigateId(PRESET_OPTION_UNIQUE_ID);
-
-	/**
-	 * ストアと LocalStorage を更新する
-	 */
-	const commitNameChange = () => {
-		if (inputRef.current) {
-			const value = inputRef.current.value.trim();
-			updatePresetName(currentSelection, value);
-			if (value === "") {
-				inputRef.current.value = String(currentPresetValue);
-			}
-		}
-	};
-
-	const handleBlur = () => {
-		commitNameChange();
-	};
-
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
-			commitNameChange();
-			// Enter 入力後はフォーカスを外して確定を視覚的に示す
-			e.currentTarget.blur();
-		}
-	};
-
-	const toggleDropdown = () => {
-		setPresetDropdownOpen(!isDropdownOpen);
-	};
 
 	return (
 		<HighlightWrapper
@@ -128,67 +61,16 @@ export function PresetSelector() {
 			isInset={false}
 		>
 			<div className="relative flex items-center gap-2" ref={dropdownRef}>
-				<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
-					<input
-						ref={inputRef}
-						type="text"
-						key={currentSelection}
-						defaultValue={currentPresetName}
-						onBlur={handleBlur}
-						onKeyDown={handleKeyDown}
-						className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
-						placeholder={PRESET_INPUT_PLACEHOLDER}
-					/>
-					<button
-						type="button"
-						onClick={toggleDropdown}
-						className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors"
-						aria-label={PRESET_SELECT_ARIA}
-					>
-						<svg
-							className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							aria-hidden="true"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M19 9l-7 7-7-7"
-							/>
-						</svg>
-					</button>
-				</div>
+				<PresetInput
+					currentSelection={currentSelection}
+					currentPresetValue={currentPresetValue}
+				/>
 
 				{isDropdownOpen && (
-					<div className="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded shadow-xl z-50 max-h-60 overflow-y-auto">
-						{presetValues.map((val, index) => {
-							const name = presetNames[index] ?? String(val);
-							const isSelected = index === currentSelection;
-							return (
-								<button
-									key={`preset-${val}`}
-									type="button"
-									onClick={() => {
-										handlePresetSelect(index);
-									}}
-									className={`
-                  w-full text-left px-3 py-2 text-sm transition-colors
-                  ${isSelected ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}
-                `}
-								>
-									<div className="flex justify-between items-center">
-										<span>{name}</span>
-										{name !== String(val) && (
-											<span className="text-xs opacity-50 ml-2">({val})</span>
-										)}
-									</div>
-								</button>
-							);
-						})}
-					</div>
+					<PresetDropdown
+						currentSelection={currentSelection}
+						presetValues={presetValues}
+					/>
 				)}
 			</div>
 		</HighlightWrapper>
