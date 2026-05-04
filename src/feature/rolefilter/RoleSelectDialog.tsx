@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { RoleGrid } from "../../components/blocks/RoleGrid";
 import { RoleSearchInput } from "../../components/parts/RoleSearchInput";
 import { roleFilterMetaData } from "../../logics/api";
@@ -46,22 +47,7 @@ export function RoleSelectDialog({
 					onClick={onCancel}
 					className="text-gray-400 hover:text-gray-600 transition-colors"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						role="img"
-						aria-label="Close icon"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
+					<X size={24} aria-label="Close icon" />
 				</button>
 			</div>
 			<div className="px-6 py-3 border-b border-gray-50">

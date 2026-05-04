@@ -37,6 +37,7 @@ export function PresetDropdown({
 		setPresetDropdownOpen(false);
 
 		setBlockDialog({
+			type: "confirm",
 			title: PRESET_SWITCH_TITLE,
 			message: format(PRESET_SWITCH_MESSAGE, currentPresetName, newPreset),
 			onConfirm: () =>
