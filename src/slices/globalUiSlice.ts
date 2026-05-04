@@ -10,11 +10,13 @@ export interface GlobalUiSlice {
 	isPendingBlock: boolean;
 	blockCount: number;
 	blockDialog: BlockDialog | undefined;
+	roleSearchQuery: string;
 	setPendingBlock: (isBlock: boolean) => void;
 	pushBlockCount: () => void;
 	popBlockCount: () => void;
 	openBlockDialog: (dialog: BlockDialog) => void;
 	closeBlockDialog: () => void;
+	setRoleSearchQuery: (query: string) => void;
 }
 
 export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
@@ -22,6 +24,7 @@ export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 		isPendingBlock: false,
 		blockCount: 0,
 		blockDialog: undefined,
+		roleSearchQuery: "",
 		setPendingBlock: (isBlock: boolean) => {
 			set({
 				isPendingBlock: isBlock,
@@ -42,7 +45,10 @@ export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 			set({ blockDialog: dialog });
 		},
 		closeBlockDialog() {
-			set({ blockDialog: undefined });
+			set({ blockDialog: undefined, roleSearchQuery: "" });
+		},
+		setRoleSearchQuery: (query: string) => {
+			set({ roleSearchQuery: query });
 		},
 	};
 };
