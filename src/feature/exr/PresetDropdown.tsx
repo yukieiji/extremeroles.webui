@@ -6,48 +6,11 @@ import {
 	PRESET_SWITCH_TITLE,
 } from "../../noTrans";
 import { useStore } from "../../useStore";
+import { PresetDropdownItem } from "./PresetDropdownItem";
 
 interface PresetDropdownProps {
 	currentSelection: number;
 	presetValues: number[];
-}
-
-interface PresetDropdownItemProps {
-	index: number;
-	value: number;
-	isSelected: boolean;
-	onSelect: (index: number, name: string) => void;
-}
-
-function PresetDropdownItem({
-	index,
-	value,
-	isSelected,
-	onSelect,
-}: PresetDropdownItemProps) {
-	const name = useStore((state) => {
-		return state.presetNames[index] ?? String(value);
-	});
-
-	return (
-		<button
-			type="button"
-			onClick={() => {
-				onSelect(index, name);
-			}}
-			className={`
-        w-full text-left px-3 py-2 text-sm transition-colors
-        ${isSelected ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}
-      `}
-		>
-			<div className="flex justify-between items-center">
-				<span>{name}</span>
-				{name !== String(value) && (
-					<span className="text-xs opacity-50 ml-2">({value})</span>
-				)}
-			</div>
-		</button>
-	);
 }
 
 /**
