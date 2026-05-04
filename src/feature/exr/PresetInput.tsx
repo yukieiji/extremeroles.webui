@@ -14,7 +14,9 @@ export function PresetInput({
 	currentSelection,
 	currentPresetValue,
 }: PresetInputProps) {
-	const presetNames = useStore((state) => state.presetNames);
+	const currentPresetName = useStore((state) => {
+		return state.presetNames[currentSelection] ?? String(currentPresetValue);
+	});
 	const isDropdownOpen = useStore((state) => state.isPresetDropdownOpen);
 	const updatePresetName = useStore((state) => state.updatePresetName);
 	const setPresetDropdownOpen = useStore(
@@ -22,9 +24,6 @@ export function PresetInput({
 	);
 
 	const inputRef = useRef<HTMLInputElement>(null);
-
-	const currentPresetName =
-		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	/**
 	 * ストアと LocalStorage を更新する

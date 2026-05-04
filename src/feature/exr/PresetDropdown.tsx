@@ -12,6 +12,44 @@ interface PresetDropdownProps {
 	presetValues: number[];
 }
 
+interface PresetDropdownItemProps {
+	index: number;
+	value: number;
+	isSelected: boolean;
+	onSelect: (index: number, name: string) => void;
+}
+
+function PresetDropdownItem({
+	index,
+	value,
+	isSelected,
+	onSelect,
+}: PresetDropdownItemProps) {
+	const name = useStore((state) => {
+		return state.presetNames[index] ?? String(value);
+	});
+
+	return (
+		<button
+			type="button"
+			onClick={() => {
+				onSelect(index, name);
+			}}
+			className={`
+        w-full text-left px-3 py-2 text-sm transition-colors
+        ${isSelected ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}
+      `}
+		>
+			<div className="flex justify-between items-center">
+				<span>{name}</span>
+				{name !== String(value) && (
+					<span className="text-xs opacity-50 ml-2">({value})</span>
+				)}
+			</div>
+		</button>
+	);
+}
+
 /**
  * プリセットの選択肢を表示するドロップダウンリストコンポーネント
  */
@@ -19,7 +57,12 @@ export function PresetDropdown({
 	currentSelection,
 	presetValues,
 }: PresetDropdownProps) {
-	const presetNames = useStore((state) => state.presetNames);
+	const currentPresetName = useStore((state) => {
+		return (
+			state.presetNames[currentSelection] ??
+			String(presetValues[currentSelection])
+		);
+	});
 	const setPresetDropdownOpen = useStore(
 		(state) => state.setPresetDropdownOpen,
 	);
@@ -27,12 +70,8 @@ export function PresetDropdown({
 
 	const backendUpdator = useBackendUpdate();
 
-	const currentPresetName =
-		presetNames[currentSelection] ?? String(presetValues[currentSelection]);
-
-	const handlePresetSelect = (index: number) => {
+	const handlePresetSelect = (index: number, newPreset: string) => {
 		setPresetDropdownOpen(false);
-		const newPreset = presetNames[index] ?? String(presetValues[index]);
 
 		setBlockDialog({
 			title: PRESET_SWITCH_TITLE,
@@ -47,27 +86,15 @@ export function PresetDropdown({
 	return (
 		<div className="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded shadow-xl z-50 max-h-60 overflow-y-auto">
 			{presetValues.map((val, index) => {
-				const name = presetNames[index] ?? String(val);
 				const isSelected = index === currentSelection;
 				return (
-					<button
+					<PresetDropdownItem
 						key={`preset-${val}`}
-						type="button"
-						onClick={() => {
-							handlePresetSelect(index);
-						}}
-						className={`
-                  w-full text-left px-3 py-2 text-sm transition-colors
-                  ${isSelected ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}
-                `}
-					>
-						<div className="flex justify-between items-center">
-							<span>{name}</span>
-							{name !== String(val) && (
-								<span className="text-xs opacity-50 ml-2">({val})</span>
-							)}
-						</div>
-					</button>
+						index={index}
+						value={val}
+						isSelected={isSelected}
+						onSelect={handlePresetSelect}
+					/>
 				);
 			})}
 		</div>
