@@ -42,7 +42,7 @@ export function RoleCategoryAccordion({
 				>
 					{disable ? (
 						<div className="w-5 h-5 flex items-center justify-center text-gray-500 font-bold">
-							<Dot size={20} aria-hidden="true" />
+							<Dot size={18} aria-hidden="true" />
 						</div>
 					) : (
 						<AccordionSvg isOpen={isOpen} className="w-5 h-5 text-gray-400" />
