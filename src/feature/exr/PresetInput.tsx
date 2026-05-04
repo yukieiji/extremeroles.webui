@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { PRESET_INPUT_PLACEHOLDER, PRESET_SELECT_ARIA } from "../../noTrans";
 import { useStore } from "../../useStore";
@@ -79,20 +80,11 @@ export function PresetInput({
 				className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors"
 				aria-label={PRESET_SELECT_ARIA}
 			>
-				<svg
-					className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
+				<ChevronDown
+					size={16}
+					className={`text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
 					aria-hidden="true"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={2}
-						d="M19 9l-7 7-7-7"
-					/>
-				</svg>
+				/>
 			</button>
 		</div>
 	);

@@ -1,3 +1,4 @@
+import { Plus } from "lucide-react";
 import { postRoleFilterUpdate } from "../../logics/api";
 import { PostExRAssignOps } from "../../type";
 import { useStore } from "../../useStore";
@@ -28,22 +29,7 @@ export function RoleFilterAddButton() {
 			onClick={onAddFilter}
 			className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				className="h-5 w-5 mr-1"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-				role="img"
-				aria-label="Add filter icon"
-			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					strokeWidth={2}
-					d="M12 4v16m8-8H4"
-				/>
-			</svg>
+			<Plus size={20} className="mr-1" aria-hidden="true" />
 			フィルターを追加
 		</button>
 	);
