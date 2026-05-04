@@ -1,7 +1,15 @@
 import { expect, test } from "@playwright/test";
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, browserName }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
+	if (browserName === "chromium") {
+		// showSaveFilePicker を無効化してフォールバックをテストする
+		// (showSaveFilePicker は Playwright の download イベントを発生させないため)
+		await page.addInitScript(() => {
+			// biome-ignore lint/suspicious/noExplicitAny: mock
+			delete (window as any).showSaveFilePicker;
+		});
+	}
 	await page.goto("/");
 	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
 		timeout: 15000,

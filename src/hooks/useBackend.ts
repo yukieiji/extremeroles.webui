@@ -35,20 +35,47 @@ export function useExportCsv(): () => Promise<void> {
 			try {
 				const result = await fetchCsvData();
 				const blob = new Blob([result.CsvBody], { type: "text/csv" });
+				const dateStr = result.ExportAt.replace(/[:.-]/g, "").replace("T", "_");
+				const fileName = `export_${dateStr}.csv`;
+
+				// showSaveFilePickerが利用可能な場合
+				if ("showSaveFilePicker" in window) {
+					try {
+						// biome-ignore lint/suspicious/noExplicitAny: showSaveFilePicker is not in standard lib yet
+						const handle = await (window as any).showSaveFilePicker({
+							suggestedName: fileName,
+							types: [
+								{
+									description: "CSV File",
+									accept: { "text/csv": [".csv"] },
+								},
+							],
+						});
+						const writable = await handle.createWritable();
+						await writable.write(blob);
+						await writable.close();
+						return;
+					} catch (error: unknown) {
+						// ユーザーがキャンセルした場合は静かに終了
+						if (error instanceof Error && error.name === "AbortError") {
+							return;
+						}
+						// それ以外のエラーの場合はフォールバックへ進む
+						console.error("showSaveFilePicker failed:", error);
+					}
+				}
+
+				// フォールバック: 従来のaタグによるダウンロード
 				const url = URL.createObjectURL(blob);
 				const a = document.createElement("a");
-
-				// ファイル名の生成: export_YYYYMMDD_HHMMSS.csv
-				const dateStr = result.ExportAt.replace(/[:.-]/g, "").replace("T", "_");
 				a.href = url;
-				a.download = `export_${dateStr}.csv`;
+				a.download = fileName;
 				document.body.appendChild(a);
 				a.click();
 				document.body.removeChild(a);
 				URL.revokeObjectURL(url);
 			} catch (error) {
 				console.error("Failed to export CSV:", error);
-				// エラーハンドリングが必要な場合はここに追加
 			}
 		});
 	};
