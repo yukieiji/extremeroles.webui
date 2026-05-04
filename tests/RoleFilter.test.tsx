@@ -24,7 +24,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		});
 	});
 
-	it("renders empty state and adds a filter", async () => {
+	it("renders empty state and triggers role selection on add filter", async () => {
 		render(<RoleFilterViewer />);
 
 		expect(screen.getByText(/フィルターがありません/)).toBeInTheDocument();
@@ -32,11 +32,24 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		const addButton = screen.getByText("フィルターを追加");
 		fireEvent.click(addButton);
 
+		// Should show role selection dialog instead of calling API immediately
+		const state = useStore.getState();
+		expect(state.blockDialog).toBeDefined();
+		expect(state.blockDialog?.type).toBe("roleSelect");
+		expect(state.blockDialog?.title).toBe("フィルター追加: 役職の選択");
+
+		// Simulate role selection
+		if (state.blockDialog?.type === "roleSelect") {
+			await state.blockDialog.onSelect(1);
+		}
+
 		await waitFor(() => {
-			expect(postRoleFilterUpdate).toHaveBeenCalled();
+			// First call: FilterNewAdd, Second call: FilterRoleAdd
+			expect(postRoleFilterUpdate).toHaveBeenCalledTimes(2);
 		});
 
 		expect(screen.getByText("AssignNum: 1")).toBeInTheDocument();
+		expect(screen.getByText("Crewmate")).toBeInTheDocument();
 	});
 
 	it("deletes a filter with confirmation", async () => {
