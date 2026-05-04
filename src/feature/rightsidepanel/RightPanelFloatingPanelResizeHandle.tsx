@@ -25,7 +25,7 @@ export function RightPanelFloatingPanelResizeHandle() {
 			}
 
 			const newWidth = window.innerWidth - e.clientX;
-			const maxWidth = window.innerWidth * 0.8;
+			const maxWidth = window.innerWidth * 0.9;
 
 			if (newWidth >= MIN_WIDTH && newWidth <= maxWidth) {
 				setRightPanelWidth(newWidth);
