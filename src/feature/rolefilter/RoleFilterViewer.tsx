@@ -16,7 +16,6 @@ export function RoleFilterViewer() {
 	return (
 		<div className="p-4 flex flex-col gap-4 max-h-[calc(100vh-200px)] overflow-auto">
 			<div className="flex justify-between items-center">
-				<h2 className="text-lg font-bold text-gray-800">Filter List</h2>
 				<RoleFilterAddButton />
 			</div>
 
