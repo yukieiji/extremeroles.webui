@@ -18,28 +18,18 @@ export function useAuNavigation(
 	categoryId: number,
 	optionId: AuOptionId,
 ) {
-	const setSelectedTab = useStore((state) => {
-		return state.setSelectedTab;
-	});
-	const setSelectedAuTabId = useStore((state) => {
-		return state.setSelectedAuTabId;
-	});
-	const toggleAuCategory = useStore((state) => {
-		return state.toggleAuCategory;
-	});
-	const openedAuCategoryIds = useStore((state) => {
-		return state.openedAuCategoryIds;
-	});
-	const setHighlightedAuOptionId = useStore((state) => {
-		return state.setHighlightedAuOptionId;
-	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
-
 	const navigateId = createAuNavigateId(optionId);
 
 	const navigateToOption = () => {
+		const {
+			setRightPanelOpen,
+			setSelectedTab,
+			setSelectedAuTabId,
+			openedAuCategoryIds,
+			toggleAuCategory,
+			setHighlightedAuOptionId,
+		} = useStore.getState();
+
 		setRightPanelOpen(false);
 		setSelectedTab("Au");
 		setSelectedAuTabId(tabId);
@@ -56,7 +46,7 @@ export function useAuNavigation(
 				}
 			}
 			setTimeout(() => {
-				setHighlightedAuOptionId(null);
+				useStore.getState().setHighlightedAuOptionId(null);
 			}, 2000);
 		}, 100);
 	};
@@ -67,29 +57,19 @@ export function useAuNavigation(
  * ExRの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
  */
 export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
-	const setSelectedTab = useStore((state) => {
-		return state.setSelectedTab;
-	});
-	const setSelectedExRTabId = useStore((state) => {
-		return state.setSelectedExRTabId;
-	});
-	const toggleExRCategory = useStore((state) => {
-		return state.toggleExRCategory;
-	});
-	const openedExRCategoryIds = useStore((state) => {
-		return state.openedExRCategoryIds;
-	});
-	const setHighlightedExROptionId = useStore((state) => {
-		return state.setHighlightedExROptionId;
-	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
-
 	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
 	const navigateId = createExRNavigateId(uniqueOptionId);
 
 	const navigateToOption = () => {
+		const {
+			setRightPanelOpen,
+			setSelectedTab,
+			setSelectedExRTabId,
+			openedExRCategoryIds,
+			toggleExRCategory,
+			setHighlightedExROptionId,
+		} = useStore.getState();
+
 		setRightPanelOpen(false);
 		setSelectedTab("ExR");
 		setSelectedExRTabId(tabId as ExRTabId);
@@ -106,7 +86,7 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 				}
 			}
 			setTimeout(() => {
-				setHighlightedExROptionId(null);
+				useStore.getState().setHighlightedExROptionId(null);
 			}, 2000);
 		}, 100);
 	};
