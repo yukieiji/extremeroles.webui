@@ -9,7 +9,9 @@ test.beforeEach(async ({ page }) => {
 	});
 });
 
-test("CSV import flow shows confirmation and calls API", async ({ page }) => {
+test("CSV import flow shows confirmation and triggers sync", async ({
+	page,
+}) => {
 	// 1. Check if Import Button is visible
 	const importButton = page.getByLabel("CSVファイルをインポート");
 	await expect(importButton).toBeVisible();
@@ -33,7 +35,7 @@ test("CSV import flow shows confirmation and calls API", async ({ page }) => {
 	// 4. Confirm import
 	await page.getByRole("button", { name: "OK" }).click();
 
-	// 5. Verify sync overlay appears
+	// 5. Verify sync overlay appears (it should because we use backendUpdater)
 	await expect(page.getByText("Synchronizing...")).toBeVisible();
 	await expect(page.getByText("Synchronizing...")).not.toBeVisible({
 		timeout: 10000,
