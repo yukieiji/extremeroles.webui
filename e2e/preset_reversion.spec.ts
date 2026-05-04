@@ -30,6 +30,7 @@ test("Preset name reversion to default when cleared", async ({ page }) => {
 	// ヘッダーのプリセットセレクターを確認
 	const presetInput = page.getByPlaceholder("プリセット名を入力...");
 	await expect(presetInput).toBeVisible({ timeout: 15000 });
+	const curValue = await presetInput.inputValue();
 
 	// 1. プリセットにカスタム名を付ける
 	await presetInput.fill("Custom Preset");
@@ -39,8 +40,8 @@ test("Preset name reversion to default when cleared", async ({ page }) => {
 	// 2. 入力欄を空にして確定（Enter）すると初期名に戻るか確認
 	await presetInput.fill("");
 	await presetInput.press("Enter");
-	// 初期値は 1 (index 0) なので "1" に戻るはず
-	await expect(presetInput).toHaveValue("1");
+	// 初期値はcurValue(index 0) なのでcurValueに戻るはず
+	await expect(presetInput).toHaveValue(curValue);
 
 	// 3. 再度カスタム名を付けて、今度は onBlur で戻るか確認
 	await presetInput.fill("Another Name");
@@ -49,7 +50,7 @@ test("Preset name reversion to default when cleared", async ({ page }) => {
 
 	await presetInput.fill("   "); // スペースのみ
 	await presetInput.blur();
-	await expect(presetInput).toHaveValue("1");
+	await expect(presetInput).toHaveValue(curValue);
 
 	// 4. ページリロード後も初期名（カスタム名なし）が維持されているか確認
 	await page.goto("/");
@@ -58,5 +59,5 @@ test("Preset name reversion to default when cleared", async ({ page }) => {
 	});
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 	await exrButton.click();
-	await expect(presetInput).toHaveValue("1");
+	await expect(presetInput).toHaveValue(curValue);
 });

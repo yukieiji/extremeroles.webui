@@ -56,7 +56,7 @@ test("right sidebar can be resized", async ({ page }) => {
 	const initialBox = await rightPanel.boundingBox();
 	expect(initialBox?.width).toBe(320);
 
-	const handle = page.locator("div.cursor-ew-resize").first();
+	const handle = page.getByTestId("resize-handle");
 	const handleBox = await handle.boundingBox();
 	if (!handleBox) {
 		throw new Error("Handle box not found");

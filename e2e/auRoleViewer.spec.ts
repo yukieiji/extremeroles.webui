@@ -89,12 +89,27 @@ test.describe("Au Role Viewer in Right Panel", () => {
 	test("does not display inactive roles in the right panel", async ({
 		page,
 	}) => {
+		// Au Options の 役職タブ（タブ 1）に移動
+		await page.getByRole("button", { name: "1", exact: true }).first().click();
+
+		// 科学者 (Scientist)を無効にしてチェック
+		const category = page
+			.getByTestId("role-category")
+			.filter({ hasText: "科学者" });
+		const chanceSlider = category
+			.getByTestId("spawn-rate-control")
+			.locator('input[type="range"]');
+		const countSlider = category
+			.getByTestId("spawn-count-control")
+			.locator('input[type="range"]');
+
 		await page.getByRole("button", { name: "パネルを開く" }).click();
 		const rightPanel = page.getByLabel("右フローティングパネル");
 
+		await chanceSlider.fill("0");
+		await countSlider.fill("0");
+
 		// モックデータで無効な役職（例: スポーンレート0%）が表示されていないことを確認
-		// 注意: モックデータの全ての役職名を把握している必要があるが、
-		// ここでは「クルー役職」セクション自体が存在しない（有効な役職がないため）ことを確認する
-		await expect(rightPanel.getByText("クルー役職")).not.toBeVisible();
+		await expect(rightPanel.getByText("科学者")).not.toBeVisible();
 	});
 });

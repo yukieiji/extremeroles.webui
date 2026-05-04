@@ -39,7 +39,7 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await selectButton.click();
 
 	// プリセット 2 (index 1) に切り替える
-	const preset2Button = page.getByRole("button", { name: "2", exact: true });
+	const preset2Button = page.getByRole("button", { name: "10", exact: true });
 	await expect(preset2Button).toBeVisible();
 	await preset2Button.click();
 
@@ -54,7 +54,7 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	});
 
 	// 入力欄が index 1 のデフォルト値 "2" になっていることを確認
-	await expect(presetInput).toHaveValue("2");
+	await expect(presetInput).toHaveValue("10");
 
 	// プリセット 2 (index 1) に名前を付ける
 	await presetInput.fill("Casual Fun");

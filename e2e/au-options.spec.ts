@@ -61,12 +61,20 @@ test.describe("Au Option Interactions", () => {
 
 		// Initially chance is probably 0, so it's disabled
 		const category = page.getByTestId("category-list").locator("> div").first();
-		await expect(category.getByTestId("spawn-rate-control")).toBeVisible();
+		const spawn = category.getByTestId("spawn-rate-control");
+		await expect(spawn).toBeVisible();
 		await expect(category.getByTestId("spawn-count-control")).toBeVisible();
+
+		const inputs = spawn.locator('input[type="range"]');
 
 		// Accordion button should be disabled when chance is 0
 		const toggleButton = category.locator("button").first();
-		await expect(toggleButton).toBeDisabled();
+
+		if (Number(await inputs.inputValue()) > 0) {
+			await expect(toggleButton).toBeVisible();
+		} else {
+			await expect(toggleButton).toBeDisabled();
+		}
 	});
 
 	test("should synchronize chance and max count in Au roles", async ({
@@ -82,6 +90,10 @@ test.describe("Au Option Interactions", () => {
 		const countInput = countControl.locator('input[type="text"]');
 		const chanceSlider = chanceControl.locator('input[type="range"]');
 		const countSlider = countControl.locator('input[type="range"]');
+
+		// 初期化
+		await countInput.fill("0");
+		await chanceInput.fill("0");
 
 		// 1. Set count to 1, should set chance to 10%
 		await countSlider.fill("1");

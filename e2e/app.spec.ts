@@ -45,7 +45,9 @@ test("has sidebar and au option editor", async ({ page }) => {
 		page.getByRole("heading", { name: "ExR Options" }),
 	).toBeVisible();
 	// JSON pre はなくなったので、アコーディオンが表示されていることを確認
-	await expect(page.getByText("グローバル設定")).toBeVisible();
+	await expect(
+		page.getByRole("button", { name: "グローバル設定", exact: false }),
+	).toBeVisible();
 
 	// サイドバーの開閉
 	await page.getByRole("button", { name: "サイドバーを閉じる" }).click();

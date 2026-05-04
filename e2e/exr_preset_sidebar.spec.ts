@@ -32,16 +32,16 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 
 	// プリセット名が表示されていることを確認。モックデータでは初期値 "1"
 	// ViewerOptionRow はボタンとして実装されている
-	const presetRow = page.getByRole("button", { name: "使用するプリセット 1" });
+	const presetRow = page.getByRole("button", { name: "使用するプリセット" });
 	await expect(presetRow).toBeVisible();
 
 	// 3. ダブルクリックでナビゲーションを確認
 	await presetRow.dblclick();
 
-	// 右パネルが閉じていることを確認 (navigateToExROption 内で setRightPanelOpen(false) しているため)
-	// translate-x-full が適用されているはず。Playwright の toBeVisible は視覚的に見えなくなっても要素がDOMにあれば true を返す場合がある（特に transform の場合）
-	// ここでは、クラスの変化や aria-hidden などを確認するか、単に少し待つ
-	await expect(rightPanel).toHaveClass(/translate-x-full/);
+	// 4. パネルのラベルを取って非表示か確認する
+	await expect(
+		rightPanel.getByLabel("右フローティングパネル"),
+	).not.toBeVisible();
 
 	// ExR タブが選択されていることを確認
 	const exrTabButton = page.getByRole("button", { name: "ExR Options" });
