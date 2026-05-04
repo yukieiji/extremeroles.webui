@@ -2,6 +2,7 @@ import type {
 	AuOptionId,
 	AuOptionMetaDataRecords,
 	AuRoleOption,
+	DeltRoleAssignFilter,
 	ExROptionDto,
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
@@ -385,6 +386,22 @@ export async function fetchCsvData(): Promise<GetCsvResult> {
 
 	const jsonData = await res.json();
 	return await GetCsvResultSchema.parseAsync(jsonData);
+}
+
+export async function postRoleFilterUpdate(
+	request: DeltRoleAssignFilter,
+): Promise<void> {
+	const res = await fetch(EXR_ROLE_FILTER_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(request),
+	});
+
+	if (!res.ok) {
+		throw new Error(`Failed to update role filter: ${res.statusText}`);
+	}
 }
 
 export async function fetchRoleFilterData(): Promise<

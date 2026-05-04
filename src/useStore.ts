@@ -9,6 +9,8 @@ import type { OptionGroupToggleSidebarSlice } from "./slices/optionGroupToggleSi
 import { createOptionGroupToggleSidebarSlice } from "./slices/optionGroupToggleSidebarSlice";
 import type { RightFloatingPanelSlice } from "./slices/rightFloatingPanelSlice";
 import { createRightFloatingPanelSlice } from "./slices/rightFloatingPanelSlice";
+import type { RoleFilterSlice } from "./slices/roleFilterSlice";
+import { createRoleFilterSlice } from "./slices/roleFilterSlice";
 
 /**
  * Zustand ストアの作成
@@ -18,7 +20,8 @@ export const useStore = create<
 		OptionGroupToggleSidebarSlice &
 		RightFloatingPanelSlice &
 		AuOptionViewerSlice &
-		ExROptionViewerSlice
+		ExROptionViewerSlice &
+		RoleFilterSlice
 >()((...a) => {
 	return {
 		...createGlobalUiSlice(...a),
@@ -26,5 +29,6 @@ export const useStore = create<
 		...createRightFloatingPanelSlice(...a),
 		...createAuOptionViewerSlice(...a),
 		...createExROptionViewerSlice(...a),
+		...createRoleFilterSlice(...a),
 	};
 });
