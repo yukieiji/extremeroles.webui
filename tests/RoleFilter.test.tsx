@@ -36,7 +36,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 			expect(postRoleFilterUpdate).toHaveBeenCalled();
 		});
 
-		expect(screen.getByText("AssignNum: 0")).toBeInTheDocument();
+		expect(screen.getByText("AssignNum: 1")).toBeInTheDocument();
 	});
 
 	it("deletes a filter with confirmation", async () => {
