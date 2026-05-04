@@ -124,8 +124,15 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		},
 		updatePresetName: (presetIndex: number, name: string) => {
 			set((state) => {
-				const newPresetNames = { ...state.presetNames };
 				const trimmedName = name.trim();
+				const currentName = state.presetNames[presetIndex] ?? "";
+
+				// 値が変更されていない場合は更新をスキップ
+				if (trimmedName === currentName) {
+					return state;
+				}
+
+				const newPresetNames = { ...state.presetNames };
 				if (trimmedName === "") {
 					delete newPresetNames[presetIndex];
 				} else {
