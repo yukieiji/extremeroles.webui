@@ -6,15 +6,17 @@ import svgLoader from 'vite-svg-loader'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
 
+const port = process.env.VITE_USE_MOCK ? 67700 : 57700
+
 // https://vite.dev/config/
 export default defineConfig({
   server: {
     proxy: {
-      '/exr/option/': 'http://localhost:57700',
-      '/exr/role/filter/': 'http://localhost:57700',
-      '/au/option/': 'http://localhost:57700',
-      '/au/translation/batch/': 'http://localhost:57700',
-      '/au/translation/batch/optionunit/': 'http://localhost:57700',
+      '/exr/option/': `http://localhost:${port}`,
+      '/exr/role/filter/': `http://localhost:${port}`,
+      '/au/option/': `http://localhost:${port}`,
+      '/au/translation/batch/': `http://localhost:${port}`,
+      '/au/translation/batch/optionunit/': `http://localhost:${port}`,
     },
   },
   test: {
