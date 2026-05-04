@@ -27,7 +27,7 @@ export function RolePin({ id, name, onDelete }: RolePinProps) {
 					className="hover:text-blue-600 focus:outline-none"
 					aria-label={`Remove ${name}`}
 				>
-					<X size={12} aria-label="Remove icon" />
+<X size={12} aria-hidden="true" />
 				</button>
 			)}
 		</div>
