@@ -19,7 +19,8 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 
 	// パネルを開く
 	await toggleButton.click();
-	await expect(rightPanel).toBeVisible();
+	// トグルボタン自体は常に表示されているため、パネルの中身が表示されるのを待つ
+	await expect(page.getByText("Right Panel")).toBeVisible();
 
 	// 設定値アコーディオンが表示され、開いていることを確認
 	const settingsAccordion = page.getByRole("button", { name: "設定値" });
@@ -52,5 +53,15 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 	// Escapeキーでパネルを閉じる
 	await page.keyboard.press("Escape");
 	// 完全に隠れるのを待つ
-	await expect(rightPanel).toHaveClass(/translate-x-full/);
+	// transform で隠れているため、 boundingBox の x 座標を確認
+	await expect
+		.poll(async () => {
+			const box = await rightPanel.boundingBox();
+			const viewport = page.viewportSize();
+			if (!box || !viewport) {
+				return -1;
+			}
+			return box.x;
+		})
+		.toBeGreaterThanOrEqual(page.viewportSize()?.width ?? 0);
 });

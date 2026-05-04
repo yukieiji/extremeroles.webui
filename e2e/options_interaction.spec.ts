@@ -40,21 +40,29 @@ test("Options interaction behavior", async ({ page }) => {
 	).toBeVisible();
 
 	// 別のカテゴリの操作を確認
-	const shuffleCategory = page.getByRole("button", {
-		name: "乱数に関する設定",
-	});
+	const shuffleCategory = page
+		.locator('[data-testid="category-list"]')
+		.getByRole("button", {
+			name: "乱数に関する設定",
+		});
 	await shuffleCategory.click();
 
-	const shuffleOption = page.getByText("強力なシャッフルを使用する");
+	const shuffleOption = page
+		.locator('[data-testid="category-list"]')
+		.getByText("強力なシャッフルを使用する");
 	await expect(shuffleOption).toBeVisible({ timeout: 3000 });
 
 	// トグルスイッチに変更されたので、トグルを操作する
-	const toggle = page.getByTestId("option-toggle").first();
-	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
-
-	// トグルを切り替え
-	await toggle.click();
+	const toggle = page
+		.locator('[data-testid="category-list"]')
+		.getByTestId("option-toggle")
+		.first();
+	// モックの初期値がオン(true)のため
 	await expect(toggle).toHaveAttribute("aria-checked", "true");
-	await expect(page.getByText("オン", { exact: true })).toBeVisible();
+	await expect(page.getByText("オン", { exact: true }).first()).toBeVisible();
+
+	// トグルを切り替え (オン -> オフ)
+	await toggle.click();
+	await expect(toggle).toHaveAttribute("aria-checked", "false");
+	await expect(page.getByText("オフ").first()).toBeVisible();
 });

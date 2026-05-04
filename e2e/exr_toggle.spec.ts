@@ -28,26 +28,39 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 		.click();
 
 	// '乱数に関する設定' アコーディオンを開く
-	const categoryAccordion = page.getByText("乱数に関する設定");
+	const categoryAccordion = page
+		.locator('[data-testid="category-list"]')
+		.getByRole("button", { name: "乱数に関する設定" });
 	await categoryAccordion.click();
 
 	// '強力なシャッフルを使用する' オプションの横にあるトグルを確認
-	const toggle = page.getByTestId("option-toggle").first(); // 最初のトグルを取得
+	const toggle = page
+		.locator('[data-testid="category-list"]')
+		.getByTestId("option-toggle")
+		.first(); // 最初のトグルを取得
 	await expect(toggle).toBeVisible();
 
-	// 初期状態は オフ (Selection 0)
-	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
-
-	// クリックして オン にする
-	await toggle.click();
-
-	// 状態が オン (Selection 1) になったことを確認
+	// 初期状態は オン (Selection 1) ※モックの初期値が1のため
 	await expect(toggle).toHaveAttribute("aria-checked", "true");
-	await expect(page.getByText("オン", { exact: true })).toBeVisible();
+	// 曖昧さを回避するため、特定のカテゴリ内を確認
+	const categoryContainer = page.locator('[data-testid="exr-category-1"]');
+	await expect(
+		categoryContainer.getByText("オン", { exact: true }),
+	).toBeVisible();
 
-	// 再度クリックして オフ に戻す
+	// クリックして オフ にする
 	await toggle.click();
+
+	// 状態が オフ (Selection 0) になったことを確認
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ")).toBeVisible();
+	await expect(
+		categoryContainer.getByText("オフ", { exact: true }),
+	).toBeVisible();
+
+	// 再度クリックして オン に戻す
+	await toggle.click();
+	await expect(toggle).toHaveAttribute("aria-checked", "true");
+	await expect(
+		categoryContainer.getByText("オン", { exact: true }),
+	).toBeVisible();
 });
