@@ -9,7 +9,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("isResizing state is correctly managed", async ({ page }) => {
-	const rightPanel = page.getByLabel("右フローティングパネル");
 	const toggleButton = page.getByRole("button", { name: "パネルを開く" });
 
 	await toggleButton.click();
@@ -84,7 +83,10 @@ test("right sidebar can be resized", async ({ page }) => {
 	if (!newHandleBox) {
 		throw new Error("New handle box not found");
 	}
-	await page.mouse.move(newHandleBox.x, newHandleBox.y + newHandleBox.height / 2);
+	await page.mouse.move(
+		newHandleBox.x,
+		newHandleBox.y + newHandleBox.height / 2,
+	);
 	await page.mouse.down();
 	await page.mouse.move(
 		newHandleBox.x + 300,
