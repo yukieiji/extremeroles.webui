@@ -1,6 +1,5 @@
 import type { StateCreator } from "zustand";
 import type { RoleAssignFilterSetUI } from "../type";
-import type { GlobalUiSlice } from "./globalUiSlice";
 
 /**
  * Role Filter の状態を管理するスライスのインターフェース
@@ -12,18 +11,12 @@ export interface RoleFilterSlice {
 	deleteRoleFilter: (guid: string) => void;
 	addRoleToFilter: (guid: string, roleId: number, roleName: string) => void;
 	removeRoleFromFilter: (guid: string, roleId: number) => void;
-	setRoleSearchQuery: (query: string) => void;
 }
 
 /**
  * Role Filter の状態管理を行うスライスの生成
  */
-export const createRoleFilterSlice: StateCreator<
-	RoleFilterSlice & GlobalUiSlice,
-	[],
-	[],
-	RoleFilterSlice
-> = (set) => {
+export const createRoleFilterSlice: StateCreator<RoleFilterSlice> = (set) => {
 	return {
 		roleFilterSet: {},
 		setRoleFilterSet: (data: Record<string, RoleAssignFilterSetUI>) => {
@@ -86,20 +79,6 @@ export const createRoleFilterSlice: StateCreator<
 						},
 					},
 				};
-			});
-		},
-		setRoleSearchQuery: (query: string) => {
-			set((state) => {
-				const blockDialog = state.blockDialog;
-				if (blockDialog?.type === "roleSelect") {
-					return {
-						blockDialog: {
-							...blockDialog,
-							searchQuery: query,
-						},
-					};
-				}
-				return state;
 			});
 		},
 	};

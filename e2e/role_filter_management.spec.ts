@@ -47,7 +47,10 @@ test.describe("Role Filter Management", () => {
 	test("should add a role to filter using search", async ({ page }) => {
 		// Add a new filter first to have a clean slate
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		const lastFilter = page.locator("[data-guid]").last();
+		const lastFilter = page
+			.locator("[data-guid]")
+			.filter({ hasText: "AssignNum: 0" })
+			.last();
 
 		// Open role select dialog
 		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
@@ -62,22 +65,25 @@ test.describe("Role Filter Management", () => {
 		await roleButton.click();
 
 		// Verify role is added to the filter
-		await expect(lastFilter.locator(`[data-role-name="Bakary"]`)).toBeVisible();
+		await expect(lastFilter.locator('[data-role-name="Bakary"]')).toBeVisible();
 	});
 
 	test("should remove a role from filter", async ({ page }) => {
 		// Use an existing filter from mock data or add a new one
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		const lastFilter = page.locator("[data-guid]").last();
+		const lastFilter = page
+			.locator("[data-guid]")
+			.filter({ hasText: "AssignNum: 0" })
+			.last();
 
 		// Add a role
 		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
 		await page.getByRole("button", { name: "Bakary" }).first().click();
+		await expect(lastFilter.locator('[data-role-name="Bakary"]')).toBeVisible();
 
 		// Remove the role
-		const rolePin = lastFilter.locator("[data-role-id]").first();
-		const roleName = await rolePin.locator("span").first().innerText();
-		await rolePin.getByLabel(`Remove ${roleName}`).click();
+		const rolePin = lastFilter.locator('[data-role-name="Bakary"]');
+		await rolePin.getByLabel("Remove Bakary").click();
 
 		// Confirmation dialog
 		await expect(page.getByText("役職の削除")).toBeVisible();
