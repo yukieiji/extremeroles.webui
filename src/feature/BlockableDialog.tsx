@@ -10,29 +10,24 @@ export function BlockableDialog() {
 		return null;
 	}
 
-	const contentType = blockDialog.contentType ?? "confirm";
-
 	return (
 		<div className="fixed inset-0 z-200 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-			{contentType === "confirm" && (
+			{blockDialog.type === "confirm" && (
 				<ConfirmDialog
 					title={blockDialog.title}
-					message={blockDialog.message ?? ""}
+					message={blockDialog.message}
 					onConfirm={() => {
-						blockDialog.onConfirm?.();
+						blockDialog.onConfirm();
 						closeDialog();
 					}}
 					onCancel={closeDialog}
 				/>
 			)}
-			{contentType === "roleSelect" && (
+			{blockDialog.type === "roleSelect" && (
 				<RoleSelectDialog
-					excludeRoleIds={blockDialog.contentProps?.excludeRoleIds as number[]}
+					excludeRoleIds={blockDialog.excludeRoleIds}
 					onSelect={(roleId) => {
-						blockDialog.onConfirm?.();
-						(blockDialog.contentProps?.onSelect as (id: number) => void)(
-							roleId,
-						);
+						blockDialog.onSelect(roleId);
 						closeDialog();
 					}}
 					onCancel={closeDialog}

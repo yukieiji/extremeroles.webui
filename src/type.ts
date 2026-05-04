@@ -349,13 +349,22 @@ export interface UpdateAuArg {
 	selection: number;
 }
 
-export interface BlockDialog {
+export interface ConfirmDialogData {
+	type: "confirm";
 	title: string;
-	message?: string;
-	onConfirm?: () => void;
-	contentType?: "confirm" | "roleSelect";
-	contentProps?: Record<string, unknown>;
+	message: string;
+	onConfirm: () => void;
 }
+
+export interface RoleSelectDialogData {
+	type: "roleSelect";
+	title: string;
+	excludeRoleIds: number[];
+	onSelect: (roleId: number) => void;
+	searchQuery: string;
+}
+
+export type BlockDialog = ConfirmDialogData | RoleSelectDialogData;
 
 export interface GetTranslationResponse {
 	Key: string | number;

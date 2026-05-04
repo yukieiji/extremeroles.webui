@@ -56,10 +56,13 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		// but we can check the store state)
 		const state = useStore.getState();
 		expect(state.blockDialog).toBeDefined();
+		expect(state.blockDialog?.type).toBe("confirm");
 		expect(state.blockDialog?.title).toBe("フィルターの削除");
 
 		// Simulate confirm
-		await state.blockDialog?.onConfirm?.();
+		if (state.blockDialog?.type === "confirm") {
+			await state.blockDialog.onConfirm();
+		}
 
 		expect(postRoleFilterUpdate).toHaveBeenCalled();
 		expect(useStore.getState().roleFilterSet[guid]).toBeUndefined();
@@ -80,10 +83,12 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		fireEvent.click(addRoleButton);
 
 		let state = useStore.getState();
-		expect(state.blockDialog?.contentType).toBe("roleSelect");
+		expect(state.blockDialog?.type).toBe("roleSelect");
 
 		// Simulate role selection
-		await state.blockDialog?.contentProps?.onSelect(1);
+		if (state.blockDialog?.type === "roleSelect") {
+			await state.blockDialog.onSelect(1);
+		}
 
 		expect(postRoleFilterUpdate).toHaveBeenCalled();
 		expect(useStore.getState().roleFilterSet[guid].Roles).toContainEqual({
@@ -96,10 +101,13 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		fireEvent.click(removeRoleButton);
 
 		state = useStore.getState();
+		expect(state.blockDialog?.type).toBe("confirm");
 		expect(state.blockDialog?.title).toBe("役職の削除");
 
 		// Simulate confirm
-		await state.blockDialog?.onConfirm?.();
+		if (state.blockDialog?.type === "confirm") {
+			await state.blockDialog.onConfirm();
+		}
 
 		expect(useStore.getState().roleFilterSet[guid].Roles).toEqual([]);
 	});

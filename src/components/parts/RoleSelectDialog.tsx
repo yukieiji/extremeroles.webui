@@ -16,7 +16,12 @@ export function RoleSelectDialog({
 	onCancel,
 	excludeRoleIds = [],
 }: RoleSelectDialogProps) {
-	const searchQuery = useStore((state) => state.roleSearchQuery);
+	const searchQuery = useStore((state) => {
+		if (state.blockDialog?.type === "roleSelect") {
+			return state.blockDialog.searchQuery;
+		}
+		return "";
+	});
 	const setSearchQuery = useStore((state) => state.setRoleSearchQuery);
 
 	const filteredRoles = roleFilterMetaData.FilterRoleId.map((roleId) => {

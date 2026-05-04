@@ -20,6 +20,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 
 	const onDeleteFilter = () => {
 		openBlockDialog({
+			type: "confirm",
 			title: "フィルターの削除",
 			message: "このフィルターを削除してもよろしいですか？",
 			onConfirm: async () => {
@@ -39,6 +40,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 
 	const onDeleteRole = (roleId: number, roleName: string) => {
 		openBlockDialog({
+			type: "confirm",
 			title: "役職の削除",
 			message: `役職「${roleName}」をフィルターから削除してもよろしいですか？`,
 			onConfirm: async () => {
@@ -58,29 +60,28 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 
 	const onOpenRoleSelect = () => {
 		openBlockDialog({
+			type: "roleSelect",
 			title: "役職の追加",
-			contentType: "roleSelect",
-			contentProps: {
-				excludeRoleIds: filterSet.Roles.map((r) => r.id),
-				onSelect: async (roleId: number) => {
-					try {
-						await postRoleFilterUpdate({
-							Op: PostExRAssignOps.FilterRoleAdd,
-							FilterId: guid,
-							MapRoleId: roleId,
-						});
+			searchQuery: "",
+			excludeRoleIds: filterSet.Roles.map((r) => r.id),
+			onSelect: async (roleId: number) => {
+				try {
+					await postRoleFilterUpdate({
+						Op: PostExRAssignOps.FilterRoleAdd,
+						FilterId: guid,
+						MapRoleId: roleId,
+					});
 
-						const roleName =
-							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
-							(roleFilterMetaData.CombinationId[roleId] as string) ||
-							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-							"Unknown Role";
+					const roleName =
+						(roleFilterMetaData.NormalRoleId[roleId] as string) ||
+						(roleFilterMetaData.CombinationId[roleId] as string) ||
+						(roleFilterMetaData.GhostRoleId[roleId] as string) ||
+						"Unknown Role";
 
-						addRoleToFilter(guid, roleId, roleName);
-					} catch (error) {
-						console.error("Failed to add role to filter:", error);
-					}
-				},
+					addRoleToFilter(guid, roleId, roleName);
+				} catch (error) {
+					console.error("Failed to add role to filter:", error);
+				}
 			},
 		});
 	};

@@ -71,6 +71,7 @@ export function PresetSelector() {
 		const newPreset = presetNames[index] ?? String(presetValues[index]);
 
 		setBlockDialog({
+			type: "confirm",
 			title: PRESET_SWITCH_TITLE,
 			message: format(PRESET_SWITCH_MESSAGE, currentPresetName, newPreset),
 			onConfirm: () =>
