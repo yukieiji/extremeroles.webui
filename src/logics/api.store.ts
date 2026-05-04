@@ -6,12 +6,15 @@ import type {
 } from "../type";
 import { OptionValueType } from "../type";
 import { useStore } from "../useStore";
+import { PostExRAssignOps } from "../type";
 import {
 	auOptionMetaData,
 	createAuOptionMetaData,
 	createExROptionMetaData,
 	fetchRoleFilterData,
 	fetchTranslationMetaData,
+	postRoleFilterUpdate,
+	roleFilterMetaData,
 	updateAuOption,
 	updateExrOption,
 } from "./api";
@@ -123,6 +126,78 @@ export function useUpdateAuOptionSelection(): (
 		}
 		auStoreUpdate(updateInfo);
 		exrStoreUpdate([updateResult]);
+	};
+}
+
+export function useAddRoleFilter() {
+	const addRoleFilter = useStore((state) => state.addRoleFilter);
+	return async () => {
+		const guid = crypto.randomUUID();
+		try {
+			await postRoleFilterUpdate({
+				Op: PostExRAssignOps.FilterNewAdd,
+				FilterId: guid,
+				MapRoleId: null,
+			});
+			addRoleFilter(guid);
+		} catch (error) {
+			console.error("Failed to add role filter:", error);
+		}
+	};
+}
+
+export function useDeleteRoleFilter() {
+	const deleteRoleFilter = useStore((state) => state.deleteRoleFilter);
+	return async (guid: string) => {
+		try {
+			await postRoleFilterUpdate({
+				Op: PostExRAssignOps.FilterDelete,
+				FilterId: guid,
+				MapRoleId: null,
+			});
+			deleteRoleFilter(guid);
+		} catch (error) {
+			console.error("Failed to delete role filter:", error);
+		}
+	};
+}
+
+export function useAddRoleToFilter() {
+	const addRoleToFilter = useStore((state) => state.addRoleToFilter);
+	return async (guid: string, roleId: number) => {
+		try {
+			await postRoleFilterUpdate({
+				Op: PostExRAssignOps.FilterRoleAdd,
+				FilterId: guid,
+				MapRoleId: roleId,
+			});
+
+			const roleName =
+				(roleFilterMetaData.NormalRoleId[roleId] as string) ||
+				(roleFilterMetaData.CombinationId[roleId] as string) ||
+				(roleFilterMetaData.GhostRoleId[roleId] as string) ||
+				"Unknown Role";
+
+			addRoleToFilter(guid, roleId, roleName);
+		} catch (error) {
+			console.error("Failed to add role to filter:", error);
+		}
+	};
+}
+
+export function useRemoveRoleFromFilter() {
+	const removeRoleFromFilter = useStore((state) => state.removeRoleFromFilter);
+	return async (guid: string, roleId: number) => {
+		try {
+			await postRoleFilterUpdate({
+				Op: PostExRAssignOps.FilterRoleDelete,
+				FilterId: guid,
+				MapRoleId: roleId,
+			});
+			removeRoleFromFilter(guid, roleId);
+		} catch (error) {
+			console.error("Failed to remove role from filter:", error);
+		}
 	};
 }
 
