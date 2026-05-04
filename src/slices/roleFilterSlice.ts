@@ -28,7 +28,7 @@ export const createRoleFilterSlice: StateCreator<RoleFilterSlice> = (set) => {
 					roleFilterSet: {
 						...state.roleFilterSet,
 						[guid]: {
-							AssignNum: 0,
+							AssignNum: 1,
 							Roles: [],
 						},
 					},
