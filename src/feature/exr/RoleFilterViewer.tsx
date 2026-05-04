@@ -1,5 +1,6 @@
 import { RoleFilterCard } from "../../components/blocks/RoleFilterCard";
-import { handleAddRoleFilter } from "../../logics/api.store";
+import { postRoleFilterUpdate } from "../../logics/api";
+import { PostExRAssignOps } from "../../type";
 import { useStore } from "../../useStore";
 
 /**
@@ -10,6 +11,23 @@ export function RoleFilterViewer() {
 	const roleFilterSet = useStore((state) => {
 		return state.roleFilterSet;
 	});
+	const addRoleFilter = useStore((state) => {
+		return state.addRoleFilter;
+	});
+
+	const onAddFilter = async () => {
+		const guid = crypto.randomUUID();
+		try {
+			await postRoleFilterUpdate({
+				Op: PostExRAssignOps.FilterNewAdd,
+				FilterId: guid,
+				MapRoleId: null,
+			});
+			addRoleFilter(guid);
+		} catch (error) {
+			console.error("Failed to add role filter:", error);
+		}
+	};
 
 	const filterEntries = Object.entries(roleFilterSet);
 
@@ -19,7 +37,7 @@ export function RoleFilterViewer() {
 				<h2 className="text-lg font-bold text-gray-800">Role Filters</h2>
 				<button
 					type="button"
-					onClick={handleAddRoleFilter}
+					onClick={onAddFilter}
 					className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
 				>
 					<svg

@@ -4,7 +4,7 @@ import type {
 	UpdatedOptions,
 	UpdateExRArg,
 } from "../type";
-import { OptionValueType, PostExRAssignOps } from "../type";
+import { OptionValueType } from "../type";
 import { useStore } from "../useStore";
 import {
 	auOptionMetaData,
@@ -12,8 +12,6 @@ import {
 	createExROptionMetaData,
 	fetchRoleFilterData,
 	fetchTranslationMetaData,
-	postRoleFilterUpdate,
-	roleFilterMetaData,
 	updateAuOption,
 	updateExrOption,
 } from "./api";
@@ -126,72 +124,6 @@ export function useUpdateAuOptionSelection(): (
 		auStoreUpdate(updateInfo);
 		exrStoreUpdate([updateResult]);
 	};
-}
-
-export async function handleAddRoleFilter(): Promise<void> {
-	const guid = crypto.randomUUID();
-	try {
-		await postRoleFilterUpdate({
-			Op: PostExRAssignOps.FilterNewAdd,
-			FilterId: guid,
-			MapRoleId: null,
-		});
-		useStore.getState().addRoleFilter(guid);
-	} catch (error) {
-		console.error("Failed to add role filter:", error);
-	}
-}
-
-export async function handleDeleteRoleFilter(guid: string): Promise<void> {
-	try {
-		await postRoleFilterUpdate({
-			Op: PostExRAssignOps.FilterDelete,
-			FilterId: guid,
-			MapRoleId: null,
-		});
-		useStore.getState().deleteRoleFilter(guid);
-	} catch (error) {
-		console.error("Failed to delete role filter:", error);
-	}
-}
-
-export async function handleAddRoleToFilter(
-	guid: string,
-	roleId: number,
-): Promise<void> {
-	try {
-		await postRoleFilterUpdate({
-			Op: PostExRAssignOps.FilterRoleAdd,
-			FilterId: guid,
-			MapRoleId: roleId,
-		});
-
-		const roleName =
-			(roleFilterMetaData.NormalRoleId[roleId] as string) ||
-			(roleFilterMetaData.CombinationId[roleId] as string) ||
-			(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-			"Unknown Role";
-
-		useStore.getState().addRoleToFilter(guid, roleId, roleName);
-	} catch (error) {
-		console.error("Failed to add role to filter:", error);
-	}
-}
-
-export async function handleRemoveRoleFromFilter(
-	guid: string,
-	roleId: number,
-): Promise<void> {
-	try {
-		await postRoleFilterUpdate({
-			Op: PostExRAssignOps.FilterRoleDelete,
-			FilterId: guid,
-			MapRoleId: roleId,
-		});
-		useStore.getState().removeRoleFromFilter(guid, roleId);
-	} catch (error) {
-		console.error("Failed to remove role from filter:", error);
-	}
 }
 
 export function useUpdateAuRoleOptionSelection(): (

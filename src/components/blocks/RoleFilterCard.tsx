@@ -1,9 +1,6 @@
-import {
-	handleAddRoleToFilter,
-	handleDeleteRoleFilter,
-	handleRemoveRoleFromFilter,
-} from "../../logics/api.store";
+import { postRoleFilterUpdate, roleFilterMetaData } from "../../logics/api";
 import type { RoleAssignFilterSetUI } from "../../type";
+import { PostExRAssignOps } from "../../type";
 import { useStore } from "../../useStore";
 import { RolePin } from "../parts/RolePin";
 
@@ -17,12 +14,26 @@ interface RoleFilterCardProps {
  */
 export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 	const openBlockDialog = useStore((state) => state.openBlockDialog);
+	const deleteRoleFilter = useStore((state) => state.deleteRoleFilter);
+	const removeRoleFromFilter = useStore((state) => state.removeRoleFromFilter);
+	const addRoleToFilter = useStore((state) => state.addRoleToFilter);
 
 	const onDeleteFilter = () => {
 		openBlockDialog({
 			title: "フィルターの削除",
 			message: "このフィルターを削除してもよろしいですか？",
-			onConfirm: () => handleDeleteRoleFilter(guid),
+			onConfirm: async () => {
+				try {
+					await postRoleFilterUpdate({
+						Op: PostExRAssignOps.FilterDelete,
+						FilterId: guid,
+						MapRoleId: null,
+					});
+					deleteRoleFilter(guid);
+				} catch (error) {
+					console.error("Failed to delete role filter:", error);
+				}
+			},
 		});
 	};
 
@@ -30,7 +41,18 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 		openBlockDialog({
 			title: "役職の削除",
 			message: `役職「${roleName}」をフィルターから削除してもよろしいですか？`,
-			onConfirm: () => handleRemoveRoleFromFilter(guid, roleId),
+			onConfirm: async () => {
+				try {
+					await postRoleFilterUpdate({
+						Op: PostExRAssignOps.FilterRoleDelete,
+						FilterId: guid,
+						MapRoleId: roleId,
+					});
+					removeRoleFromFilter(guid, roleId);
+				} catch (error) {
+					console.error("Failed to remove role from filter:", error);
+				}
+			},
 		});
 	};
 
@@ -40,7 +62,25 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 			contentType: "roleSelect",
 			contentProps: {
 				excludeRoleIds: filterSet.Roles.map((r) => r.id),
-				onSelect: (roleId: number) => handleAddRoleToFilter(guid, roleId),
+				onSelect: async (roleId: number) => {
+					try {
+						await postRoleFilterUpdate({
+							Op: PostExRAssignOps.FilterRoleAdd,
+							FilterId: guid,
+							MapRoleId: roleId,
+						});
+
+						const roleName =
+							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
+							(roleFilterMetaData.CombinationId[roleId] as string) ||
+							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
+							"Unknown Role";
+
+						addRoleToFilter(guid, roleId, roleName);
+					} catch (error) {
+						console.error("Failed to add role to filter:", error);
+					}
+				},
 			},
 		});
 	};
