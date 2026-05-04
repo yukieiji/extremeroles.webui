@@ -197,6 +197,17 @@ export const handlers = [
   }),
 
   /**
+   * GET /exr/option/csv/ のハンドラー
+   */
+  http.get('/exr/option/csv/', () => {
+    return HttpResponse.json({
+      ExportAt: new Date().toISOString(),
+      Version: '1.0.0',
+      CsvBody: 'Header1,Header2\nValue1,Value2',
+    });
+  }),
+
+  /**
    * モックデータをリセットするハンドラー
    */
   http.post('/mock/reset', () => {

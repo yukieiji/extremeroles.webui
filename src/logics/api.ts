@@ -6,6 +6,7 @@ import type {
 	ExROptionMetaDataRecords,
 	ExROptionValueData,
 	ExRTabMetaData,
+	GetCsvResult,
 	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
 	TranslationMetaDataRecords,
@@ -18,6 +19,7 @@ import {
 	AuOptionCategoryDtoArraySchema,
 	ExRTabDtoArraySchema,
 	ExRTabId,
+	GetCsvResultSchema,
 	GetTranslationResponseArraySchema,
 	OptionValueType,
 	RoleAssignFilterDtoSchema,
@@ -30,6 +32,7 @@ import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
  * API エンドポイントの定数定義
  */
 const EXR_OPTION_URL = "/exr/option/";
+const EXR_CSV_URL = "/exr/option/csv/";
 const AU_OPTION_URL = "/au/option/";
 const EXR_ROLE_FILTER_URL = "/exr/role/filter/";
 const TRANSLATION_BATCH_URL = "/au/translation/batch/optionunit/";
@@ -359,6 +362,16 @@ export async function updateExrOption(
 
 	const jsonData = await res.json();
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
+}
+
+export async function fetchCsvData(): Promise<GetCsvResult> {
+	const res = await fetch(EXR_CSV_URL);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch CSV data: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	return await GetCsvResultSchema.parseAsync(jsonData);
 }
 
 export async function fetchRoleFilterData(): Promise<

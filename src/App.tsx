@@ -1,5 +1,6 @@
 import { Suspense, use } from "react";
 import { LoadingView } from "./components/blocks/LoadingView";
+import { ExportButton } from "./components/parts/ExportButton";
 import { SyncButton } from "./components/parts/SyncButton";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
@@ -9,7 +10,7 @@ import { PresetSelector } from "./feature/exr/PresetSelector";
 import { RoleFilterViewer } from "./feature/exr/RoleFilterViewer";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
-import { useSyncBackend } from "./hooks/useBackend";
+import { useExportCsv, useSyncBackend } from "./hooks/useBackend";
 import { getAllOptions } from "./logics/api.store";
 import {
 	AU_OPTIONS_TITLE,
@@ -57,6 +58,7 @@ function MainContent() {
 	});
 
 	const syncer = useSyncBackend();
+	const exporter = useExportCsv();
 
 	const titleMap = {
 		Au: AU_OPTIONS_TITLE,
@@ -87,6 +89,7 @@ function MainContent() {
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
+				<ExportButton onClick={exporter} />
 				<SyncButton onClick={syncer} />
 			</div>
 			<Suspense
