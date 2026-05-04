@@ -8,7 +8,7 @@ import {
 import type {
 	ExROptionValueData,
 	ExRTabId,
-	RoleAssignFilterSetDto,
+	RoleAssignFilterSetUI,
 	UniqueOptionId,
 	UpdatedOptions,
 } from "../type";
@@ -26,7 +26,7 @@ export interface ExROptionViewerSlice {
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	highlightedExROptionId: UniqueOptionId | null;
-	roleFilterSet: Record<string, RoleAssignFilterSetDto> | null;
+	roleFilterSet: Record<string, RoleAssignFilterSetUI> | null;
 	setSelectedExRTabId: (id: ExRTabId) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
@@ -40,7 +40,7 @@ export interface ExROptionViewerSlice {
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
 		optionActiveData: Record<UniqueOptionId, boolean>,
 	) => void;
-	setRoleFilterSet: (data: Record<string, RoleAssignFilterSetDto>) => void;
+	setRoleFilterSet: (data: Record<string, RoleAssignFilterSetUI>) => void;
 	validateOpenedIds: () => void;
 }
 
@@ -156,7 +156,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				isExROptionActive: optionActiveData,
 			});
 		},
-		setRoleFilterSet: (data: Record<string, RoleAssignFilterSetDto>) => {
+		setRoleFilterSet: (data: Record<string, RoleAssignFilterSetUI>) => {
 			set({ roleFilterSet: data });
 		},
 		validateOpenedIds: () => {

@@ -396,6 +396,15 @@ export type RoleAssignFilterSetDto = z.infer<
 	typeof RoleAssignFilterSetDtoSchema
 >;
 
+export interface RoleInfo {
+	id: number;
+	name: string;
+}
+
+export interface RoleAssignFilterSetUI extends RoleAssignFilterSetDto {
+	Roles: RoleInfo[];
+}
+
 export const RoleAssignFilterDtoSchema = z.object({
 	FilterSet: z.record(z.string(), RoleAssignFilterSetDtoSchema),
 	FilterRoleId: z.array(z.number().int()),

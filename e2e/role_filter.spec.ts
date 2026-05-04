@@ -31,11 +31,15 @@ test.describe("Role Filter Tab", () => {
 			page.getByRole("heading", { name: "Role Filter" }),
 		).toBeVisible();
 
-		// JSONデータが表示されていることを確認 (PREタグ内)
-		const preElement = page.locator("pre");
-		await expect(preElement).toBeVisible();
+		// フィルターカードが表示されていることを確認
+		const cardElement = page.locator("[data-guid]");
+		await expect(cardElement.first()).toBeVisible();
 
-		const content = await preElement.textContent();
-		expect(content).not.toContain("FilterSet");
+		// AssignNumが表示されていることを確認
+		await expect(page.getByText("AssignNum:").first()).toBeVisible();
+
+		// 役職ピンが表示されていることを確認
+		const pinElement = page.locator("[data-role-id]");
+		await expect(pinElement.first()).toBeVisible();
 	});
 });
