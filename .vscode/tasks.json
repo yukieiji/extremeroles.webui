@@ -16,7 +16,12 @@
         {
             "label": "e2e",
             "type": "shell",
-            "command": "pnpm run e2e"
+            "command": "pnpm run e2e",
+            "options": {
+                "env": {
+                    "PLAYWRIGHT_HTML_OPEN": "never"
+                }
+            }
         },
         {
             "label": "build",
