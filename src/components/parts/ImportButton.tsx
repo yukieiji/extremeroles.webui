@@ -30,6 +30,9 @@ export function ImportButton({ onImport, disabled }: ImportButtonProps) {
 				onImport(content);
 			}
 		};
+		reader.onerror = (e) => {
+			console.error("FileReader error:", e);
+		};
 		reader.readAsText(file, "UTF-8");
 
 		// 入力をクリアして、同じファイルを再度選択できるようにする
