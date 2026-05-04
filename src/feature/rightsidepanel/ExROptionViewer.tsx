@@ -12,17 +12,14 @@ import { ExRGeneralTabOptionViewer } from "./ExRGeneralTabOptionViewer";
  */
 export function ExROptionViewer() {
 	const presetOption = useOptionData(PRESET_OPTION_UNIQUE_ID);
-	const presetNames = useStore((state) => state.presetNames);
+	const currentSelection = presetOption?.selection ?? 0;
+	const currentRecordPreset = useStore(
+		(state) => state.presetNames[currentSelection],
+	);
 	const navigate = useExRNavigation(PRESET_OPTION_UNIQUE_ID);
 
-	if (!presetOption) {
-		return null;
-	}
-
-	const currentSelection = presetOption.selection ?? 0;
-	const currentPresetValue = presetOption.values[currentSelection] ?? "";
-	const currentPresetName =
-		presetNames[currentSelection] ?? String(currentPresetValue);
+	const currentPresetValue = presetOption?.values[currentSelection] ?? "";
+	const currentPresetName = currentRecordPreset ?? String(currentPresetValue);
 
 	const optionMeta =
 		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID]?.metaData;

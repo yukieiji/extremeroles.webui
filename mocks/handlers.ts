@@ -135,6 +135,13 @@ export const handlers = [
   }),
 
   /**
+   * POST /exr/role/filter/ のハンドラー
+   */
+  http.post('/exr/role/filter/', () => {
+    return new HttpResponse(null, { status: 200 });
+  }),
+
+  /**
    * GET /au/translation/batch/optionunit/ のハンドラー
    */
   http.get('/au/translation/batch/optionunit/', () => {

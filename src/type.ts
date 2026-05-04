@@ -349,11 +349,22 @@ export interface UpdateAuArg {
 	selection: number;
 }
 
-export interface BlockDialog {
+export interface ConfirmDialogData {
+	type: "confirm";
 	title: string;
 	message: string;
 	onConfirm: () => void;
 }
+
+export interface RoleSelectDialogData {
+	type: "roleSelect";
+	title: string;
+	excludeRoleIds: number[];
+	onSelect: (roleId: number) => void;
+	searchQuery: string;
+}
+
+export type BlockDialog = ConfirmDialogData | RoleSelectDialogData;
 
 export interface GetTranslationResponse {
 	Key: string | number;
@@ -443,3 +454,25 @@ export const GetCsvResultSchema = z.object({
 	Version: z.string(),
 	CsvBody: z.string(),
 });
+
+export const PostExRAssignOps = {
+	FilterNewAdd: 0,
+	FilterRoleAdd: 1,
+	FilterRoleDelete: 2,
+	FilterDelete: 3,
+} as const;
+
+export type PostExRAssignOps =
+	(typeof PostExRAssignOps)[keyof typeof PostExRAssignOps];
+
+export const PostExRAssignOpsSchema = z.nativeEnum(
+	PostExRAssignOps as unknown as { [key: string]: string | number },
+);
+
+export const DeltRoleAssignFilterSchema = z.object({
+	Op: PostExRAssignOpsSchema,
+	FilterId: z.string().uuid(),
+	MapRoleId: z.number().int().nullable(),
+});
+
+export type DeltRoleAssignFilter = z.infer<typeof DeltRoleAssignFilterSchema>;

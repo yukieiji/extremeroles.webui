@@ -8,9 +8,9 @@ import { BlockableDialog } from "./feature/BlockableDialog";
 import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { PresetSelector } from "./feature/exr/PresetSelector";
-import { RoleFilterViewer } from "./feature/exr/RoleFilterViewer";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
+import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import {
 	useBackendUpdate,
 	useExportCsv,
@@ -71,6 +71,7 @@ function MainContent() {
 
 	const handleImport = (csvBody: string) => {
 		openDialog({
+			type: "confirm",
 			title: IMPORT_CONFIRM_TITLE,
 			message: IMPORT_CONFIRM_MESSAGE,
 			onConfirm: () => {

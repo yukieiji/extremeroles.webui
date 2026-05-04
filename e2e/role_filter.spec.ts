@@ -28,7 +28,7 @@ test.describe("Role Filter Tab", () => {
 
 		// Role Filter のタイトルが表示されていることを確認
 		await expect(
-			page.getByRole("heading", { name: "Role Filter" }),
+			page.getByRole("heading", { name: "Role Filter", exact: true }),
 		).toBeVisible();
 
 		// フィルターカードが表示されていることを確認
