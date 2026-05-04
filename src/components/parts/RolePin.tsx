@@ -1,7 +1,12 @@
+interface RolePinProps {
+	id: number;
+	name: string;
+}
+
 /**
- * 個別の役職をピン形式で表示するコンポーネント
+ * 個別の役職をピン形式で表示する最小単位のコンポーネント
  */
-export function RolePin({ id, name }: { id: number; name: string }) {
+export function RolePin({ id, name }: RolePinProps) {
 	return (
 		<div
 			data-role-id={id}

@@ -382,18 +382,24 @@ export async function fetchRoleFilterData(): Promise<
 		filterSetUI[guid] = {
 			...set,
 			Roles: [
-				...Object.entries(set.FilterNormalId).map(([id, name]) => ({
-					id: Number(id),
-					name: String(name),
-				})),
-				...Object.entries(set.FilterCombinationId).map(([id, name]) => ({
-					id: Number(id),
-					name: String(name),
-				})),
-				...Object.entries(set.FilterGhostRoleId).map(([id, name]) => ({
-					id: Number(id),
-					name: String(name),
-				})),
+				...Object.entries(set.FilterNormalId).map(([id, name]) => {
+					return {
+						id: Number(id),
+						name: String(name),
+					};
+				}),
+				...Object.entries(set.FilterCombinationId).map(([id, name]) => {
+					return {
+						id: Number(id),
+						name: String(name),
+					};
+				}),
+				...Object.entries(set.FilterGhostRoleId).map(([id, name]) => {
+					return {
+						id: Number(id),
+						name: String(name),
+					};
+				}),
 			],
 		};
 	}

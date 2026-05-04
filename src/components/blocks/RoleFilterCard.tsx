@@ -1,16 +1,15 @@
 import type { RoleAssignFilterSetUI } from "../../type";
-import { RolePin } from "./RolePin";
+import { RolePin } from "../parts/RolePin";
+
+interface RoleFilterCardProps {
+	guid: string;
+	filterSet: RoleAssignFilterSetUI;
+}
 
 /**
  * フィルターセットをカード形式で表示するコンポーネント
  */
-export function RoleFilterCard({
-	guid,
-	filterSet,
-}: {
-	guid: string;
-	filterSet: RoleAssignFilterSetUI;
-}) {
+export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 	return (
 		<div
 			data-guid={guid}
@@ -22,9 +21,9 @@ export function RoleFilterCard({
 				</span>
 			</div>
 			<div className="flex flex-wrap gap-2">
-				{filterSet.Roles.map((role) => (
-					<RolePin key={role.id} id={role.id} name={role.name} />
-				))}
+				{filterSet.Roles.map((role) => {
+					return <RolePin key={role.id} id={role.id} name={role.name} />;
+				})}
 				{filterSet.Roles.length === 0 && (
 					<span className="text-sm text-gray-400 italic">
 						No roles selected
