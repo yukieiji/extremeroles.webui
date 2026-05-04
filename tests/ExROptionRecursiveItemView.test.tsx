@@ -60,7 +60,6 @@ describe("ExROptionRecursiveItemView", () => {
 	});
 
 	it("renders ExROptionRowView and handles default depth", () => {
-		// @ts-expect-error testing default parameter
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} />);
 
 		expect(screen.getByTestId("ex-roption-row-view")).toBeInTheDocument();

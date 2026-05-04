@@ -8,7 +8,7 @@ import { ExROptionRowView } from "./ExROptionRowView";
 
 interface ExROptionRecursiveItemViewProps {
 	uniqueOptionId: UniqueOptionId;
-	depth: number;
+	depth?: number;
 }
 
 /**
