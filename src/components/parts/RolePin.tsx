@@ -30,6 +30,8 @@ export function RolePin({ id, name, onDelete }: RolePinProps) {
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
+						role="img"
+						aria-label="Remove icon"
 					>
 						<path
 							strokeLinecap="round"

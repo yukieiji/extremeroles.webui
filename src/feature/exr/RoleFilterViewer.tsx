@@ -1,5 +1,5 @@
 import { RoleFilterCard } from "../../components/blocks/RoleFilterCard";
-import { useAddRoleFilter } from "../../logics/api.store";
+import { handleAddRoleFilter } from "../../logics/api.store";
 import { useStore } from "../../useStore";
 
 /**
@@ -10,7 +10,6 @@ export function RoleFilterViewer() {
 	const roleFilterSet = useStore((state) => {
 		return state.roleFilterSet;
 	});
-	const handleAddRoleFilter = useAddRoleFilter();
 
 	const filterEntries = Object.entries(roleFilterSet);
 
@@ -29,6 +28,8 @@ export function RoleFilterViewer() {
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
+						role="img"
+						aria-label="Add filter icon"
 					>
 						<path
 							strokeLinecap="round"

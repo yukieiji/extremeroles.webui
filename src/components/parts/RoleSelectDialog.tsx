@@ -30,6 +30,8 @@ export function RoleSelectDialog({
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
+						role="img"
+						aria-label="Close icon"
 					>
 						<path
 							strokeLinecap="round"

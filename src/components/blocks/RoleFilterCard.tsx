@@ -1,7 +1,7 @@
 import {
-	useAddRoleToFilter,
-	useDeleteRoleFilter,
-	useRemoveRoleFromFilter,
+	handleAddRoleToFilter,
+	handleDeleteRoleFilter,
+	handleRemoveRoleFromFilter,
 } from "../../logics/api.store";
 import type { RoleAssignFilterSetUI } from "../../type";
 import { useStore } from "../../useStore";
@@ -16,16 +16,13 @@ interface RoleFilterCardProps {
  * フィルターセットをカード形式で表示するコンポーネント
  */
 export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
-	const deleteRoleFilter = useDeleteRoleFilter();
-	const addRoleToFilter = useAddRoleToFilter();
-	const removeRoleFromFilter = useRemoveRoleFromFilter();
 	const openBlockDialog = useStore((state) => state.openBlockDialog);
 
 	const onDeleteFilter = () => {
 		openBlockDialog({
 			title: "フィルターの削除",
 			message: "このフィルターを削除してもよろしいですか？",
-			onConfirm: () => deleteRoleFilter(guid),
+			onConfirm: () => handleDeleteRoleFilter(guid),
 		});
 	};
 
@@ -33,7 +30,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 		openBlockDialog({
 			title: "役職の削除",
 			message: `役職「${roleName}」をフィルターから削除してもよろしいですか？`,
-			onConfirm: () => removeRoleFromFilter(guid, roleId),
+			onConfirm: () => handleRemoveRoleFromFilter(guid, roleId),
 		});
 	};
 
@@ -43,7 +40,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 			contentType: "roleSelect",
 			contentProps: {
 				excludeRoleIds: filterSet.Roles.map((r) => r.id),
-				onSelect: (roleId: number) => addRoleToFilter(guid, roleId),
+				onSelect: (roleId: number) => handleAddRoleToFilter(guid, roleId),
 			},
 		});
 	};
@@ -65,6 +62,8 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
+					role="img"
+					aria-label="Delete icon"
 				>
 					<path
 						strokeLinecap="round"
@@ -90,6 +89,8 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
+						role="img"
+						aria-label="Add icon"
 					>
 						<path
 							strokeLinecap="round"

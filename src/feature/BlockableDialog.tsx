@@ -6,7 +6,9 @@ export function BlockableDialog() {
 	const blockDialog = useStore((state) => state.blockDialog);
 	const closeDialog = useStore((state) => state.closeBlockDialog);
 
-	if (!blockDialog) return null;
+	if (!blockDialog) {
+		return null;
+	}
 
 	const contentType = blockDialog.contentType ?? "confirm";
 
@@ -25,10 +27,12 @@ export function BlockableDialog() {
 			)}
 			{contentType === "roleSelect" && (
 				<RoleSelectDialog
-					excludeRoleIds={blockDialog.contentProps?.excludeRoleIds}
+					excludeRoleIds={blockDialog.contentProps?.excludeRoleIds as number[]}
 					onSelect={(roleId) => {
-						blockDialog.onConfirm?.(); // Note: if we need to pass roleId, we might need a different callback pattern
-						blockDialog.contentProps?.onSelect(roleId);
+						blockDialog.onConfirm?.();
+						(blockDialog.contentProps?.onSelect as (id: number) => void)(
+							roleId,
+						);
 						closeDialog();
 					}}
 					onCancel={closeDialog}

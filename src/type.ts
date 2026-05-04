@@ -354,7 +354,7 @@ export interface BlockDialog {
 	message?: string;
 	onConfirm?: () => void;
 	contentType?: "confirm" | "roleSelect";
-	contentProps?: any;
+	contentProps?: Record<string, unknown>;
 }
 
 export interface GetTranslationResponse {
