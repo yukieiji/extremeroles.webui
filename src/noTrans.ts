@@ -4,6 +4,8 @@
 
 export const SYNC_BUTTON_TITLE = "同期";
 export const SYNC_BUTTON_ARIA = "データを同期";
+export const EXPORT_CSV_LABEL = "エクスポート";
+export const EXPORT_CSV_TITLE = "CSVとしてエクスポート";
 export const CANCEL = "キャンセル";
 export const SIDEBAR_CLOSE_ARIA = "サイドバーを閉じる";
 export const SIDEBAR_OPEN_ARIA = "サイドバーを開く";

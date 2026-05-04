@@ -431,3 +431,15 @@ export interface RoleFilterMetaData {
 	CombinationId: Record<string, number | string>;
 	GhostRoleId: Record<string, number | string>;
 }
+
+export interface GetCsvResult {
+	ExportAt: string;
+	Version: string;
+	CsvBody: string;
+}
+
+export const GetCsvResultSchema = z.object({
+	ExportAt: z.string(),
+	Version: z.string(),
+	CsvBody: z.string(),
+});
