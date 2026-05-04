@@ -11,7 +11,7 @@
         {
             "label": "test",
             "type": "shell",
-            "command": "pnpm run test --coverage"
+            "command": "pnpm run test run --coverage"
         },
         {
             "label": "e2e",
