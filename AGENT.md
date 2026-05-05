@@ -57,7 +57,8 @@
             - App.tsx: アプリケーションウィンドウコンポーネント
             - useStore.ts: `zustand`の状態管理置き場
             - type.ts: 他のファイルで使用する。型置き場
-        - test: テストコードを置く場所
+        - test: vitestのテストコードを置く場所
+        - e2e: playwrightのテストコードを置く場所
     - Reactの`useMemo`等のパフォーマンス向上トリックは使用しない(React Compilerで自動的に追加される)
     - コンポーネントはなるべくステートレスになるように設計しfeatureディレクトリ内の肥大化を防ぐ
     - バックエンドからのデータ取得は`Suspose`を使うこと、`useEffect`は基本使用しない
@@ -65,7 +66,7 @@
         - 必ずグローバルの`useStore`からデータを取得すること
     - テストの為にid, className, data-testidの使用は限りなく避け、role => label => placeholder => text => alt => titleの順で検討しそれでも駄目な時にdata-testidを使用する
         - 要素クラス等の取得は絶対にやらない、e2eテストが壊れやすくなり保守が出来ない
-        - 特にpropを渡してidやtestidを構築するとかはもってのほか
+        - 特にpropsを渡してidやtestidを構築するとかはもってのほか
         - xPathも使用しない
     - 記載例:
     ```ts
