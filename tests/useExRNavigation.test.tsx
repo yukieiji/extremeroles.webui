@@ -58,17 +58,17 @@ describe("useExRNavigation", () => {
 		api.exrOptionMetaData.options[childId] = {
 			metaData: emptyMeta,
 			childOptionIds: [],
-			parentOptionId: parentId,
+			parentOptionIds: [parentId, grandParentId],
 		};
 		api.exrOptionMetaData.options[parentId] = {
 			metaData: emptyMeta,
 			childOptionIds: [childId],
-			parentOptionId: grandParentId,
+			parentOptionIds: [grandParentId],
 		};
 		api.exrOptionMetaData.options[grandParentId] = {
 			metaData: emptyMeta,
 			childOptionIds: [parentId],
-			parentOptionId: undefined,
+			parentOptionIds: [],
 		};
 
 		const { result } = renderHook(() => useExRNavigation(childId));

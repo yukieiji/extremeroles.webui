@@ -101,15 +101,7 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 		}
 
 		// 全ての親オプションを特定して開く
-		const ancestors: UniqueOptionId[] = [];
-		let currentId: UniqueOptionId | undefined = uniqueOptionId;
-		while (currentId) {
-			const parentId = exrOptionMetaData.options[currentId]?.parentOptionId;
-			if (parentId) {
-				ancestors.push(parentId);
-			}
-			currentId = parentId;
-		}
+		const ancestors = exrOptionMetaData.options[uniqueOptionId]?.parentOptionIds ?? [];
 		if (ancestors.length > 0) {
 			openExROptions(ancestors);
 		}
