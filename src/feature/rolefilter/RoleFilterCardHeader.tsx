@@ -20,7 +20,9 @@ export function RoleFilterCardHeader({
 	const decrementAssignNum = useStore((state) => state.decrementAssignNum);
 
 	const onIncrement = async () => {
-		if (assignNum >= 255) return;
+		if (assignNum >= 255) {
+			return;
+		}
 		try {
 			await postRoleFilterUpdate({
 				Op: PostExRAssignOps.FilterAssignNumIncrese,
@@ -34,7 +36,9 @@ export function RoleFilterCardHeader({
 	};
 
 	const onDecrement = async () => {
-		if (assignNum <= 1) return;
+		if (assignNum <= 1) {
+			return;
+		}
 		try {
 			await postRoleFilterUpdate({
 				Op: PostExRAssignOps.FilterAssignNumDecrese,

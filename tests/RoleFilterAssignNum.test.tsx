@@ -1,15 +1,9 @@
-import {
-	act,
-	fireEvent,
-	render,
-	screen,
-	waitFor,
-} from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RoleFilterViewer } from "../src/feature/rolefilter/RoleFilterViewer";
 import { postRoleFilterUpdate } from "../src/logics/api";
-import { useStore } from "../src/useStore";
 import { PostExRAssignOps } from "../src/type";
+import { useStore } from "../src/useStore";
 
 // Mock api.ts
 vi.mock("../src/logics/api", () => ({
