@@ -14,9 +14,9 @@ export function OptionEditorCategoryOptionLayout<T>({
 }: OptionEditorCategoryOptionLayoutProp<T>) {
 	return (
 		<OptionEditorOptionRowGroupLayout>
-			{arr.map((key, index) => (
+			{arr.map((key) => (
 				<div key={String(key)}>
-					{index !== 0 && <BorderLine />}
+					<BorderLine />
 					{children(key)}
 				</div>
 			))}
