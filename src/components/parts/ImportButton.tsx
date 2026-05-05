@@ -1,7 +1,7 @@
 import { Upload } from "lucide-react";
 import { useRef } from "react";
-import { IMPORT_BUTTON_ARIA, IMPORT_BUTTON_TITLE } from "../../noTrans";
 import { Button } from "@/components/ui/button";
+import { IMPORT_BUTTON_ARIA, IMPORT_BUTTON_TITLE } from "../../noTrans";
 
 interface ImportButtonProps {
 	onImport: (csvContent: string) => void;
