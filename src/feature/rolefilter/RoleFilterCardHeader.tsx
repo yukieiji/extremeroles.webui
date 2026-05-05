@@ -28,7 +28,7 @@ export function RoleFilterCardHeader({
 		setIsUpdating(guid, true);
 		try {
 			await postRoleFilterUpdate({
-				Op: PostExRAssignOps.FilterAssignNumIncrese,
+				Op: PostExRAssignOps.FilterAssignNumIncrease,
 				FilterId: guid,
 				MapRoleId: null,
 			});
@@ -47,7 +47,7 @@ export function RoleFilterCardHeader({
 		setIsUpdating(guid, true);
 		try {
 			await postRoleFilterUpdate({
-				Op: PostExRAssignOps.FilterAssignNumDecrese,
+				Op: PostExRAssignOps.FilterAssignNumDecrease,
 				FilterId: guid,
 				MapRoleId: null,
 			});

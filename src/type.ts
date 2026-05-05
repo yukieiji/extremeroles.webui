@@ -461,8 +461,8 @@ export const GetCsvResultSchema = z.object({
 export const PostExRAssignOps = {
 	FilterNewAdd: 0,
 	FilterRoleAdd: 1,
-	FilterAssignNumIncrese: 2,
-	FilterAssignNumDecrese: 3,
+	FilterAssignNumIncrease: 2,
+	FilterAssignNumDecrease: 3,
 	FilterRoleDelete: 4,
 	FilterDelete: 5,
 } as const;
