@@ -58,7 +58,7 @@ export function ExROptionRecursiveItem({
 			isOpen={isOpen}
 			depth={depth}
 		>
-			<OptionEditorCategoryOptionLayout arr={childs}>
+			<OptionEditorCategoryOptionLayout arr={childs} ignoreIndex={-1}>
 				{(childId) => (
 					<ExROptionItem uniqueOptionId={childId} depth={depth + 1} />
 				)}

@@ -5,18 +5,19 @@ import { OptionEditorOptionRowGroupLayout } from "../parts/OptionEditorOptionRow
 interface OptionEditorCategoryOptionLayoutProp<T> {
 	arr: T[];
 	children: (categoryId: T) => ReactNode;
-	test_id?: string;
+	ignoreIndex: number;
 }
 
 export function OptionEditorCategoryOptionLayout<T>({
 	arr,
 	children,
+	ignoreIndex,
 }: OptionEditorCategoryOptionLayoutProp<T>) {
 	return (
 		<OptionEditorOptionRowGroupLayout>
-			{arr.map((key) => (
+			{arr.map((key, index) => (
 				<div key={String(key)}>
-					<BorderLine />
+					{index !== ignoreIndex && <BorderLine />}
 					{children(key)}
 				</div>
 			))}
