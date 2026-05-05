@@ -72,13 +72,8 @@ export function RoleSelectDialog({
 					.filter((r) => !excludeRoleIds.includes(r.roleId))
 					.map((r) => r.roleId);
 
-				const next = [...selectedRoleIds];
-				for (const id of rangeIds) {
-					if (!next.includes(id)) {
-						next.push(id);
-					}
-				}
-				setSelectedRoleIds(next);
+				const nextSet = new Set([...selectedRoleIds, ...rangeIds]);
+				setSelectedRoleIds(Array.from(nextSet));
 			}
 		} else if (event.ctrlKey || event.metaKey) {
 			// Toggle single selection
