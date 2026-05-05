@@ -1,10 +1,10 @@
-import { Plus } from "lucide-react";
 import { RoleFilterCardLayout } from "../../components/blocks/RoleFilterCardLayout";
 import { RolePin } from "../../components/parts/RolePin";
-import { postRoleFilterUpdate, roleFilterMetaData } from "../../logics/api";
+import { postRoleFilterUpdate } from "../../logics/api";
 import type { RoleAssignFilterSetUI } from "../../type";
 import { PostExRAssignOps } from "../../type";
 import { useStore } from "../../useStore";
+import { RoleFilterCardHeader } from "./RoleFilterCardHeader";
 
 interface RoleFilterCardProps {
 	guid: string;
@@ -18,7 +18,6 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 	const openBlockDialog = useStore((state) => state.openBlockDialog);
 	const deleteRoleFilter = useStore((state) => state.deleteRoleFilter);
 	const removeRoleFromFilter = useStore((state) => state.removeRoleFromFilter);
-	const addRoleToFilter = useStore((state) => state.addRoleToFilter);
 
 	const onDeleteFilter = () => {
 		openBlockDialog({
@@ -59,57 +58,17 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 			},
 		});
 	};
-
-	const onOpenRoleSelect = () => {
-		openBlockDialog({
-			type: "roleSelect",
-			title: "役職の追加",
-			searchQuery: "",
-			excludeRoleIds: filterSet.Roles.map((r) => r.id),
-			selectedRoleIds: [],
-			lastClickedId: null,
-			onSelect: async (roleIds: number[]) => {
-				try {
-					for (const roleId of roleIds) {
-						await postRoleFilterUpdate({
-							Op: PostExRAssignOps.FilterRoleAdd,
-							FilterId: guid,
-							MapRoleId: roleId,
-						});
-
-						const roleName =
-							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
-							(roleFilterMetaData.CombinationId[roleId] as string) ||
-							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-							"Unknown Role";
-
-						addRoleToFilter(guid, roleId, roleName);
-					}
-				} catch (error) {
-					console.error("Failed to add role to filter:", error);
-				}
-			},
-		});
-	};
-
-	const header = (
-		<>
-			<span className="text-sm font-semibold text-gray-700">
-				AssignNum: {filterSet.AssignNum}
-			</span>
-			<button
-				type="button"
-				onClick={onOpenRoleSelect}
-				className="mt-1 self-start inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none"
-			>
-				<Plus size={12} className="mr-1" aria-hidden="true" />
-				役職を追加
-			</button>
-		</>
-	);
-
 	return (
-		<RoleFilterCardLayout guid={guid} onDelete={onDeleteFilter} header={header}>
+		<RoleFilterCardLayout
+			onDelete={onDeleteFilter}
+			header={
+				<RoleFilterCardHeader
+					guid={guid}
+					assignNum={filterSet.AssignNum}
+					excludeRoleIds={filterSet.Roles.map((r) => r.id)}
+				/>
+			}
+		>
 			{filterSet.Roles.map((role) => {
 				return (
 					<RolePin
