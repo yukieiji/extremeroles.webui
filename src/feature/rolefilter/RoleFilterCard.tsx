@@ -66,6 +66,8 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 			title: "役職の追加",
 			searchQuery: "",
 			excludeRoleIds: filterSet.Roles.map((r) => r.id),
+			selectedRoleIds: [],
+			lastClickedId: null,
 			onSelect: async (roleIds: number[]) => {
 				try {
 					for (const roleId of roleIds) {

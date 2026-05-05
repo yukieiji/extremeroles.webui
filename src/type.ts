@@ -362,6 +362,8 @@ export interface RoleSelectDialogData {
 	excludeRoleIds: number[];
 	onSelect: (roleIds: number[]) => void;
 	searchQuery: string;
+	selectedRoleIds: number[];
+	lastClickedId: number | null;
 }
 
 export type BlockDialog = ConfirmDialogData | RoleSelectDialogData;

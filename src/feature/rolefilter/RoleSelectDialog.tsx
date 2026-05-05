@@ -1,5 +1,4 @@
 import { X } from "lucide-react";
-import { useState } from "react";
 import { RoleGrid } from "../../components/blocks/RoleGrid";
 import { RoleSearchInput } from "../../components/parts/RoleSearchInput";
 import { roleFilterMetaData } from "../../logics/api";
@@ -20,8 +19,21 @@ export function RoleSelectDialog({
 	onCancel,
 	excludeRoleIds = [],
 }: RoleSelectDialogProps) {
-	const [selectedRoleIds, setSelectedRoleIds] = useState<number[]>([]);
-	const [lastClickedId, setLastClickedId] = useState<number | null>(null);
+	const selectedRoleIds = useStore((state) => {
+		if (state.blockDialog?.type === "roleSelect") {
+			return state.blockDialog.selectedRoleIds;
+		}
+		return [];
+	});
+	const setSelectedRoleIds = useStore((state) => state.setSelectedRoleIds);
+
+	const lastClickedId = useStore((state) => {
+		if (state.blockDialog?.type === "roleSelect") {
+			return state.blockDialog.lastClickedId;
+		}
+		return null;
+	});
+	const setLastClickedId = useStore((state) => state.setLastClickedId);
 
 	const searchQuery = useStore((state) => {
 		if (state.blockDialog?.type === "roleSelect") {
@@ -60,29 +72,27 @@ export function RoleSelectDialog({
 					.filter((r) => !excludeRoleIds.includes(r.roleId))
 					.map((r) => r.roleId);
 
-				setSelectedRoleIds((prev) => {
-					const next = [...prev];
-					for (const id of rangeIds) {
-						if (!next.includes(id)) {
-							next.push(id);
-						}
+				const next = [...selectedRoleIds];
+				for (const id of rangeIds) {
+					if (!next.includes(id)) {
+						next.push(id);
 					}
-					return next;
-				});
+				}
+				setSelectedRoleIds(next);
 			}
 		} else if (event.ctrlKey || event.metaKey) {
 			// Toggle single selection
-			setSelectedRoleIds((prev) =>
-				prev.includes(roleId)
-					? prev.filter((id) => id !== roleId)
-					: [...prev, roleId],
+			setSelectedRoleIds(
+				selectedRoleIds.includes(roleId)
+					? selectedRoleIds.filter((id) => id !== roleId)
+					: [...selectedRoleIds, roleId],
 			);
 		} else {
 			// Single selection (toggle for consistency with checkbox UI)
-			setSelectedRoleIds((prev) =>
-				prev.includes(roleId)
-					? prev.filter((id) => id !== roleId)
-					: [...prev, roleId],
+			setSelectedRoleIds(
+				selectedRoleIds.includes(roleId)
+					? selectedRoleIds.filter((id) => id !== roleId)
+					: [...selectedRoleIds, roleId],
 			);
 		}
 		setLastClickedId(roleId);

@@ -64,6 +64,8 @@ export function RoleGrid({
 									fill="none"
 									viewBox="0 0 24 24"
 									stroke="currentColor"
+									role="img"
+									aria-label="Selected"
 								>
 									<path
 										strokeLinecap="round"

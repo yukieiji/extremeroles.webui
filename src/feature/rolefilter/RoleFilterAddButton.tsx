@@ -17,6 +17,8 @@ export function RoleFilterAddButton() {
 			title: "フィルター追加: 役職の選択",
 			searchQuery: "",
 			excludeRoleIds: [],
+			selectedRoleIds: [],
+			lastClickedId: null,
 			onSelect: async (roleIds: number[]) => {
 				const guid = crypto.randomUUID();
 				try {
