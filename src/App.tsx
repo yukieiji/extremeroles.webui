@@ -90,7 +90,7 @@ function MainContent() {
 	return (
 		<section
 			data-testid="main-content-section"
-			className="flex flex-col gap-4 transition-opacity duration-200"
+			className="flex flex-col gap-4 transition-opacity duration-200 h-full overflow-hidden"
 		>
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-5 flex-1 p-4">
@@ -136,14 +136,14 @@ function App() {
 	});
 
 	return (
-		<div className="min-h-screen bg-gray-50 flex">
+		<div className="h-dvh bg-gray-50 flex overflow-hidden">
 			<BlockableLoading />
 			<BlockableDialog />
 			<Suspense fallback={<LoadingView />}>
 				<OptionGroupToggleSidebar />
 				<main
 					className={`
-            flex-1 pr-8 pl-2 transition-all duration-300
+            flex-1 pr-8 pl-2 transition-all duration-300 h-full overflow-hidden
             ${isSidebarOpen ? "ml-64" : "ml-12"}
           `}
 				>

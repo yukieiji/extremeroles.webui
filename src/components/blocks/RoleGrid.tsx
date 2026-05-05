@@ -52,7 +52,7 @@ export function RoleGrid({
 						}`}
 					>
 						<div
-							className={`flex-shrink-0 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+							className={`shrink-0 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
 								isExcluded
 									? "bg-gray-200 border-gray-300"
 									: isSelected
