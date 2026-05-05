@@ -16,7 +16,7 @@ export function RoleFilterCardLayout({
 	children,
 }: RoleFilterCardLayoutProps) {
 	return (
-		<div className="bg-white shadow rounded-lg p-4 border border-gray-200 flex flex-col gap-3 relative">
+		<li className="bg-white shadow rounded-lg p-4 border border-gray-200 flex flex-col gap-3 relative list-none">
 			<button
 				type="button"
 				onClick={onDelete}
@@ -31,6 +31,6 @@ export function RoleFilterCardLayout({
 			</div>
 
 			<div className="flex flex-wrap gap-2">{children}</div>
-		</div>
+		</li>
 	);
 }
