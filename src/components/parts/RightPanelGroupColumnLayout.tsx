@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 
-interface RightPanelGroupColumnLayoutProp {
+interface RightPanelGroupColumnLayoutProps {
 	children: ReactNode;
 }
 
 export function RightPanelGroupColumnLayout({
 	children,
-}: RightPanelGroupColumnLayoutProp) {
+}: RightPanelGroupColumnLayoutProps) {
 	return <div className="flex flex-col gap-2">{children}</div>;
 }

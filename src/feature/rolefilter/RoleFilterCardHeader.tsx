@@ -3,7 +3,7 @@ import { postRoleFilterUpdate, roleFilterMetaData } from "../../logics/api";
 import { PostExRAssignOps } from "../../type";
 import { useStore } from "../../useStore";
 
-interface RoleFilterCardHeaderProp {
+interface RoleFilterCardHeaderProps {
 	guid: string;
 	assignNum: number;
 	excludeRoleIds: number[];
@@ -13,7 +13,7 @@ export function RoleFilterCardHeader({
 	guid,
 	assignNum,
 	excludeRoleIds,
-}: RoleFilterCardHeaderProp) {
+}: RoleFilterCardHeaderProps) {
 	const openBlockDialog = useStore((state) => state.openBlockDialog);
 	const addRoleToFilter = useStore((state) => state.addRoleToFilter);
 

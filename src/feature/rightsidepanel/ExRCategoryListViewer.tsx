@@ -1,12 +1,12 @@
 import { ExRCategoryViewer } from "./ExRCategoryViewer";
 
-interface ExRCategoryListViewerProp {
+interface ExRCategoryListViewerProps {
 	categoryIds: number[];
 }
 
 export function ExRCategoryListViewer({
 	categoryIds,
-}: ExRCategoryListViewerProp) {
+}: ExRCategoryListViewerProps) {
 	return (
 		<div className="flex flex-col gap-1.5">
 			{categoryIds.map((categoryId) => (

@@ -1,8 +1,8 @@
-interface OptionFormatProp {
+interface OptionFormatProps {
 	format: string;
 }
 
-export function OptionFormat({ format }: OptionFormatProp) {
+export function OptionFormat({ format }: OptionFormatProps) {
 	const formattedValue = format.includes("{0}")
 		? format.replace("{0}", "")
 		: format;

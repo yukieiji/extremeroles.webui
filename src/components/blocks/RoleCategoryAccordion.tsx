@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 
-interface RoleCategoryAccordionProp {
+interface RoleCategoryAccordionProps {
 	isOpen: boolean;
 	onClick: () => void;
 	text: ReactNode;
@@ -19,7 +19,7 @@ export function RoleCategoryAccordion({
 	spawnControl,
 	disable,
 	children,
-}: RoleCategoryAccordionProp) {
+}: RoleCategoryAccordionProps) {
 	return (
 		<div
 			id={typeof text === "string" ? `au-category-${text}` : undefined}

@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 import { Suspense } from "react";
 import { LoadingCycle } from "../parts/LoadingCycle";
 
-interface EditorContainerProp {
+interface EditorContainerProps {
 	selector: ReactNode;
 	mainView: ReactNode;
 }
 
-export function EditorContainer({ selector, mainView }: EditorContainerProp) {
+export function EditorContainer({ selector, mainView }: EditorContainerProps) {
 	return (
 		<div className="flex flex-col gap-1 flex-1 overflow-hidden">
 			{selector}

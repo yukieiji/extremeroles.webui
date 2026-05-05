@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { LoadingCycle } from "../parts/LoadingCycle";
 
-interface CategoryContainerProp {
+interface CategoryContainerProps {
 	isPending: boolean;
 	children: ReactNode;
 }
@@ -9,7 +9,7 @@ interface CategoryContainerProp {
 export function CategoryContainer({
 	isPending,
 	children,
-}: CategoryContainerProp) {
+}: CategoryContainerProps) {
 	return (
 		<div
 			data-testid="category-list"

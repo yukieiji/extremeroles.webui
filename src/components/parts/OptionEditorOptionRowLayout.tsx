@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 
-interface OptionEditorOptionRowGroupLayoutProp {
+interface OptionEditorOptionRowGroupLayoutProps {
 	children: ReactNode;
 }
 
 export function OptionEditorOptionRowGroupLayout({
 	children,
-}: OptionEditorOptionRowGroupLayoutProp) {
+}: OptionEditorOptionRowGroupLayoutProps) {
 	return <div className="flex flex-col">{children}</div>;
 }

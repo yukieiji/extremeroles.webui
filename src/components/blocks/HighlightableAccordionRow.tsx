@@ -4,7 +4,7 @@ import { AccordionSvg } from "../parts/AccordionSvg";
 import { HighlightWrapper } from "../parts/HighlightWrapper";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
 
-interface HighlightableAccordionRowProp {
+interface HighlightableAccordionRowProps {
 	id: string;
 	isHighlight: boolean;
 	children: ReactNode;
@@ -18,7 +18,7 @@ export function HighlightableAccordionRow({
 	isOpen,
 	onToggle,
 	children,
-}: HighlightableAccordionRowProp) {
+}: HighlightableAccordionRowProps) {
 	return (
 		<HighlightWrapper id={id} isHighlighted={isHighlight} isInset={true}>
 			<OptionRowContainer

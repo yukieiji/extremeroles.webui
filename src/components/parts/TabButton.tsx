@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
-interface TabButtonProp {
+interface TabButtonProps {
 	onClick: () => void;
 	isSelect: boolean;
 	children: ReactNode;
 }
 
-export function TabButton({ onClick, isSelect, children }: TabButtonProp) {
+export function TabButton({ onClick, isSelect, children }: TabButtonProps) {
 	return (
 		<button
 			type="button"

@@ -7,11 +7,11 @@ import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
 import { useStore } from "../../useStore";
 import { ExROptionItemView } from "./ExROptionItemView";
 
-interface ExRCategoryViewerProp {
+interface ExRCategoryViewerProps {
 	categoryId: number;
 }
 
-export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProp) {
+export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 	const isOpen = useStore(
 		(state) => state.openedCategoryIdRightFloatingPanel[categoryId] ?? true,
 	);
