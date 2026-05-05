@@ -57,7 +57,7 @@ describe("RoleFilter AssignNum Adjustment", () => {
 		});
 
 		expect(postRoleFilterUpdate).toHaveBeenCalledWith({
-			Op: PostExRAssignOps.FilterAssignNumIncrese,
+			Op: PostExRAssignOps.FilterAssignNumIncrease,
 			FilterId: guid,
 			MapRoleId: null,
 		});
@@ -69,7 +69,7 @@ describe("RoleFilter AssignNum Adjustment", () => {
 		});
 
 		expect(postRoleFilterUpdate).toHaveBeenCalledWith({
-			Op: PostExRAssignOps.FilterAssignNumDecrese,
+			Op: PostExRAssignOps.FilterAssignNumDecrease,
 			FilterId: guid,
 			MapRoleId: null,
 		});
