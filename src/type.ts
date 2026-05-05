@@ -360,8 +360,10 @@ export interface RoleSelectDialogData {
 	type: "roleSelect";
 	title: string;
 	excludeRoleIds: number[];
-	onSelect: (roleId: number) => void;
+	onSelect: (roleIds: number[]) => void;
 	searchQuery: string;
+	selectedRoleIds: number[];
+	lastClickedId: number | null;
 }
 
 export type BlockDialog = ConfirmDialogData | RoleSelectDialogData;

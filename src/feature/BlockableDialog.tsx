@@ -26,8 +26,8 @@ export function BlockableDialog() {
 			{blockDialog.type === "roleSelect" && (
 				<RoleSelectDialog
 					excludeRoleIds={blockDialog.excludeRoleIds}
-					onSelect={async (roleId) => {
-						await blockDialog.onSelect(roleId);
+					onSelect={async (roleIds) => {
+						await blockDialog.onSelect(roleIds);
 						closeDialog();
 					}}
 					onCancel={closeDialog}

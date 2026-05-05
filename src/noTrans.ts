@@ -19,6 +19,7 @@ export const ROLE_SPAWN_RATE = "レート";
 export const ROLE_SPAWN_COUNT = "数";
 export const CLOSE = "閉じる";
 export const OPEN = "開く";
+export const CONFIRM = "確定";
 export const PRESET_SWITCH_TITLE = "プリセットの切り替え";
 export const PRESET_SWITCH_MESSAGE =
 	"プリセットを「{0}」から「{1}」に切り替えます";

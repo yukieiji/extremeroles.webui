@@ -32,14 +32,16 @@ test.describe("Role Filter Tab", () => {
 		).toBeVisible();
 
 		// フィルターカードが表示されていることを確認
-		const cardElement = page.locator("[data-guid]");
+		const cardElement = page
+			.getByRole("list", { name: "Filter List" })
+			.getByRole("listitem");
 		await expect(cardElement.first()).toBeVisible();
 
 		// AssignNumが表示されていることを確認
 		await expect(page.getByText("AssignNum:").first()).toBeVisible();
 
 		// 役職ピンが表示されていることを確認
-		const pinElement = page.locator("[data-role-id]");
-		await expect(pinElement.first()).toBeVisible();
+		// RolePinはテキストを表示するdivとして実装されている
+		await expect(page.getByText("Bakary").first()).toBeVisible();
 	});
 });

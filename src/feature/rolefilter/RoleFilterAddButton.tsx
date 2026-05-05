@@ -17,7 +17,9 @@ export function RoleFilterAddButton() {
 			title: "フィルター追加: 役職の選択",
 			searchQuery: "",
 			excludeRoleIds: [],
-			onSelect: async (roleId: number) => {
+			selectedRoleIds: [],
+			lastClickedId: null,
+			onSelect: async (roleIds: number[]) => {
 				const guid = crypto.randomUUID();
 				try {
 					// 1. フィルターの新規作成
@@ -29,19 +31,21 @@ export function RoleFilterAddButton() {
 					addRoleFilter(guid);
 
 					// 2. 選択された役職をフィルターに追加
-					await postRoleFilterUpdate({
-						Op: PostExRAssignOps.FilterRoleAdd,
-						FilterId: guid,
-						MapRoleId: roleId,
-					});
+					for (const roleId of roleIds) {
+						await postRoleFilterUpdate({
+							Op: PostExRAssignOps.FilterRoleAdd,
+							FilterId: guid,
+							MapRoleId: roleId,
+						});
 
-					const roleName =
-						(roleFilterMetaData.NormalRoleId[roleId] as string) ||
-						(roleFilterMetaData.CombinationId[roleId] as string) ||
-						(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-						"Unknown Role";
+						const roleName =
+							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
+							(roleFilterMetaData.CombinationId[roleId] as string) ||
+							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
+							"Unknown Role";
 
-					addRoleToFilter(guid, roleId, roleName);
+						addRoleToFilter(guid, roleId, roleName);
+					}
 				} catch (error) {
 					console.error("Failed to add role filter with role:", error);
 				}
