@@ -29,6 +29,7 @@ export interface ExROptionViewerSlice {
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
+	openExROptions: (uniqueOptionIds: UniqueOptionId[]) => void;
 	updateExROption: (updateOptions: (UpdatedOptions | null)[]) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setPresetDropdownOpen: (isOpen: boolean) => void;
@@ -80,6 +81,15 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 						[categoryId]: !state.openedExRCategoryIds[categoryId],
 					},
 				};
+			});
+		},
+		openExROptions: (uniqueOptionIds: UniqueOptionId[]) => {
+			set((state) => {
+				const nextOpenedExROptionIds = { ...state.openedExROptionIds };
+				for (const id of uniqueOptionIds) {
+					nextOpenedExROptionIds[id] = true;
+				}
+				return { openedExROptionIds: nextOpenedExROptionIds };
 			});
 		},
 		toggleExROption: (uniqueOptionId: number) => {

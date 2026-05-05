@@ -1,3 +1,4 @@
+import { exrOptionMetaData } from "../logics/api";
 import { parseUniqueOptionId } from "../logics/optionUtils";
 import type { AuOptionId, ExRTabId, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
@@ -75,6 +76,9 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
+	const openExROptions = useStore((state) => {
+		return state.openExROptions;
+	});
 
 	const setHighlightedExROptionId = useStore((state) => {
 		return state.setHighlightedExROptionId;
@@ -95,6 +99,14 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 		if (!openedExRCategoryIds[categoryId]) {
 			toggleExRCategory(categoryId);
 		}
+
+		// 全ての親オプションを特定して開く
+		const ancestors =
+			exrOptionMetaData.options[uniqueOptionId]?.parentOptionIds ?? [];
+		if (ancestors.length > 0) {
+			openExROptions(ancestors);
+		}
+
 		setHighlightedExROptionId(uniqueOptionId);
 
 		setTimeout(() => {

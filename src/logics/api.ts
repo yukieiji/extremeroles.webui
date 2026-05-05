@@ -159,7 +159,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		options: ExROptionDto[],
 		tabId: ExRTabId,
 		categoryId: number,
-		parentUniqueOptionId: UniqueOptionId | null,
+		ancestorIds: UniqueOptionId[],
 	) => {
 		for (const opt of options) {
 			const uniqueId = getUniqueOptionId(tabId, categoryId, opt.Id);
@@ -174,6 +174,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				},
 				childOptionIds:
 					exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
+				parentOptionIds: ancestorIds,
 			};
 
 			valueData[uniqueId] = {
@@ -181,7 +182,8 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				values: opt.RangeMeta.Values,
 			};
 			isOptionActive[uniqueId] = opt.IsActive;
-			if (parentUniqueOptionId !== null) {
+			if (ancestorIds.length > 0) {
+				const parentUniqueOptionId = ancestorIds[0];
 				if (!exrOptionMetaData.options[parentUniqueOptionId]) {
 					exrOptionMetaData.options[parentUniqueOptionId] = {
 						metaData: {
@@ -190,6 +192,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 							type: "",
 						},
 						childOptionIds: [],
+						parentOptionIds: [],
 					};
 				}
 				if (
@@ -204,7 +207,10 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 			}
 
 			if (opt.Childs && opt.Childs.length > 0) {
-				processOptions(opt.Childs, tabId, categoryId, uniqueId);
+				processOptions(opt.Childs, tabId, categoryId, [
+					uniqueId,
+					...ancestorIds,
+				]);
 			}
 		}
 	};
@@ -226,7 +232,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 						getUniqueOptionId(tab.Id, category.Id, o.Id),
 					); // カテゴリIDとそのカテゴリに属するオプションIDの対応を保存
 			}
-			processOptions(category.Options, tab.Id, category.Id, null);
+			processOptions(category.Options, tab.Id, category.Id, []);
 		}
 	}
 	return { valueData, isOptionActive };
