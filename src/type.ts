@@ -40,6 +40,7 @@ export interface ExRCategoryMetaData {
 export interface ExROptionMetaDataDetail {
 	metaData: ExROptionMetaData;
 	childOptionIds: UniqueOptionId[];
+	parentOptionId?: UniqueOptionId;
 }
 
 export interface ExROptionMetaDataRecords {

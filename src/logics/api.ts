@@ -174,6 +174,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				},
 				childOptionIds:
 					exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
+				parentOptionId: parentUniqueOptionId ?? undefined,
 			};
 
 			valueData[uniqueId] = {
@@ -190,6 +191,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 							type: "",
 						},
 						childOptionIds: [],
+						parentOptionId: undefined,
 					};
 				}
 				if (
