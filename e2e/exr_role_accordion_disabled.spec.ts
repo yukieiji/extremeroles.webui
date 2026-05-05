@@ -47,14 +47,14 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await expect(toggleButton).toBeDisabled();
 
 		// 3. アイコンがドット「・」になっていることを確認
-		await expect(toggleButton.getByText("・")).toBeVisible();
-		await expect(toggleButton.locator("svg")).not.toBeVisible();
+		// LucideのDotコンポーネントが描画される
+		await expect(toggleButton.locator("svg.lucide-dot")).toBeVisible();
 
 		// 4. レートを 10% に戻すと再度有効化され、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
 		await expect(toggleButton).toBeEnabled();
 		await expect(toggleButton.locator("svg")).toBeVisible();
-		await expect(toggleButton.getByText("・")).not.toBeVisible();
+		await expect(toggleButton.locator("svg.lucide-dot")).not.toBeVisible();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
 		await expect(content).toBeVisible();
 		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);

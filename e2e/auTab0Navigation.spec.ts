@@ -32,11 +32,17 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// インポスターカテゴリを展開する必要がある
 		// 右パネル内のアコーディオンを指定する
 		// 日本語環境なので「開く」または「閉じる」を使用
-		const imposterCategory = page
-			.getByLabel("右フローティングパネル")
-			.getByRole("button", {
-				name: /^(開|閉)じる インポスター$/,
-			});
+		const rightPanel = page.getByLabel("右フローティングパネル");
+		await expect(rightPanel).toBeVisible({ timeout: 10000 });
+
+		const imposterCategory = rightPanel.getByRole("button", {
+			name: "インポスター",
+			exact: true,
+		});
+
+		// getAttribute("aria-expanded") は要素が描画されるまで待機しないため、
+		// toBeVisible() で待機してから判定する
+		await expect(imposterCategory).toBeVisible({ timeout: 15000 });
 		if ((await imposterCategory.getAttribute("aria-expanded")) === "false") {
 			await imposterCategory.click();
 		}
@@ -64,8 +70,9 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 5. 右パネルの項目をダブルクリック
 		// 再び開く
 		await page.getByRole("button", { name: "パネルを開く" }).click();
+		await expect(rightPanel).toBeVisible({ timeout: 10000 });
 		await impCountSetting.scrollIntoViewIfNeeded();
-		await impCountSetting.dblclick({ force: true });
+		await impCountSetting.dblclick();
 
 		// 6. 自動的に Au Options に戻り、項目が表示されていることを確認
 		await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible(

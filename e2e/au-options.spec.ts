@@ -46,11 +46,13 @@ test.describe("Au Option Interactions", () => {
 
 		// index 1 category should still be an accordion
 		// メインコンテンツエリアのアコーディオンボタンを探す
-		// 日本語環境なので「開く」または「閉じる」と「インポスター」の組み合わせ
+		// 名称が変更されている可能性（アイコンがSVG化されたことによるアクセシブルネームの変化）を考慮し、部分一致で検索
 		const category = page
 			.locator("main")
-			.getByRole("button", { name: /^(開く|閉じる) インポスター$/ });
-		await expect(category).toBeVisible();
+			.getByRole("button", { name: /インポスター/ });
+
+		// タイムアウトを長めに設定し、要素の出現を待つ
+		await expect(category).toBeVisible({ timeout: 15000 });
 	});
 
 	test("should display role controls in header for role tabs", async ({

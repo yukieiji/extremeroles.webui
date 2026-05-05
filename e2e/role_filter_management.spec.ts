@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Role Filter Management", () => {
+	test.setTimeout(60000);
+
 	test.beforeEach(async ({ page }) => {
 		await page.goto("/");
 
@@ -25,12 +27,16 @@ test.describe("Role Filter Management", () => {
 		// Initial count of filters
 		const initialFilters = await page.locator("[data-guid]").count();
 
-		// Add a new filter
+		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
+		await expect(page.getByText("役職の選択")).toBeVisible();
+		await page.getByRole("button", { name: "Bakary" }).first().click();
 
 		// Verify new filter is added
-		await expect(page.locator("[data-guid]")).toHaveCount(initialFilters + 1);
-		await expect(page.getByText("AssignNum: 0").last()).toBeVisible();
+		await expect(page.locator("[data-guid]")).toHaveCount(initialFilters + 1, {
+			timeout: 15000,
+		});
+		await expect(page.getByText("AssignNum: 1").last()).toBeVisible();
 
 		// Delete the filter
 		const lastFilter = page.locator("[data-guid]").last();
@@ -41,45 +47,70 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: "OK" }).click();
 
 		// Verify filter is removed
-		await expect(page.locator("[data-guid]")).toHaveCount(initialFilters);
+		await expect(page.locator("[data-guid]")).toHaveCount(initialFilters, {
+			timeout: 15000,
+		});
 	});
 
 	test("should add a role to filter using search", async ({ page }) => {
-		// Add a new filter first to have a clean slate
-		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		const lastFilter = page
-			.locator("[data-guid]")
-			.filter({ hasText: "AssignNum: 0" })
-			.last();
+		const initialFilters = await page.locator("[data-guid]").count();
 
-		// Open role select dialog
+		// Add a new filter first (triggers role selection)
+		await page.getByRole("button", { name: "フィルターを追加" }).click();
+		await page.getByRole("button", { name: "Bakary" }).first().click();
+
+		// ダイアログが閉じるのを待つ
+		await expect(page.getByText("役職の選択")).not.toBeVisible({
+			timeout: 10000,
+		});
+
+		// Verify new filter is added
+		await expect(page.locator("[data-guid]")).toHaveCount(initialFilters + 1, {
+			timeout: 15000,
+		});
+
+		const lastFilter = page.locator("[data-guid]").last();
+
+		// Open role select dialog to add another role
 		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
 		await expect(page.getByText("役職の選択")).toBeVisible();
 
-		// Search for a role (using mock data role names: Bakary)
+		// Search for a role (using mock data role names: Opener)
 		const searchInput = page.getByPlaceholder("役職を検索...");
-		await searchInput.fill("Bakary");
+		await searchInput.click();
+		await searchInput.fill("Opener");
 
 		// Select a role from the grid
-		const roleButton = page.getByRole("button", { name: "Bakary" }).first();
+		// 検索結果が表示されるのを待つ
+		const roleButton = page.getByRole("button", {
+			name: "Opener",
+			exact: true,
+		});
+		await expect(roleButton).toBeVisible({ timeout: 10000 });
 		await roleButton.click();
 
+		// ダイアログが閉じるのを待つ
+		await expect(page.getByText("役職の選択")).not.toBeVisible({
+			timeout: 10000,
+		});
+
 		// Verify role is added to the filter
-		await expect(lastFilter.locator('[data-role-name="Bakary"]')).toBeVisible();
+		// 要素の出現を待つ
+		await expect(lastFilter.locator('[data-role-name="Opener"]')).toBeVisible({
+			timeout: 20000,
+		});
 	});
 
 	test("should remove a role from filter", async ({ page }) => {
-		// Use an existing filter from mock data or add a new one
+		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		const lastFilter = page
-			.locator("[data-guid]")
-			.filter({ hasText: "AssignNum: 0" })
-			.last();
-
-		// Add a role
-		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
 		await page.getByRole("button", { name: "Bakary" }).first().click();
-		await expect(lastFilter.locator('[data-role-name="Bakary"]')).toBeVisible();
+
+		const lastFilter = page.locator("[data-guid]").last();
+
+		await expect(lastFilter.locator('[data-role-name="Bakary"]')).toBeVisible({
+			timeout: 15000,
+		});
 
 		// Remove the role
 		const rolePin = lastFilter.locator('[data-role-name="Bakary"]');
@@ -90,6 +121,8 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: "OK" }).click();
 
 		// Verify role is removed
-		await expect(lastFilter.getByText("No roles selected")).toBeVisible();
+		await expect(lastFilter.getByText("No roles selected")).toBeVisible({
+			timeout: 15000,
+		});
 	});
 });

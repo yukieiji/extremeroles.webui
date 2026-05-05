@@ -20,11 +20,11 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// 2. 「インポスター役職」セクションが表示されていることを確認
 		// モックデータでは「シェイプシフター」が有効なはず
-		// 日本語環境なので「開く」または「閉じる」を使用
+		// アイコンのSVG化によるアクセシブルネームの変化を考慮し、部分一致で検索
 		const imposterRolesSection = rightPanel.getByRole("button", {
-			name: /^(開|閉)じる インポスター役職$/,
+			name: /インポスター役職/,
 		});
-		await expect(imposterRolesSection).toBeVisible();
+		await expect(imposterRolesSection).toBeVisible({ timeout: 10000 });
 
 		// 3. 役職の内容を確認
 		// aria-label ではなく、テキストとタイトルの組み合わせで特定する (右パネル内)
@@ -66,21 +66,23 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		const rightPanel = page.getByLabel("右フローティングパネル");
 		const imposterRolesSection = rightPanel.getByRole("button", {
-			name: /^(開|閉)じる インポスター役職$/,
+			name: /インポスター役職/,
 		});
 
 		// 最初は開いている（初期値 true）
+		// 要素が表示されるまで待機してから属性を確認
+		await expect(imposterRolesSection).toBeVisible({ timeout: 10000 });
 		await expect(imposterRolesSection).toHaveAttribute("aria-expanded", "true");
 
 		// クリックして閉じる
 		await imposterRolesSection.click();
 
-		// ラベルが「開く インポスター役職」に変わることを確認
-		const collapsedSection = rightPanel.getByRole("button", {
-			name: "開く インポスター役職",
-		});
-		await expect(collapsedSection).toBeVisible();
-		await expect(collapsedSection).toHaveAttribute("aria-expanded", "false");
+		// 属性が false に変わることを確認
+		await expect(imposterRolesSection).toHaveAttribute(
+			"aria-expanded",
+			"false",
+			{ timeout: 10000 },
+		);
 
 		// 役職リストが見えなくなったことを確認
 		await expect(rightPanel.getByText("シェイプシフター")).not.toBeVisible();

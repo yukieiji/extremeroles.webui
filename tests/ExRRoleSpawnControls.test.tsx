@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "../src/feature/exr/ExRRoleSpawnControls";
 import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
@@ -14,15 +20,20 @@ function setUpudateExROptionSelectionSpawnRateMock(): void {
 	// Mock useUpdateExROptionSelection to update the store
 	vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
 		async (...args) => {
-			const currentStore = useStore.getState();
-			const nextExrValue = { ...currentStore.exrValue };
-			for (const x of args) {
-				const { optionId } = parseUniqueOptionId(x.uniqueOptionId);
-				const values =
-					optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-				nextExrValue[x.uniqueOptionId] = { selection: x.selection, values };
-			}
-			currentStore.setExROptions(nextExrValue, currentStore.isExROptionActive);
+			act(() => {
+				const currentStore = useStore.getState();
+				const nextExrValue = { ...currentStore.exrValue };
+				for (const x of args) {
+					const { optionId } = parseUniqueOptionId(x.uniqueOptionId);
+					const values =
+						optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
+					nextExrValue[x.uniqueOptionId] = { selection: x.selection, values };
+				}
+				currentStore.setExROptions(
+					nextExrValue,
+					currentStore.isExROptionActive,
+				);
+			});
 		},
 	);
 }
@@ -57,27 +68,31 @@ describe("ExRRoleSpawnControls", () => {
 			childOptionIds: [],
 		};
 
-		useStore.getState().setExROptions(
-			{
-				[rateUniqueId]: {
-					selection: 0,
-					values: [0, 10, 20, 30],
+		act(() => {
+			useStore.getState().setExROptions(
+				{
+					[rateUniqueId]: {
+						selection: 0,
+						values: [0, 10, 20, 30],
+					},
+					[countUniqueId]: {
+						selection: 0,
+						values: [1, 2, 3],
+					},
 				},
-				[countUniqueId]: {
-					selection: 0,
-					values: [1, 2, 3],
+				{
+					[rateUniqueId]: true,
+					[countUniqueId]: true,
 				},
-			},
-			{
-				[rateUniqueId]: true,
-				[countUniqueId]: true,
-			},
-		);
+			);
+		});
 	};
 
 	beforeEach(() => {
 		resetExrOptionMetaData();
-		useStore.getState().resetViewer();
+		act(() => {
+			useStore.getState().resetViewer();
+		});
 	});
 
 	it("renders both controls", () => {
@@ -132,7 +147,9 @@ describe("ExRRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await fireEvent.change(slider, { target: { value: "0" } });
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "0" } });
+		});
 
 		const state = useStore.getState();
 		expect(
@@ -155,7 +172,9 @@ describe("ExRRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await fireEvent.change(slider, { target: { value: "1" } }); // Select '1' (UI selection index 1 means backend selection 0)
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "1" } }); // Select '1' (UI selection index 1 means backend selection 0)
+		});
 
 		const state = useStore.getState();
 		expect(
@@ -197,7 +216,9 @@ describe("ExRRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await fireEvent.change(slider, { target: { value: "0" } });
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "0" } });
+		});
 
 		// Wait for potential async state updates
 		await new Promise((resolve) => {
@@ -230,7 +251,9 @@ describe("ExRRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
+		});
 
 		expect(useStore.getState().openedExRCategoryIds[categoryId]).toBe(true);
 	});
@@ -254,7 +277,9 @@ describe("ExRRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+		});
 
 		await waitFor(() => {
 			const state = useStore.getState();

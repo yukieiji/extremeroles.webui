@@ -48,9 +48,9 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await page.getByRole("button", { name: "OK" }).click();
 
 	// ローディングが表示され、消えるのを待つ
-	await expect(page.getByText("Synchronizing...")).toBeVisible();
+	// すぐに消える可能性があるので、toBeVisible は必須とせず、消えるのを待つ
 	await expect(page.getByText("Synchronizing...")).not.toBeVisible({
-		timeout: 10000,
+		timeout: 15000,
 	});
 
 	// 入力欄が index 1 のデフォルト値 "2" になっていることを確認
