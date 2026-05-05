@@ -101,7 +101,8 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 		}
 
 		// 全ての親オプションを特定して開く
-		const ancestors = exrOptionMetaData.options[uniqueOptionId]?.parentOptionIds ?? [];
+		const ancestors =
+			exrOptionMetaData.options[uniqueOptionId]?.parentOptionIds ?? [];
 		if (ancestors.length > 0) {
 			openExROptions(ancestors);
 		}

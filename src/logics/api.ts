@@ -207,7 +207,10 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 			}
 
 			if (opt.Childs && opt.Childs.length > 0) {
-				processOptions(opt.Childs, tabId, categoryId, [uniqueId, ...ancestorIds]);
+				processOptions(opt.Childs, tabId, categoryId, [
+					uniqueId,
+					...ancestorIds,
+				]);
 			}
 		}
 	};
