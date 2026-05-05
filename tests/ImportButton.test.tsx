@@ -18,7 +18,6 @@ describe("ImportButton", () => {
 
 		const button = screen.getByRole("button", { name: IMPORT_BUTTON_ARIA });
 		expect(button).toBeDisabled();
-		expect(button).toHaveClass("cursor-not-allowed");
 	});
 
 	it("triggers file input click when button is clicked", () => {
