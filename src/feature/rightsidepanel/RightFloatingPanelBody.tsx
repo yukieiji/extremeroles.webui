@@ -41,7 +41,7 @@ export function RightFloatingPanelBody({
 				<div className="flex items-center justify-between p-4 border-b border-gray-100">
 					<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
 				</div>
-				<div className="flex-1 overflow-y-auto p-3">
+				<div className="flex-1 overflow-y-scroll p-3">
 					<ViewerGroupAccordion
 						title={SETTING_VALUES_TITLE}
 						isOpen={isSettingsOpen}

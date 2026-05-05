@@ -104,7 +104,7 @@ export function RoleSelectDialog({
 					placeholder="役職を検索..."
 				/>
 			</div>
-			<div className="px-6 py-4 overflow-y-auto flex-1">
+			<div className="px-6 py-4 overflow-y-scroll flex-1">
 				<RoleGrid
 					items={filteredRoles}
 					onSelect={handleSelect}
