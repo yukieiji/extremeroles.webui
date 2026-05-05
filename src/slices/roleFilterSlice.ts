@@ -13,6 +13,8 @@ export interface RoleFilterSlice {
 	removeRoleFromFilter: (guid: string, roleId: number) => void;
 	incrementAssignNum: (guid: string) => void;
 	decrementAssignNum: (guid: string) => void;
+	isUpdatingAssignNum: Record<string, boolean>;
+	setIsUpdatingAssignNum: (guid: string, isUpdating: boolean) => void;
 }
 
 /**
@@ -21,6 +23,7 @@ export interface RoleFilterSlice {
 export const createRoleFilterSlice: StateCreator<RoleFilterSlice> = (set) => {
 	return {
 		roleFilterSet: {},
+		isUpdatingAssignNum: {},
 		setRoleFilterSet: (data: Record<string, RoleAssignFilterSetUI>) => {
 			set({ roleFilterSet: data });
 		},
@@ -113,6 +116,16 @@ export const createRoleFilterSlice: StateCreator<RoleFilterSlice> = (set) => {
 							...filter,
 							AssignNum: filter.AssignNum - 1,
 						},
+					},
+				};
+			});
+		},
+		setIsUpdatingAssignNum: (guid: string, isUpdating: boolean) => {
+			set((state) => {
+				return {
+					isUpdatingAssignNum: {
+						...state.isUpdatingAssignNum,
+						[guid]: isUpdating,
 					},
 				};
 			});

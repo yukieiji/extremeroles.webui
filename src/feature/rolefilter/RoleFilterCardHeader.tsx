@@ -18,11 +18,14 @@ export function RoleFilterCardHeader({
 	const addRoleToFilter = useStore((state) => state.addRoleToFilter);
 	const incrementAssignNum = useStore((state) => state.incrementAssignNum);
 	const decrementAssignNum = useStore((state) => state.decrementAssignNum);
+	const isUpdating = useStore((state) => state.isUpdatingAssignNum[guid]);
+	const setIsUpdating = useStore((state) => state.setIsUpdatingAssignNum);
 
 	const onIncrement = async () => {
-		if (assignNum >= 255) {
+		if (assignNum >= 255 || isUpdating) {
 			return;
 		}
+		setIsUpdating(guid, true);
 		try {
 			await postRoleFilterUpdate({
 				Op: PostExRAssignOps.FilterAssignNumIncrese,
@@ -32,13 +35,16 @@ export function RoleFilterCardHeader({
 			incrementAssignNum(guid);
 		} catch (error) {
 			console.error("Failed to increment AssignNum:", error);
+		} finally {
+			setIsUpdating(guid, false);
 		}
 	};
 
 	const onDecrement = async () => {
-		if (assignNum <= 1) {
+		if (assignNum <= 1 || isUpdating) {
 			return;
 		}
+		setIsUpdating(guid, true);
 		try {
 			await postRoleFilterUpdate({
 				Op: PostExRAssignOps.FilterAssignNumDecrese,
@@ -48,6 +54,8 @@ export function RoleFilterCardHeader({
 			decrementAssignNum(guid);
 		} catch (error) {
 			console.error("Failed to decrement AssignNum:", error);
+		} finally {
+			setIsUpdating(guid, false);
 		}
 	};
 
@@ -93,7 +101,7 @@ export function RoleFilterCardHeader({
 					<button
 						type="button"
 						onClick={onIncrement}
-						disabled={assignNum >= 255}
+						disabled={assignNum >= 255 || isUpdating}
 						className="p-0.5 rounded hover:bg-gray-200 disabled:opacity-30 disabled:hover:bg-transparent"
 						aria-label="Increment AssignNum"
 					>
@@ -102,7 +110,7 @@ export function RoleFilterCardHeader({
 					<button
 						type="button"
 						onClick={onDecrement}
-						disabled={assignNum <= 1}
+						disabled={assignNum <= 1 || isUpdating}
 						className="p-0.5 rounded hover:bg-gray-200 disabled:opacity-30 disabled:hover:bg-transparent"
 						aria-label="Decrement AssignNum"
 					>

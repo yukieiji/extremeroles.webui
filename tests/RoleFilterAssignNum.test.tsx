@@ -1,4 +1,10 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RoleFilterViewer } from "../src/feature/rolefilter/RoleFilterViewer";
 import { postRoleFilterUpdate } from "../src/logics/api";
@@ -34,6 +40,7 @@ describe("RoleFilter AssignNum Adjustment", () => {
 				roleFilterSet: {
 					[guid]: { AssignNum: 5, Roles: [] },
 				},
+				isUpdatingAssignNum: {},
 			});
 		});
 
@@ -67,6 +74,46 @@ describe("RoleFilter AssignNum Adjustment", () => {
 			MapRoleId: null,
 		});
 		expect(screen.getByText("AssignNum: 5")).toBeInTheDocument();
+	});
+
+	it("disables buttons while updating", async () => {
+		const guid = "test-guid";
+		// biome-ignore lint/suspicious/noExplicitAny: Mocking API function
+		let resolveUpdate: any;
+		// biome-ignore lint/suspicious/noExplicitAny: Mocking API function
+		(postRoleFilterUpdate as any).mockReturnValue(
+			new Promise((resolve) => {
+				resolveUpdate = resolve;
+			}),
+		);
+
+		act(() => {
+			useStore.setState({
+				roleFilterSet: {
+					[guid]: { AssignNum: 5, Roles: [] },
+				},
+				isUpdatingAssignNum: {},
+			});
+		});
+
+		render(<RoleFilterViewer />);
+
+		const incrementButton = screen.getByLabelText("Increment AssignNum");
+
+		await act(async () => {
+			fireEvent.click(incrementButton);
+		});
+
+		// Button should be disabled while promise is pending
+		expect(incrementButton).toBeDisabled();
+
+		await act(async () => {
+			resolveUpdate();
+		});
+
+		await waitFor(() => {
+			expect(incrementButton).not.toBeDisabled();
+		});
 	});
 
 	it("disables decrement button at minimum value (1)", async () => {
