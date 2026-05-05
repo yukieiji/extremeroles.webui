@@ -32,7 +32,9 @@ test.describe("Role Filter Tab", () => {
 		).toBeVisible();
 
 		// フィルターカードが表示されていることを確認
-		const cardElement = page.getByRole("listitem");
+		const cardElement = page
+			.getByRole("list", { name: "Filter List" })
+			.getByRole("listitem");
 		await expect(cardElement.first()).toBeVisible();
 
 		// AssignNumが表示されていることを確認
