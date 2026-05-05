@@ -75,15 +75,7 @@ export function RoleSelectDialog({
 				const nextSet = new Set([...selectedRoleIds, ...rangeIds]);
 				setSelectedRoleIds(Array.from(nextSet));
 			}
-		} else if (event.ctrlKey || event.metaKey) {
-			// Toggle single selection
-			setSelectedRoleIds(
-				selectedRoleIds.includes(roleId)
-					? selectedRoleIds.filter((id) => id !== roleId)
-					: [...selectedRoleIds, roleId],
-			);
 		} else {
-			// Single selection (toggle for consistency with checkbox UI)
 			setSelectedRoleIds(
 				selectedRoleIds.includes(roleId)
 					? selectedRoleIds.filter((id) => id !== roleId)
