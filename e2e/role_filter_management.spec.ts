@@ -82,7 +82,10 @@ test.describe("Role Filter Management", () => {
 
 		// Select a role from the grid
 		// 検索結果が表示されるのを待つ
-		const roleButton = page.getByRole("button", { name: "Opener", exact: true });
+		const roleButton = page.getByRole("button", {
+			name: "Opener",
+			exact: true,
+		});
 		await expect(roleButton).toBeVisible({ timeout: 10000 });
 		await roleButton.click();
 

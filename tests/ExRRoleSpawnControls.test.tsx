@@ -29,7 +29,10 @@ function setUpudateExROptionSelectionSpawnRateMock(): void {
 						optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
 					nextExrValue[x.uniqueOptionId] = { selection: x.selection, values };
 				}
-				currentStore.setExROptions(nextExrValue, currentStore.isExROptionActive);
+				currentStore.setExROptions(
+					nextExrValue,
+					currentStore.isExROptionActive,
+				);
 			});
 		},
 	);
