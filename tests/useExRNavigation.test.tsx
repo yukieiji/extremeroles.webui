@@ -1,9 +1,9 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useExRNavigation } from "../src/hooks/useOptionNavigation";
-import { useStore } from "../src/useStore";
 import * as api from "../src/logics/api";
-import type { UniqueOptionId } from "../src/type";
+import type { ExROptionMetaData, UniqueOptionId } from "../src/type";
+import { useStore } from "../src/useStore";
 
 vi.mock("../src/useStore", () => ({
 	useStore: vi.fn(),
@@ -16,7 +16,9 @@ vi.mock("../src/logics/api", () => ({
 }));
 
 vi.mock("../src/logics/optionUtils", () => ({
-	parseUniqueOptionId: vi.fn().mockReturnValue({ tabId: 1, categoryId: 10, optionId: 100 }),
+	parseUniqueOptionId: vi
+		.fn()
+		.mockReturnValue({ tabId: 1, categoryId: 10, optionId: 100 }),
 }));
 
 describe("useExRNavigation", () => {
@@ -29,7 +31,7 @@ describe("useExRNavigation", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(useStore).mockImplementation((selector: any) => {
+		vi.mocked(useStore).mockImplementation((selector: unknown) => {
 			const state = {
 				setSelectedTab,
 				setSelectedExRTabId,
@@ -38,8 +40,9 @@ describe("useExRNavigation", () => {
 				setHighlightedExROptionId,
 				setRightPanelOpen,
 			};
-			return selector(state);
+			return (selector as (s: typeof state) => unknown)(state);
 		});
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore.getState
 		(useStore as any).getState = vi.fn().mockReturnValue({
 			openedExRCategoryIds: {},
 		});
@@ -50,18 +53,20 @@ describe("useExRNavigation", () => {
 		const parentId = 200 as UniqueOptionId;
 		const grandParentId = 300 as UniqueOptionId;
 
+		const emptyMeta = {} as ExROptionMetaData;
+
 		api.exrOptionMetaData.options[childId] = {
-			metaData: {} as any,
+			metaData: emptyMeta,
 			childOptionIds: [],
 			parentOptionId: parentId,
 		};
 		api.exrOptionMetaData.options[parentId] = {
-			metaData: {} as any,
+			metaData: emptyMeta,
 			childOptionIds: [childId],
 			parentOptionId: grandParentId,
 		};
 		api.exrOptionMetaData.options[grandParentId] = {
-			metaData: {} as any,
+			metaData: emptyMeta,
 			childOptionIds: [parentId],
 			parentOptionId: undefined,
 		};
