@@ -14,7 +14,7 @@ export function RoleFilterViewer() {
 	const filterEntries = Object.entries(roleFilterSet);
 
 	return (
-		<div className="p-4 flex flex-col gap-4 max-h-[calc(100vh-200px)] overflow-auto">
+		<div className="p-4 flex flex-col gap-4 max-h-dvh overflow-auto">
 			<div className="flex justify-between items-center">
 				<RoleFilterAddButton />
 			</div>
