@@ -36,8 +36,9 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		await expect(rightPanel).toBeVisible({ timeout: 10000 });
 
 		const imposterCategory = rightPanel.getByRole("button", {
-			name: /インポスター/,
-		}).filter({ hasNotText: "役職" }); // 「インポスター役職」を除外
+			name: "インポスター",
+			exact: true,
+		});
 
 		// getAttribute("aria-expanded") は要素が描画されるまで待機しないため、
 		// toBeVisible() で待機してから判定する
@@ -69,8 +70,9 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 5. 右パネルの項目をダブルクリック
 		// 再び開く
 		await page.getByRole("button", { name: "パネルを開く" }).click();
+		await expect(rightPanel).toBeVisible({ timeout: 10000 });
 		await impCountSetting.scrollIntoViewIfNeeded();
-		await impCountSetting.dblclick({ force: true });
+		await impCountSetting.dblclick();
 
 		// 6. 自動的に Au Options に戻り、項目が表示されていることを確認
 		await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible(

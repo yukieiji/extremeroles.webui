@@ -78,7 +78,11 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		await imposterRolesSection.click();
 
 		// 属性が false に変わることを確認
-		await expect(imposterRolesSection).toHaveAttribute("aria-expanded", "false", { timeout: 10000 });
+		await expect(imposterRolesSection).toHaveAttribute(
+			"aria-expanded",
+			"false",
+			{ timeout: 10000 },
+		);
 
 		// 役職リストが見えなくなったことを確認
 		await expect(rightPanel.getByText("シェイプシフター")).not.toBeVisible();
