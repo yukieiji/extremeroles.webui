@@ -460,9 +460,10 @@ export const GetCsvResultSchema = z.object({
 export const PostExRAssignOps = {
 	FilterNewAdd: 0,
 	FilterRoleAdd: 1,
-	FilterChangeAssignNum: 2,
-	FilterRoleDelete: 3,
-	FilterDelete: 4,
+	FilterAssignNumIncrese: 2,
+	FilterAssignNumDecrese: 3,
+	FilterRoleDelete: 4,
+	FilterDelete: 5,
 } as const;
 
 export type PostExRAssignOps =
