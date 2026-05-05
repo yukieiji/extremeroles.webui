@@ -460,14 +460,15 @@ export const GetCsvResultSchema = z.object({
 export const PostExRAssignOps = {
 	FilterNewAdd: 0,
 	FilterRoleAdd: 1,
-	FilterRoleDelete: 2,
-	FilterDelete: 3,
+	FilterChangeAssignNum: 2,
+	FilterRoleDelete: 3,
+	FilterDelete: 4,
 } as const;
 
 export type PostExRAssignOps =
 	(typeof PostExRAssignOps)[keyof typeof PostExRAssignOps];
 
-export const PostExRAssignOpsSchema = z.nativeEnum(
+export const PostExRAssignOpsSchema = z.enum(
 	PostExRAssignOps as unknown as { [key: string]: string | number },
 );
 
