@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RoleFilterViewer } from "../src/feature/rolefilter/RoleFilterViewer";
 import { postRoleFilterUpdate } from "../src/logics/api";
@@ -18,9 +24,11 @@ vi.mock("../src/logics/api", () => ({
 describe("RoleFilterViewer and RoleFilterCard", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
-		useStore.setState({
-			roleFilterSet: {},
-			blockDialog: undefined,
+		act(() => {
+			useStore.setState({
+				roleFilterSet: {},
+				blockDialog: undefined,
+			});
 		});
 	});
 
@@ -30,7 +38,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		expect(screen.getByText(/フィルターがありません/)).toBeInTheDocument();
 
 		const addButton = screen.getByText("フィルターを追加");
-		fireEvent.click(addButton);
+		await act(async () => {
+			fireEvent.click(addButton);
+		});
 
 		// Should show role selection dialog instead of calling API immediately
 		const state = useStore.getState();
@@ -40,7 +50,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 		// Simulate role selection
 		if (state.blockDialog?.type === "roleSelect") {
-			await state.blockDialog.onSelect(1);
+			await act(async () => {
+				await state.blockDialog?.onSelect(1);
+			});
 		}
 
 		await waitFor(() => {
@@ -54,16 +66,20 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 	it("deletes a filter with confirmation", async () => {
 		const guid = "test-guid";
-		useStore.setState({
-			roleFilterSet: {
-				[guid]: { AssignNum: 1, Roles: [] },
-			},
+		act(() => {
+			useStore.setState({
+				roleFilterSet: {
+					[guid]: { AssignNum: 1, Roles: [] },
+				},
+			});
 		});
 
 		render(<RoleFilterViewer />);
 
 		const deleteButton = screen.getByLabelText("Delete filter");
-		fireEvent.click(deleteButton);
+		await act(async () => {
+			fireEvent.click(deleteButton);
+		});
 
 		// Should show block dialog
 		const state = useStore.getState();
@@ -73,7 +89,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 		// Simulate confirm
 		if (state.blockDialog?.type === "confirm") {
-			await state.blockDialog.onConfirm();
+			await act(async () => {
+				await state.blockDialog?.onConfirm();
+			});
 		}
 
 		expect(postRoleFilterUpdate).toHaveBeenCalled();
@@ -82,24 +100,30 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 	it("adds and removes roles with confirmation", async () => {
 		const guid = "test-guid";
-		useStore.setState({
-			roleFilterSet: {
-				[guid]: { AssignNum: 1, Roles: [] },
-			},
+		act(() => {
+			useStore.setState({
+				roleFilterSet: {
+					[guid]: { AssignNum: 1, Roles: [] },
+				},
+			});
 		});
 
 		render(<RoleFilterViewer />);
 
 		// Add role
 		const addRoleButton = screen.getByText("役職を追加");
-		fireEvent.click(addRoleButton);
+		await act(async () => {
+			fireEvent.click(addRoleButton);
+		});
 
 		let state = useStore.getState();
 		expect(state.blockDialog?.type).toBe("roleSelect");
 
 		// Simulate role selection
 		if (state.blockDialog?.type === "roleSelect") {
-			await state.blockDialog.onSelect(1);
+			await act(async () => {
+				await state.blockDialog?.onSelect(1);
+			});
 		}
 
 		expect(postRoleFilterUpdate).toHaveBeenCalled();
@@ -110,7 +134,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 		// Remove role
 		const removeRoleButton = screen.getByLabelText("Remove Crewmate");
-		fireEvent.click(removeRoleButton);
+		await act(async () => {
+			fireEvent.click(removeRoleButton);
+		});
 
 		state = useStore.getState();
 		expect(state.blockDialog?.type).toBe("confirm");
@@ -118,7 +144,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 		// Simulate confirm
 		if (state.blockDialog?.type === "confirm") {
-			await state.blockDialog.onConfirm();
+			await act(async () => {
+				await state.blockDialog?.onConfirm();
+			});
 		}
 
 		expect(useStore.getState().roleFilterSet[guid].Roles).toEqual([]);
