@@ -14,7 +14,7 @@ export function RoleFilterViewer() {
 	const filterEntries = Object.entries(roleFilterSet);
 
 	return (
-		<div className="p-4 flex flex-col gap-4 max-h-dvh overflow-auto">
+		<div className="p-4 flex flex-col gap-4 flex-1 overflow-y-auto [scrollbar-gutter:stable]">
 			<div className="flex justify-between items-center">
 				<RoleFilterAddButton />
 			</div>
