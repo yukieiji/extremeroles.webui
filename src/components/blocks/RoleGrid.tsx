@@ -1,3 +1,5 @@
+import { Check } from "lucide-react";
+
 interface RoleGridItem {
 	roleId: number;
 	roleName: string;
@@ -59,21 +61,11 @@ export function RoleGrid({
 							}`}
 						>
 							{isSelected && (
-								<svg
+								<Check
 									className="w-3 h-3 text-white"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									role="img"
+									strokeWidth={4}
 									aria-label="Selected"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={3}
-										d="M5 13l4 4L19 7"
-									/>
-								</svg>
+								/>
 							)}
 						</div>
 						<div className="flex flex-col gap-0.5 overflow-hidden">
