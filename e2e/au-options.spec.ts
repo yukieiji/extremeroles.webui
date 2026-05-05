@@ -62,7 +62,10 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("button", { name: "1", exact: true }).click();
 
 		// Initially chance is probably 0, so it's disabled
-		const category = page.getByTestId("category-list").locator("> div").first();
+		const category = page
+			.getByTestId("category-list")
+			.locator("> div > div")
+			.first();
 		const spawn = category.getByTestId("spawn-rate-control");
 		await expect(spawn).toBeVisible();
 		await expect(category.getByTestId("spawn-count-control")).toBeVisible();
@@ -84,7 +87,10 @@ test.describe("Au Option Interactions", () => {
 	}) => {
 		await page.getByRole("button", { name: "1", exact: true }).click();
 
-		const category = page.getByTestId("category-list").locator("> div").first();
+		const category = page
+			.getByTestId("category-list")
+			.locator("> div > div")
+			.first();
 		const chanceControl = category.getByTestId("spawn-rate-control");
 		const countControl = category.getByTestId("spawn-count-control");
 
@@ -123,7 +129,10 @@ test.describe("Au Option Interactions", () => {
 	}) => {
 		await page.getByRole("button", { name: "1", exact: true }).click();
 
-		const category = page.getByTestId("category-list").locator("> div").first();
+		const category = page
+			.getByTestId("category-list")
+			.locator("> div > div")
+			.first();
 		const toggleButton = category.locator("button").first();
 
 		// Set chance to 100% to enable accordion
