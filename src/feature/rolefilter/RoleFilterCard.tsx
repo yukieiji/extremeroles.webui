@@ -66,21 +66,23 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 			title: "役職の追加",
 			searchQuery: "",
 			excludeRoleIds: filterSet.Roles.map((r) => r.id),
-			onSelect: async (roleId: number) => {
+			onSelect: async (roleIds: number[]) => {
 				try {
-					await postRoleFilterUpdate({
-						Op: PostExRAssignOps.FilterRoleAdd,
-						FilterId: guid,
-						MapRoleId: roleId,
-					});
+					for (const roleId of roleIds) {
+						await postRoleFilterUpdate({
+							Op: PostExRAssignOps.FilterRoleAdd,
+							FilterId: guid,
+							MapRoleId: roleId,
+						});
 
-					const roleName =
-						(roleFilterMetaData.NormalRoleId[roleId] as string) ||
-						(roleFilterMetaData.CombinationId[roleId] as string) ||
-						(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-						"Unknown Role";
+						const roleName =
+							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
+							(roleFilterMetaData.CombinationId[roleId] as string) ||
+							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
+							"Unknown Role";
 
-					addRoleToFilter(guid, roleId, roleName);
+						addRoleToFilter(guid, roleId, roleName);
+					}
 				} catch (error) {
 					console.error("Failed to add role to filter:", error);
 				}

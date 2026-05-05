@@ -51,7 +51,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		// Simulate role selection
 		if (state.blockDialog?.type === "roleSelect") {
 			await act(async () => {
-				await state.blockDialog?.onSelect(1);
+				await state.blockDialog?.onSelect([1]);
 			});
 		}
 
@@ -122,7 +122,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		// Simulate role selection
 		if (state.blockDialog?.type === "roleSelect") {
 			await act(async () => {
-				await state.blockDialog?.onSelect(1);
+				await state.blockDialog?.onSelect([1]);
 			});
 		}
 
