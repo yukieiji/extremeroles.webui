@@ -126,10 +126,7 @@ test.describe("Role Filter Management", () => {
 		});
 
 		// Remove the role
-		const rolePin = lastFilter
-			.getByText("Bakary", { exact: true })
-			.locator("xpath=..");
-		await rolePin.getByLabel("Remove Bakary").click();
+		await lastFilter.getByLabel("Remove Bakary").click();
 
 		// Confirmation dialog
 		await expect(page.getByText("役職の削除")).toBeVisible();
