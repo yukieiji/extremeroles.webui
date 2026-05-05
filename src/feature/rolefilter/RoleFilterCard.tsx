@@ -73,7 +73,6 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 				return (
 					<RolePin
 						key={role.id}
-						id={role.id}
 						name={role.name}
 						onDelete={() => onDeleteRole(role.id, role.name)}
 					/>
