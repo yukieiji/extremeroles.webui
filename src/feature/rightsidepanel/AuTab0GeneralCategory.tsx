@@ -34,7 +34,7 @@ export function AuTab0GeneralCategory({
 				toggleAuTab0Category(categoryId);
 			}}
 		>
-			<RightPanelContainer arr={categoryMeta.options}>
+			<RightPanelContainer arr={categoryMeta.options} ignoreIndex={0}>
 				{(optionId) => (
 					<AuTab0OptionRow optionId={optionId} categoryId={categoryId} />
 				)}

@@ -45,7 +45,7 @@ export function ExROptionRecursiveItemView({
 			onToggle={handleToggle}
 			depth={depth}
 		>
-			<RightPanelContainer arr={childs}>
+			<RightPanelContainer arr={childs} ignoreIndex={-1}>
 				{(optionid) => <ExROptionItemView uniqueOptionId={optionid} />}
 			</RightPanelContainer>
 		</ChildOptionViewAccordion>

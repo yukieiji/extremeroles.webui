@@ -46,7 +46,7 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 				toggleCategory(categoryId);
 			}}
 		>
-			<RightPanelContainer arr={filteredOptions}>
+			<RightPanelContainer arr={filteredOptions} ignoreIndex={0}>
 				{(optionid) => <ExROptionItemView uniqueOptionId={optionid} />}
 			</RightPanelContainer>
 		</ViewerGroupAccordion>

@@ -64,7 +64,7 @@ export function AuRoleViewerSection({
 
 	return (
 		<ViewerGroupAccordion title={title} isOpen={isOpen} onToggle={onToggle}>
-			<RightPanelContainer arr={activeRoleCategoryIds}>
+			<RightPanelContainer arr={activeRoleCategoryIds} ignoreIndex={0}>
 				{(categoryId) => (
 					<AuRoleViewerRow tabId={tabId} categoryId={categoryId} />
 				)}
