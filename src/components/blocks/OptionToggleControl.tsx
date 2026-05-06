@@ -31,6 +31,7 @@ export function OptionToggleControl({
 				onClick={handleToggle}
 				checked={isOn}
 				className="cursor-pointer"
+				data-testid="option-toggle"
 			/>
 			<FieldLabel htmlFor={id}>
 				<ColoredText text={values[selection]} />
