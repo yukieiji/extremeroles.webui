@@ -9,6 +9,7 @@ dependencies:
   - jezweb/claude-skills
   - yukieiji/agent-skills-for-exr
   - currents-dev/playwright-best-practices-skill
+  - shadcn/ui
   mcp: []
 includes: auto
 scripts: {}

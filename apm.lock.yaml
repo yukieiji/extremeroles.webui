@@ -35,6 +35,14 @@ dependencies:
   resolved_commit: da3794373cacecf16ac4d26076d481f7934c5b67
   package_type: marketplace_plugin
   content_hash: sha256:1e2f7b8b312551a868948a496bbac916fb2722645aaccfac3b5e4cf23825ba43
+- repo_url: shadcn/ui
+  host: github.com
+  resolved_commit: 92b4927a80be9345e9fd264b306abe98f7fa8130
+  package_type: marketplace_plugin
+  deployed_files:
+  - .gemini/skills/shadcn
+  - .github/skills/shadcn
+  content_hash: sha256:4fcd92813c87513f3c87abadd46a78110b7eec2156aa363871b3d64a002d0e66
 - repo_url: vercel-labs/skills
   host: github.com
   resolved_commit: 7c0a9af3f8738965b71341712710ac7371089b34
@@ -55,3 +63,14 @@ dependencies:
   - .gemini/skills/vercel-cli-with-tokens
   - .gemini/skills/web-design-guidelines
   content_hash: sha256:da91a54a946b1349e4e1738029c6e6bb798213b9883e1792ff5d7540c67477aa
+mcp_servers:
+- shadcn
+mcp_configs:
+  shadcn:
+    name: shadcn
+    transport: stdio
+    args:
+    - shadcn@latest
+    - mcp
+    registry: false
+    command: npx
