@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
-import { ExROptionRecursiveItem } from "../src/feature/exr/ExROptionRecursiveItem";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUniqueOptionId } from "../src/logics/optionUtils";
-import { useStore } from "../src/useStore";
+import { ExROptionRecursiveItem } from "@/feature/exr/ExROptionRecursiveItem";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import { getUniqueOptionId } from "@/logics/optionUtils";
+import { useStore } from "@/useStore";
 
 describe("ExROptionRecursiveItem", () => {
 	const parentUniqueId = getUniqueOptionId(1, 1, 1);

@@ -1,7 +1,7 @@
-import { ColoredText } from "../../components/parts/ColoredText";
-import { OptionFormat } from "../../components/parts/OptionFormat";
-import { useOptionData } from "../../hooks/useExROptionData";
-import type { UniqueOptionId } from "../../type";
+import { ColoredText } from "@/components/parts/ColoredText";
+import { OptionFormat } from "@/components/parts/OptionFormat";
+import { useOptionData } from "@/hooks/useExROptionData";
+import type { UniqueOptionId } from "@/type";
 
 interface ExRValueViewProps {
 	uniqueOptionId: UniqueOptionId;

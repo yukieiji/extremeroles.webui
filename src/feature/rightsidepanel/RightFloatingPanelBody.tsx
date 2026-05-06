@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
-import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
-import { RightPanelGroupColumnLayout } from "../../components/parts/RightPanelGroupColumnLayout";
+import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
+import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupColumnLayout";
 import {
 	AU_SETTINGS_TITLE,
 	EXR_SETTINGS_TITLE,
 	RIGHT_PANEL_ARIA,
 	RIGHT_PANEL_TITLE,
 	SETTING_VALUES_TITLE,
-} from "../../noTrans";
-import { useStore } from "../../useStore";
+} from "@/noTrans";
+import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
 

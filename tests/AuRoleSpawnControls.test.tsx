@@ -1,9 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AuRoleSpawnControls } from "../src/feature/amongus/AuRoleSpawnControls";
-import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
-import * as apiStore from "../src/logics/api.store";
-import { useStore } from "../src/useStore";
+import { AuRoleSpawnControls } from "@/feature/amongus/AuRoleSpawnControls";
+import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
+import * as apiStore from "@/logics/api.store";
+import { useStore } from "@/useStore";
 
 describe("AuRoleSpawnControls", () => {
 	const categoryId = 10;

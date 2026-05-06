@@ -1,9 +1,9 @@
-import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
-import { ColoredText } from "../../components/parts/ColoredText";
-import { useVisibleCategories } from "../../hooks/useExROptionData";
-import { exrOptionMetaData } from "../../logics/api";
-import { ExRTabId } from "../../type";
-import { useStore } from "../../useStore";
+import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
+import { ColoredText } from "@/components/parts/ColoredText";
+import { useVisibleCategories } from "@/hooks/useExROptionData";
+import { exrOptionMetaData } from "@/logics/api";
+import { ExRTabId } from "@/type";
+import { useStore } from "@/useStore";
 import { ExRCategoryListViewer } from "./ExRCategoryListViewer";
 
 const TARGET_TAB_ID = ExRTabId.GeneralTab;

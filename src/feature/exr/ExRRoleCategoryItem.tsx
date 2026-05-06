@@ -1,10 +1,10 @@
-import { RoleCategoryAccordion } from "../../components/blocks/RoleCategoryAccordion";
-import { ColoredText } from "../../components/parts/ColoredText";
-import { useOptionData } from "../../hooks/useExROptionData";
-import { exrOptionMetaData } from "../../logics/api";
-import { getUniqueOptionId } from "../../logics/optionUtils";
-import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../../type";
-import { useStore } from "../../useStore";
+import { RoleCategoryAccordion } from "@/components/blocks/RoleCategoryAccordion";
+import { ColoredText } from "@/components/parts/ColoredText";
+import { useOptionData } from "@/hooks/useExROptionData";
+import { exrOptionMetaData } from "@/logics/api";
+import { getUniqueOptionId } from "@/logics/optionUtils";
+import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "@/type";
+import { useStore } from "@/useStore";
 import { ExRCategoryOptionList } from "./ExRCategoryOptionList";
 import { ExRRoleSpawnControls } from "./ExRRoleSpawnControls";
 

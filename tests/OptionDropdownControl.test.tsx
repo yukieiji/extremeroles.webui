@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionDropdownControl } from "../src/components/parts/OptionDropdownControl";
+import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
 
 describe("OptionDropdownControl", () => {
 	const mockValues = ["Option A", "Option B", "Option C"];

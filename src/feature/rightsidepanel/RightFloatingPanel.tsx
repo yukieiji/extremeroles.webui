@@ -1,7 +1,7 @@
 import { use, useEffect } from "react";
-import { getAllOptions } from "../../logics/api.store";
-import { CLOSE } from "../../noTrans";
-import { useStore } from "../../useStore";
+import { getAllOptions } from "@/logics/api.store";
+import { CLOSE } from "@/noTrans";
+import { useStore } from "@/useStore";
 import { RightFloatingPanelBody } from "./RightFloatingPanelBody";
 import { RightFloatingPanelToggleButton } from "./RightFloatingPanelToggleButton";
 import { RightPanelFloatingPanelResizeHandle } from "./RightPanelFloatingPanelResizeHandle";

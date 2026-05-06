@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 
-import { useStore } from "../../useStore";
+import { useStore } from "@/useStore";
 
 const MIN_WIDTH = 320;
 

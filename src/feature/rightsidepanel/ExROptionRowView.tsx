@@ -1,4 +1,4 @@
-import type { UniqueOptionId } from "../../type";
+import type { UniqueOptionId } from "@/type";
 import { ExROptionRowViewContent } from "./ExROptionRowViewContent";
 
 interface ExROptionRowViewProps {

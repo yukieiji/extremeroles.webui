@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
-import { useOptionData } from "../../hooks/useExROptionData";
-import { createExRNavigateId } from "../../hooks/useOptionNavigation";
-import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
-import { useStore } from "../../useStore";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { useOptionData } from "@/hooks/useExROptionData";
+import { createExRNavigateId } from "@/hooks/useOptionNavigation";
+import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
+import { useStore } from "@/useStore";
 import { PresetDropdown } from "./PresetDropdown";
 import { PresetInput } from "./PresetInput";
 

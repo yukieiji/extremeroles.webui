@@ -1,8 +1,8 @@
-import { ChildOptionViewAccordion } from "../../components/blocks/ChildOptionViewAccordion";
-import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
-import { exrOptionMetaData } from "../../logics/api";
-import type { UniqueOptionId } from "../../type";
-import { useStore } from "../../useStore";
+import { ChildOptionViewAccordion } from "@/components/blocks/ChildOptionViewAccordion";
+import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
+import { exrOptionMetaData } from "@/logics/api";
+import type { UniqueOptionId } from "@/type";
+import { useStore } from "@/useStore";
 import { ExROptionItemView } from "./ExROptionItemView";
 import { ExROptionRowView } from "./ExROptionRowView";
 

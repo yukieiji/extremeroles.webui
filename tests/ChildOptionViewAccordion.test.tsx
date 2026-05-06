@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ChildOptionViewAccordion } from "../src/components/blocks/ChildOptionViewAccordion";
-import { CLOSE, OPEN } from "../src/noTrans";
+import { ChildOptionViewAccordion } from "@/components/blocks/ChildOptionViewAccordion";
+import { CLOSE, OPEN } from "@/noTrans";
 
 describe("ChildOptionViewAccordion", () => {
 	const defaultProps = {

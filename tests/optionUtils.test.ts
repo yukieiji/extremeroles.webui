@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
 import {
 	findClosestIndex,
 	getBaseOptionName,
@@ -8,7 +8,7 @@ import {
 	getUniqueOptionId,
 	groupOptionPairs,
 	parseAuOptionId,
-} from "../src/logics/optionUtils";
+} from "@/logics/optionUtils";
 
 describe("optionUtils", () => {
 	beforeEach(() => {

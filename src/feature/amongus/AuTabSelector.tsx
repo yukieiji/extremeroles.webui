@@ -1,8 +1,8 @@
 import { useEffect, useTransition } from "react";
-import { TabButton } from "../../components/parts/TabButton";
-import { TabButtonContainer } from "../../components/parts/TabButtonContainer";
-import { auOptionMetaData } from "../../logics/api";
-import { useStore } from "../../useStore";
+import { TabButton } from "@/components/parts/TabButton";
+import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
+import { auOptionMetaData } from "@/logics/api";
+import { useStore } from "@/useStore";
 
 /**
  * Auオプションのタブ選択コンポーネント

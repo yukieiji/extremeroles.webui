@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ExRTabDtoArraySchema, ExRTabId } from "../src/type";
+import { ExRTabDtoArraySchema, ExRTabId } from "@/type";
 
 describe("ExRTabDto Validation", () => {
 	it("should validate a correct ExRTabDto array", () => {

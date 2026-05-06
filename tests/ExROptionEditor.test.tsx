@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExROptionEditor } from "../src/feature/exr/ExROptionEditor";
-import { resetExrOptionMetaData } from "../src/logics/api";
-import { getAllOptions, resetApiCache } from "../src/logics/api.store";
-import type { AuOptionCategoryDto, ExRTabDto } from "../src/type";
-import { useStore } from "../src/useStore";
+import { ExROptionEditor } from "@/feature/exr/ExROptionEditor";
+import { resetExrOptionMetaData } from "@/logics/api";
+import { getAllOptions, resetApiCache } from "@/logics/api.store";
+import type { AuOptionCategoryDto, ExRTabDto } from "@/type";
+import { useStore } from "@/useStore";
 
 describe("ExROptionEditor", () => {
 	const mockExRData: ExRTabDto[] = [

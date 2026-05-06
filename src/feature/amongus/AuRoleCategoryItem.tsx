@@ -1,8 +1,8 @@
-import { RoleCategoryAccordion } from "../../components/blocks/RoleCategoryAccordion";
-import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
-import { createAuNavigateId } from "../../hooks/useOptionNavigation";
-import { auOptionMetaData } from "../../logics/api";
-import { useStore } from "../../useStore";
+import { RoleCategoryAccordion } from "@/components/blocks/RoleCategoryAccordion";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { createAuNavigateId } from "@/hooks/useOptionNavigation";
+import { auOptionMetaData } from "@/logics/api";
+import { useStore } from "@/useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
 import { AuRoleSpawnControls } from "./AuRoleSpawnControls";
 

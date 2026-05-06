@@ -1,4 +1,4 @@
-import { PANEL_CLOSE_ARIA, PANEL_OPEN_ARIA } from "../../noTrans";
+import { PANEL_CLOSE_ARIA, PANEL_OPEN_ARIA } from "@/noTrans";
 
 interface RightFloatingPanelToggleButtonProps {
 	isOpen: boolean;

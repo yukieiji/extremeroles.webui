@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRPairedOptionItem } from "../src/feature/exr/ExRPairedOptionItem";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import * as apiStore from "../src/logics/api.store";
-import { getUniqueOptionId } from "../src/logics/optionUtils";
-import { useStore } from "../src/useStore";
+import { ExRPairedOptionItem } from "@/feature/exr/ExRPairedOptionItem";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import * as apiStore from "@/logics/api.store";
+import { getUniqueOptionId } from "@/logics/optionUtils";
+import { useStore } from "@/useStore";
 
 describe("ExRPairedOptionItem", () => {
 	const minUniqueId = getUniqueOptionId(1, 1, 10);

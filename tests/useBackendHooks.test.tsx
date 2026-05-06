@@ -1,15 +1,15 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useBackendUpdate, useSyncBackend } from "../src/hooks/useBackend";
-import * as apiStore from "../src/logics/api.store";
-import { useStore } from "../src/useStore";
+import { useBackendUpdate, useSyncBackend } from "@/hooks/useBackend";
+import * as apiStore from "@/logics/api.store";
+import { useStore } from "@/useStore";
 
-vi.mock("../src/logics/api.store", () => ({
+vi.mock("@/logics/api.store", () => ({
 	resetApiCache: vi.fn(),
 	refechAll: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("../src/hooks/useManualBlock", () => ({
+vi.mock("@/hooks/useManualBlock", () => ({
 	useBlock: () => (fn: () => void) => fn(),
 	useBlockAsync: () => (fn: () => Promise<void>) => fn(),
 }));

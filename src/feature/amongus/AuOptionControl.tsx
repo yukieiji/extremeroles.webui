@@ -1,8 +1,8 @@
-import { OptionSliderControl } from "../../components/blocks/OptionSliderControl";
-import { OptionToggleControl } from "../../components/blocks/OptionToggleControl";
-import { OptionDropdownControl } from "../../components/parts/OptionDropdownControl";
-import { translationMetaData } from "../../logics/api";
-import type { AuOptionMeta } from "../../type";
+import { OptionSliderControl } from "@/components/blocks/OptionSliderControl";
+import { OptionToggleControl } from "@/components/blocks/OptionToggleControl";
+import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
+import { translationMetaData } from "@/logics/api";
+import type { AuOptionMeta } from "@/type";
 
 interface AuOptionControlProps {
 	optionMeta: AuOptionMeta;

@@ -1,10 +1,10 @@
-import { RightPanelItemColumnLayout } from "../../components/parts/RightPanelItemColumnLayout";
-import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { useOptionData } from "../../hooks/useExROptionData";
-import { useExRNavigation } from "../../hooks/useOptionNavigation";
-import { exrOptionMetaData } from "../../logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
-import { useStore } from "../../useStore";
+import { RightPanelItemColumnLayout } from "@/components/parts/RightPanelItemColumnLayout";
+import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { useOptionData } from "@/hooks/useExROptionData";
+import { useExRNavigation } from "@/hooks/useOptionNavigation";
+import { exrOptionMetaData } from "@/logics/api";
+import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
+import { useStore } from "@/useStore";
 import { ExRGeneralTabOptionViewer } from "./ExRGeneralTabOptionViewer";
 
 /**

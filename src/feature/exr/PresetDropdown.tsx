@@ -1,11 +1,7 @@
-import { useBackendUpdate } from "../../hooks/useBackend";
-import { updateExrOption } from "../../logics/api";
-import {
-	format,
-	PRESET_SWITCH_MESSAGE,
-	PRESET_SWITCH_TITLE,
-} from "../../noTrans";
-import { useStore } from "../../useStore";
+import { useBackendUpdate } from "@/hooks/useBackend";
+import { updateExrOption } from "@/logics/api";
+import { format, PRESET_SWITCH_MESSAGE, PRESET_SWITCH_TITLE } from "@/noTrans";
+import { useStore } from "@/useStore";
 import { PresetDropdownItem } from "./PresetDropdownItem";
 
 interface PresetDropdownProps {

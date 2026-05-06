@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AuOptionCategoryDtoArraySchema, OptionValueType } from "../src/type";
+import { AuOptionCategoryDtoArraySchema, OptionValueType } from "@/type";
 
 describe("AuOptionCategoryDto Validation", () => {
 	it("should validate a correct AuOptionCategoryDto array", () => {

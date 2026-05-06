@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExROptionItemView } from "../src/feature/rightsidepanel/ExROptionItemView";
+import { ExROptionItemView } from "@/feature/rightsidepanel/ExROptionItemView";
 import {
 	useHasActiveOptionChild,
 	useOptionActive,
-} from "../src/hooks/useExROptionData";
-import type { UniqueOptionId } from "../src/type";
+} from "@/hooks/useExROptionData";
+import type { UniqueOptionId } from "@/type";
 
-vi.mock("../src/hooks/useExROptionData");
-vi.mock("../src/feature/rightsidepanel/ExROptionRecursiveItemView", () => ({
+vi.mock("@/hooks/useExROptionData");
+vi.mock("@/feature/rightsidepanel/ExROptionRecursiveItemView", () => ({
 	ExROptionRecursiveItemView: ({
 		uniqueOptionId,
 		depth,
@@ -21,7 +21,7 @@ vi.mock("../src/feature/rightsidepanel/ExROptionRecursiveItemView", () => ({
 		</div>
 	),
 }));
-vi.mock("../src/feature/rightsidepanel/ExROptionRowView", () => ({
+vi.mock("@/feature/rightsidepanel/ExROptionRowView", () => ({
 	ExROptionRowView: ({
 		uniqueOptionId,
 		depth,

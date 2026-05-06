@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	loadPresetNamesFromLocalStorage,
 	savePresetNamesToLocalStorage,
-} from "../src/logics/storageUtils";
+} from "@/logics/storageUtils";
 
 describe("storageUtils", () => {
 	beforeEach(() => {

@@ -1,4 +1,4 @@
-import { useStore } from "../../useStore";
+import { useStore } from "@/useStore";
 import { RoleFilterAddButton } from "./RoleFilterAddButton";
 import { RoleFilterCard } from "./RoleFilterCard";
 

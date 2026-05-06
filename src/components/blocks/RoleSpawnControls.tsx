@@ -1,4 +1,4 @@
-import { ROLE_SPAWN_COUNT, ROLE_SPAWN_RATE } from "../../noTrans";
+import { ROLE_SPAWN_COUNT, ROLE_SPAWN_RATE } from "@/noTrans";
 import { CompactSlider } from "../parts/CompactSlider";
 
 interface ControlProps {

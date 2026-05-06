@@ -6,8 +6,8 @@ import {
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema,
   RoleAssignFilterDtoSchema
-} from '../src/type';
-import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto, RoleAssignFilterDto } from '../src/type';
+} from '@/type';
+import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto, RoleAssignFilterDto } from '@/type';
 
 // JSONファイルのロード
 import exrOptionData from './get/exr/setting-webui-dev_20260503.json';

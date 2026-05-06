@@ -1,4 +1,4 @@
-import { findClosestIndex } from "../../logics/optionUtils";
+import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
 
 interface OptionSliderControlProps {

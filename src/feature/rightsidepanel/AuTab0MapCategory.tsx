@@ -1,6 +1,6 @@
-import { useAuNavigation } from "../../hooks/useOptionNavigation";
-import { auOptionMetaData } from "../../logics/api";
-import { useStore } from "../../useStore";
+import { useAuNavigation } from "@/hooks/useOptionNavigation";
+import { auOptionMetaData } from "@/logics/api";
+import { useStore } from "@/useStore";
 
 interface AuTab0MapCategoryProps {
 	categoryId: number;

@@ -1,7 +1,7 @@
-import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { useAuNavigation } from "../../hooks/useOptionNavigation";
-import { auOptionMetaData } from "../../logics/api";
-import { useStore } from "../../useStore";
+import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { useAuNavigation } from "@/hooks/useOptionNavigation";
+import { auOptionMetaData } from "@/logics/api";
+import { useStore } from "@/useStore";
 
 interface AuRoleViewerRowProps {
 	tabId: number;

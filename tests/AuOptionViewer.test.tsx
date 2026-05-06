@@ -1,15 +1,15 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AuOptionViewer } from "../src/feature/rightsidepanel/AuOptionViewer";
+import { AuOptionViewer } from "@/feature/rightsidepanel/AuOptionViewer";
 import {
 	auOptionMetaData,
 	resetAuOptionMetaData,
 	translationMetaData,
-} from "../src/logics/api";
-import { getAllOptions, resetApiCache } from "../src/logics/api.store";
-import type { AuOptionCategoryDto, AuOptionId } from "../src/type";
-import { useStore } from "../src/useStore";
+} from "@/logics/api";
+import { getAllOptions, resetApiCache } from "@/logics/api.store";
+import type { AuOptionCategoryDto, AuOptionId } from "@/type";
+import { useStore } from "@/useStore";
 
 describe("AuOptionViewer", () => {
 	beforeEach(async () => {

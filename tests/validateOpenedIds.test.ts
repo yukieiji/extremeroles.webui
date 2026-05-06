@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { create } from "zustand";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import type { ExROptionViewerSlice } from "../src/slices/exrOptionViewerSlice";
-import { createExROptionViewerSlice } from "../src/slices/exrOptionViewerSlice";
-import type { UniqueOptionId } from "../src/type";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import type { ExROptionViewerSlice } from "@/slices/exrOptionViewerSlice";
+import { createExROptionViewerSlice } from "@/slices/exrOptionViewerSlice";
+import type { UniqueOptionId } from "@/type";
 
 describe("validateOpenedIds", () => {
 	const useStore = create<ExROptionViewerSlice>()((...a) => ({

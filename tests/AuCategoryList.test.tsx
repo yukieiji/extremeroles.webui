@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
-import { AuCategoryList } from "../src/feature/amongus/AuCategoryList";
-import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
-import type { AuOptionId } from "../src/type";
-import { useStore } from "../src/useStore";
+import { AuCategoryList } from "@/feature/amongus/AuCategoryList";
+import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
+import type { AuOptionId } from "@/type";
+import { useStore } from "@/useStore";
 
 describe("AuCategoryList", () => {
 	beforeEach(() => {

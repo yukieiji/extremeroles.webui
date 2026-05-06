@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
-import { AccordionBody } from "../src/components/blocks/AccordionBody";
+import { AccordionBody } from "@/components/blocks/AccordionBody";
 
 describe("AccordionBody", () => {
 	it("should display title and content when open", () => {

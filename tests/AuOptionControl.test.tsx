@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { AuOptionControl } from "../src/feature/amongus/AuOptionControl";
-import { translationMetaData } from "../src/logics/api";
-import type { AuOptionMeta } from "../src/type";
+import { AuOptionControl } from "@/feature/amongus/AuOptionControl";
+import { translationMetaData } from "@/logics/api";
+import type { AuOptionMeta } from "@/type";
 
 describe("AuOptionControl", () => {
 	const onSelectionChangeMock = vi.fn();

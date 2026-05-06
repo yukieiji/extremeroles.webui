@@ -1,6 +1,6 @@
-import { OptionEditorAccordion } from "../../components/blocks/OptionEditorAccordion";
-import { auOptionMetaData } from "../../logics/api";
-import { useStore } from "../../useStore";
+import { OptionEditorAccordion } from "@/components/blocks/OptionEditorAccordion";
+import { auOptionMetaData } from "@/logics/api";
+import { useStore } from "@/useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
 
 interface AuStandardCategoryItemProps {

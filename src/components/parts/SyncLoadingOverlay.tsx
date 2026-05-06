@@ -1,4 +1,4 @@
-import { SYNCHRONIZING } from "../../noTrans";
+import { SYNCHRONIZING } from "@/noTrans";
 
 /**
  * 同期中のオーバーレイコンポーネント

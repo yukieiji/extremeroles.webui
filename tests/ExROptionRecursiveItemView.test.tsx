@@ -1,14 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExROptionRecursiveItemView } from "../src/feature/rightsidepanel/ExROptionRecursiveItemView";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUniqueOptionId } from "../src/logics/optionUtils";
-import { CLOSE, OPEN } from "../src/noTrans";
-import type { UniqueOptionId } from "../src/type";
-import { useStore } from "../src/useStore";
+import { ExROptionRecursiveItemView } from "@/feature/rightsidepanel/ExROptionRecursiveItemView";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import { getUniqueOptionId } from "@/logics/optionUtils";
+import { CLOSE, OPEN } from "@/noTrans";
+import type { UniqueOptionId } from "@/type";
+import { useStore } from "@/useStore";
 
 // Mock child components to isolate ExROptionRecursiveItemView
-vi.mock("../src/feature/rightsidepanel/ExROptionItemView", () => ({
+vi.mock("@/feature/rightsidepanel/ExROptionItemView", () => ({
 	ExROptionItemView: ({
 		uniqueOptionId,
 	}: {
@@ -20,7 +20,7 @@ vi.mock("../src/feature/rightsidepanel/ExROptionItemView", () => ({
 	),
 }));
 
-vi.mock("../src/feature/rightsidepanel/ExROptionRowView", () => ({
+vi.mock("@/feature/rightsidepanel/ExROptionRowView", () => ({
 	ExROptionRowView: ({
 		uniqueOptionId,
 		depth,

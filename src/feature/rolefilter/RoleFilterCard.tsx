@@ -1,9 +1,9 @@
-import { RoleFilterCardLayout } from "../../components/blocks/RoleFilterCardLayout";
-import { RolePin } from "../../components/parts/RolePin";
-import { postRoleFilterUpdate } from "../../logics/api";
-import type { RoleAssignFilterSetUI } from "../../type";
-import { PostExRAssignOps } from "../../type";
-import { useStore } from "../../useStore";
+import { RoleFilterCardLayout } from "@/components/blocks/RoleFilterCardLayout";
+import { RolePin } from "@/components/parts/RolePin";
+import { postRoleFilterUpdate } from "@/logics/api";
+import type { RoleAssignFilterSetUI } from "@/type";
+import { PostExRAssignOps } from "@/type";
+import { useStore } from "@/useStore";
 import { RoleFilterCardHeader } from "./RoleFilterCardHeader";
 
 interface RoleFilterCardProps {

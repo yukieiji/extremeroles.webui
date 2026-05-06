@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
-import { AuOptionEditor } from "../src/feature/amongus/AuOptionEditor";
-import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
+import { AuOptionEditor } from "@/feature/amongus/AuOptionEditor";
+import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
 
 describe("OptionEditor Components", () => {
 	beforeEach(() => {

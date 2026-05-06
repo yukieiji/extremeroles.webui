@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { useRef } from "react";
-import { PRESET_INPUT_PLACEHOLDER, PRESET_SELECT_ARIA } from "../../noTrans";
-import { useStore } from "../../useStore";
+import { PRESET_INPUT_PLACEHOLDER, PRESET_SELECT_ARIA } from "@/noTrans";
+import { useStore } from "@/useStore";
 
 interface PresetInputProps {
 	currentSelection: number;

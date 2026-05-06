@@ -1,7 +1,7 @@
-import { ColoredText } from "../../components/parts/ColoredText";
-import { OptionFormat } from "../../components/parts/OptionFormat";
-import { translationMetaData } from "../../logics/api";
-import { OFF, ON } from "../../noTrans";
+import { ColoredText } from "@/components/parts/ColoredText";
+import { OptionFormat } from "@/components/parts/OptionFormat";
+import { translationMetaData } from "@/logics/api";
+import { OFF, ON } from "@/noTrans";
 
 interface AuTab0OptionValueProps {
 	value: string | number | boolean;

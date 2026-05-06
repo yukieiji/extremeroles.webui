@@ -1,14 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { PresetSelector } from "../src/feature/exr/PresetSelector";
-import { useOptionData } from "../src/hooks/useExROptionData";
-import { updateExrOption } from "../src/logics/api";
-import { useStore } from "../src/useStore";
+import { PresetSelector } from "@/feature/exr/PresetSelector";
+import { useOptionData } from "@/hooks/useExROptionData";
+import { updateExrOption } from "@/logics/api";
+import { useStore } from "@/useStore";
 
-vi.mock("../src/hooks/useExROptionData");
-vi.mock("../src/useStore");
-vi.mock("../src/logics/api");
-vi.mock("../src/hooks/useBackend", () => ({
+vi.mock("@/hooks/useExROptionData");
+vi.mock("@/useStore");
+vi.mock("@/logics/api");
+vi.mock("@/hooks/useBackend", () => ({
 	useBackendUpdate: () => vi.fn((callback: () => Promise<void>) => callback()),
 }));
 

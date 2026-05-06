@@ -1,10 +1,10 @@
-import { HighlightableAccordionRow } from "../../components/blocks/HighlightableAccordionRow";
-import { RowCustomizeAccordion } from "../../components/blocks/OptionEditableAccordion";
-import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
-import { createExRNavigateId } from "../../hooks/useOptionNavigation";
-import { exrOptionMetaData } from "../../logics/api";
-import type { UniqueOptionId } from "../../type";
-import { useStore } from "../../useStore";
+import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAccordionRow";
+import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
+import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
+import { createExRNavigateId } from "@/hooks/useOptionNavigation";
+import { exrOptionMetaData } from "@/logics/api";
+import type { UniqueOptionId } from "@/type";
+import { useStore } from "@/useStore";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExROptionRow } from "./ExROptionRow";
 

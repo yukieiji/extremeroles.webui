@@ -1,21 +1,21 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useExRNavigation } from "../src/hooks/useOptionNavigation";
-import * as api from "../src/logics/api";
-import type { ExROptionMetaData, UniqueOptionId } from "../src/type";
-import { useStore } from "../src/useStore";
+import { useExRNavigation } from "@/hooks/useOptionNavigation";
+import * as api from "@/logics/api";
+import type { ExROptionMetaData, UniqueOptionId } from "@/type";
+import { useStore } from "@/useStore";
 
-vi.mock("../src/useStore", () => ({
+vi.mock("@/useStore", () => ({
 	useStore: vi.fn(),
 }));
 
-vi.mock("../src/logics/api", () => ({
+vi.mock("@/logics/api", () => ({
 	exrOptionMetaData: {
 		options: {},
 	},
 }));
 
-vi.mock("../src/logics/optionUtils", () => ({
+vi.mock("@/logics/optionUtils", () => ({
 	parseUniqueOptionId: vi
 		.fn()
 		.mockReturnValue({ tabId: 1, categoryId: 10, optionId: 100 }),

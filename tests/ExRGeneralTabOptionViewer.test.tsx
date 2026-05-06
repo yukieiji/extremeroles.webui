@@ -1,16 +1,16 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRGeneralTabOptionViewer } from "../src/feature/rightsidepanel/ExRGeneralTabOptionViewer";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
+import { ExRGeneralTabOptionViewer } from "@/feature/rightsidepanel/ExRGeneralTabOptionViewer";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
 import {
 	getUniqueOptionId,
 	PRESET_OPTION_UNIQUE_ID,
-} from "../src/logics/optionUtils";
-import { ExRTabId } from "../src/type";
-import { useStore } from "../src/useStore";
+} from "@/logics/optionUtils";
+import { ExRTabId } from "@/type";
+import { useStore } from "@/useStore";
 
 // Mock child component to focus on ExRGeneralTabOptionViewer logic
-vi.mock("../src/feature/rightsidepanel/ExRCategoryListViewer", () => ({
+vi.mock("@/feature/rightsidepanel/ExRCategoryListViewer", () => ({
 	ExRCategoryListViewer: vi.fn(({ categoryIds }: { categoryIds: number[] }) => (
 		<div data-testid="category-list-viewer">
 			{categoryIds.map((id) => (

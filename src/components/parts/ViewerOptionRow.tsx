@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { VIEWER_ROW_TITLE } from "../../noTrans";
+import { VIEWER_ROW_TITLE } from "@/noTrans";
 
 interface ViewerOptionRowProps {
 	title: ReactNode;

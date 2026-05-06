@@ -6,15 +6,12 @@ import {
 	waitFor,
 } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRRoleSpawnControls } from "../src/feature/exr/ExRRoleSpawnControls";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import * as apiStore from "../src/logics/api.store";
-import {
-	getUniqueOptionId,
-	parseUniqueOptionId,
-} from "../src/logics/optionUtils";
-import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "../src/type";
-import { useStore } from "../src/useStore";
+import { ExRRoleSpawnControls } from "@/feature/exr/ExRRoleSpawnControls";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import * as apiStore from "@/logics/api.store";
+import { getUniqueOptionId, parseUniqueOptionId } from "@/logics/optionUtils";
+import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "@/type";
+import { useStore } from "@/useStore";
 
 function setUpudateExROptionSelectionSpawnRateMock(): void {
 	// Mock useUpdateExROptionSelection to update the store

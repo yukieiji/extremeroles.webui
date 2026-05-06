@@ -1,8 +1,8 @@
 import { useShallow } from "zustand/react/shallow";
-import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
-import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
-import { auOptionMetaData } from "../../logics/api";
-import { useStore } from "../../useStore";
+import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
+import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
+import { auOptionMetaData } from "@/logics/api";
+import { useStore } from "@/useStore";
 import { AuRoleViewerRow } from "./AuRoleViewerRow";
 
 interface AuRoleViewerSectionProps {

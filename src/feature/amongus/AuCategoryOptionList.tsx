@@ -1,5 +1,5 @@
-import { OptionEditorCategoryOptionLayout } from "../../components/blocks/OptionEditorCategoryOptionLayout";
-import type { AuOptionId } from "../../type";
+import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
+import type { AuOptionId } from "@/type";
 import { AuOptionRow } from "./AuOptionRow";
 
 interface AuCategoryOptionListProps {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PresetNamesSchema } from "../src/type";
+import { PresetNamesSchema } from "@/type";
 
 describe("PresetNamesSchema", () => {
 	it("should validate valid preset names object", () => {

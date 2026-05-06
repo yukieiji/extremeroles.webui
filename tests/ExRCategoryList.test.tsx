@@ -1,16 +1,16 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRCategoryList } from "../src/feature/exr/ExRCategoryList";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import * as apiStore from "../src/logics/api.store";
-import { getUniqueOptionId } from "../src/logics/optionUtils";
+import { ExRCategoryList } from "@/feature/exr/ExRCategoryList";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import * as apiStore from "@/logics/api.store";
+import { getUniqueOptionId } from "@/logics/optionUtils";
 import {
 	type ExRTabDto,
 	ExRTabId,
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
-} from "../src/type";
-import { useStore } from "../src/useStore";
+} from "@/type";
+import { useStore } from "@/useStore";
 
 describe("ExRCategoryList Component Selection", () => {
 	const mockTabs: ExRTabDto[] = [

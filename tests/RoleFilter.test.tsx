@@ -6,12 +6,12 @@ import {
 	waitFor,
 } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { RoleFilterViewer } from "../src/feature/rolefilter/RoleFilterViewer";
-import { postRoleFilterUpdate } from "../src/logics/api";
-import { useStore } from "../src/useStore";
+import { RoleFilterViewer } from "@/feature/rolefilter/RoleFilterViewer";
+import { postRoleFilterUpdate } from "@/logics/api";
+import { useStore } from "@/useStore";
 
 // Mock api.ts
-vi.mock("../src/logics/api", () => ({
+vi.mock("@/logics/api", () => ({
 	postRoleFilterUpdate: vi.fn().mockResolvedValue(undefined),
 	roleFilterMetaData: {
 		FilterRoleId: [1, 2],

@@ -1,8 +1,8 @@
-import { CompactSlider } from "../../components/parts/CompactSlider";
-import { useUpdateExROptionSelection } from "../../logics/api.store";
-import { findClosestIndex, getUniqueOptionId } from "../../logics/optionUtils";
-import type { ExROptionDto } from "../../type";
-import { useStore } from "../../useStore";
+import { CompactSlider } from "@/components/parts/CompactSlider";
+import { useUpdateExROptionSelection } from "@/logics/api.store";
+import { findClosestIndex, getUniqueOptionId } from "@/logics/optionUtils";
+import type { ExROptionDto } from "@/type";
+import { useStore } from "@/useStore";
 
 interface ExRHeaderOptionControlProps {
 	categoryId: number;

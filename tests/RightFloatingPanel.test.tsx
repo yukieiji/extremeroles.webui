@@ -1,9 +1,9 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { RightFloatingPanel } from "../src/feature/rightsidepanel/RightFloatingPanel";
-import { getAllOptions, resetApiCache } from "../src/logics/api.store";
-import { useStore } from "../src/useStore";
+import { RightFloatingPanel } from "@/feature/rightsidepanel/RightFloatingPanel";
+import { getAllOptions, resetApiCache } from "@/logics/api.store";
+import { useStore } from "@/useStore";
 
 describe("RightFloatingPanel Component", () => {
 	it("renders panel elements correctly", async () => {

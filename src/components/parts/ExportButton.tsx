@@ -1,6 +1,6 @@
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { EXPORT_CSV_LABEL, EXPORT_CSV_TITLE } from "../../noTrans";
+import { EXPORT_CSV_LABEL, EXPORT_CSV_TITLE } from "@/noTrans";
 
 interface ExportButtonProps {
 	onClick: () => void;

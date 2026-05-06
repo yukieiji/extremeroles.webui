@@ -1,8 +1,8 @@
-import { CategoryContainer } from "../../components/blocks/CategoryContainer";
-import { useVisibleCategories } from "../../hooks/useExROptionData";
-import { exrOptionMetaData } from "../../logics/api";
-import { ExRTabId } from "../../type";
-import { useStore } from "../../useStore";
+import { CategoryContainer } from "@/components/blocks/CategoryContainer";
+import { useVisibleCategories } from "@/hooks/useExROptionData";
+import { exrOptionMetaData } from "@/logics/api";
+import { ExRTabId } from "@/type";
+import { useStore } from "@/useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
 import { ExRStandardCategoryItem } from "./ExRStandardCategoryItem";
 

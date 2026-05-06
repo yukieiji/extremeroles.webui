@@ -1,4 +1,4 @@
-import { useStore } from "../../useStore";
+import { useStore } from "@/useStore";
 
 interface PresetDropdownItemProps {
 	index: number;

@@ -1,4 +1,4 @@
-import { findClosestIndex } from "../../logics/optionUtils";
+import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionSingleSlider } from "./OptionSingleSlider";
 
 interface OptionPairedSliderControlProps {

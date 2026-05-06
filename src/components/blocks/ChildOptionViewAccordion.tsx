@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { CLOSE, OPEN } from "../../noTrans";
+import { CLOSE, OPEN } from "@/noTrans";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 import { OptionRowContainer } from "../parts/OptionRowContainer";

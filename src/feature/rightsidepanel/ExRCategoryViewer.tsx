@@ -1,10 +1,10 @@
 import { useMemo } from "react";
-import { RightPanelContainer } from "../../components/blocks/RightPanelContainer";
-import { ViewerGroupAccordion } from "../../components/blocks/ViewerGroupAccordion";
-import { ColoredText } from "../../components/parts/ColoredText";
-import { exrOptionMetaData } from "../../logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../../logics/optionUtils";
-import { useStore } from "../../useStore";
+import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
+import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
+import { ColoredText } from "@/components/parts/ColoredText";
+import { exrOptionMetaData } from "@/logics/api";
+import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
+import { useStore } from "@/useStore";
 import { ExROptionItemView } from "./ExROptionItemView";
 
 interface ExRCategoryViewerProps {

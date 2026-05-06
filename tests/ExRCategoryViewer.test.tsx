@@ -1,19 +1,19 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRCategoryViewer } from "../src/feature/rightsidepanel/ExRCategoryViewer";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "../src/logics/optionUtils";
-import { useStore } from "../src/useStore";
+import { ExRCategoryViewer } from "@/feature/rightsidepanel/ExRCategoryViewer";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
+import { useStore } from "@/useStore";
 
 // Mock ExROptionItemView to avoid complex hook dependencies
-vi.mock("../src/feature/rightsidepanel/ExROptionItemView", () => ({
+vi.mock("@/feature/rightsidepanel/ExROptionItemView", () => ({
 	ExROptionItemView: ({ uniqueOptionId }: { uniqueOptionId: number }) => (
 		<div data-testid="option-item">{uniqueOptionId}</div>
 	),
 }));
 
 // Mock RightPanelContainer to ensure the render function is called
-vi.mock("../src/components/blocks/RightPanelContainer", () => ({
+vi.mock("@/components/blocks/RightPanelContainer", () => ({
 	RightPanelContainer: ({
 		arr,
 		children,

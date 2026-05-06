@@ -4,7 +4,7 @@ import {
 	OptionValueType,
 	UpdatedOptionsSchema,
 	VanillaOptionPutRequestSchema,
-} from "../src/type";
+} from "@/type";
 
 describe("ExROptionPutRequest and UpdatedOptions Validation", () => {
 	it("should validate a correct ExROptionPutRequest", () => {

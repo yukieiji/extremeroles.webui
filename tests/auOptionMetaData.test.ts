@@ -3,8 +3,8 @@ import {
 	auOptionMetaData,
 	createAuOptionMetaData,
 	resetAuOptionMetaData,
-} from "../src/logics/api";
-import { type AuOptionId, OptionValueType } from "../src/type";
+} from "@/logics/api";
+import { type AuOptionId, OptionValueType } from "@/type";
 
 // Mock global fetch
 global.fetch = vi.fn();

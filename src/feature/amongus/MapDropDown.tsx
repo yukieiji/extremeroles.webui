@@ -1,9 +1,9 @@
-import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
-import { OptionDropdownControl } from "../../components/parts/OptionDropdownControl";
-import { createAuNavigateId } from "../../hooks/useOptionNavigation";
-import { auOptionMetaData } from "../../logics/api";
-import { useUpdateAuOptionSelection } from "../../logics/api.store";
-import { useStore } from "../../useStore";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
+import { createAuNavigateId } from "@/hooks/useOptionNavigation";
+import { auOptionMetaData } from "@/logics/api";
+import { useUpdateAuOptionSelection } from "@/logics/api.store";
+import { useStore } from "@/useStore";
 
 interface MapDropDownProps {
 	categoryId: number;

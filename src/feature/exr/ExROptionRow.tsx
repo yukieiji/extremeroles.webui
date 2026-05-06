@@ -1,10 +1,10 @@
-import { ExROptionRowContent } from "../../components/blocks/ExROptionRowContent";
-import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
-import { LargePoint } from "../../components/parts/LargePoint";
-import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
-import { createExRNavigateId } from "../../hooks/useOptionNavigation";
-import type { UniqueOptionId } from "../../type";
-import { useStore } from "../../useStore";
+import { ExROptionRowContent } from "@/components/blocks/ExROptionRowContent";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { LargePoint } from "@/components/parts/LargePoint";
+import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
+import { createExRNavigateId } from "@/hooks/useOptionNavigation";
+import type { UniqueOptionId } from "@/type";
+import { useStore } from "@/useStore";
 
 interface ExROptionRowProps {
 	uniqueOptionId: UniqueOptionId;

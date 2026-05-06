@@ -1,9 +1,9 @@
-import { BorderLine } from "../../components/parts/BorderLine";
-import { LargePoint } from "../../components/parts/LargePoint";
-import { OptionEditorOptionRowGroupLayout } from "../../components/parts/OptionEditorOptionRowLayout";
-import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
-import { groupOptionPairs } from "../../logics/optionUtils";
-import type { UniqueOptionId } from "../../type";
+import { BorderLine } from "@/components/parts/BorderLine";
+import { LargePoint } from "@/components/parts/LargePoint";
+import { OptionEditorOptionRowGroupLayout } from "@/components/parts/OptionEditorOptionRowLayout";
+import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
+import { groupOptionPairs } from "@/logics/optionUtils";
+import type { UniqueOptionId } from "@/type";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExRPairedOptionItem } from "./ExRPairedOptionItem";
 

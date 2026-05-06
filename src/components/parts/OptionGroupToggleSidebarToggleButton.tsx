@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SIDEBAR_CLOSE_ARIA, SIDEBAR_OPEN_ARIA } from "../../noTrans";
+import { SIDEBAR_CLOSE_ARIA, SIDEBAR_OPEN_ARIA } from "@/noTrans";
 
 interface OptionGroupToggleSidebarToggleButtonProps {
 	onClick: () => void;

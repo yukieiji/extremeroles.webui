@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CANCEL } from "../../noTrans";
+import { CANCEL } from "@/noTrans";
 
 interface ConfirmDialogProps {
 	title: string;

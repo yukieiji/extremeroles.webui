@@ -1,4 +1,4 @@
-import { EditorContainer } from "../../components/blocks/EditorContainer";
+import { EditorContainer } from "@/components/blocks/EditorContainer";
 import { ExRCategoryList } from "./ExRCategoryList";
 import { ExRTabSelector } from "./ExRTabSelector";
 

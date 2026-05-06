@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ExROptionControl } from "../src/feature/exr/ExROptionControl";
-import { useOptionData } from "../src/hooks/useExROptionData";
-import { useUpdateExROptionSelection } from "../src/logics/api.store";
-import type { UniqueOptionId } from "../src/type";
+import { ExROptionControl } from "@/feature/exr/ExROptionControl";
+import { useOptionData } from "@/hooks/useExROptionData";
+import { useUpdateExROptionSelection } from "@/logics/api.store";
+import type { UniqueOptionId } from "@/type";
 
-vi.mock("../src/hooks/useExROptionData");
-vi.mock("../src/logics/api.store");
+vi.mock("@/hooks/useExROptionData");
+vi.mock("@/logics/api.store");
 
 describe("ExROptionControl", () => {
 	const mockUniqueId = 123 as UniqueOptionId;

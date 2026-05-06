@@ -1,12 +1,12 @@
-import { OptionRowContent } from "../../components/blocks/OptionContent";
-import { HighlightWrapper } from "../../components/parts/HighlightWrapper";
-import { LargePoint } from "../../components/parts/LargePoint";
-import { OptionRowContainer } from "../../components/parts/OptionRowContainer";
-import { createAuNavigateId } from "../../hooks/useOptionNavigation";
-import { auOptionMetaData } from "../../logics/api";
-import { useUpdateAuOptionSelection } from "../../logics/api.store";
-import type { AuOptionId } from "../../type";
-import { useStore } from "../../useStore";
+import { OptionRowContent } from "@/components/blocks/OptionContent";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { LargePoint } from "@/components/parts/LargePoint";
+import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
+import { createAuNavigateId } from "@/hooks/useOptionNavigation";
+import { auOptionMetaData } from "@/logics/api";
+import { useUpdateAuOptionSelection } from "@/logics/api.store";
+import type { AuOptionId } from "@/type";
+import { useStore } from "@/useStore";
 import { AuOptionControl } from "./AuOptionControl";
 
 interface AuOptionRowProps {

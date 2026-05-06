@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GetCsvResultSchema } from "../src/type";
+import { GetCsvResultSchema } from "@/type";
 
 describe("GetCsvResult Validation", () => {
 	it("should validate a correct GetCsvResult", () => {

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionSliderControl } from "../src/components/blocks/OptionSliderControl";
+import { OptionSliderControl } from "@/components/blocks/OptionSliderControl";
 
 describe("OptionSliderControl", () => {
 	const mockValues = [10, 20, 30, 40, 50];

@@ -1,8 +1,8 @@
-import { ColoredText } from "../../components/parts/ColoredText";
-import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { useExRNavigation } from "../../hooks/useOptionNavigation";
-import { exrOptionMetaData } from "../../logics/api";
-import type { UniqueOptionId } from "../../type";
+import { ColoredText } from "@/components/parts/ColoredText";
+import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { useExRNavigation } from "@/hooks/useOptionNavigation";
+import { exrOptionMetaData } from "@/logics/api";
+import type { UniqueOptionId } from "@/type";
 import { ExRValueView } from "./ExRValueView";
 
 interface ExROptionRowViewContentProps {

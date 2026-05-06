@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { postRoleFilterUpdate, roleFilterMetaData } from "../../logics/api";
-import { PostExRAssignOps } from "../../type";
-import { useStore } from "../../useStore";
+import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
+import { PostExRAssignOps } from "@/type";
+import { useStore } from "@/useStore";
 
 /**
  * フィルターを追加するためのボタンコンポーネント (ビジネスロジックを含む)

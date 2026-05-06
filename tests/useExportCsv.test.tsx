@@ -1,13 +1,13 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useExportCsv } from "../src/hooks/useBackend";
-import * as api from "../src/logics/api";
+import { useExportCsv } from "@/hooks/useBackend";
+import * as api from "@/logics/api";
 
-vi.mock("../src/logics/api", () => ({
+vi.mock("@/logics/api", () => ({
 	fetchCsvData: vi.fn(),
 }));
 
-vi.mock("../src/hooks/useManualBlock", () => ({
+vi.mock("@/hooks/useManualBlock", () => ({
 	useBlockAsync: () => (fn: () => Promise<void>) => fn(),
 }));
 

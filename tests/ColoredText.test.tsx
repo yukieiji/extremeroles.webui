@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { ColoredText } from "../src/components/parts/ColoredText";
+import { ColoredText } from "@/components/parts/ColoredText";
 
 describe("ColoredText", () => {
 	it("renders plain text correctly", () => {

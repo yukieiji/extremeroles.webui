@@ -1,8 +1,8 @@
-import { ViewerOptionRow } from "../../components/parts/ViewerOptionRow";
-import { useAuNavigation } from "../../hooks/useOptionNavigation";
-import { auOptionMetaData } from "../../logics/api";
-import type { AuOptionId } from "../../type";
-import { useStore } from "../../useStore";
+import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { useAuNavigation } from "@/hooks/useOptionNavigation";
+import { auOptionMetaData } from "@/logics/api";
+import type { AuOptionId } from "@/type";
+import { useStore } from "@/useStore";
 import { AuTab0OptionValue } from "./AuTab0OptionValue";
 
 interface AuTab0OptionRowProps {

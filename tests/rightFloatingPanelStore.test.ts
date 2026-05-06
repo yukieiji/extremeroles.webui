@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { useStore } from "../src/useStore";
+import { useStore } from "@/useStore";
 
 describe("RightFloatingPanelStore", () => {
 	beforeEach(() => {

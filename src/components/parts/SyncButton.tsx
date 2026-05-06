@@ -1,6 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SYNC_BUTTON_ARIA, SYNC_BUTTON_TITLE } from "../../noTrans";
+import { SYNC_BUTTON_ARIA, SYNC_BUTTON_TITLE } from "@/noTrans";
 
 interface SyncButtonProps {
 	onClick: () => void;

@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
-import { AuRoleViewerSection } from "../src/feature/rightsidepanel/AuRoleViewerSection";
-import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
-import type { AuOptionId } from "../src/type";
-import { useStore } from "../src/useStore";
+import { AuRoleViewerSection } from "@/feature/rightsidepanel/AuRoleViewerSection";
+import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
+import type { AuOptionId } from "@/type";
+import { useStore } from "@/useStore";
 
 describe("AuRoleViewerSection", () => {
 	beforeEach(() => {

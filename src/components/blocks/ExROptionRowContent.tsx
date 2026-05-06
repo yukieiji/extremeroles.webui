@@ -1,6 +1,6 @@
-import { ExROptionControl } from "../../feature/exr/ExROptionControl";
-import { exrOptionMetaData } from "../../logics/api";
-import type { UniqueOptionId } from "../../type";
+import { ExROptionControl } from "@/feature/exr/ExROptionControl";
+import { exrOptionMetaData } from "@/logics/api";
+import type { UniqueOptionId } from "@/type";
 import { OptionRowContent } from "./OptionContent";
 
 interface ExROptionRowContentProps {

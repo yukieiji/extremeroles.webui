@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { RightPanelFloatingPanelResizeHandle } from "../src/feature/rightsidepanel/RightPanelFloatingPanelResizeHandle";
-import { useStore } from "../src/useStore";
+import { RightPanelFloatingPanelResizeHandle } from "@/feature/rightsidepanel/RightPanelFloatingPanelResizeHandle";
+import { useStore } from "@/useStore";
 
 describe("RightPanelFloatingPanelResizeHandle Component", () => {
 	beforeEach(() => {

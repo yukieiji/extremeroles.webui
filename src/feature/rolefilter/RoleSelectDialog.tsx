@@ -1,10 +1,10 @@
 import { X } from "lucide-react";
+import { RoleGrid } from "@/components/blocks/RoleGrid";
+import { RoleSearchInput } from "@/components/parts/RoleSearchInput";
 import { Button } from "@/components/ui/button";
-import { RoleGrid } from "../../components/blocks/RoleGrid";
-import { RoleSearchInput } from "../../components/parts/RoleSearchInput";
-import { roleFilterMetaData } from "../../logics/api";
-import { CLOSE, CONFIRM } from "../../noTrans";
-import { useStore } from "../../useStore";
+import { roleFilterMetaData } from "@/logics/api";
+import { CLOSE, CONFIRM } from "@/noTrans";
+import { useStore } from "@/useStore";
 
 interface RoleSelectDialogProps {
 	onSelect: (roleIds: number[]) => void;

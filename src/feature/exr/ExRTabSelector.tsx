@@ -1,10 +1,10 @@
 import { useEffect, useTransition } from "react";
-import { ColoredText } from "../../components/parts/ColoredText";
-import { TabButton } from "../../components/parts/TabButton";
-import { TabButtonContainer } from "../../components/parts/TabButtonContainer";
-import { exrOptionMetaData } from "../../logics/api";
-import type { ExRTabId } from "../../type";
-import { useStore } from "../../useStore";
+import { ColoredText } from "@/components/parts/ColoredText";
+import { TabButton } from "@/components/parts/TabButton";
+import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
+import { exrOptionMetaData } from "@/logics/api";
+import type { ExRTabId } from "@/type";
+import { useStore } from "@/useStore";
 
 /**
  * ExRオプションのタブ選択コンポーネント

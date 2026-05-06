@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { AuTab0OptionValue } from "../src/feature/rightsidepanel/AuTab0OptionValue";
-import { translationMetaData } from "../src/logics/api";
+import { AuTab0OptionValue } from "@/feature/rightsidepanel/AuTab0OptionValue";
+import { translationMetaData } from "@/logics/api";
 
 describe("AuTab0OptionValue", () => {
 	it("renders boolean values correctly with translation", () => {

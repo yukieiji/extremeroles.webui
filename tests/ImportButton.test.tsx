@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ImportButton } from "../src/components/parts/ImportButton";
-import { IMPORT_BUTTON_ARIA, IMPORT_BUTTON_TITLE } from "../src/noTrans";
+import { ImportButton } from "@/components/parts/ImportButton";
+import { IMPORT_BUTTON_ARIA, IMPORT_BUTTON_TITLE } from "@/noTrans";
 
 describe("ImportButton", () => {
 	it("renders correctly with title and icon", () => {

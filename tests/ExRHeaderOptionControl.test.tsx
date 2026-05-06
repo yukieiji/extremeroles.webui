@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRHeaderOptionControl } from "../src/feature/exr/ExRHeaderOptionControl";
-import * as apiStore from "../src/logics/api.store";
-import { getUniqueOptionId } from "../src/logics/optionUtils";
-import type { ExROptionDto } from "../src/type";
-import { SPAWN_RATE_OPTION_ID } from "../src/type";
-import { useStore } from "../src/useStore";
+import { ExRHeaderOptionControl } from "@/feature/exr/ExRHeaderOptionControl";
+import * as apiStore from "@/logics/api.store";
+import { getUniqueOptionId } from "@/logics/optionUtils";
+import type { ExROptionDto } from "@/type";
+import { SPAWN_RATE_OPTION_ID } from "@/type";
+import { useStore } from "@/useStore";
 
 function setUpudateExROptionSelectionMock(values: (number | string)[]): void {
 	vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(

@@ -1,4 +1,4 @@
-import { EditorContainer } from "../../components/blocks/EditorContainer";
+import { EditorContainer } from "@/components/blocks/EditorContainer";
 import { AuCategoryList } from "./AuCategoryList";
 import { AuTabSelector } from "./AuTabSelector";
 

@@ -1,8 +1,8 @@
 import {
 	useHasActiveOptionChild,
 	useOptionActive,
-} from "../../hooks/useExROptionData";
-import type { UniqueOptionId } from "../../type";
+} from "@/hooks/useExROptionData";
+import type { UniqueOptionId } from "@/type";
 import { ExROptionRecursiveItem } from "./ExROptionRecursiveItem";
 import { ExROptionRow } from "./ExROptionRow";
 

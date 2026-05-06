@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { CompactSlider } from "../src/components/parts/CompactSlider";
+import { CompactSlider } from "@/components/parts/CompactSlider";
 
 describe("CompactSlider", () => {
 	const defaultProps = {

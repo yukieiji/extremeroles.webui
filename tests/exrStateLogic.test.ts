@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { exrOptionMetaData, resetExrOptionMetaData } from "../src/logics/api";
-import { getUpdatedExRState } from "../src/logics/exrStateLogic";
-import { getUniqueOptionId } from "../src/logics/optionUtils";
+import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
+import { getUpdatedExRState } from "@/logics/exrStateLogic";
+import { getUniqueOptionId } from "@/logics/optionUtils";
 import type {
 	ExROptionValueData,
 	UniqueOptionId,
 	UpdatedOptions,
-} from "../src/type";
-import { ExRTabId } from "../src/type";
+} from "@/type";
+import { ExRTabId } from "@/type";
 
 describe("exrStateLogic", () => {
 	beforeEach(() => {

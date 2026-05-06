@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AuTab0GeneralCategory } from "../src/feature/rightsidepanel/AuTab0GeneralCategory";
-import { auOptionMetaData, resetAuOptionMetaData } from "../src/logics/api";
-import type { AuOptionId } from "../src/type";
-import { useStore } from "../src/useStore";
+import { AuTab0GeneralCategory } from "@/feature/rightsidepanel/AuTab0GeneralCategory";
+import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
+import type { AuOptionId } from "@/type";
+import { useStore } from "@/useStore";
 
 // モック
-vi.mock("../src/hooks/useAuNavigation", () => ({
+vi.mock("@/hooks/useAuNavigation", () => ({
 	useAuNavigation: () => ({
 		navigateToOption: vi.fn(),
 	}),

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionToggleControl } from "../src/components/blocks/OptionToggleControl";
+import { OptionToggleControl } from "@/components/blocks/OptionToggleControl";
 
 describe("OptionToggleControl", () => {
 	const mockValues = [
