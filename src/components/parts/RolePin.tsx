@@ -15,13 +15,10 @@ export function RolePin({ name, onDelete }: RolePinProps) {
 			<span>{name}</span>
 			{onDelete && (
 				<Button
-					variant="ghost"
-					size="icon"
 					onClick={(e) => {
 						e.stopPropagation();
 						onDelete();
 					}}
-					className="h-3 w-3 p-0 hover:text-blue-600 focus:outline-none"
 					aria-label={`Remove ${name}`}
 				>
 					<X size={12} aria-hidden="true" />

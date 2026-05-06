@@ -90,12 +90,7 @@ export function RoleSelectDialog({
 		<div className="bg-white rounded-lg shadow-2xl w-full max-w-5xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col h-[min(80vh,600px)]">
 			<div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
 				<h3 className="text-xl font-bold text-gray-900">役職の選択</h3>
-				<Button
-					variant="ghost"
-					size="icon"
-					onClick={onCancel}
-					className="text-gray-400 hover:text-gray-600"
-				>
+				<Button onClick={onCancel}>
 					<X size={24} aria-label="Close icon" />
 				</Button>
 			</div>
@@ -115,9 +110,7 @@ export function RoleSelectDialog({
 				/>
 			</div>
 			<div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
-				<Button variant="outline" onClick={onCancel}>
-					{CLOSE}
-				</Button>
+				<Button onClick={onCancel}>{CLOSE}</Button>
 				<Button
 					disabled={selectedRoleIds.length === 0}
 					onClick={() => onSelect(selectedRoleIds)}

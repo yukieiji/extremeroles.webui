@@ -18,7 +18,6 @@ export function SyncButton({ onClick, disabled }: SyncButtonProps) {
 			disabled={disabled}
 			title={SYNC_BUTTON_TITLE}
 			aria-label={SYNC_BUTTON_ARIA}
-			size="icon"
 		>
 			<RefreshCw size={20} aria-hidden="true" />
 		</Button>

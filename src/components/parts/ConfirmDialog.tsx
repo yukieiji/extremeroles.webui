@@ -26,9 +26,7 @@ export function ConfirmDialog({
 				<p className="text-gray-600 leading-relaxed">{message}</p>
 			</div>
 			<div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
-				<Button variant="outline" onClick={onCancel}>
-					{CANCEL}
-				</Button>
+				<Button onClick={onCancel}>{CANCEL}</Button>
 				<Button onClick={onConfirm}>OK</Button>
 			</div>
 		</div>

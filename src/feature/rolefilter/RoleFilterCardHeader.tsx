@@ -100,33 +100,22 @@ export function RoleFilterCardHeader({
 				</span>
 				<div className="flex flex-col gap-0.5">
 					<Button
-						variant="ghost"
-						size="icon"
 						onClick={onIncrement}
 						disabled={assignNum >= 255 || isUpdating}
-						className="h-5 w-5 p-0"
 						aria-label="Increment AssignNum"
 					>
 						<ChevronUp size={14} />
 					</Button>
 					<Button
-						variant="ghost"
-						size="icon"
 						onClick={onDecrement}
 						disabled={assignNum <= 1 || isUpdating}
-						className="h-5 w-5 p-0"
 						aria-label="Decrement AssignNum"
 					>
 						<ChevronDown size={14} />
 					</Button>
 				</div>
 			</div>
-			<Button
-				variant="secondary"
-				size="sm"
-				onClick={onOpenRoleSelect}
-				className="mt-1 self-start h-7 text-xs px-2"
-			>
+			<Button onClick={onOpenRoleSelect}>
 				<Plus size={12} className="mr-1" aria-hidden="true" />
 				役職を追加
 			</Button>

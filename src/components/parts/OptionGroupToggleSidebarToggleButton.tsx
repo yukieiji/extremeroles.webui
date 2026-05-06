@@ -15,10 +15,7 @@ export function OptionGroupToggleSidebarToggleButton({
 }: OptionGroupToggleSidebarToggleButtonProps) {
 	return (
 		<Button
-			variant="secondary"
-			size="icon"
 			onClick={onClick}
-			className="h-8 w-8"
 			aria-label={isOpen ? SIDEBAR_CLOSE_ARIA : SIDEBAR_OPEN_ARIA}
 		>
 			{isOpen ? "◀" : "▶"}
