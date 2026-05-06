@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { SIDEBAR_CLOSE_ARIA, SIDEBAR_OPEN_ARIA } from "../../noTrans";
 
 interface OptionGroupToggleSidebarToggleButtonProps {
@@ -13,13 +14,14 @@ export function OptionGroupToggleSidebarToggleButton({
 	isOpen,
 }: OptionGroupToggleSidebarToggleButtonProps) {
 	return (
-		<button
-			type="button"
+		<Button
+			variant="secondary"
+			size="icon"
 			onClick={onClick}
-			className="p-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+			className="h-8 w-8"
 			aria-label={isOpen ? SIDEBAR_CLOSE_ARIA : SIDEBAR_OPEN_ARIA}
 		>
 			{isOpen ? "◀" : "▶"}
-		</button>
+		</Button>
 	);
 }
