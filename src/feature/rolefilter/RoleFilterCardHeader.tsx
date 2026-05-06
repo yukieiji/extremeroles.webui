@@ -1,4 +1,5 @@
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { postRoleFilterUpdate, roleFilterMetaData } from "../../logics/api";
 import { PostExRAssignOps } from "../../type";
 import { useStore } from "../../useStore";
@@ -97,35 +98,27 @@ export function RoleFilterCardHeader({
 				<span className="text-sm font-semibold text-gray-700">
 					AssignNum: {assignNum}
 				</span>
-				<div className="flex flex-col">
-					<button
-						type="button"
+				<div className="flex flex-col gap-0.5">
+					<Button
 						onClick={onIncrement}
 						disabled={assignNum >= 255 || isUpdating}
-						className="p-0.5 rounded hover:bg-gray-200 disabled:opacity-30 disabled:hover:bg-transparent"
 						aria-label="Increment AssignNum"
 					>
 						<ChevronUp size={14} />
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={onDecrement}
 						disabled={assignNum <= 1 || isUpdating}
-						className="p-0.5 rounded hover:bg-gray-200 disabled:opacity-30 disabled:hover:bg-transparent"
 						aria-label="Decrement AssignNum"
 					>
 						<ChevronDown size={14} />
-					</button>
+					</Button>
 				</div>
 			</div>
-			<button
-				type="button"
-				onClick={onOpenRoleSelect}
-				className="mt-1 self-start inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none"
-			>
+			<Button onClick={onOpenRoleSelect}>
 				<Plus size={12} className="mr-1" aria-hidden="true" />
 				役職を追加
-			</button>
+			</Button>
 		</>
 	);
 }

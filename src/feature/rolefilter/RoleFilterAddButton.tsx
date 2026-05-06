@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { postRoleFilterUpdate, roleFilterMetaData } from "../../logics/api";
 import { PostExRAssignOps } from "../../type";
 import { useStore } from "../../useStore";
@@ -54,13 +55,9 @@ export function RoleFilterAddButton() {
 	};
 
 	return (
-		<button
-			type="button"
-			onClick={onAddFilter}
-			className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
-		>
+		<Button onClick={onAddFilter}>
 			<Plus size={20} className="mr-1" aria-hidden="true" />
 			フィルターを追加
-		</button>
+		</Button>
 	);
 }

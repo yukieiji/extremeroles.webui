@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+import path from "node:path"
 import { defineConfig } from 'vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { viteSingleFile } from "vite-plugin-singlefile"
@@ -10,6 +11,11 @@ const port = process.env.VITE_USE_MOCK ? 67700 : 57700
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
   server: {
     proxy: {
       '/exr/option/': `http://localhost:${port}`,

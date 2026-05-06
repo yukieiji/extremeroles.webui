@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { CANCEL } from "../../noTrans";
 
 interface ConfirmDialogProps {
@@ -25,20 +26,8 @@ export function ConfirmDialog({
 				<p className="text-gray-600 leading-relaxed">{message}</p>
 			</div>
 			<div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
-				<button
-					type="button"
-					onClick={onCancel}
-					className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-				>
-					{CANCEL}
-				</button>
-				<button
-					type="button"
-					onClick={onConfirm}
-					className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors shadow-sm"
-				>
-					OK
-				</button>
+				<Button onClick={onCancel}>{CANCEL}</Button>
+				<Button onClick={onConfirm}>OK</Button>
 			</div>
 		</div>
 	);

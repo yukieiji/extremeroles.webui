@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface RolePinProps {
 	name: string;
@@ -13,17 +14,15 @@ export function RolePin({ name, onDelete }: RolePinProps) {
 		<div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
 			<span>{name}</span>
 			{onDelete && (
-				<button
-					type="button"
+				<Button
 					onClick={(e) => {
 						e.stopPropagation();
 						onDelete();
 					}}
-					className="hover:text-blue-600 focus:outline-none"
 					aria-label={`Remove ${name}`}
 				>
 					<X size={12} aria-hidden="true" />
-				</button>
+				</Button>
 			)}
 		</div>
 	);
