@@ -1,3 +1,4 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SIDEBAR_CLOSE_ARIA, SIDEBAR_OPEN_ARIA } from "../../noTrans";
 
@@ -18,7 +19,7 @@ export function OptionGroupToggleSidebarToggleButton({
 			onClick={onClick}
 			aria-label={isOpen ? SIDEBAR_CLOSE_ARIA : SIDEBAR_OPEN_ARIA}
 		>
-			{isOpen ? "◀" : "▶"}
+			{isOpen ? <ChevronLeft /> : <ChevronRight />}
 		</Button>
 	);
 }
