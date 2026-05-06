@@ -1,10 +1,12 @@
+import { useId } from "react";
 import { ColoredText } from "../parts/ColoredText";
+import { Field, FieldLabel } from "../ui/field";
+import { Switch } from "../ui/switch";
 
 interface OptionToggleControlProps {
 	selection: number; // 0 or 1
 	values: string[];
 	onChange: (selection: number) => void;
-	disabled?: boolean;
 }
 
 /**
@@ -14,39 +16,25 @@ export function OptionToggleControl({
 	selection,
 	values,
 	onChange,
-	disabled = false,
 }: OptionToggleControlProps) {
+	const id = useId();
 	const isOn = selection === 1;
 
 	const handleToggle = () => {
-		if (!disabled) {
-			onChange(isOn ? 0 : 1);
-		}
+		onChange(isOn ? 0 : 1);
 	};
 
 	return (
-		<div className="flex items-center gap-3 h-10">
-			<button
-				type="button"
+		<Field orientation="horizontal">
+			<Switch
+				id={id}
 				onClick={handleToggle}
-				disabled={disabled}
-				className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-					isOn ? "bg-blue-600" : "bg-gray-700"
-				} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
-				role="switch"
-				aria-checked={isOn}
-				data-testid="option-toggle"
-			>
-				<span
-					aria-hidden="true"
-					className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-						isOn ? "translate-x-5" : "translate-x-0"
-					}`}
-				/>
-			</button>
-			<div className="text-sm font-medium text-gray-300 min-w-24 overflow-hidden text-ellipsis whitespace-nowrap">
+				checked={isOn}
+				className="cursor-pointer"
+			/>
+			<FieldLabel htmlFor={id}>
 				<ColoredText text={values[selection]} />
-			</div>
-		</div>
+			</FieldLabel>
+		</Field>
 	);
 }
