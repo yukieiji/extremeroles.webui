@@ -1,8 +1,9 @@
+import { NativeSelect, NativeSelectOption } from "../ui/native-select";
+
 interface OptionDropdownControlProps {
 	selection: number;
 	values: string[];
 	onChange: (selection: number) => void;
-	disabled?: boolean;
 }
 
 /**
@@ -12,7 +13,6 @@ export function OptionDropdownControl({
 	selection,
 	values,
 	onChange,
-	disabled = false,
 }: OptionDropdownControlProps) {
 	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newValue = parseInt(e.target.value, 10);
@@ -20,19 +20,14 @@ export function OptionDropdownControl({
 	};
 
 	return (
-		<select
-			value={selection}
-			onChange={handleSelectChange}
-			disabled={disabled}
-			className="block h-10 w-full sm:w-48 px-3 mr-3 py-1.5 text-sm bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-		>
+		<NativeSelect value={selection} onChange={handleSelectChange}>
 			{values.map((value, index) => {
 				return (
-					<option key={value} value={index}>
+					<NativeSelectOption key={value} value={index}>
 						{value}
-					</option>
+					</NativeSelectOption>
 				);
 			})}
-		</select>
+		</NativeSelect>
 	);
 }
