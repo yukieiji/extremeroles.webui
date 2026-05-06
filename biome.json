@@ -26,13 +26,6 @@
 						}
 					}
 				}
-			},
-			"a11y": {
-				"useSemanticElements": "off",
-				"noLabelWithoutControl": "off"
-			},
-			"suspicious": {
-				"noArrayIndexKey": "off"
 			}
 		}
 	},
