@@ -64,6 +64,8 @@
     - バックエンドからのデータ取得は`Suspose`を使うこと、`useEffect`は基本使用しない
     - 状態管理は`zustand`を使用し、`useState`は使用しない
         - 必ずグローバルの`useStore`からデータを取得すること
+    - .srcフォルダには@のaエイリアスが貼っています、必要に応じてつかって下さい
+        - .src/components => @/components
     - テストの為にid, className, data-testidの使用は限りなく避け、role => label => placeholder => text => alt => titleの順で検討しそれでも駄目な時にdata-testidを使用する
         - 要素クラス等の取得は絶対にやらない、e2eテストが壊れやすくなり保守が出来ない
         - 特にpropsを渡してidやtestidを構築するとかはもってのほか
