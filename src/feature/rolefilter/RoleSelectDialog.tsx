@@ -91,7 +91,7 @@ export function RoleSelectDialog({
 			<div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
 				<h3 className="text-xl font-bold text-gray-900">役職の選択</h3>
 				<Button onClick={onCancel}>
-					<X size={24} aria-label="Close icon" />
+					<X aria-label="Close icon" />
 				</Button>
 			</div>
 			<div className="px-6 py-3 border-b border-gray-50">

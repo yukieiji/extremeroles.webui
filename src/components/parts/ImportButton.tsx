@@ -58,7 +58,7 @@ export function ImportButton({ onImport, disabled }: ImportButtonProps) {
 				title={IMPORT_BUTTON_TITLE}
 				aria-label={IMPORT_BUTTON_ARIA}
 			>
-				<Upload size={18} aria-hidden="true" />
+				<Upload />
 				{IMPORT_BUTTON_TITLE}
 			</Button>
 		</>

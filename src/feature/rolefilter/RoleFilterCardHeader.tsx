@@ -104,19 +104,19 @@ export function RoleFilterCardHeader({
 						disabled={assignNum >= 255 || isUpdating}
 						aria-label="Increment AssignNum"
 					>
-						<ChevronUp size={14} />
+						<ChevronUp />
 					</Button>
 					<Button
 						onClick={onDecrement}
 						disabled={assignNum <= 1 || isUpdating}
 						aria-label="Decrement AssignNum"
 					>
-						<ChevronDown size={14} />
+						<ChevronDown />
 					</Button>
 				</div>
 			</div>
 			<Button onClick={onOpenRoleSelect}>
-				<Plus size={12} className="mr-1" aria-hidden="true" />
+				<Plus size={12} />
 				役職を追加
 			</Button>
 		</>

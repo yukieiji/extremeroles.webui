@@ -23,7 +23,7 @@ export function RoleFilterCardLayout({
 				className="absolute top-2 right-2"
 				aria-label="Delete filter"
 			>
-				<X size={20} aria-hidden="true" />
+				<X />
 			</Button>
 			<div className="flex flex-col border-b border-gray-100 pb-2">
 				{header}

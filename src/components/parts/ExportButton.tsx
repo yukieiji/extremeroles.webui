@@ -19,7 +19,7 @@ export function ExportButton({ onClick, disabled }: ExportButtonProps) {
 			title={EXPORT_CSV_TITLE}
 			aria-label={EXPORT_CSV_TITLE}
 		>
-			<Download size={18} aria-hidden="true" />
+			<Download />
 			{EXPORT_CSV_LABEL}
 		</Button>
 	);
