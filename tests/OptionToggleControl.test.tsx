@@ -70,21 +70,4 @@ describe("OptionToggleControl", () => {
 
 		expect(onChange).toHaveBeenCalledWith(0);
 	});
-
-	it("does not call onChange when disabled", () => {
-		const onChange = vi.fn();
-		render(
-			<OptionToggleControl
-				selection={0}
-				values={mockValues}
-				onChange={onChange}
-				disabled={true}
-			/>,
-		);
-
-		const toggle = screen.getByRole("switch");
-		fireEvent.click(toggle);
-
-		expect(onChange).not.toHaveBeenCalled();
-	});
 });

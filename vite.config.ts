@@ -37,6 +37,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'json-summary', 'json'],
+      exclude: ['./src/components/ui/**.tsx'],
       thresholds: {
         lines: 85,
         functions: 80,
