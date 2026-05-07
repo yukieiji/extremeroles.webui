@@ -93,7 +93,9 @@ describe("ExROptionItem (Recursive Behavior)", () => {
 		);
 
 		// Not an accordion yet (no children active)
-		expect(screen.queryByRole("button", { name: "開く" })).not.toBeInTheDocument();
+		expect(
+			screen.queryByRole("button", { name: "開く" }),
+		).not.toBeInTheDocument();
 
 		// Make child active via updateExROption
 		useStore.getState().updateExROption([
@@ -109,10 +111,10 @@ describe("ExROptionItem (Recursive Behavior)", () => {
 								Selection: 0,
 								RangeMeta: { Values: [0, 1] },
 								Childs: [],
-							}
-						]
-					}
-				]
+							},
+						],
+					},
+				],
 			},
 		]);
 
