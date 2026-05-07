@@ -8,7 +8,10 @@ export function BlockableDialog() {
 	const closeDialog = useStore((state) => state.closeBlockDialog);
 
 	return (
-		<Dialog open={!!blockDialog} onOpenChange={(open) => !open && closeDialog()}>
+		<Dialog
+			open={!!blockDialog}
+			onOpenChange={(open) => !open && closeDialog()}
+		>
 			{blockDialog?.type === "confirm" && (
 				<ConfirmDialog
 					title={blockDialog.title}
