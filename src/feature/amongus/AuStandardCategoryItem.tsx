@@ -13,8 +13,9 @@ interface AuStandardCategoryItemProps {
 export function AuStandardCategoryItem({
 	categoryId,
 }: AuStandardCategoryItemProps) {
+	const defaultCategoryOpen = useStore((state) => state.defaultCategoryOpen);
 	const isOpen = useStore(
-		(state) => state.openedAuCategoryIds[categoryId] ?? false,
+		(state) => state.openedAuCategoryIds[categoryId] ?? defaultCategoryOpen,
 	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];

@@ -1,6 +1,10 @@
+import { z } from "zod";
 import type { StateCreator } from "zustand";
+import { loadAppSettingsFromLocalStorage } from "../logics/storageUtils";
 
 export type SelectedTab = "Au" | "ExR" | "RoleFilter";
+
+export const SelectedTabSchema = z.enum(["Au", "ExR", "RoleFilter"]);
 
 /**
  * サイドバーの開閉と表示するタブを選択するスライスのインターフェース
@@ -22,9 +26,11 @@ export interface OptionGroupToggleSidebarSlice {
 export const createOptionGroupToggleSidebarSlice: StateCreator<
 	OptionGroupToggleSidebarSlice
 > = (set) => {
+	const initialSettings = loadAppSettingsFromLocalStorage();
+
 	return {
 		isSidebarOpen: true,
-		selectedTab: "Au",
+		selectedTab: initialSettings.defaultTab,
 		isSidebarPending: false,
 		toggleSidebar: () => {
 			set((state) => {
@@ -41,7 +47,12 @@ export const createOptionGroupToggleSidebarSlice: StateCreator<
 			set({ isSidebarPending: isPending });
 		},
 		resetAll: () => {
-			set({ selectedTab: "Au", isSidebarOpen: true, isSidebarPending: false });
+			const settings = loadAppSettingsFromLocalStorage();
+			set({
+				selectedTab: settings.defaultTab,
+				isSidebarOpen: true,
+				isSidebarPending: false,
+			});
 		},
 	};
 };

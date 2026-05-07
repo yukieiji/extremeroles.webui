@@ -16,6 +16,7 @@ interface ExRRoleCategoryItemProps {
  * 役職タブで使用される、スポーン設定をヘッダーに持つカテゴリ表示コンポーネント
  */
 export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
+	const defaultCategoryOpen = useStore((state) => state.defaultCategoryOpen);
 	const isOpendCategory = useStore((state) => {
 		return state.openedExRCategoryIds[categoryId];
 	});
@@ -43,7 +44,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 
 	const spawnRateSelection = spawnRateOptionValue.selection ?? 0;
 	const isSpawnRateZero = spawnRateSelection === 0;
-	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
+	const isOpen = !isSpawnRateZero && (isOpendCategory ?? defaultCategoryOpen);
 
 	// 役職のオプションは、トップレベルのスポーンレートが一つ合って、その下に各種オプションがぶら下がる構造になっている
 	// 50

@@ -1,4 +1,6 @@
 import { create } from "zustand";
+import type { AppSettingsSlice } from "./slices/appSettingsSlice";
+import { createAppSettingsSlice } from "./slices/appSettingsSlice";
 import type { AuOptionViewerSlice } from "./slices/auOptionViewerSlice";
 import { createAuOptionViewerSlice } from "./slices/auOptionViewerSlice";
 import type { ExROptionViewerSlice } from "./slices/exrOptionViewerSlice";
@@ -16,7 +18,8 @@ import { createRoleFilterSlice } from "./slices/roleFilterSlice";
  * Zustand ストアの作成
  */
 export const useStore = create<
-	GlobalUiSlice &
+	AppSettingsSlice &
+		GlobalUiSlice &
 		OptionGroupToggleSidebarSlice &
 		RightFloatingPanelSlice &
 		AuOptionViewerSlice &
@@ -24,6 +27,7 @@ export const useStore = create<
 		RoleFilterSlice
 >()((...a) => {
 	return {
+		...createAppSettingsSlice(...a),
 		...createGlobalUiSlice(...a),
 		...createOptionGroupToggleSidebarSlice(...a),
 		...createRightFloatingPanelSlice(...a),
