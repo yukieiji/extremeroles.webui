@@ -140,20 +140,16 @@ export function OptionGroupToggleSidebar() {
 				)}
 			</div>
 
-			<div className="p-2 border-t border-gray-200">
+			<div>
 				<Button
-					variant="ghost"
+					size={isSidebarOpen ? "default" : "icon"}
 					data-testid="sidebar-settings-button"
 					onClick={() => {
 						openDialog({ type: "settings", title: SETTINGS_TITLE });
 					}}
-					className={`
-            w-full flex items-center
-            ${isSidebarOpen ? "justify-start" : "justify-center"}
-          `}
 					title={isSidebarOpen ? undefined : SETTINGS_TITLE}
 				>
-					<Settings className="w-5 h-5" />
+					<Settings />
 					{isSidebarOpen && <span>{SETTINGS_TITLE}</span>}
 				</Button>
 			</div>
