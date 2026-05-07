@@ -1,6 +1,7 @@
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
+import { ROLE_FILTER_DELETE_ARIA } from "@/noTrans";
 
 interface RoleFilterCardLayoutProps {
 	onDelete: () => void;
@@ -21,7 +22,7 @@ export function RoleFilterCardLayout({
 			<Button
 				onClick={onDelete}
 				className="absolute top-2 right-2"
-				aria-label="Delete filter"
+				aria-label={ROLE_FILTER_DELETE_ARIA}
 			>
 				<X />
 			</Button>

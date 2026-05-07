@@ -1,4 +1,5 @@
 import { useEffect, useTransition } from "react";
+import { CSV_FILE_DESCRIPTION } from "../noTrans";
 import { fetchCsvData } from "../logics/api";
 import { refechAll, resetApiCache } from "../logics/api.store";
 import { useStore } from "../useStore";
@@ -46,7 +47,7 @@ export function useExportCsv(): () => Promise<void> {
 							suggestedName: fileName,
 							types: [
 								{
-									description: "CSV File",
+									description: CSV_FILE_DESCRIPTION,
 									accept: { "text/csv": [".csv"] },
 								},
 							],

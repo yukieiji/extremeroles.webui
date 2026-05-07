@@ -1,6 +1,11 @@
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
+import {
+	ROLE_FILTER_ADD_BUTTON,
+	ROLE_FILTER_ADD_TITLE,
+	ROLE_FILTER_UNKNOWN_ROLE,
+} from "@/noTrans";
 import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -15,7 +20,7 @@ export function RoleFilterAddButton() {
 	const onAddFilter = () => {
 		openBlockDialog({
 			type: "roleSelect",
-			title: "フィルター追加: 役職の選択",
+			title: ROLE_FILTER_ADD_TITLE,
 			searchQuery: "",
 			excludeRoleIds: [],
 			selectedRoleIds: [],
@@ -43,7 +48,7 @@ export function RoleFilterAddButton() {
 							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
 							(roleFilterMetaData.CombinationId[roleId] as string) ||
 							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-							"Unknown Role";
+							ROLE_FILTER_UNKNOWN_ROLE;
 
 						addRoleToFilter(guid, roleId, roleName);
 					}
@@ -57,7 +62,7 @@ export function RoleFilterAddButton() {
 	return (
 		<Button onClick={onAddFilter}>
 			<Plus size={20} className="mr-1" aria-hidden="true" />
-			フィルターを追加
+			{ROLE_FILTER_ADD_BUTTON}
 		</Button>
 	);
 }

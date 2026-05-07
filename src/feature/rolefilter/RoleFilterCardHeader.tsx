@@ -1,6 +1,15 @@
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
+import {
+	ROLE_FILTER_ASSIGN_NUM_LABEL,
+	ROLE_FILTER_DECREMENT_ARIA,
+	ROLE_FILTER_INCREMENT_ARIA,
+	ROLE_FILTER_ROLE_ADD_BUTTON,
+	ROLE_FILTER_ROLE_ADD_TITLE,
+	ROLE_FILTER_UNKNOWN_ROLE,
+	format,
+} from "@/noTrans";
 import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -63,7 +72,7 @@ export function RoleFilterCardHeader({
 	const onOpenRoleSelect = () => {
 		openBlockDialog({
 			type: "roleSelect",
-			title: "役職の追加",
+			title: ROLE_FILTER_ROLE_ADD_TITLE,
 			searchQuery: "",
 			excludeRoleIds: excludeRoleIds,
 			selectedRoleIds: [],
@@ -81,7 +90,7 @@ export function RoleFilterCardHeader({
 							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
 							(roleFilterMetaData.CombinationId[roleId] as string) ||
 							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-							"Unknown Role";
+							ROLE_FILTER_UNKNOWN_ROLE;
 
 						addRoleToFilter(guid, roleId, roleName);
 					}
@@ -96,20 +105,20 @@ export function RoleFilterCardHeader({
 		<>
 			<div className="flex items-center gap-2">
 				<span className="text-sm font-semibold text-gray-700">
-					AssignNum: {assignNum}
+					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
 				<div className="flex flex-col gap-0.5">
 					<Button
 						onClick={onIncrement}
 						disabled={assignNum >= 255 || isUpdating}
-						aria-label="Increment AssignNum"
+						aria-label={ROLE_FILTER_INCREMENT_ARIA}
 					>
 						<ChevronUp />
 					</Button>
 					<Button
 						onClick={onDecrement}
 						disabled={assignNum <= 1 || isUpdating}
-						aria-label="Decrement AssignNum"
+						aria-label={ROLE_FILTER_DECREMENT_ARIA}
 					>
 						<ChevronDown />
 					</Button>
@@ -117,7 +126,7 @@ export function RoleFilterCardHeader({
 			</div>
 			<Button onClick={onOpenRoleSelect}>
 				<Plus size={12} />
-				役職を追加
+				{ROLE_FILTER_ROLE_ADD_BUTTON}
 			</Button>
 		</>
 	);
