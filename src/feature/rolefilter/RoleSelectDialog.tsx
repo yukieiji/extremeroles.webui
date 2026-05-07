@@ -102,7 +102,7 @@ export function RoleSelectDialog({
 	};
 
 	return (
-		<DialogContent className="max-w-5xl h-[min(80vh,600px)]">
+		<DialogContent className="flex flex-col max-w-5xl h-[min(80vh,600px)]">
 			<DialogHeader>
 				<DialogTitle>{title ?? ROLE_SELECT_DEFAULT_TITLE}</DialogTitle>
 			</DialogHeader>
@@ -110,7 +110,7 @@ export function RoleSelectDialog({
 				onChange={setSearchQuery}
 				placeholder={ROLE_SELECT_SEARCH_PLACEHOLDER}
 			/>
-			<div className="-m-4 p-6 overflow-y-scroll flex-1">
+			<div className="flex-1 min-h-0 -m-4 p-6 overflow-y-auto">
 				<RoleGrid items={filteredRoles} onSelect={handleSelect} />
 			</div>
 			<DialogFooter>
