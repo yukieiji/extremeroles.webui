@@ -54,7 +54,8 @@ export function getUpdatedExRState(
 		}
 
 		if (opt.Childs) {
-			const childOptionIds = exrOptionMetaData.options[uId]?.childOptionIds ?? [];
+			const childOptionIds =
+				exrOptionMetaData.options[uId]?.childOptionIds ?? [];
 			const hasAnyActiveBefore = childOptionIds.some(
 				(childId) => currentIsExROptionActive[childId],
 			);
