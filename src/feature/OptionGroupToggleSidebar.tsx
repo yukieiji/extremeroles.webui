@@ -148,7 +148,7 @@ export function OptionGroupToggleSidebar() {
 						openDialog({ type: "settings", title: SETTINGS_TITLE });
 					}}
 					className={`
-            w-full flex items-center gap-2 p-2 rounded-md
+            w-full flex items-center
             ${isSidebarOpen ? "justify-start" : "justify-center"}
           `}
 					title={isSidebarOpen ? undefined : SETTINGS_TITLE}
