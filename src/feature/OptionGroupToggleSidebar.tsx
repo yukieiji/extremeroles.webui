@@ -1,6 +1,7 @@
 import { Settings } from "lucide-react";
 import { useEffect, useTransition } from "react";
 import { OptionGroupToggleSidebarToggleButton } from "../components/parts/OptionGroupToggleSidebarToggleButton";
+import { Button } from "../components/ui/button";
 import {
 	AU_OPTIONS_TITLE,
 	AU_SHORT_LABEL,
@@ -140,21 +141,21 @@ export function OptionGroupToggleSidebar() {
 			</div>
 
 			<div className="p-2 border-t border-gray-200">
-				<button
-					type="button"
+				<Button
+					variant="ghost"
 					data-testid="sidebar-settings-button"
 					onClick={() => {
 						openDialog({ type: "settings", title: SETTINGS_TITLE });
 					}}
 					className={`
-            w-full flex items-center gap-2 p-2 rounded-md hover:bg-gray-200 transition-colors
+            w-full flex items-center gap-2 p-2 rounded-md
             ${isSidebarOpen ? "justify-start" : "justify-center"}
           `}
 					title={isSidebarOpen ? undefined : SETTINGS_TITLE}
 				>
 					<Settings className="w-5 h-5" />
 					{isSidebarOpen && <span>{SETTINGS_TITLE}</span>}
-				</button>
+				</Button>
 			</div>
 		</aside>
 	);
