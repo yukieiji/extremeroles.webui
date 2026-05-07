@@ -68,14 +68,7 @@ export function RoleGrid({
 								/>
 							)}
 						</div>
-						<div className="flex flex-col gap-0.5 overflow-hidden">
-							<span className="truncate">{roleName}</span>
-							{isExcluded && (
-								<span className="text-[9px] text-gray-400 font-normal uppercase tracking-wider">
-									追加済み
-								</span>
-							)}
-						</div>
+						<span className="truncate">{roleName}</span>
 					</button>
 				);
 			})}
