@@ -258,6 +258,71 @@ describe("exrStateLogic", () => {
 		expect(result.isOptionActiveChanged).toBe(false);
 	});
 
+	it("should identify newly became accordion options", () => {
+		const catId = 800;
+		const tabId = ExRTabId.CrewmateTab;
+		const parentOptId = 100;
+		const childOptId = 101;
+		const parentUId = getUniqueOptionId(tabId, catId, parentOptId);
+		const childUId = getUniqueOptionId(tabId, catId, childOptId);
+
+		exrOptionMetaData.categories[catId] = { name: "Accordion Test", tabId };
+		exrOptionMetaData.options[parentUId] = {
+			metaData: { translatedName: "Parent", format: "", type: "" },
+			childOptionIds: [childUId],
+			parentOptionIds: [],
+		};
+
+		const currentExrValue = {
+			[parentUId]: { selection: 0, values: [0] },
+			[childUId]: { selection: 0, values: [0] },
+		};
+		const currentIsExROptionActive = {
+			[parentUId]: true,
+			[childUId]: false, // Initially child is inactive, so parent is not an accordion
+		};
+
+		const updateResults: (UpdatedOptions | null)[] = [
+			{
+				UpdatedCategory: {
+					Id: catId,
+					Name: "Accordion Test",
+					Options: [
+						{
+							Id: parentOptId,
+							IsActive: true,
+							TranslatedName: "Parent",
+							Selection: 0,
+							Format: "",
+							RangeMeta: { Type: "Single", Values: [0] },
+							Childs: [
+								{
+									Id: childOptId,
+									IsActive: true, // Child becomes active!
+									TranslatedName: "Child",
+									Selection: 0,
+									Format: "",
+									RangeMeta: { Type: "Single", Values: [0] },
+									Childs: [],
+								},
+							],
+						},
+					],
+				},
+				ChainUpdatedOption: [],
+			},
+		];
+
+		const result = getUpdatedExRState(
+			updateResults,
+			currentExrValue,
+			currentIsExROptionActive,
+		);
+
+		// We expect parentUId to be identified as newly became accordion
+		expect(result.newlyBecameAccordionIds).toContain(parentUId);
+	});
+
 	it("should handle mixed updates and multiple results", () => {
 		const catId1 = 501;
 		const tabId1 = ExRTabId.CrewmateTab;

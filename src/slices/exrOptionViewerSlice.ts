@@ -109,13 +109,18 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 					nextIsOptionActive,
 					valueDataChanged,
 					isOptionActiveChanged,
+					newlyBecameAccordionIds,
 				} = getUpdatedExRState(
 					updateOptions,
 					state.exrValue,
 					state.isExROptionActive,
 				);
 
-				if (!valueDataChanged && !isOptionActiveChanged) {
+				if (
+					!valueDataChanged &&
+					!isOptionActiveChanged &&
+					newlyBecameAccordionIds.length === 0
+				) {
 					return state;
 				}
 
@@ -125,6 +130,13 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				}
 				if (isOptionActiveChanged) {
 					patch.isExROptionActive = nextIsOptionActive;
+				}
+				if (newlyBecameAccordionIds.length > 0) {
+					const nextOpenedExROptionIds = { ...state.openedExROptionIds };
+					for (const id of newlyBecameAccordionIds) {
+						nextOpenedExROptionIds[id] = true;
+					}
+					patch.openedExROptionIds = nextOpenedExROptionIds;
 				}
 				return {
 					...state,

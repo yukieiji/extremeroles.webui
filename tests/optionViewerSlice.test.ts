@@ -85,4 +85,73 @@ describe("optionViewerSlice", () => {
 		expect(state.exrValue[10001 as UniqueOptionId].selection).toBe(1);
 		expect(state.isExROptionActive[10001 as UniqueOptionId]).toBe(true);
 	});
+
+	it("should automatically open newly became accordion options", async () => {
+		const { updateExROption, setExROptions } = useStore.getState();
+
+		const api = await import("@/logics/api");
+		const { getUniqueOptionId } = await import("@/logics/optionUtils");
+
+		const tabId = 1;
+		const catId = 1;
+		const parentId = 100;
+		const childId = 101;
+
+		const parentUId = getUniqueOptionId(tabId, catId, parentId);
+		const childUId = getUniqueOptionId(tabId, catId, childId);
+
+		// Initial state
+		setExROptions(
+			{
+				[parentUId]: { selection: 0, values: [0] },
+				[childUId]: { selection: 0, values: [0] },
+			},
+			{
+				[parentUId]: true,
+				[childUId]: false, // Child is inactive
+			},
+		);
+
+		// Mock metaData for children check
+		api.exrOptionMetaData.options[parentUId] = {
+			metaData: { translatedName: "Parent", format: "", type: "" },
+			childOptionIds: [childUId],
+			parentOptionIds: [],
+		};
+		api.exrOptionMetaData.categories[catId] = { name: "Cat", tabId: tabId };
+
+		// Update that makes child active
+		updateExROption([
+			{
+				UpdatedCategory: {
+					Id: catId,
+					Name: "Cat",
+					Options: [
+						{
+							Id: parentId,
+							IsActive: true,
+							TranslatedName: "Parent",
+							Selection: 0,
+							Format: "",
+							RangeMeta: { Type: "Single", Values: [0] },
+							Childs: [
+								{
+									Id: childId,
+									IsActive: true, // Child becomes active!
+									TranslatedName: "Child",
+									Selection: 0,
+									Format: "",
+									RangeMeta: { Type: "Single", Values: [0] },
+									Childs: [],
+								},
+							],
+						},
+					],
+				},
+				ChainUpdatedOption: [],
+			},
+		]);
+
+		expect(useStore.getState().openedExROptionIds[parentUId]).toBe(true);
+	});
 });

@@ -21,6 +21,7 @@ export function getUpdatedExRState(
 
 	let valueDataChanged = false;
 	let isOptionActiveChanged = false;
+	const newlyBecameAccordionIds: UniqueOptionId[] = [];
 
 	const processOption = (opt: ExROptionDto, catId: number, tId: number) => {
 		const uId = getUniqueOptionId(tId, catId, opt.Id);
@@ -53,8 +54,22 @@ export function getUpdatedExRState(
 		}
 
 		if (opt.Childs) {
+			const hasAnyActiveBefore =
+				exrOptionMetaData.options[uId]?.childOptionIds.some(
+					(childId) => currentIsExROptionActive[childId],
+				) ?? false;
+
 			for (const child of opt.Childs) {
 				processOption(child, catId, tId);
+			}
+
+			const hasAnyActiveAfter =
+				exrOptionMetaData.options[uId]?.childOptionIds.some(
+					(childId) => nextIsOptionActive[childId],
+				) ?? false;
+
+			if (!hasAnyActiveBefore && hasAnyActiveAfter) {
+				newlyBecameAccordionIds.push(uId);
 			}
 		}
 	};
@@ -93,5 +108,6 @@ export function getUpdatedExRState(
 		nextIsOptionActive,
 		valueDataChanged,
 		isOptionActiveChanged,
+		newlyBecameAccordionIds,
 	};
 }
