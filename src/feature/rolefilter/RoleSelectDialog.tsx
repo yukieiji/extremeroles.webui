@@ -1,7 +1,12 @@
-import { X } from "lucide-react";
 import { RoleGrid } from "@/components/blocks/RoleGrid";
 import { RoleSearchInput } from "@/components/parts/RoleSearchInput";
 import { Button } from "@/components/ui/button";
+import {
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { roleFilterMetaData } from "@/logics/api";
 import { CLOSE, CONFIRM } from "@/noTrans";
 import { useStore } from "@/useStore";
@@ -87,21 +92,18 @@ export function RoleSelectDialog({
 	};
 
 	return (
-		<div className="bg-white rounded-lg shadow-2xl w-full max-w-5xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col h-[min(80vh,600px)]">
-			<div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-				<h3 className="text-xl font-bold text-gray-900">役職の選択</h3>
-				<Button onClick={onCancel}>
-					<X aria-label="Close icon" />
-				</Button>
-			</div>
-			<div className="px-6 py-3 border-b border-gray-50">
+		<DialogContent className="max-w-5xl h-[min(80vh,600px)] flex flex-col p-0 overflow-hidden">
+			<DialogHeader className="px-6 py-4 border-b">
+				<DialogTitle>役職の選択</DialogTitle>
+			</DialogHeader>
+			<div className="px-6 py-3 border-b">
 				<RoleSearchInput
 					value={searchQuery}
 					onChange={setSearchQuery}
 					placeholder="役職を検索..."
 				/>
 			</div>
-			<div className="px-6 py-4 overflow-y-scroll flex-1">
+			<div className="px-6 py-4 overflow-y-auto flex-1">
 				<RoleGrid
 					items={filteredRoles}
 					onSelect={handleSelect}
@@ -109,15 +111,17 @@ export function RoleSelectDialog({
 					excludeRoleIds={excludeRoleIds}
 				/>
 			</div>
-			<div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
-				<Button onClick={onCancel}>{CLOSE}</Button>
+			<DialogFooter className="px-6 py-4 border-t bg-muted/50 m-0 rounded-none">
+				<Button variant="outline" onClick={onCancel}>
+					{CLOSE}
+				</Button>
 				<Button
 					disabled={selectedRoleIds.length === 0}
 					onClick={() => onSelect(selectedRoleIds)}
 				>
 					{CONFIRM} ({selectedRoleIds.length})
 				</Button>
-			</div>
-		</div>
+			</DialogFooter>
+		</DialogContent>
 	);
 }

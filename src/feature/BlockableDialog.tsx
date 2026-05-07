@@ -1,4 +1,5 @@
 import { ConfirmDialog } from "../components/parts/ConfirmDialog";
+import { Dialog } from "../components/ui/dialog";
 import { useStore } from "../useStore";
 import { RoleSelectDialog } from "./rolefilter/RoleSelectDialog";
 
@@ -6,13 +7,9 @@ export function BlockableDialog() {
 	const blockDialog = useStore((state) => state.blockDialog);
 	const closeDialog = useStore((state) => state.closeBlockDialog);
 
-	if (!blockDialog) {
-		return null;
-	}
-
 	return (
-		<div className="fixed inset-0 z-200 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-			{blockDialog.type === "confirm" && (
+		<Dialog open={!!blockDialog} onOpenChange={(open) => !open && closeDialog()}>
+			{blockDialog?.type === "confirm" && (
 				<ConfirmDialog
 					title={blockDialog.title}
 					message={blockDialog.message}
@@ -23,7 +20,7 @@ export function BlockableDialog() {
 					onCancel={closeDialog}
 				/>
 			)}
-			{blockDialog.type === "roleSelect" && (
+			{blockDialog?.type === "roleSelect" && (
 				<RoleSelectDialog
 					excludeRoleIds={blockDialog.excludeRoleIds}
 					onSelect={async (roleIds) => {
@@ -33,6 +30,6 @@ export function BlockableDialog() {
 					onCancel={closeDialog}
 				/>
 			)}
-		</div>
+		</Dialog>
 	);
 }
