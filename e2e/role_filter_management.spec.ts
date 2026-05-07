@@ -30,7 +30,7 @@ test.describe("Role Filter Management", () => {
 
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		await expect(page.getByText("役職の選択")).toBeVisible();
+		await expect(page.getByText("フィルター追加: 役職の選択")).toBeVisible();
 		await page.getByRole("button", { name: "Bakary" }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
@@ -67,7 +67,7 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// ダイアログが閉じるのを待つ
-		await expect(page.getByText("役職の選択")).not.toBeVisible({
+		await expect(page.getByText("フィルター追加: 役職の選択")).not.toBeVisible({
 			timeout: 10000,
 		});
 
@@ -83,7 +83,7 @@ test.describe("Role Filter Management", () => {
 
 		// Open role select dialog to add another role
 		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
-		await expect(page.getByText("役職の選択")).toBeVisible();
+		await expect(page.getByText("役職の追加")).toBeVisible();
 
 		// Search for a role (using mock data role names: Opener)
 		const searchInput = page.getByPlaceholder("役職を検索...");
@@ -101,7 +101,7 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// ダイアログが閉じるのを待つ
-		await expect(page.getByText("役職の選択")).not.toBeVisible({
+		await expect(page.getByText("役職の追加")).not.toBeVisible({
 			timeout: 10000,
 		});
 
