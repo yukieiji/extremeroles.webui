@@ -25,15 +25,13 @@ export function ConfirmDialog({
 	onCancel,
 }: ConfirmDialogProps) {
 	return (
-		<DialogContent showCloseButton={false} className="sm:max-w-md">
+		<DialogContent className="sm:max-w-md">
 			<DialogHeader>
 				<DialogTitle>{title}</DialogTitle>
 				<DialogDescription>{message}</DialogDescription>
 			</DialogHeader>
 			<DialogFooter>
-				<Button variant="outline" onClick={onCancel}>
-					{CANCEL}
-				</Button>
+				<Button onClick={onCancel}>{CANCEL}</Button>
 				<Button onClick={onConfirm}>OK</Button>
 			</DialogFooter>
 		</DialogContent>

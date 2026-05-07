@@ -92,18 +92,16 @@ export function RoleSelectDialog({
 	};
 
 	return (
-		<DialogContent className="max-w-5xl h-[min(80vh,600px)] flex flex-col p-0 overflow-hidden">
-			<DialogHeader className="px-6 py-4 border-b">
+		<DialogContent className="max-w-5xl h-[min(80vh,600px)]">
+			<DialogHeader>
 				<DialogTitle>役職の選択</DialogTitle>
 			</DialogHeader>
-			<div className="px-6 py-3 border-b">
-				<RoleSearchInput
-					value={searchQuery}
-					onChange={setSearchQuery}
-					placeholder="役職を検索..."
-				/>
-			</div>
-			<div className="px-6 py-4 overflow-y-auto flex-1">
+			<RoleSearchInput
+				value={searchQuery}
+				onChange={setSearchQuery}
+				placeholder="役職を検索..."
+			/>
+			<div className="-m-4 p-6 overflow-y-scroll flex-1">
 				<RoleGrid
 					items={filteredRoles}
 					onSelect={handleSelect}
@@ -111,7 +109,7 @@ export function RoleSelectDialog({
 					excludeRoleIds={excludeRoleIds}
 				/>
 			</div>
-			<DialogFooter className="px-6 py-4 border-t bg-muted/50 m-0 rounded-none">
+			<DialogFooter>
 				<Button variant="outline" onClick={onCancel}>
 					{CLOSE}
 				</Button>
