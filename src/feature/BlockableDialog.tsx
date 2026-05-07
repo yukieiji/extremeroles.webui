@@ -2,7 +2,7 @@ import { ConfirmDialog } from "../components/parts/ConfirmDialog";
 import { Dialog } from "../components/ui/dialog";
 import { useStore } from "../useStore";
 import { RoleSelectDialog } from "./rolefilter/RoleSelectDialog";
-import { SettingsDialog } from "./settings/SettingsDialog";
+import { SettingsDialog } from "./SettingsDialog";
 
 export function BlockableDialog() {
 	const blockDialog = useStore((state) => state.blockDialog);
