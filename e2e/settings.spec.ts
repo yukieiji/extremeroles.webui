@@ -58,12 +58,9 @@ test("サイドバーの開閉に合わせて設定ボタンの表示が切り�
 	await toggleButton.click();
 
 	// サイドバーが閉じた状態ではテキストが表示されないことを確認
-	// transitionを待つ必要があるかもしれない
-	await page.waitForTimeout(500);
 	await expect(settingsButton).not.toContainText("設定");
 
 	// 再度開く
 	await toggleButton.click();
-	await page.waitForTimeout(500);
 	await expect(settingsButton).toContainText("設定");
 });
