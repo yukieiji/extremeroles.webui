@@ -54,22 +54,23 @@ export function getUpdatedExRState(
 		}
 
 		if (opt.Childs) {
-			const hasAnyActiveBefore =
-				exrOptionMetaData.options[uId]?.childOptionIds.some(
-					(childId) => currentIsExROptionActive[childId],
-				) ?? false;
+			const childOptionIds = exrOptionMetaData.options[uId]?.childOptionIds ?? [];
+			const hasAnyActiveBefore = childOptionIds.some(
+				(childId) => currentIsExROptionActive[childId],
+			);
 
 			for (const child of opt.Childs) {
 				processOption(child, catId, tId);
 			}
 
-			const hasAnyActiveAfter =
-				exrOptionMetaData.options[uId]?.childOptionIds.some(
+			if (!hasAnyActiveBefore) {
+				const hasAnyActiveAfter = childOptionIds.some(
 					(childId) => nextIsOptionActive[childId],
-				) ?? false;
+				);
 
-			if (!hasAnyActiveBefore && hasAnyActiveAfter) {
-				newlyBecameAccordionIds.push(uId);
+				if (hasAnyActiveAfter) {
+					newlyBecameAccordionIds.push(uId);
+				}
 			}
 		}
 	};
