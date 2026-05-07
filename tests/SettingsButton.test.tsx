@@ -13,15 +13,18 @@ vi.mock("lucide-react", () => ({
 
 describe("OptionGroupToggleSidebar", () => {
 	it("設定ボタンが表示されていること", () => {
+		useStore.setState({ isSidebarOpen: false });
 		render(<OptionGroupToggleSidebar />);
-		const settingsButton = screen.getByTitle(SETTINGS_TITLE);
+		const settingsButton = screen.getByTestId("sidebar-settings-button");
 		expect(settingsButton).toBeDefined();
 		expect(screen.getByTestId("settings-icon")).toBeDefined();
+		expect(settingsButton.getAttribute("title")).toBe(SETTINGS_TITLE);
 	});
 
 	it("設定ボタンをクリックするとダイアログが開くこと", () => {
+		useStore.setState({ isSidebarOpen: false });
 		render(<OptionGroupToggleSidebar />);
-		const settingsButton = screen.getByTitle(SETTINGS_TITLE);
+		const settingsButton = screen.getByTestId("sidebar-settings-button");
 
 		fireEvent.click(settingsButton);
 
@@ -31,19 +34,21 @@ describe("OptionGroupToggleSidebar", () => {
 		expect(state.blockDialog?.title).toBe(SETTINGS_TITLE);
 	});
 
-	it("サイドバーが閉じているとき、設定ボタンのテキストが表示されないこと", () => {
+	it("サイドバーが閉じているとき、設定ボタンのテキストが表示されず、titleが表示されること", () => {
 		useStore.setState({ isSidebarOpen: false });
 		render(<OptionGroupToggleSidebar />);
 
-		const settingsButton = screen.getByTitle(SETTINGS_TITLE);
+		const settingsButton = screen.getByTestId("sidebar-settings-button");
 		expect(settingsButton.textContent).not.toContain(SETTINGS_TITLE);
+		expect(settingsButton.getAttribute("title")).toBe(SETTINGS_TITLE);
 	});
 
-	it("サイドバーが開いているとき、設定ボタンのテキストが表示されること", () => {
+	it("サイドバーが開いているとき、設定ボタンのテキストが表示され、titleが設定されないこと", () => {
 		useStore.setState({ isSidebarOpen: true });
 		render(<OptionGroupToggleSidebar />);
 
-		const settingsButton = screen.getByTitle(SETTINGS_TITLE);
+		const settingsButton = screen.getByTestId("sidebar-settings-button");
 		expect(settingsButton.textContent).toContain(SETTINGS_TITLE);
+		expect(settingsButton.getAttribute("title")).toBeNull();
 	});
 });

@@ -150,7 +150,7 @@ export function OptionGroupToggleSidebar() {
             w-full flex items-center gap-2 p-2 rounded-md hover:bg-gray-200 transition-colors
             ${isSidebarOpen ? "justify-start" : "justify-center"}
           `}
-					title={SETTINGS_TITLE}
+					title={isSidebarOpen ? undefined : SETTINGS_TITLE}
 				>
 					<Settings className="w-5 h-5" />
 					{isSidebarOpen && <span>{SETTINGS_TITLE}</span>}
