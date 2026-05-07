@@ -1,5 +1,7 @@
+import { Settings } from "lucide-react";
 import { useEffect, useTransition } from "react";
 import { OptionGroupToggleSidebarToggleButton } from "../components/parts/OptionGroupToggleSidebarToggleButton";
+import { Button } from "../components/ui/button";
 import {
 	AU_OPTIONS_TITLE,
 	AU_SHORT_LABEL,
@@ -8,6 +10,7 @@ import {
 	OPTION_SIDEBAR_ARIA,
 	ROLE_FILTER_SHORT_LABEL,
 	ROLE_FILTER_TITLE,
+	SETTINGS_TITLE,
 } from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
 import { useStore } from "../useStore";
@@ -50,6 +53,9 @@ export function OptionGroupToggleSidebar() {
 	const setIsSidebarPending = useStore((state) => {
 		return state.setIsSidebarPending;
 	});
+	const openDialog = useStore((state) => {
+		return state.openBlockDialog;
+	});
 	const [isPending, startTransition] = useTransition();
 
 	const handleTabChange = (tab: SelectedTab) => {
@@ -73,7 +79,7 @@ export function OptionGroupToggleSidebar() {
 	return (
 		<aside
 			className={`
-        fixed left-0 top-0 h-full bg-gray-100 border-r border-gray-300 transition-all duration-300 z-10
+        fixed left-0 top-0 h-full bg-gray-100 border-r border-gray-300 transition-all duration-300 z-10 flex flex-col
         ${isSidebarOpen ? "w-64" : "w-12"}
       `}
 			aria-label={OPTION_SIDEBAR_ARIA}
@@ -86,51 +92,67 @@ export function OptionGroupToggleSidebar() {
 				/>
 			</div>
 
-			{isSidebarOpen ? (
-				<nav className="p-4 flex flex-col gap-4">
-					<ul className="flex flex-col gap-2">
+			<div className="flex-1 overflow-y-auto">
+				{isSidebarOpen ? (
+					<nav className="p-4 flex flex-col gap-4">
+						<ul className="flex flex-col gap-2">
+							{TABS.map((tab) => {
+								return (
+									<li key={tab.id}>
+										<button
+											type="button"
+											onClick={() => {
+												handleTabChange(tab.id);
+											}}
+											className={`
+                        w-full text-left p-2 rounded-md transition-colors
+                        ${selectedTab === tab.id ? "bg-blue-500 text-white" : "hover:bg-gray-200"}
+                      `}
+										>
+											{tab.label}
+										</button>
+									</li>
+								);
+							})}
+						</ul>
+					</nav>
+				) : (
+					<div className="flex flex-col items-center pt-8 gap-4">
 						{TABS.map((tab) => {
 							return (
-								<li key={tab.id}>
-									<button
-										type="button"
-										onClick={() => {
-											handleTabChange(tab.id);
-										}}
-										className={`
-                      w-full text-left p-2 rounded-md transition-colors
-                      ${selectedTab === tab.id ? "bg-blue-500 text-white" : "hover:bg-gray-200"}
-                    `}
-									>
-										{tab.label}
-									</button>
-								</li>
+								<button
+									key={tab.id}
+									type="button"
+									onClick={() => {
+										handleTabChange(tab.id);
+									}}
+									title={tab.label}
+									className={`
+                    w-8 h-8 rounded-full transition-colors flex items-center justify-center font-bold
+                    ${selectedTab === tab.id ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"}
+                  `}
+								>
+									{tab.shortLabel}
+								</button>
 							);
 						})}
-					</ul>
-				</nav>
-			) : (
-				<div className="flex flex-col items-center pt-8 gap-4">
-					{TABS.map((tab) => {
-						return (
-							<button
-								key={tab.id}
-								type="button"
-								onClick={() => {
-									handleTabChange(tab.id);
-								}}
-								title={tab.label}
-								className={`
-                  w-8 h-8 rounded-full transition-colors flex items-center justify-center font-bold
-                  ${selectedTab === tab.id ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"}
-                `}
-							>
-								{tab.shortLabel}
-							</button>
-						);
-					})}
-				</div>
-			)}
+					</div>
+				)}
+			</div>
+
+			<div>
+				<Button
+					size={isSidebarOpen ? "default" : "icon"}
+					data-testid="sidebar-settings-button"
+					onClick={() => {
+						openDialog({ type: "settings", title: SETTINGS_TITLE });
+					}}
+					title={isSidebarOpen ? undefined : SETTINGS_TITLE}
+				>
+					<Settings />
+					{isSidebarOpen && <span>{SETTINGS_TITLE}</span>}
+				</Button>
+			</div>
 		</aside>
 	);
 }

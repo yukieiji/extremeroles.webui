@@ -2,6 +2,7 @@ import { ConfirmDialog } from "../components/parts/ConfirmDialog";
 import { Dialog } from "../components/ui/dialog";
 import { useStore } from "../useStore";
 import { RoleSelectDialog } from "./rolefilter/RoleSelectDialog";
+import { SettingsDialog } from "./settings/SettingsDialog";
 
 export function BlockableDialog() {
 	const blockDialog = useStore((state) => state.blockDialog);
@@ -33,6 +34,9 @@ export function BlockableDialog() {
 					}}
 					onCancel={closeDialog}
 				/>
+			)}
+			{blockDialog?.type === "settings" && (
+				<SettingsDialog title={blockDialog.title} />
 			)}
 		</Dialog>
 	);
