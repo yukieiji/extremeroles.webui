@@ -16,7 +16,9 @@ interface ExRStandardCategoryItemProps {
 export function ExRStandardCategoryItem({
 	categoryId,
 }: ExRStandardCategoryItemProps) {
-	const defaultCategoryOpen = useStore((state) => state.defaultCategoryOpen);
+	const defaultCategoryOpen = useStore(
+		(state) => state.appSettings.defaultCategoryOpen,
+	);
 	const isOpen = useStore((state) => {
 		return state.openedExRCategoryIds[categoryId] ?? defaultCategoryOpen;
 	});

@@ -14,7 +14,9 @@ interface AuRoleCategoryItemProps {
  * Auの役職タブ（Tab 1, 2）で使用される、スポーン設定をヘッダーに持つカテゴリ表示コンポーネント
  */
 export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
-	const defaultCategoryOpen = useStore((state) => state.defaultCategoryOpen);
+	const defaultCategoryOpen = useStore(
+		(state) => state.appSettings.defaultCategoryOpen,
+	);
 	const isCategoryOpen = useStore(
 		(state) => state.openedAuCategoryIds[categoryId] ?? defaultCategoryOpen,
 	);

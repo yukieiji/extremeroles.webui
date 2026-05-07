@@ -31,12 +31,11 @@ const TABS: { id: SelectedTab; label: string }[] = [
  * 設定ダイアログのコンテンツコンポーネント
  */
 export function SettingsDialog({ title }: SettingsDialogProps) {
-	const defaultTab = useStore((state) => state.defaultTab);
-	const setDefaultTab = useStore((state) => state.setDefaultTab);
-	const defaultCategoryOpen = useStore((state) => state.defaultCategoryOpen);
-	const setDefaultCategoryOpen = useStore(
-		(state) => state.setDefaultCategoryOpen,
-	);
+	const appSettings = useStore((state) => state.appSettings);
+	const updateAppSettings = useStore((state) => state.updateAppSettings);
+
+	const defaultTab = appSettings.defaultTab;
+	const defaultCategoryOpen = appSettings.defaultCategoryOpen;
 
 	return (
 		<DialogContent className="sm:max-w-[425px]">
@@ -53,7 +52,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 							<button
 								key={tab.id}
 								type="button"
-								onClick={() => setDefaultTab(tab.id)}
+								onClick={() => updateAppSettings({ defaultTab: tab.id })}
 								className={`
                   flex items-center px-4 py-2 rounded-md border transition-colors text-sm
                   ${
@@ -79,7 +78,9 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						</span>
 						<Switch
 							checked={defaultCategoryOpen}
-							onCheckedChange={setDefaultCategoryOpen}
+							onCheckedChange={(isOpen) =>
+								updateAppSettings({ defaultCategoryOpen: isOpen })
+							}
 						/>
 					</div>
 				</div>

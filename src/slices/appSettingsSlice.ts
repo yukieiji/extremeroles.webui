@@ -1,18 +1,16 @@
 import type { StateCreator } from "zustand";
 import {
+	type AppSettings,
 	loadAppSettingsFromLocalStorage,
 	saveAppSettingsToLocalStorage,
 } from "../logics/storageUtils";
-import type { SelectedTab } from "./optionGroupToggleSidebarSlice";
 
 /**
  * アプリケーション設定を管理するスライスのインターフェース
  */
 export interface AppSettingsSlice {
-	defaultTab: SelectedTab;
-	defaultCategoryOpen: boolean;
-	setDefaultTab: (tab: SelectedTab) => void;
-	setDefaultCategoryOpen: (isOpen: boolean) => void;
+	appSettings: AppSettings;
+	updateAppSettings: (patch: Partial<AppSettings>) => void;
 }
 
 /**
@@ -25,21 +23,14 @@ export const createAppSettingsSlice: StateCreator<AppSettingsSlice> = (
 	const initialSettings = loadAppSettingsFromLocalStorage();
 
 	return {
-		defaultTab: initialSettings.defaultTab,
-		defaultCategoryOpen: initialSettings.defaultCategoryOpen,
-		setDefaultTab: (tab: SelectedTab) => {
-			set({ defaultTab: tab });
-			saveAppSettingsToLocalStorage({
-				defaultTab: tab,
-				defaultCategoryOpen: get().defaultCategoryOpen,
-			});
-		},
-		setDefaultCategoryOpen: (isOpen: boolean) => {
-			set({ defaultCategoryOpen: isOpen });
-			saveAppSettingsToLocalStorage({
-				defaultTab: get().defaultTab,
-				defaultCategoryOpen: isOpen,
-			});
+		appSettings: initialSettings,
+		updateAppSettings: (patch: Partial<AppSettings>) => {
+			const nextSettings = {
+				...get().appSettings,
+				...patch,
+			};
+			set({ appSettings: nextSettings });
+			saveAppSettingsToLocalStorage(nextSettings);
 		},
 	};
 };
