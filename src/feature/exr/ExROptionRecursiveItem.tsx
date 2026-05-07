@@ -1,6 +1,7 @@
 import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAccordionRow";
 import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
+import { useHasActiveOptionChild } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import type { UniqueOptionId } from "@/type";
@@ -20,7 +21,7 @@ export function ExROptionRecursiveItem({
 	uniqueOptionId,
 	depth = 0,
 }: ExROptionRecursiveItemProps) {
-	const isOpen = useStore((state) => {
+	const isOpenFromStore = useStore((state) => {
 		return state.openedExROptionIds[uniqueOptionId] ?? false;
 	});
 	const toggleExROption = useStore((state) => {
@@ -33,6 +34,9 @@ export function ExROptionRecursiveItem({
 	const isHighlighted = useStore((state) => {
 		return state.highlightedExROptionId === uniqueOptionId;
 	});
+
+	const hasActiveChildren = useHasActiveOptionChild(uniqueOptionId);
+	const isOpen = hasActiveChildren && isOpenFromStore;
 
 	const childs =
 		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
@@ -47,6 +51,7 @@ export function ExROptionRecursiveItem({
 					onToggle={handleToggle}
 					isOpen={isOpen}
 					isHighlight={isHighlighted}
+					hasActiveChildren={hasActiveChildren}
 				>
 					<ExROptionRow
 						uniqueOptionId={uniqueOptionId}
