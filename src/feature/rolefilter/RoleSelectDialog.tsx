@@ -65,9 +65,11 @@ export function RoleSelectDialog({
 		return { roleId, roleName };
 	});
 
-	const filteredRoles = allRoles.filter(({ roleName }) =>
-		roleName.toLowerCase().includes(searchQuery.toLowerCase()),
-	);
+	const filteredRoles = allRoles
+		.filter(({ roleId }) => !excludeRoleIds.includes(roleId))
+		.filter(({ roleName }) =>
+			roleName.toLowerCase().includes(searchQuery.toLowerCase()),
+		);
 
 	const handleSelect = (roleId: number, event: React.MouseEvent) => {
 		if (event.shiftKey && lastClickedId !== null) {
