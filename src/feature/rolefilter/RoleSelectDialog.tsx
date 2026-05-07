@@ -107,7 +107,6 @@ export function RoleSelectDialog({
 				<DialogTitle>{title ?? ROLE_SELECT_DEFAULT_TITLE}</DialogTitle>
 			</DialogHeader>
 			<RoleSearchInput
-				value={searchQuery}
 				onChange={setSearchQuery}
 				placeholder={ROLE_SELECT_SEARCH_PLACEHOLDER}
 			/>
