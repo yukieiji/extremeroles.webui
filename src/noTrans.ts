@@ -38,6 +38,29 @@ export const OPTION_SIDEBAR_ARIA = "オプションサイドバー";
 export const AU_OPTION_ROW_ARIA = "{0}の設定";
 export const AU_ROLE_ROW_ARIA = "{0}の役職";
 
+export const ROLE_FILTER_ADD_TITLE = "フィルター追加: 役職の選択";
+export const ROLE_FILTER_ADD_BUTTON = "フィルターを追加";
+export const ROLE_FILTER_UNKNOWN_ROLE = "Unknown Role";
+export const ROLE_FILTER_ROLE_ADD_TITLE = "役職の追加";
+export const ROLE_FILTER_ASSIGN_NUM_LABEL = "AssignNum: {0}";
+export const ROLE_FILTER_INCREMENT_ARIA = "Increment AssignNum";
+export const ROLE_FILTER_DECREMENT_ARIA = "Decrement AssignNum";
+export const ROLE_FILTER_ROLE_ADD_BUTTON = "役職を追加";
+export const ROLE_FILTER_EMPTY_MESSAGE =
+	"フィルターがありません。「フィルターを追加」ボタンから作成してください。";
+export const ROLE_FILTER_LIST_ARIA = "Filter List";
+export const ROLE_FILTER_DELETE_CONFIRM_TITLE = "フィルターの削除";
+export const ROLE_FILTER_DELETE_CONFIRM_MESSAGE =
+	"このフィルターを削除してもよろしいですか？";
+export const ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE = "役職の削除";
+export const ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE =
+	"役職「{0}」をフィルターから削除してもよろしいですか？";
+export const ROLE_FILTER_NO_ROLES = "No roles selected";
+export const ROLE_FILTER_DELETE_ARIA = "Delete filter";
+export const ROLE_SELECT_SEARCH_PLACEHOLDER = "役職を検索...";
+export const ROLE_SELECT_DEFAULT_TITLE = "役職の選択";
+export const CSV_FILE_DESCRIPTION = "CSV File";
+
 export const SYNCHRONIZING = "Synchronizing...";
 export const RIGHT_PANEL_TITLE = "Right Panel";
 export const AU_OPTIONS_TITLE = "Au Options";

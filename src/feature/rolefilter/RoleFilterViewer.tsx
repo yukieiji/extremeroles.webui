@@ -1,3 +1,4 @@
+import { ROLE_FILTER_EMPTY_MESSAGE, ROLE_FILTER_LIST_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { RoleFilterAddButton } from "./RoleFilterAddButton";
 import { RoleFilterCard } from "./RoleFilterCard";
@@ -21,13 +22,11 @@ export function RoleFilterViewer() {
 
 			{filterEntries.length === 0 ? (
 				<div className="p-8 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg text-center">
-					<p className="text-gray-500">
-						フィルターがありません。「フィルターを追加」ボタンから作成してください。
-					</p>
+					<p className="text-gray-500">{ROLE_FILTER_EMPTY_MESSAGE}</p>
 				</div>
 			) : (
 				<ul
-					aria-label="Filter List"
+					aria-label={ROLE_FILTER_LIST_ARIA}
 					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
 				>
 					{filterEntries.map(([guid, filterSet]) => {

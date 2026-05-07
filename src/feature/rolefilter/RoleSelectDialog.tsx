@@ -8,10 +8,16 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { roleFilterMetaData } from "@/logics/api";
-import { CLOSE, CONFIRM } from "@/noTrans";
+import {
+	CLOSE,
+	CONFIRM,
+	ROLE_SELECT_DEFAULT_TITLE,
+	ROLE_SELECT_SEARCH_PLACEHOLDER,
+} from "@/noTrans";
 import { useStore } from "@/useStore";
 
 interface RoleSelectDialogProps {
+	title?: string;
 	onSelect: (roleIds: number[]) => void;
 	onCancel: () => void;
 	excludeRoleIds?: number[];
@@ -21,6 +27,7 @@ interface RoleSelectDialogProps {
  * 役職を選択するためのダイアログコンテンツ (ビジネスロジックを含む feature コンポーネント)
  */
 export function RoleSelectDialog({
+	title,
 	onSelect,
 	onCancel,
 	excludeRoleIds = [],
@@ -94,12 +101,12 @@ export function RoleSelectDialog({
 	return (
 		<DialogContent className="max-w-5xl h-[min(80vh,600px)]">
 			<DialogHeader>
-				<DialogTitle>役職の選択</DialogTitle>
+				<DialogTitle>{title ?? ROLE_SELECT_DEFAULT_TITLE}</DialogTitle>
 			</DialogHeader>
 			<RoleSearchInput
 				value={searchQuery}
 				onChange={setSearchQuery}
-				placeholder="役職を検索..."
+				placeholder={ROLE_SELECT_SEARCH_PLACEHOLDER}
 			/>
 			<div className="-m-4 p-6 overflow-y-scroll flex-1">
 				<RoleGrid

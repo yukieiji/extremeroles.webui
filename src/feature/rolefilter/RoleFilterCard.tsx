@@ -1,6 +1,14 @@
 import { RoleFilterCardLayout } from "@/components/blocks/RoleFilterCardLayout";
 import { RolePin } from "@/components/parts/RolePin";
 import { postRoleFilterUpdate } from "@/logics/api";
+import {
+	format,
+	ROLE_FILTER_DELETE_CONFIRM_MESSAGE,
+	ROLE_FILTER_DELETE_CONFIRM_TITLE,
+	ROLE_FILTER_NO_ROLES,
+	ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE,
+	ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE,
+} from "@/noTrans";
 import type { RoleAssignFilterSetUI } from "@/type";
 import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
@@ -22,8 +30,8 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 	const onDeleteFilter = () => {
 		openBlockDialog({
 			type: "confirm",
-			title: "フィルターの削除",
-			message: "このフィルターを削除してもよろしいですか？",
+			title: ROLE_FILTER_DELETE_CONFIRM_TITLE,
+			message: ROLE_FILTER_DELETE_CONFIRM_MESSAGE,
 			onConfirm: async () => {
 				try {
 					await postRoleFilterUpdate({
@@ -42,8 +50,8 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 	const onDeleteRole = (roleId: number, roleName: string) => {
 		openBlockDialog({
 			type: "confirm",
-			title: "役職の削除",
-			message: `役職「${roleName}」をフィルターから削除してもよろしいですか？`,
+			title: ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE,
+			message: format(ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE, roleName),
 			onConfirm: async () => {
 				try {
 					await postRoleFilterUpdate({
@@ -79,7 +87,9 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 				);
 			})}
 			{filterSet.Roles.length === 0 && (
-				<span className="text-sm text-gray-400 italic">No roles selected</span>
+				<span className="text-sm text-gray-400 italic">
+					{ROLE_FILTER_NO_ROLES}
+				</span>
 			)}
 		</RoleFilterCardLayout>
 	);
