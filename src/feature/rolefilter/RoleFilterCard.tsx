@@ -2,12 +2,12 @@ import { RoleFilterCardLayout } from "@/components/blocks/RoleFilterCardLayout";
 import { RolePin } from "@/components/parts/RolePin";
 import { postRoleFilterUpdate } from "@/logics/api";
 import {
+	format,
 	ROLE_FILTER_DELETE_CONFIRM_MESSAGE,
 	ROLE_FILTER_DELETE_CONFIRM_TITLE,
 	ROLE_FILTER_NO_ROLES,
 	ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE,
 	ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE,
-	format,
 } from "@/noTrans";
 import type { RoleAssignFilterSetUI } from "@/type";
 import { PostExRAssignOps } from "@/type";
