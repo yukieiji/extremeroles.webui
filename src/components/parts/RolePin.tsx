@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "../ui/badge";
 
 interface RolePinProps {
 	name: string;
@@ -11,7 +12,7 @@ interface RolePinProps {
  */
 export function RolePin({ name, onDelete }: RolePinProps) {
 	return (
-		<div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
+		<Badge>
 			<span>{name}</span>
 			{onDelete && (
 				<Button
@@ -21,9 +22,9 @@ export function RolePin({ name, onDelete }: RolePinProps) {
 					}}
 					aria-label={`Remove ${name}`}
 				>
-					<X />
+					<X data-icon="inline-end" />
 				</Button>
 			)}
-		</div>
+		</Badge>
 	);
 }
