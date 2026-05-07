@@ -367,7 +367,15 @@ export interface RoleSelectDialogData {
 	lastClickedId: number | null;
 }
 
-export type BlockDialog = ConfirmDialogData | RoleSelectDialogData;
+export interface SettingsDialogData {
+	type: "settings";
+	title: string;
+}
+
+export type BlockDialog =
+	| ConfirmDialogData
+	| RoleSelectDialogData
+	| SettingsDialogData;
 
 export interface GetTranslationResponse {
 	Key: string | number;
