@@ -125,6 +125,37 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				}
 				if (isOptionActiveChanged) {
 					patch.isExROptionActive = nextIsOptionActive;
+
+					// アコーディオン（有効な子要素を持つ有効なオプション）として新しく表示されるようになった項目を自動的に開く
+					const nextOpenedExROptionIds = { ...state.openedExROptionIds };
+					let openedIdsChanged = false;
+
+					for (const id in nextIsOptionActive) {
+						const uId = Number(id) as UniqueOptionId;
+						const childIds = exrOptionMetaData.options[uId]?.childOptionIds;
+
+						if (childIds && childIds.length > 0) {
+							const wasAccordion =
+								state.isExROptionActive[uId] &&
+								childIds.some((childId) => state.isExROptionActive[childId]);
+							const isAccordion =
+								nextIsOptionActive[uId] &&
+								childIds.some((childId) => nextIsOptionActive[childId]);
+
+							// 新しくアコーディオン状態になった場合
+							if (!wasAccordion && isAccordion) {
+								// かつ、一度も開閉操作がされていない（undefined）場合のみ自動で開く
+								if (nextOpenedExROptionIds[uId] === undefined) {
+									nextOpenedExROptionIds[uId] = true;
+									openedIdsChanged = true;
+								}
+							}
+						}
+					}
+
+					if (openedIdsChanged) {
+						patch.openedExROptionIds = nextOpenedExROptionIds;
+					}
 				}
 				return {
 					...state,
