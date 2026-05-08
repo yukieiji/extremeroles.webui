@@ -34,7 +34,7 @@ export function RoleGrid({
 		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
 			{items.map(({ roleId, roleName }) => {
 				return (
-					<FieldLabel key={roleId}>
+					<FieldLabel key={roleId} className="cursor-pointer">
 						<Field orientation="horizontal">
 							<Checkbox onClick={(e) => onSelect(roleId, e)} />
 							<FieldContent>
