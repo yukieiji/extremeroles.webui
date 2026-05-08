@@ -1,14 +1,19 @@
-import { useCallback, useEffect } from "react";
-
+import { use, useCallback, useEffect } from "react";
+import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
+import { getAllOptions } from "@/logics/api.store";
 import { useStore } from "@/useStore";
+import { RightFloatingPanelBody } from "./RightFloatingPanelBody";
 
 const MIN_WIDTH = 320;
 
-export function RightPanelFloatingPanelResizeHandle() {
-	const setIsResizing = useStore((state) => state.setIsResizing);
-	const isResizing = useStore((state) => state.isResizing);
-	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);
+export function RightSidebar() {
+	use(getAllOptions());
+	const isRightPanelOpen = useStore((state) => state.isRightPanelOpen);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 	const rightPanelWidth = useStore((state) => state.rightPanelWidth);
+	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);
+	const isResizing = useStore((state) => state.isResizing);
+	const setIsResizing = useStore((state) => state.setIsResizing);
 
 	const handleMouseDown = useCallback(
 		(e: React.MouseEvent) => {
@@ -59,11 +64,19 @@ export function RightPanelFloatingPanelResizeHandle() {
 	}, [isResizing, handleMouseMove, handleMouseUp]);
 
 	return (
-		<div
-			onMouseDown={handleMouseDown}
-			className="absolute left-0 top-0 h-full w-1 cursor-ew-resize hover:bg-blue-400 transition-colors z-50"
-			aria-hidden="true"
-			data-testid="resize-handle"
-		/>
+		<Sidebar
+			side="right"
+			collapsible="offcanvas"
+			style={
+				{
+					"--sidebar-width": `${rightPanelWidth}px`,
+				} as React.CSSProperties
+			}
+		>
+			<SidebarContent>
+				<RightFloatingPanelBody />
+			</SidebarContent>
+			<SidebarRail onMouseDown={handleMouseDown} />
+		</Sidebar>
 	);
 }

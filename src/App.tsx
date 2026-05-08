@@ -1,16 +1,21 @@
-import { Suspense, use } from "react";
+import { Suspense } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
 import { ImportButton } from "./components/parts/ImportButton";
 import { SyncButton } from "./components/parts/SyncButton";
-import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
+import {
+	SidebarInset,
+	SidebarProvider,
+	SidebarTrigger,
+} from "./components/ui/sidebar";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
 import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { PresetSelector } from "./feature/exr/PresetSelector";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
-import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
+import { RightSidebar } from "./feature/rightsidepanel/RightSidebar";
 import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import {
 	useBackendUpdate,
@@ -65,6 +70,7 @@ function MainContent() {
 	const isSidebarPending = useStore((state) => {
 		return state.isSidebarPending;
 	});
+	const isRightPanelOpen = useStore((state) => state.isRightPanelOpen);
 
 	const syncer = useSyncBackend();
 	const backendUpdater = useBackendUpdate();
@@ -91,7 +97,7 @@ function MainContent() {
 	return (
 		<section
 			data-testid="main-content-section"
-			className="flex flex-col gap-4 transition-opacity duration-200 h-full overflow-hidden"
+			className="flex flex-col gap-4 transition-opacity duration-200 h-full overflow-hidden flex-1"
 		>
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-5 flex-1 p-4">
@@ -114,6 +120,9 @@ function MainContent() {
 				<ImportButton onImport={handleImport} />
 				<ExportButton onClick={exporter} />
 				<SyncButton onClick={syncer} />
+				<SidebarTrigger className="ml-2">
+					{isRightPanelOpen ? <ChevronRight /> : <ChevronLeft />}
+				</SidebarTrigger>
 			</div>
 			<Suspense
 				fallback={
@@ -132,16 +141,32 @@ function MainContent() {
  * メインアプリケーションコンポーネント
  */
 function App() {
+	const isRightPanelOpen = useStore((state) => state.isRightPanelOpen);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
+	const rightPanelWidth = useStore((state) => state.rightPanelWidth);
+
 	return (
 		<SidebarProvider>
 			<BlockableLoading />
 			<BlockableDialog />
 			<Suspense fallback={<LoadingView />}>
 				<OptionGroupToggleSidebar />
-				<SidebarInset className="pr-8">
-					<MainContent />
-				</SidebarInset>
-				<RightFloatingPanel />
+				<SidebarProvider
+					defaultOpen={isRightPanelOpen}
+					open={isRightPanelOpen}
+					onOpenChange={setRightPanelOpen}
+					className="flex-1 w-auto"
+					style={
+						{
+							"--sidebar-width": `${rightPanelWidth}px`,
+						} as React.CSSProperties
+					}
+				>
+					<SidebarInset>
+						<MainContent />
+					</SidebarInset>
+					<RightSidebar />
+				</SidebarProvider>
 			</Suspense>
 		</SidebarProvider>
 	);

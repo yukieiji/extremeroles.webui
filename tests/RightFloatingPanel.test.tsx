@@ -1,7 +1,8 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { RightFloatingPanel } from "@/feature/rightsidepanel/RightFloatingPanel";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { RightSidebar } from "@/feature/rightsidepanel/RightSidebar";
 import { getAllOptions, resetApiCache } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
@@ -36,7 +37,12 @@ describe("RightFloatingPanel Component", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
+					<SidebarProvider
+						open={useStore.getState().isRightPanelOpen}
+						onOpenChange={(open) => useStore.setState({ isRightPanelOpen: open })}
+					>
+						<RightSidebar />
+					</SidebarProvider>
 				</Suspense>,
 			);
 		});
@@ -77,12 +83,17 @@ describe("RightFloatingPanel Component", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
+					<SidebarProvider
+						open={useStore.getState().isRightPanelOpen}
+						onOpenChange={(open) => useStore.setState({ isRightPanelOpen: open })}
+					>
+						<RightSidebar />
+					</SidebarProvider>
 				</Suspense>,
 			);
 		});
 
-		const toggleButton = screen.getByLabelText("パネルを開く");
+		const toggleButton = screen.getByTitle("Toggle Sidebar");
 		fireEvent.click(toggleButton);
 
 		expect(useStore.getState().isRightPanelOpen).toBe(true);
@@ -122,7 +133,12 @@ describe("RightFloatingPanel Component", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
+					<SidebarProvider
+						open={useStore.getState().isRightPanelOpen}
+						onOpenChange={(open) => useStore.setState({ isRightPanelOpen: open })}
+					>
+						<RightSidebar />
+					</SidebarProvider>
 				</Suspense>,
 			);
 		});
@@ -135,43 +151,4 @@ describe("RightFloatingPanel Component", () => {
 		expect(useStore.getState().isAuSettingsOpen).toBe(false);
 	});
 
-	it("closes panel when Escape key is pressed", async () => {
-		resetApiCache();
-		vi.stubGlobal(
-			"fetch",
-			vi.fn().mockImplementation((input: RequestInfo | URL) => {
-				const url = typeof input === "string" ? input : input.toString();
-				if (url.includes("/exr/role/filter/")) {
-					return Promise.resolve({
-						ok: true,
-						json: vi.fn().mockResolvedValue({
-							FilterSet: {},
-							FilterRoleId: [],
-							NormalRoleId: {},
-							CombinationId: {},
-							GhostRoleId: {},
-						}),
-					} as unknown as Response);
-				}
-				return Promise.resolve({
-					ok: true,
-					json: vi.fn().mockResolvedValue([]),
-				} as unknown as Response);
-			}),
-		);
-		await getAllOptions();
-
-		useStore.setState({ isRightPanelOpen: true });
-		await act(async () => {
-			render(
-				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
-				</Suspense>,
-			);
-		});
-
-		fireEvent.keyDown(window, { key: "Escape" });
-
-		expect(useStore.getState().isRightPanelOpen).toBe(false);
-	});
 });
