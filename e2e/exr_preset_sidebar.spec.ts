@@ -45,7 +45,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 
 	// ExR タブが選択されていることを確認
 	const exrTabButton = page.getByRole("button", { name: "ExR Options" });
-	await expect(exrTabButton).toHaveClass(/bg-blue-500/);
+	await expect(exrTabButton).toHaveAttribute("data-active", "");
 
 	// プリセットセレクターがハイライトされていることを確認
 	// HighlightWrapper は data-testid は持っていないが、ID を付与している

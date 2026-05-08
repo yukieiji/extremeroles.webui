@@ -12,17 +12,8 @@ describe("SidebarStore", () => {
 
 	it("初期状態が正しいこと", () => {
 		const state = useStore.getState();
-		expect(state.isSidebarOpen).toBe(true);
 		expect(state.selectedTab).toBe("ExR");
 		expect(state.isSidebarPending).toBe(false);
-	});
-
-	it("toggleSidebar で isSidebarOpen が切り替わること", () => {
-		useStore.getState().toggleSidebar();
-		expect(useStore.getState().isSidebarOpen).toBe(false);
-
-		useStore.getState().toggleSidebar();
-		expect(useStore.getState().isSidebarOpen).toBe(true);
 	});
 
 	it("setSelectedTab で selectedTab が変更されること", () => {

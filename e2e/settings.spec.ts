@@ -48,19 +48,17 @@ test("サイドバーの開閉に合わせて設定ボタンの表示が切り�
 	const settingsButton = page.getByTestId("sidebar-settings-button");
 
 	// 初期状態（サイドバーが開いている想定）
-	await expect(settingsButton).toContainText("設定");
+	await expect(settingsButton.getByText("設定")).toBeVisible();
 
 	// サイドバーを閉じるボタンをクリック
 	// サイドバーのトグルボタンを取得
-	const toggleButton = page.getByRole("button", {
-		name: /サイドバーを(閉じる|開く)/,
-	});
+	const toggleButton = page.locator('[data-sidebar="trigger"]');
 	await toggleButton.click();
 
 	// サイドバーが閉じた状態ではテキストが表示されないことを確認
-	await expect(settingsButton).not.toContainText("設定");
+	await expect(settingsButton.getByText("設定")).not.toBeVisible();
 
 	// 再度開く
 	await toggleButton.click();
-	await expect(settingsButton).toContainText("設定");
+	await expect(settingsButton.getByText("設定")).toBeVisible();
 });

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { OptionGroupToggleSidebar } from "@/feature/OptionGroupToggleSidebar";
 import { SETTINGS_TITLE } from "@/noTrans";
 import { useStore } from "@/useStore";
@@ -7,23 +8,43 @@ import { useStore } from "@/useStore";
 // Lucideアイコンのモック
 vi.mock("lucide-react", () => ({
 	Settings: () => <div data-testid="settings-icon" />,
-	ChevronLeft: () => <div data-testid="chevron-left-icon" />,
-	ChevronRight: () => <div data-testid="chevron-right-icon" />,
+	PanelLeftIcon: () => <div data-testid="panel-left-icon" />,
 }));
 
 describe("OptionGroupToggleSidebar", () => {
+	beforeAll(() => {
+		Object.defineProperty(window, "matchMedia", {
+			writable: true,
+			value: vi.fn().mockImplementation((query) => ({
+				matches: false,
+				media: query,
+				onchange: null,
+				addListener: vi.fn(), // deprecated
+				removeListener: vi.fn(), // deprecated
+				addEventListener: vi.fn(),
+				removeEventListener: vi.fn(),
+				dispatchEvent: vi.fn(),
+			})),
+		});
+	});
+
 	it("設定ボタンが表示されていること", () => {
-		useStore.setState({ isSidebarOpen: false });
-		render(<OptionGroupToggleSidebar />);
+		render(
+			<SidebarProvider>
+				<OptionGroupToggleSidebar />
+			</SidebarProvider>,
+		);
 		const settingsButton = screen.getByTestId("sidebar-settings-button");
 		expect(settingsButton).toBeDefined();
 		expect(screen.getByTestId("settings-icon")).toBeDefined();
-		expect(settingsButton.getAttribute("title")).toBe(SETTINGS_TITLE);
 	});
 
 	it("設定ボタンをクリックするとダイアログが開くこと", () => {
-		useStore.setState({ isSidebarOpen: false });
-		render(<OptionGroupToggleSidebar />);
+		render(
+			<SidebarProvider>
+				<OptionGroupToggleSidebar />
+			</SidebarProvider>,
+		);
 		const settingsButton = screen.getByTestId("sidebar-settings-button");
 
 		fireEvent.click(settingsButton);
@@ -34,21 +55,14 @@ describe("OptionGroupToggleSidebar", () => {
 		expect(state.blockDialog?.title).toBe(SETTINGS_TITLE);
 	});
 
-	it("サイドバーが閉じているとき、設定ボタンのテキストが表示されず、titleが表示されること", () => {
-		useStore.setState({ isSidebarOpen: false });
-		render(<OptionGroupToggleSidebar />);
-
-		const settingsButton = screen.getByTestId("sidebar-settings-button");
-		expect(settingsButton.textContent).not.toContain(SETTINGS_TITLE);
-		expect(settingsButton.getAttribute("title")).toBe(SETTINGS_TITLE);
-	});
-
-	it("サイドバーが開いているとき、設定ボタンのテキストが表示され、titleが設定されないこと", () => {
-		useStore.setState({ isSidebarOpen: true });
-		render(<OptionGroupToggleSidebar />);
+	it("サイドバーが開いているとき、設定ボタンのテキストが表示されること", () => {
+		render(
+			<SidebarProvider defaultOpen={true}>
+				<OptionGroupToggleSidebar />
+			</SidebarProvider>,
+		);
 
 		const settingsButton = screen.getByTestId("sidebar-settings-button");
 		expect(settingsButton.textContent).toContain(SETTINGS_TITLE);
-		expect(settingsButton.getAttribute("title")).toBeNull();
 	});
 });

@@ -52,11 +52,20 @@ test("has sidebar and au option editor", async ({ page }) => {
 	).toBeVisible();
 
 	// サイドバーの開閉
+	// 閉じる
 	await page.getByRole("button", { name: "サイドバーを閉じる" }).click();
-	await expect(sidebar.getByRole("navigation")).not.toBeAttached({
-		timeout: 10000,
-	});
+	// shadcn sidebar collapsible="icon" doesn't remove elements from DOM,
+	// it just hides or shrinks them.
+	// We check the data-state attribute on the sidebar element.
+	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
+		"data-state",
+		"collapsed",
+	);
 
+	// 開く
 	await page.getByRole("button", { name: "サイドバーを開く" }).click();
-	await expect(sidebar.getByRole("navigation")).toBeVisible({ timeout: 10000 });
+	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
+		"data-state",
+		"expanded",
+	);
 });

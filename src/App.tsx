@@ -3,6 +3,7 @@ import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
 import { ImportButton } from "./components/parts/ImportButton";
 import { SyncButton } from "./components/parts/SyncButton";
+import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
 import { BlockableLoading } from "./feature/BlockableLoading";
@@ -131,27 +132,18 @@ function MainContent() {
  * メインアプリケーションコンポーネント
  */
 function App() {
-	const isSidebarOpen = useStore((state) => {
-		return state.isSidebarOpen;
-	});
-
 	return (
-		<div className="h-dvh bg-gray-50 flex overflow-hidden">
+		<SidebarProvider>
 			<BlockableLoading />
 			<BlockableDialog />
 			<Suspense fallback={<LoadingView />}>
 				<OptionGroupToggleSidebar />
-				<main
-					className={`
-            flex-1 pr-8 pl-2 transition-all duration-300 h-full overflow-hidden
-            ${isSidebarOpen ? "ml-64" : "ml-12"}
-          `}
-				>
+				<SidebarInset className="pr-8">
 					<MainContent />
-				</main>
+				</SidebarInset>
 				<RightFloatingPanel />
 			</Suspense>
-		</div>
+		</SidebarProvider>
 	);
 }
 
