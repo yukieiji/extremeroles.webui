@@ -16,7 +16,10 @@ export function ExROptionViewer() {
 	const currentRecordPreset = useStore(
 		(state) => state.presetNames[currentSelection],
 	);
-	const navigate = useExRNavigation(PRESET_OPTION_UNIQUE_ID);
+	const navigateToExR = useExRNavigation();
+	const navigate = () => {
+		navigateToExR(0, 0, PRESET_OPTION_UNIQUE_ID);
+	};
 
 	const currentPresetValue = presetOption?.values[currentSelection] ?? "";
 	const currentPresetName = currentRecordPreset ?? String(currentPresetValue);

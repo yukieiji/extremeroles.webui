@@ -15,7 +15,10 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const mapOptionMeta = auOptionMetaData.options[mapOptionId];
 	const mapSelection = useStore((state) => state.auValue[mapOptionId] ?? 0);
 
-	const navigateToOption = useAuNavigation(0, categoryId, mapOptionId);
+	const navigateToAu = useAuNavigation();
+	const navigateToOption = () => {
+		navigateToAu(0, categoryId, mapOptionId);
+	};
 
 	if (!categoryMeta) {
 		return null;

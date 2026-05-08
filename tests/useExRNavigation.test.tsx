@@ -71,8 +71,8 @@ describe("useExRNavigation", () => {
 			parentOptionIds: [],
 		};
 
-		const { result } = renderHook(() => useExRNavigation(childId));
-		result.current();
+		const { result } = renderHook(() => useExRNavigation());
+		result.current(1 as any, 10, childId);
 
 		expect(openExROptions).toHaveBeenCalledWith([parentId, grandParentId]);
 	});

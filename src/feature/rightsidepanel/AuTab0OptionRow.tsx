@@ -20,7 +20,10 @@ export function AuTab0OptionRow({
 	const selection = useStore((state) => {
 		return state.auValue[optionId] ?? 0;
 	});
-	const navigateToOption = useAuNavigation(0, categoryId, optionId);
+	const navigateToAu = useAuNavigation();
+	const navigateToOption = () => {
+		navigateToAu(0, categoryId, optionId);
+	};
 
 	const optionMeta = auOptionMetaData.options[optionId];
 	if (!optionMeta) {

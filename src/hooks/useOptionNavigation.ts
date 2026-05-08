@@ -1,5 +1,4 @@
 import { exrOptionMetaData } from "../logics/api";
-import { parseUniqueOptionId } from "../logics/optionUtils";
 import type { AuOptionId, ExRTabId, UniqueOptionId } from "../type";
 import { useStore } from "../useStore";
 
@@ -11,33 +10,31 @@ export function createAuNavigateId(auOptionId: AuOptionId) {
 	return `au-option-${auOptionId}`;
 }
 
+export function createExRCategoryNavigateId(categoryId: number) {
+	return `exr-category-${categoryId}`;
+}
+
+export function createAuCategoryNavigateId(categoryId: number) {
+	return `au-category-${categoryId}`;
+}
+
 /**
- * Auの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
+ * Auの設定項目へのナビゲーションを行うフック
  */
-export function useAuNavigation(
-	tabId: number,
-	categoryId: number,
-	optionId: AuOptionId,
-) {
-	const setSelectedTab = useStore((state) => {
-		return state.setSelectedTab;
-	});
-	const setSelectedAuTabId = useStore((state) => {
-		return state.setSelectedAuTabId;
-	});
-	const toggleAuCategory = useStore((state) => {
-		return state.toggleAuCategory;
-	});
-	const setHighlightedAuOptionId = useStore((state) => {
-		return state.setHighlightedAuOptionId;
-	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
+export function useAuNavigation() {
+	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
+	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
+	const setHighlightedAuOptionId = useStore(
+		(state) => state.setHighlightedAuOptionId,
+	);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 
-	const navigateId = createAuNavigateId(optionId);
-
-	const navigateToOption = () => {
+	const navigateToAu = (
+		tabId: number,
+		categoryId: number,
+		optionId?: AuOptionId,
+	) => {
 		const { openedAuCategoryIds } = useStore.getState();
 
 		setRightPanelOpen(false);
@@ -46,7 +43,15 @@ export function useAuNavigation(
 		if (!openedAuCategoryIds[categoryId]) {
 			toggleAuCategory(categoryId);
 		}
-		setHighlightedAuOptionId(optionId);
+
+		const navigateId =
+			optionId !== undefined
+				? createAuNavigateId(optionId)
+				: createAuCategoryNavigateId(categoryId);
+
+		if (optionId !== undefined) {
+			setHighlightedAuOptionId(optionId);
+		}
 
 		setTimeout(() => {
 			if (typeof document !== "undefined") {
@@ -55,59 +60,59 @@ export function useAuNavigation(
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
 			}
-			setTimeout(() => {
-				setHighlightedAuOptionId(null);
-			}, 2000);
+			if (optionId !== undefined) {
+				setTimeout(() => {
+					setHighlightedAuOptionId(null);
+				}, 2000);
+			}
 		}, 100);
 	};
 
-	return navigateToOption;
+	return navigateToAu;
 }
+
 /**
- * ExRの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
+ * ExRの設定項目へのナビゲーションを行うフック
  */
-export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
-	const setSelectedTab = useStore((state) => {
-		return state.setSelectedTab;
-	});
-	const setSelectedExRTabId = useStore((state) => {
-		return state.setSelectedExRTabId;
-	});
-	const toggleExRCategory = useStore((state) => {
-		return state.toggleExRCategory;
-	});
-	const openExROptions = useStore((state) => {
-		return state.openExROptions;
-	});
+export function useExRNavigation() {
+	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setSelectedExRTabId = useStore((state) => state.setSelectedExRTabId);
+	const toggleExRCategory = useStore((state) => state.toggleExRCategory);
+	const openExROptions = useStore((state) => state.openExROptions);
+	const setHighlightedExROptionId = useStore(
+		(state) => state.setHighlightedExROptionId,
+	);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 
-	const setHighlightedExROptionId = useStore((state) => {
-		return state.setHighlightedExROptionId;
-	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
-
-	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
-	const navigateId = createExRNavigateId(uniqueOptionId);
-
-	const navigateToOption = () => {
+	const navigateToExR = (
+		tabId: ExRTabId,
+		categoryId: number,
+		uniqueOptionId?: UniqueOptionId,
+	) => {
 		const { openedExRCategoryIds } = useStore.getState();
 
 		setRightPanelOpen(false);
 		setSelectedTab("ExR");
-		setSelectedExRTabId(tabId as ExRTabId);
+		setSelectedExRTabId(tabId);
 		if (!openedExRCategoryIds[categoryId]) {
 			toggleExRCategory(categoryId);
 		}
 
-		// 全ての親オプションを特定して開く
-		const ancestors =
-			exrOptionMetaData.options[uniqueOptionId]?.parentOptionIds ?? [];
-		if (ancestors.length > 0) {
-			openExROptions(ancestors);
+		if (uniqueOptionId !== undefined) {
+			// 全ての親オプションを特定して開く
+			const ancestors =
+				exrOptionMetaData.options[uniqueOptionId]?.parentOptionIds ?? [];
+			if (ancestors.length > 0) {
+				openExROptions(ancestors);
+			}
+
+			setHighlightedExROptionId(uniqueOptionId);
 		}
 
-		setHighlightedExROptionId(uniqueOptionId);
+		const navigateId =
+			uniqueOptionId !== undefined
+				? createExRNavigateId(uniqueOptionId)
+				: createExRCategoryNavigateId(categoryId);
 
 		setTimeout(() => {
 			if (typeof document !== "undefined") {
@@ -116,11 +121,13 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
 			}
-			setTimeout(() => {
-				setHighlightedExROptionId(null);
-			}, 2000);
+			if (uniqueOptionId !== undefined) {
+				setTimeout(() => {
+					setHighlightedExROptionId(null);
+				}, 2000);
+			}
 		}, 100);
 	};
 
-	return navigateToOption;
+	return navigateToExR;
 }
