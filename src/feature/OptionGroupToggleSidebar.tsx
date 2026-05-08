@@ -95,7 +95,6 @@ export function OptionGroupToggleSidebar() {
 									onClick={() => {
 										handleTabChange(tab.id);
 									}}
-									tooltip={tab.label}
 									className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:font-bold"
 								>
 									<span className="group-data-[collapsible=icon]:hidden">
@@ -119,7 +118,6 @@ export function OptionGroupToggleSidebar() {
 							onClick={() => {
 								openDialog({ type: "settings", title: SETTINGS_TITLE });
 							}}
-							tooltip={SETTINGS_TITLE}
 							className="group-data-[collapsible=icon]:justify-center"
 						>
 							<Settings />

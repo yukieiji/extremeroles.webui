@@ -4,7 +4,6 @@ import { ExportButton } from "./components/parts/ExportButton";
 import { ImportButton } from "./components/parts/ImportButton";
 import { SyncButton } from "./components/parts/SyncButton";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
-import { TooltipProvider } from "./components/ui/tooltip";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
 import { BlockableLoading } from "./feature/BlockableLoading";
@@ -134,21 +133,19 @@ function MainContent() {
  */
 function App() {
 	return (
-		<TooltipProvider>
-			<SidebarProvider>
-				<div className="h-dvh bg-gray-50 flex overflow-hidden w-full">
-					<BlockableLoading />
-					<BlockableDialog />
-					<Suspense fallback={<LoadingView />}>
-						<OptionGroupToggleSidebar />
-						<SidebarInset className="flex-1 pr-8 pl-2 transition-all duration-300 h-full overflow-hidden relative">
-							<MainContent />
-						</SidebarInset>
-						<RightFloatingPanel />
-					</Suspense>
-				</div>
-			</SidebarProvider>
-		</TooltipProvider>
+		<SidebarProvider>
+			<div className="h-dvh bg-gray-50 flex overflow-hidden w-full">
+				<BlockableLoading />
+				<BlockableDialog />
+				<Suspense fallback={<LoadingView />}>
+					<OptionGroupToggleSidebar />
+					<SidebarInset className="flex-1 pr-8 pl-2 transition-all duration-300 h-full overflow-hidden relative">
+						<MainContent />
+					</SidebarInset>
+					<RightFloatingPanel />
+				</Suspense>
+			</div>
+		</SidebarProvider>
 	);
 }
 
