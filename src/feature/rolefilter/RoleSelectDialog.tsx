@@ -110,7 +110,7 @@ export function RoleSelectDialog({
 				onChange={setSearchQuery}
 				placeholder={ROLE_SELECT_SEARCH_PLACEHOLDER}
 			/>
-			<div className="-mx-4 px-4 overflow-y-auto flex-1">
+			<div className="overflow-y-scroll flex-1">
 				<RoleGrid items={filteredRoles} onSelect={handleSelect} />
 			</div>
 			<DialogFooter>
