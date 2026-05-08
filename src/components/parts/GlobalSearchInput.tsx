@@ -5,11 +5,8 @@ import {
 	InputGroupAddon,
 	InputGroupInput,
 } from "@/components/ui/input-group";
-import type { SearchItem } from "@/hooks/useGlobalSearch";
-import {
-	getAllSearchItems,
-	useSearchNavigation,
-} from "@/hooks/useGlobalSearch";
+import { useSearchNavigation } from "@/hooks/useGlobalSearch";
+import type { SearchItem } from "@/type";
 import { useStore } from "@/useStore";
 
 /**
@@ -28,12 +25,11 @@ export function GlobalSearchInput() {
 	const isOpen = useStore((state) => state.isGlobalSearchOpen);
 	const setIsOpen = useStore((state) => state.setIsGlobalSearchOpen);
 
-	const navigateToItem = useSearchNavigation();
+	const { navigateToItem, globalSearchItems } = useSearchNavigation();
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	const allItems = getAllSearchItems();
 	const filteredItems = query
-		? allItems.filter((item) =>
+		? globalSearchItems.filter((item) =>
 				stripColorTags(item.name).toLowerCase().includes(query.toLowerCase()),
 			)
 		: [];

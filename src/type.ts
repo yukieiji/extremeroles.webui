@@ -454,6 +454,21 @@ export interface RoleFilterMetaData {
 	GhostRoleId: Record<string, number | string>;
 }
 
+export type SearchItemType = "category" | "option";
+export type SearchItemMode = "Au" | "ExR";
+
+export interface SearchItem {
+	id: string;
+	name: string;
+	type: SearchItemType;
+	mode: SearchItemMode;
+	// Navigation data
+	tabId: number;
+	categoryId: number;
+	optionId?: number | UniqueOptionId | AuOptionId;
+	uniqueOptionId?: UniqueOptionId;
+}
+
 export interface GetCsvResult {
 	ExportAt: string;
 	Version: string;

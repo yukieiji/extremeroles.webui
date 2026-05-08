@@ -24,6 +24,7 @@ import {
 	GetTranslationResponseArraySchema,
 	OptionValueType,
 	RoleAssignFilterDtoSchema,
+	type SearchItem,
 	UpdatedOptionsSchema,
 } from "../type";
 
@@ -65,6 +66,8 @@ export const roleFilterMetaData: RoleFilterMetaData = {
 	GhostRoleId: {},
 };
 
+export const globalSearchItems: SearchItem[] = [];
+
 /**
  * ExRオプションのメタデータをリセットする（テスト用）
  */
@@ -73,6 +76,7 @@ export function resetExrOptionMetaData() {
 	exrOptionMetaData.categories = {};
 	exrOptionMetaData.options = {};
 	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
+	refreshGlobalSearchItems();
 }
 
 /**
@@ -83,6 +87,7 @@ export function resetAuOptionMetaData() {
 	auOptionMetaData.tabCategoryMap = {};
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
+	refreshGlobalSearchItems();
 }
 
 /**
@@ -235,6 +240,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 			processOptions(category.Options, tab.Id, category.Id, []);
 		}
 	}
+	refreshGlobalSearchItems();
 	return { valueData, isOptionActive };
 }
 
@@ -336,6 +342,7 @@ export async function createAuOptionMetaData(): Promise<
 		}
 	}
 
+	refreshGlobalSearchItems();
 	return initialValueData;
 }
 
@@ -369,6 +376,102 @@ export async function updateExrOption(
 
 	const jsonData = await res.json();
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
+}
+
+/**
+ * 検索項目を更新します
+ */
+function refreshGlobalSearchItems() {
+	globalSearchItems.length = 0;
+
+	// ExR Categories
+	for (const [id, category] of Object.entries(exrOptionMetaData.categories)) {
+		globalSearchItems.push({
+			id: `exr-cat-${id}`,
+			name: category.name,
+			type: "category",
+			mode: "ExR",
+			tabId: category.tabId,
+			categoryId: Number(id),
+		});
+	}
+
+	// ExR Options
+	for (const [id, option] of Object.entries(exrOptionMetaData.options)) {
+		const uniqueId = Number(id) as UniqueOptionId;
+		const tabId = Math.floor(uniqueId / 1_000_000_000_000);
+		const categoryId = Math.floor((uniqueId % 1_000_000_000_000) / 1_000_000);
+		if (option.metaData.translatedName) {
+			globalSearchItems.push({
+				id: `exr-opt-${id}`,
+				name: option.metaData.translatedName,
+				type: "option",
+				mode: "ExR",
+				tabId,
+				categoryId,
+				optionId: uniqueId,
+				uniqueOptionId: uniqueId,
+			});
+		}
+	}
+
+	// Au Categories
+	for (const [tabId, categoryIds] of Object.entries(
+		auOptionMetaData.tabCategoryMap,
+	)) {
+		for (const categoryId of categoryIds) {
+			const category = auOptionMetaData.categoryMetaData[categoryId];
+			if (category) {
+				globalSearchItems.push({
+					id: `au-cat-${categoryId}`,
+					name: category.name,
+					type: "category",
+					mode: "Au",
+					tabId: Number(tabId),
+					categoryId,
+				});
+			}
+		}
+	}
+
+	// Au Options
+	for (const [id, option] of Object.entries(auOptionMetaData.options)) {
+		const auOptionId = Number(id) as AuOptionId;
+		// Find tab and category for this option
+		let foundTabId = -1;
+		let foundCategoryId = -1;
+
+		for (const [tId, catIds] of Object.entries(
+			auOptionMetaData.tabCategoryMap,
+		)) {
+			for (const cId of catIds) {
+				if (
+					auOptionMetaData.categoryMetaData[cId]?.options.includes(auOptionId)
+				) {
+					foundTabId = Number(tId);
+					foundCategoryId = cId;
+					break;
+				}
+			}
+			if (foundTabId !== -1) {
+				break;
+			}
+		}
+
+		if (foundTabId !== -1) {
+			globalSearchItems.push({
+				id: `au-opt-${id}`,
+				name: option.title,
+				type: "option",
+				mode: "Au",
+				tabId: foundTabId,
+				categoryId: foundCategoryId,
+				optionId: auOptionId,
+			});
+		}
+	}
+
+	globalSearchItems.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function postExrCsv(csvBody: string): Promise<void> {
