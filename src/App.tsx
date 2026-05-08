@@ -1,6 +1,7 @@
 import { Suspense, use } from "react";
 import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
+import { GlobalSearchInput } from "./components/parts/GlobalSearchInput";
 import { ImportButton } from "./components/parts/ImportButton";
 import { SyncButton } from "./components/parts/SyncButton";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
@@ -110,6 +111,7 @@ function MainContent() {
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
+				<GlobalSearchInput />
 				<ImportButton onImport={handleImport} />
 				<ExportButton onClick={exporter} />
 				<SyncButton onClick={syncer} />

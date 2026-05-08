@@ -23,12 +23,14 @@ export function AuStandardCategoryItem({
 	}
 
 	return (
-		<OptionEditorAccordion
-			title={categoryMeta.name}
-			isOpen={isOpen}
-			onToggle={() => toggleAuCategory(categoryId)}
-		>
-			<AuCategoryOptionList optionIds={categoryMeta.options} />
-		</OptionEditorAccordion>
+		<div id={`au-category-${categoryId}`}>
+			<OptionEditorAccordion
+				title={categoryMeta.name}
+				isOpen={isOpen}
+				onToggle={() => toggleAuCategory(categoryId)}
+			>
+				<AuCategoryOptionList optionIds={categoryMeta.options} />
+			</OptionEditorAccordion>
+		</div>
 	);
 }

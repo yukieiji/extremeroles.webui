@@ -63,22 +63,24 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	}
 
 	return (
-		<RoleCategoryAccordion
-			isOpen={isOpen}
-			onClick={() => toggleExRCategory(categoryId)}
-			text={<ColoredText text={category} />}
-			spawnControl={
-				<ExRRoleSpawnControls
-					tabId={selectedExRTabId}
+		<div id={`exr-category-${categoryId}`}>
+			<RoleCategoryAccordion
+				isOpen={isOpen}
+				onClick={() => toggleExRCategory(categoryId)}
+				text={<ColoredText text={category} />}
+				spawnControl={
+					<ExRRoleSpawnControls
+						tabId={selectedExRTabId}
+						categoryId={categoryId}
+					/>
+				}
+				disable={isSpawnRateZero}
+			>
+				<ExRCategoryOptionList
 					categoryId={categoryId}
+					uniqueOptionIds={filteredChildOptionIds}
 				/>
-			}
-			disable={isSpawnRateZero}
-		>
-			<ExRCategoryOptionList
-				categoryId={categoryId}
-				uniqueOptionIds={filteredChildOptionIds}
-			/>
-		</RoleCategoryAccordion>
+			</RoleCategoryAccordion>
+		</div>
 	);
 }

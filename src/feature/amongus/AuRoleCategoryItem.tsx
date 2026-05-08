@@ -48,20 +48,22 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	const navigateId = createAuNavigateId(chanceOptionId);
 
 	return (
-		<HighlightWrapper
-			id={navigateId}
-			isHighlighted={isHighlighted}
-			isInset={false}
-		>
-			<RoleCategoryAccordion
-				isOpen={isOpen}
-				onClick={() => toggleAuCategory(categoryId)}
-				text={categoryMeta.name}
-				spawnControl={<AuRoleSpawnControls categoryId={categoryId} />}
-				disable={isChanceZero}
+		<div id={`au-category-${categoryId}`}>
+			<HighlightWrapper
+				id={navigateId}
+				isHighlighted={isHighlighted}
+				isInset={false}
 			>
-				<AuCategoryOptionList optionIds={otherOptionIds} />
-			</RoleCategoryAccordion>
-		</HighlightWrapper>
+				<RoleCategoryAccordion
+					isOpen={isOpen}
+					onClick={() => toggleAuCategory(categoryId)}
+					text={categoryMeta.name}
+					spawnControl={<AuRoleSpawnControls categoryId={categoryId} />}
+					disable={isChanceZero}
+				>
+					<AuCategoryOptionList optionIds={otherOptionIds} />
+				</RoleCategoryAccordion>
+			</HighlightWrapper>
+		</div>
 	);
 }
