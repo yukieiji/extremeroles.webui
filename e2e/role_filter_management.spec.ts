@@ -98,12 +98,12 @@ test.describe("Role Filter Management", () => {
 
 		// Select a role from the grid
 		// 検索結果が表示されるのを待つ
-		const roleButton = page.getByRole("checkbox", {
+		const roleCheckbox = page.getByRole("checkbox", {
 			name: "Opener",
 			exact: true,
 		});
-		await expect(roleButton).toBeVisible({ timeout: 10000 });
-		await roleButton.click();
+		await expect(roleCheckbox).toBeVisible({ timeout: 10000 });
+		await roleCheckbox.click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// ダイアログが閉じるのを待つ
