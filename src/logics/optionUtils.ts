@@ -1,4 +1,4 @@
-import type { AuOptionId, OptionData, UniqueOptionId } from "../type";
+import type { AuOptionId, ExRTabId, OptionData, UniqueOptionId } from "../type";
 import { exrOptionMetaData } from "./api";
 
 const TAB_ID_MULTIPLIER = 1_000_000_000_000;
@@ -40,11 +40,11 @@ export function parseAuOptionId(id: number) {
 }
 
 export function parseUniqueOptionId(uniqueOptionId: UniqueOptionId): {
-	tabId: number;
+	tabId: ExRTabId;
 	categoryId: number;
 	optionId: number;
 } {
-	const tabId = Math.floor(uniqueOptionId / TAB_ID_MULTIPLIER);
+	const tabId = Math.floor(uniqueOptionId / TAB_ID_MULTIPLIER) as ExRTabId;
 	const categoryId = Math.floor(
 		(uniqueOptionId % TAB_ID_MULTIPLIER) / CATEGORY_ID_MULTIPLIER,
 	);

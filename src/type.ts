@@ -489,3 +489,39 @@ export const DeltRoleAssignFilterSchema = z.object({
 });
 
 export type DeltRoleAssignFilter = z.infer<typeof DeltRoleAssignFilterSchema>;
+
+export type SearchItemMode = "Au" | "ExR";
+
+export interface ExROptionSearchTargetInfo {
+	mode: "exr-opt";
+	uniqueOptionId: UniqueOptionId;
+}
+
+export interface AuOptionSearchTargetInfo {
+	mode: "au-opt";
+	tabId: number;
+	categoryId: number;
+	auOptionId: AuOptionId;
+}
+
+export interface ExRCategorySearchTargetInfo {
+	mode: "exr-cat";
+	tabId: ExRTabId;
+	categoryId: number;
+}
+
+export interface AuCategorySearchTargetInfo {
+	mode: "au-cat";
+	tabId: number;
+	categoryId: number;
+}
+
+export interface SearchItem {
+	id: string;
+	tearm: string;
+	info:
+		| AuCategorySearchTargetInfo
+		| AuOptionSearchTargetInfo
+		| ExRCategorySearchTargetInfo
+		| ExROptionSearchTargetInfo;
+}

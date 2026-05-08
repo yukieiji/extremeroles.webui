@@ -1,6 +1,6 @@
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
-import { useExRNavigation } from "@/hooks/useOptionNavigation";
+import { useExROptionNavigation } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import type { UniqueOptionId } from "@/type";
 import { ExRValueView } from "./ExRValueView";
@@ -16,7 +16,7 @@ export function ExROptionRowViewContent({
 	uniqueOptionId,
 }: ExROptionRowViewContentProps) {
 	const optionData = exrOptionMetaData.options[uniqueOptionId]?.metaData;
-	const navigate = useExRNavigation(uniqueOptionId);
+	const navigate = useExROptionNavigation(uniqueOptionId);
 
 	if (!optionData) {
 		return null;

@@ -10,6 +10,7 @@ import type {
 	GetCsvResult,
 	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
+	SearchItem,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -64,6 +65,8 @@ export const roleFilterMetaData: RoleFilterMetaData = {
 	CombinationId: {},
 	GhostRoleId: {},
 };
+
+export const globalSearchItems: SearchItem[] = [];
 
 /**
  * ExRオプションのメタデータをリセットする（テスト用）

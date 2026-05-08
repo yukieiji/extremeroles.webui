@@ -1,5 +1,5 @@
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
-import { useAuNavigation } from "@/hooks/useOptionNavigation";
+import { useAuOptionNavigation } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
@@ -25,7 +25,11 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 	const maxCountSelection = useStore(
 		(state) => state.auValue[maxCountOptionId] ?? 0,
 	);
-	const navigateToOption = useAuNavigation(tabId, categoryId, chanceOptionId);
+	const navigateToOption = useAuOptionNavigation(
+		tabId,
+		categoryId,
+		chanceOptionId,
+	);
 
 	const chanceMeta = auOptionMetaData.options[chanceOptionId];
 	const maxCountMeta = auOptionMetaData.options[maxCountOptionId];

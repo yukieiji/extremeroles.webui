@@ -1,5 +1,5 @@
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
-import { useAuNavigation } from "@/hooks/useOptionNavigation";
+import { useAuOptionNavigation } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import type { AuOptionId } from "@/type";
 import { useStore } from "@/useStore";
@@ -20,7 +20,7 @@ export function AuTab0OptionRow({
 	const selection = useStore((state) => {
 		return state.auValue[optionId] ?? 0;
 	});
-	const navigateToOption = useAuNavigation(0, categoryId, optionId);
+	const navigateToOption = useAuOptionNavigation(0, categoryId, optionId);
 
 	const optionMeta = auOptionMetaData.options[optionId];
 	if (!optionMeta) {

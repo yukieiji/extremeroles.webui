@@ -11,14 +11,7 @@ export function createAuNavigateId(auOptionId: AuOptionId) {
 	return `au-option-${auOptionId}`;
 }
 
-/**
- * Auの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
- */
-export function useAuNavigation(
-	tabId: number,
-	categoryId: number,
-	optionId: AuOptionId,
-) {
+function useAuNavigationInner() {
 	const setSelectedTab = useStore((state) => {
 		return state.setSelectedTab;
 	});
@@ -35,9 +28,12 @@ export function useAuNavigation(
 		return state.setRightPanelOpen;
 	});
 
-	const navigateId = createAuNavigateId(optionId);
-
-	const navigateToOption = () => {
+	const navigation = (
+		tabId: number,
+		categoryId: number,
+		optionId: AuOptionId,
+		navId: string,
+	) => {
 		const { openedAuCategoryIds } = useStore.getState();
 
 		setRightPanelOpen(false);
@@ -50,7 +46,7 @@ export function useAuNavigation(
 
 		setTimeout(() => {
 			if (typeof document !== "undefined") {
-				const element = document.getElementById(navigateId);
+				const element = document.getElementById(navId);
 				if (element) {
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
@@ -60,13 +56,47 @@ export function useAuNavigation(
 			}, 2000);
 		}, 100);
 	};
+	return navigation;
+}
+
+/**
+ * Auの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
+ */
+export function useAuOptionNavigation(
+	tabId: number,
+	categoryId: number,
+	optionId: AuOptionId,
+) {
+	const navigateToAuOption = useAuNavigationInner();
+
+	const navigateId = createAuNavigateId(optionId);
+	const navigateToOption = () => {
+		navigateToAuOption(tabId, categoryId, optionId, navigateId);
+	};
 
 	return navigateToOption;
 }
+
+export function useAuOptionNavigationInline() {
+	const navigateToAuOption = useAuNavigationInner();
+
+	const navigateToOption = (
+		tabId: number,
+		categoryId: number,
+		optionId: AuOptionId,
+	) => {
+		const navigateId = createAuNavigateId(optionId);
+		navigateToAuOption(tabId, categoryId, optionId, navigateId);
+	};
+
+	return navigateToOption;
+}
+
 /**
  * ExRの設定項目をダブルクリックした際のナビゲーションとハイライトを行うフック
  */
-export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
+
+function useExROptionNavigationInner() {
 	const setSelectedTab = useStore((state) => {
 		return state.setSelectedTab;
 	});
@@ -87,10 +117,12 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 		return state.setRightPanelOpen;
 	});
 
-	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
-	const navigateId = createExRNavigateId(uniqueOptionId);
-
-	const navigateToOption = () => {
+	const navigateToOption = (
+		tabId: ExRTabId,
+		categoryId: number,
+		nabId: string,
+		uniqueOptionId: UniqueOptionId,
+	) => {
 		const { openedExRCategoryIds } = useStore.getState();
 
 		setRightPanelOpen(false);
@@ -111,7 +143,7 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 
 		setTimeout(() => {
 			if (typeof document !== "undefined") {
-				const element = document.getElementById(navigateId);
+				const element = document.getElementById(nabId);
 				if (element) {
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
@@ -120,6 +152,30 @@ export function useExRNavigation(uniqueOptionId: UniqueOptionId) {
 				setHighlightedExROptionId(null);
 			}, 2000);
 		}, 100);
+	};
+	return navigateToOption;
+}
+
+export function useExROptionNavigation(uniqueOptionId: UniqueOptionId) {
+	const navigateToOptionInner = useExROptionNavigationInner();
+
+	const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
+	const navigateId = createExRNavigateId(uniqueOptionId);
+
+	const navigateToOption = () => {
+		navigateToOptionInner(tabId, categoryId, navigateId, uniqueOptionId);
+	};
+
+	return navigateToOption;
+}
+
+export function useExROptionNavigationInline() {
+	const navigateToOptionInner = useExROptionNavigationInner();
+
+	const navigateToOption = (uniqueOptionId: UniqueOptionId) => {
+		const { tabId, categoryId } = parseUniqueOptionId(uniqueOptionId);
+		const navigateId = createExRNavigateId(uniqueOptionId);
+		navigateToOptionInner(tabId, categoryId, navigateId, uniqueOptionId);
 	};
 
 	return navigateToOption;

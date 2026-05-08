@@ -1,7 +1,7 @@
 import { RightPanelItemColumnLayout } from "@/components/parts/RightPanelItemColumnLayout";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
 import { useOptionData } from "@/hooks/useExROptionData";
-import { useExRNavigation } from "@/hooks/useOptionNavigation";
+import { useExROptionNavigation } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
@@ -16,7 +16,7 @@ export function ExROptionViewer() {
 	const currentRecordPreset = useStore(
 		(state) => state.presetNames[currentSelection],
 	);
-	const navigate = useExRNavigation(PRESET_OPTION_UNIQUE_ID);
+	const navigate = useExROptionNavigation(PRESET_OPTION_UNIQUE_ID);
 
 	const currentPresetValue = presetOption?.values[currentSelection] ?? "";
 	const currentPresetName = currentRecordPreset ?? String(currentPresetValue);

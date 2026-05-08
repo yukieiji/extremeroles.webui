@@ -1,4 +1,4 @@
-import { useAuNavigation } from "@/hooks/useOptionNavigation";
+import { useAuOptionNavigation } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
@@ -15,7 +15,7 @@ export function AuTab0MapCategory({ categoryId }: AuTab0MapCategoryProps) {
 	const mapOptionMeta = auOptionMetaData.options[mapOptionId];
 	const mapSelection = useStore((state) => state.auValue[mapOptionId] ?? 0);
 
-	const navigateToOption = useAuNavigation(0, categoryId, mapOptionId);
+	const navigateToOption = useAuOptionNavigation(0, categoryId, mapOptionId);
 
 	if (!categoryMeta) {
 		return null;
