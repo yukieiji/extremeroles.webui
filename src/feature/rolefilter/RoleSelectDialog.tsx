@@ -102,8 +102,8 @@ export function RoleSelectDialog({
 	};
 
 	return (
-		<DialogContent className="max-w-5xl h-[min(80vh,600px)]">
-			<DialogHeader>
+		<DialogContent className="flex flex-col max-w-5xl h-[min(80vh,600px)]">
+			<DialogHeader className="mb-4">
 				<DialogTitle>{title ?? ROLE_SELECT_DEFAULT_TITLE}</DialogTitle>
 			</DialogHeader>
 			<RoleSearchInput
