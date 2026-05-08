@@ -16,6 +16,11 @@ import {
 	SheetTitle,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
@@ -495,13 +500,16 @@ function SidebarMenuButton({
 	isActive = false,
 	variant = "default",
 	size = "default",
+	tooltip,
 	className,
 	...props
 }: useRender.ComponentProps<"button"> &
 	React.ComponentProps<"button"> & {
 		isActive?: boolean;
+		tooltip?: string | React.ComponentProps<typeof TooltipContent>;
 	} & VariantProps<typeof sidebarMenuButtonVariants>) {
-	return useRender({
+	const { isMobile, state } = useSidebar();
+	const comp = useRender({
 		defaultTagName: "button",
 		props: mergeProps<"button">(
 			{
@@ -509,7 +517,7 @@ function SidebarMenuButton({
 			},
 			props,
 		),
-		render,
+		render: !tooltip ? render : <TooltipTrigger render={render} />,
 		state: {
 			slot: "sidebar-menu-button",
 			sidebar: "menu-button",
@@ -517,6 +525,28 @@ function SidebarMenuButton({
 			active: isActive,
 		},
 	});
+
+	if (!tooltip) {
+		return comp;
+	}
+
+	if (typeof tooltip === "string") {
+		tooltip = {
+			children: tooltip,
+		};
+	}
+
+	return (
+		<Tooltip>
+			{comp}
+			<TooltipContent
+				side="right"
+				align="center"
+				hidden={state !== "collapsed" || isMobile}
+				{...tooltip}
+			/>
+		</Tooltip>
+	);
 }
 
 function SidebarMenuAction({

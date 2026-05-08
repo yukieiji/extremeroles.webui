@@ -57,11 +57,17 @@ test("synchronization updates data and preserves UI state", async ({
 
 	// Sidebar state check (open by default, let's close it and sync)
 	await page.getByRole("button", { name: "サイドバーを閉じる" }).click();
-	await expect(page.getByRole("navigation")).not.toBeAttached();
+	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
+		"data-state",
+		"collapsed",
+	);
 
 	await syncButton.click();
 	await expect(page.getByText("Synchronizing...")).not.toBeVisible();
 
-	// Sidebar should still be closed (navigation not visible)
-	await expect(page.getByRole("navigation")).not.toBeAttached();
+	// Sidebar should still be closed
+	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
+		"data-state",
+		"collapsed",
+	);
 });

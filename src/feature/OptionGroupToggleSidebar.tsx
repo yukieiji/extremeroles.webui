@@ -10,6 +10,7 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 	SidebarTrigger,
+	useSidebar,
 } from "../components/ui/sidebar";
 import {
 	AU_OPTIONS_TITLE,
@@ -20,6 +21,8 @@ import {
 	ROLE_FILTER_SHORT_LABEL,
 	ROLE_FILTER_TITLE,
 	SETTINGS_TITLE,
+	SIDEBAR_CLOSE_ARIA,
+	SIDEBAR_OPEN_ARIA,
 } from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
 import { useStore } from "../useStore";
@@ -47,6 +50,7 @@ const TABS: TabItem[] = [
  * サイドバーコンポーネント
  */
 export function OptionGroupToggleSidebar() {
+	const { open } = useSidebar();
 	const selectedTab = useStore((state) => {
 		return state.selectedTab;
 	});
@@ -79,10 +83,12 @@ export function OptionGroupToggleSidebar() {
 		}
 	}, [isPending, setIsSidebarPending]);
 
+	const triggerLabel = open ? SIDEBAR_CLOSE_ARIA : SIDEBAR_OPEN_ARIA;
+
 	return (
 		<Sidebar collapsible="icon" aria-label={OPTION_SIDEBAR_ARIA}>
 			<SidebarHeader className="flex flex-row items-center justify-end">
-				<SidebarTrigger />
+				<SidebarTrigger title={triggerLabel} aria-label={triggerLabel} />
 			</SidebarHeader>
 
 			<SidebarContent>
