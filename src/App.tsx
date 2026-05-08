@@ -134,17 +134,17 @@ function MainContent() {
 function App() {
 	return (
 		<SidebarProvider>
-			<div className="h-dvh bg-gray-50 flex overflow-hidden w-full">
-				<BlockableLoading />
-				<BlockableDialog />
-				<Suspense fallback={<LoadingView />}>
-					<OptionGroupToggleSidebar />
-					<SidebarInset className="flex-1 pr-8 pl-2 transition-all duration-300 h-full overflow-hidden relative">
+			<BlockableLoading />
+			<BlockableDialog />
+			<Suspense fallback={<LoadingView />}>
+				<OptionGroupToggleSidebar />
+				<SidebarInset className="flex-1 pr-8 pl-2">
+					<main>
 						<MainContent />
-					</SidebarInset>
-					<RightFloatingPanel />
-				</Suspense>
-			</div>
+					</main>
+				</SidebarInset>
+				<RightFloatingPanel />
+			</Suspense>
 		</SidebarProvider>
 	);
 }
