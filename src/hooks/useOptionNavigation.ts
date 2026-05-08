@@ -11,6 +11,20 @@ export function createAuNavigateId(auOptionId: AuOptionId) {
 	return `au-option-${auOptionId}`;
 }
 
+function useNavigate() {
+	return (navId: string, timeoutFunc: () => void) => {
+		setTimeout(() => {
+			if (typeof document !== "undefined") {
+				const element = document.getElementById(navId);
+				if (element) {
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
+				}
+			}
+			setTimeout(timeoutFunc, 2000);
+		}, 100);
+	};
+}
+
 function useAuNavigationInner() {
 	const setSelectedTab = useStore((state) => {
 		return state.setSelectedTab;
@@ -28,6 +42,8 @@ function useAuNavigationInner() {
 		return state.setRightPanelOpen;
 	});
 
+	const nav = useNavigate();
+
 	const navigation = (
 		tabId: number,
 		categoryId: number,
@@ -44,17 +60,9 @@ function useAuNavigationInner() {
 		}
 		setHighlightedAuOptionId(optionId);
 
-		setTimeout(() => {
-			if (typeof document !== "undefined") {
-				const element = document.getElementById(navId);
-				if (element) {
-					element.scrollIntoView({ behavior: "smooth", block: "center" });
-				}
-			}
-			setTimeout(() => {
-				setHighlightedAuOptionId(null);
-			}, 2000);
-		}, 100);
+		nav(navId, () => {
+			setHighlightedAuOptionId(null);
+		});
 	};
 	return navigation;
 }
@@ -117,10 +125,12 @@ function useExROptionNavigationInner() {
 		return state.setRightPanelOpen;
 	});
 
+	const nav = useNavigate();
+
 	const navigateToOption = (
 		tabId: ExRTabId,
 		categoryId: number,
-		nabId: string,
+		navId: string,
 		uniqueOptionId: UniqueOptionId,
 	) => {
 		const { openedExRCategoryIds } = useStore.getState();
@@ -141,17 +151,9 @@ function useExROptionNavigationInner() {
 
 		setHighlightedExROptionId(uniqueOptionId);
 
-		setTimeout(() => {
-			if (typeof document !== "undefined") {
-				const element = document.getElementById(nabId);
-				if (element) {
-					element.scrollIntoView({ behavior: "smooth", block: "center" });
-				}
-			}
-			setTimeout(() => {
-				setHighlightedExROptionId(null);
-			}, 2000);
-		}, 100);
+		nav(navId, () => {
+			setHighlightedExROptionId(null);
+		});
 	};
 	return navigateToOption;
 }
