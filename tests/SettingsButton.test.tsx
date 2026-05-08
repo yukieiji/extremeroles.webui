@@ -60,7 +60,6 @@ describe("OptionGroupToggleSidebar", () => {
 		expect(state.blockDialog?.title).toBe(SETTINGS_TITLE);
 	});
 
-
 	it("サイドバーが開いているとき、設定ボタンのテキストが表示されること", () => {
 		render(
 			<TooltipProvider>
