@@ -31,7 +31,7 @@ test.describe("Role Filter Management", () => {
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await expect(page.getByText("フィルター追加: 役職の選択")).toBeVisible();
-		await page.getByRole("button", { name: "Bakary" }).first().click();
+		await page.getByRole("checkbox", { name: "Bakary" }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// Verify new filter is added
@@ -63,7 +63,7 @@ test.describe("Role Filter Management", () => {
 
 		// Add a new filter first (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		await page.getByRole("button", { name: "Bakary" }).first().click();
+		await page.getByRole("checkbox", { name: "Bakary" }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// ダイアログが閉じるのを待つ
@@ -92,7 +92,7 @@ test.describe("Role Filter Management", () => {
 
 		// Select a role from the grid
 		// 検索結果が表示されるのを待つ
-		const roleButton = page.getByRole("button", {
+		const roleButton = page.getByRole("checkbox", {
 			name: "Opener",
 			exact: true,
 		});
@@ -116,7 +116,7 @@ test.describe("Role Filter Management", () => {
 		const filterList = page.getByRole("list", { name: "Filter List" });
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		await page.getByRole("button", { name: "Bakary" }).first().click();
+		await page.getByRole("checkbox", { name: "Bakary" }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		const lastFilter = filterList.getByRole("listitem").last();
