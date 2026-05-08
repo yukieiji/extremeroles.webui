@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useExRNavigation } from "@/hooks/useOptionNavigation";
+import { useExROptionNavigation } from "@/hooks/useOptionNavigation";
 import * as api from "@/logics/api";
 import type { ExROptionMetaData, UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
@@ -71,7 +71,7 @@ describe("useExRNavigation", () => {
 			parentOptionIds: [],
 		};
 
-		const { result } = renderHook(() => useExRNavigation(childId));
+		const { result } = renderHook(() => useExROptionNavigation(childId));
 		result.current();
 
 		expect(openExROptions).toHaveBeenCalledWith([parentId, grandParentId]);
