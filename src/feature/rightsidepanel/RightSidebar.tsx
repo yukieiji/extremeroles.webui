@@ -8,8 +8,6 @@ const MIN_WIDTH = 320;
 
 export function RightSidebar() {
 	use(getAllOptions());
-	const isRightPanelOpen = useStore((state) => state.isRightPanelOpen);
-	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
 	const rightPanelWidth = useStore((state) => state.rightPanelWidth);
 	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);
 	const isResizing = useStore((state) => state.isResizing);

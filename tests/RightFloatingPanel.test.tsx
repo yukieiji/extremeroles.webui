@@ -39,7 +39,9 @@ describe("RightFloatingPanel Component", () => {
 				<Suspense fallback={<div>Loading...</div>}>
 					<SidebarProvider
 						open={useStore.getState().isRightPanelOpen}
-						onOpenChange={(open) => useStore.setState({ isRightPanelOpen: open })}
+						onOpenChange={(open) =>
+							useStore.setState({ isRightPanelOpen: open })
+						}
 					>
 						<RightSidebar />
 					</SidebarProvider>
@@ -85,7 +87,9 @@ describe("RightFloatingPanel Component", () => {
 				<Suspense fallback={<div>Loading...</div>}>
 					<SidebarProvider
 						open={useStore.getState().isRightPanelOpen}
-						onOpenChange={(open) => useStore.setState({ isRightPanelOpen: open })}
+						onOpenChange={(open) =>
+							useStore.setState({ isRightPanelOpen: open })
+						}
 					>
 						<RightSidebar />
 					</SidebarProvider>
@@ -135,7 +139,9 @@ describe("RightFloatingPanel Component", () => {
 				<Suspense fallback={<div>Loading...</div>}>
 					<SidebarProvider
 						open={useStore.getState().isRightPanelOpen}
-						onOpenChange={(open) => useStore.setState({ isRightPanelOpen: open })}
+						onOpenChange={(open) =>
+							useStore.setState({ isRightPanelOpen: open })
+						}
 					>
 						<RightSidebar />
 					</SidebarProvider>
@@ -150,5 +156,4 @@ describe("RightFloatingPanel Component", () => {
 
 		expect(useStore.getState().isAuSettingsOpen).toBe(false);
 	});
-
 });

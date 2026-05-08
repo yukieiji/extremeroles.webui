@@ -1,5 +1,5 @@
-import { Suspense } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Suspense } from "react";
 import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
 import { ImportButton } from "./components/parts/ImportButton";
