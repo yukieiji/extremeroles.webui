@@ -57,15 +57,12 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 
 	// タブを切り替えてもアコーディオンの状態が維持されることを確認
 	await page
-		.getByRole("tab", { name: "ゴーストニュートラル役職設定", exact: false })
+		.getByRole("tab", { name: "ゴーストニュートラル役職設定", exact: true })
 		.click();
 	await expect(page.getByRole("button", { name: "フォラス" })).toBeVisible();
 
 	// グローバル設定タブに戻る
-	await page
-		.getByTestId("main-content-section")
-		.getByRole("tab", { name: "グローバル設定", exact: false })
-		.click();
+	await page.getByRole("tab", { name: "グローバル設定", exact: true }).click();
 	// アコーディオンがまだ開いていることを確認
 	await expect(optionName).toBeVisible();
 
