@@ -27,7 +27,7 @@ export function RoleCategoryAccordion({
 			data-testid="role-category"
 		>
 			<div
-				className={`flex items-center bg-gray-800 ${!disable ? "hover:bg-gray-700 transition-colors" : ""}`}
+				className={`flex items-center ${!disable ? "hover:bg-gray-700 transition-colors" : ""}`}
 			>
 				<button
 					type="button"
@@ -54,11 +54,7 @@ export function RoleCategoryAccordion({
 			</div>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
-					{isOpen && (
-						<div className="bg-gray-900 border-t border-gray-700">
-							{children}
-						</div>
-					)}
+					{isOpen && <div className="border-t border-gray-700">{children}</div>}
 				</div>
 			</AccordionContentContainer>
 		</div>
