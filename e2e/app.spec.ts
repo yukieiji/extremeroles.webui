@@ -48,7 +48,7 @@ test("has sidebar and au option editor", async ({ page }) => {
 	await expect(
 		page
 			.getByTestId("main-content-section")
-			.getByRole("button", { name: "グローバル設定", exact: false }),
+			.getByRole("tab", { name: "グローバル設定", exact: false }),
 	).toBeVisible();
 
 	// サイドバーの開閉
