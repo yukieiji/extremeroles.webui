@@ -1,5 +1,11 @@
 import type { RenderResult } from "@testing-library/react";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { ExROptionControl } from "@/feature/exr/ExROptionControl";
@@ -178,6 +184,7 @@ describe("ExROptionControl", () => {
 	});
 
 	it("calls updateExRSelection when value changes (Dropdown)", async () => {
+		const user = userEvent.setup();
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: ["A", "B"],
@@ -194,9 +201,9 @@ describe("ExROptionControl", () => {
 		});
 
 		const dropdown = screen.getByRole("combobox");
-		await userEvent.click(dropdown);
-		const optionB = screen.getByRole("option", { name: "B" });
-		await userEvent.click(optionB);
+		await user.click(dropdown);
+		const optionB = await screen.findByRole("option", { name: "B" });
+		await user.click(optionB);
 
 		await waitFor(() => {
 			expect(mockUpdateExRSelection).toHaveBeenCalledWith({
@@ -207,6 +214,7 @@ describe("ExROptionControl", () => {
 	});
 
 	it("calls updateExRSelection when value changes (Toggle)", async () => {
+		const user = userEvent.setup();
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: ["<color=#FF0000>OFF</color>", "<color=#00FF00>ON</color>"],
@@ -223,7 +231,7 @@ describe("ExROptionControl", () => {
 		});
 
 		const toggle = screen.getByRole("switch");
-		await userEvent.click(toggle);
+		await user.click(toggle);
 
 		expect(mockUpdateExRSelection).toHaveBeenCalledWith({
 			uniqueOptionId: mockUniqueId,

@@ -1,4 +1,10 @@
-import { act, render, screen, waitFor, fireEvent } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { AuOptionControl } from "@/feature/amongus/AuOptionControl";
@@ -11,13 +17,13 @@ describe("AuOptionControl", () => {
 
 	beforeAll(() => {
 		originalBooleanTransData = translationMetaData.booleanTransData;
-        // Mocking setPointerCapture for Slider tests
-        if (typeof Element.prototype.setPointerCapture !== 'function') {
-            Element.prototype.setPointerCapture = vi.fn();
-        }
-        if (typeof Element.prototype.releasePointerCapture !== 'function') {
-            Element.prototype.releasePointerCapture = vi.fn();
-        }
+		// Mocking setPointerCapture for Slider tests
+		if (typeof Element.prototype.setPointerCapture !== "function") {
+			Element.prototype.setPointerCapture = vi.fn();
+		}
+		if (typeof Element.prototype.releasePointerCapture !== "function") {
+			Element.prototype.releasePointerCapture = vi.fn();
+		}
 	});
 
 	beforeEach(() => {
@@ -31,6 +37,7 @@ describe("AuOptionControl", () => {
 	});
 
 	it("renders OptionToggleControl when range is boolean", async () => {
+		const user = userEvent.setup();
 		const optionMeta: AuOptionMeta = {
 			title: "Test Toggle",
 			format: "",
@@ -51,7 +58,7 @@ describe("AuOptionControl", () => {
 		expect(toggle).toBeInTheDocument();
 		expect(screen.getByText("Off")).toBeInTheDocument();
 
-		await userEvent.click(toggle);
+		await user.click(toggle);
 		expect(onSelectionChangeMock).toHaveBeenCalledWith(1);
 	});
 
@@ -110,6 +117,7 @@ describe("AuOptionControl", () => {
 	});
 
 	it("renders OptionDropdownControl when range is string", async () => {
+		const user = userEvent.setup();
 		const optionMeta: AuOptionMeta = {
 			title: "Test Dropdown",
 			format: "",
@@ -130,9 +138,9 @@ describe("AuOptionControl", () => {
 		expect(dropdown).toBeInTheDocument();
 		expect(dropdown).toHaveTextContent("Option 2");
 
-		await userEvent.click(dropdown);
-		const option3 = screen.getByRole("option", { name: "Option 3" });
-		await userEvent.click(option3);
+		await user.click(dropdown);
+		const option3 = await screen.findByRole("option", { name: "Option 3" });
+		await user.click(option3);
 
 		await waitFor(() => {
 			expect(onSelectionChangeMock).toHaveBeenCalledWith(2);

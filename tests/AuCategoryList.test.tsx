@@ -13,6 +13,7 @@ describe("AuCategoryList", () => {
 	});
 
 	it("renders MapDropDown for the first category of Tab 0", async () => {
+		const user = userEvent.setup();
 		const mapOptionId = 100 as unknown as AuOptionId;
 		auOptionMetaData.tabCategoryMap = { 0: [1], 1: [], 2: [] };
 		auOptionMetaData.categoryMetaData = {
@@ -40,10 +41,12 @@ describe("AuCategoryList", () => {
 		// Should show current map name in dropdown
 		expect(screen.getByText("The Skeld")).toBeInTheDocument();
 
-        // Open dropdown to see other options
-        const trigger = screen.getByRole("combobox");
-        await userEvent.click(trigger);
-		expect(screen.getByRole("option", { name: "Mira HQ" })).toBeInTheDocument();
+		// Open dropdown to see other options
+		const trigger = screen.getByRole("combobox");
+		await user.click(trigger);
+		expect(
+			await screen.findByRole("option", { name: "Mira HQ" }),
+		).toBeInTheDocument();
 	});
 
 	it("renders standard category items for Tab 0 other than the first", async () => {

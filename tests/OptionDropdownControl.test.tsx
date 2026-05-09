@@ -7,6 +7,7 @@ describe("OptionDropdownControl", () => {
 	const mockValues = ["Option A", "Option B", "Option C"];
 
 	it("renders dropdown with correct options", async () => {
+		const user = userEvent.setup();
 		render(
 			<OptionDropdownControl
 				selection="Option B"
@@ -19,10 +20,10 @@ describe("OptionDropdownControl", () => {
 		expect(trigger).toHaveTextContent("Option B");
 
 		// Click to open
-		await userEvent.click(trigger);
+		await user.click(trigger);
 
-		// Check options
-		const options = screen.getAllByRole("option");
+		// Check options - wait for them to appear
+		const options = await screen.findAllByRole("option");
 		expect(options).toHaveLength(3);
 		expect(options[0]).toHaveTextContent("Option A");
 		expect(options[1]).toHaveTextContent("Option B");
@@ -30,6 +31,7 @@ describe("OptionDropdownControl", () => {
 	});
 
 	it("calls onChange when selection changes", async () => {
+		const user = userEvent.setup();
 		const onChange = vi.fn();
 		render(
 			<OptionDropdownControl
@@ -40,10 +42,10 @@ describe("OptionDropdownControl", () => {
 		);
 
 		const trigger = screen.getByRole("combobox");
-		await userEvent.click(trigger);
+		await user.click(trigger);
 
-		const optionC = screen.getByRole("option", { name: "Option C" });
-		await userEvent.click(optionC);
+		const optionC = await screen.findByRole("option", { name: "Option C" });
+		await user.click(optionC);
 
 		await waitFor(() => {
 			expect(onChange).toHaveBeenCalledWith("Option C");
