@@ -10,7 +10,7 @@ describe("OptionDropdownControl", () => {
 		const user = userEvent.setup();
 		render(
 			<OptionDropdownControl
-				selection="Option B"
+				selection={1}
 				values={mockValues}
 				onChange={() => {}}
 			/>,
@@ -35,7 +35,7 @@ describe("OptionDropdownControl", () => {
 		const onChange = vi.fn();
 		render(
 			<OptionDropdownControl
-				selection="Option B"
+				selection={1}
 				values={mockValues}
 				onChange={onChange}
 			/>,
@@ -48,7 +48,7 @@ describe("OptionDropdownControl", () => {
 		await user.click(optionC);
 
 		await waitFor(() => {
-			expect(onChange).toHaveBeenCalledWith("Option C");
+			expect(onChange).toHaveBeenCalledWith(2);
 		});
 	});
 });
