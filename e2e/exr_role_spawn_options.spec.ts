@@ -94,7 +94,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 		const sheriffCategory = page
 			.getByTestId("role-category")
 			.filter({ hasText: "シェリフ" });
-		const content = sheriffCategory.locator(".bg-gray-900"); // Body area
+		const content = sheriffCategory.getByTestId("accordion-content"); // Body area
 
 		// 最初は閉じている
 		await expect(content).not.toBeVisible();
@@ -147,7 +147,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 			.locator('input[type="range"]')
 			.fill("1");
 
-		const content = sheriffCategory.locator(".bg-gray-900");
+		const content = sheriffCategory.getByTestId("accordion-content");
 		await expect(content).toBeVisible();
 
 		// 中身に「スポーンレート」や「スポーン数」というテキストが無いことを確認

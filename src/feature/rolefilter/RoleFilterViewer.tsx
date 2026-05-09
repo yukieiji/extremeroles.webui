@@ -25,7 +25,7 @@ export function RoleFilterViewer() {
 					<p className="text-gray-500">{ROLE_FILTER_EMPTY_MESSAGE}</p>
 				</div>
 			) : (
-				<ul
+				<div
 					aria-label={ROLE_FILTER_LIST_ARIA}
 					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
 				>
@@ -34,7 +34,7 @@ export function RoleFilterViewer() {
 							<RoleFilterCard key={guid} guid={guid} filterSet={filterSet} />
 						);
 					})}
-				</ul>
+				</div>
 			)}
 		</div>
 	);

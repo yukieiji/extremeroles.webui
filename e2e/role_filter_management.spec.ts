@@ -24,9 +24,8 @@ test.describe("Role Filter Management", () => {
 	});
 
 	test("should add and delete a role filter", async ({ page }) => {
-		const filterList = page.getByRole("list", { name: "Filter List" });
 		// Initial count of filters
-		const initialFilters = await filterList.getByRole("listitem").count();
+		const initialFilters = await page.getByTestId("role-filter-card").count();
 
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
@@ -38,7 +37,7 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// Verify new filter is added
-		await expect(filterList.getByRole("listitem")).toHaveCount(
+		await expect(page.getByTestId("role-filter-card")).toHaveCount(
 			initialFilters + 1,
 			{
 				timeout: 15000,
@@ -47,7 +46,7 @@ test.describe("Role Filter Management", () => {
 		await expect(page.getByText("AssignNum: 1").last()).toBeVisible();
 
 		// Delete the filter
-		const lastFilter = filterList.getByRole("listitem").last();
+		const lastFilter = page.getByTestId("role-filter-card").last();
 		await lastFilter.getByLabel("Delete filter").click();
 
 		// Confirmation dialog
@@ -55,14 +54,16 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: "OK" }).click();
 
 		// Verify filter is removed
-		await expect(filterList.getByRole("listitem")).toHaveCount(initialFilters, {
-			timeout: 15000,
-		});
+		await expect(page.getByTestId("role-filter-card")).toHaveCount(
+			initialFilters,
+			{
+				timeout: 15000,
+			},
+		);
 	});
 
 	test("should add a role to filter using search", async ({ page }) => {
-		const filterList = page.getByRole("list", { name: "Filter List" });
-		const initialFilters = await filterList.getByRole("listitem").count();
+		const initialFilters = await page.getByTestId("role-filter-card").count();
 
 		// Add a new filter first (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
@@ -78,14 +79,14 @@ test.describe("Role Filter Management", () => {
 		});
 
 		// Verify new filter is added
-		await expect(filterList.getByRole("listitem")).toHaveCount(
+		await expect(page.getByTestId("role-filter-card")).toHaveCount(
 			initialFilters + 1,
 			{
 				timeout: 15000,
 			},
 		);
 
-		const lastFilter = filterList.getByRole("listitem").last();
+		const lastFilter = page.getByTestId("role-filter-card").last();
 
 		// Open role select dialog to add another role
 		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
@@ -119,7 +120,6 @@ test.describe("Role Filter Management", () => {
 	});
 
 	test("should remove a role from filter", async ({ page }) => {
-		const filterList = page.getByRole("list", { name: "Filter List" });
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await page
@@ -128,7 +128,7 @@ test.describe("Role Filter Management", () => {
 			.click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
-		const lastFilter = filterList.getByRole("listitem").last();
+		const lastFilter = page.getByTestId("role-filter-card").last();
 
 		await expect(lastFilter.getByText("Bakary", { exact: true })).toBeVisible({
 			timeout: 15000,
