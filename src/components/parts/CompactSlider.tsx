@@ -1,4 +1,8 @@
 import type React from "react";
+import { useId } from "react";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { Field, FieldLabel, FieldSet } from "../ui/field";
 
 interface CompactSliderProps {
 	label: string;
@@ -11,8 +15,7 @@ interface CompactSliderProps {
 
 /**
  * カテゴリアコーディオンのヘッダーなどで使用する、コンパクトなスライダーとテキスト入力のセット
- * (純粋なUIコンポーネント)
- * 入力欄はスライダーの上に表示されるようにレイアウト
+ * shadcn/uiベースのコンポーネントを使用
  */
 export function CompactSlider({
 	label,
@@ -22,11 +25,11 @@ export function CompactSlider({
 	onInputChange,
 	testId,
 }: CompactSliderProps) {
+	const id = useId();
 	const currentValue = values[currentSelection] ?? values[0] ?? 0;
 
-	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.stopPropagation();
-		onSelectionChange(parseInt(e.target.value, 10));
+	const handleSliderChange = (val: number | readonly number[]) => {
+		onSelectionChange(Array.isArray(val) ? val[0] : val);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,39 +40,36 @@ export function CompactSlider({
 		}
 	};
 
-	const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
-		// アコーディオンの開閉を防ぐ
+	const stopPropagation = (e: React.MouseEvent | React.KeyboardEvent) => {
 		e.stopPropagation();
 	};
 
 	return (
-		<fieldset
-			className="flex flex-col gap-1 px-2 py-1 bg-gray-900/50 rounded border border-gray-700/50 text-left cursor-default"
-			onClick={handleClick}
-			onKeyDown={handleClick}
-			aria-label={label}
+		<FieldSet
+			onClick={stopPropagation}
+			onKeyDown={stopPropagation}
 			data-testid={testId}
+			aria-label={label}
 		>
-			<div className="flex items-center justify-between gap-2">
-				<span className="text-[10px] font-medium text-gray-400 whitespace-nowrap leading-none">
+			<Field orientation="horizontal">
+				<FieldLabel htmlFor={id} className="text-sm font-medium">
 					{label}
-				</span>
-				<input
+				</FieldLabel>
+				<Input
+					id={id}
 					type="text"
 					value={currentValue}
 					onChange={handleInputChange}
-					className="w-8 px-0.5 py-0 text-right text-[10px] bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 leading-none"
 				/>
-			</div>
-			<input
-				type="range"
+			</Field>
+			<Slider
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={currentSelection}
-				onChange={handleSliderChange}
-				className="w-20 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+				value={[currentSelection]}
+				onValueChange={handleSliderChange}
+				className="cursor-pointer"
 			/>
-		</fieldset>
+		</FieldSet>
 	);
 }
