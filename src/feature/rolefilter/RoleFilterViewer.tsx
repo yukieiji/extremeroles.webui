@@ -1,4 +1,4 @@
-import { ROLE_FILTER_EMPTY_MESSAGE, ROLE_FILTER_LIST_ARIA } from "@/noTrans";
+import { ROLE_FILTER_EMPTY_MESSAGE } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { RoleFilterAddButton } from "./RoleFilterAddButton";
 import { RoleFilterCard } from "./RoleFilterCard";
@@ -25,10 +25,8 @@ export function RoleFilterViewer() {
 					<p className="text-gray-500">{ROLE_FILTER_EMPTY_MESSAGE}</p>
 				</div>
 			) : (
-				// biome-ignore lint/a11y/useSemanticElements: user wants to avoid ul/li tags
 				<div
-					role="list"
-					aria-label={ROLE_FILTER_LIST_ARIA}
+					data-testid="role-filter-list"
 					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
 				>
 					{filterEntries.map(([guid, filterSet]) => {
