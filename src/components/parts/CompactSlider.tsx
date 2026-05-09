@@ -1,7 +1,6 @@
 import type React from "react";
 import { useId } from "react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 
