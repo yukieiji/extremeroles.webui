@@ -24,7 +24,7 @@ export function RoleFilterCardLayout({
 	children,
 }: RoleFilterCardLayoutProps) {
 	return (
-		<Card>
+		<Card data-testid="role-filter-card">
 			<CardHeader>
 				<CardAction>
 					<Button onClick={onDelete} aria-label={ROLE_FILTER_DELETE_ARIA}>

@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 
 	// ExR Options タブに切り替え
 	await page.getByRole("button", { name: "ExR Options" }).click();
-	await page.waitForSelector('[data-testid="category-list"]');
+	await expect(page.getByTestId("category-list")).toBeVisible();
 });
 
 test.describe("ExR Role Accordion Disabled State", () => {
@@ -37,7 +37,7 @@ test.describe("ExR Role Accordion Disabled State", () => {
 
 		// 1. まずレートを 10% にすると、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
-		const content = sheriffCategory.getByTestId("accordion-content");
+		const content = sheriffCategory.getByTestId("accordion-content").first();
 		await expect(content).toBeVisible();
 		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
 

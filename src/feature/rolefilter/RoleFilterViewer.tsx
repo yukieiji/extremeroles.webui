@@ -1,4 +1,4 @@
-import { ROLE_FILTER_EMPTY_MESSAGE, ROLE_FILTER_LIST_ARIA } from "@/noTrans";
+import { ROLE_FILTER_EMPTY_MESSAGE } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { RoleFilterAddButton } from "./RoleFilterAddButton";
 import { RoleFilterCard } from "./RoleFilterCard";
@@ -25,8 +25,8 @@ export function RoleFilterViewer() {
 					<p className="text-gray-500">{ROLE_FILTER_EMPTY_MESSAGE}</p>
 				</div>
 			) : (
-				<ul
-					aria-label={ROLE_FILTER_LIST_ARIA}
+				<div
+					data-testid="role-filter-list"
 					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
 				>
 					{filterEntries.map(([guid, filterSet]) => {
@@ -34,7 +34,7 @@ export function RoleFilterViewer() {
 							<RoleFilterCard key={guid} guid={guid} filterSet={filterSet} />
 						);
 					})}
-				</ul>
+				</div>
 			)}
 		</div>
 	);

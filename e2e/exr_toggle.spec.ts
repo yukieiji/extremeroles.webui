@@ -31,13 +31,13 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 
 	// '乱数に関する設定' アコーディオンを開く
 	const categoryAccordion = page
-		.locator('[data-testid="category-list"]')
+		.getByTestId("category-list")
 		.getByRole("button", { name: "乱数に関する設定" });
 	await categoryAccordion.click();
 
 	// '強力なシャッフルを使用する' オプションの横にあるトグルを確認
 	const toggle = page
-		.locator('[data-testid="category-list"]')
+		.getByTestId("category-list")
 		.getByTestId("option-toggle")
 		.first(); // 最初のトグルを取得
 	await expect(toggle).toBeVisible();
@@ -45,7 +45,7 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 	// 初期状態は オン (Selection 1) ※モックの初期値が1のため
 	await expect(toggle).toHaveAttribute("aria-checked", "true");
 	// 曖昧さを回避するため、特定のカテゴリ内を確認
-	const categoryContainer = page.locator('[data-testid="exr-category-1"]');
+	const categoryContainer = page.getByTestId("exr-category-1");
 	await expect(
 		categoryContainer.getByText("オン", { exact: true }),
 	).toBeVisible();
