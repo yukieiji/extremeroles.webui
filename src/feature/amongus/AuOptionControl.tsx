@@ -48,9 +48,9 @@ export function AuOptionControl({
 	return (
 		<OptionDropdownControl
 			values={stringRange}
-			selection={stringRange[selection]}
+			selection={selection}
 			onChange={(newValue) => {
-				onSelectionChange(stringRange.indexOf(newValue));
+				onSelectionChange(newValue);
 			}}
 		/>
 	);

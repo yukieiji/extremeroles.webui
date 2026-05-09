@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/select";
 
 interface OptionDropdownControlProps {
-	selection: string;
+	selection: number;
 	values: string[];
-	onChange: (selection: string) => void;
+	onChange: (selection: number) => void;
 	disabled?: boolean;
 }
 
@@ -23,21 +23,22 @@ export function OptionDropdownControl({
 	disabled = false,
 }: OptionDropdownControlProps) {
 	const handleValueChange = (value: string | null) => {
-		if (value !== null) {
-			onChange(value);
+		const index = values.indexOf(value ?? "");
+		if (index !== -1) {
+			onChange(index);
 		}
 	};
 
 	return (
 		<Select
-			value={selection}
+			value={values[selection]}
 			onValueChange={handleValueChange}
 			disabled={disabled}
 		>
-			<SelectTrigger className="w-full sm:w-48 mr-3">
+			<SelectTrigger>
 				<SelectValue />
 			</SelectTrigger>
-			<SelectContent>
+			<SelectContent alignItemWithTrigger={false}>
 				{values.map((value) => (
 					<SelectItem key={value} value={value}>
 						{value}
