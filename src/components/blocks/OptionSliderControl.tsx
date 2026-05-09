@@ -24,11 +24,7 @@ export function OptionSliderControl({
 	const currentValue = values[selection] ?? values[0] ?? 0;
 
 	const handleSliderChange = (val: number | readonly number[]) => {
-		if (typeof val === "number") {
-			onChange(val);
-		} else if (Array.isArray(val)) {
-			onChange(val[0]);
-		}
+		onChange(Array.isArray(val) ? val[0] : val);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
