@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ExROptionControl } from "@/feature/exr/ExROptionControl";
 import { useOptionData } from "@/hooks/useExROptionData";
@@ -19,76 +19,86 @@ describe("ExROptionControl", () => {
 		);
 	});
 
-	it("renders OptionSliderControl when type is Int32", () => {
+	it("renders OptionSliderControl when type is Int32", async () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 1,
 			values: [0, 10, 20],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format="{0}%"
-				type="Int32"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format="{0}%"
+					type="Int32"
+				/>,
+			);
+		});
 
-		const slider = screen.getByRole("slider");
+		const slider = screen
+			.getAllByDisplayValue("1")
+			.find((e) => (e as HTMLInputElement).type === "range");
 		expect(slider).toBeInTheDocument();
-		expect(slider).toHaveValue("1");
 	});
 
-	it("renders OptionSliderControl when type is Single", () => {
+	it("renders OptionSliderControl when type is Single", async () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: [0.5, 1.0, 1.5],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format="{0}x"
-				type="Single"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format="{0}x"
+					type="Single"
+				/>,
+			);
+		});
 
-		const slider = screen.getByRole("slider");
+		const slider = screen
+			.getAllByDisplayValue("0")
+			.find((e) => (e as HTMLInputElement).type === "range");
 		expect(slider).toBeInTheDocument();
-		expect(slider).toHaveValue("0");
 	});
 
-	it("renders OptionToggleControl when type is String and values have color tags", () => {
+	it("renders OptionToggleControl when type is String and values have color tags", async () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: ["<color=#FF0000>OFF</color>", "<color=#00FF00>ON</color>"],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format=""
-				type="String"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format=""
+					type="String"
+				/>,
+			);
+		});
 
 		const toggle = screen.getByRole("switch");
 		expect(toggle).toBeInTheDocument();
 		expect(screen.getByText("OFF")).toBeInTheDocument();
 	});
 
-	it("renders OptionDropdownControl when type is String and values do not have color tags", () => {
+	it("renders OptionDropdownControl when type is String and values do not have color tags", async () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 1,
 			values: ["Option A", "Option B", "Option C"],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format=""
-				type="String"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format=""
+					type="String"
+				/>,
+			);
+		});
 
 		const dropdown = screen.getByRole("combobox");
 		expect(dropdown).toBeInTheDocument();
@@ -96,7 +106,7 @@ describe("ExROptionControl", () => {
 		expect(screen.getByText("Option B")).toBeInTheDocument();
 	});
 
-	it("renders OptionDropdownControl when type is String and has more than 2 values even with color tags", () => {
+	it("renders OptionDropdownControl when type is String and has more than 2 values even with color tags", async () => {
 		// Currently the logic is stringValues.length === 2 && every has color tags
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
@@ -107,34 +117,40 @@ describe("ExROptionControl", () => {
 			],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format=""
-				type="String"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format=""
+					type="String"
+				/>,
+			);
+		});
 
 		const dropdown = screen.getByRole("combobox");
 		expect(dropdown).toBeInTheDocument();
 	});
 
-	it("uses default selection 0 if optionValue.selection is missing", () => {
+	it("uses default selection 0 if optionValue.selection is missing", async () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: undefined as unknown as number,
 			values: [0, 10, 20],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format="{0}"
-				type="Int32"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format="{0}"
+					type="Int32"
+				/>,
+			);
+		});
 
-		const slider = screen.getByRole("slider");
-		expect(slider).toHaveValue("0");
+		const slider = screen
+			.getAllByDisplayValue("0")
+			.find((e) => (e as HTMLInputElement).type === "range");
+		expect(slider).toBeInTheDocument();
 	});
 
 	it("calls updateExRSelection when value changes (Slider)", async () => {
@@ -143,16 +159,23 @@ describe("ExROptionControl", () => {
 			values: [0, 10, 20],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format="{0}"
-				type="Int32"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format="{0}"
+					type="Int32"
+				/>,
+			);
+		});
 
-		const slider = screen.getByRole("slider");
-		fireEvent.change(slider, { target: { value: "2" } });
+		const slider = screen
+			.getAllByDisplayValue("0")
+			.find((e) => (e as HTMLInputElement).type === "range");
+		await act(async () => {
+			// biome-ignore lint/style/noNonNullAssertion: test
+			fireEvent.change(slider!, { target: { value: "2" } });
+		});
 
 		expect(mockUpdateExRSelection).toHaveBeenCalledWith({
 			uniqueOptionId: mockUniqueId,
@@ -166,16 +189,20 @@ describe("ExROptionControl", () => {
 			values: ["A", "B"],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format=""
-				type="String"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format=""
+					type="String"
+				/>,
+			);
+		});
 
 		const dropdown = screen.getByRole("combobox");
-		fireEvent.change(dropdown, { target: { value: "1" } });
+		await act(async () => {
+			fireEvent.change(dropdown, { target: { value: "1" } });
+		});
 
 		expect(mockUpdateExRSelection).toHaveBeenCalledWith({
 			uniqueOptionId: mockUniqueId,
@@ -189,16 +216,20 @@ describe("ExROptionControl", () => {
 			values: ["<color=#FF0000>OFF</color>", "<color=#00FF00>ON</color>"],
 		});
 
-		render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format=""
-				type="String"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format=""
+					type="String"
+				/>,
+			);
+		});
 
 		const toggle = screen.getByRole("switch");
-		fireEvent.click(toggle);
+		await act(async () => {
+			fireEvent.click(toggle);
+		});
 
 		expect(mockUpdateExRSelection).toHaveBeenCalledWith({
 			uniqueOptionId: mockUniqueId,
@@ -206,20 +237,23 @@ describe("ExROptionControl", () => {
 		});
 	});
 
-	it("returns null for unknown type", () => {
+	it("returns null for unknown type", async () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: [0, 1],
 		});
 
-		const { container } = render(
-			<ExROptionControl
-				uniqueOptionId={mockUniqueId}
-				format=""
-				type="UnknownType"
-			/>,
-		);
+		let renderResult: any;
+		await act(async () => {
+			renderResult = render(
+				<ExROptionControl
+					uniqueOptionId={mockUniqueId}
+					format=""
+					type="UnknownType"
+				/>,
+			);
+		});
 
-		expect(container.firstChild).toBeNull();
+		expect(renderResult.container.firstChild).toBeNull();
 	});
 });

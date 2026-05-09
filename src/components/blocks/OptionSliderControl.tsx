@@ -1,7 +1,7 @@
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
-import { Slider } from "@/components/ui/slider";
-import { Input } from "@/components/ui/input";
 
 interface OptionSliderControlProps {
 	selection: number;

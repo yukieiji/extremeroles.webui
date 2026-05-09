@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionEditor } from "@/feature/exr/ExROptionEditor";
@@ -164,12 +164,14 @@ describe("ExROptionEditor", () => {
 		await getAllOptions();
 	});
 
-	it("should only show visible categories (not empty, at least one active option) and hide preset", () => {
-		render(
-			<Suspense fallback={<div>Loading...</div>}>
-				<ExROptionEditor />
-			</Suspense>,
-		);
+	it("should only show visible categories (not empty, at least one active option) and hide preset", async () => {
+		await act(async () => {
+			render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExROptionEditor />
+				</Suspense>,
+			);
+		});
 
 		expect(screen.getByText("Category 1")).toBeInTheDocument();
 		expect(screen.queryByText("Empty Category")).not.toBeInTheDocument();
@@ -179,39 +181,53 @@ describe("ExROptionEditor", () => {
 		expect(screen.queryByText("Preset Category")).not.toBeInTheDocument();
 	});
 
-	it("should switch tabs and show correct categories", () => {
-		const { unmount } = render(
-			<Suspense fallback={<div>Loading...</div>}>
-				<ExROptionEditor />
-			</Suspense>,
-		);
+	it("should switch tabs and show correct categories", async () => {
+		let unmount: () => void;
+		await act(async () => {
+			const result = render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExROptionEditor />
+				</Suspense>,
+			);
+			unmount = result.unmount;
+		});
 
 		expect(screen.getByText("Category 1")).toBeInTheDocument();
 
 		const tab2Button = screen.getByText("Tab 2");
-		fireEvent.click(tab2Button);
+		await act(async () => {
+			fireEvent.click(tab2Button);
+		});
 
 		expect(screen.queryByText("Category 1")).not.toBeInTheDocument();
 		expect(screen.getByText("Category 2")).toBeInTheDocument();
 		unmount();
 	});
 
-	it("should toggle accordion and show options UI", () => {
-		const { unmount } = render(
-			<Suspense fallback={<div>Loading...</div>}>
-				<ExROptionEditor />
-			</Suspense>,
-		);
+	it("should toggle accordion and show options UI", async () => {
+		let unmount: () => void;
+		await act(async () => {
+			const result = render(
+				<Suspense fallback={<div>Loading...</div>}>
+					<ExROptionEditor />
+				</Suspense>,
+			);
+			unmount = result.unmount;
+		});
 
 		const categoryButton = screen.getByText("Category 1");
 
-		fireEvent.click(categoryButton);
+		await act(async () => {
+			fireEvent.click(categoryButton);
+		});
 
 		// オプション名が表示されていることを確認
 		expect(screen.getByText("Option 1")).toBeInTheDocument();
 
 		// スライダー（input[type="range"]）が存在することを確認
-		expect(screen.getByRole("slider")).toBeInTheDocument();
+		// biome-ignore lint/style/noNonNullAssertion: test
+		const slider = screen.getAllByDisplayValue("0").find((e) => (e as HTMLInputElement).type === "range")!;
+		expect(slider).toBeInTheDocument();
 
 		// 現在の値が表示されていることを確認
 		// uniqueOptionId: 0*100M + 1*10k + 101 = 10101

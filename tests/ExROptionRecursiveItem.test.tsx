@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ExROptionRecursiveItem } from "@/feature/exr/ExROptionRecursiveItem";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
@@ -44,10 +44,12 @@ describe("ExROptionRecursiveItem", () => {
 		);
 	});
 
-	it("renders parent option and toggles child options", () => {
-		render(
-			<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
-		);
+	it("renders parent option and toggles child options", async () => {
+		await act(async () => {
+			render(
+				<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
+			);
+		});
 
 		// Parent should be visible
 		expect(screen.getByText("Parent Option")).toBeInTheDocument();
@@ -57,23 +59,31 @@ describe("ExROptionRecursiveItem", () => {
 
 		// Click the parent to toggle
 		const toggleButton = screen.getByRole("button", { name: "開く" });
-		fireEvent.click(toggleButton);
+		await act(async () => {
+			fireEvent.click(toggleButton);
+		});
 
 		// Child should be visible now
 		expect(screen.getByText("Child Option")).toBeInTheDocument();
 
 		// Click again to close
-		fireEvent.click(toggleButton);
+		await act(async () => {
+			fireEvent.click(toggleButton);
+		});
 		expect(screen.queryByText("Child Option")).not.toBeInTheDocument();
 	});
 
-	it("reflects store's opened state", () => {
+	it("reflects store's opened state", async () => {
 		// Manually open in store
-		useStore.getState().toggleExROption(parentUniqueId);
+		await act(async () => {
+			useStore.getState().toggleExROption(parentUniqueId);
+		});
 
-		render(
-			<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
-		);
+		await act(async () => {
+			render(
+				<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
+			);
+		});
 
 		// Child should be visible immediately
 		expect(screen.getByText("Child Option")).toBeInTheDocument();

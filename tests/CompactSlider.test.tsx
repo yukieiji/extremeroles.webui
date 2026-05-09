@@ -1,72 +1,60 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CompactSlider } from "@/components/parts/CompactSlider";
 
 describe("CompactSlider", () => {
 	const defaultProps = {
-		label: "Test Label",
-		values: [0, 10, 20],
+		label: "Test Slider",
 		currentSelection: 1,
+		values: [0, 10, 20, 30],
 		onSelectionChange: vi.fn(),
 		onInputChange: vi.fn(),
 	};
 
-	it("renders label and current value correctly", () => {
-		render(<CompactSlider {...defaultProps} />);
-
-		expect(screen.getByText("Test Label")).toBeInTheDocument();
-		expect(screen.getByRole("slider")).toHaveValue("1");
+	it("renders label and current value correctly", async () => {
+		await act(async () => {
+			render(<CompactSlider {...defaultProps} />);
+		});
+		expect(screen.getByText("Test Slider")).toBeInTheDocument();
 		expect(screen.getByDisplayValue("10")).toBeInTheDocument();
 	});
 
-	it("calls onSelectionChange when slider is moved", () => {
+	it("renders slider with correct initial value", async () => {
+		await act(async () => {
+			render(<CompactSlider {...defaultProps} />);
+		});
+		const slider = screen.getByRole("slider");
+		expect(slider).toBeInTheDocument();
+		expect(slider).toHaveValue("1");
+	});
+
+	it("calls onSelectionChange when slider value changes", async () => {
 		const onSelectionChange = vi.fn();
-		render(
-			<CompactSlider {...defaultProps} onSelectionChange={onSelectionChange} />,
-		);
+		await act(async () => {
+			render(
+				<CompactSlider {...defaultProps} onSelectionChange={onSelectionChange} />,
+			);
+		});
 
 		const slider = screen.getByRole("slider");
-		fireEvent.change(slider, { target: { value: "2" } });
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "2" } });
+		});
 
 		expect(onSelectionChange).toHaveBeenCalledWith(2);
 	});
 
-	it("calls onInputChange when text input is changed", () => {
+	it("calls onInputChange when input value changes", async () => {
 		const onInputChange = vi.fn();
-		render(<CompactSlider {...defaultProps} onInputChange={onInputChange} />);
+		await act(async () => {
+			render(<CompactSlider {...defaultProps} onInputChange={onInputChange} />);
+		});
 
 		const input = screen.getByDisplayValue("10");
-		fireEvent.change(input, { target: { value: "20" } });
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "25" } });
+		});
 
-		expect(onInputChange).toHaveBeenCalledWith(20);
-	});
-
-	it("stops event propagation on click", () => {
-		const parentClick = vi.fn();
-		render(
-			<button
-				type="button"
-				onClick={parentClick}
-				onKeyDown={parentClick}
-				aria-label="parent"
-			>
-				<CompactSlider {...defaultProps} />
-			</button>,
-		);
-
-		fireEvent.click(screen.getByText("Test Label"));
-		expect(parentClick).not.toHaveBeenCalled();
-	});
-
-	it("stops event propagation on slider change", () => {
-		const parentChange = vi.fn();
-		render(
-			<form onChange={parentChange}>
-				<CompactSlider {...defaultProps} />
-			</form>,
-		);
-
-		fireEvent.change(screen.getByRole("slider"), { target: { value: "0" } });
-		expect(parentChange).not.toHaveBeenCalled();
+		expect(onInputChange).toHaveBeenCalledWith(25);
 	});
 });

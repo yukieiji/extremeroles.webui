@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "@/feature/exr/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
@@ -151,9 +151,13 @@ describe("ExRCategoryList Component Selection", () => {
 		}
 	});
 
-	it("renders ExRStandardCategoryItem for General Tab", () => {
-		useStore.getState().setSelectedExRTabId(ExRTabId.GeneralTab);
-		render(<ExRCategoryList />);
+	it("renders ExRStandardCategoryItem for General Tab", async () => {
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(ExRTabId.GeneralTab);
+		});
+		await act(async () => {
+			render(<ExRCategoryList />);
+		});
 
 		// General Tab: Should render standard category
 		expect(screen.getByText("General Category")).toBeInTheDocument();
@@ -162,9 +166,13 @@ describe("ExRCategoryList Component Selection", () => {
 		expect(screen.queryByText("レート")).not.toBeInTheDocument();
 	});
 
-	it("renders ExRRoleCategoryItem for Role Tab", () => {
-		useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
-		render(<ExRCategoryList />);
+	it("renders ExRRoleCategoryItem for Role Tab", async () => {
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
+		});
+		await act(async () => {
+			render(<ExRCategoryList />);
+		});
 
 		// Role Tab: Should render specialized category item
 		expect(screen.getByText("Sheriff")).toBeInTheDocument();
@@ -174,7 +182,9 @@ describe("ExRCategoryList Component Selection", () => {
 	});
 
 	it("filters out 50 and 51 from role category body", async () => {
-		useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
+		await act(async () => {
+			useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
+		});
 
 		// Mock useUpdateExROptionSelection to update the store manually
 		vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
@@ -195,20 +205,27 @@ describe("ExRCategoryList Component Selection", () => {
 		const updateExRSelection = apiStore.useUpdateExROptionSelection();
 
 		// Set a non-zero spawn rate so the accordion is enabled
-		await updateExRSelection({
-			uniqueOptionId: getUniqueOptionId(
-				ExRTabId.CrewmateTab,
-				2,
-				SPAWN_RATE_OPTION_ID,
-			),
-			selection: 1,
-		}); // Category 2, Option 50, Index 1 (Value 100)
-		render(<ExRCategoryList />);
+		await act(async () => {
+			await updateExRSelection({
+				uniqueOptionId: getUniqueOptionId(
+					ExRTabId.CrewmateTab,
+					2,
+					SPAWN_RATE_OPTION_ID,
+				),
+				selection: 1,
+			}); // Category 2, Option 50, Index 1 (Value 100)
+		});
+
+		await act(async () => {
+			render(<ExRCategoryList />);
+		});
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
 		// we find the toggle button by role.
 		const toggleButton = screen.getByRole("button", { name: /Sheriff/i });
-		fireEvent.click(toggleButton);
+		await act(async () => {
+			fireEvent.click(toggleButton);
+		});
 
 		// Body content should be visible after click
 		// ExRRoleCategoryItem renders options list when isOpen is true
