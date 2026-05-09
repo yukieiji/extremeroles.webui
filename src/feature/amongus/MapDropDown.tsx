@@ -38,7 +38,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const navigateId = createAuNavigateId(mapOptionId);
 
 	return (
-		<div className="border bg-gray-800 border-gray-700 rounded-lg overflow-hidden">
+		<div className="border border-gray-700 rounded-lg overflow-hidden">
 			<HighlightWrapper
 				id={navigateId}
 				isHighlighted={isHighlighted}
@@ -56,10 +56,10 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 						<OptionDropdownControl
 							values={displayValues}
 							selection={selection}
-							onChange={(newSelection) => {
+							onChange={(newSelectionValue) => {
 								updateAuOption({
 									auOptionId: mapOptionId,
-									selection: newSelection,
+									selection: newSelectionValue,
 								});
 							}}
 						/>

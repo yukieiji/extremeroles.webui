@@ -44,11 +44,14 @@ export function AuOptionControl({
 		);
 	}
 
+	const stringRange = range as string[];
 	return (
 		<OptionDropdownControl
-			values={range as string[]}
+			values={stringRange}
 			selection={selection}
-			onChange={onSelectionChange}
+			onChange={(newValue) => {
+				onSelectionChange(newValue);
+			}}
 		/>
 	);
 }

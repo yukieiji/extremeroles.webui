@@ -1,5 +1,12 @@
 import type { RenderResult } from "@testing-library/react";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { ExROptionControl } from "@/feature/exr/ExROptionControl";
 import { useOptionData } from "@/hooks/useExROptionData";
@@ -101,8 +108,7 @@ describe("ExROptionControl", () => {
 
 		const dropdown = screen.getByRole("combobox");
 		expect(dropdown).toBeInTheDocument();
-		expect(dropdown).toHaveValue("1");
-		expect(screen.getByText("Option B")).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent("Option B");
 	});
 
 	it("renders OptionDropdownControl when type is String and has more than 2 values even with color tags", async () => {
@@ -178,6 +184,7 @@ describe("ExROptionControl", () => {
 	});
 
 	it("calls updateExRSelection when value changes (Dropdown)", async () => {
+		const user = userEvent.setup();
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: ["A", "B"],
@@ -194,17 +201,20 @@ describe("ExROptionControl", () => {
 		});
 
 		const dropdown = screen.getByRole("combobox");
-		await act(async () => {
-			fireEvent.change(dropdown, { target: { value: "1" } });
-		});
+		await user.click(dropdown);
+		const optionB = await screen.findByRole("option", { name: "B" });
+		await user.click(optionB);
 
-		expect(mockUpdateExRSelection).toHaveBeenCalledWith({
-			uniqueOptionId: mockUniqueId,
-			selection: 1,
+		await waitFor(() => {
+			expect(mockUpdateExRSelection).toHaveBeenCalledWith({
+				uniqueOptionId: mockUniqueId,
+				selection: 1,
+			});
 		});
 	});
 
 	it("calls updateExRSelection when value changes (Toggle)", async () => {
+		const user = userEvent.setup();
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: ["<color=#FF0000>OFF</color>", "<color=#00FF00>ON</color>"],
@@ -221,9 +231,7 @@ describe("ExROptionControl", () => {
 		});
 
 		const toggle = screen.getByRole("switch");
-		await act(async () => {
-			fireEvent.click(toggle);
-		});
+		await user.click(toggle);
 
 		expect(mockUpdateExRSelection).toHaveBeenCalledWith({
 			uniqueOptionId: mockUniqueId,

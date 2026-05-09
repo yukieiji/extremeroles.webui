@@ -50,7 +50,9 @@ export function ExROptionControl({
 			<OptionDropdownControl
 				selection={currentSelection}
 				values={stringValues}
-				onChange={handleChange}
+				onChange={(newValue) => {
+					handleChange(newValue);
+				}}
 			/>
 		);
 	}
