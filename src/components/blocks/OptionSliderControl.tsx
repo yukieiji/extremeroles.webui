@@ -1,5 +1,7 @@
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
+import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 
 interface OptionSliderControlProps {
 	selection: number;
@@ -21,8 +23,12 @@ export function OptionSliderControl({
 }: OptionSliderControlProps) {
 	const currentValue = values[selection] ?? values[0] ?? 0;
 
-	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(parseInt(e.target.value, 10));
+	const handleSliderChange = (val: number | readonly number[]) => {
+		if (typeof val === "number") {
+			onChange(val);
+		} else if (Array.isArray(val)) {
+			onChange(val[0]);
+		}
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,23 +42,21 @@ export function OptionSliderControl({
 
 	return (
 		<div className="flex items-center gap-4 w-full h-10 sm:w-64">
-			<input
-				type="range"
+			<Slider
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={selection}
-				onChange={handleSliderChange}
+				value={[selection]}
+				onValueChange={handleSliderChange}
 				disabled={disabled}
-				className="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 			/>
 			<div className="flex items-center gap-2 min-w-20">
-				<input
+				<Input
 					type="text"
 					value={currentValue}
 					onChange={handleInputChange}
 					disabled={disabled}
-					className="w-16 px-2 py-1 text-right text-sm bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50"
+					className="w-16 text-right"
 				/>
 				<OptionFormat format={format} />
 			</div>
