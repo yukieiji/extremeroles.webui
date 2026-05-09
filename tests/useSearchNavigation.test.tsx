@@ -2,7 +2,8 @@ import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useSearchNavigation } from "@/hooks/useOptionNavigation";
 import * as api from "@/logics/api";
-import type { ExROptionMetaData, UniqueOptionId, SearchItem } from "@/type";
+import { parseUniqueOptionId } from "@/logics/optionUtils";
+import type { ExROptionMetaData, SearchItem, UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
 vi.mock("@/useStore", () => ({
@@ -15,7 +16,6 @@ vi.mock("@/logics/api", () => ({
 	},
 }));
 
-import { parseUniqueOptionId } from "@/logics/optionUtils";
 vi.mock("@/logics/optionUtils", () => ({
 	parseUniqueOptionId: vi.fn(),
 	createExRNavigateId: vi.fn().mockReturnValue("exr-nav-id"),
@@ -27,77 +27,80 @@ describe("useSearchNavigation", () => {
 	const setSelectedAuTabId = vi.fn();
 	const toggleAuCategory = vi.fn();
 	const setHighlightedAuOptionId = vi.fn();
-    const setSelectedExRTabId = vi.fn();
-    const toggleExRCategory = vi.fn();
-    const openExROptions = vi.fn();
-    const setHighlightedExROptionId = vi.fn();
+	const setSelectedExRTabId = vi.fn();
+	const toggleExRCategory = vi.fn();
+	const openExROptions = vi.fn();
+	const setHighlightedExROptionId = vi.fn();
 	const setRightPanelOpen = vi.fn();
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(useStore).mockImplementation((selector: unknown) => {
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
+		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				setSelectedTab,
 				setSelectedAuTabId,
 				toggleAuCategory,
 				setHighlightedAuOptionId,
-                setSelectedExRTabId,
-                toggleExRCategory,
-                openExROptions,
-                setHighlightedExROptionId,
+				setSelectedExRTabId,
+				toggleExRCategory,
+				openExROptions,
+				setHighlightedExROptionId,
 				setRightPanelOpen,
 			};
-			return (selector as (s: typeof state) => unknown)(state);
+			return selector(state);
 		});
 		// biome-ignore lint/suspicious/noExplicitAny: mock useStore.getState
 		(useStore as any).getState = vi.fn().mockReturnValue({
 			openedAuCategoryIds: {},
-            openedExRCategoryIds: {},
+			openedExRCategoryIds: {},
 		});
 	});
 
 	it("should navigate to au-cat correctly", () => {
 		const item: SearchItem = {
-            id: "au-cat-1",
-            tearm: "cat",
-            info: { mode: "au-cat", tabId: 0, categoryId: 1 }
-        };
+			id: "au-cat-1",
+			tearm: "cat",
+			info: { mode: "au-cat", tabId: 0, categoryId: 1 },
+		};
 
 		const { result } = renderHook(() => useSearchNavigation());
 		result.current(item);
 
 		expect(setSelectedTab).toHaveBeenCalledWith("Au");
-        expect(setSelectedAuTabId).toHaveBeenCalledWith(0);
-        expect(toggleAuCategory).toHaveBeenCalledWith(1);
+		expect(setSelectedAuTabId).toHaveBeenCalledWith(0);
+		expect(toggleAuCategory).toHaveBeenCalledWith(1);
 	});
 
-    it("should navigate to au-opt correctly", () => {
+	it("should navigate to au-opt correctly", () => {
 		const item: SearchItem = {
-            id: "au-opt-1",
-            tearm: "opt",
-            info: { mode: "au-opt", tabId: 0, categoryId: 1, auOptionId: 100 as any }
-        };
+			id: "au-opt-1",
+			tearm: "opt",
+			// biome-ignore lint/suspicious/noExplicitAny: mock auOptionId
+			info: { mode: "au-opt", tabId: 0, categoryId: 1, auOptionId: 100 as any },
+		};
 
 		const { result } = renderHook(() => useSearchNavigation());
 		result.current(item);
 
 		expect(setSelectedTab).toHaveBeenCalledWith("Au");
-        expect(setHighlightedAuOptionId).toHaveBeenCalledWith(100);
+		expect(setHighlightedAuOptionId).toHaveBeenCalledWith(100);
 	});
 
-    it("should navigate to exr-cat correctly", () => {
+	it("should navigate to exr-cat correctly", () => {
 		const item: SearchItem = {
-            id: "exr-cat-1",
-            tearm: "cat",
-            info: { mode: "exr-cat", tabId: 0 as any, categoryId: 1 }
-        };
+			id: "exr-cat-1",
+			tearm: "cat",
+			// biome-ignore lint/suspicious/noExplicitAny: mock tabId
+			info: { mode: "exr-cat", tabId: 0 as any, categoryId: 1 },
+		};
 
 		const { result } = renderHook(() => useSearchNavigation());
 		result.current(item);
 
 		expect(setSelectedTab).toHaveBeenCalledWith("ExR");
-        expect(setSelectedExRTabId).toHaveBeenCalledWith(0);
-        expect(toggleExRCategory).toHaveBeenCalledWith(1);
+		expect(setSelectedExRTabId).toHaveBeenCalledWith(0);
+		expect(toggleExRCategory).toHaveBeenCalledWith(1);
 	});
 
 	it("should navigate to exr-opt correctly", () => {
@@ -109,16 +112,17 @@ describe("useSearchNavigation", () => {
 		});
 
 		const item: SearchItem = {
-            id: "exr-opt-1",
-            tearm: "opt",
-            info: { mode: "exr-opt", uniqueOptionId: uniqueId }
-        };
+			id: "exr-opt-1",
+			tearm: "opt",
+			info: { mode: "exr-opt", uniqueOptionId: uniqueId },
+		};
 
-        api.exrOptionMetaData.options[uniqueId] = {
-            metaData: {} as any,
-            childOptionIds: [],
-            parentOptionIds: [200 as any],
-        };
+		api.exrOptionMetaData.options[uniqueId] = {
+			metaData: {} as ExROptionMetaData,
+			childOptionIds: [],
+			// biome-ignore lint/suspicious/noExplicitAny: mock parentOptionIds
+			parentOptionIds: [200 as any],
+		};
 
 		const { result } = renderHook(() => useSearchNavigation());
 		result.current(item);
@@ -147,17 +151,17 @@ describe("useSearchNavigation", () => {
 		};
 
 		api.exrOptionMetaData.options[uniqueId] = {
-			metaData: {} as any,
+			metaData: {} as ExROptionMetaData,
 			childOptionIds: [],
 			parentOptionIds: [parentId, grandParentId],
 		};
 		api.exrOptionMetaData.options[parentId] = {
-			metaData: {} as any,
+			metaData: {} as ExROptionMetaData,
 			childOptionIds: [uniqueId],
 			parentOptionIds: [grandParentId],
 		};
 		api.exrOptionMetaData.options[grandParentId] = {
-			metaData: {} as any,
+			metaData: {} as ExROptionMetaData,
 			childOptionIds: [parentId],
 			parentOptionIds: [],
 		};
@@ -175,7 +179,8 @@ describe("useSearchNavigation", () => {
 			info: { mode: "au-cat", tabId: 0, categoryId: 1 },
 		};
 
-		vi.mocked(useStore).mockImplementation((selector: unknown) => {
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
+		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				setSelectedTab,
 				setSelectedAuTabId,
@@ -187,7 +192,7 @@ describe("useSearchNavigation", () => {
 				setHighlightedExROptionId,
 				setRightPanelOpen,
 			};
-			return (selector as (s: typeof state) => unknown)(state);
+			return selector(state);
 		});
 		// biome-ignore lint/suspicious/noExplicitAny: mock useStore.getState
 		(useStore as any).getState = vi.fn().mockReturnValue({
@@ -216,7 +221,7 @@ describe("useSearchNavigation", () => {
 		};
 
 		api.exrOptionMetaData.options[uniqueId] = {
-			metaData: {} as any,
+			metaData: {} as ExROptionMetaData,
 			childOptionIds: [],
 			parentOptionIds: [],
 		};
@@ -245,10 +250,12 @@ describe("useSearchNavigation", () => {
 		const item: SearchItem = {
 			id: "exr-cat-1",
 			tearm: "cat",
+			// biome-ignore lint/suspicious/noExplicitAny: mock tabId
 			info: { mode: "exr-cat", tabId: 0 as any, categoryId: 10 },
 		};
 
-		vi.mocked(useStore).mockImplementation((selector: unknown) => {
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
+		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				setSelectedTab,
 				setSelectedAuTabId,
@@ -260,8 +267,9 @@ describe("useSearchNavigation", () => {
 				setHighlightedExROptionId,
 				setRightPanelOpen,
 			};
-			return (selector as (s: typeof state) => unknown)(state);
+			return selector(state);
 		});
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore.getState
 		(useStore as any).getState = vi.fn().mockReturnValue({
 			openedAuCategoryIds: {},
 			openedExRCategoryIds: { 10: true },
@@ -287,7 +295,8 @@ describe("useSearchNavigation", () => {
 			info: { mode: "exr-opt", uniqueOptionId: uniqueId },
 		};
 
-		vi.mocked(useStore).mockImplementation((selector: unknown) => {
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
+		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				setSelectedTab,
 				setSelectedAuTabId,
@@ -299,8 +308,9 @@ describe("useSearchNavigation", () => {
 				setHighlightedExROptionId,
 				setRightPanelOpen,
 			};
-			return (selector as (s: typeof state) => unknown)(state);
+			return selector(state);
 		});
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore.getState
 		(useStore as any).getState = vi.fn().mockReturnValue({
 			openedAuCategoryIds: {},
 			openedExRCategoryIds: { 10: true },

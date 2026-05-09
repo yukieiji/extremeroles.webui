@@ -5,6 +5,7 @@ describe("globalUiSlice", () => {
 	it("should have initial search state", () => {
 		const set = () => {};
 		const get = () => ({});
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, get as any, {} as any);
 
 		expect(slice.optionSearchQuery).toBe("");
@@ -13,10 +14,12 @@ describe("globalUiSlice", () => {
 
 	it("should update search query", () => {
 		let state = { optionSearchQuery: "" };
+		// biome-ignore lint/suspicious/noExplicitAny: mock set
 		const set = (update: any) => {
 			state = { ...state, ...update };
 		};
 		const get = () => state;
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, get as any, {} as any);
 
 		slice.setOptionSearchQuery("test");
@@ -25,10 +28,12 @@ describe("globalUiSlice", () => {
 
 	it("should update search focus", () => {
 		let state = { isOptionSearchFocused: false };
+		// biome-ignore lint/suspicious/noExplicitAny: mock set
 		const set = (update: any) => {
 			state = { ...state, ...update };
 		};
 		const get = () => state;
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, get as any, {} as any);
 
 		slice.setIsOptionSearchFocused(true);
@@ -37,6 +42,7 @@ describe("globalUiSlice", () => {
 
 	it("should update role search query if dialog is roleSelect", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
 
 		slice.setRoleSearchQuery("test-role");
@@ -55,6 +61,7 @@ describe("globalUiSlice", () => {
 
 	it("should update selected role ids if dialog is roleSelect", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
 
 		slice.setSelectedRoleIds([1, 2]);
@@ -73,6 +80,7 @@ describe("globalUiSlice", () => {
 
 	it("should update last clicked id if dialog is roleSelect", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
 
 		slice.setLastClickedId(123);
@@ -91,6 +99,7 @@ describe("globalUiSlice", () => {
 
 	it("should set pending block", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
 		slice.setPendingBlock(true);
 		expect(set).toHaveBeenCalledWith({ isPendingBlock: true });
@@ -99,6 +108,7 @@ describe("globalUiSlice", () => {
 	it("should push block count", () => {
 		const set = vi.fn();
 		const get = vi.fn().mockReturnValue({ blockCount: 5 });
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, get as any, {} as any);
 		slice.pushBlockCount();
 		expect(set).toHaveBeenCalledWith({ blockCount: 6 });
@@ -106,21 +116,34 @@ describe("globalUiSlice", () => {
 
 	it("should pop block count", () => {
 		const set = vi.fn();
-		let get = vi.fn().mockReturnValue({ blockCount: 5 });
-		let slice = createGlobalUiSlice(set as any, get as any, {} as any);
+		const get = vi.fn().mockReturnValue({ blockCount: 5 });
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
+		const slice = createGlobalUiSlice(set as any, get as any, {} as any);
 		slice.popBlockCount();
 		expect(set).toHaveBeenCalledWith({ blockCount: 4 });
 
-		get = vi.fn().mockReturnValue({ blockCount: 0 });
-		slice = createGlobalUiSlice(set as any, get as any, {} as any);
-		slice.popBlockCount();
+		const getZero = vi.fn().mockReturnValue({ blockCount: 0 });
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
+		const sliceZero = createGlobalUiSlice(
+			set as any,
+			getZero as any,
+			{} as any,
+		);
+		sliceZero.popBlockCount();
 		expect(set).toHaveBeenCalledWith({ blockCount: 0 });
 	});
 
 	it("should open and close block dialog", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
-		const dialog = { type: "confirm", title: "T", message: "M", onConfirm: () => {} };
+		const dialog = {
+			type: "confirm",
+			title: "T",
+			message: "M",
+			onConfirm: () => {},
+		};
+		// biome-ignore lint/suspicious/noExplicitAny: mock dialog
 		slice.openBlockDialog(dialog as any);
 		expect(set).toHaveBeenCalledWith({ blockDialog: dialog });
 
@@ -130,6 +153,7 @@ describe("globalUiSlice", () => {
 
 	it("should NOT update role search query if dialog is NOT roleSelect", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
 
 		slice.setRoleSearchQuery("test-role");
@@ -144,6 +168,7 @@ describe("globalUiSlice", () => {
 
 	it("should NOT update selected role ids if dialog is NOT roleSelect", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
 
 		slice.setSelectedRoleIds([1, 2]);
@@ -156,6 +181,7 @@ describe("globalUiSlice", () => {
 
 	it("should NOT update last clicked id if dialog is NOT roleSelect", () => {
 		const set = vi.fn();
+		// biome-ignore lint/suspicious/noExplicitAny: mock store
 		const slice = createGlobalUiSlice(set as any, vi.fn() as any, {} as any);
 
 		slice.setLastClickedId(123);

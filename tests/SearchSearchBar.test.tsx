@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, act } from "@testing-library/react";
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SearchSearchBar } from "@/feature/SearchSearchBar";
 import { useSearchNavigation } from "@/hooks/useOptionNavigation";
-import { useStore } from "@/useStore";
 import { globalSearchItems } from "@/logics/api";
+import { useStore } from "@/useStore";
 
 vi.mock("@/useStore", () => ({
 	useStore: vi.fn(),
@@ -24,6 +24,7 @@ describe("SearchSearchBar", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		globalSearchItems.length = 0;
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
 		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				optionSearchQuery: "",
@@ -38,7 +39,9 @@ describe("SearchSearchBar", () => {
 
 	it("should render input correctly", () => {
 		render(<SearchSearchBar />);
-		expect(screen.getByPlaceholderText("オプションを検索...")).toBeInTheDocument();
+		expect(
+			screen.getByPlaceholderText("オプションを検索..."),
+		).toBeInTheDocument();
 	});
 
 	it("should call setOptionSearchQuery on change", () => {
@@ -52,9 +55,11 @@ describe("SearchSearchBar", () => {
 		globalSearchItems.push({
 			id: "1",
 			tearm: "Target Option",
+			// biome-ignore lint/suspicious/noExplicitAny: mock info
 			info: { mode: "au-opt" } as any,
 		});
 
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
 		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				optionSearchQuery: "target",
@@ -70,14 +75,15 @@ describe("SearchSearchBar", () => {
 		expect(screen.getByText("Target Option")).toBeInTheDocument();
 	});
 
-    it("should show 'no results' if no match", () => {
+	it("should show 'no results' if no match", () => {
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
 		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				optionSearchQuery: "nomatch",
 				isOptionSearchFocused: true,
 				setIsOptionSearchFocused,
-                setOptionSearchQuery,
-                isExROptionActive: {},
+				setOptionSearchQuery,
+				isExROptionActive: {},
 			};
 			return selector(state);
 		});
@@ -86,13 +92,15 @@ describe("SearchSearchBar", () => {
 		expect(screen.getByText("結果が見つかりませんでした")).toBeInTheDocument();
 	});
 
-    it("should gray out inactive ExR options", () => {
+	it("should gray out inactive ExR options", () => {
 		globalSearchItems.push({
 			id: "exr-1",
 			tearm: "Inactive ExR",
+			// biome-ignore lint/suspicious/noExplicitAny: mock info
 			info: { mode: "exr-opt", uniqueOptionId: 100 } as any,
 		});
 
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
 		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				optionSearchQuery: "inactive",
@@ -116,9 +124,11 @@ describe("SearchSearchBar", () => {
 		globalSearchItems.push({
 			id: "1",
 			tearm: "Target Option",
+			// biome-ignore lint/suspicious/noExplicitAny: mock info
 			info: { mode: "au-opt" } as any,
 		});
 
+		// biome-ignore lint/suspicious/noExplicitAny: mock useStore
 		vi.mocked(useStore).mockImplementation((selector: any) => {
 			const state = {
 				optionSearchQuery: "target",
