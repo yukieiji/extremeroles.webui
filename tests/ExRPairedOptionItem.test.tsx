@@ -94,7 +94,8 @@ describe("ExRPairedOptionItem", () => {
 		);
 
 		// Find the min slider by its label
-		const minSlider = screen.getByRole("slider", { name: "最小" });
+		const sliders = screen.getAllByRole("slider", { hidden: true });
+		const minSlider = sliders[0];
 
 		fireEvent.change(minSlider, { target: { value: "3" } });
 
@@ -119,7 +120,8 @@ describe("ExRPairedOptionItem", () => {
 		);
 
 		// Find the max slider by its label
-		const maxSlider = screen.getByRole("slider", { name: "最大" });
+		const sliders = screen.getAllByRole("slider", { hidden: true });
+		const maxSlider = sliders[1];
 
 		fireEvent.change(maxSlider, { target: { value: "5" } });
 
