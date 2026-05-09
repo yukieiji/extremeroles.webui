@@ -51,16 +51,11 @@ describe("ExRHeaderOptionControl", () => {
 		});
 
 		expect(screen.getByText("Rate")).toBeInTheDocument();
-		const slider = screen
-			.getAllByDisplayValue("0")
-			.find((e) => (e as HTMLInputElement).type === "range");
-		expect(slider).toBeInTheDocument();
+		const slider = screen.getByRole("slider", { hidden: true });
+		expect(slider).toHaveValue("0");
 
-		const inputs = screen.getAllByDisplayValue("0");
-		const textInput = inputs.find(
-			(i) => (i as HTMLInputElement).type === "text",
-		);
-		expect(textInput).toBeInTheDocument();
+		const input = screen.getByRole("textbox");
+		expect(input).toHaveValue("0");
 	});
 
 	it("updates selection when slider is moved", async () => {
@@ -77,12 +72,9 @@ describe("ExRHeaderOptionControl", () => {
 			);
 		});
 
-		const slider = screen
-			.getAllByDisplayValue("0")
-			.find((e) => (e as HTMLInputElement).type === "range");
+		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
-			// biome-ignore lint/style/noNonNullAssertion: test
-			fireEvent.change(slider!, { target: { value: "1" } });
+			fireEvent.change(slider, { target: { value: "1" } });
 		});
 
 		// Check if store was updated
@@ -107,16 +99,9 @@ describe("ExRHeaderOptionControl", () => {
 			);
 		});
 
-		const inputs = screen.getAllByDisplayValue("0");
-		const textInput = inputs.find(
-			(i) => (i as HTMLInputElement).type === "text",
-		);
-		if (!textInput) {
-			throw new Error("Text input not found");
-		}
-
+		const input = screen.getByRole("textbox");
 		await act(async () => {
-			fireEvent.change(textInput, { target: { value: "100" } });
+			fireEvent.change(input, { target: { value: "100" } });
 		});
 
 		const state = useStore.getState();

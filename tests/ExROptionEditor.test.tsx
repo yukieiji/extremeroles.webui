@@ -224,16 +224,15 @@ describe("ExROptionEditor", () => {
 		// オプション名が表示されていることを確認
 		expect(screen.getByText("Option 1")).toBeInTheDocument();
 
-		// スライダー（input[type="range"]）が存在することを確認
-		// biome-ignore lint/style/noNonNullAssertion: test
-		const slider = screen
-			.getAllByDisplayValue("0")
-			.find((e) => (e as HTMLInputElement).type === "range")!;
+		// スライダーが存在することを確認
+		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
+		expect(slider).toHaveAttribute("aria-valuenow", "0");
 
 		// 現在の値が表示されていることを確認
 		// uniqueOptionId: 0*100M + 1*10k + 101 = 10101
 		// mockExRDataでは selection: 0 なので "0"
+		// Input(text) と Slider(hidden range) の2つがあるはず
 		expect(screen.getAllByDisplayValue("0")).toHaveLength(2);
 
 		unmount();

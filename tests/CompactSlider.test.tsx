@@ -16,7 +16,7 @@ describe("CompactSlider", () => {
 			render(<CompactSlider {...defaultProps} />);
 		});
 		expect(screen.getByText("Test Slider")).toBeInTheDocument();
-		expect(screen.getByDisplayValue("10")).toBeInTheDocument();
+		expect(screen.getByRole("textbox")).toHaveValue("10");
 	});
 
 	it("renders slider with correct initial value", async () => {
@@ -53,7 +53,7 @@ describe("CompactSlider", () => {
 			render(<CompactSlider {...defaultProps} onInputChange={onInputChange} />);
 		});
 
-		const input = screen.getByDisplayValue("10");
+		const input = screen.getByRole("textbox");
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "25" } });
 		});
@@ -97,7 +97,7 @@ describe("CompactSlider", () => {
 			);
 		});
 
-		const input = screen.getByDisplayValue("10");
+		const input = screen.getByRole("textbox");
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "25" } });
 		});

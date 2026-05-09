@@ -36,10 +36,9 @@ describe("ExROptionControl", () => {
 			);
 		});
 
-		const slider = screen
-			.getAllByDisplayValue("1")
-			.find((e) => (e as HTMLInputElement).type === "range");
+		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
+		expect(slider).toHaveAttribute("aria-valuenow", "1");
 	});
 
 	it("renders OptionSliderControl when type is Single", async () => {
@@ -58,10 +57,9 @@ describe("ExROptionControl", () => {
 			);
 		});
 
-		const slider = screen
-			.getAllByDisplayValue("0")
-			.find((e) => (e as HTMLInputElement).type === "range");
+		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
+		expect(slider).toHaveAttribute("aria-valuenow", "0");
 	});
 
 	it("renders OptionToggleControl when type is String and values have color tags", async () => {
@@ -148,10 +146,8 @@ describe("ExROptionControl", () => {
 			);
 		});
 
-		const slider = screen
-			.getAllByDisplayValue("0")
-			.find((e) => (e as HTMLInputElement).type === "range");
-		expect(slider).toBeInTheDocument();
+		const slider = screen.getByRole("slider", { hidden: true });
+		expect(slider).toHaveAttribute("aria-valuenow", "0");
 	});
 
 	it("calls updateExRSelection when value changes (Slider)", async () => {
@@ -170,12 +166,9 @@ describe("ExROptionControl", () => {
 			);
 		});
 
-		const slider = screen
-			.getAllByDisplayValue("0")
-			.find((e) => (e as HTMLInputElement).type === "range");
+		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
-			// biome-ignore lint/style/noNonNullAssertion: test
-			fireEvent.change(slider!, { target: { value: "2" } });
+			fireEvent.change(slider, { target: { value: "2" } });
 		});
 
 		expect(mockUpdateExRSelection).toHaveBeenCalledWith({

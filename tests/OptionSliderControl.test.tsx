@@ -18,13 +18,14 @@ describe("OptionSliderControl", () => {
 			);
 		});
 
-		// shadcn/ui (Base UI) Slider uses a hidden input for the value
-		const slider = screen.getByDisplayValue("1");
+		// Base UI Slider input has type="range" and is accessible via its role
+		// We use hidden: true if it's visually hidden but still in the DOM
+		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
-		expect(slider).toHaveAttribute("type", "range");
+		expect(slider).toHaveAttribute("aria-valuenow", "1");
 
-		const input = screen.getByDisplayValue("20");
-		expect(input).toBeInTheDocument();
+		const input = screen.getByRole("textbox");
+		expect(input).toHaveValue("20");
 
 		expect(screen.getByText("s")).toBeInTheDocument();
 	});
@@ -42,7 +43,7 @@ describe("OptionSliderControl", () => {
 			);
 		});
 
-		const slider = screen.getByDisplayValue("1");
+		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
 			fireEvent.change(slider, { target: { value: "3" } });
 		});
@@ -63,7 +64,7 @@ describe("OptionSliderControl", () => {
 			);
 		});
 
-		const input = screen.getByDisplayValue("20");
+		const input = screen.getByRole("textbox");
 
 		// 24 is closer to 20 (index 1)
 		await act(async () => {

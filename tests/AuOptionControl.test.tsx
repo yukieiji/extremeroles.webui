@@ -66,15 +66,13 @@ describe("AuOptionControl", () => {
 			);
 		});
 
-		const slider = screen
-			.getAllByDisplayValue("2")
-			.find((e) => (e as HTMLInputElement).type === "range");
+		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
+		expect(slider).toHaveAttribute("aria-valuenow", "2");
 		expect(screen.getByText("s")).toBeInTheDocument();
 
 		await act(async () => {
-			// biome-ignore lint/style/noNonNullAssertion: test
-			fireEvent.change(slider!, { target: { value: "4" } });
+			fireEvent.change(slider, { target: { value: "4" } });
 		});
 		expect(onSelectionChangeMock).toHaveBeenCalledWith(4);
 
@@ -109,10 +107,9 @@ describe("AuOptionControl", () => {
 			);
 		});
 
-		const slider = screen
-			.getAllByDisplayValue("0")
-			.find((e) => (e as HTMLInputElement).type === "range");
+		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
+		expect(slider).toHaveAttribute("aria-valuenow", "0");
 	});
 
 	it("renders OptionDropdownControl when range is string", async () => {
