@@ -1,7 +1,10 @@
+import { useId } from "react";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
+import { Field } from "../ui/field";
+import { Label } from "../ui/label";
 
 interface OptionSliderControlProps {
 	selection: number;
@@ -21,6 +24,8 @@ export function OptionSliderControl({
 	onChange,
 	disabled = false,
 }: OptionSliderControlProps) {
+	const id = useId();
+
 	const currentValue = values[selection] ?? values[0] ?? 0;
 
 	const handleSliderChange = (val: number | readonly number[]) => {
@@ -37,7 +42,7 @@ export function OptionSliderControl({
 	};
 
 	return (
-		<div className="flex items-center gap-4 w-full h-10 sm:w-64">
+		<div className="flex items-center">
 			<Slider
 				min={0}
 				max={values.length - 1}
@@ -46,16 +51,18 @@ export function OptionSliderControl({
 				onValueChange={handleSliderChange}
 				disabled={disabled}
 			/>
-			<div className="flex items-center gap-2 min-w-20">
+			<Field orientation="horizontal">
 				<Input
+					id={id}
 					type="text"
 					value={currentValue}
 					onChange={handleInputChange}
 					disabled={disabled}
-					className="w-16 text-right"
 				/>
-				<OptionFormat format={format} />
-			</div>
+				<Label htmlFor={id}>
+					<OptionFormat format={format} />
+				</Label>
+			</Field>
 		</div>
 	);
 }
