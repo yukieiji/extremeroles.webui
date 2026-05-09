@@ -18,7 +18,7 @@ export function TabButtonContainer<T extends Key | undefined | null>({
 }: TabButtonContainerProps<T>) {
 	return (
 		<Tabs value={value} onValueChange={onValueChange} className="w-full">
-			<TabsList className="w-full grid grid-cols-4 h-10">
+			<TabsList className="w-full grid grid-cols-4 shrink-0">
 				{tabs.map((tab, index) => {
 					const value = getValue(tab, index);
 					return (
