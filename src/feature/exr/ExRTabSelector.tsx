@@ -1,6 +1,6 @@
 import { useEffect, useTransition } from "react";
 import { ColoredText } from "@/components/parts/ColoredText";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
 import { exrOptionMetaData } from "@/logics/api";
 import type { ExRTabId } from "@/type";
 import { useStore } from "@/useStore";
@@ -40,23 +40,18 @@ export function ExRTabSelector() {
 	};
 
 	return (
-		<Tabs
+		<TabButtonContainer
 			value={selectedExRTabId.toString()}
+			tabs={Object.keys(exrOptionMetaData.tabs)}
 			onValueChange={handleValueChange}
-			className="w-full"
+			getValue={(t, _) => t}
 		>
-			<TabsList className="w-full grid grid-cols-4 h-10">
-				{Object.keys(exrOptionMetaData.tabs).map((tabId) => {
-					const castedTabId = Number(tabId) as ExRTabId;
-					return (
-						<TabsTrigger key={tabId} value={tabId}>
-							<ColoredText
-								text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""}
-							/>
-						</TabsTrigger>
-					);
-				})}
-			</TabsList>
-		</Tabs>
+			{(t) => {
+				const castedTabId = Number(t) as ExRTabId;
+				return (
+					<ColoredText text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""} />
+				);
+			}}
+		</TabButtonContainer>
 	);
 }

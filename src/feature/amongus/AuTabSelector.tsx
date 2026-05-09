@@ -1,5 +1,5 @@
 import { useEffect, useTransition } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
 import { auOptionMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
@@ -38,20 +38,13 @@ export function AuTabSelector() {
 	};
 
 	return (
-		<Tabs
+		<TabButtonContainer
 			value={selectedAuTabId.toString()}
+			tabs={auOptionMetaData.tabNames}
 			onValueChange={handleValueChange}
-			className="w-full"
+			getValue={(_, index) => index.toString()}
 		>
-			<TabsList className="w-full grid grid-cols-4 h-10">
-				{auOptionMetaData.tabNames.map((name, index) => {
-					return (
-						<TabsTrigger key={name} value={index.toString()}>
-							{name}
-						</TabsTrigger>
-					);
-				})}
-			</TabsList>
-		</Tabs>
+			{(t) => t}
+		</TabButtonContainer>
 	);
 }
