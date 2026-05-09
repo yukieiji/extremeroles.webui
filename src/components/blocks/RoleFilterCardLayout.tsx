@@ -1,6 +1,12 @@
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardAction,
+	CardDescription,
+	CardHeader,
+} from "@/components/ui/card";
 import { ROLE_FILTER_DELETE_ARIA } from "@/noTrans";
 
 interface RoleFilterCardLayoutProps {
@@ -18,19 +24,16 @@ export function RoleFilterCardLayout({
 	children,
 }: RoleFilterCardLayoutProps) {
 	return (
-		<li className="bg-white shadow rounded-lg p-4 border border-gray-200 flex flex-col gap-3 relative list-none">
-			<Button
-				onClick={onDelete}
-				className="absolute top-2 right-2"
-				aria-label={ROLE_FILTER_DELETE_ARIA}
-			>
-				<X />
-			</Button>
-			<div className="flex flex-col border-b border-gray-100 pb-2">
+		<Card>
+			<CardHeader>
+				<CardAction>
+					<Button onClick={onDelete} aria-label={ROLE_FILTER_DELETE_ARIA}>
+						<X />
+					</Button>
+				</CardAction>
 				{header}
-			</div>
-
-			<div className="flex flex-wrap gap-2">{children}</div>
-		</li>
+			</CardHeader>
+			<CardDescription>{children}</CardDescription>
+		</Card>
 	);
 }
