@@ -1,4 +1,5 @@
-import React, { useId } from "react";
+import type React from "react";
+import { useId } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -44,12 +45,11 @@ export function CompactSlider({
 	};
 
 	return (
-		<div
+		<fieldset
 			className="flex flex-col gap-2"
 			onClick={stopPropagation}
 			onKeyDown={stopPropagation}
 			data-testid={testId}
-			role="group"
 			aria-label={label}
 		>
 			<div className="flex items-center justify-between gap-4">
@@ -72,6 +72,6 @@ export function CompactSlider({
 				onValueChange={handleSliderChange}
 				className="cursor-pointer"
 			/>
-		</div>
+		</fieldset>
 	);
 }
