@@ -1,7 +1,15 @@
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+
 interface OptionDropdownControlProps {
-	selection: number;
+	selection: string;
 	values: string[];
-	onChange: (selection: number) => void;
+	onChange: (selection: string) => void;
 	disabled?: boolean;
 }
 
@@ -14,25 +22,28 @@ export function OptionDropdownControl({
 	onChange,
 	disabled = false,
 }: OptionDropdownControlProps) {
-	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const newValue = parseInt(e.target.value, 10);
-		onChange(newValue);
+	const handleValueChange = (value: string | null) => {
+		if (value !== null) {
+			onChange(value);
+		}
 	};
 
 	return (
-		<select
+		<Select
 			value={selection}
-			onChange={handleSelectChange}
+			onValueChange={handleValueChange}
 			disabled={disabled}
-			className="block h-10 w-full sm:w-48 px-3 mr-3 py-1.5 text-sm bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 		>
-			{values.map((value, index) => {
-				return (
-					<option key={value} value={index}>
+			<SelectTrigger className="w-full sm:w-48 mr-3">
+				<SelectValue />
+			</SelectTrigger>
+			<SelectContent>
+				{values.map((value) => (
+					<SelectItem key={value} value={value}>
 						{value}
-					</option>
-				);
-			})}
-		</select>
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
 	);
 }

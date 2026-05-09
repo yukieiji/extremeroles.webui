@@ -55,11 +55,11 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 					<div className="w-48">
 						<OptionDropdownControl
 							values={displayValues}
-							selection={selection}
-							onChange={(newSelection) => {
+							selection={displayValues[selection]}
+							onChange={(newSelectionValue) => {
 								updateAuOption({
 									auOptionId: mapOptionId,
-									selection: newSelection,
+									selection: displayValues.indexOf(newSelectionValue),
 								});
 							}}
 						/>
