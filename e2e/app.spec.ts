@@ -47,7 +47,7 @@ test("has sidebar and au option editor", async ({ page }) => {
 	// JSON pre はなくなったので、アコーディオンが表示されていることを確認
 	await expect(
 		page
-			.locator('[data-testid="main-content-section"]')
+			.getByTestId("main-content-section")
 			.getByRole("button", { name: "グローバル設定", exact: false }),
 	).toBeVisible();
 

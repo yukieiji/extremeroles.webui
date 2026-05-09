@@ -41,20 +41,20 @@ test("Options interaction behavior", async ({ page }) => {
 
 	// 別のカテゴリの操作を確認
 	const shuffleCategory = page
-		.locator('[data-testid="category-list"]')
+		.getByTestId("category-list")
 		.getByRole("button", {
 			name: "乱数に関する設定",
 		});
 	await shuffleCategory.click();
 
 	const shuffleOption = page
-		.locator('[data-testid="category-list"]')
+		.getByTestId("category-list")
 		.getByText("強力なシャッフルを使用する");
 	await expect(shuffleOption).toBeVisible({ timeout: 3000 });
 
 	// トグルスイッチに変更されたので、トグルを操作する
 	const toggle = page
-		.locator('[data-testid="category-list"]')
+		.getByTestId("category-list")
 		.getByTestId("option-toggle")
 		.first();
 	// モックの初期値がオン(true)のため

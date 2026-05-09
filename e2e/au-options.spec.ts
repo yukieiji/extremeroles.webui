@@ -138,8 +138,6 @@ test.describe("Au Option Interactions", () => {
 
 		// Should show additional options inside
 		// Since I don't know the exact options in mock data, I'll just check if the content area appears
-		await expect(
-			category.locator('[data-testid="accordion-content"]'),
-		).toBeVisible();
+		await expect(category.getByTestId("accordion-content")).toBeVisible();
 	});
 });
