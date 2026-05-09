@@ -42,7 +42,10 @@ export function OptionSingleSlider({
 	return (
 		<div className="flex flex-col gap-1 w-full">
 			<div className="flex items-center justify-between gap-2 px-1">
-				<Label htmlFor={id} className="text-xs text-muted-foreground font-medium">
+				<Label
+					htmlFor={id}
+					className="text-xs text-muted-foreground font-medium"
+				>
 					{label}
 				</Label>
 				<Field orientation="horizontal" className="w-auto gap-1">
