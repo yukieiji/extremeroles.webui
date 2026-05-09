@@ -60,6 +60,7 @@ export function OptionSingleSlider({
 				value={[selection]}
 				onValueChange={handleSliderChange}
 				aria-label={label}
+				className="cursor-pointer"
 			/>
 		</div>
 	);

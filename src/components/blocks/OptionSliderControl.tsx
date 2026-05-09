@@ -11,7 +11,6 @@ interface OptionSliderControlProps {
 	values: number[];
 	format: string;
 	onChange: (selection: number) => void;
-	disabled?: boolean;
 }
 
 /**
@@ -22,7 +21,6 @@ export function OptionSliderControl({
 	values,
 	format,
 	onChange,
-	disabled = false,
 }: OptionSliderControlProps) {
 	const id = useId();
 
@@ -49,7 +47,7 @@ export function OptionSliderControl({
 				step={1}
 				value={[selection]}
 				onValueChange={handleSliderChange}
-				disabled={disabled}
+				className="cursor-pointer"
 			/>
 			<Field orientation="horizontal">
 				<Input
@@ -57,7 +55,6 @@ export function OptionSliderControl({
 					type="text"
 					value={currentValue}
 					onChange={handleInputChange}
-					disabled={disabled}
 				/>
 				<Label htmlFor={id}>
 					<OptionFormat format={format} />
