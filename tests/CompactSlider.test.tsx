@@ -23,9 +23,9 @@ describe("CompactSlider", () => {
 		await act(async () => {
 			render(<CompactSlider {...defaultProps} />);
 		});
-		const slider = screen.getByRole("slider");
+		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
-		expect(slider).toHaveValue("1");
+		expect(slider).toHaveAttribute("aria-valuenow", "1");
 	});
 
 	it("calls onSelectionChange when slider value changes", async () => {
@@ -39,7 +39,7 @@ describe("CompactSlider", () => {
 			);
 		});
 
-		const slider = screen.getByRole("slider");
+		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
 			fireEvent.change(slider, { target: { value: "2" } });
 		});
@@ -76,7 +76,7 @@ describe("CompactSlider", () => {
 			);
 		});
 
-		const slider = screen.getByRole("slider");
+		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
 			fireEvent.change(slider, { target: { value: "2" } });
 		});
@@ -117,9 +117,9 @@ describe("CompactSlider", () => {
 			);
 		});
 
-		const fieldset = screen.getByRole("group", { name: "Test Slider" });
+		const group = screen.getByRole("group", { name: "Test Slider" });
 		await act(async () => {
-			fireEvent.click(fieldset);
+			fireEvent.click(group);
 		});
 
 		expect(onParentClick).not.toHaveBeenCalled();

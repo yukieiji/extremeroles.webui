@@ -1,4 +1,7 @@
-import type React from "react";
+import React, { useId } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 
 interface CompactSliderProps {
 	label: string;
@@ -11,8 +14,7 @@ interface CompactSliderProps {
 
 /**
  * カテゴリアコーディオンのヘッダーなどで使用する、コンパクトなスライダーとテキスト入力のセット
- * (純粋なUIコンポーネント)
- * 入力欄はスライダーの上に表示されるようにレイアウト
+ * shadcn/uiベースのコンポーネントを使用
  */
 export function CompactSlider({
 	label,
@@ -22,11 +24,11 @@ export function CompactSlider({
 	onInputChange,
 	testId,
 }: CompactSliderProps) {
+	const id = useId();
 	const currentValue = values[currentSelection] ?? values[0] ?? 0;
 
-	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.stopPropagation();
-		onSelectionChange(parseInt(e.target.value, 10));
+	const handleSliderChange = (val: number | readonly number[]) => {
+		onSelectionChange(Array.isArray(val) ? val[0] : val);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,39 +39,39 @@ export function CompactSlider({
 		}
 	};
 
-	const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
-		// アコーディオンの開閉を防ぐ
+	const stopPropagation = (e: React.MouseEvent | React.KeyboardEvent) => {
 		e.stopPropagation();
 	};
 
 	return (
-		<fieldset
-			className="flex flex-col gap-1 px-2 py-1 bg-gray-900/50 rounded border border-gray-700/50 text-left cursor-default"
-			onClick={handleClick}
-			onKeyDown={handleClick}
-			aria-label={label}
+		<div
+			className="flex flex-col gap-2"
+			onClick={stopPropagation}
+			onKeyDown={stopPropagation}
 			data-testid={testId}
+			role="group"
+			aria-label={label}
 		>
-			<div className="flex items-center justify-between gap-2">
-				<span className="text-[10px] font-medium text-gray-400 whitespace-nowrap leading-none">
+			<div className="flex items-center justify-between gap-4">
+				<Label htmlFor={id} className="text-sm font-medium">
 					{label}
-				</span>
-				<input
+				</Label>
+				<Input
+					id={id}
 					type="text"
 					value={currentValue}
 					onChange={handleInputChange}
-					className="w-8 px-0.5 py-0 text-right text-[10px] bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 leading-none"
+					className="h-8 w-16 px-2 text-right"
 				/>
 			</div>
-			<input
-				type="range"
+			<Slider
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={currentSelection}
-				onChange={handleSliderChange}
-				className="w-20 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+				value={[currentSelection]}
+				onValueChange={handleSliderChange}
+				className="cursor-pointer"
 			/>
-		</fieldset>
+		</div>
 	);
 }
