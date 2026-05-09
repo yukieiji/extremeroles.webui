@@ -1,5 +1,10 @@
+import { useId } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
+import { Field } from "../ui/field";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Slider } from "../ui/slider";
 
 interface OptionSingleSliderProps {
 	label: string;
@@ -7,7 +12,6 @@ interface OptionSingleSliderProps {
 	values: number[];
 	format: string;
 	onChange: (selection: number) => void;
-	disabled?: boolean;
 }
 
 export function OptionSingleSlider({
@@ -16,12 +20,12 @@ export function OptionSingleSlider({
 	values,
 	format,
 	onChange,
-	disabled = false,
 }: OptionSingleSliderProps) {
+	const id = useId();
 	const currentValue = values[selection] ?? values[0] ?? 0;
 
-	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(parseInt(e.target.value, 10));
+	const handleSliderChange = (val: number | readonly number[]) => {
+		onChange(Array.isArray(val) ? val[0] : val);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,30 +38,28 @@ export function OptionSingleSlider({
 	};
 
 	return (
-		<div className="flex flex-col gap-1 w-full">
-			<div className="flex items-center justify-between gap-2 px-1">
-				<span className="text-xs text-gray-400 font-medium">{label}</span>
-				<div className="flex items-center gap-1">
-					<input
+		<div className="flex flex-col w-full">
+			<div className="flex items-center justify-between">
+				<Label>{label}</Label>
+				<Field orientation="horizontal">
+					<Input
+						id={id}
 						type="text"
 						value={currentValue}
 						onChange={handleInputChange}
-						disabled={disabled}
-						className="w-12 px-1 py-0.5 text-right text-xs bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50"
 					/>
-					<OptionFormat format={format} />
-				</div>
+					<Label htmlFor={id}>
+						<OptionFormat format={format} />
+					</Label>
+				</Field>
 			</div>
-			<input
-				type="range"
+			<Slider
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={selection}
-				onChange={handleSliderChange}
-				disabled={disabled}
+				value={[selection]}
+				onValueChange={handleSliderChange}
 				aria-label={label}
-				className="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 			/>
 		</div>
 	);

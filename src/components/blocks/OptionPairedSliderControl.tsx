@@ -11,7 +11,6 @@ interface OptionPairedSliderControlProps {
 	onMaxChange: (selection: number) => void;
 	minLabel: string;
 	maxLabel: string;
-	disabled?: boolean;
 }
 
 /**
@@ -27,7 +26,6 @@ export function OptionPairedSliderControl({
 	onMaxChange,
 	minLabel,
 	maxLabel,
-	disabled = false,
 }: OptionPairedSliderControlProps) {
 	const handleMinChange = (newMinIdx: number) => {
 		const newMinVal = minValues[newMinIdx];
@@ -52,14 +50,13 @@ export function OptionPairedSliderControl({
 	};
 
 	return (
-		<div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-lg">
+		<div className="flex flex-col sm:flex-row items-center w-full sm:w-lg">
 			<OptionSingleSlider
 				label={minLabel}
 				selection={minSelection}
 				values={minValues}
 				format={format}
 				onChange={handleMinChange}
-				disabled={disabled}
 			/>
 			<OptionSingleSlider
 				label={maxLabel}
@@ -67,7 +64,6 @@ export function OptionPairedSliderControl({
 				values={maxValues}
 				format={format}
 				onChange={handleMaxChange}
-				disabled={disabled}
 			/>
 		</div>
 	);
