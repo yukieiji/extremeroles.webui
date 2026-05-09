@@ -1,6 +1,5 @@
 import { useEffect, useTransition } from "react";
 import { ColoredText } from "@/components/parts/ColoredText";
-import { TabButton } from "@/components/parts/TabButton";
 import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
 import { exrOptionMetaData } from "@/logics/api";
 import type { ExRTabId } from "@/type";
@@ -28,7 +27,8 @@ export function ExRTabSelector() {
 		}
 	}, [isPending, setIsTabPending]);
 
-	const handleClick = (id: ExRTabId) => {
+	const handleValueChange = (value: string) => {
+		const id = Number(value) as ExRTabId;
 		if (id === selectedExRTabId) {
 			return;
 		}
@@ -40,21 +40,18 @@ export function ExRTabSelector() {
 	};
 
 	return (
-		<TabButtonContainer>
-			{Object.keys(exrOptionMetaData.tabs).map((tabId) => {
-				const castedTabId = Number(tabId) as ExRTabId;
+		<TabButtonContainer
+			value={selectedExRTabId.toString()}
+			tabs={Object.keys(exrOptionMetaData.tabs)}
+			onValueChange={handleValueChange}
+			getValue={(t, _) => t}
+		>
+			{(t) => {
+				const castedTabId = Number(t) as ExRTabId;
 				return (
-					<TabButton
-						key={tabId}
-						onClick={() => handleClick(castedTabId)}
-						isSelect={selectedExRTabId === castedTabId}
-					>
-						<ColoredText
-							text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""}
-						/>
-					</TabButton>
+					<ColoredText text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""} />
 				);
-			})}
+			}}
 		</TabButtonContainer>
 	);
 }
