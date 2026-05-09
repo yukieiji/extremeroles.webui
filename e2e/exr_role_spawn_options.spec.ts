@@ -25,7 +25,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 	}) => {
 		// 役職タブ（クルーメイト）に切り替え
 		await page
-			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
+			.getByRole("tab", { name: "クルーメイト役職設定", exact: true })
 			.click();
 
 		// カテゴリ（シェリフ）のヘッダーに「レート」と「数」が表示されていることを確認
@@ -42,7 +42,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 
 	test("should synchronize spawn rate and count", async ({ page }) => {
 		await page
-			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
+			.getByRole("tab", { name: "クルーメイト役職設定", exact: true })
 			.click();
 
 		const sheriffCategory = page
@@ -88,7 +88,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 		page,
 	}) => {
 		await page
-			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
+			.getByRole("tab", { name: "クルーメイト役職設定", exact: true })
 			.click();
 
 		const sheriffCategory = page
@@ -134,7 +134,7 @@ test.describe("ExR Role Spawn Options in Header", () => {
 		page,
 	}) => {
 		await page
-			.getByRole("button", { name: "クルーメイト役職設定", exact: true })
+			.getByRole("tab", { name: "クルーメイト役職設定", exact: true })
 			.click();
 
 		const sheriffCategory = page

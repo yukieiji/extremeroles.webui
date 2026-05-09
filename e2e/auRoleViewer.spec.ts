@@ -92,7 +92,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		page,
 	}) => {
 		// Au Options の 役職タブ（タブ 1）に移動
-		await page.getByRole("button", { name: "1", exact: true }).first().click();
+		await page.getByRole("tab", { name: "1", exact: true }).first().click();
 
 		// 科学者 (Scientist)を無効にしてチェック
 		const category = page

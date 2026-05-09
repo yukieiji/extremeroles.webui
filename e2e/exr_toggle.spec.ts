@@ -26,7 +26,7 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 	// getByTestId('main-content-section') を使用して、右フローティングパネルのボタンとの競合を避ける
 	await page
 		.getByTestId("main-content-section")
-		.getByRole("button", { name: "グローバル設定", exact: true })
+		.getByRole("tab", { name: "グローバル設定", exact: true })
 		.click();
 
 	// '乱数に関する設定' アコーディオンを開く

@@ -23,7 +23,7 @@ test.describe("Au Option Interactions", () => {
 		page,
 	}) => {
 		// Tab 0 (General)
-		await page.getByRole("button", { name: "0", exact: true }).click();
+		await page.getByRole("tab", { name: "0", exact: true }).click();
 
 		// Map is now a direct dropdown (select element)
 		// モックデータでは "map" (小文字)
@@ -42,7 +42,7 @@ test.describe("Au Option Interactions", () => {
 		page,
 	}) => {
 		// Tab 0 (General)
-		await page.getByRole("button", { name: "0", exact: true }).click();
+		await page.getByRole("tab", { name: "0", exact: true }).click();
 
 		// index 1 category should still be an accordion
 		// メインコンテンツエリアのアコーディオンボタンを探す
@@ -59,7 +59,7 @@ test.describe("Au Option Interactions", () => {
 		page,
 	}) => {
 		// Tab 1
-		await page.getByRole("button", { name: "1", exact: true }).click();
+		await page.getByRole("tab", { name: "1", exact: true }).click();
 
 		// Initially chance is probably 0, so it's disabled
 		const category = page.getByTestId("category-list").locator("> div").first();
@@ -82,7 +82,7 @@ test.describe("Au Option Interactions", () => {
 	test("should synchronize chance and max count in Au roles", async ({
 		page,
 	}) => {
-		await page.getByRole("button", { name: "1", exact: true }).click();
+		await page.getByRole("tab", { name: "1", exact: true }).click();
 
 		const category = page.getByTestId("category-list").locator("> div").first();
 		const chanceControl = category.getByTestId("spawn-rate-control");
@@ -121,7 +121,7 @@ test.describe("Au Option Interactions", () => {
 	test("expanding role accordion should show other options", async ({
 		page,
 	}) => {
-		await page.getByRole("button", { name: "1", exact: true }).click();
+		await page.getByRole("tab", { name: "1", exact: true }).click();
 
 		const category = page.getByTestId("category-list").locator("> div").first();
 		const toggleButton = category.locator("button").first();
