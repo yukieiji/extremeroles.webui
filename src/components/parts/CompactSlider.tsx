@@ -3,6 +3,7 @@ import { useId } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Field, FieldLabel, FieldSet } from "../ui/field";
 
 interface CompactSliderProps {
 	label: string;
@@ -45,25 +46,23 @@ export function CompactSlider({
 	};
 
 	return (
-		<fieldset
-			className="flex flex-col gap-2"
+		<FieldSet
 			onClick={stopPropagation}
 			onKeyDown={stopPropagation}
 			data-testid={testId}
 			aria-label={label}
 		>
-			<div className="flex items-center justify-between gap-4">
-				<Label htmlFor={id} className="text-sm font-medium">
+			<Field orientation="horizontal">
+				<FieldLabel htmlFor={id} className="text-sm font-medium">
 					{label}
-				</Label>
+				</FieldLabel>
 				<Input
 					id={id}
 					type="text"
 					value={currentValue}
 					onChange={handleInputChange}
-					className="h-8 w-16 px-2 text-right"
 				/>
-			</div>
+			</Field>
 			<Slider
 				min={0}
 				max={values.length - 1}
@@ -72,6 +71,6 @@ export function CompactSlider({
 				onValueChange={handleSliderChange}
 				className="cursor-pointer"
 			/>
-		</fieldset>
+		</FieldSet>
 	);
 }

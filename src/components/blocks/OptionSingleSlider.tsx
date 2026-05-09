@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
-import { Field } from "../ui/field";
+import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
@@ -38,21 +38,19 @@ export function OptionSingleSlider({
 	};
 
 	return (
-		<div className="flex flex-col w-full">
-			<div className="flex items-center justify-between">
-				<Label>{label}</Label>
-				<Field orientation="horizontal">
-					<Input
-						id={id}
-						type="text"
-						value={currentValue}
-						onChange={handleInputChange}
-					/>
-					<Label htmlFor={id}>
-						<OptionFormat format={format} />
-					</Label>
-				</Field>
-			</div>
+		<FieldSet>
+			<Field orientation="horizontal">
+				<FieldLabel htmlFor={id}>{label}</FieldLabel>
+				<Input
+					id={id}
+					type="text"
+					value={currentValue}
+					onChange={handleInputChange}
+				/>
+				<Label htmlFor={id}>
+					<OptionFormat format={format} />
+				</Label>
+			</Field>
 			<Slider
 				min={0}
 				max={values.length - 1}
@@ -62,6 +60,6 @@ export function OptionSingleSlider({
 				aria-label={label}
 				className="cursor-pointer"
 			/>
-		</div>
+		</FieldSet>
 	);
 }
