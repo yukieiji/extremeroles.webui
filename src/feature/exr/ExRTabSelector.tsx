@@ -1,7 +1,6 @@
 import { useEffect, useTransition } from "react";
 import { ColoredText } from "@/components/parts/ColoredText";
-import { TabButton } from "@/components/parts/TabButton";
-import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { exrOptionMetaData } from "@/logics/api";
 import type { ExRTabId } from "@/type";
 import { useStore } from "@/useStore";
@@ -28,7 +27,8 @@ export function ExRTabSelector() {
 		}
 	}, [isPending, setIsTabPending]);
 
-	const handleClick = (id: ExRTabId) => {
+	const handleValueChange = (value: string) => {
+		const id = Number(value) as ExRTabId;
 		if (id === selectedExRTabId) {
 			return;
 		}
@@ -40,21 +40,23 @@ export function ExRTabSelector() {
 	};
 
 	return (
-		<TabButtonContainer>
-			{Object.keys(exrOptionMetaData.tabs).map((tabId) => {
-				const castedTabId = Number(tabId) as ExRTabId;
-				return (
-					<TabButton
-						key={tabId}
-						onClick={() => handleClick(castedTabId)}
-						isSelect={selectedExRTabId === castedTabId}
-					>
-						<ColoredText
-							text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""}
-						/>
-					</TabButton>
-				);
-			})}
-		</TabButtonContainer>
+		<Tabs
+			value={selectedExRTabId.toString()}
+			onValueChange={handleValueChange}
+			className="w-full"
+		>
+			<TabsList className="w-full grid grid-cols-4 h-10">
+				{Object.keys(exrOptionMetaData.tabs).map((tabId) => {
+					const castedTabId = Number(tabId) as ExRTabId;
+					return (
+						<TabsTrigger key={tabId} value={tabId}>
+							<ColoredText
+								text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""}
+							/>
+						</TabsTrigger>
+					);
+				})}
+			</TabsList>
+		</Tabs>
 	);
 }
