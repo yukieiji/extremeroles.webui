@@ -52,18 +52,16 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 							{optionMeta.title}
 						</span>
 					</div>
-					<div className="w-48">
-						<OptionDropdownControl
-							values={displayValues}
-							selection={selection}
-							onChange={(newSelectionValue) => {
-								updateAuOption({
-									auOptionId: mapOptionId,
-									selection: newSelectionValue,
-								});
-							}}
-						/>
-					</div>
+					<OptionDropdownControl
+						values={displayValues}
+						selection={selection}
+						onChange={(newSelectionValue) => {
+							updateAuOption({
+								auOptionId: mapOptionId,
+								selection: newSelectionValue,
+							});
+						}}
+					/>
 				</div>
 			</HighlightWrapper>
 		</div>
