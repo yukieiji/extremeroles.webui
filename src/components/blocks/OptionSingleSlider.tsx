@@ -12,7 +12,6 @@ interface OptionSingleSliderProps {
 	values: number[];
 	format: string;
 	onChange: (selection: number) => void;
-	disabled?: boolean;
 }
 
 export function OptionSingleSlider({
@@ -21,7 +20,6 @@ export function OptionSingleSlider({
 	values,
 	format,
 	onChange,
-	disabled = false,
 }: OptionSingleSliderProps) {
 	const id = useId();
 	const currentValue = values[selection] ?? values[0] ?? 0;
@@ -40,22 +38,15 @@ export function OptionSingleSlider({
 	};
 
 	return (
-		<div className="flex flex-col gap-1 w-full">
-			<div className="flex items-center justify-between gap-2 px-1">
-				<Label
-					htmlFor={id}
-					className="text-xs text-muted-foreground font-medium"
-				>
-					{label}
-				</Label>
-				<Field orientation="horizontal" className="w-auto gap-1">
+		<div className="flex flex-col w-full">
+			<div className="flex items-center justify-between">
+				<Label>{label}</Label>
+				<Field orientation="horizontal">
 					<Input
 						id={id}
 						type="text"
 						value={currentValue}
 						onChange={handleInputChange}
-						disabled={disabled}
-						className="w-12 h-7 px-1 py-0.5 text-right text-xs"
 					/>
 					<Label htmlFor={id}>
 						<OptionFormat format={format} />
@@ -68,9 +59,7 @@ export function OptionSingleSlider({
 				step={1}
 				value={[selection]}
 				onValueChange={handleSliderChange}
-				disabled={disabled}
 				aria-label={label}
-				className="w-full"
 			/>
 		</div>
 	);
