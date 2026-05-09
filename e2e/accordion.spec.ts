@@ -39,7 +39,9 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 		.locator("div.border.border-gray-700")
 		.filter({ hasText: categoryName })
 		.first();
-	const contentContainer = accordionItem.getByTestId("accordion-content");
+	const contentContainer = accordionItem
+		.getByTestId("accordion-content")
+		.first();
 	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
 
 	// 閉じているときはオプション名が表示されていない（lazy rendering）
