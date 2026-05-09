@@ -72,6 +72,8 @@ export const EXR_SHORT_LABEL = "E";
 export const ROLE_FILTER_SHORT_LABEL = "R";
 export const ON = "ON";
 export const OFF = "OFF";
+export const SEARCH_PLACEHOLDER = "オプションを検索...";
+export const NO_SEARCH_RESULTS = "結果が見つかりませんでした";
 
 /**
  * プレースホルダーを含む文字列を置換します。

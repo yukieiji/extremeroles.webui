@@ -69,6 +69,117 @@ export const roleFilterMetaData: RoleFilterMetaData = {
 export const globalSearchItems: SearchItem[] = [];
 
 /**
+ * 検索アイテムを構築します。
+ * 各メタデータが構築された後に呼び出す必要があります。
+ */
+export function buildSearchItems() {
+	globalSearchItems.length = 0;
+
+	// Au Categories
+	for (const [tabIdStr, categoryIds] of Object.entries(
+		auOptionMetaData.tabCategoryMap,
+	)) {
+		const tabId = Number(tabIdStr);
+		for (const categoryId of categoryIds) {
+			const category = auOptionMetaData.categoryMetaData[categoryId];
+			if (category) {
+				globalSearchItems.push({
+					id: `au-cat-${categoryId}`,
+					tearm: category.name,
+					info: {
+						mode: "au-cat",
+						tabId,
+						categoryId,
+					},
+				});
+			}
+		}
+	}
+
+	// Au Options
+	for (const [tabIdStr, categoryIds] of Object.entries(
+		auOptionMetaData.tabCategoryMap,
+	)) {
+		const tabId = Number(tabIdStr);
+		for (const categoryId of categoryIds) {
+			const category = auOptionMetaData.categoryMetaData[categoryId];
+			if (category) {
+				for (const auOptionId of category.options) {
+					const option = auOptionMetaData.options[auOptionId];
+					if (option) {
+						globalSearchItems.push({
+							id: `au-opt-${auOptionId}`,
+							tearm: option.title,
+							info: {
+								mode: "au-opt",
+								tabId,
+								categoryId,
+								auOptionId,
+							},
+						});
+					}
+				}
+			}
+		}
+	}
+
+	// ExR Categories
+	for (const [categoryIdStr, categoryMeta] of Object.entries(
+		exrOptionMetaData.categories,
+	)) {
+		const categoryId = Number(categoryIdStr);
+		globalSearchItems.push({
+			id: `exr-cat-${categoryId}`,
+			tearm: categoryMeta.name,
+			info: {
+				mode: "exr-cat",
+				tabId: categoryMeta.tabId,
+				categoryId,
+			},
+		});
+	}
+
+	// ExR Options
+	for (const [uniqueOptionIdStr, optionDetail] of Object.entries(
+		exrOptionMetaData.options,
+	)) {
+		const uniqueOptionId = Number(uniqueOptionIdStr) as UniqueOptionId;
+		if (optionDetail.metaData.translatedName) {
+			globalSearchItems.push({
+				id: `exr-opt-${uniqueOptionId}`,
+				tearm: optionDetail.metaData.translatedName,
+				info: {
+					mode: "exr-opt",
+					uniqueOptionId,
+				},
+			});
+		}
+	}
+
+	const modePriority: Record<string, number> = {
+		"au-cat": 0,
+		"au-opt": 1,
+		"exr-cat": 2,
+		"exr-opt": 3,
+	};
+
+	globalSearchItems.sort((a, b) => {
+		const priorityA = modePriority[a.info.mode] ?? 99;
+		const priorityB = modePriority[b.info.mode] ?? 99;
+
+		if (priorityA !== priorityB) {
+			return priorityA - priorityB;
+		}
+
+		if (a.tearm !== b.tearm) {
+			return a.tearm.localeCompare(b.tearm);
+		}
+
+		return a.id.localeCompare(b.id);
+	});
+}
+
+/**
  * ExRオプションのメタデータをリセットする（テスト用）
  */
 export function resetExrOptionMetaData() {

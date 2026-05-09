@@ -8,6 +8,7 @@ import { OptionValueType } from "../type";
 import { useStore } from "../useStore";
 import {
 	auOptionMetaData,
+	buildSearchItems,
 	createAuOptionMetaData,
 	createExROptionMetaData,
 	fetchRoleFilterData,
@@ -171,6 +172,7 @@ export async function refechAll(): Promise<void> {
 		createAuOptionMetaDataWithStore(),
 		fetchRoleFilterDataWithStore(),
 	]);
+	buildSearchItems();
 }
 
 export function getAllOptions(): Promise<void> {

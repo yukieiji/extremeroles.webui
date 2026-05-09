@@ -12,6 +12,7 @@ import { PresetSelector } from "./feature/exr/PresetSelector";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
 import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
+import { SearchSearchBar } from "./feature/SearchSearchBar";
 import {
 	useBackendUpdate,
 	useExportCsv,
@@ -111,6 +112,7 @@ function MainContent() {
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
+				<SearchSearchBar />
 				<ImportButton onImport={handleImport} />
 				<ExportButton onClick={exporter} />
 				<SyncButton onClick={syncer} />

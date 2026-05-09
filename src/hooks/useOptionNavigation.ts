@@ -85,6 +85,85 @@ export function useAuOptionNavigation(
 	return navigateToOption;
 }
 
+/**
+ * 検索結果から該当のオプションやカテゴリーへナビゲーションするためのフック
+ */
+export function useSearchNavigation() {
+	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
+	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
+	const setHighlightedAuOptionId = useStore(
+		(state) => state.setHighlightedAuOptionId,
+	);
+
+	const setSelectedExRTabId = useStore((state) => state.setSelectedExRTabId);
+	const toggleExRCategory = useStore((state) => state.toggleExRCategory);
+	const openExROptions = useStore((state) => state.openExROptions);
+	const setHighlightedExROptionId = useStore(
+		(state) => state.setHighlightedExROptionId,
+	);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
+
+	const nav = useNavigate();
+
+	const navigation = (item: import("@/type").SearchItem) => {
+		const info = item.info;
+		setRightPanelOpen(false);
+
+		if (info.mode === "au-cat" || info.mode === "au-opt") {
+			setSelectedTab("Au");
+			setSelectedAuTabId(info.tabId);
+
+			const { openedAuCategoryIds } = useStore.getState();
+			if (!openedAuCategoryIds[info.categoryId]) {
+				toggleAuCategory(info.categoryId);
+			}
+
+			if (info.mode === "au-opt") {
+				setHighlightedAuOptionId(info.auOptionId);
+				const navId = createAuNavigateId(info.auOptionId);
+				nav(navId, () => {
+					setHighlightedAuOptionId(null);
+				});
+			} else {
+				setHighlightedAuOptionId(null);
+			}
+		} else if (info.mode === "exr-cat") {
+			setSelectedTab("ExR");
+			setSelectedExRTabId(info.tabId);
+
+			const { openedExRCategoryIds } = useStore.getState();
+			if (!openedExRCategoryIds[info.categoryId]) {
+				toggleExRCategory(info.categoryId);
+			}
+			setHighlightedExROptionId(null);
+		} else if (info.mode === "exr-opt") {
+			setSelectedTab("ExR");
+			const { tabId, categoryId } = parseUniqueOptionId(info.uniqueOptionId);
+			setSelectedExRTabId(tabId);
+
+			const { openedExRCategoryIds } = useStore.getState();
+			if (!openedExRCategoryIds[categoryId]) {
+				toggleExRCategory(categoryId);
+			}
+
+			const ancestors =
+				exrOptionMetaData.options[info.uniqueOptionId]?.parentOptionIds ?? [];
+			if (ancestors.length > 0) {
+				openExROptions(ancestors);
+			}
+
+			setHighlightedExROptionId(info.uniqueOptionId);
+			const navId = createExRNavigateId(info.uniqueOptionId);
+			nav(navId, () => {
+				setHighlightedExROptionId(null);
+			});
+		}
+	};
+
+	return navigation;
+}
+
 export function useAuOptionNavigationInline() {
 	const navigateToAuOption = useAuNavigationInner();
 
