@@ -18,6 +18,10 @@ export interface GlobalUiSlice {
 	setRoleSearchQuery: (query: string) => void;
 	setSelectedRoleIds: (roleIds: number[]) => void;
 	setLastClickedId: (roleId: number | null) => void;
+	optionSearchQuery: string;
+	setOptionSearchQuery: (query: string) => void;
+	isOptionSearchFocused: boolean;
+	setIsOptionSearchFocused: (isFocused: boolean) => void;
 }
 
 export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
@@ -88,6 +92,14 @@ export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 				}
 				return state;
 			});
+		},
+		optionSearchQuery: "",
+		setOptionSearchQuery: (query) => {
+			set({ optionSearchQuery: query });
+		},
+		isOptionSearchFocused: false,
+		setIsOptionSearchFocused: (isFocused) => {
+			set({ isOptionSearchFocused: isFocused });
 		},
 	};
 };

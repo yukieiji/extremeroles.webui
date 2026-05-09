@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { useSearchNavigation } from "@/hooks/useOptionNavigation";
 import { globalSearchItems } from "@/logics/api";
@@ -10,8 +10,11 @@ import { useStore } from "@/useStore";
  * オプションを検索する検索バーコンポーネント
  */
 export function SearchSearchBar() {
-	const [query, setQuery] = useState("");
-	const [isFocused, setIsFocused] = useState(false);
+	const query = useStore((state) => state.optionSearchQuery);
+	const setQuery = useStore((state) => state.setOptionSearchQuery);
+	const isFocused = useStore((state) => state.isOptionSearchFocused);
+	const setIsFocused = useStore((state) => state.setIsOptionSearchFocused);
+
 	const navigate = useSearchNavigation();
 	const isExROptionActive = useStore((state) => state.isExROptionActive);
 
