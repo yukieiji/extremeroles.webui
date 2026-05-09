@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import { AuCategoryList } from "@/feature/amongus/AuCategoryList";
 import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
@@ -11,7 +11,7 @@ describe("AuCategoryList", () => {
 		useStore.getState().resetViewer();
 	});
 
-	it("renders MapDropDown for the first category of Tab 0", () => {
+	it("renders MapDropDown for the first category of Tab 0", async () => {
 		const mapOptionId = 100 as unknown as AuOptionId;
 		auOptionMetaData.tabCategoryMap = { 0: [1], 1: [], 2: [] };
 		auOptionMetaData.categoryMetaData = {
@@ -22,9 +22,13 @@ describe("AuCategoryList", () => {
 			format: "",
 			range: ["The Skeld", "Mira HQ"],
 		};
-		useStore.getState().setSelectedAuTabId(0);
+		await act(async () => {
+			useStore.getState().setSelectedAuTabId(0);
+		});
 
-		render(<AuCategoryList />);
+		await act(async () => {
+			render(<AuCategoryList />);
+		});
 
 		const map = screen.getByText("Map");
 		expect(map).toBeInTheDocument();
@@ -37,7 +41,7 @@ describe("AuCategoryList", () => {
 		expect(screen.getByText("Mira HQ")).toBeInTheDocument();
 	});
 
-	it("renders standard category items for Tab 0 other than the first", () => {
+	it("renders standard category items for Tab 0 other than the first", async () => {
 		auOptionMetaData.tabCategoryMap = { 0: [1, 2], 1: [], 2: [] };
 		auOptionMetaData.categoryMetaData = {
 			1: { name: "Map Category", options: [] },
@@ -48,14 +52,18 @@ describe("AuCategoryList", () => {
 			format: "",
 			range: ["The Skeld"],
 		};
-		useStore.getState().setSelectedAuTabId(0);
+		await act(async () => {
+			useStore.getState().setSelectedAuTabId(0);
+		});
 
-		render(<AuCategoryList />);
+		await act(async () => {
+			render(<AuCategoryList />);
+		});
 
 		expect(screen.getByText("Other Category")).toBeInTheDocument();
 	});
 
-	it("renders role category items for Tab 1", () => {
+	it("renders role category items for Tab 1", async () => {
 		const chanceId = 101 as unknown as AuOptionId;
 		const countId = 102 as unknown as AuOptionId;
 		auOptionMetaData.tabCategoryMap = { 0: [], 1: [2], 2: [] };
@@ -73,17 +81,21 @@ describe("AuCategoryList", () => {
 			range: [0, 1],
 		};
 
-		useStore.getState().setSelectedAuTabId(1);
-		useStore.getState().setAuValue({ [chanceId]: 1, [countId]: 1 });
+		await act(async () => {
+			useStore.getState().setSelectedAuTabId(1);
+			useStore.getState().setAuValue({ [chanceId]: 1, [countId]: 1 });
+		});
 
-		render(<AuCategoryList />);
+		await act(async () => {
+			render(<AuCategoryList />);
+		});
 
 		expect(screen.getByText("Scientist")).toBeInTheDocument();
 		expect(screen.getByTestId("spawn-rate-control")).toBeInTheDocument();
 		expect(screen.getByTestId("spawn-count-control")).toBeInTheDocument();
 	});
 
-	it("disables accordion button when chance is 0", () => {
+	it("disables accordion button when chance is 0", async () => {
 		const chanceId = 101 as unknown as AuOptionId;
 		const countId = 102 as unknown as AuOptionId;
 		auOptionMetaData.tabCategoryMap = { 1: [2] };
@@ -101,10 +113,14 @@ describe("AuCategoryList", () => {
 			range: [0, 1],
 		};
 
-		useStore.getState().setSelectedAuTabId(1);
-		useStore.getState().setAuValue({ [chanceId]: 0, [countId]: 0 });
+		await act(async () => {
+			useStore.getState().setSelectedAuTabId(1);
+			useStore.getState().setAuValue({ [chanceId]: 0, [countId]: 0 });
+		});
 
-		render(<AuCategoryList />);
+		await act(async () => {
+			render(<AuCategoryList />);
+		});
 
 		const button = screen.getByRole("button", { name: /Scientist/ });
 		expect(button).toBeDisabled();
@@ -135,15 +151,21 @@ describe("AuCategoryList", () => {
 			range: [0, 1],
 		};
 
-		useStore.getState().setSelectedAuTabId(1);
-		useStore
-			.getState()
-			.setAuValue({ [chanceId]: 1, [countId]: 1, [otherId]: 0 });
+		await act(async () => {
+			useStore.getState().setSelectedAuTabId(1);
+			useStore
+				.getState()
+				.setAuValue({ [chanceId]: 1, [countId]: 1, [otherId]: 0 });
+		});
 
-		render(<AuCategoryList />);
+		await act(async () => {
+			render(<AuCategoryList />);
+		});
 
 		const toggleButton = screen.getByRole("button", { name: /Scientist/ });
-		fireEvent.click(toggleButton);
+		await act(async () => {
+			fireEvent.click(toggleButton);
+		});
 
 		expect(screen.getByText("Other Option")).toBeInTheDocument();
 		expect(screen.queryByText("Chance")).not.toBeInTheDocument();

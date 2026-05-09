@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "@/feature/exr/ExRHeaderOptionControl";
 import * as apiStore from "@/logics/api.store";
@@ -39,39 +39,43 @@ describe("ExRHeaderOptionControl", () => {
 		useStore.getState().resetViewer();
 	});
 
-	it("renders correctly with given label and value", () => {
-		render(
-			<ExRHeaderOptionControl
-				categoryId={1}
-				option={mockOption}
-				label="Rate"
-			/>,
-		);
+	it("renders correctly with given label and value", async () => {
+		await act(async () => {
+			render(
+				<ExRHeaderOptionControl
+					categoryId={1}
+					option={mockOption}
+					label="Rate"
+				/>,
+			);
+		});
 
 		expect(screen.getByText("Rate")).toBeInTheDocument();
-		expect(screen.getByRole("slider")).toHaveValue("0");
+		const slider = screen.getByRole("slider", { hidden: true });
+		expect(slider).toHaveValue("0");
 
-		const inputs = screen.getAllByDisplayValue("0");
-		const textInput = inputs.find(
-			(i) => (i as HTMLInputElement).type === "text",
-		);
-		expect(textInput).toBeInTheDocument();
+		const input = screen.getByRole("textbox");
+		expect(input).toHaveValue("0");
 	});
 
 	it("updates selection when slider is moved", async () => {
 		// Mock updateExROptionSelection to update the store manually since there is no real API
 		setUpudateExROptionSelectionMock(mockOption.RangeMeta.Values);
 
-		render(
-			<ExRHeaderOptionControl
-				categoryId={1}
-				option={mockOption}
-				label="Rate"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExRHeaderOptionControl
+					categoryId={1}
+					option={mockOption}
+					label="Rate"
+				/>,
+			);
+		});
 
-		const slider = screen.getByRole("slider");
-		fireEvent.change(slider, { target: { value: "1" } });
+		const slider = screen.getByRole("slider", { hidden: true });
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "1" } });
+		});
 
 		// Check if store was updated
 		const state = useStore.getState();
@@ -85,23 +89,20 @@ describe("ExRHeaderOptionControl", () => {
 	it("updates selection when input is changed", async () => {
 		setUpudateExROptionSelectionMock(mockOption.RangeMeta.Values);
 
-		render(
-			<ExRHeaderOptionControl
-				categoryId={1}
-				option={mockOption}
-				label="Rate"
-			/>,
-		);
+		await act(async () => {
+			render(
+				<ExRHeaderOptionControl
+					categoryId={1}
+					option={mockOption}
+					label="Rate"
+				/>,
+			);
+		});
 
-		const inputs = screen.getAllByDisplayValue("0");
-		const textInput = inputs.find(
-			(i) => (i as HTMLInputElement).type === "text",
-		);
-		if (!textInput) {
-			throw new Error("Text input not found");
-		}
-
-		fireEvent.change(textInput, { target: { value: "100" } });
+		const input = screen.getByRole("textbox");
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "100" } });
+		});
 
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;
@@ -111,25 +112,29 @@ describe("ExRHeaderOptionControl", () => {
 		).toBe(2); // 100 is at index 2
 	});
 
-	it("prevents click propagation to parent", () => {
+	it("prevents click propagation to parent", async () => {
 		const parentClick = vi.fn();
-		render(
-			<button
-				type="button"
-				onClick={parentClick}
-				onKeyDown={parentClick}
-				aria-label="parent"
-			>
-				<ExRHeaderOptionControl
-					categoryId={1}
-					option={mockOption}
-					label="Rate"
-				/>
-			</button>,
-		);
+		await act(async () => {
+			render(
+				<button
+					type="button"
+					onClick={parentClick}
+					onKeyDown={parentClick}
+					aria-label="parent"
+				>
+					<ExRHeaderOptionControl
+						categoryId={1}
+						option={mockOption}
+						label="Rate"
+					/>
+				</button>,
+			);
+		});
 
 		const label = screen.getByText("Rate");
-		fireEvent.click(label);
+		await act(async () => {
+			fireEvent.click(label);
+		});
 
 		expect(parentClick).not.toHaveBeenCalled();
 	});

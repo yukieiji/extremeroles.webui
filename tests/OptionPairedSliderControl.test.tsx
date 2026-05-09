@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSliderControl";
 
@@ -10,70 +10,97 @@ describe("OptionPairedSliderControl", () => {
 	const onMinChange = vi.fn();
 	const onMaxChange = vi.fn();
 
-	it("renders both sliders and labels", () => {
-		render(
-			<OptionPairedSliderControl
-				minSelection={1}
-				maxSelection={3}
-				minValues={minValues}
-				maxValues={maxValues}
-				format={format}
-				onMinChange={onMinChange}
-				onMaxChange={onMaxChange}
-				minLabel="最小"
-				maxLabel="最大"
-			/>,
-		);
+	it("renders both sliders and labels", async () => {
+		await act(async () => {
+			render(
+				<OptionPairedSliderControl
+					minSelection={1}
+					maxSelection={3}
+					minValues={minValues}
+					maxValues={maxValues}
+					format={format}
+					onMinChange={onMinChange}
+					onMaxChange={onMaxChange}
+					minLabel="最小"
+					maxLabel="最大"
+				/>,
+			);
+		});
 
 		expect(screen.getByText("最小")).toBeInTheDocument();
 		expect(screen.getByText("最大")).toBeInTheDocument();
-		expect(screen.getAllByRole("slider")).toHaveLength(2);
+
+		const sliders = screen.getAllByRole("slider", { hidden: true });
+		expect(sliders).toHaveLength(2);
+		// Note: aria-valuenow might not be set immediately or might be set on a different element
+		// if attribute check fails, we check the value of the underlying range input.
+		expect(sliders[0]).toHaveValue("1");
+		expect(sliders[1]).toHaveValue("3");
+
 		// Values are displayed in inputs
-		expect(screen.getByDisplayValue("5")).toBeInTheDocument(); // Min value at index 1
-		expect(screen.getByDisplayValue("15")).toBeInTheDocument(); // Max value at index 3
+		const inputs = screen.getAllByRole("textbox");
+		expect(inputs.some((i) => (i as HTMLInputElement).value === "5")).toBe(
+			true,
+		);
+		expect(inputs.some((i) => (i as HTMLInputElement).value === "15")).toBe(
+			true,
+		);
 	});
 
-	it("syncs max when min exceeds it", () => {
-		render(
-			<OptionPairedSliderControl
-				minSelection={1}
-				maxSelection={3}
-				minValues={minValues}
-				maxValues={maxValues}
-				format={format}
-				onMinChange={onMinChange}
-				onMaxChange={onMaxChange}
-				minLabel="Min"
-				maxLabel="Max"
-			/>,
-		);
+	it("syncs max when min exceeds it", async () => {
+		await act(async () => {
+			render(
+				<OptionPairedSliderControl
+					minSelection={1}
+					maxSelection={3}
+					minValues={minValues}
+					maxValues={maxValues}
+					format={format}
+					onMinChange={onMinChange}
+					onMaxChange={onMaxChange}
+					minLabel="Min"
+					maxLabel="Max"
+				/>,
+			);
+		});
 
-		const minSlider = screen.getByRole("slider", { name: "Min" });
+		const sliders = screen.getAllByRole("slider", { hidden: true });
+		// Usually min is first, max is second in DOM order
+		const minSlider = sliders[0];
+
 		// Move min to index 4 (value 20), which is greater than max (index 3, value 15)
-		fireEvent.change(minSlider, { target: { value: "4" } });
+		await act(async () => {
+			fireEvent.change(minSlider, { target: { value: "4" } });
+		});
 
 		expect(onMinChange).toHaveBeenCalledWith(4);
 		expect(onMaxChange).toHaveBeenCalledWith(4);
 	});
 
-	it("syncs min when max is less than it", () => {
-		render(
-			<OptionPairedSliderControl
-				minSelection={1}
-				maxSelection={3}
-				minValues={minValues}
-				maxValues={maxValues}
-				format={format}
-				onMinChange={onMinChange}
-				onMaxChange={onMaxChange}
-				minLabel="Min"
-				maxLabel="Max"
-			/>,
-		);
+	it("syncs min when max is less than it", async () => {
+		await act(async () => {
+			render(
+				<OptionPairedSliderControl
+					minSelection={1}
+					maxSelection={3}
+					minValues={minValues}
+					maxValues={maxValues}
+					format={format}
+					onMinChange={onMinChange}
+					onMaxChange={onMaxChange}
+					minLabel="Min"
+					maxLabel="Max"
+				/>,
+			);
+		});
 
-		const maxSlider = screen.getByRole("slider", { name: "Max" });
+		const sliders = screen.getAllByRole("slider", { hidden: true });
+		const maxSlider = sliders[1];
+
 		// Move max to index 0 (value 0), which is less than min (index 1, value 5)
-		fireEvent.change(maxSlider, { target: { value: "0" } });
+		await act(async () => {
+			fireEvent.change(maxSlider, { target: { value: "0" } });
+		});
 
 		expect(onMaxChange).toHaveBeenCalledWith(0);
 		expect(onMinChange).toHaveBeenCalledWith(0);

@@ -1,5 +1,10 @@
+import { useId } from "react";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
+import { Field } from "../ui/field";
+import { Label } from "../ui/label";
 
 interface OptionSliderControlProps {
 	selection: number;
@@ -19,10 +24,12 @@ export function OptionSliderControl({
 	onChange,
 	disabled = false,
 }: OptionSliderControlProps) {
+	const id = useId();
+
 	const currentValue = values[selection] ?? values[0] ?? 0;
 
-	const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(parseInt(e.target.value, 10));
+	const handleSliderChange = (val: number | readonly number[]) => {
+		onChange(Array.isArray(val) ? val[0] : val);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,27 +42,27 @@ export function OptionSliderControl({
 	};
 
 	return (
-		<div className="flex items-center gap-4 w-full h-10 sm:w-64">
-			<input
-				type="range"
+		<div className="flex items-center">
+			<Slider
 				min={0}
 				max={values.length - 1}
 				step={1}
-				value={selection}
-				onChange={handleSliderChange}
+				value={[selection]}
+				onValueChange={handleSliderChange}
 				disabled={disabled}
-				className="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
 			/>
-			<div className="flex items-center gap-2 min-w-20">
-				<input
+			<Field orientation="horizontal">
+				<Input
+					id={id}
 					type="text"
 					value={currentValue}
 					onChange={handleInputChange}
 					disabled={disabled}
-					className="w-16 px-2 py-1 text-right text-sm bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500 disabled:opacity-50"
 				/>
-				<OptionFormat format={format} />
-			</div>
+				<Label htmlFor={id}>
+					<OptionFormat format={format} />
+				</Label>
+			</Field>
 		</div>
 	);
 }
