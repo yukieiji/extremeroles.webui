@@ -1,22 +1,27 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
 
 describe("OptionDropdownControl", () => {
 	const mockValues = ["Option A", "Option B", "Option C"];
 
-	it("renders dropdown with correct options", () => {
+	it("renders dropdown with correct options", async () => {
 		render(
 			<OptionDropdownControl
-				selection={1}
+				selection="Option B"
 				values={mockValues}
 				onChange={() => {}}
 			/>,
 		);
 
-		const select = screen.getByRole("combobox");
-		expect(select).toHaveValue("1");
+		const trigger = screen.getByRole("combobox");
+		expect(trigger).toHaveTextContent("Option B");
 
+		// Click to open
+		await userEvent.click(trigger);
+
+		// Check options
 		const options = screen.getAllByRole("option");
 		expect(options).toHaveLength(3);
 		expect(options[0]).toHaveTextContent("Option A");
@@ -24,19 +29,24 @@ describe("OptionDropdownControl", () => {
 		expect(options[2]).toHaveTextContent("Option C");
 	});
 
-	it("calls onChange when selection changes", () => {
+	it("calls onChange when selection changes", async () => {
 		const onChange = vi.fn();
 		render(
 			<OptionDropdownControl
-				selection={1}
+				selection="Option B"
 				values={mockValues}
 				onChange={onChange}
 			/>,
 		);
 
-		const select = screen.getByRole("combobox");
-		fireEvent.change(select, { target: { value: "2" } });
+		const trigger = screen.getByRole("combobox");
+		await userEvent.click(trigger);
 
-		expect(onChange).toHaveBeenCalledWith(2);
+		const optionC = screen.getByRole("option", { name: "Option C" });
+		await userEvent.click(optionC);
+
+		await waitFor(() => {
+			expect(onChange).toHaveBeenCalledWith("Option C");
+		});
 	});
 });

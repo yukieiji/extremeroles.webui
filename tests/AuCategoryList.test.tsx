@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it } from "vitest";
 import { AuCategoryList } from "@/feature/amongus/AuCategoryList";
 import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
@@ -36,9 +37,13 @@ describe("AuCategoryList", () => {
 			screen.queryByRole("button", { name: "Map Category" }),
 		).not.toBeInTheDocument();
 
-		// Should show actual map names in dropdown
+		// Should show current map name in dropdown
 		expect(screen.getByText("The Skeld")).toBeInTheDocument();
-		expect(screen.getByText("Mira HQ")).toBeInTheDocument();
+
+        // Open dropdown to see other options
+        const trigger = screen.getByRole("combobox");
+        await userEvent.click(trigger);
+		expect(screen.getByRole("option", { name: "Mira HQ" })).toBeInTheDocument();
 	});
 
 	it("renders standard category items for Tab 0 other than the first", async () => {

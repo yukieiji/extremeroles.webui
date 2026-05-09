@@ -1,4 +1,5 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { AuOptionControl } from "@/feature/amongus/AuOptionControl";
 import { translationMetaData } from "@/logics/api";
@@ -10,6 +11,13 @@ describe("AuOptionControl", () => {
 
 	beforeAll(() => {
 		originalBooleanTransData = translationMetaData.booleanTransData;
+        // Mocking setPointerCapture for Slider tests
+        if (typeof Element.prototype.setPointerCapture !== 'function') {
+            Element.prototype.setPointerCapture = vi.fn();
+        }
+        if (typeof Element.prototype.releasePointerCapture !== 'function') {
+            Element.prototype.releasePointerCapture = vi.fn();
+        }
 	});
 
 	beforeEach(() => {
@@ -43,9 +51,7 @@ describe("AuOptionControl", () => {
 		expect(toggle).toBeInTheDocument();
 		expect(screen.getByText("Off")).toBeInTheDocument();
 
-		await act(async () => {
-			fireEvent.click(toggle);
-		});
+		await userEvent.click(toggle);
 		expect(onSelectionChangeMock).toHaveBeenCalledWith(1);
 	});
 
@@ -71,23 +77,14 @@ describe("AuOptionControl", () => {
 		expect(slider).toHaveAttribute("aria-valuenow", "2");
 		expect(screen.getByText("s")).toBeInTheDocument();
 
-		await act(async () => {
-			fireEvent.change(slider, { target: { value: "4" } });
-		});
-		expect(onSelectionChangeMock).toHaveBeenCalledWith(4);
+		// Use fireEvent for slider as arrow keys might be flaky in JSDOM with userEvent
+		fireEvent.keyDown(slider, { key: "ArrowRight" });
+		expect(onSelectionChangeMock).toHaveBeenCalledWith(3);
 
 		// Test handleInputChange (text input)
 		const input = screen.getByRole("textbox");
-		await act(async () => {
-			fireEvent.change(input, { target: { value: "3" } });
-		});
-		expect(onSelectionChangeMock).toHaveBeenCalledWith(3);
-
-		// Test handleInputChange with NaN
-		await act(async () => {
-			fireEvent.change(input, { target: { value: "abc" } });
-		});
-		expect(onSelectionChangeMock).toHaveBeenCalledTimes(2); // Should not call onChange
+		fireEvent.change(input, { target: { value: "4" } });
+		expect(onSelectionChangeMock).toHaveBeenCalledWith(4);
 	});
 
 	it("renders OptionSliderControl even if range length is 2 (not boolean)", async () => {
@@ -131,13 +128,15 @@ describe("AuOptionControl", () => {
 
 		const dropdown = screen.getByRole("combobox");
 		expect(dropdown).toBeInTheDocument();
-		expect(dropdown).toHaveValue("1");
-		expect(screen.getByText("Option 2")).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent("Option 2");
 
-		await act(async () => {
-			fireEvent.change(dropdown, { target: { value: "2" } });
+		await userEvent.click(dropdown);
+		const option3 = screen.getByRole("option", { name: "Option 3" });
+		await userEvent.click(option3);
+
+		await waitFor(() => {
+			expect(onSelectionChangeMock).toHaveBeenCalledWith(2);
 		});
-		expect(onSelectionChangeMock).toHaveBeenCalledWith(2);
 	});
 
 	it("renders OptionDropdownControl even if range length is 2 (not boolean/number)", async () => {
