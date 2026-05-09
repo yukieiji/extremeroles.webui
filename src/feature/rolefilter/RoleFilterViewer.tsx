@@ -25,7 +25,9 @@ export function RoleFilterViewer() {
 					<p className="text-gray-500">{ROLE_FILTER_EMPTY_MESSAGE}</p>
 				</div>
 			) : (
+				// biome-ignore lint/a11y/useSemanticElements: user wants to avoid ul/li tags
 				<div
+					role="list"
 					aria-label={ROLE_FILTER_LIST_ARIA}
 					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
 				>
