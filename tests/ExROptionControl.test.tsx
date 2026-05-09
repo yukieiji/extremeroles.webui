@@ -1,3 +1,4 @@
+import type { RenderResult } from "@testing-library/react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ExROptionControl } from "@/feature/exr/ExROptionControl";
@@ -243,7 +244,7 @@ describe("ExROptionControl", () => {
 			values: [0, 1],
 		});
 
-		let renderResult: any;
+		let renderResult: RenderResult;
 		await act(async () => {
 			renderResult = render(
 				<ExROptionControl
@@ -254,6 +255,7 @@ describe("ExROptionControl", () => {
 			);
 		});
 
-		expect(renderResult.container.firstChild).toBeNull();
+		// biome-ignore lint/style/noNonNullAssertion: test
+		expect(renderResult!.container.firstChild).toBeNull();
 	});
 });

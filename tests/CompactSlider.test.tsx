@@ -32,7 +32,10 @@ describe("CompactSlider", () => {
 		const onSelectionChange = vi.fn();
 		await act(async () => {
 			render(
-				<CompactSlider {...defaultProps} onSelectionChange={onSelectionChange} />,
+				<CompactSlider
+					{...defaultProps}
+					onSelectionChange={onSelectionChange}
+				/>,
 			);
 		});
 
@@ -56,5 +59,69 @@ describe("CompactSlider", () => {
 		});
 
 		expect(onInputChange).toHaveBeenCalledWith(25);
+	});
+
+	it("stops propagation when slider is changed", async () => {
+		const onSelectionChange = vi.fn();
+		const onParentClick = vi.fn();
+		await act(async () => {
+			render(
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<CompactSlider
+						{...defaultProps}
+						onSelectionChange={onSelectionChange}
+					/>
+				</div>,
+			);
+		});
+
+		const slider = screen.getByRole("slider");
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "2" } });
+		});
+
+		expect(onSelectionChange).toHaveBeenCalled();
+		expect(onParentClick).not.toHaveBeenCalled();
+	});
+
+	it("stops propagation when input is changed", async () => {
+		const onInputChange = vi.fn();
+		const onParentClick = vi.fn();
+		await act(async () => {
+			render(
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<CompactSlider {...defaultProps} onInputChange={onInputChange} />
+				</div>,
+			);
+		});
+
+		const input = screen.getByDisplayValue("10");
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "25" } });
+		});
+
+		expect(onInputChange).toHaveBeenCalled();
+		expect(onParentClick).not.toHaveBeenCalled();
+	});
+
+	it("stops propagation when clicked", async () => {
+		const onParentClick = vi.fn();
+		await act(async () => {
+			render(
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<CompactSlider {...defaultProps} />
+				</div>,
+			);
+		});
+
+		const fieldset = screen.getByRole("group", { name: "Test Slider" });
+		await act(async () => {
+			fireEvent.click(fieldset);
+		});
+
+		expect(onParentClick).not.toHaveBeenCalled();
 	});
 });

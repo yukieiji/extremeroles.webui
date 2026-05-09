@@ -226,7 +226,9 @@ describe("ExROptionEditor", () => {
 
 		// スライダー（input[type="range"]）が存在することを確認
 		// biome-ignore lint/style/noNonNullAssertion: test
-		const slider = screen.getAllByDisplayValue("0").find((e) => (e as HTMLInputElement).type === "range")!;
+		const slider = screen
+			.getAllByDisplayValue("0")
+			.find((e) => (e as HTMLInputElement).type === "range")!;
 		expect(slider).toBeInTheDocument();
 
 		// 現在の値が表示されていることを確認
