@@ -48,7 +48,7 @@ test("ExRタブ切り替え時にカテゴリリストが表示されること",
 	const categoryList = page.getByTestId("category-list");
 	await expect(categoryList).toBeVisible();
 
-	const tabs = page.locator("button.px-4.py-2.rounded-t-lg");
+	const tabs = page.getByRole("tab");
 	const secondTab = tabs.nth(1);
 	const secondTabName = await secondTab.textContent();
 	await secondTab.click();
