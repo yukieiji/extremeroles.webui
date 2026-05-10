@@ -37,7 +37,9 @@ describe("ChildOptionViewAccordion", () => {
 	it("should call onToggle when the button is clicked", async () => {
 		const onToggle = vi.fn();
 		await act(async () => {
-			render(<ChildOptionViewAccordion {...defaultProps} onToggle={onToggle} />);
+			render(
+				<ChildOptionViewAccordion {...defaultProps} onToggle={onToggle} />,
+			);
 		});
 
 		const button = screen.getByRole("button", { name: OPEN });

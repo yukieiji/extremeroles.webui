@@ -50,7 +50,7 @@ describe("AccordionBody", () => {
 			fireEvent.click(button);
 		});
 		expect(button).toHaveAttribute("aria-expanded", "true");
-		const content = screen.getByText("Test Content");
+		const _content = screen.getByText("Test Content");
 		const contentContainer = screen.getByTestId("accordion-content");
 		expect(contentContainer).toHaveAttribute("data-open", "");
 

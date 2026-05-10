@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import { CLOSE, OPEN } from "@/noTrans";
+import { OptionRowContainer } from "../parts/OptionRowContainer";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "../ui/accordion";
-import { OptionRowContainer } from "../parts/OptionRowContainer";
 
 interface ChildOptionViewAccordionProps {
 	optionItem: ReactNode;

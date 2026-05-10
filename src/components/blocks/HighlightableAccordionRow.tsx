@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { CLOSE, OPEN } from "@/noTrans";
-import { AccordionTrigger } from "../ui/accordion";
 import { HighlightWrapper } from "../parts/HighlightWrapper";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
+import { AccordionTrigger } from "../ui/accordion";
 
 interface HighlightableAccordionRowProps {
 	id: string;
