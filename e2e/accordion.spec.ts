@@ -56,13 +56,16 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	await expect(optionName).toBeVisible();
 
 	// タブを切り替えてもアコーディオンの状態が維持されることを確認
-	// 注意: レイアウトの関係でアコーディオンのコンテンツがタブに重なることがあるため、DOMのclick()を直接呼び出す
+	// TODO: レイアウト崩れの修正後、以下の evaluate を通常の click() に戻す。
+	// 現在、アコーディオンのコンテンツがタブに重なっており、click({ force: true }) でも
+	// 正しくクリックが伝達されない（重なっている要素がイベントを奪う）ため、直接DOMのclickを呼び出している。
 	await page
 		.getByRole("tab", { name: "ゴーストニュートラル役職設定", exact: true })
 		.evaluate((el: HTMLElement) => el.click());
 	await expect(page.getByRole("button", { name: "フォラス" })).toBeVisible();
 
 	// グローバル設定タブに戻る
+	// TODO: レイアウト崩れの修正後、evaluate を通常の click() に戻す
 	await page
 		.getByRole("tab", { name: "グローバル設定", exact: true })
 		.evaluate((el: HTMLElement) => el.click());
@@ -70,11 +73,13 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	await expect(optionName).toBeVisible();
 
 	// サイドバーを切り替えて戻ってきても維持されることを確認
+	// TODO: レイアウト崩れの修正後、evaluate を通常の click() に戻す
 	await sidebar
 		.getByRole("button", { name: "Au Options" })
 		.evaluate((el: HTMLElement) => el.click());
 	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
 
+	// TODO: レイアウト崩れの修正後、evaluate を通常の click() に戻す
 	await sidebar
 		.getByRole("button", { name: "ExR Options" })
 		.evaluate((el: HTMLElement) => el.click());
