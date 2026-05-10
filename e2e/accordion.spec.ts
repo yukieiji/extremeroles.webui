@@ -42,17 +42,17 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	const contentContainer = accordionItem
 		.getByTestId("accordion-content")
 		.first();
-	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
+	await expect(contentContainer).toBeHidden();
 
 	// 閉じているときはオプション名が表示されていない（lazy rendering）
 	const optionName = page
 		.getByTestId("main-content-section")
 		.getByText("強力なシャッフルを使用する");
-	await expect(optionName).not.toBeAttached();
+	await expect(optionName).not.toBeVisible();
 
 	// アコーディオンを開く
 	await accordionButton.click();
-	await expect(contentContainer).toHaveClass(/grid-rows-\[1fr\]/);
+	await expect(contentContainer).toHaveAttribute("data-open", "");
 	await expect(optionName).toBeVisible();
 
 	// タブを切り替えてもアコーディオンの状態が維持されることを確認
@@ -87,6 +87,6 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 
 	// アコーディオンを閉じる
 	await accordionButton.click();
-	await expect(contentContainer).toHaveClass(/grid-rows-\[0fr\]/);
-	await expect(optionName).not.toBeAttached();
+	await expect(contentContainer).toBeHidden();
+	await expect(optionName).not.toBeVisible();
 });

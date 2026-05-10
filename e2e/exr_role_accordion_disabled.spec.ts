@@ -39,12 +39,12 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		await rateSlider.fill("1"); // 10%
 		const content = sheriffCategory.getByTestId("accordion-content").first();
 		await expect(content).toBeVisible();
-		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
+		await expect(content).toHaveAttribute("data-open", "");
 
 		// 2. レートを 0% にするとアコーディオンが閉じ、無効化されることを確認
 		await rateSlider.fill("0"); // 0%
 		await expect(content).not.toBeVisible();
-		await expect(toggleButton).toBeDisabled();
+		await expect(toggleButton).toHaveAttribute("aria-disabled", "true");
 
 		// 3. アイコンがドット「・」になっていることを確認
 		// LucideのDotコンポーネントが描画される
@@ -52,12 +52,12 @@ test.describe("ExR Role Accordion Disabled State", () => {
 
 		// 4. レートを 10% に戻すと再度有効化され、自動的に開くことを確認
 		await rateSlider.fill("1"); // 10%
-		await expect(toggleButton).toBeEnabled();
+		await expect(toggleButton).toHaveAttribute("aria-disabled", "false");
 		await expect(toggleButton.locator("svg")).toBeVisible();
 		await expect(toggleButton.locator("svg.lucide-dot")).not.toBeVisible();
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
 		await expect(content).toBeVisible();
-		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
+		await expect(content).toHaveAttribute("data-open", "");
 
 		// 5. 一旦閉じてから数を変更しても自動的に開くことを確認
 		await toggleButton.click();
@@ -70,12 +70,12 @@ test.describe("ExR Role Accordion Disabled State", () => {
 		// 既にレートが10%なので、数を変更しても自動では開かないはず（今回の要件は「0から有効になった時」）
 		// 念の為0にしてから動かす
 		await rateSlider.fill("0");
-		await expect(toggleButton).toBeDisabled();
+		await expect(toggleButton).toHaveAttribute("aria-disabled", "true");
 
 		await countSlider.fill("2"); // 数を2にする（0から0以外へ）
-		await expect(toggleButton).toBeEnabled();
+		await expect(toggleButton).toHaveAttribute("aria-disabled", "false");
 		await expect(toggleButton).toHaveAttribute("aria-expanded", "true");
 		await expect(content).toBeVisible();
-		await expect(content).toHaveClass(/grid-rows-\[1fr\]/);
+		await expect(content).toHaveAttribute("data-open", "");
 	});
 });
