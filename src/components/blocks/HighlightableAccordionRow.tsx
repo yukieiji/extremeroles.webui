@@ -16,7 +16,6 @@ export function HighlightableAccordionRow({
 	id,
 	isHighlight,
 	isOpen,
-	onToggle,
 	children,
 }: HighlightableAccordionRowProps) {
 	return (
@@ -25,7 +24,6 @@ export function HighlightableAccordionRow({
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
 						<AccordionTrigger
-							onClick={onToggle}
 							className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full p-0 gap-0 justify-items-center hover:no-underline [&>div>svg]:size-4"
 							aria-label={isOpen ? CLOSE : OPEN}
 						/>

@@ -28,16 +28,7 @@ export function ChildOptionViewAccordion({
 }: ChildOptionViewAccordionProps) {
 	return (
 		<div className={`flex flex-col ${depth > 0 ? "pl-2" : ""}`}>
-			<Accordion
-				value={isOpen ? ["item-1"] : []}
-				onValueChange={(value) => {
-					if (value.includes("item-1") && !isOpen) {
-						onToggle();
-					} else if (!value.includes("item-1") && isOpen) {
-						onToggle();
-					}
-				}}
-			>
+			<Accordion value={isOpen ? ["item-1"] : []} onValueChange={onToggle}>
 				<AccordionItem value="item-1">
 					<OptionRowContainer
 						leading={

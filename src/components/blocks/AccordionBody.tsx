@@ -23,16 +23,7 @@ export function AccordionBody({
 	children,
 }: AccordionBodyProps) {
 	return (
-		<Accordion
-			value={isOpen ? ["item-1"] : []}
-			onValueChange={(value) => {
-				if (value.includes("item-1") && !isOpen) {
-					onToggle();
-				} else if (!value.includes("item-1") && isOpen) {
-					onToggle();
-				}
-			}}
-		>
+		<Accordion value={isOpen ? ["item-1"] : []} onValueChange={onToggle}>
 			<AccordionItem value="item-1">
 				<AccordionTrigger className="w-full flex items-center gap-3 p-4 hover:bg-gray-700 transition-colors text-left cursor-pointer hover:no-underline [&>div>svg]:text-gray-400 [&>div>svg]:size-5">
 					<span className="font-semibold text-gray-200">{title}</span>

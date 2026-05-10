@@ -44,7 +44,6 @@ export function ExROptionRecursiveItem({
 			row={
 				<HighlightableAccordionRow
 					id={navigateId}
-					onToggle={handleToggle}
 					isOpen={isOpen}
 					isHighlight={isHighlighted}
 				>
@@ -56,6 +55,7 @@ export function ExROptionRecursiveItem({
 				</HighlightableAccordionRow>
 			}
 			isOpen={isOpen}
+			onToggle={handleToggle}
 			depth={depth}
 		>
 			<OptionEditorCategoryOptionLayout arr={childs} ignoreIndex={-1}>

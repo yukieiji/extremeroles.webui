@@ -35,20 +35,16 @@ export function RoleCategoryAccordion({
 			>
 				<Accordion
 					value={isOpen && !disable ? ["item-1"] : []}
-					onValueChange={(value) => {
+					onValueChange={() => {
 						if (!disable) {
-							if (value.includes("item-1") && !isOpen) {
-								onClick();
-							} else if (!value.includes("item-1") && isOpen) {
-								onClick();
-							}
+							onClick();
 						}
 					}}
 					className="flex-1"
 				>
 					<AccordionItem value="item-1">
 						<AccordionTrigger
-							className={`flex-1 flex items-center gap-3 p-4 text-left hover:no-underline [&>div>svg]:${disable ? "hidden" : "text-gray-400 size-5"} ${disable ? "cursor-default opacity-50" : ""}`}
+							className={`flex-1 flex items-center gap-3 p-4 text-left hover:no-underline [&>div>svg]:${disable ? "hidden" : "text-gray-400 [&>div>svg]:size-5"} ${disable ? "cursor-default opacity-50" : ""}`}
 							disabled={disable}
 						>
 							{disable && (
