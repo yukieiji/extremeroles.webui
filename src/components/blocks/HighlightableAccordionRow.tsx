@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { CLOSE, OPEN } from "@/noTrans";
-import { AccordionSvg } from "../parts/AccordionSvg";
+import { AccordionTrigger } from "../ui/accordion";
 import { HighlightWrapper } from "../parts/HighlightWrapper";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
 
@@ -24,15 +24,11 @@ export function HighlightableAccordionRow({
 			<OptionRowContainer
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
-						<button
-							type="button"
+						<AccordionTrigger
 							onClick={onToggle}
-							className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full"
-							aria-expanded={isOpen}
+							className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full p-0 gap-0 justify-items-center hover:no-underline [&>div>svg]:size-4"
 							aria-label={isOpen ? CLOSE : OPEN}
-						>
-							<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
-						</button>
+						/>
 					</div>
 				}
 				content={children}

@@ -1,7 +1,11 @@
 import type { ReactNode } from "react";
 import { CLOSE, OPEN } from "@/noTrans";
-import { AccordionContentContainer } from "../parts/AccordionContentContainer";
-import { AccordionSvg } from "../parts/AccordionSvg";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "../ui/accordion";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
 
 interface ChildOptionViewAccordionProps {
@@ -24,29 +28,35 @@ export function ChildOptionViewAccordion({
 }: ChildOptionViewAccordionProps) {
 	return (
 		<div className={`flex flex-col ${depth > 0 ? "pl-2" : ""}`}>
-			<OptionRowContainer
-				leading={
-					<div className="flex items-center justify-center w-full h-full">
-						<button
-							type="button"
-							onClick={onToggle}
-							className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full"
-							aria-expanded={isOpen}
-							aria-label={isOpen ? CLOSE : OPEN}
-						>
-							<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
-						</button>
-					</div>
-				}
-				content={optionItem}
-			/>
+			<Accordion
+				value={isOpen ? ["item-1"] : []}
+				onValueChange={(value) => {
+					if (value.includes("item-1") && !isOpen) {
+						onToggle();
+					} else if (!value.includes("item-1") && isOpen) {
+						onToggle();
+					}
+				}}
+			>
+				<AccordionItem value="item-1">
+					<OptionRowContainer
+						leading={
+							<div className="flex items-center justify-center w-full h-full">
+								<AccordionTrigger
+									className="flex items-center justify-center text-gray-500 hover:text-gray-300 w-full h-full p-0 gap-0 justify-items-center hover:no-underline [&>div>svg]:size-4"
+									aria-label={isOpen ? CLOSE : OPEN}
+								/>
+							</div>
+						}
+						content={optionItem}
+					/>
 
-			{/* 子要素（ネストされたオプション） */}
-			<AccordionContentContainer isOpen={isOpen}>
-				<div className="min-h-0">
-					{isOpen && <div className="flex flex-col">{children}</div>}
-				</div>
-			</AccordionContentContainer>
+					{/* 子要素（ネストされたオプション） */}
+					<AccordionContent className="p-0 pb-0">
+						<div className="flex flex-col">{children}</div>
+					</AccordionContent>
+				</AccordionItem>
+			</Accordion>
 		</div>
 	);
 }

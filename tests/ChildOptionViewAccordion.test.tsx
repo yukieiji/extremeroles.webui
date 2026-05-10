@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ChildOptionViewAccordion } from "@/components/blocks/ChildOptionViewAccordion";
 import { CLOSE, OPEN } from "@/noTrans";
@@ -17,28 +17,33 @@ describe("ChildOptionViewAccordion", () => {
 		expect(screen.getByText("Option Item")).toBeInTheDocument();
 	});
 
-	it("should not render children when isOpen is false", () => {
-		render(<ChildOptionViewAccordion {...defaultProps} isOpen={false} />);
+	it("should not render children when isOpen is false", async () => {
+		await act(async () => {
+			render(<ChildOptionViewAccordion {...defaultProps} isOpen={false} />);
+		});
 		expect(screen.queryByText("Child Content")).not.toBeInTheDocument();
-
-		const contentContainer = screen.getByTestId("accordion-content");
-		expect(contentContainer).toHaveClass("grid-rows-[0fr]");
 	});
 
-	it("should render children when isOpen is true", () => {
-		render(<ChildOptionViewAccordion {...defaultProps} isOpen={true} />);
+	it("should render children when isOpen is true", async () => {
+		await act(async () => {
+			render(<ChildOptionViewAccordion {...defaultProps} isOpen={true} />);
+		});
 		expect(screen.getByText("Child Content")).toBeInTheDocument();
 
 		const contentContainer = screen.getByTestId("accordion-content");
-		expect(contentContainer).toHaveClass("grid-rows-[1fr]");
+		expect(contentContainer).toHaveAttribute("data-open", "");
 	});
 
-	it("should call onToggle when the button is clicked", () => {
+	it("should call onToggle when the button is clicked", async () => {
 		const onToggle = vi.fn();
-		render(<ChildOptionViewAccordion {...defaultProps} onToggle={onToggle} />);
+		await act(async () => {
+			render(<ChildOptionViewAccordion {...defaultProps} onToggle={onToggle} />);
+		});
 
 		const button = screen.getByRole("button", { name: OPEN });
-		fireEvent.click(button);
+		await act(async () => {
+			fireEvent.click(button);
+		});
 
 		expect(onToggle).toHaveBeenCalledTimes(1);
 	});
@@ -51,8 +56,10 @@ describe("ChildOptionViewAccordion", () => {
 		expect(button).toHaveAttribute("aria-label", OPEN);
 	});
 
-	it("should have correct accessibility attributes when open", () => {
-		render(<ChildOptionViewAccordion {...defaultProps} isOpen={true} />);
+	it("should have correct accessibility attributes when open", async () => {
+		await act(async () => {
+			render(<ChildOptionViewAccordion {...defaultProps} isOpen={true} />);
+		});
 
 		const button = screen.getByRole("button", { name: CLOSE });
 		expect(button).toHaveAttribute("aria-expanded", "true");

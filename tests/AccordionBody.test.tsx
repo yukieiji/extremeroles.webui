@@ -1,16 +1,18 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { AccordionBody } from "@/components/blocks/AccordionBody";
 
 describe("AccordionBody", () => {
-	it("should display title and content when open", () => {
+	it("should display title and content when open", async () => {
 		const onToggle = vi.fn();
-		render(
-			<AccordionBody title="Test Title" isOpen={true} onToggle={onToggle}>
-				<div>Test Content</div>
-			</AccordionBody>,
-		);
+		await act(async () => {
+			render(
+				<AccordionBody title="Test Title" isOpen={true} onToggle={onToggle}>
+					<div>Test Content</div>
+				</AccordionBody>,
+			);
+		});
 
 		expect(screen.getByText("Test Title")).toBeInTheDocument();
 		expect(screen.getByText("Test Content")).toBeInTheDocument();
@@ -19,7 +21,7 @@ describe("AccordionBody", () => {
 		expect(button).toHaveAttribute("aria-expanded", "true");
 	});
 
-	it("should handle toggle lifecycle (initial closed, open, close)", () => {
+	it("should handle toggle lifecycle (initial closed, open, close)", async () => {
 		const TestWrapper = () => {
 			const [isOpen, setIsOpen] = React.useState(false);
 			return (
@@ -33,7 +35,9 @@ describe("AccordionBody", () => {
 			);
 		};
 
-		render(<TestWrapper />);
+		await act(async () => {
+			render(<TestWrapper />);
+		});
 		const button = screen.getByRole("button");
 
 		// 1. 初期状態: 閉じている
@@ -42,14 +46,18 @@ describe("AccordionBody", () => {
 		expect(screen.queryByText("Test Content")).not.toBeInTheDocument();
 
 		// 2. 開く動作
-		fireEvent.click(button);
+		await act(async () => {
+			fireEvent.click(button);
+		});
 		expect(button).toHaveAttribute("aria-expanded", "true");
 		const content = screen.getByText("Test Content");
-		const gridContainer = content.closest(".grid");
-		expect(gridContainer).toHaveClass("grid-rows-[1fr]");
+		const contentContainer = screen.getByTestId("accordion-content");
+		expect(contentContainer).toHaveAttribute("data-open", "");
 
 		// 3. 閉じる動作
-		fireEvent.click(button);
+		await act(async () => {
+			fireEvent.click(button);
+		});
 		expect(button).toHaveAttribute("aria-expanded", "false");
 		expect(screen.queryByText("Test Content")).not.toBeInTheDocument();
 	});

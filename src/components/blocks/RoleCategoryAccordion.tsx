@@ -1,7 +1,11 @@
 import { Dot } from "lucide-react";
 import type { ReactNode } from "react";
-import { AccordionContentContainer } from "../parts/AccordionContentContainer";
-import { AccordionSvg } from "../parts/AccordionSvg";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "../ui/accordion";
 
 interface RoleCategoryAccordionProps {
 	isOpen: boolean;
@@ -29,34 +33,39 @@ export function RoleCategoryAccordion({
 			<div
 				className={`flex items-center ${!disable ? "hover:bg-gray-700 transition-colors" : ""}`}
 			>
-				<button
-					type="button"
-					onClick={() => {
+				<Accordion
+					value={isOpen && !disable ? ["item-1"] : []}
+					onValueChange={(value) => {
 						if (!disable) {
-							onClick();
+							if (value.includes("item-1") && !isOpen) {
+								onClick();
+							} else if (!value.includes("item-1") && isOpen) {
+								onClick();
+							}
 						}
 					}}
-					className={`flex-1 flex items-center gap-3 p-4 text-left ${disable ? "cursor-default" : ""}`}
-					aria-expanded={isOpen}
-					disabled={disable}
+					className="flex-1"
 				>
-					{disable ? (
-						<div className="w-5 h-5 flex items-center justify-center text-gray-500 font-bold">
-							<Dot size={18} aria-hidden="true" />
-						</div>
-					) : (
-						<AccordionSvg isOpen={isOpen} className="w-5 h-5 text-gray-400" />
-					)}
-					<span className="font-semibold text-gray-200">{text}</span>
-				</button>
+					<AccordionItem value="item-1">
+						<AccordionTrigger
+							className={`flex-1 flex items-center gap-3 p-4 text-left hover:no-underline [&>div>svg]:${disable ? "hidden" : "text-gray-400 size-5"} ${disable ? "cursor-default opacity-50" : ""}`}
+							disabled={disable}
+						>
+							{disable && (
+								<div className="w-5 h-5 flex items-center justify-center text-gray-500 font-bold">
+									<Dot size={18} aria-hidden="true" />
+								</div>
+							)}
+							<span className="font-semibold text-gray-200">{text}</span>
+						</AccordionTrigger>
+						<AccordionContent className="p-0 pb-0">
+							<div className="border-t border-gray-700">{children}</div>
+						</AccordionContent>
+					</AccordionItem>
+				</Accordion>
 
 				<div className="flex items-center px-4">{spawnControl}</div>
 			</div>
-			<AccordionContentContainer isOpen={isOpen}>
-				<div className="min-h-0">
-					{isOpen && <div className="border-t border-gray-700">{children}</div>}
-				</div>
-			</AccordionContentContainer>
 		</div>
 	);
 }

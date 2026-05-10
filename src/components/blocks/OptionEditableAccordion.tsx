@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { AccordionContentContainer } from "../parts/AccordionContentContainer";
+import { Accordion, AccordionContent, AccordionItem } from "../ui/accordion";
 
 interface RowCustomizeAccordionProps {
 	row: ReactNode;
@@ -19,13 +19,15 @@ export function RowCustomizeAccordion({
 }: RowCustomizeAccordionProps) {
 	return (
 		<div className={`flex flex-col ${depth > 0 ? "pl-4" : ""}`}>
-			{row}
-			{/* 子要素（ネストされたオプション） */}
-			<AccordionContentContainer isOpen={isOpen}>
-				<div className="min-h-0">
-					{isOpen && <div className="flex flex-col">{children}</div>}
-				</div>
-			</AccordionContentContainer>
+			<Accordion value={isOpen ? ["item-1"] : []}>
+				<AccordionItem value="item-1">
+					{row}
+					{/* 子要素（ネストされたオプション） */}
+					<AccordionContent className="p-0 pb-0">
+						<div className="flex flex-col">{children}</div>
+					</AccordionContent>
+				</AccordionItem>
+			</Accordion>
 		</div>
 	);
 }

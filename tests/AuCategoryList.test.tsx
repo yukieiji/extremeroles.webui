@@ -131,7 +131,7 @@ describe("AuCategoryList", () => {
 		});
 
 		const button = screen.getByRole("button", { name: /Scientist/ });
-		expect(button).toBeDisabled();
+		expect(button).toHaveAttribute("aria-disabled", "true");
 	});
 
 	it("filters out first two options from role category body", async () => {
