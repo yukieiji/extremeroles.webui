@@ -35,9 +35,12 @@ export function RoleCategoryAccordion({
 			>
 				<Accordion
 					value={isOpen && !disable ? ["item-1"] : []}
-					onValueChange={() => {
+					onValueChange={(val) => {
 						if (!disable) {
-							onClick();
+							const nextOpen = val.includes("item-1");
+							if (nextOpen !== isOpen) {
+								onClick();
+							}
 						}
 					}}
 					className="flex-1"

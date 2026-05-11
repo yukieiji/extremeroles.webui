@@ -40,7 +40,7 @@ function AccordionTrigger({
 				<div className="relative size-4 shrink-0">
 					<ChevronDownIcon
 						data-slot="accordion-trigger-icon"
-						className="pointer-events-none absolute inset-0 transition-transform duration-200 group-data-[open]:rotate-180"
+						className="pointer-events-none absolute inset-0 transition-transform duration-200 group-data-[panel-open]:rotate-180"
 					/>
 				</div>
 				{children}
