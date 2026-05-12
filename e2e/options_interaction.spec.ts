@@ -42,7 +42,9 @@ test("Options interaction behavior", async ({ page }) => {
 
 	// 他の操作を妨げないようにドロップダウンを閉じる
 	await selectButton.click();
-	await expect(page.getByRole("option", { name: "Test Preset" })).not.toBeVisible();
+	await expect(
+		page.getByRole("option", { name: "Test Preset" }),
+	).not.toBeVisible();
 
 	// 別のカテゴリの操作を確認
 	const shuffleCategory = page

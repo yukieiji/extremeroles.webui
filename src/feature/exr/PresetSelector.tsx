@@ -79,15 +79,14 @@ export function PresetSelector() {
 					<PresetInput
 						currentSelection={currentSelection}
 						currentPresetValue={currentPresetValue}
-						selectTrigger={
-							<SelectTrigger
-								className="w-9 px-0 justify-center border-l-0 rounded-l-none h-8"
-								aria-label={PRESET_SELECT_ARIA}
-							/>
-						}
-					/>
+					>
+						<SelectTrigger
+							className="h-8 w-9 justify-center rounded-l-none border-l-0 px-0"
+							aria-label={PRESET_SELECT_ARIA}
+						/>
+					</PresetInput>
 				</div>
-				<SelectContent align="start" className="min-w-64">
+				<SelectContent alignItemWithTrigger={false} className="min-w-64">
 					{presetValues.map((val, index) => (
 						<PresetSelectItem key={`preset-${val}`} index={index} value={val} />
 					))}

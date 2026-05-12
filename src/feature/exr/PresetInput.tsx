@@ -6,7 +6,7 @@ import { useStore } from "@/useStore";
 interface PresetInputProps {
 	currentSelection: number;
 	currentPresetValue: number;
-	selectTrigger?: ReactNode;
+	children: ReactNode;
 }
 
 /**
@@ -16,7 +16,7 @@ interface PresetInputProps {
 export function PresetInput({
 	currentSelection,
 	currentPresetValue,
-	selectTrigger,
+	children,
 }: PresetInputProps) {
 	const currentPresetName = useStore((state) => {
 		return state.presetNames[currentSelection] ?? String(currentPresetValue);
@@ -64,7 +64,7 @@ export function PresetInput({
 				className="rounded-r-none"
 				aria-label={PRESET_INPUT_PLACEHOLDER}
 			/>
-			{selectTrigger}
+			{children}
 		</InputGroup>
 	);
 }
