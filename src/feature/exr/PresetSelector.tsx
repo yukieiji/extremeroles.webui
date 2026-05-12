@@ -112,11 +112,7 @@ export function PresetSelector() {
 				</div>
 				<SelectContent align="start" className="min-w-64">
 					{presetValues.map((val, index) => (
-						<PresetSelectItem
-							key={`preset-${val}`}
-							index={index}
-							value={val}
-						/>
+						<PresetSelectItem key={`preset-${val}`} index={index} value={val} />
 					))}
 				</SelectContent>
 			</Select>
