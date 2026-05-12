@@ -134,44 +134,4 @@ describe("RightFloatingPanel Component", () => {
 
 		expect(useStore.getState().isAuSettingsOpen).toBe(false);
 	});
-
-	it("closes panel when Escape key is pressed", async () => {
-		resetApiCache();
-		vi.stubGlobal(
-			"fetch",
-			vi.fn().mockImplementation((input: RequestInfo | URL) => {
-				const url = typeof input === "string" ? input : input.toString();
-				if (url.includes("/exr/role/filter/")) {
-					return Promise.resolve({
-						ok: true,
-						json: vi.fn().mockResolvedValue({
-							FilterSet: {},
-							FilterRoleId: [],
-							NormalRoleId: {},
-							CombinationId: {},
-							GhostRoleId: {},
-						}),
-					} as unknown as Response);
-				}
-				return Promise.resolve({
-					ok: true,
-					json: vi.fn().mockResolvedValue([]),
-				} as unknown as Response);
-			}),
-		);
-		await getAllOptions();
-
-		useStore.setState({ isRightPanelOpen: true });
-		await act(async () => {
-			render(
-				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
-				</Suspense>,
-			);
-		});
-
-		fireEvent.keyDown(window, { key: "Escape" });
-
-		expect(useStore.getState().isRightPanelOpen).toBe(false);
-	});
 });

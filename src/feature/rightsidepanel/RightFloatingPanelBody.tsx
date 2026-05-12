@@ -4,7 +4,6 @@ import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupC
 import {
 	AU_SETTINGS_TITLE,
 	EXR_SETTINGS_TITLE,
-	RIGHT_PANEL_ARIA,
 	RIGHT_PANEL_TITLE,
 	SETTING_VALUES_TITLE,
 } from "@/noTrans";
@@ -29,12 +28,11 @@ export function RightFloatingPanelBody({
 	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
 
 	return (
-		<aside
+		<div
 			className="h-full bg-white border-l border-gray-200 shadow-2xl relative"
 			style={{
 				width: width,
 			}}
-			aria-label={RIGHT_PANEL_ARIA}
 		>
 			{children}
 			<div className="flex flex-col h-full">
@@ -66,6 +64,6 @@ export function RightFloatingPanelBody({
 					</ViewerGroupAccordion>
 				</div>
 			</div>
-		</aside>
+		</div>
 	);
 }

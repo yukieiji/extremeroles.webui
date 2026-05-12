@@ -1,6 +1,7 @@
-import { use, useEffect } from "react";
+import { use } from "react";
+import { cn } from "@/lib/utils";
 import { getAllOptions } from "@/logics/api.store";
-import { CLOSE } from "@/noTrans";
+import { RIGHT_PANEL_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { RightFloatingPanelBody } from "./RightFloatingPanelBody";
 import { RightFloatingPanelToggleButton } from "./RightFloatingPanelToggleButton";
@@ -17,56 +18,31 @@ export function RightFloatingPanel() {
 	const toggleRightPanel = useStore((state) => {
 		return state.toggleRightPanel;
 	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
 	const rightPanelWidth = useStore((state) => state.rightPanelWidth);
-
-	// Escapeキーでパネルを閉じるためのグローバルリスナー
-	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape" && isRightPanelOpen) {
-				setRightPanelOpen(false);
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyDown);
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [isRightPanelOpen, setRightPanelOpen]);
+	const isResizing = useStore((state) => state.isResizing);
 
 	return (
-		<>
-			<div
-				className="fixed top-0 right-0 h-full flex z-40"
-				style={{
-					transform: isRightPanelOpen
-						? "translateX(0)"
-						: `translateX(${rightPanelWidth}px)`,
-					transition: "transform 300ms ease-in-out",
-				}}
-			>
-				{/* トグルボタン (縦全体のストリップ) */}
-				<RightFloatingPanelToggleButton
-					isOpen={isRightPanelOpen}
-					onClick={toggleRightPanel}
-				/>
-				{/* パネル本体 */}
-				<RightFloatingPanelBody width={rightPanelWidth}>
-					{isRightPanelOpen && <RightPanelFloatingPanelResizeHandle />}
-				</RightFloatingPanelBody>
-			</div>
-
-			{/* オーバーレイ */}
-			{isRightPanelOpen && (
-				<button
-					type="button"
-					className="fixed inset-0 bg-black/20 z-30 cursor-default"
-					onClick={toggleRightPanel}
-					aria-label={CLOSE}
-				/>
+		<aside
+			className={cn(
+				"h-full flex shrink-0 overflow-hidden",
+				!isResizing && "transition-[width] duration-300 ease-in-out",
 			)}
-		</>
+			style={{
+				width: isRightPanelOpen ? `${rightPanelWidth + 24}px` : "24px",
+				minWidth: isRightPanelOpen ? `${rightPanelWidth + 24}px` : "24px",
+			}}
+			aria-label={RIGHT_PANEL_ARIA}
+			data-testid="right-side-panel"
+		>
+			{/* トグルボタン (縦全体のストリップ) */}
+			<RightFloatingPanelToggleButton
+				isOpen={isRightPanelOpen}
+				onClick={toggleRightPanel}
+			/>
+			{/* パネル本体 */}
+			<RightFloatingPanelBody width={rightPanelWidth}>
+				{isRightPanelOpen && <RightPanelFloatingPanelResizeHandle />}
+			</RightFloatingPanelBody>
+		</aside>
 	);
 }

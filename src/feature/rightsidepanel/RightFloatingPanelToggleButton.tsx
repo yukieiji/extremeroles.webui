@@ -13,8 +13,9 @@ export function RightFloatingPanelToggleButton({
 		<button
 			type="button"
 			onClick={onClick}
-			className="h-full w-6 bg-blue-600 text-white shadow-mdhover:bg-blue-700 flex items-center justify-center cursor-pointer"
+			className="h-full w-6 bg-blue-600 text-white shadow-md hover:bg-blue-700 flex items-center justify-center cursor-pointer"
 			aria-label={isOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
+			data-testid="right-panel-toggle"
 		>
 			<span className="text-sm font-bold">{isOpen ? "▶" : "◀"}</span>
 		</button>

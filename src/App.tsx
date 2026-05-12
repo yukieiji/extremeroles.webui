@@ -141,7 +141,7 @@ function RootContent() {
 			<BlockableLoading />
 			<BlockableDialog />
 			<OptionGroupToggleSidebar />
-			<SidebarInset className="pr-8">
+			<SidebarInset>
 				<MainContent />
 			</SidebarInset>
 			<RightFloatingPanel />
