@@ -10,7 +10,6 @@ interface OptionDropdownControlProps {
 	selection: number;
 	values: string[];
 	onChange: (selection: number) => void;
-	disabled?: boolean;
 }
 
 /**
@@ -20,7 +19,6 @@ export function OptionDropdownControl({
 	selection,
 	values,
 	onChange,
-	disabled = false,
 }: OptionDropdownControlProps) {
 	const handleValueChange = (value: string | null) => {
 		const index = values.indexOf(value ?? "");
@@ -30,11 +28,7 @@ export function OptionDropdownControl({
 	};
 
 	return (
-		<Select
-			value={values[selection]}
-			onValueChange={handleValueChange}
-			disabled={disabled}
-		>
+		<Select value={values[selection]} onValueChange={handleValueChange}>
 			<SelectTrigger>
 				<SelectValue />
 			</SelectTrigger>

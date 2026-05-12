@@ -33,10 +33,9 @@ export function AuOptionControl({
 
 	// 数値(Slider)か文字列(Selector)かの判定
 	if (typeof range[0] === "number") {
-		const numRange = range as number[];
 		return (
 			<OptionSliderControl
-				values={numRange}
+				values={range as number[]}
 				selection={selection}
 				format={optionMeta.format}
 				onChange={onSelectionChange}
@@ -44,10 +43,9 @@ export function AuOptionControl({
 		);
 	}
 
-	const stringRange = range as string[];
 	return (
 		<OptionDropdownControl
-			values={stringRange}
+			values={range as string[]}
 			selection={selection}
 			onChange={(newValue) => {
 				onSelectionChange(newValue);
