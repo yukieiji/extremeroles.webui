@@ -37,17 +37,19 @@ test("isResizing state is correctly managed", async ({ page }) => {
 		throw new Error("Handle box not found");
 	}
 
-	// Move to handle center and press down
-	await page.mouse.move(
-		handleBox.x + handleBox.width / 2,
-		handleBox.y + handleBox.height / 2,
-	);
-	await page.mouse.down();
+	// Dispatch event instead of mouse actions to avoid potential issues with thin handles
+	await handle.dispatchEvent("mousedown", { button: 0 });
 
 	// Move a bit to ensure resize state is active
-	await page.mouse.move(handleBox.x - 20, handleBox.y + handleBox.height / 2, {
-		steps: 5,
-	});
+	await page.evaluate((targetX) => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: targetX,
+				clientY: 300,
+			}),
+		);
+	}, handleBox.x - 20);
 
 	try {
 		await expect(page.locator("body")).toHaveCSS("cursor", "ew-resize", {
@@ -56,7 +58,9 @@ test("isResizing state is correctly managed", async ({ page }) => {
 	} catch (_e) {
 		console.warn("Cursor check failed in headless environment, continuing.");
 	}
-	await page.mouse.up();
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+	});
 });
 
 test("right sidebar can be resized", async ({ page }) => {
@@ -97,16 +101,11 @@ test("right sidebar can be resized", async ({ page }) => {
 		throw new Error("Handle box not found");
 	}
 
-	// Move mouse to handle and drag
-	await page.mouse.move(
-		handleBox.x + handleBox.width / 2,
-		handleBox.y + handleBox.height / 2,
-	);
-	await page.mouse.down();
-
 	// Drag left (increase width)
 	// Dispatch events for better reliability with thin handles
 	await handle.dispatchEvent("mousedown", { button: 0 });
+	// Wait a bit to ensure event listeners are attached
+	await page.waitForTimeout(100);
 	await page.evaluate((targetX) => {
 		window.dispatchEvent(
 			new MouseEvent("mousemove", {
@@ -145,6 +144,7 @@ test("right sidebar can be resized", async ({ page }) => {
 
 	// Drag right (decrease width)
 	await newHandle.dispatchEvent("mousedown", { button: 0 });
+	await page.waitForTimeout(100);
 	await page.evaluate((targetX) => {
 		window.dispatchEvent(
 			new MouseEvent("mousemove", {

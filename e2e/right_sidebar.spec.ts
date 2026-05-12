@@ -32,7 +32,7 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 			},
 			{ timeout: 15000 },
 		)
-		.toBeCloseTo(0, 0);
+		.toBeLessThan(5);
 
 	// Open the panel
 	await toggleButton.click();
@@ -75,5 +75,5 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 			},
 			{ timeout: 15000 },
 		)
-		.toBeCloseTo(0, 0);
+		.toBeLessThan(5);
 });

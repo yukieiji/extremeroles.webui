@@ -41,7 +41,7 @@ export function RightFloatingPanel() {
 	return (
 		<aside
 			className={cn(
-				"h-full flex shrink min-w-0 overflow-hidden",
+				"h-full flex shrink-0 overflow-hidden",
 				!isResizing && "transition-[width] duration-300 ease-in-out",
 			)}
 			style={{

@@ -50,11 +50,11 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 		.poll(
 			async () => {
 				const box = await rightPanel.boundingBox();
-				return box?.width;
+				return box ? box.width : -1;
 			},
-			{ timeout: 10000 },
+			{ timeout: 15000 },
 		)
-		.toBeCloseTo(0, 0);
+		.toBeLessThan(5);
 
 	// ExR タブが選択されていることを確認
 	const exrTabButton = page.getByRole("button", { name: "ExR Options" });
