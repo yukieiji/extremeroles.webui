@@ -1,5 +1,10 @@
 import { ChevronDown } from "lucide-react";
 import { useRef } from "react";
+import {
+	InputGroup,
+	InputGroupButton,
+	InputGroupInput,
+} from "@/components/ui/input-group";
 import { PRESET_INPUT_PLACEHOLDER, PRESET_SELECT_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 
@@ -58,34 +63,33 @@ export function PresetInput({
 		}
 	};
 
-	const toggleDropdown = () => {
+	const toggleDropdown = (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
 		setPresetDropdownOpen(!isDropdownOpen);
 	};
 
 	return (
-		<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
-			<input
+		<InputGroup className="w-64">
+			<InputGroupInput
 				ref={inputRef}
 				type="text"
 				key={currentSelection}
 				defaultValue={currentPresetName}
 				onBlur={handleBlur}
 				onKeyDown={handleKeyDown}
-				className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
 				placeholder={PRESET_INPUT_PLACEHOLDER}
 			/>
-			<button
-				type="button"
+			<InputGroupButton
 				onClick={toggleDropdown}
-				className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors"
 				aria-label={PRESET_SELECT_ARIA}
+				size="icon-sm"
 			>
 				<ChevronDown
-					size={16}
-					className={`text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+					className={`text-muted-foreground transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
 					aria-hidden="true"
 				/>
-			</button>
-		</div>
+			</InputGroupButton>
+		</InputGroup>
 	);
 }

@@ -1,5 +1,9 @@
-import { useEffect, useRef } from "react";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
@@ -26,24 +30,6 @@ export function PresetSelector() {
 		return state.highlightedExROptionId === PRESET_OPTION_UNIQUE_ID;
 	});
 
-	const dropdownRef = useRef<HTMLDivElement>(null);
-
-	// 外部クリックでドロップダウンを閉じる
-	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
-			) {
-				setPresetDropdownOpen(false);
-			}
-		};
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, [setPresetDropdownOpen]);
-
 	if (!presetOption) {
 		return null;
 	}
@@ -60,19 +46,21 @@ export function PresetSelector() {
 			isHighlighted={isHighlighted}
 			isInset={false}
 		>
-			<div className="relative flex items-center gap-2" ref={dropdownRef}>
-				<PresetInput
-					currentSelection={currentSelection}
-					currentPresetValue={currentPresetValue}
-				/>
-
-				{isDropdownOpen && (
+			<Popover open={isDropdownOpen} onOpenChange={setPresetDropdownOpen}>
+				<div className="relative flex items-center gap-2">
+					<PresetInput
+						currentSelection={currentSelection}
+						currentPresetValue={currentPresetValue}
+					/>
+					<PopoverTrigger className="sr-only">Open presets</PopoverTrigger>
+				</div>
+				<PopoverContent className="w-64 p-0" align="start">
 					<PresetDropdown
 						currentSelection={currentSelection}
 						presetValues={presetValues}
 					/>
-				)}
-			</div>
+				</PopoverContent>
+			</Popover>
 		</HighlightWrapper>
 	);
 }

@@ -44,7 +44,7 @@ export function PresetDropdown({
 	};
 
 	return (
-		<div className="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded shadow-xl z-50 max-h-60 overflow-y-auto">
+		<div className="flex flex-col p-1 max-h-60 overflow-y-auto">
 			{presetValues.map((val, index) => {
 				const isSelected = index === currentSelection;
 				return (

@@ -18,3 +18,7 @@ class ResizeObserver {
 }
 
 window.ResizeObserver = ResizeObserver;
+
+if (typeof Element.prototype.scrollIntoView !== "function") {
+	Element.prototype.scrollIntoView = vi.fn();
+}

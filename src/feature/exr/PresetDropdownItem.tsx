@@ -1,3 +1,6 @@
+import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useStore } from "@/useStore";
 
 interface PresetDropdownItemProps {
@@ -22,22 +25,27 @@ export function PresetDropdownItem({
 	});
 
 	return (
-		<button
-			type="button"
+		<Button
+			variant="ghost"
+			className={cn(
+				"w-full justify-start font-normal px-2 py-1.5 h-auto",
+				isSelected && "bg-accent text-accent-foreground",
+			)}
 			onClick={() => {
 				onSelect(index, name);
 			}}
-			className={`
-        w-full text-left px-3 py-2 text-sm transition-colors
-        ${isSelected ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}
-      `}
 		>
-			<div className="flex justify-between items-center">
-				<span>{name}</span>
+			<div className="flex w-full justify-between items-center">
+				<div className="flex items-center gap-2">
+					<Check
+						className={cn("h-4 w-4", isSelected ? "opacity-100" : "opacity-0")}
+					/>
+					<span>{name}</span>
+				</div>
 				{name !== String(value) && (
 					<span className="text-xs opacity-50 ml-2">({value})</span>
 				)}
 			</div>
-		</button>
+		</Button>
 	);
 }
