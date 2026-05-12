@@ -6,7 +6,7 @@ import { useStore } from "@/useStore";
 
 vi.mock("@/logics/api.store", () => ({
 	resetApiCache: vi.fn(),
-	refechAll: vi.fn().mockResolvedValue(undefined),
+	refetchAll: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock("@/hooks/useManualBlock", () => ({
@@ -31,7 +31,7 @@ describe("useSyncBackend", () => {
 		});
 
 		expect(apiStore.resetApiCache).toHaveBeenCalled();
-		expect(apiStore.refechAll).toHaveBeenCalled();
+		expect(apiStore.refetchAll).toHaveBeenCalled();
 		// startTransition 内で実行されるため、少し待つ必要があるかもしれないが、
 		// act でラップしているので同期的に扱えるはず
 		expect(validateOpenedIds).toHaveBeenCalled();
@@ -52,6 +52,6 @@ describe("useBackendUpdate", () => {
 		});
 
 		expect(mockUpdate).toHaveBeenCalled();
-		expect(apiStore.refechAll).toHaveBeenCalled();
+		expect(apiStore.refetchAll).toHaveBeenCalled();
 	});
 });
