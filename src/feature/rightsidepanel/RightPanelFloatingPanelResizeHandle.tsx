@@ -27,7 +27,10 @@ export function RightPanelFloatingPanelResizeHandle() {
 			const newWidth = window.innerWidth - e.clientX;
 			// メインコンテンツが極端に狭くならないように、画面幅の80%を上限とする
 			// また、サイドバーがあることを考慮して、実際の表示領域を超えないように制御する
-			const maxWidth = Math.min(window.innerWidth * 0.8, window.innerWidth - 300);
+			const maxWidth = Math.min(
+				window.innerWidth * 0.8,
+				window.innerWidth - 300,
+			);
 
 			if (newWidth >= MIN_WIDTH && newWidth <= maxWidth) {
 				setRightPanelWidth(newWidth);
