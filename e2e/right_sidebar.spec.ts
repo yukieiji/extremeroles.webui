@@ -21,6 +21,8 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
+	await page.screenshot({ path: "temp/verification/sidebar_closed.png" });
+
 	// Initially closed (width should be 0px)
 	// We use attach state or presence because 0 width might be considered hidden by toBeVisible
 	await expect(rightPanel).toBeAttached();
@@ -32,10 +34,12 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(5);
+		.toBeCloseTo(24, 1);
 
 	// Open the panel
 	await toggleButton.click();
+	await page.waitForTimeout(500);
+	await page.screenshot({ path: "temp/verification/sidebar_open.png" });
 
 	// Wait for panel content to appear
 	await expect(page.getByText("Right Panel")).toBeVisible({ timeout: 15000 });
@@ -75,5 +79,5 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(5);
+		.toBeCloseTo(24, 1);
 });

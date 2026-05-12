@@ -45,7 +45,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	// 3. ダブルクリックでナビゲーションを確認
 	await presetRow.dblclick();
 
-	// 4. パネルが閉じているか確認 (幅が0pxに戻っているか)
+	// 4. パネルが閉じているか確認 (幅が24pxに戻っているか)
 	await expect
 		.poll(
 			async () => {
@@ -54,7 +54,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(5);
+		.toBeCloseTo(24, 1);
 
 	// ExR タブが選択されていることを確認
 	const exrTabButton = page.getByRole("button", { name: "ExR Options" });

@@ -41,25 +41,32 @@ export function RightFloatingPanel() {
 	return (
 		<aside
 			className={cn(
-				"h-full flex shrink-0 overflow-hidden",
+				"h-full flex shrink-0",
 				!isResizing && "transition-[width] duration-300 ease-in-out",
 			)}
 			style={{
-				width: isRightPanelOpen ? `${rightPanelWidth}px` : "0px",
+				width: isRightPanelOpen ? `${rightPanelWidth + 24}px` : "24px",
 				maxWidth: "80vw",
 			}}
 			aria-label={RIGHT_PANEL_ARIA}
 			data-testid="right-side-panel"
 		>
-			{/* トグルボタン (画面右上に固定) */}
+			{/* パネル本体 */}
+			<div
+				className={cn(
+					"h-full overflow-hidden flex-1 min-w-0",
+					!isRightPanelOpen && "w-0",
+				)}
+			>
+				<RightFloatingPanelBody>
+					{isRightPanelOpen && <RightPanelFloatingPanelResizeHandle />}
+				</RightFloatingPanelBody>
+			</div>
+			{/* トグルボタン (リールのようなボタン) */}
 			<RightFloatingPanelToggleButton
 				isOpen={isRightPanelOpen}
 				onClick={toggleRightPanel}
 			/>
-			{/* パネル本体 */}
-			<RightFloatingPanelBody>
-				{isRightPanelOpen && <RightPanelFloatingPanelResizeHandle />}
-			</RightFloatingPanelBody>
 		</aside>
 	);
 }

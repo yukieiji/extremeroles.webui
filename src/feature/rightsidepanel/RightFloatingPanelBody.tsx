@@ -26,7 +26,7 @@ export function RightFloatingPanelBody({
 	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
 
 	return (
-		<div className="h-full w-full bg-white border-l border-gray-200 shadow-2xl relative">
+		<div className="h-full flex-1 min-w-0 bg-white border-l border-gray-200 shadow-2xl relative">
 			{children}
 			<div className="flex flex-col h-full">
 				<div className="flex items-center justify-between p-4 border-b border-gray-100">
