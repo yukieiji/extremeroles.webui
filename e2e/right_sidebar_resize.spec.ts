@@ -51,13 +51,9 @@ test("isResizing state is correctly managed", async ({ page }) => {
 		);
 	}, handleBox.x - 20);
 
-	try {
-		await expect(page.locator("body")).toHaveCSS("cursor", "ew-resize", {
-			timeout: 5000,
-		});
-	} catch (_e) {
-		console.warn("Cursor check failed in headless environment, continuing.");
-	}
+	await expect(page.locator("body")).toHaveCSS("cursor", "ew-resize", {
+		timeout: 5000,
+	});
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
