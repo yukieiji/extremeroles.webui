@@ -34,7 +34,7 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await presetInput.press("Enter");
 
 	// ドロップダウンを開く
-	const selectButton = page.getByRole("combobox", { name: "プリセットを選択" });
+	const selectButton = page.getByLabel("プリセットを選択");
 	await expect(selectButton).toBeVisible();
 	await selectButton.click();
 
