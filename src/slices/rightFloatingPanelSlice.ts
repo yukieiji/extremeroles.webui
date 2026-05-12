@@ -2,7 +2,7 @@ import type { StateCreator } from "zustand";
 import type { ExRTabId, UniqueOptionId } from "../type";
 
 /**
- * 右フローティングパネルの状態管理を行うスライスのインターフェース
+ * 右サイドパネルの状態管理を行うスライスのインターフェース
  */
 export interface RightFloatingPanelSlice {
 	isRightPanelOpen: boolean;
@@ -34,7 +34,7 @@ export interface RightFloatingPanelSlice {
 }
 
 /**
- * 右フローティングパネルの状態管理を行うスライスの生成
+ * 右サイドパネルの状態管理を行うスライスの生成
  */
 export const createRightFloatingPanelSlice: StateCreator<
 	RightFloatingPanelSlice

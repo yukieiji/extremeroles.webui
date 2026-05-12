@@ -8,7 +8,7 @@ import { RightFloatingPanelToggleButton } from "./RightFloatingPanelToggleButton
 import { RightPanelFloatingPanelResizeHandle } from "./RightPanelFloatingPanelResizeHandle";
 
 /**
- * 右フローティングパネルコンポーネント
+ * 右サイドパネルコンポーネント
  */
 export function RightFloatingPanel() {
 	use(getAllOptions());
