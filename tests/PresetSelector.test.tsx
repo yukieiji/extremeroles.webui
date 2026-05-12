@@ -20,16 +20,16 @@ describe("PresetSelector", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: ["Preset 1", "Preset 2"],
-				isPresetDropdownOpen: false,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
+		const mockState = {
+			presetNames: ["Preset 1", "Preset 2"],
+			isPresetDropdownOpen: false,
+			setPresetDropdownOpen: mockSetPresetDropdownOpen,
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(mockState));
+		useStore.getState = vi.fn().mockReturnValue(mockState);
 	});
 
 	it("renders preset name in input", () => {
@@ -63,16 +63,16 @@ describe("PresetSelector", () => {
 			selection: 0,
 			values: [0, 1],
 		});
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: ["Preset 1", "Preset 2"],
-				isPresetDropdownOpen: true,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
+		const mockState = {
+			presetNames: ["Preset 1", "Preset 2"],
+			isPresetDropdownOpen: true,
+			setPresetDropdownOpen: mockSetPresetDropdownOpen,
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(mockState));
+		useStore.getState = vi.fn().mockReturnValue(mockState);
 
 		render(<PresetSelector />);
 
@@ -146,16 +146,16 @@ describe("PresetSelector", () => {
 			selection: 0,
 			values: [10, 20],
 		});
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: ["P1", "P2"],
-				isPresetDropdownOpen: true,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
+		const mockState = {
+			presetNames: ["P1", "P2"],
+			isPresetDropdownOpen: true,
+			setPresetDropdownOpen: mockSetPresetDropdownOpen,
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(mockState));
+		useStore.getState = vi.fn().mockReturnValue(mockState);
 
 		render(<PresetSelector />);
 
@@ -180,16 +180,16 @@ describe("PresetSelector", () => {
 			selection: 0,
 			values: [123, 456],
 		});
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: ["Custom Name", "Preset 2"],
-				isPresetDropdownOpen: true,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
+		const mockState = {
+			presetNames: ["Custom Name", "Preset 2"],
+			isPresetDropdownOpen: true,
+			setPresetDropdownOpen: mockSetPresetDropdownOpen,
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(mockState));
+		useStore.getState = vi.fn().mockReturnValue(mockState);
 
 		render(<PresetSelector />);
 		expect(screen.getByText("(123)")).toBeInTheDocument();

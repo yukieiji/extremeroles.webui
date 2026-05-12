@@ -20,6 +20,25 @@ import { useStore } from "@/useStore";
 import { PresetInput } from "./PresetInput";
 
 /**
+ * プリセットの各項目を表示するためのコンポーネント。
+ * 特定のインデックスのプリセット名のみを監視します。
+ */
+function PresetSelectItem({ index, value }: { index: number; value: number }) {
+	const name = useStore((state) => state.presetNames[index] ?? String(value));
+
+	return (
+		<SelectItem value={String(index)}>
+			<div className="flex w-full items-center justify-between gap-2">
+				<span>{name}</span>
+				{name !== String(value) && (
+					<span className="text-xs opacity-50">({value})</span>
+				)}
+			</div>
+		</SelectItem>
+	);
+}
+
+/**
  * プリセットを選択・編集するためのコンポーネント。
  * CategoryId: 0, OptionId: 0 の設定を操作します。
  */
@@ -33,7 +52,6 @@ export function PresetSelector() {
 	const isHighlighted = useStore(
 		(state) => state.highlightedExROptionId === PRESET_OPTION_UNIQUE_ID,
 	);
-	const presetNames = useStore((state) => state.presetNames);
 	const openBlockDialog = useStore((state) => state.openBlockDialog);
 	const backendUpdator = useBackendUpdate();
 
@@ -44,12 +62,15 @@ export function PresetSelector() {
 	const currentSelection = presetOption.selection ?? 0;
 	const presetValues = presetOption.values as number[];
 	const currentPresetValue = presetValues[currentSelection];
-	const currentPresetName =
-		presetNames[currentSelection] ?? String(currentPresetValue);
 
 	const handlePresetSelect = (value: string) => {
 		const index = Number(value);
 		const val = presetValues[index];
+
+		// ストアから最新の情報を取得
+		const { presetNames } = useStore.getState();
+		const currentPresetName =
+			presetNames[currentSelection] ?? String(currentPresetValue);
 		const newPresetName = presetNames[index] ?? String(val);
 
 		openBlockDialog({
@@ -90,19 +111,13 @@ export function PresetSelector() {
 					/>
 				</div>
 				<SelectContent align="start" className="min-w-64">
-					{presetValues.map((val, index) => {
-						const name = presetNames[index] ?? String(val);
-						return (
-							<SelectItem key={`preset-${val}`} value={String(index)}>
-								<div className="flex justify-between items-center w-full gap-2">
-									<span>{name}</span>
-									{name !== String(val) && (
-										<span className="text-xs opacity-50">({val})</span>
-									)}
-								</div>
-							</SelectItem>
-						);
-					})}
+					{presetValues.map((val, index) => (
+						<PresetSelectItem
+							key={`preset-${val}`}
+							index={index}
+							value={val}
+						/>
+					))}
 				</SelectContent>
 			</Select>
 		</HighlightWrapper>
