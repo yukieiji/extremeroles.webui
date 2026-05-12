@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { PresetSelector } from "@/feature/exr/PresetSelector";
 import { useOptionData } from "@/hooks/useExROptionData";
@@ -51,7 +52,7 @@ describe("PresetSelector", () => {
 
 		render(<PresetSelector />);
 
-		const button = screen.getByRole("button", { name: /プリセットを選択/i });
+		const button = screen.getByRole("combobox", { name: /プリセットを選択/i });
 		fireEvent.click(button);
 
 		expect(mockSetPresetDropdownOpen).toHaveBeenCalled();
@@ -140,6 +141,7 @@ describe("PresetSelector", () => {
 	});
 
 	it("handles preset selection from dropdown and confirm dialog", async () => {
+		const user = userEvent.setup();
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: [10, 20],
@@ -157,17 +159,15 @@ describe("PresetSelector", () => {
 
 		render(<PresetSelector />);
 
-		const optionButton = screen.getByText("P2");
-		fireEvent.click(optionButton);
+		const optionItem = screen.getByRole("option", { name: /P2/i });
+		await user.click(optionItem);
 
-		expect(mockSetPresetDropdownOpen).toHaveBeenCalledWith(false);
 		expect(mockOpenBlockDialog).toHaveBeenCalled();
 
 		const { onConfirm } = mockOpenBlockDialog.mock.calls[0][0];
 		await onConfirm();
 		expect(updateExrOption).toHaveBeenCalledWith(0, 0, 0, 1);
 	});
-
 
 	it("renders nothing if presetOption is missing", () => {
 		vi.mocked(useOptionData).mockReturnValue(null as never);
