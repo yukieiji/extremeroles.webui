@@ -1,10 +1,5 @@
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectTrigger } from "@/components/ui/select";
 import { useBackendUpdate } from "@/hooks/useBackend";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
@@ -18,25 +13,7 @@ import {
 } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { PresetInput } from "./PresetInput";
-
-/**
- * プリセットの各項目を表示するためのコンポーネント。
- * 特定のインデックスのプリセット名のみを監視します。
- */
-function PresetSelectItem({ index, value }: { index: number; value: number }) {
-	const name = useStore((state) => state.presetNames[index] ?? String(value));
-
-	return (
-		<SelectItem value={String(index)}>
-			<div className="flex w-full items-center justify-between gap-2">
-				<span>{name}</span>
-				{name !== String(value) && (
-					<span className="text-xs opacity-50">({value})</span>
-				)}
-			</div>
-		</SelectItem>
-	);
-}
+import { PresetSelectItem } from "./PresetSelectItem";
 
 /**
  * プリセットを選択・編集するためのコンポーネント。
