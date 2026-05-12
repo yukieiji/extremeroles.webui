@@ -1,11 +1,14 @@
-import { use } from "react";
+import { use, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { getAllOptions } from "@/logics/api.store";
 import { RIGHT_PANEL_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { RightFloatingPanelBody } from "./RightFloatingPanelBody";
 import { RightFloatingPanelToggleButton } from "./RightFloatingPanelToggleButton";
-import { RightPanelFloatingPanelResizeHandle } from "./RightPanelFloatingPanelResizeHandle";
+import {
+	calculateMaxRightPanelWidth,
+	RightPanelFloatingPanelResizeHandle,
+} from "./RightPanelFloatingPanelResizeHandle";
 
 /**
  * 右サイドパネルコンポーネント
@@ -19,16 +22,31 @@ export function RightFloatingPanel() {
 		return state.toggleRightPanel;
 	});
 	const rightPanelWidth = useStore((state) => state.rightPanelWidth);
+	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);
 	const isResizing = useStore((state) => state.isResizing);
+
+	// 画面サイズ変更時にパネル幅をクランプする
+	useEffect(() => {
+		const handleResize = () => {
+			const maxWidth = calculateMaxRightPanelWidth(window.innerWidth);
+			if (rightPanelWidth > maxWidth) {
+				setRightPanelWidth(maxWidth);
+			}
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, [rightPanelWidth, setRightPanelWidth]);
 
 	return (
 		<aside
 			className={cn(
-				"h-full flex shrink-0 overflow-hidden",
+				"h-full flex shrink min-w-0 overflow-hidden",
 				!isResizing && "transition-[width] duration-300 ease-in-out",
 			)}
 			style={{
 				width: isRightPanelOpen ? `${rightPanelWidth}px` : "0px",
+				maxWidth: "80vw",
 			}}
 			aria-label={RIGHT_PANEL_ARIA}
 			data-testid="right-side-panel"
@@ -39,7 +57,7 @@ export function RightFloatingPanel() {
 				onClick={toggleRightPanel}
 			/>
 			{/* パネル本体 */}
-			<RightFloatingPanelBody width={rightPanelWidth}>
+			<RightFloatingPanelBody>
 				{isRightPanelOpen && <RightPanelFloatingPanelResizeHandle />}
 			</RightFloatingPanelBody>
 		</aside>

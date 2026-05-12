@@ -170,3 +170,60 @@ test("right sidebar can be resized", async ({ page }) => {
 		)
 		.toBeLessThan(resizedBox.width - 100);
 });
+
+test("right sidebar width is clamped and does not cause overflow", async ({
+	page,
+}) => {
+	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
+
+	await toggleButton.click();
+
+	const viewport = page.viewportSize();
+	if (!viewport) {
+		throw new Error("Viewport not found");
+	}
+
+	const handle = page.getByTestId("resize-handle");
+	await expect(handle).toBeVisible();
+	const handleBox = await handle.boundingBox();
+	if (!handleBox) {
+		throw new Error("Handle box not found");
+	}
+
+	// Attempt to drag to the far left (beyond 80% width)
+	await handle.dispatchEvent("mousedown", { button: 0 });
+	await page.evaluate(() => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: 0, // Far left
+				clientY: 300,
+			}),
+		);
+	}, handleBox.x - 150);
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+	});
+
+	// Verify that the width is clamped (e.g., should not be 100% of viewport)
+	await expect
+		.poll(
+			async () => {
+				const box = await rightPanel.boundingBox();
+				return box ? box.width : 0;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeLessThan(viewport.width * 0.9);
+
+	// Verify no horizontal scrollbar
+	const hasHScroll = await page.evaluate(() => {
+		return (
+			document.documentElement.scrollWidth >
+			document.documentElement.clientWidth
+		);
+	});
+	expect(hasHScroll).toBe(false);
+});
