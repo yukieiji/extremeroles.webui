@@ -140,13 +140,11 @@ function RootContent() {
 		<SidebarProvider>
 			<BlockableLoading />
 			<BlockableDialog />
-			<Suspense fallback={<LoadingView />}>
-				<OptionGroupToggleSidebar />
-				<SidebarInset className="pr-8">
-					<MainContent />
-				</SidebarInset>
-				<RightFloatingPanel />
-			</Suspense>
+			<OptionGroupToggleSidebar />
+			<SidebarInset className="pr-8">
+				<MainContent />
+			</SidebarInset>
+			<RightFloatingPanel />
 		</SidebarProvider>
 	);
 }

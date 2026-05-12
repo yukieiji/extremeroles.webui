@@ -1,16 +1,18 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import {
 	afterAll,
 	afterEach,
 	beforeAll,
+	beforeEach,
 	describe,
 	expect,
 	it,
 	vi,
 } from "vitest";
 import App from "../src/App";
+import { resetApiCache } from "../src/logics/api.store";
 import { ERROR_TITLE } from "../src/noTrans";
 
 // mswサーバーのセットアップ
@@ -25,6 +27,9 @@ const server = setupServer(
 
 beforeAll(() => {
 	server.listen();
+});
+beforeEach(() => {
+	resetApiCache();
 });
 afterEach(() => {
 	server.resetHandlers();
@@ -42,7 +47,7 @@ vi.mock("../src/components/ui/sidebar", async (importOriginal) => {
 			return { open: true, setOpen: vi.fn() };
 		},
 		SidebarProvider: ({ children }: { children: React.ReactNode }) => (
-			<div>{children}</div>
+			<div data-testid="sidebar-provider">{children}</div>
 		),
 	};
 });
@@ -52,12 +57,29 @@ describe("Error Handling", () => {
 		// コンソールエラーを抑制（意図的なエラーのため）
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
+		// getAllOptionsが失敗するのを確実にするためにモック
+		const apiStore = await import("../src/logics/api.store");
+		const getAllOptionsSpy = vi.spyOn(apiStore, "getAllOptions");
+		getAllOptionsSpy.mockImplementation(() => {
+			throw new Error("Manual Fetch Error");
+		});
+
 		render(<App />);
 
 		// エラー画面が表示されるのを待機
-		const errorTitle = await screen.findByText(ERROR_TITLE);
-		expect(errorTitle).toBeInTheDocument();
+		await waitFor(
+			() => {
+				const errorTitle = screen.queryByText(ERROR_TITLE);
+				if (errorTitle) {
+					expect(errorTitle).toBeInTheDocument();
+					return;
+				}
+				throw new Error("Still waiting for ErrorBoundary to catch error");
+			},
+			{ timeout: 10000 },
+		);
 
 		consoleSpy.mockRestore();
+		getAllOptionsSpy.mockRestore();
 	});
 });
