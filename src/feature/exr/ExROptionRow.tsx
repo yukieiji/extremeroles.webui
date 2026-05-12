@@ -1,7 +1,7 @@
-import { ExROptionRowContent } from "@/components/blocks/ExROptionRowContent";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
+import { ExROptionRowContent } from "@/feature/exr/ExROptionRowContent";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
