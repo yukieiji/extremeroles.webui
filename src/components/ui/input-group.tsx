@@ -1,14 +1,16 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import type * as React from "react";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
-	return (
+const InputGroup = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
+	({ className, ...props }, ref) => {
+		return (
 		// biome-ignore lint/a11y/useSemanticElements: This is a grop component
 		<div
+			ref={ref}
 			data-slot="input-group"
 			role="group"
 			className={cn(
@@ -18,7 +20,8 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
 			{...props}
 		/>
 	);
-}
+});
+InputGroup.displayName = "InputGroup";
 
 const inputGroupAddonVariants = cva(
 	"flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",

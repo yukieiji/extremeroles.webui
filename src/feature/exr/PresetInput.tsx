@@ -1,23 +1,23 @@
-import { type ReactNode, useRef } from "react";
+import { ChevronDownIcon } from "lucide-react";
+import { forwardRef, useRef } from "react";
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
-import { PRESET_INPUT_PLACEHOLDER } from "@/noTrans";
+import { PRESET_INPUT_PLACEHOLDER, PRESET_SELECT_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 
 interface PresetInputProps {
 	currentSelection: number;
 	currentPresetValue: number;
-	children: ReactNode;
 }
 
 /**
  * プリセット名を入力するための入力コンポーネント。
  * Select コンポーネントと組み合わせて使用されます。
  */
-export function PresetInput({
-	currentSelection,
-	currentPresetValue,
-	children,
-}: PresetInputProps) {
+// biome-ignore lint/suspicious/noExplicitAny: base-ui props
+type AnyProps = any;
+
+export const PresetInput = forwardRef<HTMLDivElement, PresetInputProps>(
+	({ currentSelection, currentPresetValue, ...props }, ref) => {
 	const currentPresetName = useStore((state) => {
 		return state.presetNames[currentSelection] ?? String(currentPresetValue);
 	});
@@ -51,8 +51,8 @@ export function PresetInput({
 		}
 	};
 
-	return (
-		<InputGroup className="w-64">
+		return (
+		<InputGroup ref={ref} className="w-64 cursor-default" {...props}>
 			<InputGroupInput
 				ref={inputRef}
 				type="text"
@@ -60,11 +60,20 @@ export function PresetInput({
 				defaultValue={currentPresetName}
 				onBlur={handleBlur}
 				onKeyDown={handleKeyDown}
+				onClick={(e) => e.stopPropagation()}
+				onPointerDown={(e) => e.stopPropagation()}
 				placeholder={PRESET_INPUT_PLACEHOLDER}
 				className="rounded-r-none"
 				aria-label={PRESET_INPUT_PLACEHOLDER}
 			/>
-			{children}
+			<div
+				role="button"
+				tabIndex={-1}
+				className="flex h-8 w-9 shrink-0 items-center justify-center rounded-r-lg border-l border-input bg-transparent text-muted-foreground outline-none transition-colors group-hover/input-group:bg-accent/50 group-focus-within/input-group:bg-accent/50"
+				aria-label={PRESET_SELECT_ARIA}
+			>
+				<ChevronDownIcon className="size-4" />
+			</div>
 		</InputGroup>
 	);
-}
+});

@@ -1,5 +1,7 @@
+import { Select as SelectPrimitive } from "@base-ui/react/select";
+import { ChevronDownIcon } from "lucide-react";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
-import { Select, SelectContent, SelectTrigger } from "@/components/ui/select";
+import { Select, SelectContent } from "@/components/ui/select";
 import { useBackendUpdate } from "@/hooks/useBackend";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
@@ -76,17 +78,17 @@ export function PresetSelector() {
 				onValueChange={handlePresetSelect}
 			>
 				<div className="relative flex items-center gap-2">
-					<PresetInput
-						currentSelection={currentSelection}
-						currentPresetValue={currentPresetValue}
-					>
-						<SelectTrigger
-							className="h-8 w-9 justify-center rounded-l-none border-l-0 px-0"
-							aria-label={PRESET_SELECT_ARIA}
-						/>
-					</PresetInput>
+					<SelectPrimitive.Trigger
+						nativeButton={false}
+						render={
+							<PresetInput
+								currentSelection={currentSelection}
+								currentPresetValue={currentPresetValue}
+							/>
+						}
+					/>
 				</div>
-				<SelectContent alignItemWithTrigger={false} className="min-w-64">
+				<SelectContent alignItemWithTrigger={false} className="w-64">
 					{presetValues.map((val, index) => (
 						<PresetSelectItem key={`preset-${val}`} index={index} value={val} />
 					))}

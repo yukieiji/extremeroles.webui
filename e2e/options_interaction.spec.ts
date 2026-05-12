@@ -33,7 +33,7 @@ test("Options interaction behavior", async ({ page }) => {
 	await presetInput.press("Enter");
 
 	// ドロップダウンを開いて名前が反映されているか確認
-	const selectButton = page.getByRole("combobox", { name: "プリセットを選択" });
+	const selectButton = page.getByLabel("プリセットを選択");
 	await selectButton.click();
 	// ドロップダウン内の項目を特定するため、より具体的なロケータを使用（サイドバーにも同じテキストが表示されるため）
 	await expect(
@@ -41,7 +41,7 @@ test("Options interaction behavior", async ({ page }) => {
 	).toBeVisible();
 
 	// 他の操作を妨げないようにドロップダウンを閉じる
-	await selectButton.click();
+	await page.keyboard.press("Escape");
 	await expect(
 		page.getByRole("option", { name: "Test Preset" }),
 	).not.toBeVisible();
