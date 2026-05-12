@@ -1,4 +1,6 @@
 import { Suspense, use } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorView } from "./components/blocks/ErrorView";
 import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
 import { ImportButton } from "./components/parts/ImportButton";
@@ -129,9 +131,11 @@ function MainContent() {
 }
 
 /**
- * メインアプリケーションコンポーネント
+ * アプリケーションのルートコンテンツ
  */
-function App() {
+function RootContent() {
+	use(getAllOptions());
+
 	return (
 		<SidebarProvider>
 			<BlockableLoading />
@@ -144,6 +148,19 @@ function App() {
 				<RightFloatingPanel />
 			</Suspense>
 		</SidebarProvider>
+	);
+}
+
+/**
+ * メインアプリケーションコンポーネント
+ */
+function App() {
+	return (
+		<ErrorBoundary FallbackComponent={ErrorView}>
+			<Suspense fallback={<LoadingView />}>
+				<RootContent />
+			</Suspense>
+		</ErrorBoundary>
 	);
 }
 
