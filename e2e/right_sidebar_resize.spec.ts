@@ -5,10 +5,15 @@ test.beforeEach(async ({ page }) => {
 	await expect(page.locator("body")).not.toContainText("Loading data...", {
 		timeout: 60000,
 	});
+	// Ensure main content is loaded
+	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
+		timeout: 30000,
+	});
 });
 
 test("isResizing state is correctly managed", async ({ page }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -56,6 +61,7 @@ test("isResizing state is correctly managed", async ({ page }) => {
 
 test("right sidebar can be resized", async ({ page }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -91,26 +97,29 @@ test("right sidebar can be resized", async ({ page }) => {
 		throw new Error("Handle box not found");
 	}
 
-	// Use dispatchEvent for mousedown as it is more reliable for thin elements in some environments
-	await handle.dispatchEvent("mousedown", { button: 0 });
+	// Move mouse to handle and drag
+	await page.mouse.move(
+		handleBox.x + handleBox.width / 2,
+		handleBox.y + handleBox.height / 2,
+	);
+	await page.mouse.down();
 
 	// Drag left (increase width)
-	// We must use page.evaluate to dispatch mousemove on window
+	// Dispatch events for better reliability with thin handles
+	await handle.dispatchEvent("mousedown", { button: 0 });
 	await page.evaluate((targetX) => {
 		window.dispatchEvent(
 			new MouseEvent("mousemove", {
 				bubbles: true,
-				cancelable: true,
 				clientX: targetX,
 				clientY: 300,
 			}),
 		);
-	}, handleBox.x - 150);
-
-	// Release
+	}, handleBox.x - 200);
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
+	await page.waitForTimeout(500);
 
 	// Verify increased width
 	await expect
@@ -121,34 +130,34 @@ test("right sidebar can be resized", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeGreaterThan(initialBox.width + 50);
+		.toBeGreaterThan(initialBox.width + 100);
 
 	const resizedBox = await rightPanel.boundingBox();
 	if (!resizedBox) {
 		throw new Error("Resized box not found");
 	}
 
-	const newHandleBox = await handle.boundingBox();
+	const newHandle = page.getByTestId("resize-handle");
+	const newHandleBox = await newHandle.boundingBox();
 	if (!newHandleBox) {
 		throw new Error("New handle box not found");
 	}
 
 	// Drag right (decrease width)
-	await handle.dispatchEvent("mousedown", { button: 0 });
+	await newHandle.dispatchEvent("mousedown", { button: 0 });
 	await page.evaluate((targetX) => {
 		window.dispatchEvent(
 			new MouseEvent("mousemove", {
 				bubbles: true,
-				cancelable: true,
 				clientX: targetX,
 				clientY: 300,
 			}),
 		);
-	}, newHandleBox.x + 100);
-
+	}, newHandleBox.x + 150);
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
+	await page.waitForTimeout(500);
 
 	// Verify decreased width
 	await expect
@@ -159,5 +168,5 @@ test("right sidebar can be resized", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(resizedBox.width - 50);
+		.toBeLessThan(resizedBox.width - 100);
 });

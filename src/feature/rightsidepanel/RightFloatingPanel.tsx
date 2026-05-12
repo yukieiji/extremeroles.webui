@@ -28,13 +28,12 @@ export function RightFloatingPanel() {
 				!isResizing && "transition-[width] duration-300 ease-in-out",
 			)}
 			style={{
-				width: isRightPanelOpen ? `${rightPanelWidth + 24}px` : "24px",
-				minWidth: isRightPanelOpen ? `${rightPanelWidth + 24}px` : "24px",
+				width: isRightPanelOpen ? `${rightPanelWidth}px` : "0px",
 			}}
 			aria-label={RIGHT_PANEL_ARIA}
 			data-testid="right-side-panel"
 		>
-			{/* トグルボタン (縦全体のストリップ) */}
+			{/* トグルボタン (画面右上に固定) */}
 			<RightFloatingPanelToggleButton
 				isOpen={isRightPanelOpen}
 				onClick={toggleRightPanel}

@@ -25,10 +25,16 @@ export function RightPanelFloatingPanelResizeHandle() {
 			}
 
 			const newWidth = window.innerWidth - e.clientX;
-			const maxWidth = window.innerWidth * 0.9;
+			// メインコンテンツが極端に狭くならないように、画面幅の80%を上限とする
+			// また、サイドバーがあることを考慮して、実際の表示領域を超えないように制御する
+			const maxWidth = Math.min(window.innerWidth * 0.8, window.innerWidth - 300);
 
 			if (newWidth >= MIN_WIDTH && newWidth <= maxWidth) {
 				setRightPanelWidth(newWidth);
+			} else if (newWidth > maxWidth) {
+				setRightPanelWidth(maxWidth);
+			} else if (newWidth < MIN_WIDTH) {
+				setRightPanelWidth(MIN_WIDTH);
 			}
 		},
 		[isResizing, setRightPanelWidth],
