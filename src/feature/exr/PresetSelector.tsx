@@ -1,5 +1,4 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select";
-import { ChevronDownIcon } from "lucide-react";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { Select, SelectContent } from "@/components/ui/select";
 import { useBackendUpdate } from "@/hooks/useBackend";
@@ -7,12 +6,7 @@ import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
 import { updateExrOption } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
-import {
-	format,
-	PRESET_SELECT_ARIA,
-	PRESET_SWITCH_MESSAGE,
-	PRESET_SWITCH_TITLE,
-} from "@/noTrans";
+import { format, PRESET_SWITCH_MESSAGE, PRESET_SWITCH_TITLE } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { PresetInput } from "./PresetInput";
 import { PresetSelectItem } from "./PresetSelectItem";

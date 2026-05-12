@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-const InputGroup = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
-	({ className, ...props }, ref) => {
-		return (
+const InputGroup = React.forwardRef<
+	HTMLDivElement,
+	React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+	return (
 		// biome-ignore lint/a11y/useSemanticElements: This is a grop component
 		<div
 			ref={ref}

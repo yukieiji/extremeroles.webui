@@ -52,7 +52,7 @@ describe("PresetSelector", () => {
 
 		render(<PresetSelector />);
 
-	const button = screen.getByLabelText(/プリセットを選択/i);
+		const button = screen.getByLabelText(/プリセットを選択/i);
 		fireEvent.click(button);
 
 		expect(mockSetPresetDropdownOpen).toHaveBeenCalled();
