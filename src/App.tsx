@@ -20,7 +20,7 @@ import {
 	useSyncBackend,
 } from "./hooks/useBackend";
 import { postExrCsv } from "./logics/api";
-import { getAllOptions } from "./logics/api.store";
+import { getAllOptions, resetApiCache } from "./logics/api.store";
 import {
 	AU_OPTIONS_TITLE,
 	EXR_OPTIONS_TITLE,
@@ -154,7 +154,12 @@ function RootContent() {
  */
 function App() {
 	return (
-		<ErrorBoundary FallbackComponent={ErrorView}>
+		<ErrorBoundary
+			FallbackComponent={ErrorView}
+			onReset={() => {
+				resetApiCache();
+			}}
+		>
 			<Suspense fallback={<LoadingView />}>
 				<RootContent />
 			</Suspense>

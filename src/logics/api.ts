@@ -104,22 +104,30 @@ interface ExRinitializeData {
 }
 
 export async function fetchTranslationMetaData(): Promise<void> {
-	const [resOptionUnit, resBatch] = await Promise.all([
-		fetch(TRANSLATION_BATCH_URL),
-		fetch(TRANSLATION_BATCH_BASE_URL, {
-			method: "POST",
-			body: JSON.stringify([{ Key: "optionOff" }, { Key: "optionOn" }]),
-		}),
-	]);
+	let resOptionUnit: Response;
+	let resBatch: Response;
+	try {
+		[resOptionUnit, resBatch] = await Promise.all([
+			fetch(TRANSLATION_BATCH_URL),
+			fetch(TRANSLATION_BATCH_BASE_URL, {
+				method: "POST",
+				body: JSON.stringify([{ Key: "optionOff" }, { Key: "optionOn" }]),
+			}),
+		]);
+	} catch (error) {
+		throw new Error(
+			`Failed to fetch translation data: ${error instanceof Error ? error.message : String(error)}`,
+		);
+	}
 
 	if (!resOptionUnit.ok) {
 		throw new Error(
-			`Failed to fetch translation data (optionunit): ${resOptionUnit.statusText}`,
+			`Failed to fetch translation data (optionunit): ${resOptionUnit.status} ${resOptionUnit.statusText}`,
 		);
 	}
 	if (!resBatch.ok) {
 		throw new Error(
-			`Failed to fetch translation data (batch): ${resBatch.statusText}`,
+			`Failed to fetch translation data (batch): ${resBatch.status} ${resBatch.statusText}`,
 		);
 	}
 
@@ -147,9 +155,19 @@ export async function fetchTranslationMetaData(): Promise<void> {
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {
-	const res = await fetch(EXR_OPTION_URL);
+	let res: Response;
+	try {
+		res = await fetch(EXR_OPTION_URL);
+	} catch (error) {
+		throw new Error(
+			`Failed to fetch ExR options: ${error instanceof Error ? error.message : String(error)}`,
+		);
+	}
+
 	if (!res.ok) {
-		throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
+		throw new Error(
+			`Failed to fetch ExR options: ${res.status} ${res.statusText}`,
+		);
 	}
 
 	const jsonData = await res.json();
@@ -244,9 +262,18 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 export async function createAuOptionMetaData(): Promise<
 	Record<AuOptionId, number>
 > {
-	const res = await fetch(AU_OPTION_URL);
+	let res: Response;
+	try {
+		res = await fetch(AU_OPTION_URL);
+	} catch (error) {
+		throw new Error(
+			`Failed to fetch Au options: ${error instanceof Error ? error.message : String(error)}`,
+		);
+	}
 	if (!res.ok) {
-		throw new Error(`Failed to fetch Au options: ${res.statusText}`);
+		throw new Error(
+			`Failed to fetch Au options: ${res.status} ${res.statusText}`,
+		);
 	}
 
 	const jsonData = await res.json();
@@ -416,9 +443,18 @@ export async function postRoleFilterUpdate(
 export async function fetchRoleFilterData(): Promise<
 	Record<string, RoleAssignFilterSetUI>
 > {
-	const res = await fetch(EXR_ROLE_FILTER_URL);
+	let res: Response;
+	try {
+		res = await fetch(EXR_ROLE_FILTER_URL);
+	} catch (error) {
+		throw new Error(
+			`Failed to fetch role filter data: ${error instanceof Error ? error.message : String(error)}`,
+		);
+	}
 	if (!res.ok) {
-		throw new Error(`Failed to fetch role filter data: ${res.statusText}`);
+		throw new Error(
+			`Failed to fetch role filter data: ${res.status} ${res.statusText}`,
+		);
 	}
 
 	const jsonData = await res.json();

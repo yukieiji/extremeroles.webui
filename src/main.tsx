@@ -48,13 +48,26 @@ async function enableMocking() {
 	return worker.start();
 }
 
-enableMocking().then(() => {
-	const rootElement = document.getElementById("root");
-	if (rootElement) {
-		createRoot(rootElement).render(
-			<StrictMode>
-				<App />
-			</StrictMode>,
-		);
-	}
-});
+enableMocking()
+	.then(() => {
+		const rootElement = document.getElementById("root");
+		if (rootElement) {
+			createRoot(rootElement).render(
+				<StrictMode>
+					<App />
+				</StrictMode>,
+			);
+		}
+	})
+	.catch((error) => {
+		console.error("Failed to enable mocking:", error);
+		// モックの有効化に失敗してもアプリは起動を試みる
+		const rootElement = document.getElementById("root");
+		if (rootElement) {
+			createRoot(rootElement).render(
+				<StrictMode>
+					<App />
+				</StrictMode>,
+			);
+		}
+	});
