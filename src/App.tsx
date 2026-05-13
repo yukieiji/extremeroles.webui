@@ -156,9 +156,7 @@ function App() {
 	return (
 		<ErrorBoundary
 			FallbackComponent={ErrorView}
-			onReset={() => {
-				resetApiCache();
-			}}
+			onReset={resetApiCache}
 		>
 			<Suspense fallback={<LoadingView />}>
 				<RootContent />
