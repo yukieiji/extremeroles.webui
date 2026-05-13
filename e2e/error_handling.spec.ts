@@ -24,6 +24,9 @@ test("初期ロード時にフェッチが失敗した場合、エラー画面�
 
 	// 再試行で成功するようにルートを解除
 	await page.unroute("**/au/translation/batch/**");
+	await page.unroute("**/exr/option/");
+	await page.unroute("**/au/option/");
+	await page.unroute("**/exr/role/filter/");
 
 	await retryButton.click();
 
