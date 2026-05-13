@@ -177,9 +177,6 @@ export function getAllOptions(): Promise<void> {
 	if (allOptionsPromise) {
 		return allOptionsPromise;
 	}
-	allOptionsPromise = refetchAll().catch((error) => {
-		allOptionsPromise = null; // エラー時はキャッシュをクリアして再試行可能にする
-		throw error;
-	});
+	allOptionsPromise = refetchAll();
 	return allOptionsPromise;
 }
