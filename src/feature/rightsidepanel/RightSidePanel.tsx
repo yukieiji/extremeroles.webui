@@ -4,11 +4,11 @@ import { getAllOptions } from "@/logics/api.store";
 import { RIGHT_PANEL_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { RightSidePanelBody } from "./RightSidePanelBody";
-import { RightSidePanelToggleButton } from "./RightSidePanelToggleButton";
 import {
 	calculateMaxRightPanelWidth,
 	RightSidePanelResizeHandle,
 } from "./RightSidePanelResizeHandle";
+import { RightSidePanelToggleButton } from "./RightSidePanelToggleButton";
 
 /**
  * 右サイドパネルコンポーネント

@@ -15,9 +15,7 @@ interface RightSidePanelBodyProps {
 	children: ReactNode;
 }
 
-export function RightSidePanelBody({
-	children,
-}: RightSidePanelBodyProps) {
+export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 	const isSettingsOpen = useStore((state) => state.isSettingsOpen);
 	const toggleSettings = useStore((state) => state.toggleSettings);
 	const isAuSettingsOpen = useStore((state) => state.isAuSettingsOpen);

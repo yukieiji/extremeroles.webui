@@ -113,9 +113,9 @@ describe("ExROptionRecursiveItemView", () => {
 		fireEvent.click(toggleButton);
 
 		// Check if store state updated
-		expect(
-			useStore.getState().openedExROptionRightSidePanel[parentId],
-		).toBe(true);
+		expect(useStore.getState().openedExROptionRightSidePanel[parentId]).toBe(
+			true,
+		);
 
 		// Re-render happens via useStore, verify children appear
 		expect(
@@ -124,9 +124,9 @@ describe("ExROptionRecursiveItemView", () => {
 
 		// Click again to close
 		fireEvent.click(screen.getByRole("button", { name: CLOSE }));
-		expect(
-			useStore.getState().openedExROptionRightSidePanel[parentId],
-		).toBe(false);
+		expect(useStore.getState().openedExROptionRightSidePanel[parentId]).toBe(
+			false,
+		);
 		expect(
 			screen.queryByTestId(`ex-roption-item-${childId1}`),
 		).not.toBeInTheDocument();

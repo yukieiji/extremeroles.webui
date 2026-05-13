@@ -36,9 +36,9 @@ export interface RightSidePanelSlice {
 /**
  * 右サイドパネルの状態管理を行うスライスの生成
  */
-export const createRightSidePanelSlice: StateCreator<
-	RightSidePanelSlice
-> = (set) => {
+export const createRightSidePanelSlice: StateCreator<RightSidePanelSlice> = (
+	set,
+) => {
 	const savedWidth = localStorage.getItem("rightPanelWidth");
 	const initialWidth = savedWidth ? Number.parseInt(savedWidth, 10) : 320;
 
