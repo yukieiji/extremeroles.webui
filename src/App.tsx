@@ -154,10 +154,7 @@ function RootContent() {
  */
 function App() {
 	return (
-		<ErrorBoundary
-			FallbackComponent={ErrorView}
-			onReset={resetApiCache}
-		>
+		<ErrorBoundary FallbackComponent={ErrorView} onReset={resetApiCache}>
 			<Suspense fallback={<LoadingView />}>
 				<RootContent />
 			</Suspense>
