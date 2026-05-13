@@ -164,7 +164,7 @@ export function useUpdateAuRoleOptionSelection(): (
 	};
 }
 
-export async function refechAll(): Promise<void> {
+export async function refetchAll(): Promise<void> {
 	await fetchTranslationMetaData();
 	await Promise.all([
 		createExROptionMetaDataWithStore(),
@@ -177,6 +177,9 @@ export function getAllOptions(): Promise<void> {
 	if (allOptionsPromise) {
 		return allOptionsPromise;
 	}
-	allOptionsPromise = refechAll();
+	allOptionsPromise = refetchAll().catch((error) => {
+		allOptionsPromise = null; // エラー時はキャッシュをクリアして再試行可能にする
+		throw error;
+	});
 	return allOptionsPromise;
 }
