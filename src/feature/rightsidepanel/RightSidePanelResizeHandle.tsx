@@ -10,7 +10,7 @@ export const calculateMaxRightPanelWidth = (windowWidth: number) => {
 	return Math.min(windowWidth * 0.8, windowWidth - 300);
 };
 
-export function RightPanelFloatingPanelResizeHandle() {
+export function RightSidePanelResizeHandle() {
 	const setIsResizing = useStore((state) => state.setIsResizing);
 	const isResizing = useStore((state) => state.isResizing);
 	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);

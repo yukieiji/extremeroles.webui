@@ -174,7 +174,7 @@ describe("ExRGeneralTabOptionViewer", () => {
 	});
 
 	it("uses initial open state from store", () => {
-		// GeneralTab (0) is true by default in rightFloatingPanelSlice
+		// GeneralTab (0) is true by default in rightSidePanelSlice
 		expect(useStore.getState().openedExRTabId[TARGET_TAB_ID]).toBe(true);
 
 		render(<ExRGeneralTabOptionViewer />);

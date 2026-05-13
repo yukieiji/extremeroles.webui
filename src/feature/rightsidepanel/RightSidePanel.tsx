@@ -3,17 +3,17 @@ import { cn } from "@/lib/utils";
 import { getAllOptions } from "@/logics/api.store";
 import { RIGHT_PANEL_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
-import { RightFloatingPanelBody } from "./RightFloatingPanelBody";
-import { RightFloatingPanelToggleButton } from "./RightFloatingPanelToggleButton";
+import { RightSidePanelBody } from "./RightSidePanelBody";
+import { RightSidePanelToggleButton } from "./RightSidePanelToggleButton";
 import {
 	calculateMaxRightPanelWidth,
-	RightPanelFloatingPanelResizeHandle,
-} from "./RightPanelFloatingPanelResizeHandle";
+	RightSidePanelResizeHandle,
+} from "./RightSidePanelResizeHandle";
 
 /**
  * 右サイドパネルコンポーネント
  */
-export function RightFloatingPanel() {
+export function RightSidePanel() {
 	use(getAllOptions());
 	const isRightPanelOpen = useStore((state) => {
 		return state.isRightPanelOpen;
@@ -58,12 +58,12 @@ export function RightFloatingPanel() {
 					!isRightPanelOpen && "w-0",
 				)}
 			>
-				<RightFloatingPanelBody>
-					{isRightPanelOpen && <RightPanelFloatingPanelResizeHandle />}
-				</RightFloatingPanelBody>
+				<RightSidePanelBody>
+					{isRightPanelOpen && <RightSidePanelResizeHandle />}
+				</RightSidePanelBody>
 			</div>
 			{/* トグルボタン (リールのようなボタン) */}
-			<RightFloatingPanelToggleButton
+			<RightSidePanelToggleButton
 				isOpen={isRightPanelOpen}
 				onClick={toggleRightPanel}
 			/>

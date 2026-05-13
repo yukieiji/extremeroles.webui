@@ -106,7 +106,7 @@ describe("ExRCategoryViewer", () => {
 
 		// Set state to closed explicitly
 		useStore.setState({
-			openedCategoryIdRightFloatingPanel: { [categoryId]: false },
+			openedCategoryIdRightSidePanel: { [categoryId]: false },
 		});
 
 		render(<ExRCategoryViewer categoryId={categoryId} />);
@@ -117,11 +117,11 @@ describe("ExRCategoryViewer", () => {
 		expect(accordionButton).toHaveAttribute("aria-expanded", "false");
 	});
 
-	it("calls toggleCategoryIdRightFloatingPanel when clicked", () => {
+	it("calls toggleCategoryIdRightSidePanel when clicked", () => {
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId] = [1001];
 		const toggleSpy = vi.spyOn(
 			useStore.getState(),
-			"toggleCategoryIdRightFloatingPanel",
+			"toggleCategoryIdRightSidePanel",
 		);
 
 		render(<ExRCategoryViewer categoryId={categoryId} />);

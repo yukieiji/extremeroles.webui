@@ -1,14 +1,14 @@
 import { PANEL_CLOSE_ARIA, PANEL_OPEN_ARIA } from "@/noTrans";
 
-interface RightFloatingPanelToggleButtonProps {
+interface RightSidePanelToggleButtonProps {
 	isOpen: boolean;
 	onClick: () => void;
 }
 
-export function RightFloatingPanelToggleButton({
+export function RightSidePanelToggleButton({
 	isOpen,
 	onClick,
-}: RightFloatingPanelToggleButtonProps) {
+}: RightSidePanelToggleButtonProps) {
 	return (
 		<button
 			type="button"

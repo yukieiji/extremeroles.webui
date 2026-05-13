@@ -11,13 +11,13 @@ import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
 
-interface RightFloatingPanelBodyProps {
+interface RightSidePanelBodyProps {
 	children: ReactNode;
 }
 
-export function RightFloatingPanelBody({
+export function RightSidePanelBody({
 	children,
-}: RightFloatingPanelBodyProps) {
+}: RightSidePanelBodyProps) {
 	const isSettingsOpen = useStore((state) => state.isSettingsOpen);
 	const toggleSettings = useStore((state) => state.toggleSettings);
 	const isAuSettingsOpen = useStore((state) => state.isAuSettingsOpen);
