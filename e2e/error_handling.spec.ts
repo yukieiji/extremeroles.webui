@@ -9,8 +9,21 @@ test("初期ロード時にフェッチが失敗した場合、エラー画面�
 	page,
 }) => {
 	// APIリクエストを失敗させる
-	await page.route("**/au/translation/batch/**", (route) => {
-		return route.abort("failed");
+	// Service Workerが有効な場合、page.routeでは捕捉できないことがあるため
+	// ブラウザ側でfetchをモックする
+	await page.addInitScript(() => {
+		// @ts-ignore
+		window._nativeFetch = window.fetch;
+		window.fetch = function (...args) {
+			if (
+				typeof args[0] === "string" &&
+				args[0].includes("au/translation/batch")
+			) {
+				return Promise.reject(new TypeError("Failed to fetch (simulated)"));
+			}
+			// @ts-ignore
+			return window._nativeFetch.apply(this, args);
+		};
 	});
 
 	await page.goto("/");
@@ -23,10 +36,14 @@ test("初期ロード時にフェッチが失敗した場合、エラー画面�
 	await expect(retryButton).toBeVisible();
 
 	// 再試行で成功するようにルートを解除
-	await page.unroute("**/au/translation/batch/**");
-	await page.unroute("**/exr/option/");
-	await page.unroute("**/au/option/");
-	await page.unroute("**/exr/role/filter/");
+	await page.evaluate(() => {
+		// fetchのモックを解除（元のfetchに戻す）
+		// @ts-ignore
+		if (window._nativeFetch) {
+			// @ts-ignore
+			window.fetch = window._nativeFetch;
+		}
+	});
 
 	await retryButton.click();
 
@@ -38,8 +55,17 @@ test("再試行してもフェッチが失敗し続ける場合、エラー画�
 	page,
 }) => {
 	// APIリクエストを永続的に失敗させる
-	await page.route("**/au/translation/batch/**", (route) => {
-		return route.abort("failed");
+	await page.addInitScript(() => {
+		const nativeFetch = window.fetch;
+		window.fetch = function (...args) {
+			if (
+				typeof args[0] === "string" &&
+				args[0].includes("au/translation/batch")
+			) {
+				return Promise.reject(new TypeError("Failed to fetch (simulated)"));
+			}
+			return nativeFetch.apply(this, args);
+		};
 	});
 
 	await page.goto("/");
