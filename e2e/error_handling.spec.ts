@@ -15,10 +15,18 @@ test("初期ロード時にフェッチが失敗した場合、エラー画面�
 		// @ts-ignore
 		window._nativeFetch = window.fetch;
 		window.fetch = function (...args) {
-			if (
-				typeof args[0] === "string" &&
-				args[0].includes("au/translation/batch")
-			) {
+			const input = args[0];
+			let url = "";
+			if (typeof input === "string") {
+				url = input;
+			} else if (input instanceof URL) {
+				url = input.href;
+			} else if (input && typeof input === "object" && "url" in input) {
+				// Request-like object
+				url = (input as any).url;
+			}
+
+			if (url.includes("au/translation/batch")) {
 				return Promise.reject(new TypeError("Failed to fetch (simulated)"));
 			}
 			// @ts-ignore
@@ -56,15 +64,25 @@ test("再試行してもフェッチが失敗し続ける場合、エラー画�
 }) => {
 	// APIリクエストを永続的に失敗させる
 	await page.addInitScript(() => {
-		const nativeFetch = window.fetch;
+		// @ts-ignore
+		window._nativeFetch = window.fetch;
 		window.fetch = function (...args) {
-			if (
-				typeof args[0] === "string" &&
-				args[0].includes("au/translation/batch")
-			) {
+			const input = args[0];
+			let url = "";
+			if (typeof input === "string") {
+				url = input;
+			} else if (input instanceof URL) {
+				url = input.href;
+			} else if (input && typeof input === "object" && "url" in input) {
+				// Request-like object
+				url = (input as any).url;
+			}
+
+			if (url.includes("au/translation/batch")) {
 				return Promise.reject(new TypeError("Failed to fetch (simulated)"));
 			}
-			return nativeFetch.apply(this, args);
+			// @ts-ignore
+			return window._nativeFetch.apply(this, args);
 		};
 	});
 
