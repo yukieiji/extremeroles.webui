@@ -13,10 +13,10 @@ interface ExRCategoryViewerProps {
 
 export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 	const isOpen = useStore(
-		(state) => state.openedCategoryIdRightFloatingPanel[categoryId] ?? true,
+		(state) => state.openedCategoryIdRightSidePanel[categoryId] ?? true,
 	);
 	const toggleCategory = useStore(
-		(state) => state.toggleCategoryIdRightFloatingPanel,
+		(state) => state.toggleCategoryIdRightSidePanel,
 	);
 
 	const uniqueOptions =

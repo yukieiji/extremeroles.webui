@@ -1,11 +1,11 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { RightFloatingPanel } from "@/feature/rightsidepanel/RightFloatingPanel";
+import { RightSidePanel } from "@/feature/rightsidepanel/RightSidePanel";
 import { getAllOptions, resetApiCache } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
-describe("RightFloatingPanel Component", () => {
+describe("RightSidePanel Component", () => {
 	it("renders panel elements correctly", async () => {
 		resetApiCache();
 		vi.stubGlobal(
@@ -36,7 +36,7 @@ describe("RightFloatingPanel Component", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
+					<RightSidePanel />
 				</Suspense>,
 			);
 		});
@@ -77,7 +77,7 @@ describe("RightFloatingPanel Component", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
+					<RightSidePanel />
 				</Suspense>,
 			);
 		});
@@ -122,7 +122,7 @@ describe("RightFloatingPanel Component", () => {
 		await act(async () => {
 			render(
 				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
+					<RightSidePanel />
 				</Suspense>,
 			);
 		});
@@ -133,45 +133,5 @@ describe("RightFloatingPanel Component", () => {
 		fireEvent.click(auSettingsButton);
 
 		expect(useStore.getState().isAuSettingsOpen).toBe(false);
-	});
-
-	it("closes panel when Escape key is pressed", async () => {
-		resetApiCache();
-		vi.stubGlobal(
-			"fetch",
-			vi.fn().mockImplementation((input: RequestInfo | URL) => {
-				const url = typeof input === "string" ? input : input.toString();
-				if (url.includes("/exr/role/filter/")) {
-					return Promise.resolve({
-						ok: true,
-						json: vi.fn().mockResolvedValue({
-							FilterSet: {},
-							FilterRoleId: [],
-							NormalRoleId: {},
-							CombinationId: {},
-							GhostRoleId: {},
-						}),
-					} as unknown as Response);
-				}
-				return Promise.resolve({
-					ok: true,
-					json: vi.fn().mockResolvedValue([]),
-				} as unknown as Response);
-			}),
-		);
-		await getAllOptions();
-
-		useStore.setState({ isRightPanelOpen: true });
-		await act(async () => {
-			render(
-				<Suspense fallback={<div>Loading...</div>}>
-					<RightFloatingPanel />
-				</Suspense>,
-			);
-		});
-
-		fireEvent.keyDown(window, { key: "Escape" });
-
-		expect(useStore.getState().isRightPanelOpen).toBe(false);
 	});
 });

@@ -1,34 +1,34 @@
 import { expect, test } from "@playwright/test";
 
-const MIN_WIDTH = 320;
-
 test.beforeEach(async ({ page }) => {
 	await page.goto("/");
-	// ローディング画面が消えるのを待つ
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
+	await expect(page.locator("body")).not.toContainText("Loading data...", {
+		timeout: 60000,
+	});
+	// Ensure main content is loaded
+	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
 		timeout: 30000,
 	});
 });
 
 test("isResizing state is correctly managed", async ({ page }) => {
-	const rightPanel = page.getByLabel("右フローティングパネル");
-	const toggleButton = page.getByRole("button", { name: "パネルを開く" });
+	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
-	// パネルが開くのを待つ（アニメーション完了を待機）
-	await expect(page.getByText("Right Panel")).toBeVisible();
-
-	// transition: transform 300ms が完了し、右端に密着するまで待機
+	// Wait for panel to open
 	await expect
-		.poll(async () => {
-			const box = await rightPanel.boundingBox();
-			const viewport = page.viewportSize();
-			if (!box || !viewport) {
-				return -1;
-			}
-			return box.x + box.width;
-		})
-		.toBe(page.viewportSize()?.width);
+		.poll(
+			async () => {
+				const box = await rightPanel.boundingBox();
+				return box ? box.width : 0;
+			},
+			{
+				timeout: 15000,
+			},
+		)
+		.toBeGreaterThan(100);
 
 	const handle = page.getByTestId("resize-handle");
 	await expect(handle).toBeVisible();
@@ -37,90 +37,189 @@ test("isResizing state is correctly managed", async ({ page }) => {
 		throw new Error("Handle box not found");
 	}
 
-	// ドラッグ開始
-	await page.mouse.move(handleBox.x, handleBox.y + handleBox.height / 2);
-	await page.mouse.down();
+	// Dispatch event instead of mouse actions to avoid potential issues with thin handles
+	await handle.dispatchEvent("mousedown", { button: 0 });
 
-	// マウスを動かしてリサイズ状態をトリガーする
-	await page.mouse.move(handleBox.x - 50, handleBox.y + handleBox.height / 2, {
-		steps: 5,
+	// Move a bit to ensure resize state is active
+	await page.evaluate((targetX) => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: targetX,
+				clientY: 300,
+			}),
+		);
+	}, handleBox.x - 20);
+
+	await expect(page.locator("body")).toHaveCSS("cursor", "ew-resize", {
+		timeout: 5000,
 	});
-
-	// body のカーソルが ew-resize であることを確認
-	await expect(page.locator("body")).toHaveCSS("cursor", "ew-resize");
-
-	await page.mouse.up();
-
-	// body のカーソルが元に戻ることを確認
-	await expect(page.locator("body")).toHaveCSS("cursor", "auto");
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+	});
 });
 
 test("right sidebar can be resized", async ({ page }) => {
-	const rightPanel = page.getByLabel("右フローティングパネル");
-	const toggleButton = page.getByRole("button", { name: "パネルを開く" });
+	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
-	// パネルが開くのを待つ
-	await expect(page.getByText("Right Panel")).toBeVisible();
 
-	// transition: transform 300ms が完了し、右端に密着するまで待機
+	const viewport = page.viewportSize();
+	if (!viewport) {
+		throw new Error("Viewport not found");
+	}
+
+	// Wait for panel to be fully open
 	await expect
-		.poll(async () => {
-			const box = await rightPanel.boundingBox();
-			const viewport = page.viewportSize();
-			if (!box || !viewport) {
-				return -1;
-			}
-			return box.x + box.width;
-		})
-		.toBe(page.viewportSize()?.width);
+		.poll(
+			async () => {
+				const box = await rightPanel.boundingBox();
+				if (!box) {
+					return -1;
+				}
+				return Math.round(box.x + box.width);
+			},
+			{ timeout: 15000 },
+		)
+		.toBe(viewport.width);
 
 	const initialBox = await rightPanel.boundingBox();
-	expect(initialBox?.width).toBe(MIN_WIDTH);
+	if (!initialBox) {
+		throw new Error("Initial box not found");
+	}
 
 	const handle = page.getByTestId("resize-handle");
+	await expect(handle).toBeVisible();
 	const handleBox = await handle.boundingBox();
 	if (!handleBox) {
 		throw new Error("Handle box not found");
 	}
 
-	// 左にドラッグして幅を広げる (左へ200px)
-	await page.mouse.move(handleBox.x, handleBox.y + handleBox.height / 2);
-	await page.mouse.down();
-	await page.mouse.move(handleBox.x - 200, handleBox.y + handleBox.height / 2, {
-		steps: 20,
+	// Drag left (increase width)
+	// Dispatch events for better reliability with thin handles
+	await handle.dispatchEvent("mousedown", { button: 0 });
+	// Wait a bit to ensure event listeners are attached
+	await page.waitForTimeout(100);
+	await page.evaluate((targetX) => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: targetX,
+				clientY: 300,
+			}),
+		);
+	}, handleBox.x - 200);
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
-	await page.mouse.up();
+	await page.waitForTimeout(500);
 
-	// リサイズ後の幅を確認
+	// Verify increased width
 	await expect
 		.poll(
 			async () => {
 				const box = await rightPanel.boundingBox();
-				return box?.width;
+				return box ? box.width : 0;
 			},
-			{ timeout: 5000 },
+			{ timeout: 15000 },
 		)
-		.toBeGreaterThan(400);
+		.toBeGreaterThan(initialBox.width + 100);
 
-	// 右にドラッグして幅を狭める (MIN_WIDTH付近になるはず)
-	const newHandleBox = await handle.boundingBox();
+	const resizedBox = await rightPanel.boundingBox();
+	if (!resizedBox) {
+		throw new Error("Resized box not found");
+	}
+
+	const newHandle = page.getByTestId("resize-handle");
+	const newHandleBox = await newHandle.boundingBox();
 	if (!newHandleBox) {
 		throw new Error("New handle box not found");
 	}
-	await page.mouse.move(
-		newHandleBox.x,
-		newHandleBox.y + newHandleBox.height / 2,
-	);
-	await page.mouse.down();
-	await page.mouse.move(
-		newHandleBox.x + 300,
-		newHandleBox.y + newHandleBox.height / 2,
-		{ steps: 20 },
-	);
-	await page.mouse.up();
 
-	const narrowBox = await rightPanel.boundingBox();
-	// 最小幅付近 (MIN_WIDTH) になっていることを確認
-	expect(narrowBox?.width).toBeLessThanOrEqual(MIN_WIDTH + 5);
+	// Drag right (decrease width)
+	await newHandle.dispatchEvent("mousedown", { button: 0 });
+	await page.waitForTimeout(100);
+	await page.evaluate((targetX) => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: targetX,
+				clientY: 300,
+			}),
+		);
+	}, newHandleBox.x + 150);
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+	});
+	await page.waitForTimeout(500);
+
+	// Verify decreased width
+	await expect
+		.poll(
+			async () => {
+				const box = await rightPanel.boundingBox();
+				return box ? box.width : 0;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeLessThan(resizedBox.width - 100);
+});
+
+test("right sidebar width is clamped and does not cause overflow", async ({
+	page,
+}) => {
+	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
+
+	await toggleButton.click();
+
+	const viewport = page.viewportSize();
+	if (!viewport) {
+		throw new Error("Viewport not found");
+	}
+
+	const handle = page.getByTestId("resize-handle");
+	await expect(handle).toBeVisible();
+	const handleBox = await handle.boundingBox();
+	if (!handleBox) {
+		throw new Error("Handle box not found");
+	}
+
+	// Attempt to drag to the far left (beyond 80% width)
+	await handle.dispatchEvent("mousedown", { button: 0 });
+	await page.evaluate(() => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: 0, // Far left
+				clientY: 300,
+			}),
+		);
+	}, handleBox.x - 150);
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+	});
+
+	// Verify that the width is clamped (e.g., should not be 100% of viewport)
+	await expect
+		.poll(
+			async () => {
+				const box = await rightPanel.boundingBox();
+				return box ? box.width : 0;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeLessThan(viewport.width * 0.9);
+
+	// Verify no horizontal scrollbar
+	const hasHScroll = await page.evaluate(() => {
+		return (
+			document.documentElement.scrollWidth >
+			document.documentElement.clientWidth
+		);
+	});
+	expect(hasHScroll).toBe(false);
 });

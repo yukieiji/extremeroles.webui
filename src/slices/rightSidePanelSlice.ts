@@ -2,9 +2,9 @@ import type { StateCreator } from "zustand";
 import type { ExRTabId, UniqueOptionId } from "../type";
 
 /**
- * 右フローティングパネルの状態管理を行うスライスのインターフェース
+ * 右サイドパネルの状態管理を行うスライスのインターフェース
  */
-export interface RightFloatingPanelSlice {
+export interface RightSidePanelSlice {
 	isRightPanelOpen: boolean;
 	toggleRightPanel: () => void;
 	setRightPanelOpen: (isOpen: boolean) => void;
@@ -27,18 +27,18 @@ export interface RightFloatingPanelSlice {
 	setIsResizing: (isResizing: boolean) => void;
 	openedExRTabId: Record<ExRTabId, boolean>;
 	toggleExRTabId: (tabId: ExRTabId) => void;
-	openedCategoryIdRightFloatingPanel: Record<number, boolean>;
-	toggleCategoryIdRightFloatingPanel: (categoryId: number) => void;
-	openedExROptionRightFloatingPanel: Record<UniqueOptionId, boolean>;
-	toggleExROptionRightFloatingPanel: (optionId: UniqueOptionId) => void;
+	openedCategoryIdRightSidePanel: Record<number, boolean>;
+	toggleCategoryIdRightSidePanel: (categoryId: number) => void;
+	openedExROptionRightSidePanel: Record<UniqueOptionId, boolean>;
+	toggleExROptionRightSidePanel: (optionId: UniqueOptionId) => void;
 }
 
 /**
- * 右フローティングパネルの状態管理を行うスライスの生成
+ * 右サイドパネルの状態管理を行うスライスの生成
  */
-export const createRightFloatingPanelSlice: StateCreator<
-	RightFloatingPanelSlice
-> = (set) => {
+export const createRightSidePanelSlice: StateCreator<RightSidePanelSlice> = (
+	set,
+) => {
 	const savedWidth = localStorage.getItem("rightPanelWidth");
 	const initialWidth = savedWidth ? Number.parseInt(savedWidth, 10) : 320;
 
@@ -117,24 +117,24 @@ export const createRightFloatingPanelSlice: StateCreator<
 				};
 			});
 		},
-		openedCategoryIdRightFloatingPanel: {},
-		toggleCategoryIdRightFloatingPanel: (categoryId) => {
+		openedCategoryIdRightSidePanel: {},
+		toggleCategoryIdRightSidePanel: (categoryId) => {
 			set((state) => {
 				return {
-					openedCategoryIdRightFloatingPanel: {
-						...state.openedCategoryIdRightFloatingPanel,
-						[categoryId]: !state.openedCategoryIdRightFloatingPanel[categoryId],
+					openedCategoryIdRightSidePanel: {
+						...state.openedCategoryIdRightSidePanel,
+						[categoryId]: !state.openedCategoryIdRightSidePanel[categoryId],
 					},
 				};
 			});
 		},
-		openedExROptionRightFloatingPanel: {},
-		toggleExROptionRightFloatingPanel: (optionId) => {
+		openedExROptionRightSidePanel: {},
+		toggleExROptionRightSidePanel: (optionId) => {
 			set((state) => {
 				return {
-					openedExROptionRightFloatingPanel: {
-						...state.openedExROptionRightFloatingPanel,
-						[optionId]: !state.openedExROptionRightFloatingPanel[optionId],
+					openedExROptionRightSidePanel: {
+						...state.openedExROptionRightSidePanel,
+						[optionId]: !state.openedExROptionRightSidePanel[optionId],
 					},
 				};
 			});

@@ -45,7 +45,7 @@ describe("ExROptionRecursiveItemView", () => {
 		resetExrOptionMetaData();
 		// Manually reset relevant store state
 		useStore.setState({
-			openedExROptionRightFloatingPanel: {},
+			openedExROptionRightSidePanel: {},
 		});
 
 		// Setup metadata
@@ -78,7 +78,7 @@ describe("ExROptionRecursiveItemView", () => {
 
 	it("shows children when store state is open", () => {
 		useStore.setState({
-			openedExROptionRightFloatingPanel: { [parentId]: true },
+			openedExROptionRightSidePanel: { [parentId]: true },
 		});
 
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={0} />);
@@ -93,7 +93,7 @@ describe("ExROptionRecursiveItemView", () => {
 
 	it("hides children when store state is closed", () => {
 		useStore.setState({
-			openedExROptionRightFloatingPanel: { [parentId]: false },
+			openedExROptionRightSidePanel: { [parentId]: false },
 		});
 
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={0} />);
@@ -113,9 +113,9 @@ describe("ExROptionRecursiveItemView", () => {
 		fireEvent.click(toggleButton);
 
 		// Check if store state updated
-		expect(
-			useStore.getState().openedExROptionRightFloatingPanel[parentId],
-		).toBe(true);
+		expect(useStore.getState().openedExROptionRightSidePanel[parentId]).toBe(
+			true,
+		);
 
 		// Re-render happens via useStore, verify children appear
 		expect(
@@ -124,9 +124,9 @@ describe("ExROptionRecursiveItemView", () => {
 
 		// Click again to close
 		fireEvent.click(screen.getByRole("button", { name: CLOSE }));
-		expect(
-			useStore.getState().openedExROptionRightFloatingPanel[parentId],
-		).toBe(false);
+		expect(useStore.getState().openedExROptionRightSidePanel[parentId]).toBe(
+			false,
+		);
 		expect(
 			screen.queryByTestId(`ex-roption-item-${childId1}`),
 		).not.toBeInTheDocument();
@@ -136,7 +136,7 @@ describe("ExROptionRecursiveItemView", () => {
 		exrOptionMetaData.options[parentId].childOptionIds = [];
 
 		useStore.setState({
-			openedExROptionRightFloatingPanel: { [parentId]: true },
+			openedExROptionRightSidePanel: { [parentId]: true },
 		});
 
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={0} />);
@@ -150,7 +150,7 @@ describe("ExROptionRecursiveItemView", () => {
 		const unknownId = 999 as UniqueOptionId;
 
 		useStore.setState({
-			openedExROptionRightFloatingPanel: { [unknownId]: true },
+			openedExROptionRightSidePanel: { [unknownId]: true },
 		});
 
 		render(<ExROptionRecursiveItemView uniqueOptionId={unknownId} depth={0} />);

@@ -13,10 +13,10 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		page,
 	}) => {
 		// 1. 右パネルを開く
-		const rightPanelToggle = page.getByRole("button", { name: "パネルを開く" });
+		const rightPanelToggle = page.getByTestId("right-panel-toggle");
 		await rightPanelToggle.click();
-		const rightPanel = page.getByLabel("右フローティングパネル");
-		await expect(rightPanel).toBeVisible();
+		const rightPanel = page.getByTestId("right-side-panel");
+		await expect(rightPanel).toBeVisible({ timeout: 15000 });
 
 		// 2. 「インポスター役職」セクションが表示されていることを確認
 		// モックデータでは「シェイプシフター」が有効なはず
@@ -62,9 +62,9 @@ test.describe("Au Role Viewer in Right Panel", () => {
 	});
 
 	test("toggles role sections in the right panel", async ({ page }) => {
-		await page.getByRole("button", { name: "パネルを開く" }).click();
+		await page.getByTestId("right-panel-toggle").click();
 
-		const rightPanel = page.getByLabel("右フローティングパネル");
+		const rightPanel = page.getByTestId("right-side-panel");
 		const imposterRolesSection = rightPanel.getByRole("button", {
 			name: /インポスター役職/,
 		});
@@ -105,8 +105,8 @@ test.describe("Au Role Viewer in Right Panel", () => {
 			.getByTestId("spawn-count-control")
 			.locator('input[type="range"]');
 
-		await page.getByRole("button", { name: "パネルを開く" }).click();
-		const rightPanel = page.getByLabel("右フローティングパネル");
+		await page.getByTestId("right-panel-toggle").click();
+		const rightPanel = page.getByTestId("right-side-panel");
 
 		await chanceSlider.fill("0");
 		await countSlider.fill("0");

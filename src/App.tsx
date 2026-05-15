@@ -12,7 +12,7 @@ import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { PresetSelector } from "./feature/exr/PresetSelector";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
-import { RightFloatingPanel } from "./feature/rightsidepanel/RightFloatingPanel";
+import { RightSidePanel } from "./feature/rightsidepanel/RightSidePanel";
 import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import {
 	useBackendUpdate,
@@ -141,10 +141,10 @@ function RootContent() {
 			<BlockableLoading />
 			<BlockableDialog />
 			<OptionGroupToggleSidebar />
-			<SidebarInset className="pr-8">
+			<SidebarInset>
 				<MainContent />
 			</SidebarInset>
-			<RightFloatingPanel />
+			<RightSidePanel />
 		</SidebarProvider>
 	);
 }

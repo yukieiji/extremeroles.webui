@@ -13,9 +13,10 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		page,
 	}) => {
 		// 1. 右パネルを開く
-		const rightPanelToggle = page.getByRole("button", { name: "パネルを開く" });
+		const rightPanelToggle = page.getByTestId("right-panel-toggle");
 		await rightPanelToggle.click();
-		await expect(page.getByLabel("右フローティングパネル")).toBeVisible();
+		const rightPanel = page.getByTestId("right-side-panel");
+		await expect(rightPanel).toBeVisible({ timeout: 15000 });
 
 		// 2. 「AmongUsの設定」アコーディオンを展開（デフォルトで開いているはずだが念のため）
 		const auSettingsAccordion = page.getByRole("button", {
@@ -31,10 +32,6 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 3. Tab 0の内容が表示されていることを確認 (インポスター数)
 		// インポスターカテゴリを展開する必要がある
 		// 右パネル内のアコーディオンを指定する
-		// 日本語環境なので「開く」または「閉じる」を使用
-		const rightPanel = page.getByLabel("右フローティングパネル");
-		await expect(rightPanel).toBeVisible({ timeout: 10000 });
-
 		const imposterCategory = rightPanel.getByRole("button", {
 			name: "インポスター",
 			exact: true,
@@ -48,8 +45,7 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		}
 
 		// テキストとタイトルの組み合わせで特定 (右パネル内)
-		const impCountSetting = page
-			.getByLabel("右フローティングパネル")
+		const impCountSetting = rightPanel
 			.getByTitle("ダブルクリックで設定場所へ移動")
 			.filter({ hasText: "インポスター数" });
 		// スクロールが必要な場合がある
@@ -60,8 +56,8 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		await expect(impCountSetting).toContainText("1");
 
 		// 4. メインエディタで一旦 ExR Options に切り替えておく
-		// 右パネルのオーバーレイが邪魔をする可能性があるので、一旦右パネルを閉じる
-		await page.getByRole("button", { name: "閉じる", exact: true }).click();
+		// パネルを一旦閉じる
+		await rightPanelToggle.click();
 		await page.getByRole("button", { name: "ExR Options" }).click();
 		await expect(
 			page.getByRole("heading", { name: "ExR Options" }),
@@ -69,8 +65,8 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 
 		// 5. 右パネルの項目をダブルクリック
 		// 再び開く
-		await page.getByRole("button", { name: "パネルを開く" }).click();
-		await expect(rightPanel).toBeVisible({ timeout: 10000 });
+		await rightPanelToggle.click();
+		await expect(rightPanel).toBeVisible({ timeout: 15000 });
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await impCountSetting.dblclick();
 

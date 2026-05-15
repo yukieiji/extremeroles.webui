@@ -23,7 +23,7 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();
 
 	// 'グローバル設定' タブをクリック (デフォルトで選択されているはずだが念のため)
-	// getByTestId('main-content-section') を使用して、右フローティングパネルのボタンとの競合を避ける
+	// getByTestId('main-content-section') を使用して、右サイドパネルのボタンとの競合を避ける
 	await page
 		.getByTestId("main-content-section")
 		.getByRole("tab", { name: "グローバル設定", exact: true })

@@ -1,9 +1,9 @@
 import { fireEvent, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { RightPanelFloatingPanelResizeHandle } from "@/feature/rightsidepanel/RightPanelFloatingPanelResizeHandle";
+import { RightSidePanelResizeHandle } from "@/feature/rightsidepanel/RightSidePanelResizeHandle";
 import { useStore } from "@/useStore";
 
-describe("RightPanelFloatingPanelResizeHandle Component", () => {
+describe("RightSidePanelResizeHandle Component", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		// Reset store state
@@ -24,13 +24,13 @@ describe("RightPanelFloatingPanelResizeHandle Component", () => {
 	});
 
 	it("renders the resize handle element", () => {
-		const { container } = render(<RightPanelFloatingPanelResizeHandle />);
+		const { container } = render(<RightSidePanelResizeHandle />);
 		const handle = container.querySelector(".cursor-ew-resize");
 		expect(handle).toBeInTheDocument();
 	});
 
 	it("sets isResizing to true on mouseDown", () => {
-		const { container } = render(<RightPanelFloatingPanelResizeHandle />);
+		const { container } = render(<RightSidePanelResizeHandle />);
 		const handle = container.querySelector(".cursor-ew-resize");
 
 		if (!handle) {

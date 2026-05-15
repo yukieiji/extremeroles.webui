@@ -19,12 +19,19 @@ test.beforeEach(async ({ page }) => {
 
 test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	// 1. 右パネルを開く
-	const openButton = page.getByLabel("パネルを開く");
+	const openButton = page.getByTestId("right-panel-toggle");
 	await openButton.click();
 
 	// 右パネルが表示されていることを確認
-	const rightPanel = page.getByLabel("右フローティングパネル");
-	await expect(rightPanel).toBeVisible({ timeout: 10000 });
+	const rightPanel = page.getByTestId("right-side-panel");
+	await expect(rightPanel).toBeVisible({ timeout: 15000 });
+	// アニメーション待ち
+	await expect
+		.poll(async () => {
+			const box = await rightPanel.boundingBox();
+			return box?.width;
+		})
+		.toBeGreaterThan(30);
 
 	// 2. ExRの設定セクションを確認 (初期状態では開いている想定だが、必要ならスクロールして開く)
 	const exrSettingsTitle = page.getByText("ExRの設定");
@@ -38,10 +45,16 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	// 3. ダブルクリックでナビゲーションを確認
 	await presetRow.dblclick();
 
-	// 4. パネルのラベルを取って非表示か確認する
-	await expect(
-		rightPanel.getByLabel("右フローティングパネル"),
-	).not.toBeVisible();
+	// 4. パネルが閉じているか確認 (幅が24pxに戻っているか)
+	await expect
+		.poll(
+			async () => {
+				const box = await rightPanel.boundingBox();
+				return box ? box.width : -1;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeCloseTo(24, 1);
 
 	// ExR タブが選択されていることを確認
 	const exrTabButton = page.getByRole("button", { name: "ExR Options" });
@@ -58,6 +71,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 });
 
 test("Updating preset name reflects in right sidebar", async ({ page }) => {
+	const _rightPanel = page.getByTestId("right-side-panel");
 	// 1. ExR タブに切り替え
 	const sidebar = page.getByLabel("オプションサイドバー");
 	await sidebar.getByRole("button", { name: "ExR Options" }).click();
@@ -68,10 +82,8 @@ test("Updating preset name reflects in right sidebar", async ({ page }) => {
 	await presetInput.press("Enter");
 
 	// 3. 右パネルを開いて確認
-	const openButton = page.getByLabel("パネルを開く");
-	if (await openButton.isVisible()) {
-		await openButton.click();
-	}
+	const openButton = page.getByTestId("right-panel-toggle");
+	await openButton.click();
 
 	const exrSettingsTitle = page.getByText("ExRの設定");
 	await exrSettingsTitle.scrollIntoViewIfNeeded();

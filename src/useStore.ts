@@ -7,8 +7,8 @@ import type { GlobalUiSlice } from "./slices/globalUiSlice";
 import { createGlobalUiSlice } from "./slices/globalUiSlice";
 import type { OptionGroupToggleSidebarSlice } from "./slices/optionGroupToggleSidebarSlice";
 import { createOptionGroupToggleSidebarSlice } from "./slices/optionGroupToggleSidebarSlice";
-import type { RightFloatingPanelSlice } from "./slices/rightFloatingPanelSlice";
-import { createRightFloatingPanelSlice } from "./slices/rightFloatingPanelSlice";
+import type { RightSidePanelSlice } from "./slices/rightSidePanelSlice";
+import { createRightSidePanelSlice } from "./slices/rightSidePanelSlice";
 import type { RoleFilterSlice } from "./slices/roleFilterSlice";
 import { createRoleFilterSlice } from "./slices/roleFilterSlice";
 
@@ -18,7 +18,7 @@ import { createRoleFilterSlice } from "./slices/roleFilterSlice";
 export const useStore = create<
 	GlobalUiSlice &
 		OptionGroupToggleSidebarSlice &
-		RightFloatingPanelSlice &
+		RightSidePanelSlice &
 		AuOptionViewerSlice &
 		ExROptionViewerSlice &
 		RoleFilterSlice
@@ -26,7 +26,7 @@ export const useStore = create<
 	return {
 		...createGlobalUiSlice(...a),
 		...createOptionGroupToggleSidebarSlice(...a),
-		...createRightFloatingPanelSlice(...a),
+		...createRightSidePanelSlice(...a),
 		...createAuOptionViewerSlice(...a),
 		...createExROptionViewerSlice(...a),
 		...createRoleFilterSlice(...a),

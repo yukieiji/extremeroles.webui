@@ -4,7 +4,6 @@ import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupC
 import {
 	AU_SETTINGS_TITLE,
 	EXR_SETTINGS_TITLE,
-	RIGHT_PANEL_ARIA,
 	RIGHT_PANEL_TITLE,
 	SETTING_VALUES_TITLE,
 } from "@/noTrans";
@@ -12,15 +11,11 @@ import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
 
-interface RightFloatingPanelBodyProps {
-	width: number;
+interface RightSidePanelBodyProps {
 	children: ReactNode;
 }
 
-export function RightFloatingPanelBody({
-	width,
-	children,
-}: RightFloatingPanelBodyProps) {
+export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 	const isSettingsOpen = useStore((state) => state.isSettingsOpen);
 	const toggleSettings = useStore((state) => state.toggleSettings);
 	const isAuSettingsOpen = useStore((state) => state.isAuSettingsOpen);
@@ -29,13 +24,7 @@ export function RightFloatingPanelBody({
 	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
 
 	return (
-		<aside
-			className="h-full bg-white border-l border-gray-200 shadow-2xl relative"
-			style={{
-				width: width,
-			}}
-			aria-label={RIGHT_PANEL_ARIA}
-		>
+		<div className="h-full flex-1 min-w-0 bg-white border-l border-gray-200 shadow-2xl relative">
 			{children}
 			<div className="flex flex-col h-full">
 				<div className="flex items-center justify-between p-4 border-b border-gray-100">
@@ -66,6 +55,6 @@ export function RightFloatingPanelBody({
 					</ViewerGroupAccordion>
 				</div>
 			</div>
-		</aside>
+		</div>
 	);
 }

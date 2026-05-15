@@ -19,10 +19,10 @@ export function ExROptionRecursiveItemView({
 	depth = 0,
 }: ExROptionRecursiveItemViewProps) {
 	const isOpen = useStore((state) => {
-		return state.openedExROptionRightFloatingPanel[uniqueOptionId] ?? false;
+		return state.openedExROptionRightSidePanel[uniqueOptionId] ?? false;
 	});
 	const toggleExROption = useStore((state) => {
-		return state.toggleExROptionRightFloatingPanel;
+		return state.toggleExROptionRightSidePanel;
 	});
 
 	const handleToggle = () => {

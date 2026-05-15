@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { useStore } from "@/useStore";
 
-describe("RightFloatingPanelStore", () => {
+describe("RightSidePanelStore", () => {
 	beforeEach(() => {
 		// ストアを初期状態にリセット
 		useStore.setState({

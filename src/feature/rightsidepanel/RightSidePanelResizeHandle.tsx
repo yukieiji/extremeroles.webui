@@ -2,9 +2,15 @@ import { useCallback, useEffect } from "react";
 
 import { useStore } from "@/useStore";
 
-const MIN_WIDTH = 320;
+export const MIN_RIGHT_PANEL_WIDTH = 320;
 
-export function RightPanelFloatingPanelResizeHandle() {
+export const calculateMaxRightPanelWidth = (windowWidth: number) => {
+	// メインコンテンツが極端に狭くならないように、画面幅の80%を上限とする
+	// また、左サイドバー(約300px)があることを考慮して、実際の表示領域を超えないように制御する
+	return Math.min(windowWidth * 0.8, windowWidth - 300);
+};
+
+export function RightSidePanelResizeHandle() {
 	const setIsResizing = useStore((state) => state.setIsResizing);
 	const isResizing = useStore((state) => state.isResizing);
 	const setRightPanelWidth = useStore((state) => state.setRightPanelWidth);
@@ -25,10 +31,14 @@ export function RightPanelFloatingPanelResizeHandle() {
 			}
 
 			const newWidth = window.innerWidth - e.clientX;
-			const maxWidth = window.innerWidth * 0.9;
+			const maxWidth = calculateMaxRightPanelWidth(window.innerWidth);
 
-			if (newWidth >= MIN_WIDTH && newWidth <= maxWidth) {
+			if (newWidth >= MIN_RIGHT_PANEL_WIDTH && newWidth <= maxWidth) {
 				setRightPanelWidth(newWidth);
+			} else if (newWidth > maxWidth) {
+				setRightPanelWidth(maxWidth);
+			} else if (newWidth < MIN_RIGHT_PANEL_WIDTH) {
+				setRightPanelWidth(MIN_RIGHT_PANEL_WIDTH);
 			}
 		},
 		[isResizing, setRightPanelWidth],
