@@ -36,7 +36,7 @@ export function ExRCategoryOptionList({
 					<div key={key}>
 						{index !== 0 && <BorderLine />}
 						{isNumber ? (
-							<ExROptionItem uniqueOptionId={item} />
+							<ExROptionItem uniqueOptionId={item} depth={0} />
 						) : (
 							<OptionRowContainer
 								leading={<LargePoint />}

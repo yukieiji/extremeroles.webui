@@ -2,6 +2,7 @@ import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAcco
 import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
+import { getIndentClass } from "@/logics/indentUtils";
 import { exrOptionMetaData } from "@/logics/api";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
@@ -47,7 +48,7 @@ export function ExROptionRecursiveItem({
 					onToggle={handleToggle}
 					isOpen={isOpen}
 					isHighlight={isHighlighted}
-					containerClassName={depth > 0 ? "pl-4" : ""}
+					containerClassName={getIndentClass(depth, 4)}
 				>
 					<ExROptionRow
 						uniqueOptionId={uniqueOptionId}

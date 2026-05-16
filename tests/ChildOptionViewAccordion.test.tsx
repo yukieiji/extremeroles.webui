@@ -77,6 +77,6 @@ describe("ChildOptionViewAccordion", () => {
 		render(<ChildOptionViewAccordion {...defaultProps} depth={5} />);
 		const button = screen.getByRole("button", { name: OPEN });
 		const row = button.closest("div[class*='hover:bg-']");
-		expect(row).toHaveClass("pl-2");
+		expect(row).toHaveClass("pl-10"); // getIndentClass(5, 2)
 	});
 });

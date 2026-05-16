@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { CLOSE, OPEN } from "@/noTrans";
+import { getIndentClass } from "@/logics/indentUtils";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
@@ -25,7 +26,7 @@ export function ChildOptionViewAccordion({
 	return (
 		<div className="flex flex-col">
 			<OptionRowContainer
-				containerClassName={depth > 0 ? "pl-2" : ""}
+				containerClassName={getIndentClass(depth, 2)}
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
 						<button
@@ -43,13 +44,11 @@ export function ChildOptionViewAccordion({
 			/>
 
 			{/* 子要素（ネストされたオプション） */}
-			<div className={depth > 0 ? "pl-2" : ""}>
-				<AccordionContentContainer isOpen={isOpen}>
-					<div className="min-h-0">
-						{isOpen && <div className="flex flex-col">{children}</div>}
-					</div>
-				</AccordionContentContainer>
-			</div>
+			<AccordionContentContainer isOpen={isOpen}>
+				<div className="min-h-0">
+					{isOpen && <div className="flex flex-col">{children}</div>}
+				</div>
+			</AccordionContentContainer>
 		</div>
 	);
 }

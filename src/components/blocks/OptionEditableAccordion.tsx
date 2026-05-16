@@ -21,13 +21,11 @@ export function RowCustomizeAccordion({
 		<div className="flex flex-col">
 			{row}
 			{/* 子要素（ネストされたオプション） */}
-			<div className={depth > 0 ? "pl-4" : ""}>
-				<AccordionContentContainer isOpen={isOpen}>
-					<div className="min-h-0">
-						{isOpen && <div className="flex flex-col">{children}</div>}
-					</div>
-				</AccordionContentContainer>
-			</div>
+			<AccordionContentContainer isOpen={isOpen}>
+				<div className="min-h-0">
+					{isOpen && <div className="flex flex-col">{children}</div>}
+				</div>
+			</AccordionContentContainer>
 		</div>
 	);
 }

@@ -7,6 +7,8 @@ import { ExRValueView } from "./ExRValueView";
 
 interface ExROptionRowViewContentProps {
 	uniqueOptionId: UniqueOptionId;
+	indentClassName?: string;
+	noHover?: boolean;
 }
 
 /**
@@ -14,6 +16,8 @@ interface ExROptionRowViewContentProps {
  */
 export function ExROptionRowViewContent({
 	uniqueOptionId,
+	indentClassName = "",
+	noHover = false,
 }: ExROptionRowViewContentProps) {
 	const optionData = exrOptionMetaData.options[uniqueOptionId]?.metaData;
 	const navigate = useExROptionNavigation(uniqueOptionId);
@@ -32,6 +36,8 @@ export function ExROptionRowViewContent({
 				/>
 			}
 			onDoubleClick={navigate}
+			indentClassName={indentClassName}
+			noHover={noHover}
 		/>
 	);
 }

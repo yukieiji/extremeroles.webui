@@ -3,6 +3,7 @@ import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
 import { ExROptionRowContent } from "@/feature/exr/ExROptionRowContent";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
+import { getIndentClass } from "@/logics/indentUtils";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -36,7 +37,7 @@ function ExROptionRowInner({ uniqueOptionId, depth }: ExROptionRowInnerProps) {
 			<OptionRowContainer
 				leading={<LargePoint />}
 				content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
-				containerClassName={depth > 0 ? "pl-4" : ""}
+				containerClassName={getIndentClass(depth, 4)}
 			/>
 		</HighlightWrapper>
 	);
