@@ -47,6 +47,7 @@ export function ExROptionRecursiveItem({
 					onToggle={handleToggle}
 					isOpen={isOpen}
 					isHighlight={isHighlighted}
+					containerClassName={depth > 0 ? "pl-4" : ""}
 				>
 					<ExROptionRow
 						uniqueOptionId={uniqueOptionId}

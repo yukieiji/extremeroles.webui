@@ -59,22 +59,24 @@ describe("ChildOptionViewAccordion", () => {
 		expect(button).toHaveAttribute("aria-label", CLOSE);
 	});
 
-	it("should apply padding class when depth > 0", () => {
-		const { container: containerDepth0 } = render(
+	it("should apply padding class to the row container when depth > 0", () => {
+		const { rerender } = render(
 			<ChildOptionViewAccordion {...defaultProps} depth={0} />,
 		);
-		expect(containerDepth0.firstChild).not.toHaveClass("pl-2");
+		const button0 = screen.getByRole("button", { name: OPEN });
+		const row0 = button0.closest("div[class*='hover:bg-']");
+		expect(row0).not.toHaveClass("pl-2");
 
-		const { container: containerDepth1 } = render(
-			<ChildOptionViewAccordion {...defaultProps} depth={1} />,
-		);
-		expect(containerDepth1.firstChild).toHaveClass("pl-2");
+		rerender(<ChildOptionViewAccordion {...defaultProps} depth={1} />);
+		const button1 = screen.getByRole("button", { name: OPEN });
+		const row1 = button1.closest("div[class*='hover:bg-']");
+		expect(row1).toHaveClass("pl-2");
 	});
 
-	it("should apply padding class when depth is large", () => {
-		const { container } = render(
-			<ChildOptionViewAccordion {...defaultProps} depth={5} />,
-		);
-		expect(container.firstChild).toHaveClass("pl-2");
+	it("should apply padding class to the row container when depth is large", () => {
+		render(<ChildOptionViewAccordion {...defaultProps} depth={5} />);
+		const button = screen.getByRole("button", { name: OPEN });
+		const row = button.closest("div[class*='hover:bg-']");
+		expect(row).toHaveClass("pl-2");
 	});
 });

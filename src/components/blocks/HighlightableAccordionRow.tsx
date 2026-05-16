@@ -10,6 +10,7 @@ interface HighlightableAccordionRowProps {
 	children: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
+	containerClassName?: string;
 }
 
 export function HighlightableAccordionRow({
@@ -18,10 +19,12 @@ export function HighlightableAccordionRow({
 	isOpen,
 	onToggle,
 	children,
+	containerClassName,
 }: HighlightableAccordionRowProps) {
 	return (
 		<HighlightWrapper id={id} isHighlighted={isHighlight} isInset={true}>
 			<OptionRowContainer
+				containerClassName={containerClassName}
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
 						<button

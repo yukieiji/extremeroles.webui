@@ -36,7 +36,7 @@ function ExROptionRowInner({ uniqueOptionId, depth }: ExROptionRowInnerProps) {
 			<OptionRowContainer
 				leading={<LargePoint />}
 				content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
-				className={depth > 0 ? "pl-4" : ""}
+				containerClassName={depth > 0 ? "pl-4" : ""}
 			/>
 		</HighlightWrapper>
 	);

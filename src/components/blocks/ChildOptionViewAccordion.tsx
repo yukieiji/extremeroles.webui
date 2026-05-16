@@ -23,8 +23,9 @@ export function ChildOptionViewAccordion({
 	depth,
 }: ChildOptionViewAccordionProps) {
 	return (
-		<div className={`flex flex-col ${depth > 0 ? "pl-2" : ""}`}>
+		<div className="flex flex-col">
 			<OptionRowContainer
+				containerClassName={depth > 0 ? "pl-2" : ""}
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
 						<button
@@ -42,11 +43,13 @@ export function ChildOptionViewAccordion({
 			/>
 
 			{/* 子要素（ネストされたオプション） */}
-			<AccordionContentContainer isOpen={isOpen}>
-				<div className="min-h-0">
-					{isOpen && <div className="flex flex-col">{children}</div>}
-				</div>
-			</AccordionContentContainer>
+			<div className={depth > 0 ? "pl-2" : ""}>
+				<AccordionContentContainer isOpen={isOpen}>
+					<div className="min-h-0">
+						{isOpen && <div className="flex flex-col">{children}</div>}
+					</div>
+				</AccordionContentContainer>
+			</div>
 		</div>
 	);
 }
