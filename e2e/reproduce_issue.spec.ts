@@ -17,7 +17,14 @@ test("right sidebar expansion should not cause horizontal overflow", async ({
 
 	// Open the panel
 	await toggleButton.click();
-	await page.waitForTimeout(1000); // Wait for open transition
+
+	// Wait for panel to open (width becomes significant)
+	await expect
+		.poll(async () => {
+			const box = await rightPanel.boundingBox();
+			return box ? box.width : 0;
+		})
+		.toBeGreaterThan(100);
 
 	const handle = page.getByTestId("resize-handle");
 	await expect(handle).toBeVisible();
@@ -46,33 +53,26 @@ test("right sidebar expansion should not cause horizontal overflow", async ({
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
 
-	// Wait for any transitions
-	await page.waitForTimeout(1000);
-
-	// Check for horizontal overflow
-	const overflow = await page.evaluate(() => {
-		return {
-			scrollWidth: document.documentElement.scrollWidth,
-			clientWidth: document.documentElement.clientWidth,
-			hasOverflow:
-				document.documentElement.scrollWidth >
-				document.documentElement.clientWidth,
-		};
-	});
-
-	console.log(
-		`ScrollWidth: ${overflow.scrollWidth}, ClientWidth: ${overflow.clientWidth}`,
-	);
-
-	// This is the core of the fix verification
-	expect(overflow.hasOverflow, "Horizontal overflow detected!").toBe(false);
+	// Check for horizontal overflow using poll to avoid hard timeouts
+	await expect
+		.poll(async () => {
+			return await page.evaluate(() => {
+				return (
+					document.documentElement.scrollWidth >
+					document.documentElement.clientWidth
+				);
+			});
+		})
+		.toBe(false);
 
 	// Also check if the panel itself is within the viewport
-	const panelBox = await rightPanel.boundingBox();
-	if (panelBox) {
-		const viewport = page.viewportSize();
-		if (viewport) {
-			expect(panelBox.x + panelBox.width).toBeLessThanOrEqual(viewport.width);
-		}
+	const viewport = page.viewportSize();
+	if (viewport) {
+		await expect
+			.poll(async () => {
+				const box = await rightPanel.boundingBox();
+				return box ? box.x + box.width : Number.MAX_VALUE;
+			})
+			.toBeLessThanOrEqual(viewport.width);
 	}
 });

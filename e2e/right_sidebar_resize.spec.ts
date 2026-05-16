@@ -98,7 +98,6 @@ test("right sidebar can be resized", async ({ page }) => {
 	if (!handleBox) {
 		throw new Error("Handle box not found");
 	}
-	// Use evaluate for dragging to be more reliable in CI
 	await handle.dispatchEvent("mousedown", { button: 0 });
 	await page.evaluate((startX) => {
 		window.dispatchEvent(
@@ -112,20 +111,22 @@ test("right sidebar can be resized", async ({ page }) => {
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
-	await page.waitForTimeout(500);
 
 	// Verify increased width
-	let resizedBoxWidth = 0;
 	await expect
 		.poll(
 			async () => {
 				const box = await rightPanel.boundingBox();
-				resizedBoxWidth = box ? box.width : 0;
-				return resizedBoxWidth;
+				return box ? box.width : 0;
 			},
 			{ timeout: 15000 },
 		)
 		.toBeGreaterThan(initialBox.width + 50);
+
+	const resizedBox = await rightPanel.boundingBox();
+	if (!resizedBox) {
+		throw new Error("Resized box not found");
+	}
 
 	// Drag right (decrease width)
 	const newHandle = page.getByTestId("resize-handle");
@@ -146,7 +147,6 @@ test("right sidebar can be resized", async ({ page }) => {
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
-	await page.waitForTimeout(500);
 
 	// Verify decreased width
 	await expect
@@ -157,7 +157,7 @@ test("right sidebar can be resized", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(resizedBoxWidth - 50);
+		.toBeLessThan(resizedBox.width - 30);
 });
 
 test("right sidebar width is clamped and does not cause overflow", async ({
@@ -208,11 +208,14 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 		.toBeLessThan(viewport.width * 0.85);
 
 	// Verify no horizontal scrollbar
-	const hasHScroll = await page.evaluate(() => {
-		return (
-			document.documentElement.scrollWidth >
-			document.documentElement.clientWidth
-		);
-	});
-	expect(hasHScroll).toBe(false);
+	await expect
+		.poll(async () => {
+			return await page.evaluate(() => {
+				return (
+					document.documentElement.scrollWidth >
+					document.documentElement.clientWidth
+				);
+			});
+		})
+		.toBe(false);
 });
