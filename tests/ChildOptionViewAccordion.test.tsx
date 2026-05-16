@@ -59,22 +59,25 @@ describe("ChildOptionViewAccordion", () => {
 		expect(button).toHaveAttribute("aria-label", CLOSE);
 	});
 
-	it("should apply padding class when depth > 0", () => {
-		const { container: containerDepth0 } = render(
-			<ChildOptionViewAccordion {...defaultProps} depth={0} />,
-		);
-		expect(containerDepth0.firstChild).not.toHaveClass("pl-2");
+	it("should apply indentation to the header when depth > 0", () => {
+		render(<ChildOptionViewAccordion {...defaultProps} depth={1} />);
 
-		const { container: containerDepth1 } = render(
-			<ChildOptionViewAccordion {...defaultProps} depth={1} />,
-		);
-		expect(containerDepth1.firstChild).toHaveClass("pl-2");
+		// OptionRowContainer now receives the padding through its inner flex div
+		const header = screen.getByText("Option Item");
+		// The parent of Option Item (content area) should have its grandparent as the flex container with style
+		const flexContainer = header.parentElement?.parentElement;
+		expect(flexContainer).toHaveStyle({
+			paddingLeft: "calc(0.875rem)",
+		});
 	});
 
-	it("should apply padding class when depth is large", () => {
-		const { container } = render(
-			<ChildOptionViewAccordion {...defaultProps} depth={5} />,
-		);
-		expect(container.firstChild).toHaveClass("pl-2");
+	it("should apply correct indentation for large depth", () => {
+		render(<ChildOptionViewAccordion {...defaultProps} depth={5} />);
+
+		const header = screen.getByText("Option Item");
+		const flexContainer = header.parentElement?.parentElement;
+		expect(flexContainer).toHaveStyle({
+			paddingLeft: "calc(2.875rem)",
+		});
 	});
 });

@@ -47,6 +47,7 @@ export function ExROptionRecursiveItem({
 					onToggle={handleToggle}
 					isOpen={isOpen}
 					isHighlight={isHighlighted}
+					depth={depth}
 				>
 					<ExROptionRow
 						uniqueOptionId={uniqueOptionId}
@@ -56,9 +57,12 @@ export function ExROptionRecursiveItem({
 				</HighlightableAccordionRow>
 			}
 			isOpen={isOpen}
-			depth={depth}
 		>
-			<OptionEditorCategoryOptionLayout arr={childs} ignoreIndex={-1}>
+			<OptionEditorCategoryOptionLayout
+				arr={childs}
+				ignoreIndex={-1}
+				depth={depth + 1}
+			>
 				{(childId) => (
 					<ExROptionItem uniqueOptionId={childId} depth={depth + 1} />
 				)}

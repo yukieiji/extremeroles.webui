@@ -7,6 +7,7 @@ import { ExRValueView } from "./ExRValueView";
 
 interface ExROptionRowViewContentProps {
 	uniqueOptionId: UniqueOptionId;
+	depth?: number;
 }
 
 /**
@@ -14,6 +15,7 @@ interface ExROptionRowViewContentProps {
  */
 export function ExROptionRowViewContent({
 	uniqueOptionId,
+	depth = 0,
 }: ExROptionRowViewContentProps) {
 	const optionData = exrOptionMetaData.options[uniqueOptionId]?.metaData;
 	const navigate = useExROptionNavigation(uniqueOptionId);
@@ -32,6 +34,7 @@ export function ExROptionRowViewContent({
 				/>
 			}
 			onDoubleClick={navigate}
+			depth={depth}
 		/>
 	);
 }

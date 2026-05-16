@@ -26,6 +26,7 @@ function ExROptionRowInner({ uniqueOptionId, depth }: ExROptionRowInnerProps) {
 	});
 
 	const navigateId = createExRNavigateId(uniqueOptionId);
+	const paddingLeft = depth > 0 ? `${depth * 1}rem` : "0";
 
 	return (
 		<HighlightWrapper
@@ -36,7 +37,7 @@ function ExROptionRowInner({ uniqueOptionId, depth }: ExROptionRowInnerProps) {
 			<OptionRowContainer
 				leading={<LargePoint />}
 				content={<ExROptionRowContent uniqueOptionId={uniqueOptionId} />}
-				className={depth > 0 ? "pl-4" : ""}
+				style={{ paddingLeft: `calc(0.375rem + ${paddingLeft})` }}
 			/>
 		</HighlightWrapper>
 	);

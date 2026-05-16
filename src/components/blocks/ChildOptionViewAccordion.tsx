@@ -22,8 +22,10 @@ export function ChildOptionViewAccordion({
 	children,
 	depth,
 }: ChildOptionViewAccordionProps) {
+	const paddingLeft = depth > 0 ? `${depth * 0.5}rem` : "0";
+
 	return (
-		<div className={`flex flex-col ${depth > 0 ? "pl-2" : ""}`}>
+		<div className="flex flex-col">
 			<OptionRowContainer
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
@@ -39,6 +41,7 @@ export function ChildOptionViewAccordion({
 					</div>
 				}
 				content={optionItem}
+				style={{ paddingLeft: `calc(0.375rem + ${paddingLeft})` }}
 			/>
 
 			{/* 子要素（ネストされたオプション） */}
