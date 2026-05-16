@@ -6,6 +6,7 @@ import { useStore } from "@/useStore";
 import { RightSidePanelBody } from "./RightSidePanelBody";
 import {
 	calculateMaxRightPanelWidth,
+	RIGHT_PANEL_TOGGLE_WIDTH,
 	RightSidePanelResizeHandle,
 } from "./RightSidePanelResizeHandle";
 import { RightSidePanelToggleButton } from "./RightSidePanelToggleButton";
@@ -38,6 +39,10 @@ export function RightSidePanel() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, [rightPanelWidth, setRightPanelWidth]);
 
+	const maxWidth = calculateMaxRightPanelWidth(
+		typeof window !== "undefined" ? window.innerWidth : 1920,
+	);
+
 	return (
 		<aside
 			className={cn(
@@ -45,8 +50,10 @@ export function RightSidePanel() {
 				!isResizing && "transition-[width] duration-300 ease-in-out",
 			)}
 			style={{
-				width: isRightPanelOpen ? `${rightPanelWidth + 24}px` : "24px",
-				maxWidth: "80vw",
+				width: isRightPanelOpen
+					? `${rightPanelWidth + RIGHT_PANEL_TOGGLE_WIDTH}px`
+					: `${RIGHT_PANEL_TOGGLE_WIDTH}px`,
+				maxWidth: `${maxWidth + RIGHT_PANEL_TOGGLE_WIDTH}px`,
 			}}
 			aria-label={RIGHT_PANEL_ARIA}
 			data-testid="right-side-panel"

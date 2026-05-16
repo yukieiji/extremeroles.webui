@@ -141,7 +141,7 @@ function RootContent() {
 			<BlockableLoading />
 			<BlockableDialog />
 			<OptionGroupToggleSidebar />
-			<SidebarInset>
+			<SidebarInset className="min-w-0">
 				<MainContent />
 			</SidebarInset>
 			<RightSidePanel />

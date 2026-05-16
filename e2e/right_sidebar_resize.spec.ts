@@ -149,7 +149,7 @@ test("right sidebar can be resized", async ({ page }) => {
 				clientY: 300,
 			}),
 		);
-	}, newHandleBox.x + 150);
+	}, newHandleBox.x + 250);
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
@@ -164,7 +164,7 @@ test("right sidebar can be resized", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(resizedBox.width - 100);
+		.toBeLessThan(resizedBox.width - 150);
 });
 
 test("right sidebar width is clamped and does not cause overflow", async ({
@@ -212,7 +212,7 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(viewport.width * 0.9);
+		.toBeLessThan(viewport.width * 0.85);
 
 	// Verify no horizontal scrollbar
 	const hasHScroll = await page.evaluate(() => {
