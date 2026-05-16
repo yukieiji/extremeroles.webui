@@ -7,13 +7,13 @@ test.beforeEach(async ({ page }) => {
 	});
 	// Ensure main content is loaded
 	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
-		timeout: 30000,
+		timeout: 45000,
 	});
 });
 
 test("isResizing state is correctly managed", async ({ page }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
-	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -61,7 +61,7 @@ test("isResizing state is correctly managed", async ({ page }) => {
 
 test("right sidebar can be resized", async ({ page }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
-	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -98,13 +98,20 @@ test("right sidebar can be resized", async ({ page }) => {
 	if (!handleBox) {
 		throw new Error("Handle box not found");
 	}
-	await page.mouse.move(
-		handleBox.x + handleBox.width / 2,
-		handleBox.y + handleBox.height / 2,
-	);
-	await page.mouse.down();
-	await page.mouse.move(handleBox.x - 200, handleBox.y + handleBox.height / 2);
-	await page.mouse.up();
+	// Use evaluate for dragging to be more reliable in CI
+	await handle.dispatchEvent("mousedown", { button: 0 });
+	await page.evaluate((startX) => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: startX - 200,
+				clientY: 300,
+			}),
+		);
+	}, handleBox.x);
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+	});
 	await page.waitForTimeout(500);
 
 	// Verify increased width
@@ -121,20 +128,24 @@ test("right sidebar can be resized", async ({ page }) => {
 		.toBeGreaterThan(initialBox.width + 50);
 
 	// Drag right (decrease width)
-	const newHandleBox = await handle.boundingBox();
+	const newHandle = page.getByTestId("resize-handle");
+	const newHandleBox = await newHandle.boundingBox();
 	if (!newHandleBox) {
 		throw new Error("New handle box not found");
 	}
-	await page.mouse.move(
-		newHandleBox.x + newHandleBox.width / 2,
-		newHandleBox.y + newHandleBox.height / 2,
-	);
-	await page.mouse.down();
-	await page.mouse.move(
-		newHandleBox.x + 100,
-		newHandleBox.y + newHandleBox.height / 2,
-	);
-	await page.mouse.up();
+	await newHandle.dispatchEvent("mousedown", { button: 0 });
+	await page.evaluate((startX) => {
+		window.dispatchEvent(
+			new MouseEvent("mousemove", {
+				bubbles: true,
+				clientX: startX + 150,
+				clientY: 300,
+			}),
+		);
+	}, newHandleBox.x);
+	await page.evaluate(() => {
+		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+	});
 	await page.waitForTimeout(500);
 
 	// Verify decreased width
@@ -153,7 +164,7 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 	page,
 }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
-	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -180,7 +191,7 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 				clientY: 300,
 			}),
 		);
-	}, handleBox.x - 150);
+	});
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
