@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 interface OptionRowContainerProps {
 	leading: ReactNode;
 	content: ReactNode;
-	className?: string;
 	containerClassName?: string;
 }
 
@@ -14,14 +13,13 @@ interface OptionRowContainerProps {
 export function OptionRowContainer({
 	leading,
 	content,
-	className = "",
 	containerClassName = "",
 }: OptionRowContainerProps) {
 	return (
 		<div
 			className={`py-0.5 hover:bg-gray-800/50 transition-colors ${containerClassName}`}
 		>
-			<div className={`flex items-stretch pl-1.5 ${className}`}>
+			<div className="flex items-stretch pl-1.5">
 				{/* 左側領域（トグルボタンやスペーサー） */}
 				<div className="flex items-center justify-center w-10 shrink-0">
 					{leading}
