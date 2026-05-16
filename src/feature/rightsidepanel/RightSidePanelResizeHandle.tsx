@@ -3,11 +3,15 @@ import { useCallback, useEffect } from "react";
 import { useStore } from "@/useStore";
 
 export const MIN_RIGHT_PANEL_WIDTH = 320;
+export const RIGHT_PANEL_TOGGLE_WIDTH = 24;
+export const DEFAULT_WINDOW_WIDTH = 1920;
 
 export const calculateMaxRightPanelWidth = (windowWidth: number) => {
 	// メインコンテンツが極端に狭くならないように、画面幅の80%を上限とする
 	// また、左サイドバー(約300px)があることを考慮して、実際の表示領域を超えないように制御する
-	return Math.min(windowWidth * 0.8, windowWidth - 300);
+	// トグルボタンの幅(24px)を考慮して、パネル本体の最大幅を計算する
+	const maxAsideWidth = Math.min(windowWidth * 0.8, windowWidth - 300);
+	return maxAsideWidth - RIGHT_PANEL_TOGGLE_WIDTH;
 };
 
 export function RightSidePanelResizeHandle() {

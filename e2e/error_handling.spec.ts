@@ -23,7 +23,7 @@ test("初期ロード時にフェッチが失敗した場合、エラー画面�
 				url = input.href;
 			} else if (input && typeof input === "object" && "url" in input) {
 				// Request-like object
-				url = (input as any).url;
+				url = (input as { url: string }).url;
 			}
 
 			if (url.includes("au/translation/batch")) {
@@ -75,7 +75,7 @@ test("再試行してもフェッチが失敗し続ける場合、エラー画�
 				url = input.href;
 			} else if (input && typeof input === "object" && "url" in input) {
 				// Request-like object
-				url = (input as any).url;
+				url = (input as { url: string }).url;
 			}
 
 			if (url.includes("au/translation/batch")) {

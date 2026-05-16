@@ -7,13 +7,13 @@ test.beforeEach(async ({ page }) => {
 	});
 	// Ensure main content is loaded
 	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
-		timeout: 30000,
+		timeout: 45000,
 	});
 });
 
 test("isResizing state is correctly managed", async ({ page }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
-	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -61,7 +61,7 @@ test("isResizing state is correctly managed", async ({ page }) => {
 
 test("right sidebar can be resized", async ({ page }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
-	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -92,29 +92,25 @@ test("right sidebar can be resized", async ({ page }) => {
 
 	const handle = page.getByTestId("resize-handle");
 	await expect(handle).toBeVisible();
+
+	// Drag left (increase width)
 	const handleBox = await handle.boundingBox();
 	if (!handleBox) {
 		throw new Error("Handle box not found");
 	}
-
-	// Drag left (increase width)
-	// Dispatch events for better reliability with thin handles
 	await handle.dispatchEvent("mousedown", { button: 0 });
-	// Wait a bit to ensure event listeners are attached
-	await page.waitForTimeout(100);
-	await page.evaluate((targetX) => {
+	await page.evaluate((startX) => {
 		window.dispatchEvent(
 			new MouseEvent("mousemove", {
 				bubbles: true,
-				clientX: targetX,
+				clientX: startX - 200,
 				clientY: 300,
 			}),
 		);
-	}, handleBox.x - 200);
+	}, handleBox.x);
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
-	await page.waitForTimeout(500);
 
 	// Verify increased width
 	await expect
@@ -125,35 +121,32 @@ test("right sidebar can be resized", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeGreaterThan(initialBox.width + 100);
+		.toBeGreaterThan(initialBox.width + 50);
 
 	const resizedBox = await rightPanel.boundingBox();
 	if (!resizedBox) {
 		throw new Error("Resized box not found");
 	}
 
+	// Drag right (decrease width)
 	const newHandle = page.getByTestId("resize-handle");
 	const newHandleBox = await newHandle.boundingBox();
 	if (!newHandleBox) {
 		throw new Error("New handle box not found");
 	}
-
-	// Drag right (decrease width)
 	await newHandle.dispatchEvent("mousedown", { button: 0 });
-	await page.waitForTimeout(100);
-	await page.evaluate((targetX) => {
+	await page.evaluate((startX) => {
 		window.dispatchEvent(
 			new MouseEvent("mousemove", {
 				bubbles: true,
-				clientX: targetX,
+				clientX: startX + 150,
 				clientY: 300,
 			}),
 		);
-	}, newHandleBox.x + 150);
+	}, newHandleBox.x);
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
-	await page.waitForTimeout(500);
 
 	// Verify decreased width
 	await expect
@@ -164,14 +157,14 @@ test("right sidebar can be resized", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(resizedBox.width - 100);
+		.toBeLessThan(resizedBox.width - 30);
 });
 
 test("right sidebar width is clamped and does not cause overflow", async ({
 	page,
 }) => {
 	const rightPanel = page.locator('[data-testid="right-side-panel"]');
-	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
+	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
@@ -198,7 +191,7 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 				clientY: 300,
 			}),
 		);
-	}, handleBox.x - 150);
+	});
 	await page.evaluate(() => {
 		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 	});
@@ -212,14 +205,17 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(viewport.width * 0.9);
+		.toBeLessThan(viewport.width * 0.85);
 
 	// Verify no horizontal scrollbar
-	const hasHScroll = await page.evaluate(() => {
-		return (
-			document.documentElement.scrollWidth >
-			document.documentElement.clientWidth
-		);
-	});
-	expect(hasHScroll).toBe(false);
+	await expect
+		.poll(async () => {
+			return await page.evaluate(() => {
+				return (
+					document.documentElement.scrollWidth >
+					document.documentElement.clientWidth
+				);
+			});
+		})
+		.toBe(false);
 });

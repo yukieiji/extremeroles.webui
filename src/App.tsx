@@ -1,4 +1,4 @@
-import { Suspense, use } from "react";
+import { Suspense, use, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorView } from "./components/blocks/ErrorView";
 import { LoadingView } from "./components/blocks/LoadingView";
@@ -135,13 +135,22 @@ function MainContent() {
  */
 function RootContent() {
 	use(getAllOptions());
+	const setWindowWidth = useStore((state) => state.setWindowWidth);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setWindowWidth(window.innerWidth);
+		};
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, [setWindowWidth]);
 
 	return (
 		<SidebarProvider>
 			<BlockableLoading />
 			<BlockableDialog />
 			<OptionGroupToggleSidebar />
-			<SidebarInset>
+			<SidebarInset className="min-w-0">
 				<MainContent />
 			</SidebarInset>
 			<RightSidePanel />
