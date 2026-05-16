@@ -6,6 +6,7 @@ import { useStore } from "@/useStore";
 import { RightSidePanelBody } from "./RightSidePanelBody";
 import {
 	calculateMaxRightPanelWidth,
+	DEFAULT_WINDOW_WIDTH,
 	RIGHT_PANEL_TOGGLE_WIDTH,
 	RightSidePanelResizeHandle,
 } from "./RightSidePanelResizeHandle";
@@ -39,8 +40,9 @@ export function RightSidePanel() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, [rightPanelWidth, setRightPanelWidth]);
 
+	const windowWidth = useStore((state) => state.windowWidth);
 	const maxWidth = calculateMaxRightPanelWidth(
-		typeof window !== "undefined" ? window.innerWidth : 1920,
+		windowWidth || DEFAULT_WINDOW_WIDTH,
 	);
 
 	return (

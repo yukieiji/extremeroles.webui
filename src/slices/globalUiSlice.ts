@@ -18,10 +18,14 @@ export interface GlobalUiSlice {
 	setRoleSearchQuery: (query: string) => void;
 	setSelectedRoleIds: (roleIds: number[]) => void;
 	setLastClickedId: (roleId: number | null) => void;
+	windowWidth: number;
+	setWindowWidth: (width: number) => void;
 }
 
 export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 	return {
+		windowWidth: typeof window !== "undefined" ? window.innerWidth : 1920,
+		setWindowWidth: (width) => set({ windowWidth: width }),
 		isPendingBlock: false,
 		blockCount: 0,
 		blockDialog: undefined,
