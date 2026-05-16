@@ -2,8 +2,8 @@ import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAcco
 import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
-import { getIndentClass } from "@/logics/indentUtils";
 import { exrOptionMetaData } from "@/logics/api";
+import { getIndentClass } from "@/logics/indentUtils";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 import { ExROptionItem } from "./ExROptionItem";

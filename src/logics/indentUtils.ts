@@ -7,23 +7,35 @@
  * @returns Tailwindのパディングクラス
  */
 export function getIndentClass(depth: number, step: 4 | 2 = 4): string {
-  if (depth <= 0) return "";
+	if (depth <= 0) {
+		return "";
+	}
 
-  if (step === 4) {
-    switch (depth) {
-      case 1: return "pl-4";
-      case 2: return "pl-8";
-      case 3: return "pl-12";
-      case 4: return "pl-16";
-      default: return "pl-20";
-    }
-  } else {
-    switch (depth) {
-      case 1: return "pl-2";
-      case 2: return "pl-4";
-      case 3: return "pl-6";
-      case 4: return "pl-8";
-      default: return "pl-10";
-    }
-  }
+	if (step === 4) {
+		switch (depth) {
+			case 1:
+				return "pl-4";
+			case 2:
+				return "pl-8";
+			case 3:
+				return "pl-12";
+			case 4:
+				return "pl-16";
+			default:
+				return "pl-20";
+		}
+	} else {
+		switch (depth) {
+			case 1:
+				return "pl-2";
+			case 2:
+				return "pl-4";
+			case 3:
+				return "pl-6";
+			case 4:
+				return "pl-8";
+			default:
+				return "pl-10";
+		}
+	}
 }

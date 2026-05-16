@@ -39,7 +39,6 @@ export function ExROptionRecursiveItemView({
 					uniqueOptionId={uniqueOptionId}
 					depth={depth}
 					isLeaf={false}
-					noHover={true}
 				/>
 			}
 			isOpen={isOpen}
