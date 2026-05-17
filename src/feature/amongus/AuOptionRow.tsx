@@ -40,6 +40,8 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 		>
 			<OptionRowContainer
 				leading={<LargePoint />}
+				depth={0}
+				indentMultiplier={1}
 				content={
 					<OptionRowContent name={optionMeta.title}>
 						<AuOptionControl

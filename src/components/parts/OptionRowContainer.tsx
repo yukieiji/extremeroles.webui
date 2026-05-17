@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
+import { calculateIndentation } from "@/logics/optionUtils";
 
 interface OptionRowContainerProps {
 	leading: ReactNode;
 	content: ReactNode;
 	className?: string;
+	depth?: number;
+	indentMultiplier?: number;
 }
 
 /**
@@ -14,10 +17,17 @@ export function OptionRowContainer({
 	leading,
 	content,
 	className = "",
+	depth = 0,
+	indentMultiplier = 1,
 }: OptionRowContainerProps) {
+	const paddingLeft = calculateIndentation(depth, indentMultiplier, 0.375);
+
 	return (
-		<div className="pl-1.5 py-0.5 hover:bg-gray-800/50 transition-colors">
-			<div className={`flex items-stretch ${className}`}>
+		<div className="py-0.5 hover:bg-gray-800/50 transition-colors">
+			<div
+				className={`flex items-stretch ${className}`}
+				style={{ paddingLeft }}
+			>
 				{/* 左側領域（トグルボタンやスペーサー） */}
 				<div className="flex items-center justify-center w-10 shrink-0">
 					{leading}

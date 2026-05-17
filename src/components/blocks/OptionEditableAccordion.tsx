@@ -5,7 +5,6 @@ interface RowCustomizeAccordionProps {
 	row: ReactNode;
 	isOpen: boolean;
 	children: ReactNode;
-	depth: number;
 }
 
 /**
@@ -15,10 +14,9 @@ export function RowCustomizeAccordion({
 	isOpen,
 	row,
 	children,
-	depth,
 }: RowCustomizeAccordionProps) {
 	return (
-		<div className={`flex flex-col ${depth > 0 ? "pl-4" : ""}`}>
+		<div className="flex flex-col">
 			{row}
 			{/* 子要素（ネストされたオプション） */}
 			<AccordionContentContainer isOpen={isOpen}>

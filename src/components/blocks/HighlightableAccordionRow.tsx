@@ -10,6 +10,7 @@ interface HighlightableAccordionRowProps {
 	children: ReactNode;
 	isOpen: boolean;
 	onToggle: () => void;
+	depth?: number;
 }
 
 export function HighlightableAccordionRow({
@@ -18,6 +19,7 @@ export function HighlightableAccordionRow({
 	isOpen,
 	onToggle,
 	children,
+	depth = 0,
 }: HighlightableAccordionRowProps) {
 	return (
 		<HighlightWrapper id={id} isHighlighted={isHighlight} isInset={true}>
@@ -36,6 +38,8 @@ export function HighlightableAccordionRow({
 					</div>
 				}
 				content={children}
+				depth={depth}
+				indentMultiplier={1}
 			/>
 		</HighlightWrapper>
 	);

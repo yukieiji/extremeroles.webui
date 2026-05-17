@@ -40,6 +40,8 @@ export function ExRCategoryOptionList({
 						) : (
 							<OptionRowContainer
 								leading={<LargePoint />}
+								depth={0}
+								indentMultiplier={1}
 								content={
 									<ExRPairedOptionItem
 										baseName={item.baseName}

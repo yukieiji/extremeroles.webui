@@ -23,7 +23,7 @@ export function ChildOptionViewAccordion({
 	depth,
 }: ChildOptionViewAccordionProps) {
 	return (
-		<div className={`flex flex-col ${depth > 0 ? "pl-2" : ""}`}>
+		<div className="flex flex-col">
 			<OptionRowContainer
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
@@ -39,6 +39,8 @@ export function ChildOptionViewAccordion({
 					</div>
 				}
 				content={optionItem}
+				depth={depth}
+				indentMultiplier={0.5}
 			/>
 
 			{/* 子要素（ネストされたオプション） */}
