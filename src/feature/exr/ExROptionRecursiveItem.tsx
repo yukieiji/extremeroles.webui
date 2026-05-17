@@ -1,5 +1,5 @@
-import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAccordionRow";
 import { useShallow } from "zustand/react/shallow";
+import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAccordionRow";
 import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";

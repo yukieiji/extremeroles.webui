@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { BorderLine } from "@/components/parts/BorderLine";
 import { LargePoint } from "@/components/parts/LargePoint";
