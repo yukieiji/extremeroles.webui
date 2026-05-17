@@ -1,3 +1,4 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PANEL_CLOSE_ARIA, PANEL_OPEN_ARIA } from "@/noTrans";
 
 interface RightSidePanelToggleButtonProps {
@@ -17,7 +18,7 @@ export function RightSidePanelToggleButton({
 			aria-label={isOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
 			data-testid="right-panel-toggle"
 		>
-			<span className="text-sm font-bold">{isOpen ? "▶" : "◀"}</span>
+			{isOpen ? <ChevronRight /> : <ChevronLeft />}
 		</button>
 	);
 }
