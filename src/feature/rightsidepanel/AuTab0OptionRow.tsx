@@ -1,3 +1,4 @@
+import { RightPanelBorderLine } from "@/components/parts/RightPanelBorderLine";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
 import { useAuOptionNavigation } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
@@ -8,6 +9,7 @@ import { AuTab0OptionValue } from "./AuTab0OptionValue";
 interface AuTab0OptionRowProps {
 	optionId: AuOptionId;
 	categoryId: number;
+	withBorder?: boolean;
 }
 
 /**
@@ -16,6 +18,7 @@ interface AuTab0OptionRowProps {
 export function AuTab0OptionRow({
 	optionId,
 	categoryId,
+	withBorder = false,
 }: AuTab0OptionRowProps) {
 	const selection = useStore((state) => {
 		return state.auValue[optionId] ?? 0;
@@ -30,10 +33,15 @@ export function AuTab0OptionRow({
 	const value = optionMeta.range[selection] ?? 0;
 
 	return (
-		<ViewerOptionRow
-			title={optionMeta.title}
-			value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
-			onDoubleClick={navigateToOption}
-		/>
+		<>
+			{withBorder && (
+				<RightPanelBorderLine className="first:hidden" depth={0} />
+			)}
+			<ViewerOptionRow
+				title={optionMeta.title}
+				value={<AuTab0OptionValue value={value} format={optionMeta.format} />}
+				onDoubleClick={navigateToOption}
+			/>
+		</>
 	);
 }

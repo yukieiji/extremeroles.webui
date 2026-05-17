@@ -1,3 +1,4 @@
+import { RightPanelBorderLine } from "@/components/parts/RightPanelBorderLine";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
 import { useAuOptionNavigation } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
@@ -6,13 +7,18 @@ import { useStore } from "@/useStore";
 interface AuRoleViewerRowProps {
 	tabId: number;
 	categoryId: number;
+	withBorder?: boolean;
 }
 
 /**
  * 役職の概要を表示する行コンポーネント
  * 役職名、スポーンレート、スポーン数を表示する
  */
-export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
+export function AuRoleViewerRow({
+	tabId,
+	categoryId,
+	withBorder = false,
+}: AuRoleViewerRowProps) {
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 
 	// 役職タブ（1, 2）では、0番目がChance、1番目がMaxCount
@@ -42,16 +48,21 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 	const maxCountValue = maxCountMeta.range[maxCountSelection] ?? 0;
 
 	return (
-		<ViewerOptionRow
-			title={categoryMeta?.name ?? ""}
-			value={
-				<div className="flex items-center gap-2">
-					<span className="text-blue-400">{chanceValue.toString()}%</span>
-					<span className="text-gray-500">/</span>
-					<span className="text-blue-400">{maxCountValue.toString()}</span>
-				</div>
-			}
-			onDoubleClick={navigateToOption}
-		/>
+		<>
+			{withBorder && (
+				<RightPanelBorderLine className="first:hidden" depth={0} />
+			)}
+			<ViewerOptionRow
+				title={categoryMeta?.name ?? ""}
+				value={
+					<div className="flex items-center gap-2">
+						<span className="text-blue-400">{chanceValue.toString()}%</span>
+						<span className="text-gray-500">/</span>
+						<span className="text-blue-400">{maxCountValue.toString()}</span>
+					</div>
+				}
+				onDoubleClick={navigateToOption}
+			/>
+		</>
 	);
 }

@@ -1,4 +1,5 @@
 import { OptionRowContent } from "@/components/blocks/OptionContent";
+import { BorderLine } from "@/components/parts/BorderLine";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
@@ -11,12 +12,21 @@ import { AuOptionControl } from "./AuOptionControl";
 
 interface AuOptionRowProps {
 	auOptionId: AuOptionId;
+	withBorder?: boolean;
+	Separator?: React.ComponentType<{
+		className?: string;
+		depth?: number;
+	}>;
 }
 
 /**
  * Auの各オプション行を表示するコンポーネント
  */
-export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
+export function AuOptionRow({
+	auOptionId,
+	withBorder = false,
+	Separator = BorderLine,
+}: AuOptionRowProps) {
 	const optionMeta = auOptionMetaData.options[auOptionId];
 	const selection = useStore((state) => state.auValue[auOptionId] ?? 0);
 	const highlightedAuOptionId = useStore(
@@ -33,27 +43,30 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 	const navigateId = createAuNavigateId(auOptionId);
 
 	return (
-		<HighlightWrapper
-			id={navigateId}
-			isHighlighted={isHighlighted}
-			isInset={true}
-		>
-			<OptionRowContainer
-				leading={<LargePoint />}
-				depth={0}
-				indentMultiplier={1}
-				content={
-					<OptionRowContent name={optionMeta.title}>
-						<AuOptionControl
-							optionMeta={optionMeta}
-							selection={selection}
-							onSelectionChange={(selection) => {
-								updateAuOption({ auOptionId, selection });
-							}}
-						/>
-					</OptionRowContent>
-				}
-			/>
-		</HighlightWrapper>
+		<>
+			{withBorder && <Separator className="first:hidden" depth={0} />}
+			<HighlightWrapper
+				id={navigateId}
+				isHighlighted={isHighlighted}
+				isInset={true}
+			>
+				<OptionRowContainer
+					leading={<LargePoint />}
+					depth={0}
+					indentMultiplier={1}
+					content={
+						<OptionRowContent name={optionMeta.title}>
+							<AuOptionControl
+								optionMeta={optionMeta}
+								selection={selection}
+								onSelectionChange={(selection) => {
+									updateAuOption({ auOptionId, selection });
+								}}
+							/>
+						</OptionRowContent>
+					}
+				/>
+			</HighlightWrapper>
+		</>
 	);
 }
