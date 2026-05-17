@@ -1,4 +1,5 @@
 import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAccordionRow";
+import { useShallow } from "zustand/react/shallow";
 import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
@@ -34,8 +35,14 @@ export function ExROptionRecursiveItem({
 		return state.highlightedExROptionId === uniqueOptionId;
 	});
 
-	const childs =
+	const childIds =
 		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
+
+	const visibleChildIds = useStore(
+		useShallow((state) =>
+			childIds.filter((id) => state.isExROptionActive[id] ?? false),
+		),
+	);
 
 	const navigateId = createExRNavigateId(uniqueOptionId);
 
@@ -59,7 +66,7 @@ export function ExROptionRecursiveItem({
 			isOpen={isOpen}
 		>
 			<OptionEditorCategoryOptionLayout
-				arr={childs}
+				arr={visibleChildIds}
 				ignoreIndex={-1}
 				depth={depth + 1}
 			>
