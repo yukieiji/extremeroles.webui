@@ -229,11 +229,13 @@ export function groupOptionPairs(
 }
 
 /**
- * 階層（depth）と倍率（multiplier）に基づいてインデント幅（rem）を計算します。
+ * 階層（depth）と倍率（multiplier）、およびベース値に基づいてインデント幅（rem）を計算します。
  */
 export function calculateIndentation(
 	depth: number,
 	multiplier: number,
+	base = 0,
 ): string {
-	return depth > 0 ? `${depth * multiplier}rem` : "0";
+	const total = base + (depth > 0 ? depth * multiplier : 0);
+	return total > 0 ? `${total}rem` : "0";
 }

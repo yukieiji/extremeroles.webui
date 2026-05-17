@@ -20,13 +20,13 @@ export function OptionRowContainer({
 	depth = 0,
 	indentMultiplier = 1,
 }: OptionRowContainerProps) {
-	const paddingLeft = calculateIndentation(depth, indentMultiplier);
+	const paddingLeft = calculateIndentation(depth, indentMultiplier, 0.375);
 
 	return (
 		<div className="py-0.5 hover:bg-gray-800/50 transition-colors">
 			<div
 				className={`flex items-stretch ${className}`}
-				style={{ paddingLeft: `calc(0.375rem + ${paddingLeft})` }}
+				style={{ paddingLeft }}
 			>
 				{/* 左側領域（トグルボタンやスペーサー） */}
 				<div className="flex items-center justify-center w-10 shrink-0">

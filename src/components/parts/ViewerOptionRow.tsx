@@ -20,14 +20,14 @@ export function ViewerOptionRow({
 	depth = 0,
 	indentMultiplier = 0.5,
 }: ViewerOptionRowProps) {
-	const paddingLeft = calculateIndentation(depth, indentMultiplier);
+	const paddingLeft = calculateIndentation(depth, indentMultiplier, 0.5);
 
 	return (
 		<button
 			type="button"
 			onDoubleClick={onDoubleClick}
 			className="w-full flex justify-between items-center py-1 pr-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2 group"
-			style={{ paddingLeft: `calc(0.5rem + ${paddingLeft})` }}
+			style={{ paddingLeft }}
 			title={VIEWER_ROW_TITLE}
 		>
 			<span className="text-sm text-gray-300 flex-1 text-left group-hover:text-white transition-colors">
