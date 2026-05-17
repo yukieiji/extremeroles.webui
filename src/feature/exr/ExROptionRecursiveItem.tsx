@@ -57,7 +57,6 @@ export function ExROptionRecursiveItem({
 				</HighlightableAccordionRow>
 			}
 			isOpen={isOpen}
-			depth={depth}
 		>
 			<OptionEditorCategoryOptionLayout
 				arr={childs}

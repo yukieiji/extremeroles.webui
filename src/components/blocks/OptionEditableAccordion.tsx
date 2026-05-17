@@ -5,7 +5,6 @@ interface RowCustomizeAccordionProps {
 	row: ReactNode;
 	isOpen: boolean;
 	children: ReactNode;
-	depth: number;
 }
 
 /**
