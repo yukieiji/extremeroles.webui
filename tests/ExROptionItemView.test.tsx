@@ -93,4 +93,27 @@ describe("ExROptionItemView", () => {
 			screen.getByText(`Row Item ${mockUniqueId} Depth 0`),
 		).toBeInTheDocument();
 	});
+
+	it("renders RightPanelBorderLine when withBorder is true", () => {
+		vi.mocked(useOptionActive).mockReturnValue(true);
+		vi.mocked(useHasActiveOptionChild).mockReturnValue(false);
+
+		const { container } = render(
+			<ExROptionItemView uniqueOptionId={mockUniqueId} withBorder={true} />,
+		);
+
+		// RightPanelBorderLine renders an <hr> tag
+		expect(container.querySelector("hr")).toBeInTheDocument();
+	});
+
+	it("does not render RightPanelBorderLine when withBorder is false", () => {
+		vi.mocked(useOptionActive).mockReturnValue(true);
+		vi.mocked(useHasActiveOptionChild).mockReturnValue(false);
+
+		const { container } = render(
+			<ExROptionItemView uniqueOptionId={mockUniqueId} withBorder={false} />,
+		);
+
+		expect(container.querySelector("hr")).not.toBeInTheDocument();
+	});
 });

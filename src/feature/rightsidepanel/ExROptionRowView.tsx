@@ -10,11 +10,8 @@ interface ExROptionRowViewProps {
 export function ExROptionRowView({
 	uniqueOptionId,
 	depth = 0,
-	isLeaf = false,
 }: ExROptionRowViewProps) {
-	return isLeaf ? (
-		<ExROptionRowViewContent uniqueOptionId={uniqueOptionId} depth={depth} />
-	) : (
+	return (
 		<ExROptionRowViewContent uniqueOptionId={uniqueOptionId} depth={depth} />
 	);
 }
