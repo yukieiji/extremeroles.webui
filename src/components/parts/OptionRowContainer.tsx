@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { calculateIndentation } from "@/logics/optionUtils";
 
 interface OptionRowContainerProps {
 	leading: ReactNode;
@@ -19,7 +20,7 @@ export function OptionRowContainer({
 	depth = 0,
 	indentMultiplier = 1,
 }: OptionRowContainerProps) {
-	const paddingLeft = depth > 0 ? `${depth * indentMultiplier}rem` : "0";
+	const paddingLeft = calculateIndentation(depth, indentMultiplier);
 
 	return (
 		<div className="py-0.5 hover:bg-gray-800/50 transition-colors">

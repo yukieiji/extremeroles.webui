@@ -3,11 +3,13 @@ interface RightPanelBorderLineProps {
 	indentMultiplier?: number;
 }
 
+import { calculateIndentation } from "@/logics/optionUtils";
+
 export function RightPanelBorderLine({
 	depth = 0,
 	indentMultiplier = 0.5,
 }: RightPanelBorderLineProps) {
-	const paddingLeft = depth > 0 ? `${depth * indentMultiplier}rem` : "0";
+	const paddingLeft = calculateIndentation(depth, indentMultiplier);
 	return (
 		<div style={{ paddingLeft: paddingLeft }}>
 			<hr className="w-[95%] mx-auto border-t border-gray-400" />

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { calculateIndentation } from "@/logics/optionUtils";
 import { VIEWER_ROW_TITLE } from "@/noTrans";
 
 interface ViewerOptionRowProps {
@@ -19,7 +20,7 @@ export function ViewerOptionRow({
 	depth = 0,
 	indentMultiplier = 0.5,
 }: ViewerOptionRowProps) {
-	const paddingLeft = depth > 0 ? `${depth * indentMultiplier}rem` : "0";
+	const paddingLeft = calculateIndentation(depth, indentMultiplier);
 
 	return (
 		<button

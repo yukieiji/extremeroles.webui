@@ -227,3 +227,13 @@ export function groupOptionPairs(
 	}
 	return result;
 }
+
+/**
+ * 階層（depth）と倍率（multiplier）に基づいてインデント幅（rem）を計算します。
+ */
+export function calculateIndentation(
+	depth: number,
+	multiplier: number,
+): string {
+	return depth > 0 ? `${depth * multiplier}rem` : "0";
+}
