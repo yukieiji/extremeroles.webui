@@ -2,6 +2,7 @@ import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAcco
 import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
+import { exrOptionMetaData } from "@/logics/api";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 import { ExROptionItem } from "./ExROptionItem";
@@ -32,6 +33,9 @@ export function ExROptionRecursiveItem({
 	const isHighlighted = useStore((state) => {
 		return state.highlightedExROptionId === uniqueOptionId;
 	});
+
+	const childIds =
+		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
 
 	const navigateId = createExRNavigateId(uniqueOptionId);
 
