@@ -6,6 +6,7 @@ interface ViewerOptionRowProps {
 	value: ReactNode;
 	onDoubleClick: () => void;
 	depth?: number;
+	indentMultiplier?: number;
 }
 
 /**
@@ -16,8 +17,9 @@ export function ViewerOptionRow({
 	value,
 	onDoubleClick,
 	depth = 0,
+	indentMultiplier = 0.5,
 }: ViewerOptionRowProps) {
-	const paddingLeft = depth > 0 ? `${depth * 0.5}rem` : "0";
+	const paddingLeft = depth > 0 ? `${depth * indentMultiplier}rem` : "0";
 
 	return (
 		<button

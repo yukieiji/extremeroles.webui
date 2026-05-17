@@ -1,10 +1,11 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface OptionRowContainerProps {
 	leading: ReactNode;
 	content: ReactNode;
 	className?: string;
-	style?: CSSProperties;
+	depth?: number;
+	indentMultiplier?: number;
 }
 
 /**
@@ -15,11 +16,17 @@ export function OptionRowContainer({
 	leading,
 	content,
 	className = "",
-	style,
+	depth = 0,
+	indentMultiplier = 1,
 }: OptionRowContainerProps) {
+	const paddingLeft = depth > 0 ? `${depth * indentMultiplier}rem` : "0";
+
 	return (
 		<div className="py-0.5 hover:bg-gray-800/50 transition-colors">
-			<div className={`flex items-stretch ${className}`} style={style}>
+			<div
+				className={`flex items-stretch ${className}`}
+				style={{ paddingLeft: `calc(0.375rem + ${paddingLeft})` }}
+			>
 				{/* 左側領域（トグルボタンやスペーサー） */}
 				<div className="flex items-center justify-center w-10 shrink-0">
 					{leading}
