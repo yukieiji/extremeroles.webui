@@ -12,7 +12,9 @@ interface AuCategoryOptionListProps {
 export function AuCategoryOptionList({ optionIds }: AuCategoryOptionListProps) {
 	return (
 		<OptionEditorCategoryOptionLayout arr={optionIds} ignoreIndex={0}>
-			{(optionId) => <AuOptionRow auOptionId={optionId} />}
+			{(optionId, withBorder) => (
+				<AuOptionRow auOptionId={optionId} withBorder={withBorder} />
+			)}
 		</OptionEditorCategoryOptionLayout>
 	);
 }
