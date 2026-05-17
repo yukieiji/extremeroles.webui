@@ -41,6 +41,16 @@ describe("ExRCategoryViewer", () => {
 			name: "Test Category",
 			tabId: 0,
 		};
+
+		// Default all options as active for tests unless specified otherwise
+		useStore.setState({
+			isExROptionActive: new Proxy(
+				{},
+				{
+					get: () => true,
+				},
+			),
+		});
 	});
 
 	it("renders null if there are no options in the category", () => {

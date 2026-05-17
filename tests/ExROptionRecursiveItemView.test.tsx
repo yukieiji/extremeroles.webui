@@ -46,6 +46,11 @@ describe("ExROptionRecursiveItemView", () => {
 		// Manually reset relevant store state
 		useStore.setState({
 			openedExROptionRightSidePanel: {},
+			isExROptionActive: {
+				[parentId]: true,
+				[childId1]: true,
+				[childId2]: true,
+			},
 		});
 
 		// Setup metadata
