@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 interface AccordionSvgProps {
 	className: string;
@@ -7,8 +7,8 @@ interface AccordionSvgProps {
 
 export function AccordionSvg({ className, isOpen }: AccordionSvgProps) {
 	return (
-		<ChevronDown
-			className={`transition-transform duration-200 ${className} ${isOpen ? "rotate-180" : ""}`}
+		<ChevronRight
+			className={`transition-transform duration-200 ${className} ${isOpen ? "rotate-90" : ""}`}
 			aria-hidden="true"
 		/>
 	);
