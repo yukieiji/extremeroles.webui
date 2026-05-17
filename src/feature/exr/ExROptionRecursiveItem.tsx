@@ -1,8 +1,8 @@
 import { HighlightableAccordionRow } from "@/components/blocks/HighlightableAccordionRow";
 import { RowCustomizeAccordion } from "@/components/blocks/OptionEditableAccordion";
 import { OptionEditorCategoryOptionLayout } from "@/components/blocks/OptionEditorCategoryOptionLayout";
+import { useActiveChildOptions } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
-import { exrOptionMetaData } from "@/logics/api";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 import { ExROptionItem } from "./ExROptionItem";
@@ -34,8 +34,7 @@ export function ExROptionRecursiveItem({
 		return state.highlightedExROptionId === uniqueOptionId;
 	});
 
-	const childs =
-		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
+	const activeChilds = useActiveChildOptions(uniqueOptionId);
 
 	const navigateId = createExRNavigateId(uniqueOptionId);
 
@@ -59,7 +58,7 @@ export function ExROptionRecursiveItem({
 			isOpen={isOpen}
 		>
 			<OptionEditorCategoryOptionLayout
-				arr={childs}
+				arr={activeChilds}
 				ignoreIndex={-1}
 				depth={depth + 1}
 			>

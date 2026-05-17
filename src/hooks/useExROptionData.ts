@@ -22,6 +22,18 @@ export function useOptionActive(uniqueOptionId: UniqueOptionId): boolean {
 	);
 }
 
+export function useActiveChildOptions(
+	uniqueOptionId: UniqueOptionId,
+): UniqueOptionId[] {
+	const childs =
+		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
+	return useStore(
+		useShallow((state) =>
+			childs.filter((childId) => state.isExROptionActive[childId]),
+		),
+	);
+}
+
 export function useHasActiveOptionChild(
 	uniqueOptionId: UniqueOptionId,
 ): boolean {

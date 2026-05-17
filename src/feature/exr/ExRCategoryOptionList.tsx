@@ -1,9 +1,11 @@
+import { useShallow } from "zustand/react/shallow";
 import { BorderLine } from "@/components/parts/BorderLine";
 import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionEditorOptionRowGroupLayout } from "@/components/parts/OptionEditorOptionRowLayout";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
 import { groupOptionPairs } from "@/logics/optionUtils";
 import type { UniqueOptionId } from "@/type";
+import { useStore } from "@/useStore";
 import { ExROptionItem } from "./ExROptionItem";
 import { ExRPairedOptionItem } from "./ExRPairedOptionItem";
 
@@ -21,10 +23,15 @@ export function ExRCategoryOptionList({
 	categoryId,
 	uniqueOptionIds,
 }: ExRCategoryOptionListProps) {
+	const activeUniqueOptionIds = useStore(
+		useShallow((state) =>
+			uniqueOptionIds.filter((id) => state.isExROptionActive[id]),
+		),
+	);
 	const shouldGroup = GROUPED_CATEGORY_IDS.includes(categoryId);
 	const groupedItems = shouldGroup
-		? groupOptionPairs(uniqueOptionIds)
-		: uniqueOptionIds;
+		? groupOptionPairs(activeUniqueOptionIds)
+		: activeUniqueOptionIds;
 
 	// gropedItemsはOptionIdの配列か、ペアオプションの情報を持つオブジェクトの配列になる
 	return (
