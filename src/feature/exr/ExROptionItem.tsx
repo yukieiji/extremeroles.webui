@@ -1,4 +1,3 @@
-import { BorderLine } from "@/components/parts/BorderLine";
 import {
 	useHasActiveOptionChild,
 	useOptionActive,
@@ -14,42 +13,23 @@ import { ExROptionRow } from "./ExROptionRow";
 interface ExROptionItemProps {
 	uniqueOptionId: UniqueOptionId;
 	depth?: number;
-	withBorder?: boolean;
 }
 
-function ExROptionItemInner({
-	uniqueOptionId,
-	depth = 0,
-	withBorder = false,
-}: ExROptionItemProps) {
+function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
 	const hasActiveChildren = useHasActiveOptionChild(uniqueOptionId);
-	return (
-		<>
-			{withBorder && <BorderLine depth={depth} />}
-			{hasActiveChildren ? (
-				<ExROptionRecursiveItem uniqueOptionId={uniqueOptionId} depth={depth} />
-			) : (
-				<ExROptionRow
-					uniqueOptionId={uniqueOptionId}
-					depth={depth}
-					isLeaf={true}
-				/>
-			)}
-		</>
+	return hasActiveChildren ? (
+		<ExROptionRecursiveItem uniqueOptionId={uniqueOptionId} depth={depth} />
+	) : (
+		<ExROptionRow uniqueOptionId={uniqueOptionId} depth={depth} isLeaf={true} />
 	);
 }
 
 export function ExROptionItem({
 	uniqueOptionId,
 	depth = 0,
-	withBorder = false,
 }: ExROptionItemProps) {
 	const isActive = useOptionActive(uniqueOptionId);
 	return isActive ? (
-		<ExROptionItemInner
-			uniqueOptionId={uniqueOptionId}
-			depth={depth}
-			withBorder={withBorder}
-		/>
+		<ExROptionItemInner uniqueOptionId={uniqueOptionId} depth={depth} />
 	) : null;
 }

@@ -1,5 +1,4 @@
 import { OptionRowContent } from "@/components/blocks/OptionContent";
-import { BorderLine } from "@/components/parts/BorderLine";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
@@ -12,18 +11,12 @@ import { AuOptionControl } from "./AuOptionControl";
 
 interface AuOptionRowProps {
 	auOptionId: AuOptionId;
-	withBorder?: boolean;
-	depth?: number;
 }
 
 /**
  * Auの各オプション行を表示するコンポーネント
  */
-export function AuOptionRow({
-	auOptionId,
-	withBorder = false,
-	depth = 0,
-}: AuOptionRowProps) {
+export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 	const optionMeta = auOptionMetaData.options[auOptionId];
 	const selection = useStore((state) => state.auValue[auOptionId] ?? 0);
 	const highlightedAuOptionId = useStore(
@@ -40,30 +33,27 @@ export function AuOptionRow({
 	const navigateId = createAuNavigateId(auOptionId);
 
 	return (
-		<>
-			{withBorder && <BorderLine depth={depth} />}
-			<HighlightWrapper
-				id={navigateId}
-				isHighlighted={isHighlighted}
-				isInset={true}
-			>
-				<OptionRowContainer
-					leading={<LargePoint />}
-					depth={0}
-					indentMultiplier={1}
-					content={
-						<OptionRowContent name={optionMeta.title}>
-							<AuOptionControl
-								optionMeta={optionMeta}
-								selection={selection}
-								onSelectionChange={(selection) => {
-									updateAuOption({ auOptionId, selection });
-								}}
-							/>
-						</OptionRowContent>
-					}
-				/>
-			</HighlightWrapper>
-		</>
+		<HighlightWrapper
+			id={navigateId}
+			isHighlighted={isHighlighted}
+			isInset={true}
+		>
+			<OptionRowContainer
+				leading={<LargePoint />}
+				depth={0}
+				indentMultiplier={1}
+				content={
+					<OptionRowContent name={optionMeta.title}>
+						<AuOptionControl
+							optionMeta={optionMeta}
+							selection={selection}
+							onSelectionChange={(selection) => {
+								updateAuOption({ auOptionId, selection });
+							}}
+						/>
+					</OptionRowContent>
+				}
+			/>
+		</HighlightWrapper>
 	);
 }
