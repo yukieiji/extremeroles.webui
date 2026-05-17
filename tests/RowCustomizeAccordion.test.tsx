@@ -30,10 +30,10 @@ describe("RowCustomizeAccordion", () => {
 		expect(contentContainer).toHaveClass("grid-rows-[1fr]");
 	});
 
-    it("should NOT have padding class on container (to support full-width hover background)", () => {
-        const { container } = render(<RowCustomizeAccordion {...defaultProps} />);
-        // The outer div should just be "flex flex-col" without "pl-4"
-        expect(container.firstChild).toHaveClass("flex flex-col");
-        expect(container.firstChild).not.toHaveClass("pl-4");
-    });
+	it("should NOT have padding class on container (to support full-width hover background)", () => {
+		const { container } = render(<RowCustomizeAccordion {...defaultProps} />);
+		// The outer div should just be "flex flex-col" without "pl-4"
+		expect(container.firstChild).toHaveClass("flex flex-col");
+		expect(container.firstChild).not.toHaveClass("pl-4");
+	});
 });
