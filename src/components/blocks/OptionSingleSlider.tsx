@@ -1,4 +1,4 @@
-import { useId, useState, useEffect } from "react";
+import * as React from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
@@ -21,11 +21,11 @@ export function OptionSingleSlider({
 	format,
 	onChange,
 }: OptionSingleSliderProps) {
-	const id = useId();
+	const id = React.useId();
 	const currentValue = values[selection] ?? values[0] ?? 0;
-	const [inputValue, setInputValue] = useState(currentValue.toString());
+	const [inputValue, setInputValue] = React.useState(currentValue.toString());
 
-	useEffect(() => {
+	React.useEffect(() => {
 		setInputValue(currentValue.toString());
 	}, [currentValue]);
 
