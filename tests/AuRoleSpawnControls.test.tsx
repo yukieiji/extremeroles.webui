@@ -1,9 +1,24 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuRoleSpawnControls } from "@/feature/amongus/AuRoleSpawnControls";
 import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
-import * as apiStore from "@/logics/api.store";
+import { useUpdateAuRoleOptionSelection } from "@/logics/api.store";
+import type { AuOptionId, UpdateAuArg } from "@/type";
 import { useStore } from "@/useStore";
+
+vi.mock("@/logics/api.store", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api.store")>();
+	return {
+		...actual,
+		useUpdateAuRoleOptionSelection: vi.fn(),
+	};
+});
 
 describe("AuRoleSpawnControls", () => {
 	const categoryId = 10;
@@ -15,8 +30,8 @@ describe("AuRoleSpawnControls", () => {
 		useStore.getState().resetViewer();
 
 		// Mock useUpdateAuRoleOptionSelection to update the store
-		vi.spyOn(apiStore, "useUpdateAuRoleOptionSelection").mockReturnValue(
-			async (chance, maxCount) => {
+		vi.mocked(useUpdateAuRoleOptionSelection).mockReturnValue(
+			async (chance: UpdateAuArg, maxCount: UpdateAuArg) => {
 				useStore.getState().updateAuOptionSelection(chance, maxCount);
 			},
 		);
@@ -44,8 +59,10 @@ describe("AuRoleSpawnControls", () => {
 		});
 	});
 
-	it("renders both controls", () => {
-		render(<AuRoleSpawnControls categoryId={categoryId} />);
+	it("renders both controls", async () => {
+		await act(async () => {
+			render(<AuRoleSpawnControls categoryId={categoryId} />);
+		});
 
 		expect(screen.getByTestId("spawn-rate-control")).toBeInTheDocument();
 		expect(screen.getByTestId("spawn-count-control")).toBeInTheDocument();
@@ -59,7 +76,9 @@ describe("AuRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+		});
 
 		await waitFor(() => {
 			const state = useStore.getState();
@@ -82,7 +101,9 @@ describe("AuRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		fireEvent.change(slider, { target: { value: "0" } });
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "0" } });
+		});
 
 		await waitFor(() => {
 			const state = useStore.getState();
@@ -105,7 +126,9 @@ describe("AuRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		fireEvent.change(slider, { target: { value: "0" } });
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "0" } });
+		});
 
 		await waitFor(() => {
 			const state = useStore.getState();
@@ -114,7 +137,7 @@ describe("AuRoleSpawnControls", () => {
 		});
 	});
 
-	it("closes accordion when chance becomes 0%", () => {
+	it("closes accordion when chance becomes 0%", async () => {
 		// Initial state: Open and Chance 10%
 		useStore.getState().setAuValue({ [chanceId]: 1, [maxCountId]: 1 });
 		useStore.getState().toggleAuCategory(categoryId);
@@ -127,7 +150,9 @@ describe("AuRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		fireEvent.change(slider, { target: { value: "0" } });
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "0" } });
+		});
 
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(false);
 	});
@@ -144,7 +169,9 @@ describe("AuRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
+		});
 
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
 	});
@@ -162,7 +189,9 @@ describe("AuRoleSpawnControls", () => {
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+		await act(async () => {
+			fireEvent.change(slider, { target: { value: "1" } }); // Select 1
+		});
 
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
 	});

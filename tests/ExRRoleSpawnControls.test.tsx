@@ -8,15 +8,29 @@ import {
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRRoleSpawnControls } from "@/feature/exr/ExRRoleSpawnControls";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
-import * as apiStore from "@/logics/api.store";
+import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId, parseUniqueOptionId } from "@/logics/optionUtils";
-import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "@/type";
+import {
+	SPAWN_COUNT_OPTION_ID,
+	SPAWN_RATE_OPTION_ID,
+	type UniqueOptionId,
+} from "@/type";
 import { useStore } from "@/useStore";
+
+vi.mock("@/logics/api.store", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api.store")>();
+	return {
+		...actual,
+		useUpdateExROptionSelection: vi.fn(),
+	};
+});
 
 function setUpudateExROptionSelectionSpawnRateMock(): void {
 	// Mock useUpdateExROptionSelection to update the store
-	vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
-		async (...args) => {
+	vi.mocked(useUpdateExROptionSelection).mockReturnValue(
+		async (
+			...args: { uniqueOptionId: UniqueOptionId; selection: number }[]
+		) => {
 			act(() => {
 				const currentStore = useStore.getState();
 				const nextExrValue = { ...currentStore.exrValue };
@@ -24,7 +38,10 @@ function setUpudateExROptionSelectionSpawnRateMock(): void {
 					const { optionId } = parseUniqueOptionId(x.uniqueOptionId);
 					const values =
 						optionId === SPAWN_RATE_OPTION_ID ? [0, 10, 20, 30] : [1, 2, 3];
-					nextExrValue[x.uniqueOptionId] = { selection: x.selection, values };
+					nextExrValue[x.uniqueOptionId] = {
+						selection: x.selection,
+						values,
+					};
 				}
 				currentStore.setExROptions(
 					nextExrValue,
@@ -125,7 +142,7 @@ describe("ExRRoleSpawnControls", () => {
 		setupTestData(tabId, categoryId);
 
 		setUpudateExROptionSelectionSpawnRateMock();
-		const updateExRSelection = apiStore.useUpdateExROptionSelection();
+		const updateExRSelection = useUpdateExROptionSelection();
 
 		// Set initial rate to 10%
 		await updateExRSelection({
@@ -186,7 +203,7 @@ describe("ExRRoleSpawnControls", () => {
 		setupTestData(tabId, categoryId);
 
 		setUpudateExROptionSelectionSpawnRateMock();
-		const updateExRSelection = apiStore.useUpdateExROptionSelection();
+		const updateExRSelection = useUpdateExROptionSelection();
 
 		// Set initial rate to 10% and count to 2 (selection 1)
 		await updateExRSelection({

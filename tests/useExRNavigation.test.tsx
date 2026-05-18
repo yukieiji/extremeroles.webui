@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useExROptionNavigation } from "@/hooks/useOptionNavigation";
-import * as api from "@/logics/api";
+import { exrOptionMetaData } from "@/logics/api";
 import type { ExROptionMetaData, UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -55,17 +55,17 @@ describe("useExRNavigation", () => {
 
 		const emptyMeta = {} as ExROptionMetaData;
 
-		api.exrOptionMetaData.options[childId] = {
+		exrOptionMetaData.options[childId] = {
 			metaData: emptyMeta,
 			childOptionIds: [],
 			parentOptionIds: [parentId, grandParentId],
 		};
-		api.exrOptionMetaData.options[parentId] = {
+		exrOptionMetaData.options[parentId] = {
 			metaData: emptyMeta,
 			childOptionIds: [childId],
 			parentOptionIds: [grandParentId],
 		};
-		api.exrOptionMetaData.options[grandParentId] = {
+		exrOptionMetaData.options[grandParentId] = {
 			metaData: emptyMeta,
 			childOptionIds: [parentId],
 			parentOptionIds: [],
