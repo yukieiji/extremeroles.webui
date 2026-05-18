@@ -1,10 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionItemView } from "@/feature/rightsidepanel/ExROptionItemView";
-import {
-	useHasActiveOptionChild,
-	useOptionActive,
-} from "@/hooks/useExROptionData";
+import { useHasActiveOptionChild } from "@/hooks/useExROptionData";
 import type { UniqueOptionId } from "@/type";
 
 vi.mock("@/hooks/useExROptionData");
@@ -43,18 +40,7 @@ describe("ExROptionItemView", () => {
 		vi.clearAllMocks();
 	});
 
-	it("renders nothing when the option is not active", () => {
-		vi.mocked(useOptionActive).mockReturnValue(false);
-
-		const { container } = render(
-			<ExROptionItemView uniqueOptionId={mockUniqueId} depth={mockDepth} />,
-		);
-
-		expect(container.firstChild).toBeNull();
-	});
-
-	it("renders ExROptionRowView when the option is active and has no active children", () => {
-		vi.mocked(useOptionActive).mockReturnValue(true);
+	it("renders ExROptionRowView when the option has no active children", () => {
 		vi.mocked(useHasActiveOptionChild).mockReturnValue(false);
 
 		render(
@@ -67,8 +53,7 @@ describe("ExROptionItemView", () => {
 		).toBeInTheDocument();
 	});
 
-	it("renders ExROptionRecursiveItemView when the option is active and has active children", () => {
-		vi.mocked(useOptionActive).mockReturnValue(true);
+	it("renders ExROptionRecursiveItemView when the option has active children", () => {
 		vi.mocked(useHasActiveOptionChild).mockReturnValue(true);
 
 		render(
@@ -84,7 +69,6 @@ describe("ExROptionItemView", () => {
 	});
 
 	it("uses default depth of 0 when depth prop is not provided", () => {
-		vi.mocked(useOptionActive).mockReturnValue(true);
 		vi.mocked(useHasActiveOptionChild).mockReturnValue(false);
 
 		render(<ExROptionItemView uniqueOptionId={mockUniqueId} />);

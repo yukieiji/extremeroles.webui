@@ -1,6 +1,6 @@
 import { ChildOptionViewAccordion } from "@/components/blocks/ChildOptionViewAccordion";
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
-import { exrOptionMetaData } from "@/logics/api";
+import { useActiveChildOptions } from "@/hooks/useExROptionData";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 import { ExROptionItemView } from "./ExROptionItemView";
@@ -29,8 +29,7 @@ export function ExROptionRecursiveItemView({
 		toggleExROption(uniqueOptionId);
 	};
 
-	const childs =
-		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
+	const activeChilds = useActiveChildOptions(uniqueOptionId);
 
 	return (
 		<ChildOptionViewAccordion
@@ -45,7 +44,11 @@ export function ExROptionRecursiveItemView({
 			onToggle={handleToggle}
 			depth={depth}
 		>
-			<RightPanelContainer arr={childs} ignoreIndex={-1} depth={depth + 1}>
+			<RightPanelContainer
+				arr={activeChilds}
+				ignoreIndex={-1}
+				depth={depth + 1}
+			>
 				{(optionid) => (
 					<ExROptionItemView uniqueOptionId={optionid} depth={depth + 1} />
 				)}
