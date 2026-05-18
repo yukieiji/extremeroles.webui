@@ -18,6 +18,7 @@ import {
 	ExRTabId,
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
+	type UpdateExRArg,
 } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -197,9 +198,7 @@ describe("ExRCategoryList Component Selection", () => {
 
 		// Mock useUpdateExROptionSelection to update the store manually
 		vi.mocked(useUpdateExROptionSelection).mockReturnValue(
-			async (
-				...args: { uniqueOptionId: UniqueOptionId; selection: number }[]
-			) => {
+			async (...args: UpdateExRArg[]) => {
 				const nextExrValue = { ...useStore.getState().exrValue };
 				for (const x of args) {
 					nextExrValue[x.uniqueOptionId] = {

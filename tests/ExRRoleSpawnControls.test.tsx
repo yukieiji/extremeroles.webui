@@ -13,7 +13,7 @@ import { getUniqueOptionId, parseUniqueOptionId } from "@/logics/optionUtils";
 import {
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
-	type UniqueOptionId,
+	type UpdateExRArg,
 } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -28,9 +28,7 @@ vi.mock("@/logics/api.store", async (importOriginal) => {
 function setUpudateExROptionSelectionSpawnRateMock(): void {
 	// Mock useUpdateExROptionSelection to update the store
 	vi.mocked(useUpdateExROptionSelection).mockReturnValue(
-		async (
-			...args: { uniqueOptionId: UniqueOptionId; selection: number }[]
-		) => {
+		async (...args: UpdateExRArg[]) => {
 			act(() => {
 				const currentStore = useStore.getState();
 				const nextExrValue = { ...currentStore.exrValue };

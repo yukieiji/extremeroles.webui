@@ -3,8 +3,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "@/feature/exr/ExRHeaderOptionControl";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId } from "@/logics/optionUtils";
-import type { ExROptionDto, UniqueOptionId } from "@/type";
-import { SPAWN_RATE_OPTION_ID } from "@/type";
+import {
+	type ExROptionDto,
+	SPAWN_RATE_OPTION_ID,
+	type UpdateExRArg,
+} from "@/type";
 import { useStore } from "@/useStore";
 
 vi.mock("@/logics/api.store", async (importOriginal) => {
@@ -17,9 +20,7 @@ vi.mock("@/logics/api.store", async (importOriginal) => {
 
 function setUpudateExROptionSelectionMock(values: (number | string)[]): void {
 	vi.mocked(useUpdateExROptionSelection).mockReturnValue(
-		async (
-			...args: { uniqueOptionId: UniqueOptionId; selection: number }[]
-		) => {
+		async (...args: UpdateExRArg[]) => {
 			const nextExrValue = { ...useStore.getState().exrValue };
 			for (const x of args) {
 				nextExrValue[x.uniqueOptionId] = {
