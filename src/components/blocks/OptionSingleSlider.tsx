@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useState, useEffect } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
@@ -23,18 +23,30 @@ export function OptionSingleSlider({
 }: OptionSingleSliderProps) {
 	const id = useId();
 	const currentValue = values[selection] ?? values[0] ?? 0;
+	const [inputValue, setInputValue] = useState(currentValue.toString());
+
+	useEffect(() => {
+		setInputValue(currentValue.toString());
+	}, [currentValue]);
 
 	const handleSliderChange = (val: number | readonly number[]) => {
 		onChange(Array.isArray(val) ? val[0] : val);
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const val = parseFloat(e.target.value);
+		const nextValue = e.target.value;
+		setInputValue(nextValue);
+
+		const val = parseFloat(nextValue);
 		if (Number.isNaN(val)) {
 			return;
 		}
 
 		onChange(findClosestIndex(values, val));
+	};
+
+	const handleBlur = () => {
+		setInputValue(currentValue.toString());
 	};
 
 	return (
@@ -44,8 +56,9 @@ export function OptionSingleSlider({
 				<Input
 					id={id}
 					type="text"
-					value={currentValue}
+					value={inputValue}
 					onChange={handleInputChange}
+					onBlur={handleBlur}
 				/>
 				<Label htmlFor={id}>
 					<OptionFormat format={format} />

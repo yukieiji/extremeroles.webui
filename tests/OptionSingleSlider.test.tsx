@@ -82,4 +82,76 @@ describe("OptionSingleSlider", () => {
 		});
 		expect(onChange).toHaveBeenCalledWith(2);
 	});
+
+	it("allows clearing the input and then typing a new number", async () => {
+		const onChange = vi.fn();
+		await act(async () => {
+			render(
+				<OptionSingleSlider
+					label={mockLabel}
+					selection={1}
+					values={mockValues}
+					format={mockFormat}
+					onChange={onChange}
+				/>,
+			);
+		});
+
+		const input = screen.getByRole("textbox");
+
+		// Clear input
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "" } });
+		});
+		expect(input).toHaveValue("");
+		expect(onChange).not.toHaveBeenCalledWith(expect.any(Number));
+
+		// Type "3"
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "3" } });
+		});
+		expect(input).toHaveValue("3");
+		// 3 is closer to 10 (index 0)
+		expect(onChange).toHaveBeenCalledWith(0);
+
+		// Type "35"
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "35" } });
+		});
+		expect(input).toHaveValue("35");
+		// 35 is closer to 30 (index 2) or 40 (index 3).
+		// findClosestIndex:
+		// 10: 25
+		// 20: 15
+		// 30: 5
+		// 40: 5
+		// It returns the first one with min diff, so 2.
+		expect(onChange).toHaveBeenCalledWith(2);
+	});
+
+	it("resets input on blur if empty", async () => {
+		await act(async () => {
+			render(
+				<OptionSingleSlider
+					label={mockLabel}
+					selection={1}
+					values={mockValues}
+					format={mockFormat}
+					onChange={() => {}}
+				/>,
+			);
+		});
+
+		const input = screen.getByRole("textbox");
+
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "" } });
+		});
+		expect(input).toHaveValue("");
+
+		await act(async () => {
+			fireEvent.blur(input);
+		});
+		expect(input).toHaveValue("20");
+	});
 });
