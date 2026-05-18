@@ -11,6 +11,8 @@ import type { RightSidePanelSlice } from "./slices/rightSidePanelSlice";
 import { createRightSidePanelSlice } from "./slices/rightSidePanelSlice";
 import type { RoleFilterSlice } from "./slices/roleFilterSlice";
 import { createRoleFilterSlice } from "./slices/roleFilterSlice";
+import type { SliderInputSlice } from "./slices/sliderInputSlice";
+import { createSliderInputSlice } from "./slices/sliderInputSlice";
 
 /**
  * Zustand ストアの作成
@@ -21,7 +23,8 @@ export const useStore = create<
 		RightSidePanelSlice &
 		AuOptionViewerSlice &
 		ExROptionViewerSlice &
-		RoleFilterSlice
+		RoleFilterSlice &
+		SliderInputSlice
 >()((...a) => {
 	return {
 		...createGlobalUiSlice(...a),
@@ -30,5 +33,6 @@ export const useStore = create<
 		...createAuOptionViewerSlice(...a),
 		...createExROptionViewerSlice(...a),
 		...createRoleFilterSlice(...a),
+		...createSliderInputSlice(...a),
 	};
 });

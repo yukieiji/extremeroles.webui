@@ -74,11 +74,21 @@ describe("OptionSingleSlider", () => {
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "24" } });
 		});
+		expect(onChange).not.toHaveBeenCalled();
+
+		await act(async () => {
+			fireEvent.blur(input);
+		});
 		expect(onChange).toHaveBeenCalledWith(1);
 
 		// 26 is closer to 30 (index 2)
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "26" } });
+		});
+		expect(onChange).toHaveBeenCalledTimes(1); // Not called yet for 26
+
+		await act(async () => {
+			fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
 		});
 		expect(onChange).toHaveBeenCalledWith(2);
 	});
@@ -111,6 +121,11 @@ describe("OptionSingleSlider", () => {
 			fireEvent.change(input, { target: { value: "3" } });
 		});
 		expect(input).toHaveValue("3");
+		expect(onChange).not.toHaveBeenCalled();
+
+		await act(async () => {
+			fireEvent.blur(input);
+		});
 		// 3 is closer to 10 (index 0)
 		expect(onChange).toHaveBeenCalledWith(0);
 
@@ -119,6 +134,11 @@ describe("OptionSingleSlider", () => {
 			fireEvent.change(input, { target: { value: "35" } });
 		});
 		expect(input).toHaveValue("35");
+		expect(onChange).toHaveBeenCalledTimes(1);
+
+		await act(async () => {
+			fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
+		});
 		// 35 is closer to 30 (index 2) or 40 (index 3).
 		// findClosestIndex:
 		// 10: 25

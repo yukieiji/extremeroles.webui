@@ -57,6 +57,11 @@ describe("CompactSlider", () => {
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "25" } });
 		});
+		expect(onInputChange).not.toHaveBeenCalled();
+
+		await act(async () => {
+			fireEvent.blur(input);
+		});
 
 		expect(onInputChange).toHaveBeenCalledWith(25);
 	});
@@ -100,6 +105,11 @@ describe("CompactSlider", () => {
 		const input = screen.getByRole("textbox");
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "25" } });
+		});
+		expect(onParentClick).not.toHaveBeenCalled();
+
+		await act(async () => {
+			fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
 		});
 
 		expect(onInputChange).toHaveBeenCalled();

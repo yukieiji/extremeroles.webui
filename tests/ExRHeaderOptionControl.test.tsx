@@ -103,6 +103,9 @@ describe("ExRHeaderOptionControl", () => {
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "100" } });
 		});
+		await act(async () => {
+			fireEvent.blur(input);
+		});
 
 		const state = useStore.getState();
 		const tabId = state.selectedExRTabId;

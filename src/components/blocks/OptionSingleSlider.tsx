@@ -1,5 +1,7 @@
-import * as React from "react";
+import type { ChangeEvent, KeyboardEvent } from "react";
+import { useEffect, useId } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
+import { useStore } from "@/useStore";
 import { OptionFormat } from "../parts/OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Input } from "../ui/input";
@@ -21,32 +23,58 @@ export function OptionSingleSlider({
 	format,
 	onChange,
 }: OptionSingleSliderProps) {
-	const id = React.useId();
+	const id = useId();
 	const currentValue = values[selection] ?? values[0] ?? 0;
-	const [inputValue, setInputValue] = React.useState(currentValue.toString());
 
-	React.useEffect(() => {
-		setInputValue(currentValue.toString());
-	}, [currentValue]);
+	// Zustandストアを使用して入力値を管理（AGENTS.mdのルールに従い、useStateは使用しない）
+	const inputValueFromStore = useStore((state) => {
+		return state.sliderInputs[id];
+	});
+	const setSliderInput = useStore((state) => {
+		return state.setSliderInput;
+	});
+	const clearSliderInput = useStore((state) => {
+		return state.clearSliderInput;
+	});
+
+	const inputValue = inputValueFromStore ?? currentValue.toString();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: currentValue is used to trigger clear
+	useEffect(() => {
+		// 値が外部から変更された場合（スライダー操作など）、入力値をクリアしてプロップと同期させる
+		clearSliderInput(id);
+		// currentValue は依存関係に含める必要がある（値が変わった時にクリアしたいため）
+	}, [currentValue, id, clearSliderInput]);
 
 	const handleSliderChange = (val: number | readonly number[]) => {
 		onChange(Array.isArray(val) ? val[0] : val);
 	};
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const nextValue = e.target.value;
-		setInputValue(nextValue);
+		setSliderInput(id, nextValue);
+	};
 
-		const val = parseFloat(nextValue);
-		if (Number.isNaN(val)) {
+	const commitInput = () => {
+		if (inputValueFromStore === undefined) {
 			return;
 		}
 
-		onChange(findClosestIndex(values, val));
+		const val = parseFloat(inputValueFromStore);
+		if (!Number.isNaN(val)) {
+			onChange(findClosestIndex(values, val));
+		}
+		clearSliderInput(id);
 	};
 
 	const handleBlur = () => {
-		setInputValue(currentValue.toString());
+		commitInput();
+	};
+
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			commitInput();
+		}
 	};
 
 	return (
@@ -59,6 +87,7 @@ export function OptionSingleSlider({
 					value={inputValue}
 					onChange={handleInputChange}
 					onBlur={handleBlur}
+					onKeyDown={handleKeyDown}
 				/>
 				<Label htmlFor={id}>
 					<OptionFormat format={format} />

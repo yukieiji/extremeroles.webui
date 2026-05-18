@@ -70,17 +70,32 @@ describe("OptionSliderControl", () => {
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "24" } });
 		});
+		expect(onChange).not.toHaveBeenCalled();
+
+		await act(async () => {
+			fireEvent.blur(input);
+		});
 		expect(onChange).toHaveBeenCalledWith(1);
 
 		// 26 is closer to 30 (index 2)
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "26" } });
 		});
+		expect(onChange).toHaveBeenCalledTimes(1);
+
+		await act(async () => {
+			fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
+		});
 		expect(onChange).toHaveBeenCalledWith(2);
 
 		// 100 is closer to 50 (index 4)
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "100" } });
+		});
+		expect(onChange).toHaveBeenCalledTimes(2);
+
+		await act(async () => {
+			fireEvent.blur(input);
 		});
 		expect(onChange).toHaveBeenCalledWith(4);
 	});

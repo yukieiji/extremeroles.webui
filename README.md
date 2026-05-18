@@ -84,3 +84,4 @@ export default defineConfig([
 
 ## 追加知識
 - [showSaveFilePicker の使用とテスト](.gemini/knowledge/showSaveFilePicker/README.md)
+- [スライダー入力欄の挙動修正と状態管理](.gemini/knowledge/slider-input-fix/input-persistence.md)
