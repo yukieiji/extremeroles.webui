@@ -1,7 +1,4 @@
-import {
-	useHasActiveOptionChild,
-	useOptionActive,
-} from "@/hooks/useExROptionData";
+import { useHasActiveOptionChild } from "@/hooks/useExROptionData";
 import type { UniqueOptionId } from "@/type";
 import { ExROptionRecursiveItem } from "./ExROptionRecursiveItem";
 import { ExROptionRow } from "./ExROptionRow";
@@ -15,21 +12,14 @@ interface ExROptionItemProps {
 	depth?: number;
 }
 
-function ExROptionItemInner({ uniqueOptionId, depth = 0 }: ExROptionItemProps) {
+export function ExROptionItem({
+	uniqueOptionId,
+	depth = 0,
+}: ExROptionItemProps) {
 	const hasActiveChildren = useHasActiveOptionChild(uniqueOptionId);
 	return hasActiveChildren ? (
 		<ExROptionRecursiveItem uniqueOptionId={uniqueOptionId} depth={depth} />
 	) : (
 		<ExROptionRow uniqueOptionId={uniqueOptionId} depth={depth} isLeaf={true} />
 	);
-}
-
-export function ExROptionItem({
-	uniqueOptionId,
-	depth = 0,
-}: ExROptionItemProps) {
-	const isActive = useOptionActive(uniqueOptionId);
-	return isActive ? (
-		<ExROptionItemInner uniqueOptionId={uniqueOptionId} depth={depth} />
-	) : null;
 }

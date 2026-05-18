@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
@@ -21,16 +21,22 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 
 	const uniqueOptions =
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
-	const filteredOptions = useMemo(() => {
-		if (!uniqueOptions) {
-			return [];
-		}
-		return uniqueOptions.filter((uniqueId) => {
-			return uniqueId !== PRESET_OPTION_UNIQUE_ID;
-		});
-	}, [uniqueOptions]);
 
-	if (filteredOptions.length === 0) {
+	const activeOptions = useStore(
+		useShallow((state) => {
+			if (!uniqueOptions) {
+				return [];
+			}
+			return uniqueOptions.filter((uniqueId) => {
+				return (
+					uniqueId !== PRESET_OPTION_UNIQUE_ID &&
+					state.isExROptionActive[uniqueId]
+				);
+			});
+		}),
+	);
+
+	if (activeOptions.length === 0) {
 		return null;
 	}
 
@@ -46,7 +52,7 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 				toggleCategory(categoryId);
 			}}
 		>
-			<RightPanelContainer arr={filteredOptions} ignoreIndex={0}>
+			<RightPanelContainer arr={activeOptions} ignoreIndex={0}>
 				{(optionid) => <ExROptionItemView uniqueOptionId={optionid} />}
 			</RightPanelContainer>
 		</ViewerGroupAccordion>

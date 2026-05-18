@@ -1,7 +1,4 @@
-import {
-	useHasActiveOptionChild,
-	useOptionActive,
-} from "@/hooks/useExROptionData";
+import { useHasActiveOptionChild } from "@/hooks/useExROptionData";
 import type { UniqueOptionId } from "@/type";
 import { ExROptionRecursiveItemView } from "./ExROptionRecursiveItemView";
 import { ExROptionRowView } from "./ExROptionRowView";
@@ -11,7 +8,7 @@ interface ExROptionItemViewProps {
 	depth?: number;
 }
 
-function ExROptionItemViewInner({
+export function ExROptionItemView({
 	uniqueOptionId,
 	depth = 0,
 }: ExROptionItemViewProps) {
@@ -25,14 +22,4 @@ function ExROptionItemViewInner({
 			isLeaf={true}
 		/>
 	);
-}
-
-export function ExROptionItemView({
-	uniqueOptionId,
-	depth = 0,
-}: ExROptionItemViewProps) {
-	const isActive = useOptionActive(uniqueOptionId);
-	return isActive ? (
-		<ExROptionItemViewInner uniqueOptionId={uniqueOptionId} depth={depth} />
-	) : null;
 }
