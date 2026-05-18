@@ -1,3 +1,4 @@
+// biome-ignore lint/performance/noNamespaceImport: This is a library file.
 import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;
