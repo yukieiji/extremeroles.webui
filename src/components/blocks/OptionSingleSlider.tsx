@@ -50,7 +50,6 @@ export function OptionSingleSlider({
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
-			commitValue();
 			e.currentTarget.blur();
 		}
 	};

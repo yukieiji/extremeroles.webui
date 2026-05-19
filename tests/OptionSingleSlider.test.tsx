@@ -86,6 +86,7 @@ describe("OptionSingleSlider", () => {
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "26" } });
 			fireEvent.keyDown(input, { key: "Enter" });
+			fireEvent.blur(input);
 		});
 		expect(onChange).toHaveBeenCalledWith(2);
 	});
