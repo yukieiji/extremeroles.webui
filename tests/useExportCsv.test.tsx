@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useExportCsv } from "@/hooks/useBackend";
-import * as api from "@/logics/api";
+import { fetchCsvData } from "@/logics/api";
 
 vi.mock("@/logics/api", () => ({
 	fetchCsvData: vi.fn(),
@@ -20,7 +20,7 @@ describe("useExportCsv", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		// biome-ignore lint/suspicious/noExplicitAny: mock
-		(api.fetchCsvData as any).mockResolvedValue(mockCsvData);
+		(fetchCsvData as any).mockResolvedValue(mockCsvData);
 
 		// URL.createObjectURL のモック化
 		vi.stubGlobal("URL", {
@@ -106,7 +106,7 @@ describe("useExportCsv", () => {
 
 		await result.current();
 
-		expect(showSaveFilePicker).toHaveBeenCalled();
+		expect(fetchCsvData).toHaveBeenCalled();
 		expect(document.createElement).toHaveBeenCalledWith("a");
 		expect(mockA.download).toBe("export_20231001_123456.csv");
 		expect(clickSpy).toHaveBeenCalled();

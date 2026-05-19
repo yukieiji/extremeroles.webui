@@ -2,8 +2,17 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuRoleSpawnControls } from "@/feature/amongus/AuRoleSpawnControls";
 import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
-import * as apiStore from "@/logics/api.store";
+import { useUpdateAuRoleOptionSelection } from "@/logics/api.store";
+import type { UpdateAuArg } from "@/type";
 import { useStore } from "@/useStore";
+
+vi.mock("@/logics/api.store", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api.store")>();
+	return {
+		...actual,
+		useUpdateAuRoleOptionSelection: vi.fn(),
+	};
+});
 
 describe("AuRoleSpawnControls", () => {
 	const categoryId = 10;
@@ -15,8 +24,8 @@ describe("AuRoleSpawnControls", () => {
 		useStore.getState().resetViewer();
 
 		// Mock useUpdateAuRoleOptionSelection to update the store
-		vi.spyOn(apiStore, "useUpdateAuRoleOptionSelection").mockReturnValue(
-			async (chance, maxCount) => {
+		vi.mocked(useUpdateAuRoleOptionSelection).mockReturnValue(
+			async (chance: UpdateAuArg, maxCount: UpdateAuArg) => {
 				useStore.getState().updateAuOptionSelection(chance, maxCount);
 			},
 		);

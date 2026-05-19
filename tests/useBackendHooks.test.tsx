@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useBackendUpdate, useSyncBackend } from "@/hooks/useBackend";
-import * as apiStore from "@/logics/api.store";
+import { refetchAll, resetApiCache } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
 vi.mock("@/logics/api.store", () => ({
@@ -30,8 +30,8 @@ describe("useSyncBackend", () => {
 			result.current();
 		});
 
-		expect(apiStore.resetApiCache).toHaveBeenCalled();
-		expect(apiStore.refetchAll).toHaveBeenCalled();
+		expect(resetApiCache).toHaveBeenCalled();
+		expect(refetchAll).toHaveBeenCalled();
 		// startTransition 内で実行されるため、少し待つ必要があるかもしれないが、
 		// act でラップしているので同期的に扱えるはず
 		expect(validateOpenedIds).toHaveBeenCalled();
@@ -52,6 +52,6 @@ describe("useBackendUpdate", () => {
 		});
 
 		expect(mockUpdate).toHaveBeenCalled();
-		expect(apiStore.refetchAll).toHaveBeenCalled();
+		expect(refetchAll).toHaveBeenCalled();
 	});
 });

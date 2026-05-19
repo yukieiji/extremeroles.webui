@@ -2,8 +2,9 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRCategoryList } from "@/feature/exr/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
-import * as apiStore from "@/logics/api.store";
+import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId } from "@/logics/optionUtils";
+import type { UpdateExRArg } from "@/type";
 import {
 	type ExRTabDto,
 	ExRTabId,
@@ -11,6 +12,14 @@ import {
 	SPAWN_RATE_OPTION_ID,
 } from "@/type";
 import { useStore } from "@/useStore";
+
+vi.mock("@/logics/api.store", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api.store")>();
+	return {
+		...actual,
+		useUpdateExROptionSelection: vi.fn(),
+	};
+});
 
 describe("ExRCategoryList Component Selection", () => {
 	const mockTabs: ExRTabDto[] = [
@@ -187,8 +196,8 @@ describe("ExRCategoryList Component Selection", () => {
 		});
 
 		// Mock useUpdateExROptionSelection to update the store manually
-		vi.spyOn(apiStore, "useUpdateExROptionSelection").mockReturnValue(
-			async (...args) => {
+		vi.mocked(useUpdateExROptionSelection).mockReturnValue(
+			async (...args: UpdateExRArg[]) => {
 				const nextExrValue = { ...useStore.getState().exrValue };
 				for (const x of args) {
 					nextExrValue[x.uniqueOptionId] = {
@@ -202,7 +211,7 @@ describe("ExRCategoryList Component Selection", () => {
 			},
 		);
 
-		const updateExRSelection = apiStore.useUpdateExROptionSelection();
+		const updateExRSelection = useUpdateExROptionSelection();
 
 		// Set a non-zero spawn rate so the accordion is enabled
 		await act(async () => {
