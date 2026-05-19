@@ -39,7 +39,9 @@ export function OptionSingleSlider({
 			return;
 		}
 
-		onChange(findClosestIndex(values, val));
+		const closestIdx = findClosestIndex(values, val);
+		inputRef.current.value = (values[closestIdx] ?? values[0] ?? 0).toString();
+		onChange(closestIdx);
 	};
 
 	const handleBlur = () => {

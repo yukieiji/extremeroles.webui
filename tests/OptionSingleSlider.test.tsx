@@ -121,4 +121,31 @@ describe("OptionSingleSlider", () => {
 		// values = [10, 20, 30, 40, 50]
 		expect(onChange).toHaveBeenCalledWith(2);
 	});
+
+	it("snaps input value back even if selection index doesn't change", async () => {
+		const onChange = vi.fn();
+		await act(async () => {
+			render(
+				<OptionSingleSlider
+					label={mockLabel}
+					selection={1} // Value is 20
+					values={mockValues}
+					format={mockFormat}
+					onChange={onChange}
+				/>,
+			);
+		});
+
+		const input = screen.getByRole("textbox");
+
+		// 21 is closest to 20 (index 1)
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "21" } });
+			fireEvent.blur(input);
+		});
+
+		// Selection index 1 didn't change, but input should snap back to "20"
+		expect(onChange).toHaveBeenCalledWith(1);
+		expect(input).toHaveValue("20");
+	});
 });
