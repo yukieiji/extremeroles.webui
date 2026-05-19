@@ -165,9 +165,7 @@ describe("ExRCategoryList Component Selection", () => {
 		await act(async () => {
 			useStore.getState().setSelectedExRTabId(ExRTabId.GeneralTab);
 		});
-		await act(async () => {
-			render(<ExRCategoryList />);
-		});
+		render(<ExRCategoryList />);
 
 		// General Tab: Should render standard category
 		expect(screen.getByText("General Category")).toBeInTheDocument();
@@ -180,9 +178,7 @@ describe("ExRCategoryList Component Selection", () => {
 		await act(async () => {
 			useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
 		});
-		await act(async () => {
-			render(<ExRCategoryList />);
-		});
+		render(<ExRCategoryList />);
 
 		// Role Tab: Should render specialized category item
 		expect(screen.getByText("Sheriff")).toBeInTheDocument();
@@ -226,9 +222,7 @@ describe("ExRCategoryList Component Selection", () => {
 			}); // Category 2, Option 50, Index 1 (Value 100)
 		});
 
-		await act(async () => {
-			render(<ExRCategoryList />);
-		});
+		render(<ExRCategoryList />);
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
 		// we find the toggle button by role.

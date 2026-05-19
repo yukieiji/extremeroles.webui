@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { RightSidePanel } from "@/feature/rightsidepanel/RightSidePanel";
-import { getAllOptions, resetApiCache } from "@/logics/api.store";
+import { resetApiCache } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
 describe("RightSidePanel Component", () => {
@@ -30,7 +30,6 @@ describe("RightSidePanel Component", () => {
 				} as unknown as Response);
 			}),
 		);
-		await getAllOptions();
 
 		useStore.setState({ isRightPanelOpen: true });
 		await act(async () => {
@@ -71,7 +70,6 @@ describe("RightSidePanel Component", () => {
 				} as unknown as Response);
 			}),
 		);
-		await getAllOptions();
 
 		useStore.setState({ isRightPanelOpen: false });
 		await act(async () => {
@@ -112,7 +110,6 @@ describe("RightSidePanel Component", () => {
 				} as unknown as Response);
 			}),
 		);
-		await getAllOptions();
 
 		useStore.setState({
 			isRightPanelOpen: true,

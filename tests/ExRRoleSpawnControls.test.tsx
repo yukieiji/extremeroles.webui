@@ -107,23 +107,27 @@ describe("ExRRoleSpawnControls", () => {
 		});
 	});
 
-	it("renders both controls", () => {
+	it("renders both controls", async () => {
 		const tabId = 1;
 		const categoryId = 1;
 		setupTestData(tabId, categoryId);
 
-		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		await act(async () => {
+			render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		});
 
 		expect(screen.getByTestId("spawn-rate-control")).toBeInTheDocument();
 		expect(screen.getByTestId("spawn-count-control")).toBeInTheDocument();
 	});
 
-	it("handles virtual 0 for spawn count", () => {
+	it("handles virtual 0 for spawn count", async () => {
 		const tabId = 1;
 		const categoryId = 1;
 		setupTestData(tabId, categoryId);
 
-		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		await act(async () => {
+			render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		});
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
@@ -152,7 +156,9 @@ describe("ExRRoleSpawnControls", () => {
 			selection: 1,
 		});
 
-		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		await act(async () => {
+			render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		});
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
@@ -177,7 +183,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		setUpudateExROptionSelectionSpawnRateMock();
 
-		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		await act(async () => {
+			render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		});
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
@@ -221,7 +229,9 @@ describe("ExRRoleSpawnControls", () => {
 			selection: 1,
 		});
 
-		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		await act(async () => {
+			render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		});
 
 		const rateControl = screen.getByTestId("spawn-rate-control");
 		const slider = rateControl.querySelector(
@@ -256,7 +266,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		expect(useStore.getState().openedExRCategoryIds[categoryId]).toBeFalsy();
 
-		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		await act(async () => {
+			render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		});
 
 		const rateControl = screen.getByTestId("spawn-rate-control");
 		const slider = rateControl.querySelector(
@@ -282,7 +294,9 @@ describe("ExRRoleSpawnControls", () => {
 
 		expect(useStore.getState().openedExRCategoryIds[categoryId]).toBeFalsy();
 
-		render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		await act(async () => {
+			render(<ExRRoleSpawnControls tabId={tabId} categoryId={categoryId} />);
+		});
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(

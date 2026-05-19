@@ -69,7 +69,9 @@ describe("AuRoleSpawnControls", () => {
 	});
 
 	it("syncs chance to 10% when max count is set to non-zero from zero", async () => {
-		render(<AuRoleSpawnControls categoryId={categoryId} />);
+		await act(async () => {
+			render(<AuRoleSpawnControls categoryId={categoryId} />);
+		});
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
@@ -94,7 +96,9 @@ describe("AuRoleSpawnControls", () => {
 			[maxCountId]: 2,
 		});
 
-		render(<AuRoleSpawnControls categoryId={categoryId} />);
+		await act(async () => {
+			render(<AuRoleSpawnControls categoryId={categoryId} />);
+		});
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
@@ -119,7 +123,9 @@ describe("AuRoleSpawnControls", () => {
 			[maxCountId]: 2,
 		});
 
-		render(<AuRoleSpawnControls categoryId={categoryId} />);
+		await act(async () => {
+			render(<AuRoleSpawnControls categoryId={categoryId} />);
+		});
 
 		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
@@ -143,7 +149,9 @@ describe("AuRoleSpawnControls", () => {
 		useStore.getState().toggleAuCategory(categoryId);
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
 
-		render(<AuRoleSpawnControls categoryId={categoryId} />);
+		await act(async () => {
+			render(<AuRoleSpawnControls categoryId={categoryId} />);
+		});
 
 		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
@@ -162,7 +170,9 @@ describe("AuRoleSpawnControls", () => {
 		useStore.getState().setAuValue({ [chanceId]: 0, [maxCountId]: 0 });
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBeFalsy();
 
-		render(<AuRoleSpawnControls categoryId={categoryId} />);
+		await act(async () => {
+			render(<AuRoleSpawnControls categoryId={categoryId} />);
+		});
 
 		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
@@ -182,7 +192,9 @@ describe("AuRoleSpawnControls", () => {
 		useStore.getState().setOpenedAuCategoryIds({}); // Ensure it's empty
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBeFalsy();
 
-		render(<AuRoleSpawnControls categoryId={categoryId} />);
+		await act(async () => {
+			render(<AuRoleSpawnControls categoryId={categoryId} />);
+		});
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(

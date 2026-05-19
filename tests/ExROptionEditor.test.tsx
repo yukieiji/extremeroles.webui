@@ -82,6 +82,15 @@ describe("ExROptionEditor", () => {
 							RangeMeta: { Type: "Int32", Values: [0, 100] },
 							Childs: [
 								{
+									Id: 51,
+									IsActive: true,
+									TranslatedName: "Spawn Count",
+									Selection: 0,
+									Format: "{0}",
+									RangeMeta: { Type: "Int32", Values: [1, 2, 3] },
+									Childs: [],
+								},
+								{
 									Id: 201,
 									IsActive: true,
 									TranslatedName: "Option 3",
