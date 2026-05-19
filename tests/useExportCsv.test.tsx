@@ -106,7 +106,7 @@ describe("useExportCsv", () => {
 
 		await result.current();
 
-		expect(showSaveFilePicker).toHaveBeenCalled();
+		expect(fetchCsvData).toHaveBeenCalled();
 		expect(document.createElement).toHaveBeenCalledWith("a");
 		expect(mockA.download).toBe("export_20231001_123456.csv");
 		expect(clickSpy).toHaveBeenCalled();

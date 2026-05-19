@@ -1,15 +1,9 @@
-import {
-	act,
-	fireEvent,
-	render,
-	screen,
-	waitFor,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuRoleSpawnControls } from "@/feature/amongus/AuRoleSpawnControls";
 import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
 import { useUpdateAuRoleOptionSelection } from "@/logics/api.store";
-import type { AuOptionId, UpdateAuArg } from "@/type";
+import type { UpdateAuArg } from "@/type";
 import { useStore } from "@/useStore";
 
 vi.mock("@/logics/api.store", async (importOriginal) => {
@@ -59,28 +53,22 @@ describe("AuRoleSpawnControls", () => {
 		});
 	});
 
-	it("renders both controls", async () => {
-		await act(async () => {
-			render(<AuRoleSpawnControls categoryId={categoryId} />);
-		});
+	it("renders both controls", () => {
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		expect(screen.getByTestId("spawn-rate-control")).toBeInTheDocument();
 		expect(screen.getByTestId("spawn-count-control")).toBeInTheDocument();
 	});
 
 	it("syncs chance to 10% when max count is set to non-zero from zero", async () => {
-		await act(async () => {
-			render(<AuRoleSpawnControls categoryId={categoryId} />);
-		});
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await act(async () => {
-			fireEvent.change(slider, { target: { value: "1" } }); // Select 1
-		});
+		fireEvent.change(slider, { target: { value: "1" } }); // Select 1
 
 		await waitFor(() => {
 			const state = useStore.getState();
@@ -96,18 +84,14 @@ describe("AuRoleSpawnControls", () => {
 			[maxCountId]: 2,
 		});
 
-		await act(async () => {
-			render(<AuRoleSpawnControls categoryId={categoryId} />);
-		});
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await act(async () => {
-			fireEvent.change(slider, { target: { value: "0" } });
-		});
+		fireEvent.change(slider, { target: { value: "0" } });
 
 		await waitFor(() => {
 			const state = useStore.getState();
@@ -123,18 +107,14 @@ describe("AuRoleSpawnControls", () => {
 			[maxCountId]: 2,
 		});
 
-		await act(async () => {
-			render(<AuRoleSpawnControls categoryId={categoryId} />);
-		});
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await act(async () => {
-			fireEvent.change(slider, { target: { value: "0" } });
-		});
+		fireEvent.change(slider, { target: { value: "0" } });
 
 		await waitFor(() => {
 			const state = useStore.getState();
@@ -143,24 +123,20 @@ describe("AuRoleSpawnControls", () => {
 		});
 	});
 
-	it("closes accordion when chance becomes 0%", async () => {
+	it("closes accordion when chance becomes 0%", () => {
 		// Initial state: Open and Chance 10%
 		useStore.getState().setAuValue({ [chanceId]: 1, [maxCountId]: 1 });
 		useStore.getState().toggleAuCategory(categoryId);
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
 
-		await act(async () => {
-			render(<AuRoleSpawnControls categoryId={categoryId} />);
-		});
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await act(async () => {
-			fireEvent.change(slider, { target: { value: "0" } });
-		});
+		fireEvent.change(slider, { target: { value: "0" } });
 
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(false);
 	});
@@ -170,18 +146,14 @@ describe("AuRoleSpawnControls", () => {
 		useStore.getState().setAuValue({ [chanceId]: 0, [maxCountId]: 0 });
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBeFalsy();
 
-		await act(async () => {
-			render(<AuRoleSpawnControls categoryId={categoryId} />);
-		});
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		const chanceControl = screen.getByTestId("spawn-rate-control");
 		const slider = chanceControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await act(async () => {
-			fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
-		});
+		fireEvent.change(slider, { target: { value: "1" } }); // Select 10%
 
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
 	});
@@ -192,18 +164,14 @@ describe("AuRoleSpawnControls", () => {
 		useStore.getState().setOpenedAuCategoryIds({}); // Ensure it's empty
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBeFalsy();
 
-		await act(async () => {
-			render(<AuRoleSpawnControls categoryId={categoryId} />);
-		});
+		render(<AuRoleSpawnControls categoryId={categoryId} />);
 
 		const countControl = screen.getByTestId("spawn-count-control");
 		const slider = countControl.querySelector(
 			'input[type="range"]',
 		) as HTMLInputElement;
 
-		await act(async () => {
-			fireEvent.change(slider, { target: { value: "1" } }); // Select 1
-		});
+		fireEvent.change(slider, { target: { value: "1" } }); // Select 1
 
 		expect(useStore.getState().openedAuCategoryIds[categoryId]).toBe(true);
 	});

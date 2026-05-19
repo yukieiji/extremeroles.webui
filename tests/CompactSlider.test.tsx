@@ -11,14 +11,18 @@ describe("CompactSlider", () => {
 		onInputChange: vi.fn(),
 	};
 
-	it("renders label and current value correctly", () => {
-		render(<CompactSlider {...defaultProps} />);
+	it("renders label and current value correctly", async () => {
+		await act(async () => {
+			render(<CompactSlider {...defaultProps} />);
+		});
 		expect(screen.getByText("Test Slider")).toBeInTheDocument();
 		expect(screen.getByRole("textbox")).toHaveValue("10");
 	});
 
-	it("renders slider with correct initial value", () => {
-		render(<CompactSlider {...defaultProps} />);
+	it("renders slider with correct initial value", async () => {
+		await act(async () => {
+			render(<CompactSlider {...defaultProps} />);
+		});
 		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
 		expect(slider).toHaveAttribute("aria-valuenow", "1");
@@ -26,9 +30,14 @@ describe("CompactSlider", () => {
 
 	it("calls onSelectionChange when slider value changes", async () => {
 		const onSelectionChange = vi.fn();
-		render(
-			<CompactSlider {...defaultProps} onSelectionChange={onSelectionChange} />,
-		);
+		await act(async () => {
+			render(
+				<CompactSlider
+					{...defaultProps}
+					onSelectionChange={onSelectionChange}
+				/>,
+			);
+		});
 
 		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
@@ -40,7 +49,9 @@ describe("CompactSlider", () => {
 
 	it("calls onInputChange when input value changes", async () => {
 		const onInputChange = vi.fn();
-		render(<CompactSlider {...defaultProps} onInputChange={onInputChange} />);
+		await act(async () => {
+			render(<CompactSlider {...defaultProps} onInputChange={onInputChange} />);
+		});
 
 		const input = screen.getByRole("textbox");
 		await act(async () => {
@@ -53,15 +64,17 @@ describe("CompactSlider", () => {
 	it("stops propagation when slider is changed", async () => {
 		const onSelectionChange = vi.fn();
 		const onParentClick = vi.fn();
-		render(
-			// biome-ignore lint/a11y/noStaticElementInteractions: test
-			<div onClick={onParentClick} onKeyDown={onParentClick}>
-				<CompactSlider
-					{...defaultProps}
-					onSelectionChange={onSelectionChange}
-				/>
-			</div>,
-		);
+		await act(async () => {
+			render(
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<CompactSlider
+						{...defaultProps}
+						onSelectionChange={onSelectionChange}
+					/>
+				</div>,
+			);
+		});
 
 		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
@@ -75,12 +88,14 @@ describe("CompactSlider", () => {
 	it("stops propagation when input is changed", async () => {
 		const onInputChange = vi.fn();
 		const onParentClick = vi.fn();
-		render(
-			// biome-ignore lint/a11y/noStaticElementInteractions: test
-			<div onClick={onParentClick} onKeyDown={onParentClick}>
-				<CompactSlider {...defaultProps} onInputChange={onInputChange} />
-			</div>,
-		);
+		await act(async () => {
+			render(
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<CompactSlider {...defaultProps} onInputChange={onInputChange} />
+				</div>,
+			);
+		});
 
 		const input = screen.getByRole("textbox");
 		await act(async () => {
@@ -93,12 +108,14 @@ describe("CompactSlider", () => {
 
 	it("stops propagation when clicked", async () => {
 		const onParentClick = vi.fn();
-		render(
-			// biome-ignore lint/a11y/noStaticElementInteractions: test
-			<div onClick={onParentClick} onKeyDown={onParentClick}>
-				<CompactSlider {...defaultProps} />
-			</div>,
-		);
+		await act(async () => {
+			render(
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<CompactSlider {...defaultProps} />
+				</div>,
+			);
+		});
 
 		const group = screen.getByRole("group", { name: "Test Slider" });
 		await act(async () => {

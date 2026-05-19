@@ -3,11 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExRHeaderOptionControl } from "@/feature/exr/ExRHeaderOptionControl";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId } from "@/logics/optionUtils";
-import {
-	type ExROptionDto,
-	SPAWN_RATE_OPTION_ID,
-	type UpdateExRArg,
-} from "@/type";
+import type { ExROptionDto, UpdateExRArg } from "@/type";
+import { SPAWN_RATE_OPTION_ID } from "@/type";
 import { useStore } from "@/useStore";
 
 vi.mock("@/logics/api.store", async (importOriginal) => {

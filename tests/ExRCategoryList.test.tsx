@@ -4,6 +4,14 @@ import { ExRCategoryList } from "@/feature/exr/ExRCategoryList";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId } from "@/logics/optionUtils";
+import type { UpdateExRArg } from "@/type";
+import {
+	type ExRTabDto,
+	ExRTabId,
+	SPAWN_COUNT_OPTION_ID,
+	SPAWN_RATE_OPTION_ID,
+} from "@/type";
+import { useStore } from "@/useStore";
 
 vi.mock("@/logics/api.store", async (importOriginal) => {
 	const actual = await importOriginal<typeof import("@/logics/api.store")>();
@@ -12,15 +20,6 @@ vi.mock("@/logics/api.store", async (importOriginal) => {
 		useUpdateExROptionSelection: vi.fn(),
 	};
 });
-
-import {
-	type ExRTabDto,
-	ExRTabId,
-	SPAWN_COUNT_OPTION_ID,
-	SPAWN_RATE_OPTION_ID,
-	type UpdateExRArg,
-} from "@/type";
-import { useStore } from "@/useStore";
 
 describe("ExRCategoryList Component Selection", () => {
 	const mockTabs: ExRTabDto[] = [
@@ -165,7 +164,9 @@ describe("ExRCategoryList Component Selection", () => {
 		await act(async () => {
 			useStore.getState().setSelectedExRTabId(ExRTabId.GeneralTab);
 		});
-		render(<ExRCategoryList />);
+		await act(async () => {
+			render(<ExRCategoryList />);
+		});
 
 		// General Tab: Should render standard category
 		expect(screen.getByText("General Category")).toBeInTheDocument();
@@ -178,7 +179,9 @@ describe("ExRCategoryList Component Selection", () => {
 		await act(async () => {
 			useStore.getState().setSelectedExRTabId(ExRTabId.CrewmateTab);
 		});
-		render(<ExRCategoryList />);
+		await act(async () => {
+			render(<ExRCategoryList />);
+		});
 
 		// Role Tab: Should render specialized category item
 		expect(screen.getByText("Sheriff")).toBeInTheDocument();
@@ -222,7 +225,9 @@ describe("ExRCategoryList Component Selection", () => {
 			}); // Category 2, Option 50, Index 1 (Value 100)
 		});
 
-		render(<ExRCategoryList />);
+		await act(async () => {
+			render(<ExRCategoryList />);
+		});
 
 		// Open accordion - RoleCategoryItem uses a custom layout,
 		// we find the toggle button by role.
