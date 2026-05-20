@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { findClosestIndex } from "@/logics/optionUtils";
 import { OptionFormat } from "../parts/OptionFormat";
-import { Field } from "../ui/field";
+import { Field, FieldSet } from "../ui/field";
 import { Label } from "../ui/label";
 
 interface OptionSliderControlProps {
@@ -40,7 +40,7 @@ export function OptionSliderControl({
 	};
 
 	return (
-		<div className="flex items-center">
+		<FieldSet>
 			<Slider
 				min={0}
 				max={Math.max(0, values.length - 1)}
@@ -60,6 +60,6 @@ export function OptionSliderControl({
 					<OptionFormat format={format} />
 				</Label>
 			</Field>
-		</div>
+		</FieldSet>
 	);
 }
