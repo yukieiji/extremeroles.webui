@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import type { KeyboardEvent } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 
 interface UseOptionSliderProps {
@@ -45,7 +46,7 @@ export function useOptionSlider({
 		commitValue();
 	};
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
 			e.currentTarget.blur();
 		}
