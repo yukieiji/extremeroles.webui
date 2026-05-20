@@ -91,6 +91,7 @@ describe("AuOptionControl", () => {
 		// Test handleInputChange (text input)
 		const input = screen.getByRole("textbox");
 		fireEvent.change(input, { target: { value: "4" } });
+		fireEvent.blur(input);
 		expect(onSelectionChangeMock).toHaveBeenCalledWith(4);
 	});
 
