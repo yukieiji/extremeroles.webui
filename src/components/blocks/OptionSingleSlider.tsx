@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
 import { OptionFormat } from "../parts/OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
@@ -21,14 +20,14 @@ export function OptionSingleSlider({
 	format,
 	onChange,
 }: OptionSingleSliderProps) {
-	const id = useId();
 	const {
+		id,
 		currentValue,
 		inputRef,
 		handleSliderChange,
 		handleBlur,
 		handleKeyDown,
-	} = useOptionSlider({ selection, values, onChange });
+	} = useOptionSlider(selection, values, onChange);
 
 	return (
 		<FieldSet>

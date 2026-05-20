@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
@@ -22,25 +21,17 @@ export function OptionSliderControl({
 	format,
 	onChange,
 }: OptionSliderControlProps) {
-	const id = useId();
 	const {
+		id,
 		currentValue,
 		inputRef,
 		handleSliderChange,
 		handleBlur,
 		handleKeyDown,
-	} = useOptionSlider({ selection, values, onChange });
+	} = useOptionSlider(selection, values, onChange);
 
 	return (
 		<FieldSet>
-			<Slider
-				min={0}
-				max={Math.max(0, values.length - 1)}
-				step={1}
-				value={[selection]}
-				onValueChange={handleSliderChange}
-				className="cursor-pointer"
-			/>
 			<Field orientation="horizontal">
 				<Input
 					id={id}
@@ -54,6 +45,14 @@ export function OptionSliderControl({
 					<OptionFormat format={format} />
 				</Label>
 			</Field>
+			<Slider
+				min={0}
+				max={Math.max(0, values.length - 1)}
+				step={1}
+				value={[selection]}
+				onValueChange={handleSliderChange}
+				className="cursor-pointer"
+			/>
 		</FieldSet>
 	);
 }

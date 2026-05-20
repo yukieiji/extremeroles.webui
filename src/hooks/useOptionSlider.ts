@@ -1,18 +1,13 @@
 import type { KeyboardEvent } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 
-interface UseOptionSliderProps {
-	selection: number;
-	values: number[];
-	onChange: (selection: number) => void;
-}
-
-export function useOptionSlider({
-	selection,
-	values,
-	onChange,
-}: UseOptionSliderProps) {
+export function useOptionSlider(
+	selection: number,
+	values: number[],
+	onChange: (selection: number) => void,
+) {
+	const id = useId();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const currentValue = values[selection] ?? values[0] ?? 0;
 
@@ -53,6 +48,7 @@ export function useOptionSlider({
 	};
 
 	return {
+		id,
 		currentValue,
 		inputRef,
 		handleSliderChange,
