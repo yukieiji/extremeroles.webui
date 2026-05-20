@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import type { KeyboardEvent } from "react";
+import { useEffect, useRef } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 
 interface UseOptionSliderProps {
