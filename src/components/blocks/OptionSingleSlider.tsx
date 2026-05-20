@@ -1,5 +1,5 @@
-import { useId, useRef } from "react";
-import { findClosestIndex } from "@/logics/optionUtils";
+import { useId } from "react";
+import { useOptionSlider } from "@/hooks/useOptionSlider";
 import { OptionFormat } from "../parts/OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Input } from "../ui/input";
@@ -22,37 +22,8 @@ export function OptionSingleSlider({
 	onChange,
 }: OptionSingleSliderProps) {
 	const id = useId();
-	const currentValue = values[selection] ?? values[0] ?? 0;
-	const inputRef = useRef<HTMLInputElement>(null);
-
-	const handleSliderChange = (val: number | readonly number[]) => {
-		onChange(Array.isArray(val) ? val[0] : val);
-	};
-
-	const commitValue = () => {
-		if (!inputRef.current) {
-			return;
-		}
-		const val = parseFloat(inputRef.current.value);
-		if (Number.isNaN(val)) {
-			inputRef.current.value = currentValue.toString();
-			return;
-		}
-
-		const closestIdx = findClosestIndex(values, val);
-		inputRef.current.value = (values[closestIdx] ?? values[0] ?? 0).toString();
-		onChange(closestIdx);
-	};
-
-	const handleBlur = () => {
-		commitValue();
-	};
-
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
-			e.currentTarget.blur();
-		}
-	};
+	const { currentValue, inputRef, handleSliderChange, handleBlur, handleKeyDown } =
+		useOptionSlider({ selection, values, onChange });
 
 	return (
 		<FieldSet>

@@ -51,7 +51,7 @@ describe("OptionSliderControl", () => {
 		expect(onChange).toHaveBeenCalledWith(3);
 	});
 
-	it("calls onChange with closest value when input changes", async () => {
+	it("calls onChange with closest value when input changes and blurred", async () => {
 		const onChange = vi.fn();
 		await act(async () => {
 			render(
@@ -70,17 +70,25 @@ describe("OptionSliderControl", () => {
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "24" } });
 		});
+		// Should not be called yet (unified behavior: blur/enter)
+		expect(onChange).not.toHaveBeenCalled();
+
+		await act(async () => {
+			fireEvent.blur(input);
+		});
 		expect(onChange).toHaveBeenCalledWith(1);
 
 		// 26 is closer to 30 (index 2)
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "26" } });
+			fireEvent.blur(input);
 		});
 		expect(onChange).toHaveBeenCalledWith(2);
 
 		// 100 is closer to 50 (index 4)
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "100" } });
+			fireEvent.blur(input);
 		});
 		expect(onChange).toHaveBeenCalledWith(4);
 	});

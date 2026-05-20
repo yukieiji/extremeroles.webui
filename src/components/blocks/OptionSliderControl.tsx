@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { findClosestIndex } from "@/logics/optionUtils";
+import { useOptionSlider } from "@/hooks/useOptionSlider";
 import { OptionFormat } from "../parts/OptionFormat";
 import { Field, FieldSet } from "../ui/field";
 import { Label } from "../ui/label";
@@ -23,21 +23,8 @@ export function OptionSliderControl({
 	onChange,
 }: OptionSliderControlProps) {
 	const id = useId();
-
-	const currentValue = values[selection] ?? values[0] ?? 0;
-
-	const handleSliderChange = (val: number | readonly number[]) => {
-		onChange(Array.isArray(val) ? val[0] : val);
-	};
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const val = parseFloat(e.target.value);
-		if (Number.isNaN(val)) {
-			return;
-		}
-
-		onChange(findClosestIndex(values, val));
-	};
+	const { currentValue, inputRef, handleSliderChange, handleBlur, handleKeyDown } =
+		useOptionSlider({ selection, values, onChange });
 
 	return (
 		<FieldSet>
@@ -52,9 +39,12 @@ export function OptionSliderControl({
 			<Field orientation="horizontal">
 				<Input
 					id={id}
+					ref={inputRef}
 					type="text"
-					value={currentValue}
-					onChange={handleInputChange}
+					key={selection}
+					defaultValue={currentValue.toString()}
+					onBlur={handleBlur}
+					onKeyDown={handleKeyDown}
 				/>
 				<Label htmlFor={id}>
 					<OptionFormat format={format} />
