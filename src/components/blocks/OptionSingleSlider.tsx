@@ -22,8 +22,13 @@ export function OptionSingleSlider({
 	onChange,
 }: OptionSingleSliderProps) {
 	const id = useId();
-	const { currentValue, inputRef, handleSliderChange, handleBlur, handleKeyDown } =
-		useOptionSlider({ selection, values, onChange });
+	const {
+		currentValue,
+		inputRef,
+		handleSliderChange,
+		handleBlur,
+		handleKeyDown,
+	} = useOptionSlider({ selection, values, onChange });
 
 	return (
 		<FieldSet>
