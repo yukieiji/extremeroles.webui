@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 
 interface UseOptionSliderProps {
@@ -14,6 +14,12 @@ export function useOptionSlider({
 }: UseOptionSliderProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const currentValue = values[selection] ?? values[0] ?? 0;
+
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.value = currentValue.toString();
+		}
+	}, [currentValue]);
 
 	const handleSliderChange = (val: number | readonly number[]) => {
 		const newIndex = Array.isArray(val) ? val[0] : val;
