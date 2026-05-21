@@ -58,6 +58,11 @@ export function OptionSliderControl({
 					defaultValue={currentValue.toString()}
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
+					onChange={(e) => {
+						// e.stopPropagation() is not needed for native input onChange
+						// but let's be explicit if we want to prevent some parent behaviors
+						e.stopPropagation();
+					}}
 				/>
 				<Label htmlFor={id}>
 					<OptionFormat format={format} />
