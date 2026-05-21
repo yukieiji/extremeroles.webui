@@ -97,9 +97,10 @@ describe("OptionSliderControl", () => {
 			);
 		});
 
-		const group = screen.getByRole("group", { name: "Test Slider" });
+		const groups = screen.getAllByRole("group", { name: "Test Slider" });
+		// The first one is the FieldSet
 		await act(async () => {
-			fireEvent.click(group);
+			fireEvent.click(groups[0]);
 		});
 
 		expect(onParentClick).not.toHaveBeenCalled();
