@@ -1,9 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
-import { OptionFormat } from "./OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Label } from "../ui/label";
+import { OptionFormat } from "./OptionFormat";
 
 interface OptionSliderControlProps {
 	label: string;
@@ -43,7 +43,11 @@ export function OptionSliderControl({
 			aria-label={label}
 		>
 			<Field orientation="horizontal">
-				<FieldLabel htmlFor={id} className="text-sm font-medium">
+				<FieldLabel
+					htmlFor={id}
+					className="text-sm font-medium"
+					aria-hidden="true"
+				>
 					{label}
 				</FieldLabel>
 				<Input

@@ -29,9 +29,7 @@ describe("OptionSliderControl", () => {
 
 	it("renders format when provided", async () => {
 		await act(async () => {
-			render(
-				<OptionSliderControl {...defaultProps} format="{0}s" />,
-			);
+			render(<OptionSliderControl {...defaultProps} format="{0}s" />);
 		});
 		expect(screen.getByText("s")).toBeInTheDocument();
 	});
@@ -39,12 +37,7 @@ describe("OptionSliderControl", () => {
 	it("calls onChange when slider value changes", async () => {
 		const onChange = vi.fn();
 		await act(async () => {
-			render(
-				<OptionSliderControl
-					{...defaultProps}
-					onChange={onChange}
-				/>,
-			);
+			render(<OptionSliderControl {...defaultProps} onChange={onChange} />);
 		});
 
 		const slider = screen.getByRole("slider", { hidden: true });
@@ -58,12 +51,7 @@ describe("OptionSliderControl", () => {
 	it("calls onChange with closest index when input is blurred", async () => {
 		const onChange = vi.fn();
 		await act(async () => {
-			render(
-				<OptionSliderControl
-					{...defaultProps}
-					onChange={onChange}
-				/>,
-			);
+			render(<OptionSliderControl {...defaultProps} onChange={onChange} />);
 		});
 
 		const input = screen.getByRole("textbox");
@@ -83,10 +71,7 @@ describe("OptionSliderControl", () => {
 			render(
 				// biome-ignore lint/a11y/noStaticElementInteractions: test
 				<div onClick={onParentClick} onKeyDown={onParentClick}>
-					<OptionSliderControl
-						{...defaultProps}
-						onChange={onChange}
-					/>
+					<OptionSliderControl {...defaultProps} onChange={onChange} />
 				</div>,
 			);
 		});
