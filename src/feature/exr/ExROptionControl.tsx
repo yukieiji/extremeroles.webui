@@ -1,6 +1,6 @@
-import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
 import { OptionToggleControl } from "@/components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
+import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import type { UniqueOptionId } from "@/type";
