@@ -76,10 +76,6 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 		}
 	};
 
-	const handleChanceInputChange = (val: number) => {
-		handleChanceChange(findClosestIndex(chanceValues, val));
-	};
-
 	const handleMaxCountChange = (newSelection: number) => {
 		const newMaxCountValue = maxCountValues[newSelection] ?? 0;
 		const isBecomingEnabled = isChanceZero && newMaxCountValue > 0;
@@ -125,23 +121,17 @@ export function AuRoleSpawnControls({ categoryId }: AuRoleSpawnControlsProps) {
 		}
 	};
 
-	const handleMaxCountInputChange = (val: number) => {
-		handleMaxCountChange(findClosestIndex(maxCountValues, val));
-	};
-
 	return (
 		<RoleSpawnControls
 			rate={{
 				values: chanceValues,
 				currentSelection: chanceSelection,
 				onSelectionChange: handleChanceChange,
-				onInputChange: handleChanceInputChange,
 			}}
 			num={{
 				values: maxCountValues,
 				currentSelection: maxCountSelection,
 				onSelectionChange: handleMaxCountChange,
-				onInputChange: handleMaxCountInputChange,
 			}}
 		/>
 	);
