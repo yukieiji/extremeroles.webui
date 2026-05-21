@@ -8,6 +8,7 @@ describe("CompactSlider", () => {
 		currentSelection: 1,
 		values: [0, 10, 20, 30],
 		onSelectionChange: vi.fn(),
+		onInputChange: vi.fn(),
 	};
 
 	it("renders label and current value correctly", async () => {
@@ -46,26 +47,18 @@ describe("CompactSlider", () => {
 		expect(onSelectionChange).toHaveBeenCalledWith(2);
 	});
 
-	it("calls onSelectionChange when input value is committed via blur", async () => {
-		const onSelectionChange = vi.fn();
+	it("calls onInputChange when input value changes (realtime mode)", async () => {
+		const onInputChange = vi.fn();
 		await act(async () => {
-			render(
-				<CompactSlider
-					{...defaultProps}
-					onSelectionChange={onSelectionChange}
-				/>,
-			);
+			render(<CompactSlider {...defaultProps} onInputChange={onInputChange} />);
 		});
 
 		const input = screen.getByRole("textbox");
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "25" } });
-			fireEvent.blur(input);
 		});
 
-		// 25 is closest to 20 (index 2) or 30 (index 3).
-		// findClosestIndex usually rounds. 20 is index 2, 30 is index 3.
-		expect(onSelectionChange).toHaveBeenCalledWith(expect.any(Number));
+		expect(onInputChange).toHaveBeenCalledWith(25);
 	});
 
 	it("stops propagation when slider is changed", async () => {
@@ -92,26 +85,24 @@ describe("CompactSlider", () => {
 		expect(onParentClick).not.toHaveBeenCalled();
 	});
 
-	it("stops propagation when input is blurred", async () => {
-		const onSelectionChange = vi.fn();
+	it("stops propagation when input is changed", async () => {
+		const onInputChange = vi.fn();
 		const onParentClick = vi.fn();
 		await act(async () => {
 			render(
 				// biome-ignore lint/a11y/noStaticElementInteractions: test
 				<div onClick={onParentClick} onKeyDown={onParentClick}>
-					<CompactSlider
-						{...defaultProps}
-						onSelectionChange={onSelectionChange}
-					/>
+					<CompactSlider {...defaultProps} onInputChange={onInputChange} />
 				</div>,
 			);
 		});
 
 		const input = screen.getByRole("textbox");
 		await act(async () => {
-			fireEvent.blur(input);
+			fireEvent.change(input, { target: { value: "25" } });
 		});
 
+		expect(onInputChange).toHaveBeenCalled();
 		expect(onParentClick).not.toHaveBeenCalled();
 	});
 

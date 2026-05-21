@@ -94,7 +94,7 @@ describe("ExRHeaderOptionControl", () => {
 		).toBe(1);
 	});
 
-	it("updates selection when input is changed and committed via blur", async () => {
+	it("updates selection when input is changed", async () => {
 		setUpudateExROptionSelectionMock(mockOption.RangeMeta.Values);
 
 		await act(async () => {
@@ -110,7 +110,6 @@ describe("ExRHeaderOptionControl", () => {
 		const input = screen.getByRole("textbox");
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "100" } });
-			fireEvent.blur(input);
 		});
 
 		const state = useStore.getState();

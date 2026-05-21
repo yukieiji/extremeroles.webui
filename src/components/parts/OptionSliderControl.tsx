@@ -12,6 +12,7 @@ interface OptionSliderControlProps {
 	values: number[];
 	format?: string;
 	onChange: (selection: number) => void;
+	onInputChange?: (value: number) => void;
 	testId?: string;
 }
 
@@ -24,6 +25,7 @@ export function OptionSliderControl({
 	values,
 	format = "",
 	onChange,
+	onInputChange,
 	testId,
 }: OptionSliderControlProps) {
 	const {
@@ -39,6 +41,20 @@ export function OptionSliderControl({
 		e.stopPropagation();
 	};
 
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		e.stopPropagation();
+		if (onInputChange) {
+			const val = parseFloat(e.target.value);
+			if (!Number.isNaN(val)) {
+				onInputChange(val);
+			}
+		}
+	};
+
+	// 外部から onInputChange が渡されている場合は、リアルタイム更新の挙動にする
+	// 渡されていない場合は useOptionSlider の挙動 (blur/Enterで確定) にする
+	const isRealtime = !!onInputChange;
+
 	return (
 		<FieldSet
 			onClick={stopPropagation}
@@ -53,16 +69,13 @@ export function OptionSliderControl({
 				)}
 				<Input
 					id={id}
-					ref={inputRef}
+					ref={isRealtime ? undefined : inputRef}
 					type="text"
-					defaultValue={currentValue.toString()}
-					onBlur={handleBlur}
-					onKeyDown={handleKeyDown}
-					onChange={(e) => {
-						// e.stopPropagation() is not needed for native input onChange
-						// but let's be explicit if we want to prevent some parent behaviors
-						e.stopPropagation();
-					}}
+					value={isRealtime ? currentValue : undefined}
+					defaultValue={isRealtime ? undefined : currentValue.toString()}
+					onBlur={isRealtime ? undefined : handleBlur}
+					onKeyDown={isRealtime ? undefined : handleKeyDown}
+					onChange={isRealtime ? handleInputChange : (e) => e.stopPropagation()}
 				/>
 				<Label htmlFor={id}>
 					<OptionFormat format={format} />

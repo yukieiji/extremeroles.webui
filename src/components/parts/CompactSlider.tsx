@@ -5,7 +5,6 @@ interface CompactSliderProps {
 	values: number[];
 	currentSelection: number;
 	onSelectionChange: (selection: number) => void;
-	/** @deprecated OptionSliderControl handles input logic internally */
 	onInputChange?: (value: number) => void;
 	format?: string;
 	testId?: string;
@@ -20,6 +19,7 @@ export function CompactSlider({
 	values,
 	currentSelection,
 	onSelectionChange,
+	onInputChange,
 	format,
 	testId,
 }: CompactSliderProps) {
@@ -29,6 +29,7 @@ export function CompactSlider({
 			values={values}
 			selection={currentSelection}
 			onChange={onSelectionChange}
+			onInputChange={onInputChange}
 			format={format}
 			testId={testId}
 		/>

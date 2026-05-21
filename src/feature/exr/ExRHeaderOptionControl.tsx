@@ -1,6 +1,6 @@
 import { CompactSlider } from "@/components/parts/CompactSlider";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
-import { getUniqueOptionId } from "@/logics/optionUtils";
+import { findClosestIndex, getUniqueOptionId } from "@/logics/optionUtils";
 import type { ExROptionDto } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -35,12 +35,20 @@ export function ExRHeaderOptionControl({
 		});
 	};
 
+	const handleInputChange = async (val: number) => {
+		await updateExRSelection({
+			uniqueOptionId: uniqueId,
+			selection: findClosestIndex(values, val),
+		});
+	};
+
 	return (
 		<CompactSlider
 			label={label}
 			values={values}
 			currentSelection={currentSelection}
 			onSelectionChange={handleSelectionChange}
+			onInputChange={handleInputChange}
 		/>
 	);
 }
