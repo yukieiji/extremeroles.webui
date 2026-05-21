@@ -1,16 +1,18 @@
+import type React from "react";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
-import { OptionFormat } from "../parts/OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Label } from "../ui/label";
+import { OptionFormat } from "./OptionFormat";
 
 interface OptionSliderControlProps {
 	label?: string;
 	selection: number;
 	values: number[];
-	format: string;
+	format?: string;
 	onChange: (selection: number) => void;
+	testId?: string;
 }
 
 /**
@@ -20,8 +22,9 @@ export function OptionSliderControl({
 	label,
 	selection,
 	values,
-	format,
+	format = "",
 	onChange,
+	testId,
 }: OptionSliderControlProps) {
 	const {
 		id,
@@ -32,10 +35,22 @@ export function OptionSliderControl({
 		handleKeyDown,
 	} = useOptionSlider(selection, values, onChange);
 
+	const stopPropagation = (e: React.MouseEvent | React.KeyboardEvent) => {
+		e.stopPropagation();
+	};
+
 	return (
-		<FieldSet>
+		<FieldSet
+			onClick={stopPropagation}
+			onKeyDown={stopPropagation}
+			data-testid={testId}
+		>
 			<Field orientation="horizontal">
-				{label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
+				{label && (
+					<FieldLabel htmlFor={id} className="text-sm font-medium">
+						{label}
+					</FieldLabel>
+				)}
 				<Input
 					id={id}
 					ref={inputRef}

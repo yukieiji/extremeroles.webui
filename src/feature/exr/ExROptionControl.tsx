@@ -1,4 +1,4 @@
-import { OptionSliderControl } from "@/components/blocks/OptionSliderControl";
+import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
 import { OptionToggleControl } from "@/components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
 import { useOptionData } from "@/hooks/useExROptionData";

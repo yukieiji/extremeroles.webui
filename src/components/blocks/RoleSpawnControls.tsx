@@ -21,7 +21,6 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				values={rate.values}
 				currentSelection={rate.currentSelection}
 				onSelectionChange={rate.onSelectionChange}
-				onInputChange={rate.onInputChange}
 				testId="spawn-rate-control"
 			/>
 			<CompactSlider
@@ -29,7 +28,6 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				values={num.values}
 				currentSelection={num.currentSelection}
 				onSelectionChange={num.onSelectionChange}
-				onInputChange={num.onInputChange}
 				testId="spawn-count-control"
 			/>
 		</div>
