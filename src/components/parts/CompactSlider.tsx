@@ -1,7 +1,7 @@
 import type React from "react";
-import { useId } from "react";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+import { useOptionSlider } from "@/hooks/useOptionSlider";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 
 interface CompactSliderProps {
@@ -9,7 +9,6 @@ interface CompactSliderProps {
 	values: number[];
 	currentSelection: number;
 	onSelectionChange: (selection: number) => void;
-	onInputChange: (value: number) => void;
 	testId?: string;
 }
 
@@ -22,23 +21,16 @@ export function CompactSlider({
 	values,
 	currentSelection,
 	onSelectionChange,
-	onInputChange,
 	testId,
 }: CompactSliderProps) {
-	const id = useId();
-	const currentValue = values[currentSelection] ?? values[0] ?? 0;
-
-	const handleSliderChange = (val: number | readonly number[]) => {
-		onSelectionChange(Array.isArray(val) ? val[0] : val);
-	};
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.stopPropagation();
-		const val = parseFloat(e.target.value);
-		if (!Number.isNaN(val)) {
-			onInputChange(val);
-		}
-	};
+	const {
+		id,
+		currentValue,
+		inputRef,
+		handleSliderChange,
+		handleBlur,
+		handleKeyDown,
+	} = useOptionSlider(currentSelection, values, onSelectionChange);
 
 	const stopPropagation = (e: React.MouseEvent | React.KeyboardEvent) => {
 		e.stopPropagation();
@@ -57,9 +49,11 @@ export function CompactSlider({
 				</FieldLabel>
 				<Input
 					id={id}
+					ref={inputRef}
 					type="text"
-					value={currentValue}
-					onChange={handleInputChange}
+					defaultValue={currentValue.toString()}
+					onBlur={handleBlur}
+					onKeyDown={handleKeyDown}
 				/>
 			</Field>
 			<Slider

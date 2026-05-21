@@ -8,7 +8,6 @@ describe("CompactSlider", () => {
 		currentSelection: 1,
 		values: [0, 10, 20, 30],
 		onSelectionChange: vi.fn(),
-		onInputChange: vi.fn(),
 	};
 
 	it("renders label and current value correctly", async () => {
@@ -47,18 +46,25 @@ describe("CompactSlider", () => {
 		expect(onSelectionChange).toHaveBeenCalledWith(2);
 	});
 
-	it("calls onInputChange when input value changes", async () => {
-		const onInputChange = vi.fn();
+	it("calls onSelectionChange with closest index when input is blurred", async () => {
+		const onSelectionChange = vi.fn();
 		await act(async () => {
-			render(<CompactSlider {...defaultProps} onInputChange={onInputChange} />);
+			render(
+				<CompactSlider
+					{...defaultProps}
+					onSelectionChange={onSelectionChange}
+				/>,
+			);
 		});
 
 		const input = screen.getByRole("textbox");
 		await act(async () => {
-			fireEvent.change(input, { target: { value: "25" } });
+			fireEvent.change(input, { target: { value: "26" } });
+			fireEvent.blur(input);
 		});
 
-		expect(onInputChange).toHaveBeenCalledWith(25);
+		// 26 is closest to values[3] (30)
+		expect(onSelectionChange).toHaveBeenCalledWith(3);
 	});
 
 	it("stops propagation when slider is changed", async () => {
@@ -86,23 +92,27 @@ describe("CompactSlider", () => {
 	});
 
 	it("stops propagation when input is changed", async () => {
-		const onInputChange = vi.fn();
+		const onSelectionChange = vi.fn();
 		const onParentClick = vi.fn();
 		await act(async () => {
 			render(
 				// biome-ignore lint/a11y/noStaticElementInteractions: test
 				<div onClick={onParentClick} onKeyDown={onParentClick}>
-					<CompactSlider {...defaultProps} onInputChange={onInputChange} />
+					<CompactSlider
+						{...defaultProps}
+						onSelectionChange={onSelectionChange}
+					/>
 				</div>,
 			);
 		});
 
 		const input = screen.getByRole("textbox");
 		await act(async () => {
-			fireEvent.change(input, { target: { value: "25" } });
+			fireEvent.change(input, { target: { value: "26" } });
+			fireEvent.blur(input);
 		});
 
-		expect(onInputChange).toHaveBeenCalled();
+		expect(onSelectionChange).toHaveBeenCalled();
 		expect(onParentClick).not.toHaveBeenCalled();
 	});
 

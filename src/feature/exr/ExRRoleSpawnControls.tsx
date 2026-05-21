@@ -72,10 +72,6 @@ export function ExRRoleSpawnControls({
 		}
 	};
 
-	const handleRateInputChange = async (val: number) => {
-		await handleRateChange(findClosestIndex(rateValues, val));
-	};
-
 	const handleCountUIChange = async (newUISelection: number) => {
 		const isBecomingEnabled = isSpawnRateZero && newUISelection > 0;
 
@@ -115,23 +111,17 @@ export function ExRRoleSpawnControls({
 		}
 	};
 
-	const handleCountUIInputChange = async (val: number) => {
-		await handleCountUIChange(findClosestIndex(virtualCountValues, val));
-	};
-
 	return (
 		<RoleSpawnControls
 			rate={{
 				values: rateValues,
 				currentSelection: spawnRateSelection,
 				onSelectionChange: handleRateChange,
-				onInputChange: handleRateInputChange,
 			}}
 			num={{
 				values: virtualCountValues,
 				currentSelection: currentCountUISelection,
 				onSelectionChange: handleCountUIChange,
-				onInputChange: handleCountUIInputChange,
 			}}
 		/>
 	);
