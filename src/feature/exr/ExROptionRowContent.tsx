@@ -20,7 +20,6 @@ export function ExROptionRowContent({
 				uniqueOptionId={uniqueOptionId}
 				format={optionData.format}
 				type={optionData.type}
-				label={optionData.translatedName}
 			/>
 		</OptionRowContent>
 	);

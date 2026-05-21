@@ -18,13 +18,14 @@ describe("OptionSliderControl", () => {
 		expect(screen.getByRole("textbox")).toHaveValue("10");
 	});
 
-	it("renders slider with correct initial value", async () => {
+	it("renders slider with correct initial value and aria-label", async () => {
 		await act(async () => {
 			render(<OptionSliderControl {...defaultProps} />);
 		});
 		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
 		expect(slider).toHaveAttribute("aria-valuenow", "1");
+		expect(slider).toHaveAttribute("aria-label", "Test Slider");
 	});
 
 	it("renders format when provided", async () => {
@@ -109,5 +110,24 @@ describe("OptionSliderControl", () => {
 			render(<OptionSliderControl {...defaultProps} testId="custom-test-id" />);
 		});
 		expect(screen.getByTestId("custom-test-id")).toBeInTheDocument();
+	});
+
+	it("renders correctly without label", async () => {
+		await act(async () => {
+			render(
+				<OptionSliderControl
+					selection={defaultProps.selection}
+					values={defaultProps.values}
+					onChange={defaultProps.onChange}
+				/>,
+			);
+		});
+		expect(
+			screen.queryByRole("group", { name: "Test Slider" }),
+		).not.toBeInTheDocument();
+		expect(screen.getByRole("slider", { hidden: true })).toHaveAttribute(
+			"aria-label",
+			"slider",
+		);
 	});
 });

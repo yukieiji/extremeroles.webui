@@ -9,7 +9,6 @@ interface ExROptionControlProps {
 	uniqueOptionId: UniqueOptionId;
 	format: string;
 	type: string;
-	label?: string;
 }
 
 /**
@@ -19,7 +18,6 @@ export function ExROptionControl({
 	uniqueOptionId,
 	format,
 	type,
-	label,
 }: ExROptionControlProps) {
 	const optionValue = useOptionData(uniqueOptionId);
 	const currentSelection = optionValue.selection ?? 0;
@@ -62,7 +60,6 @@ export function ExROptionControl({
 	if (type === "Int32" || type === "Single") {
 		return (
 			<OptionSliderControl
-				label={label ?? ""}
 				selection={currentSelection}
 				values={optionValue.values as number[]}
 				format={format}

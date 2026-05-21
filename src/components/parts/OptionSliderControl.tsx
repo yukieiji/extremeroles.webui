@@ -6,7 +6,7 @@ import { Label } from "../ui/label";
 import { OptionFormat } from "./OptionFormat";
 
 interface OptionSliderControlProps {
-	label: string;
+	label?: string;
 	selection: number;
 	values: number[];
 	format?: string;
@@ -43,13 +43,15 @@ export function OptionSliderControl({
 			aria-label={label}
 		>
 			<Field orientation="horizontal">
-				<FieldLabel
-					htmlFor={id}
-					className="text-sm font-medium"
-					aria-hidden="true"
-				>
-					{label}
-				</FieldLabel>
+				{label && (
+					<FieldLabel
+						htmlFor={id}
+						className="text-sm font-medium"
+						aria-hidden="true"
+					>
+						{label}
+					</FieldLabel>
+				)}
 				<Input
 					id={id}
 					ref={inputRef}
@@ -70,7 +72,7 @@ export function OptionSliderControl({
 				step={1}
 				value={[selection]}
 				onValueChange={handleSliderChange}
-				aria-label={`${label} slider`}
+				aria-label={label ?? "slider"}
 				className="cursor-pointer"
 			/>
 		</FieldSet>

@@ -35,7 +35,6 @@ export function AuOptionControl({
 	if (typeof range[0] === "number") {
 		return (
 			<OptionSliderControl
-				label={optionMeta.name}
 				values={range as number[]}
 				selection={selection}
 				format={optionMeta.format}
