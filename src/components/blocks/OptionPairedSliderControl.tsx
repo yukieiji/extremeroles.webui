@@ -1,5 +1,5 @@
 import { findClosestIndex } from "@/logics/optionUtils";
-import { OptionSingleSlider } from "./OptionSingleSlider";
+import { OptionSliderControl } from "./OptionSliderControl";
 
 interface OptionPairedSliderControlProps {
 	minSelection: number;
@@ -51,14 +51,14 @@ export function OptionPairedSliderControl({
 
 	return (
 		<div className="flex flex-col sm:flex-row items-center w-full sm:w-lg">
-			<OptionSingleSlider
+			<OptionSliderControl
 				label={minLabel}
 				selection={minSelection}
 				values={minValues}
 				format={format}
 				onChange={handleMinChange}
 			/>
-			<OptionSingleSlider
+			<OptionSliderControl
 				label={maxLabel}
 				selection={maxSelection}
 				values={maxValues}

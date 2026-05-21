@@ -2,10 +2,11 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
 import { OptionFormat } from "../parts/OptionFormat";
-import { Field, FieldSet } from "../ui/field";
+import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Label } from "../ui/label";
 
 interface OptionSliderControlProps {
+	label?: string;
 	selection: number;
 	values: number[];
 	format: string;
@@ -16,6 +17,7 @@ interface OptionSliderControlProps {
  * 数値オプション（Int32, Single）用のスライダーと入力欄コンポーネント
  */
 export function OptionSliderControl({
+	label,
 	selection,
 	values,
 	format,
@@ -33,6 +35,7 @@ export function OptionSliderControl({
 	return (
 		<FieldSet>
 			<Field orientation="horizontal">
+				{label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
 				<Input
 					id={id}
 					ref={inputRef}
@@ -51,6 +54,7 @@ export function OptionSliderControl({
 				step={1}
 				value={[selection]}
 				onValueChange={handleSliderChange}
+				aria-label={label}
 				className="cursor-pointer"
 			/>
 		</FieldSet>
