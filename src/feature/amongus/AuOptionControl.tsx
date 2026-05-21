@@ -1,4 +1,4 @@
-import { OptionSliderControl } from "@/components/blocks/OptionSliderControl";
+import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
 import { OptionToggleControl } from "@/components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
 import { translationMetaData } from "@/logics/api";
@@ -35,6 +35,7 @@ export function AuOptionControl({
 	if (typeof range[0] === "number") {
 		return (
 			<OptionSliderControl
+				label={optionMeta.name}
 				values={range as number[]}
 				selection={selection}
 				format={optionMeta.format}

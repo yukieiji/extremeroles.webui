@@ -1,4 +1,4 @@
-import type { KeyboardEvent } from "react";
+import type React from "react";
 import { useEffect, useId, useRef } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 
@@ -41,10 +41,14 @@ export function useOptionSlider(
 		commitValue();
 	};
 
-	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
 			e.currentTarget.blur();
 		}
+	};
+
+	const stopPropagation = (e: React.MouseEvent | React.KeyboardEvent) => {
+		e.stopPropagation();
 	};
 
 	return {
@@ -54,5 +58,6 @@ export function useOptionSlider(
 		handleSliderChange,
 		handleBlur,
 		handleKeyDown,
+		stopPropagation,
 	};
 }

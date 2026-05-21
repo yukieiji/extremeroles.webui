@@ -1,5 +1,5 @@
 import { ROLE_SPAWN_COUNT, ROLE_SPAWN_RATE } from "@/noTrans";
-import { CompactSlider } from "../parts/CompactSlider";
+import { OptionSliderControl } from "../parts/OptionSliderControl";
 
 interface ControlProps {
 	values: number[];
@@ -15,18 +15,18 @@ interface RoleSpawnControlsProps {
 export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 	return (
 		<div className="flex items-center gap-4">
-			<CompactSlider
+			<OptionSliderControl
 				label={ROLE_SPAWN_RATE}
 				values={rate.values}
-				currentSelection={rate.currentSelection}
-				onSelectionChange={rate.onSelectionChange}
+				selection={rate.currentSelection}
+				onChange={rate.onSelectionChange}
 				testId="spawn-rate-control"
 			/>
-			<CompactSlider
+			<OptionSliderControl
 				label={ROLE_SPAWN_COUNT}
 				values={num.values}
-				currentSelection={num.currentSelection}
-				onSelectionChange={num.onSelectionChange}
+				selection={num.currentSelection}
+				onChange={num.onSelectionChange}
 				testId="spawn-count-control"
 			/>
 		</div>

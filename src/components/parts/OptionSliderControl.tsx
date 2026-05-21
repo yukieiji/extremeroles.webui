@@ -1,28 +1,30 @@
-import type React from "react";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
+import { OptionFormat } from "./OptionFormat";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
+import { Label } from "../ui/label";
 
-interface CompactSliderProps {
+interface OptionSliderControlProps {
 	label: string;
+	selection: number;
 	values: number[];
-	currentSelection: number;
-	onSelectionChange: (selection: number) => void;
+	format?: string;
+	onChange: (selection: number) => void;
 	testId?: string;
 }
 
 /**
- * カテゴリアコーディオンのヘッダーなどで使用する、コンパクトなスライダーとテキスト入力のセット
- * shadcn/uiベースのコンポーネントを使用
+ * 数値オプション（Int32, Single）用のスライダーと入力欄コンポーネント
  */
-export function CompactSlider({
+export function OptionSliderControl({
 	label,
+	selection,
 	values,
-	currentSelection,
-	onSelectionChange,
+	format,
+	onChange,
 	testId,
-}: CompactSliderProps) {
+}: OptionSliderControlProps) {
 	const {
 		id,
 		currentValue,
@@ -30,11 +32,8 @@ export function CompactSlider({
 		handleSliderChange,
 		handleBlur,
 		handleKeyDown,
-	} = useOptionSlider(currentSelection, values, onSelectionChange);
-
-	const stopPropagation = (e: React.MouseEvent | React.KeyboardEvent) => {
-		e.stopPropagation();
-	};
+		stopPropagation,
+	} = useOptionSlider(selection, values, onChange);
 
 	return (
 		<FieldSet
@@ -55,13 +54,19 @@ export function CompactSlider({
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
 				/>
+				{format && (
+					<Label htmlFor={id}>
+						<OptionFormat format={format} />
+					</Label>
+				)}
 			</Field>
 			<Slider
 				min={0}
 				max={Math.max(0, values.length - 1)}
 				step={1}
-				value={[currentSelection]}
+				value={[selection]}
 				onValueChange={handleSliderChange}
+				aria-label={`${label} slider`}
 				className="cursor-pointer"
 			/>
 		</FieldSet>
