@@ -222,7 +222,7 @@ describe("ExROptionEditor", () => {
 		});
 
 		// オプション名が表示されていることを確認
-		expect(screen.getByText("Option 1")).toBeInTheDocument();
+		expect(screen.getAllByText("Option 1")[0]).toBeInTheDocument();
 
 		// スライダーが存在することを確認
 		const slider = screen.getByRole("slider", { hidden: true });

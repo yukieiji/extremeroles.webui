@@ -52,7 +52,7 @@ describe("ExROptionRecursiveItem", () => {
 		});
 
 		// Parent should be visible
-		expect(screen.getByText("Parent Option")).toBeInTheDocument();
+		expect(screen.getAllByText("Parent Option")[0]).toBeInTheDocument();
 
 		// Child should NOT be visible initially (accordion closed)
 		expect(screen.queryByText("Child Option")).not.toBeInTheDocument();
@@ -64,7 +64,7 @@ describe("ExROptionRecursiveItem", () => {
 		});
 
 		// Child should be visible now
-		expect(screen.getByText("Child Option")).toBeInTheDocument();
+		expect(screen.getAllByText("Child Option")[0]).toBeInTheDocument();
 
 		// Click again to close
 		await act(async () => {
@@ -86,6 +86,6 @@ describe("ExROptionRecursiveItem", () => {
 		});
 
 		// Child should be visible immediately
-		expect(screen.getByText("Child Option")).toBeInTheDocument();
+		expect(screen.getAllByText("Child Option")[0]).toBeInTheDocument();
 	});
 });

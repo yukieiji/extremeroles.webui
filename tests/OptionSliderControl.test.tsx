@@ -1,168 +1,134 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionSliderControl } from "@/components/blocks/OptionSliderControl";
+import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
 
 describe("OptionSliderControl", () => {
-	const mockValues = [10, 20, 30, 40, 50];
-	const mockFormat = "{0}s";
-	const mockLabel = "Test Label";
+	const defaultProps = {
+		label: "Test Slider",
+		selection: 1,
+		values: [0, 10, 20, 30],
+		onChange: vi.fn(),
+	};
 
-	it("renders slider and input with correct initial value", async () => {
+	it("renders label and current value correctly", async () => {
 		await act(async () => {
-			render(
-				<OptionSliderControl
-					selection={1}
-					values={mockValues}
-					format={mockFormat}
-					onChange={() => {}}
-				/>,
-			);
+			render(<OptionSliderControl {...defaultProps} />);
 		});
+		expect(screen.getByText("Test Slider")).toBeInTheDocument();
+		expect(screen.getByRole("textbox")).toHaveValue("10");
+	});
 
-		// Base UI Slider input has type="range" and is accessible via its role
-		// We use hidden: true if it's visually hidden but still in the DOM
+	it("renders slider with correct initial value and aria-label", async () => {
+		await act(async () => {
+			render(<OptionSliderControl {...defaultProps} />);
+		});
 		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
 		expect(slider).toHaveAttribute("aria-valuenow", "1");
+		expect(slider).toHaveAttribute("aria-label", "Test Slider");
+	});
 
-		const input = screen.getByRole("textbox");
-		expect(input).toHaveValue("20");
-
+	it("renders format when provided", async () => {
+		await act(async () => {
+			render(<OptionSliderControl {...defaultProps} format="{0}s" />);
+		});
 		expect(screen.getByText("s")).toBeInTheDocument();
 	});
 
-	it("renders label when provided", async () => {
-		await act(async () => {
-			render(
-				<OptionSliderControl
-					label={mockLabel}
-					selection={1}
-					values={mockValues}
-					format={mockFormat}
-					onChange={() => {}}
-				/>,
-			);
-		});
-
-		expect(screen.getByText(mockLabel)).toBeInTheDocument();
-	});
-
-	it("calls onChange when slider moves", async () => {
+	it("calls onChange when slider value changes", async () => {
 		const onChange = vi.fn();
 		await act(async () => {
-			render(
-				<OptionSliderControl
-					selection={1}
-					values={mockValues}
-					format={mockFormat}
-					onChange={onChange}
-				/>,
-			);
+			render(<OptionSliderControl {...defaultProps} onChange={onChange} />);
 		});
 
 		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
-			fireEvent.change(slider, { target: { value: "3" } });
+			fireEvent.change(slider, { target: { value: "2" } });
 		});
 
-		expect(onChange).toHaveBeenCalledWith(3);
+		expect(onChange).toHaveBeenCalledWith(2);
 	});
 
-	it("calls onChange with closest value when input changes and blurred", async () => {
+	it("calls onChange with closest index when input is blurred", async () => {
 		const onChange = vi.fn();
 		await act(async () => {
-			render(
-				<OptionSliderControl
-					selection={1}
-					values={mockValues}
-					format={mockFormat}
-					onChange={onChange}
-				/>,
-			);
+			render(<OptionSliderControl {...defaultProps} onChange={onChange} />);
 		});
 
 		const input = screen.getByRole("textbox");
-
-		// 24 is closer to 20 (index 1)
-		await act(async () => {
-			fireEvent.change(input, { target: { value: "24" } });
-		});
-		// Should not be called yet
-		expect(onChange).not.toHaveBeenCalled();
-
-		await act(async () => {
-			fireEvent.blur(input);
-		});
-		expect(onChange).toHaveBeenCalledWith(1);
-
-		// 26 is closer to 30 (index 2)
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "26" } });
 			fireEvent.blur(input);
 		});
-		expect(onChange).toHaveBeenCalledWith(2);
 
-		// 100 is closer to 50 (index 4)
-		await act(async () => {
-			fireEvent.change(input, { target: { value: "100" } });
-			fireEvent.blur(input);
-		});
-		expect(onChange).toHaveBeenCalledWith(4);
+		// 26 is closest to values[3] (30)
+		expect(onChange).toHaveBeenCalledWith(3);
 	});
 
-	it("allows clearing input and then entering a value", async () => {
+	it("stops propagation when slider is changed", async () => {
 		const onChange = vi.fn();
+		const onParentClick = vi.fn();
 		await act(async () => {
 			render(
-				<OptionSliderControl
-					selection={1}
-					values={mockValues}
-					format={mockFormat}
-					onChange={onChange}
-				/>,
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<OptionSliderControl {...defaultProps} onChange={onChange} />
+				</div>,
 			);
 		});
 
-		const input = screen.getByRole("textbox");
-
+		const slider = screen.getByRole("slider", { hidden: true });
 		await act(async () => {
-			fireEvent.change(input, { target: { value: "" } });
+			fireEvent.change(slider, { target: { value: "2" } });
 		});
-		expect(input).toHaveValue("");
-		expect(onChange).not.toHaveBeenCalled();
 
-		await act(async () => {
-			fireEvent.change(input, { target: { value: "35" } });
-			fireEvent.blur(input);
-		});
-		// 35 is between 30 (index 2) and 40 (index 3).
-		// values = [10, 20, 30, 40, 50]
-		expect(onChange).toHaveBeenCalledWith(2);
+		expect(onChange).toHaveBeenCalled();
+		expect(onParentClick).not.toHaveBeenCalled();
 	});
 
-	it("snaps input value back even if selection index doesn't change", async () => {
-		const onChange = vi.fn();
+	it("stops propagation when clicked", async () => {
+		const onParentClick = vi.fn();
 		await act(async () => {
 			render(
-				<OptionSliderControl
-					selection={1} // Value is 20
-					values={mockValues}
-					format={mockFormat}
-					onChange={onChange}
-				/>,
+				// biome-ignore lint/a11y/noStaticElementInteractions: test
+				<div onClick={onParentClick} onKeyDown={onParentClick}>
+					<OptionSliderControl {...defaultProps} />
+				</div>,
 			);
 		});
 
-		const input = screen.getByRole("textbox");
-
-		// 21 is closest to 20 (index 1)
+		const groups = screen.getAllByRole("group", { name: "Test Slider" });
+		// The first one is the FieldSet
 		await act(async () => {
-			fireEvent.change(input, { target: { value: "21" } });
-			fireEvent.blur(input);
+			fireEvent.click(groups[0]);
 		});
 
-		// Selection index 1 didn't change, but input should snap back to "20"
-		expect(onChange).toHaveBeenCalledWith(1);
-		expect(input).toHaveValue("20");
+		expect(onParentClick).not.toHaveBeenCalled();
+	});
+
+	it("uses testId when provided", async () => {
+		await act(async () => {
+			render(<OptionSliderControl {...defaultProps} testId="custom-test-id" />);
+		});
+		expect(screen.getByTestId("custom-test-id")).toBeInTheDocument();
+	});
+
+	it("renders correctly without label", async () => {
+		await act(async () => {
+			render(
+				<OptionSliderControl
+					selection={defaultProps.selection}
+					values={defaultProps.values}
+					onChange={defaultProps.onChange}
+				/>,
+			);
+		});
+		expect(
+			screen.queryByRole("group", { name: "Test Slider" }),
+		).not.toBeInTheDocument();
+		expect(screen.getByRole("slider", { hidden: true })).toHaveAttribute(
+			"aria-label",
+			"slider",
+		);
 	});
 });

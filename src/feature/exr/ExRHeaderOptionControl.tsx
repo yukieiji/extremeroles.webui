@@ -1,4 +1,4 @@
-import { CompactSlider } from "@/components/parts/CompactSlider";
+import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId } from "@/logics/optionUtils";
 import type { ExROptionDto } from "@/type";
@@ -36,11 +36,11 @@ export function ExRHeaderOptionControl({
 	};
 
 	return (
-		<CompactSlider
+		<OptionSliderControl
 			label={label}
 			values={values}
-			currentSelection={currentSelection}
-			onSelectionChange={handleSelectionChange}
+			selection={currentSelection}
+			onChange={handleSelectionChange}
 		/>
 	);
 }

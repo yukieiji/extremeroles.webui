@@ -238,7 +238,7 @@ describe("ExRCategoryList Component Selection", () => {
 
 		// Body content should be visible after click
 		// ExRRoleCategoryItem renders options list when isOpen is true
-		expect(screen.getByText("Kill CD")).toBeInTheDocument();
+		expect(screen.getAllByText("Kill CD")[0]).toBeInTheDocument();
 
 		// 50 and 51 should be filtered out from the body
 		expect(screen.queryByText("Spawn Rate")).not.toBeInTheDocument();
