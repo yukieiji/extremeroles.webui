@@ -56,13 +56,15 @@ export function useUpdateExROptionSelection(): (
 	const storeUpdate = useStore((state) => state.updateExROption);
 
 	return async (...updateInfos: UpdateExRArg[]) => {
-		console.log(
-			JSON.stringify({
-				type: "user_action",
-				action: "updateExROption",
-				payload: updateInfos,
-			}),
-		);
+		if (import.meta.env.DEV) {
+			console.log(
+				JSON.stringify({
+					type: "user_action",
+					action: "updateExROption",
+					payload: updateInfos,
+				}),
+			);
+		}
 		let updateResult: (UpdatedOptions | null)[];
 		try {
 			updateResult = await Promise.all(
@@ -107,13 +109,15 @@ export function useUpdateAuOptionSelection(): (
 	const exrStoreUpdate = useStore((state) => state.updateExROption);
 
 	return async (updateInfo: UpdateAuArg) => {
-		console.log(
-			JSON.stringify({
-				type: "user_action",
-				action: "updateAuOption",
-				payload: updateInfo,
-			}),
-		);
+		if (import.meta.env.DEV) {
+			console.log(
+				JSON.stringify({
+					type: "user_action",
+					action: "updateAuOption",
+					payload: updateInfo,
+				}),
+			);
+		}
 		const { optionName, valueType } = parseAuOptionId(updateInfo.auOptionId);
 		const meta = auOptionMetaData.options[updateInfo.auOptionId];
 		if (!meta) {
@@ -148,13 +152,15 @@ export function useUpdateAuRoleOptionSelection(): (
 	const exrStoreUpdate = useStore((state) => state.updateExROption);
 
 	return async (chance: UpdateAuArg, maxCount: UpdateAuArg) => {
-		console.log(
-			JSON.stringify({
-				type: "user_action",
-				action: "updateAuRoleOption",
-				payload: { chance, maxCount },
-			}),
-		);
+		if (import.meta.env.DEV) {
+			console.log(
+				JSON.stringify({
+					type: "user_action",
+					action: "updateAuRoleOption",
+					payload: { chance, maxCount },
+				}),
+			);
+		}
 		const { optionName } = parseAuOptionId(chance.auOptionId);
 
 		const chanceMeta = auOptionMetaData.options[chance.auOptionId];

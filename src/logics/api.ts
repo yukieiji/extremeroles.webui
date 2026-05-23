@@ -104,21 +104,25 @@ interface ExRinitializeData {
 }
 
 export async function fetchTranslationMetaData(): Promise<void> {
-	console.log(
-		JSON.stringify({
-			type: "request",
-			method: "GET",
-			url: TRANSLATION_BATCH_URL,
-		}),
-	);
-	console.log(
-		JSON.stringify({
-			type: "request",
-			method: "POST",
-			url: TRANSLATION_BATCH_BASE_URL,
-			body: [{ Key: "optionOff" }, { Key: "optionOn" }],
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "request",
+				method: "GET",
+				url: TRANSLATION_BATCH_URL,
+			}),
+		);
+	}
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "request",
+				method: "POST",
+				url: TRANSLATION_BATCH_BASE_URL,
+				body: [{ Key: "optionOff" }, { Key: "optionOn" }],
+			}),
+		);
+	}
 	const [resOptionUnit, resBatch] = await Promise.all([
 		fetch(TRANSLATION_BATCH_URL),
 		fetch(TRANSLATION_BATCH_BASE_URL, {
@@ -127,20 +131,24 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		}),
 	]);
 
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: TRANSLATION_BATCH_URL,
-			status: resOptionUnit.status,
-		}),
-	);
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: TRANSLATION_BATCH_BASE_URL,
-			status: resBatch.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: TRANSLATION_BATCH_URL,
+				status: resOptionUnit.status,
+			}),
+		);
+	}
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: TRANSLATION_BATCH_BASE_URL,
+				status: resBatch.status,
+			}),
+		);
+	}
 
 	if (!resOptionUnit.ok) {
 		throw new Error(
@@ -177,25 +185,31 @@ export async function fetchTranslationMetaData(): Promise<void> {
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {
-	console.log(
-		JSON.stringify({ type: "request", method: "GET", url: EXR_OPTION_URL }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "request", method: "GET", url: EXR_OPTION_URL }),
+		);
+	}
 	const res = await fetch(EXR_OPTION_URL);
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: EXR_OPTION_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: EXR_OPTION_URL,
+				status: res.status,
+			}),
+		);
+	}
 	if (!res.ok) {
 		throw new Error(`Failed to fetch ExR options: ${res.statusText}`);
 	}
 
 	const jsonData = await res.json();
-	console.log(
-		JSON.stringify({ type: "data", url: EXR_OPTION_URL, data: jsonData }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "data", url: EXR_OPTION_URL, data: jsonData }),
+		);
+	}
 	const data = await ExRTabDtoArraySchema.parseAsync(jsonData);
 
 	const valueData: Record<number, ExROptionValueData> = {};
@@ -287,25 +301,31 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 export async function createAuOptionMetaData(): Promise<
 	Record<AuOptionId, number>
 > {
-	console.log(
-		JSON.stringify({ type: "request", method: "GET", url: AU_OPTION_URL }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "request", method: "GET", url: AU_OPTION_URL }),
+		);
+	}
 	const res = await fetch(AU_OPTION_URL);
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: AU_OPTION_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: AU_OPTION_URL,
+				status: res.status,
+			}),
+		);
+	}
 	if (!res.ok) {
 		throw new Error(`Failed to fetch Au options: ${res.statusText}`);
 	}
 
 	const jsonData = await res.json();
-	console.log(
-		JSON.stringify({ type: "data", url: AU_OPTION_URL, data: jsonData }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "data", url: AU_OPTION_URL, data: jsonData }),
+		);
+	}
 	const data = await AuOptionCategoryDtoArraySchema.parseAsync(jsonData);
 
 	const initialValueData: Record<number, number> = {};
@@ -410,14 +430,16 @@ export async function updateExrOption(
 		OptionId: optionId,
 		Selection: selection,
 	};
-	console.log(
-		JSON.stringify({
-			type: "request",
-			method: "PUT",
-			url: EXR_OPTION_URL,
-			body: request,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "request",
+				method: "PUT",
+				url: EXR_OPTION_URL,
+				body: request,
+			}),
+		);
+	}
 	const res = await fetch(EXR_OPTION_URL, {
 		method: "PUT",
 		headers: {
@@ -426,13 +448,15 @@ export async function updateExrOption(
 		body: JSON.stringify(request),
 	});
 
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: EXR_OPTION_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: EXR_OPTION_URL,
+				status: res.status,
+			}),
+		);
+	}
 
 	if (res.status === 202) {
 		return null;
@@ -443,22 +467,26 @@ export async function updateExrOption(
 	}
 
 	const jsonData = await res.json();
-	console.log(
-		JSON.stringify({ type: "data", url: EXR_OPTION_URL, data: jsonData }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "data", url: EXR_OPTION_URL, data: jsonData }),
+		);
+	}
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
 export async function postExrCsv(csvBody: string): Promise<void> {
 	const body = { CsvBody: csvBody };
-	console.log(
-		JSON.stringify({
-			type: "request",
-			method: "POST",
-			url: EXR_CSV_URL,
-			body: body,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "request",
+				method: "POST",
+				url: EXR_CSV_URL,
+				body: body,
+			}),
+		);
+	}
 	const res = await fetch(EXR_CSV_URL, {
 		method: "POST",
 		headers: {
@@ -467,52 +495,62 @@ export async function postExrCsv(csvBody: string): Promise<void> {
 		body: JSON.stringify(body),
 	});
 
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: EXR_CSV_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: EXR_CSV_URL,
+				status: res.status,
+			}),
+		);
+	}
 
 	if (!res.ok) {
 		throw new Error(`Failed to post ExR CSV: ${res.statusText}`);
 	}
 }
 export async function fetchCsvData(): Promise<GetCsvResult> {
-	console.log(
-		JSON.stringify({ type: "request", method: "GET", url: EXR_CSV_URL }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "request", method: "GET", url: EXR_CSV_URL }),
+		);
+	}
 	const res = await fetch(EXR_CSV_URL);
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: EXR_CSV_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: EXR_CSV_URL,
+				status: res.status,
+			}),
+		);
+	}
 	if (!res.ok) {
 		throw new Error(`Failed to fetch CSV data: ${res.statusText}`);
 	}
 
 	const jsonData = await res.json();
-	console.log(
-		JSON.stringify({ type: "data", url: EXR_CSV_URL, data: jsonData }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "data", url: EXR_CSV_URL, data: jsonData }),
+		);
+	}
 	return await GetCsvResultSchema.parseAsync(jsonData);
 }
 
 export async function postRoleFilterUpdate(
 	request: DeltRoleAssignFilter,
 ): Promise<void> {
-	console.log(
-		JSON.stringify({
-			type: "request",
-			method: "POST",
-			url: EXR_ROLE_FILTER_URL,
-			body: request,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "request",
+				method: "POST",
+				url: EXR_ROLE_FILTER_URL,
+				body: request,
+			}),
+		);
+	}
 	const res = await fetch(EXR_ROLE_FILTER_URL, {
 		method: "POST",
 		headers: {
@@ -521,13 +559,15 @@ export async function postRoleFilterUpdate(
 		body: JSON.stringify(request),
 	});
 
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: EXR_ROLE_FILTER_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: EXR_ROLE_FILTER_URL,
+				status: res.status,
+			}),
+		);
+	}
 
 	if (!res.ok) {
 		throw new Error(`Failed to update role filter: ${res.statusText}`);
@@ -537,29 +577,39 @@ export async function postRoleFilterUpdate(
 export async function fetchRoleFilterData(): Promise<
 	Record<string, RoleAssignFilterSetUI>
 > {
-	console.log(
-		JSON.stringify({
-			type: "request",
-			method: "GET",
-			url: EXR_ROLE_FILTER_URL,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "request",
+				method: "GET",
+				url: EXR_ROLE_FILTER_URL,
+			}),
+		);
+	}
 	const res = await fetch(EXR_ROLE_FILTER_URL);
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: EXR_ROLE_FILTER_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: EXR_ROLE_FILTER_URL,
+				status: res.status,
+			}),
+		);
+	}
 	if (!res.ok) {
 		throw new Error(`Failed to fetch role filter data: ${res.statusText}`);
 	}
 
 	const jsonData = await res.json();
-	console.log(
-		JSON.stringify({ type: "data", url: EXR_ROLE_FILTER_URL, data: jsonData }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "data",
+				url: EXR_ROLE_FILTER_URL,
+				data: jsonData,
+			}),
+		);
+	}
 	const data = await RoleAssignFilterDtoSchema.parseAsync(jsonData);
 
 	roleFilterMetaData.FilterRoleId = data.FilterRoleId;
@@ -600,14 +650,16 @@ export async function fetchRoleFilterData(): Promise<
 export async function updateAuOption(
 	request: VanillaOptionPutRequest,
 ): Promise<UpdatedOptions> {
-	console.log(
-		JSON.stringify({
-			type: "request",
-			method: "PUT",
-			url: AU_OPTION_URL,
-			body: request,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "request",
+				method: "PUT",
+				url: AU_OPTION_URL,
+				body: request,
+			}),
+		);
+	}
 	const res = await fetch(AU_OPTION_URL, {
 		method: "PUT",
 		headers: {
@@ -616,21 +668,25 @@ export async function updateAuOption(
 		body: JSON.stringify(request),
 	});
 
-	console.log(
-		JSON.stringify({
-			type: "response",
-			url: AU_OPTION_URL,
-			status: res.status,
-		}),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({
+				type: "response",
+				url: AU_OPTION_URL,
+				status: res.status,
+			}),
+		);
+	}
 
 	if (!res.ok) {
 		throw new Error(`Failed to update AU option: ${res.statusText}`);
 	}
 
 	const jsonData = await res.json();
-	console.log(
-		JSON.stringify({ type: "data", url: AU_OPTION_URL, data: jsonData }),
-	);
+	if (import.meta.env.DEV) {
+		console.log(
+			JSON.stringify({ type: "data", url: AU_OPTION_URL, data: jsonData }),
+		);
+	}
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
