@@ -10,6 +10,7 @@ dependencies:
   - yukieiji/agent-skills-for-exr
   - currents-dev/playwright-best-practices-skill
   - shadcn/ui
+  - GoogleChrome/modern-web-guidance
   mcp: []
 includes: auto
 scripts: {}

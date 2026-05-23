@@ -2,6 +2,16 @@ lockfile_version: '1'
 generated_at: '2026-05-01T19:27:00.856644+00:00'
 apm_version: 0.11.0
 dependencies:
+- repo_url: GoogleChrome/modern-web-guidance
+  host: github.com
+  resolved_commit: 65d7f20ac85517a362107ce89b7be7f905105fd3
+  package_type: marketplace_plugin
+  deployed_files:
+  - .gemini/skills/chrome-extensions
+  - .gemini/skills/modern-web-guidance
+  - .github/skills/chrome-extensions
+  - .github/skills/modern-web-guidance
+  content_hash: sha256:53991e9dd2eb953a87676fdabd4c4413f771302c1e7be281af4d24abd7eccbbd
 - repo_url: anthropics/skills
   host: github.com
   resolved_commit: 5128e1865d670f5d6c9cef000e6dfc4e951fb5b9
