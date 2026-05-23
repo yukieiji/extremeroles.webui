@@ -32,15 +32,13 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 		highlightedAuOptionId: null,
 		auValue: {},
 		setSelectedAuTabId: (id: number) => {
-			if (import.meta.env.DEV) {
-				console.log(
-					JSON.stringify({
-						type: "user_action",
-						action: "setSelectedAuTabId",
-						payload: { id },
-					}),
-				);
-			}
+			console.log(
+				JSON.stringify({
+					type: "user_action",
+					action: "setSelectedAuTabId",
+					payload: { id },
+				}),
+			);
 			set({ selectedAuTabId: id });
 		},
 		setIsAuTabPending: (isPending: boolean) => {
@@ -56,15 +54,13 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 			set({ highlightedAuOptionId: id });
 		},
 		toggleAuCategory: (categoryId) => {
-			if (import.meta.env.DEV) {
-				console.log(
-					JSON.stringify({
-						type: "user_action",
-						action: "toggleAuCategory",
-						payload: { categoryId },
-					}),
-				);
-			}
+			console.log(
+				JSON.stringify({
+					type: "user_action",
+					action: "toggleAuCategory",
+					payload: { categoryId },
+				}),
+			);
 			set((state) => {
 				const next = { ...state.openedAuCategoryIds };
 				next[categoryId] = !next[categoryId];
