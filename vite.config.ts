@@ -10,7 +10,7 @@ import tailwindcss from '@tailwindcss/vite'
 const port = process.env.VITE_USE_MOCK ? 67700 : 57700
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -53,4 +53,19 @@ export default defineConfig({
     svgLoader(),
     babel({ presets: [reactCompilerPreset()] })
   ],
-})
+  build: {
+    rolldownOptions: {
+      output: {
+        minify:
+          mode === 'production'
+            ? {
+                compress: {
+                  dropConsole: true,
+                  dropDebugger: true,
+                },
+              }
+            : undefined,
+      },
+    },
+  },
+}))

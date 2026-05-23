@@ -59,6 +59,13 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		presetNames: loadPresetNamesFromLocalStorage(),
 		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: ExRTabId) => {
+			console.log(
+				JSON.stringify({
+					type: "user_action",
+					action: "setSelectedExRTabId",
+					payload: { id },
+				}),
+			);
 			set({ selectedExRTabId: id });
 		},
 		setIsExRTabPending: (isPending: boolean) => {
@@ -74,6 +81,13 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 			});
 		},
 		toggleExRCategory: (categoryId: number) => {
+			console.log(
+				JSON.stringify({
+					type: "user_action",
+					action: "toggleExRCategory",
+					payload: { categoryId },
+				}),
+			);
 			set((state) => {
 				return {
 					openedExRCategoryIds: {
