@@ -115,7 +115,10 @@ export function RightSidePanelSummary() {
 	}, [getVanillaRoleData]);
 
 	return (
-		<div className="flex flex-col gap-1 p-3 border-b border-gray-200 bg-gray-50">
+		<div
+			className="flex flex-col gap-1 p-3 border-b border-gray-200 bg-gray-50"
+			data-testid="right-panel-summary"
+		>
 			<ViewerOptionRow
 				title="プリセット"
 				value={presetName}
@@ -161,6 +164,7 @@ export function RightSidePanelSummary() {
 					role && (
 						<ViewerOptionRow
 							key={role.name}
+							data-testid="vanilla-role-summary"
 							title={role.name}
 							value={role.display}
 							onDoubleClick={() => navigateAu(role.tabId, 0, role.chanceId)}

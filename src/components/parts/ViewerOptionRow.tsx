@@ -19,13 +19,16 @@ export function ViewerOptionRow({
 	onDoubleClick,
 	depth = 0,
 	indentMultiplier = 0.5,
-}: ViewerOptionRowProps) {
+	...props
+}: ViewerOptionRowProps &
+	Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title" | "value">) {
 	const paddingLeft = calculateIndentation(depth, indentMultiplier, 0.5);
 
 	return (
 		<button
 			type="button"
 			onDoubleClick={onDoubleClick}
+			{...props}
 			className="w-full flex justify-between items-center py-1 pr-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2 group"
 			style={{ paddingLeft }}
 			title={VIEWER_ROW_TITLE}

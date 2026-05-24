@@ -20,9 +20,11 @@ test.describe("Au Role Viewer in Right Panel", () => {
 
 		// 2. 役職の内容を確認 (バニラ役職はSummaryに移動した)
 		// モックデータでは「シェイプシフター」が有効なはず
-		const roleRow = rightPanel.getByRole("button", {
-			name: /シェイプシフター/,
-		});
+		const roleRow = rightPanel
+			.getByTestId("right-panel-summary")
+			.getByRole("button", {
+				name: /シェイプシフター/,
+			});
 		await expect(roleRow).toBeVisible({ timeout: 10000 });
 		await expect(roleRow).toContainText("シェイプシフター");
 		// Summaryでは "Count - Chance%" 形式

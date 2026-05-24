@@ -84,7 +84,13 @@ test.describe("Au Option Interactions", () => {
 	}) => {
 		await page.getByRole("tab", { name: "1", exact: true }).click();
 
-		const category = page.getByTestId("category-list").locator("> div").first();
+		// Find a non-vanilla role that is not hidden (index 6 onwards in Tab 1 should be safe if mock data follows usual pattern)
+		// Or just find the first visible category in the list
+		const category = page
+			.getByTestId("category-list")
+			.locator("> div")
+			.filter({ has: page.getByTestId("spawn-rate-control") })
+			.first();
 		const chanceControl = category.getByTestId("spawn-rate-control");
 		const countControl = category.getByTestId("spawn-count-control");
 
