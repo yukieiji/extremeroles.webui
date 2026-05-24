@@ -29,8 +29,9 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 			}
 			return uniqueOptions.filter((uniqueId) => {
 				return (
-					!(MOVED_EXR_OPTION_UNIQUE_IDS as readonly number[]).includes(uniqueId) &&
-					state.isExROptionActive[uniqueId]
+					!(MOVED_EXR_OPTION_UNIQUE_IDS as readonly number[]).includes(
+						uniqueId,
+					) && state.isExROptionActive[uniqueId]
 				);
 			});
 		}),

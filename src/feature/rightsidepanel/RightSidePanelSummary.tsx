@@ -20,7 +20,7 @@ import {
 	EXR_NEUTRAL_MIN_ID,
 	PRESET_OPTION_UNIQUE_ID,
 } from "@/logics/optionUtils";
-import { type UniqueOptionId } from "@/type";
+import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
 export function RightSidePanelSummary() {

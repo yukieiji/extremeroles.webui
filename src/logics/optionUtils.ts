@@ -1,4 +1,10 @@
-import { type AuOptionId, type ExRTabId, OptionValueType, type OptionData, type UniqueOptionId } from "../type";
+import {
+	type AuOptionId,
+	type ExRTabId,
+	type OptionData,
+	OptionValueType,
+	type UniqueOptionId,
+} from "../type";
 import { exrOptionMetaData } from "./api";
 
 const TAB_ID_MULTIPLIER = 1_000_000_000_000;
