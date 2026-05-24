@@ -96,25 +96,27 @@ function MainContent() {
 			data-testid="main-content-section"
 			className="flex flex-col gap-4 transition-opacity duration-200 h-full overflow-hidden"
 		>
-			<div className="flex items-center gap-4 p-4 border-b border-gray-700/50">
-				<div className="flex items-center gap-5 flex-1 min-w-0">
-					<h2 className="text-2xl font-bold whitespace-nowrap">
-						{titleMap[selectedTab]}
-					</h2>
-					<OptionSearchBar />
-					{selectedTab === "ExR" && (
-						<Suspense
-							fallback={
-								<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />
-							}
-						>
-							<PresetSelectorContainer />
-						</Suspense>
-					)}
-					{isSidebarPending && (
-						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-					)}
-				</div>
+			<div className="flex items-center gap-4 p-4 border-b border-gray-700/50 min-w-0">
+				<h2 className="text-2xl font-bold shrink-0">{titleMap[selectedTab]}</h2>
+
+				{selectedTab === "ExR" && (
+					<Suspense
+						fallback={
+							<div className="w-48 h-8 bg-gray-700 animate-pulse rounded shrink-0" />
+						}
+					>
+						<PresetSelectorContainer />
+					</Suspense>
+				)}
+
+				<OptionSearchBar />
+
+				{isSidebarPending && (
+					<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin shrink-0"></div>
+				)}
+
+				<div className="flex-1" />
+
 				<ImportButton onImport={handleImport} />
 				<ExportButton onClick={exporter} />
 				<SyncButton onClick={syncer} />

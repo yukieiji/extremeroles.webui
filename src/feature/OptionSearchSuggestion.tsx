@@ -76,8 +76,8 @@ export function OptionSearchSuggestion() {
 
 	return (
 		<Select onValueChange={onSelect}>
-			<SelectTrigger className="w-[180px]">
-				<SelectValue placeholder="検索結果から選択" />
+			<SelectTrigger className="w-32">
+				<SelectValue placeholder="結果" />
 			</SelectTrigger>
 			<SelectContent>
 				{filteredItems.slice(0, 20).map((item) => {
