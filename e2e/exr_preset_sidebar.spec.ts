@@ -38,8 +38,8 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	await exrSettingsTitle.scrollIntoViewIfNeeded();
 
 	// プリセット名が表示されていることを確認。モックデータでは初期値 "1"
-	// ViewerOptionRow はボタンとして実装されている
-	const presetRow = page.getByRole("button", { name: "使用するプリセット" });
+	// Summaryに移動したので、名前が変わっている
+	const presetRow = page.getByRole("button", { name: /プリセット/ });
 	await expect(presetRow).toBeVisible();
 
 	// 3. ダブルクリックでナビゲーションを確認
@@ -90,7 +90,7 @@ test("Updating preset name reflects in right sidebar", async ({ page }) => {
 
 	// 変更後の名前が表示されていることを確認
 	const presetRow = page.getByRole("button", {
-		name: "使用するプリセット New Custom Preset",
+		name: /プリセット New Custom Preset/,
 	});
 	await expect(presetRow).toBeVisible();
 });

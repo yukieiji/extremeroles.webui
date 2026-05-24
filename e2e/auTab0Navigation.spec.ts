@@ -44,10 +44,11 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 			await imposterCategory.click();
 		}
 
-		// テキストとタイトルの組み合わせで特定 (右パネル内)
+		// Summaryに移動したので、タイトルの検索方法が変わる可能性がある。
+		// RightSidePanelSummary内では ViewerOptionRow を使用している。
 		const impCountSetting = rightPanel
-			.getByTitle("ダブルクリックで設定場所へ移動")
-			.filter({ hasText: "インポスター数" });
+			.getByRole("button", { name: /インポスター人数/ });
+
 		// スクロールが必要な場合がある
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await expect(impCountSetting).toBeVisible({ timeout: 15000 });
