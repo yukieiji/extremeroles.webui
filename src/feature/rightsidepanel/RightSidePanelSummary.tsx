@@ -19,6 +19,7 @@ import {
 	EXR_NEUTRAL_MAX_ID,
 	EXR_NEUTRAL_MIN_ID,
 	PRESET_OPTION_UNIQUE_ID,
+	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
@@ -107,7 +108,7 @@ export function RightSidePanelSummary() {
 	);
 
 	const vanillaRoles = useMemo(() => {
-		const roles = [5, 6, 7, 8, 9, 10, 11, 12, 13]
+		const roles = (VANILLA_ROLE_CATEGORY_IDS as readonly number[])
 			.map(getVanillaRoleData)
 			.filter(Boolean);
 		return roles;

@@ -2,6 +2,7 @@ import { useShallow } from "zustand/react/shallow";
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { auOptionMetaData } from "@/logics/api";
+import { VANILLA_ROLE_CATEGORY_IDS } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
 import { AuRoleViewerRow } from "./AuRoleViewerRow";
 
@@ -34,7 +35,11 @@ export function AuRoleViewerSection({
 						}
 
 						// 科学者～バイパー（バニラ役職）はサマリーに表示するため、ここでは除外する
-						if (categoryId >= 5 && categoryId <= 13) {
+						if (
+							(VANILLA_ROLE_CATEGORY_IDS as readonly number[]).includes(
+								categoryId,
+							)
+						) {
 							return false;
 						}
 

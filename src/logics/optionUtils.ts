@@ -84,6 +84,10 @@ export const EXR_LIBERAL_MAX_ID = getUniqueOptionId(0, 5, 7);
 export const EXR_MILITANT_MIN_ID = getUniqueOptionId(0, 7, 22);
 export const EXR_MILITANT_MAX_ID = getUniqueOptionId(0, 7, 23);
 
+export const VANILLA_ROLE_CATEGORY_IDS = [
+	5, 6, 7, 8, 9, 10, 11, 12, 13,
+] as const;
+
 // Summaryに移動したオプションのリスト
 export const MOVED_EXR_OPTION_UNIQUE_IDS = [
 	PRESET_OPTION_UNIQUE_ID,
