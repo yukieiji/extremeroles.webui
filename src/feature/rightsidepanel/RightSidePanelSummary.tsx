@@ -1,8 +1,15 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
-import { useAuOptionNavigationInline, useExROptionNavigationInline } from "@/hooks/useOptionNavigation";
+import {
+	useAuOptionNavigationInline,
+	useExROptionNavigationInline,
+} from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
-import { getAuOptionId, getUniqueOptionId, PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
+import {
+	getAuOptionId,
+	getUniqueOptionId,
+	PRESET_OPTION_UNIQUE_ID,
+} from "@/logics/optionUtils";
 import { OptionValueType } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -16,7 +23,9 @@ export function RightSidePanelSummary() {
 	// 1. Preset
 	const presetOption = exrValue[PRESET_OPTION_UNIQUE_ID];
 	const presetSelection = presetOption?.selection ?? 0;
-	const presetName = presetNames[presetSelection] ?? String(presetOption?.values[presetSelection] ?? "");
+	const presetName =
+		presetNames[presetSelection] ??
+		String(presetOption?.values[presetSelection] ?? "");
 
 	// 2. Map
 	const mapOptionId = getAuOptionId(1, OptionValueType.Byte);
@@ -26,18 +35,26 @@ export function RightSidePanelSummary() {
 	// 3. Impostor Count
 	const impCountOptionId = getAuOptionId(1, OptionValueType.Int);
 	const impCountMeta = auOptionMetaData.options[impCountOptionId];
-	const impCountValue = impCountMeta?.range[auValue[impCountOptionId] ?? 0] ?? "";
+	const impCountValue =
+		impCountMeta?.range[auValue[impCountOptionId] ?? 0] ?? "";
 
 	// Helper for ExR Min-Max
-	const getExRMinMax = (minId: number, maxId: number, catId: number, tabId = 0) => {
+	const getExRMinMax = (
+		minId: number,
+		maxId: number,
+		catId: number,
+		tabId = 0,
+	) => {
 		const minUniqueId = getUniqueOptionId(tabId, catId, minId);
 		const maxUniqueId = getUniqueOptionId(tabId, catId, maxId);
-		const minVal = exrValue[minUniqueId]?.values[exrValue[minUniqueId]?.selection ?? 0] ?? 0;
-		const maxVal = exrValue[maxUniqueId]?.values[exrValue[maxUniqueId]?.selection ?? 0] ?? 0;
+		const minVal =
+			exrValue[minUniqueId]?.values[exrValue[minUniqueId]?.selection ?? 0] ?? 0;
+		const maxVal =
+			exrValue[maxUniqueId]?.values[exrValue[maxUniqueId]?.selection ?? 0] ?? 0;
 		return {
 			display: `${minVal} - ${maxVal}`,
 			minUniqueId,
-			maxUniqueId
+			maxUniqueId,
 		};
 	};
 
@@ -57,31 +74,40 @@ export function RightSidePanelSummary() {
 	const neutralRoles = getExRMinMax(2, 3, 5);
 
 	// 9. Vanilla Roles
-	const getVanillaRoleData = (catId: number) => {
-		const catMeta = auOptionMetaData.categoryMetaData[catId];
-		if (!catMeta) return null;
-		const chanceId = catMeta.options[0];
-		const maxCountId = catMeta.options[1];
-		const chanceMeta = auOptionMetaData.options[chanceId];
-		const maxCountMeta = auOptionMetaData.options[maxCountId];
+	const getVanillaRoleData = useCallback(
+		(catId: number) => {
+			const catMeta = auOptionMetaData.categoryMetaData[catId];
+			if (!catMeta) {
+				return null;
+			}
+			const chanceId = catMeta.options[0];
+			const maxCountId = catMeta.options[1];
+			const chanceMeta = auOptionMetaData.options[chanceId];
+			const maxCountMeta = auOptionMetaData.options[maxCountId];
 
-		const chance = chanceMeta?.range[auValue[chanceId] ?? 0] ?? 0;
-		const maxCount = maxCountMeta?.range[auValue[maxCountId] ?? 0] ?? 0;
+			const chance = chanceMeta?.range[auValue[chanceId] ?? 0] ?? 0;
+			const maxCount = maxCountMeta?.range[auValue[maxCountId] ?? 0] ?? 0;
 
-		if (Number(chance) === 0 || Number(maxCount) === 0) return null;
+			if (Number(chance) === 0 || Number(maxCount) === 0) {
+				return null;
+			}
 
-		return {
-			name: catMeta.name,
-			display: `${maxCount} - ${chance}%`,
-			chanceId,
-			tabId: catId >= 5 && catId <= 10 ? 1 : 2 // Crew or Impostor tab
-		};
-	};
+			return {
+				name: catMeta.name,
+				display: `${maxCount} - ${chance}%`,
+				chanceId,
+				tabId: catId >= 5 && catId <= 10 ? 1 : 2, // Crew or Impostor tab
+			};
+		},
+		[auValue],
+	);
 
 	const vanillaRoles = useMemo(() => {
-		const roles = [5, 6, 7, 8, 9, 10, 11, 12, 13].map(getVanillaRoleData).filter(Boolean);
+		const roles = [5, 6, 7, 8, 9, 10, 11, 12, 13]
+			.map(getVanillaRoleData)
+			.filter(Boolean);
 		return roles;
-	}, [auValue]);
+	}, [getVanillaRoleData]);
 
 	return (
 		<div className="flex flex-col gap-1 p-3 border-b border-gray-200 bg-gray-50">
@@ -125,16 +151,17 @@ export function RightSidePanelSummary() {
 				value={neutralRoles.display}
 				onDoubleClick={() => navigateExR(neutralRoles.minUniqueId)}
 			/>
-			{vanillaRoles.map((role) => (
-				role && (
-					<ViewerOptionRow
-						key={role.name}
-						title={role.name}
-						value={role.display}
-						onDoubleClick={() => navigateAu(role.tabId, 0, role.chanceId)}
-					/>
-				)
-			))}
+			{vanillaRoles.map(
+				(role) =>
+					role && (
+						<ViewerOptionRow
+							key={role.name}
+							title={role.name}
+							value={role.display}
+							onDoubleClick={() => navigateAu(role.tabId, 0, role.chanceId)}
+						/>
+					),
+			)}
 		</div>
 	);
 }

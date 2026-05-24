@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuTab0GeneralCategory } from "@/feature/rightsidepanel/AuTab0GeneralCategory";
 import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
@@ -63,7 +63,7 @@ describe("AuTab0GeneralCategory", () => {
 			options: [],
 		};
 
-		const toggleSpy = vi.spyOn(useStore.getState(), "toggleAuTab0Category");
+		const _toggleSpy = vi.spyOn(useStore.getState(), "toggleAuTab0Category");
 
 		render(<AuTab0GeneralCategory categoryId={categoryId} />);
 

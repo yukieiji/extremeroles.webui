@@ -29,7 +29,9 @@ export function AuTab0GeneralCategory({
 	}
 
 	const impCountOptionId = getAuOptionId(1, OptionValueType.Int);
-	const filteredOptions = categoryMeta.options.filter(id => id !== impCountOptionId);
+	const filteredOptions = categoryMeta.options.filter(
+		(id) => id !== impCountOptionId,
+	);
 
 	if (filteredOptions.length === 0) {
 		return null;

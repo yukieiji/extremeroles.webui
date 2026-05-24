@@ -34,28 +34,28 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 				<div className="flex-1 overflow-y-scroll">
 					<RightSidePanelSummary />
 					<div className="p-3">
-					<ViewerGroupAccordion
-						title={SETTING_VALUES_TITLE}
-						isOpen={isSettingsOpen}
-						onToggle={toggleSettings}
-					>
-						<RightPanelGroupColumnLayout>
-							<ViewerGroupAccordion
-								title={AU_SETTINGS_TITLE}
-								isOpen={isAuSettingsOpen}
-								onToggle={toggleAuSettings}
-							>
-								<AuOptionViewer />
-							</ViewerGroupAccordion>
-							<ViewerGroupAccordion
-								title={EXR_SETTINGS_TITLE}
-								isOpen={isExrSettingsOpen}
-								onToggle={toggleExrSettings}
-							>
-								<ExROptionViewer />
-							</ViewerGroupAccordion>
-						</RightPanelGroupColumnLayout>
-					</ViewerGroupAccordion>
+						<ViewerGroupAccordion
+							title={SETTING_VALUES_TITLE}
+							isOpen={isSettingsOpen}
+							onToggle={toggleSettings}
+						>
+							<RightPanelGroupColumnLayout>
+								<ViewerGroupAccordion
+									title={AU_SETTINGS_TITLE}
+									isOpen={isAuSettingsOpen}
+									onToggle={toggleAuSettings}
+								>
+									<AuOptionViewer />
+								</ViewerGroupAccordion>
+								<ViewerGroupAccordion
+									title={EXR_SETTINGS_TITLE}
+									isOpen={isExrSettingsOpen}
+									onToggle={toggleExrSettings}
+								>
+									<ExROptionViewer />
+								</ViewerGroupAccordion>
+							</RightPanelGroupColumnLayout>
+						</ViewerGroupAccordion>
 					</div>
 				</div>
 			</div>
