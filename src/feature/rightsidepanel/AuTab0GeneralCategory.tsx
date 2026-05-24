@@ -1,8 +1,7 @@
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { auOptionMetaData } from "@/logics/api";
-import { getAuOptionId } from "@/logics/optionUtils";
-import { OptionValueType } from "@/type";
+import { AU_IMPOSTOR_COUNT_OPTION_ID } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
 
@@ -28,9 +27,8 @@ export function AuTab0GeneralCategory({
 		return null;
 	}
 
-	const impCountOptionId = getAuOptionId(1, OptionValueType.Int);
 	const filteredOptions = categoryMeta.options.filter(
-		(id) => id !== impCountOptionId,
+		(id) => id !== AU_IMPOSTOR_COUNT_OPTION_ID,
 	);
 
 	if (filteredOptions.length === 0) {

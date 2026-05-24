@@ -6,11 +6,21 @@ import {
 } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import {
-	getAuOptionId,
-	getUniqueOptionId,
+	AU_IMPOSTOR_COUNT_OPTION_ID,
+	AU_MAP_OPTION_ID,
+	EXR_CREW_MAX_ID,
+	EXR_CREW_MIN_ID,
+	EXR_IMPOSTOR_MAX_ID,
+	EXR_IMPOSTOR_MIN_ID,
+	EXR_LIBERAL_MAX_ID,
+	EXR_LIBERAL_MIN_ID,
+	EXR_MILITANT_MAX_ID,
+	EXR_MILITANT_MIN_ID,
+	EXR_NEUTRAL_MAX_ID,
+	EXR_NEUTRAL_MIN_ID,
 	PRESET_OPTION_UNIQUE_ID,
 } from "@/logics/optionUtils";
-import { OptionValueType } from "@/type";
+import { type UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
 export function RightSidePanelSummary() {
@@ -28,25 +38,19 @@ export function RightSidePanelSummary() {
 		String(presetOption?.values[presetSelection] ?? "");
 
 	// 2. Map
-	const mapOptionId = getAuOptionId(1, OptionValueType.Byte);
-	const mapMeta = auOptionMetaData.options[mapOptionId];
-	const mapValue = mapMeta?.range[auValue[mapOptionId] ?? 0] ?? "";
+	const mapMeta = auOptionMetaData.options[AU_MAP_OPTION_ID];
+	const mapValue = mapMeta?.range[auValue[AU_MAP_OPTION_ID] ?? 0] ?? "";
 
 	// 3. Impostor Count
-	const impCountOptionId = getAuOptionId(1, OptionValueType.Int);
-	const impCountMeta = auOptionMetaData.options[impCountOptionId];
+	const impCountMeta = auOptionMetaData.options[AU_IMPOSTOR_COUNT_OPTION_ID];
 	const impCountValue =
-		impCountMeta?.range[auValue[impCountOptionId] ?? 0] ?? "";
+		impCountMeta?.range[auValue[AU_IMPOSTOR_COUNT_OPTION_ID] ?? 0] ?? "";
 
 	// Helper for ExR Min-Max
 	const getExRMinMax = (
-		minId: number,
-		maxId: number,
-		catId: number,
-		tabId = 0,
+		minUniqueId: UniqueOptionId,
+		maxUniqueId: UniqueOptionId,
 	) => {
-		const minUniqueId = getUniqueOptionId(tabId, catId, minId);
-		const maxUniqueId = getUniqueOptionId(tabId, catId, maxId);
 		const minVal =
 			exrValue[minUniqueId]?.values[exrValue[minUniqueId]?.selection ?? 0] ?? 0;
 		const maxVal =
@@ -59,19 +63,19 @@ export function RightSidePanelSummary() {
 	};
 
 	// 4. Liberal Count
-	const liberal = getExRMinMax(6, 7, 5);
+	const liberal = getExRMinMax(EXR_LIBERAL_MIN_ID, EXR_LIBERAL_MAX_ID);
 
 	// 5. Militant Count
-	const militant = getExRMinMax(22, 23, 7);
+	const militant = getExRMinMax(EXR_MILITANT_MIN_ID, EXR_MILITANT_MAX_ID);
 
 	// 6. Crew Role Count
-	const crewRoles = getExRMinMax(0, 1, 5);
+	const crewRoles = getExRMinMax(EXR_CREW_MIN_ID, EXR_CREW_MAX_ID);
 
 	// 7. Impostor Role Count
-	const impRoles = getExRMinMax(4, 5, 5);
+	const impRoles = getExRMinMax(EXR_IMPOSTOR_MIN_ID, EXR_IMPOSTOR_MAX_ID);
 
 	// 8. Neutral Role Count
-	const neutralRoles = getExRMinMax(2, 3, 5);
+	const neutralRoles = getExRMinMax(EXR_NEUTRAL_MIN_ID, EXR_NEUTRAL_MAX_ID);
 
 	// 9. Vanilla Roles
 	const getVanillaRoleData = useCallback(
@@ -119,12 +123,12 @@ export function RightSidePanelSummary() {
 			<ViewerOptionRow
 				title="マップ"
 				value={String(mapValue)}
-				onDoubleClick={() => navigateAu(0, 0, mapOptionId)}
+				onDoubleClick={() => navigateAu(0, 0, AU_MAP_OPTION_ID)}
 			/>
 			<ViewerOptionRow
 				title="インポスター人数"
 				value={String(impCountValue)}
-				onDoubleClick={() => navigateAu(0, 1, impCountOptionId)}
+				onDoubleClick={() => navigateAu(0, 1, AU_IMPOSTOR_COUNT_OPTION_ID)}
 			/>
 			<ViewerOptionRow
 				title="リベラル人数"

@@ -3,10 +3,7 @@ import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { exrOptionMetaData } from "@/logics/api";
-import {
-	getUniqueOptionId,
-	PRESET_OPTION_UNIQUE_ID,
-} from "@/logics/optionUtils";
+import { MOVED_EXR_OPTION_UNIQUE_IDS } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
 import { ExROptionItemView } from "./ExROptionItemView";
 
@@ -30,22 +27,9 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 			if (!uniqueOptions) {
 				return [];
 			}
-			const movedOptionIds = [
-				PRESET_OPTION_UNIQUE_ID,
-				getUniqueOptionId(0, 5, 0), // Crew Min
-				getUniqueOptionId(0, 5, 1), // Crew Max
-				getUniqueOptionId(0, 5, 2), // Neutral Min
-				getUniqueOptionId(0, 5, 3), // Neutral Max
-				getUniqueOptionId(0, 5, 4), // Impostor Min
-				getUniqueOptionId(0, 5, 5), // Impostor Max
-				getUniqueOptionId(0, 5, 6), // Liberal Min
-				getUniqueOptionId(0, 5, 7), // Liberal Max
-				getUniqueOptionId(0, 7, 22), // Militant Min
-				getUniqueOptionId(0, 7, 23), // Militant Max
-			];
 			return uniqueOptions.filter((uniqueId) => {
 				return (
-					!movedOptionIds.includes(uniqueId) &&
+					!(MOVED_EXR_OPTION_UNIQUE_IDS as readonly number[]).includes(uniqueId) &&
 					state.isExROptionActive[uniqueId]
 				);
 			});
