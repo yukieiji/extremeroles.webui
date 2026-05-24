@@ -46,8 +46,9 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 
 		// Summaryに移動したので、タイトルの検索方法が変わる可能性がある。
 		// RightSidePanelSummary内では ViewerOptionRow を使用している。
-		const impCountSetting = rightPanel
-			.getByRole("button", { name: /インポスター人数/ });
+		const impCountSetting = rightPanel.getByRole("button", {
+			name: /インポスター人数/,
+		});
 
 		// スクロールが必要な場合がある
 		await impCountSetting.scrollIntoViewIfNeeded();
