@@ -15,7 +15,7 @@ export function OptionSearchBar() {
 	const setQuery = useStore((state) => state.setOptionSearchQuery);
 
 	return (
-		<div className="flex items-center gap-2 flex-1 max-w-md mx-4">
+		<div className="flex items-center gap-2 w-64 shrink-0">
 			<InputGroup className="flex-1">
 				<InputGroupAddon align="inline-start">
 					<Search className="size-4" />
