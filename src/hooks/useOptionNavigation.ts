@@ -12,7 +12,7 @@ export function createAuNavigateId(auOptionId: AuOptionId) {
 }
 
 function useNavigate() {
-	return (navId: string, timeoutFunc: () => void) => {
+	return (navId: string, timeoutFunc?: () => void) => {
 		setTimeout(() => {
 			if (typeof document !== "undefined") {
 				const element = document.getElementById(navId);
@@ -20,7 +20,9 @@ function useNavigate() {
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
 			}
-			setTimeout(timeoutFunc, 2000);
+			if (timeoutFunc) {
+				setTimeout(timeoutFunc, 2000);
+			}
 		}, 100);
 	};
 }
@@ -83,6 +85,44 @@ export function useAuOptionNavigation(
 	};
 
 	return navigateToOption;
+}
+
+export function useAuCategoryNavigationInline() {
+	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
+	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
+	const nav = useNavigate();
+
+	return (tabId: number, categoryId: number) => {
+		const { openedAuCategoryIds } = useStore.getState();
+		setRightPanelOpen(false);
+		setSelectedTab("Au");
+		setSelectedAuTabId(tabId);
+		if (!openedAuCategoryIds[categoryId]) {
+			toggleAuCategory(categoryId);
+		}
+		nav(`au-category-${categoryId}`);
+	};
+}
+
+export function useExRCategoryNavigationInline() {
+	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setSelectedExRTabId = useStore((state) => state.setSelectedExRTabId);
+	const toggleExRCategory = useStore((state) => state.toggleExRCategory);
+	const setRightPanelOpen = useStore((state) => state.setRightPanelOpen);
+	const nav = useNavigate();
+
+	return (tabId: ExRTabId, categoryId: number) => {
+		const { openedExRCategoryIds } = useStore.getState();
+		setRightPanelOpen(false);
+		setSelectedTab("ExR");
+		setSelectedExRTabId(tabId);
+		if (!openedExRCategoryIds[categoryId]) {
+			toggleExRCategory(categoryId);
+		}
+		nav(`exr-category-${categoryId}`);
+	};
 }
 
 export function useAuOptionNavigationInline() {

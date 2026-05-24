@@ -73,6 +73,8 @@ export const ROLE_FILTER_SHORT_LABEL = "R";
 export const ON = "ON";
 export const OFF = "OFF";
 
+export const SEARCH_PLACEHOLDER = "オプションを検索...";
+
 export const ERROR_TITLE = "エラーが発生しました";
 export const ERROR_RETRY_BUTTON = "再試行";
 export const ERROR_DETAIL_LABEL = "エラー詳細:";

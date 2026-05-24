@@ -12,6 +12,7 @@ import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { PresetSelector } from "./feature/exr/PresetSelector";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
+import { OptionSearchBar } from "./feature/OptionSearchBar";
 import { RightSidePanel } from "./feature/rightsidepanel/RightSidePanel";
 import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import {
@@ -100,6 +101,7 @@ function MainContent() {
 					<h2 className="text-2xl font-bold whitespace-nowrap">
 						{titleMap[selectedTab]}
 					</h2>
+					<OptionSearchBar />
 					{selectedTab === "ExR" && (
 						<Suspense
 							fallback={

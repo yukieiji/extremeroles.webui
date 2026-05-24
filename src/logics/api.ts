@@ -69,6 +69,20 @@ export const roleFilterMetaData: RoleFilterMetaData = {
 export const globalSearchItems: SearchItem[] = [];
 
 /**
+ * 検索アイテムをリセットする
+ */
+function resetGlobalSearchItems(mode: "Au" | "ExR") {
+	const items = globalSearchItems.filter((item) => {
+		if (mode === "Au") {
+			return item.info.mode !== "au-opt" && item.info.mode !== "au-cat";
+		}
+		return item.info.mode !== "exr-opt" && item.info.mode !== "exr-cat";
+	});
+	globalSearchItems.length = 0;
+	globalSearchItems.push(...items);
+}
+
+/**
  * ExRオプションのメタデータをリセットする（テスト用）
  */
 export function resetExrOptionMetaData() {
@@ -76,6 +90,7 @@ export function resetExrOptionMetaData() {
 	exrOptionMetaData.categories = {};
 	exrOptionMetaData.options = {};
 	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
+	resetGlobalSearchItems("ExR");
 }
 
 /**
@@ -86,6 +101,7 @@ export function resetAuOptionMetaData() {
 	auOptionMetaData.tabCategoryMap = {};
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
+	resetGlobalSearchItems("Au");
 }
 
 /**
@@ -177,6 +193,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {
+	resetGlobalSearchItems("ExR");
 	console.log(
 		JSON.stringify({ type: "request", method: "GET", url: EXR_OPTION_URL }),
 	);
@@ -222,6 +239,25 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 					exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
 				parentOptionIds: ancestorIds,
 			};
+
+			const contextParts = [exrOptionMetaData.categories[categoryId]?.name];
+			for (const ancestorId of ancestorIds) {
+				const ancestorName =
+					exrOptionMetaData.options[ancestorId]?.metaData.translatedName;
+				if (ancestorName) {
+					contextParts.push(ancestorName);
+				}
+			}
+
+			globalSearchItems.push({
+				id: `exr-opt-${uniqueId}`,
+				term: opt.TranslatedName,
+				context: contextParts.filter(Boolean).join(" > "),
+				info: {
+					mode: "exr-opt",
+					uniqueOptionId: uniqueId,
+				},
+			});
 
 			valueData[uniqueId] = {
 				selection: opt.Selection,
@@ -271,6 +307,15 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				name: category.Name,
 				tabId: tab.Id,
 			};
+			globalSearchItems.push({
+				id: `exr-cat-${category.Id}`,
+				term: category.Name,
+				info: {
+					mode: "exr-cat",
+					tabId: tab.Id,
+					categoryId: category.Id,
+				},
+			});
 			if (tab.Id === ExRTabId.GeneralTab) {
 				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
 				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
@@ -287,6 +332,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 export async function createAuOptionMetaData(): Promise<
 	Record<AuOptionId, number>
 > {
+	resetGlobalSearchItems("Au");
 	console.log(
 		JSON.stringify({ type: "request", method: "GET", url: AU_OPTION_URL }),
 	);
@@ -336,6 +382,17 @@ export async function createAuOptionMetaData(): Promise<
 			options: [],
 		};
 
+		globalSearchItems.push({
+			id: `au-cat-${categoryId}`,
+			term: category.TranslatedTitle,
+			context: `Tab ${currentTab}`,
+			info: {
+				mode: "au-cat",
+				tabId: currentTab,
+				categoryId: categoryId,
+			},
+		});
+
 		for (const opt of category.Options) {
 			const valueType = opt.Info.ValueType;
 			const optionName = opt.Info.OptionName;
@@ -353,6 +410,18 @@ export async function createAuOptionMetaData(): Promise<
 				};
 				initialValueData[chanceId] = Math.floor(roleValue.Chance / 10);
 
+				globalSearchItems.push({
+					id: `au-opt-${chanceId}`,
+					term: `${opt.TranslatedTitle} (Chance)`,
+					context: category.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: chanceId,
+					},
+				});
+
 				// MaxCount
 				const maxCountId = getAuOptionId(
 					optionName,
@@ -366,6 +435,18 @@ export async function createAuOptionMetaData(): Promise<
 					range: Array.from({ length: 16 }, (_, i) => i), // 0～15を1刻みで用意するため
 				};
 				initialValueData[maxCountId] = roleValue.MaxCount;
+
+				globalSearchItems.push({
+					id: `au-opt-${maxCountId}`,
+					term: `${opt.TranslatedTitle} (MaxCount)`,
+					context: category.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: maxCountId,
+					},
+				});
 			} else {
 				const auOptionId = getAuOptionId(optionName, valueType);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(auOptionId);
@@ -391,6 +472,18 @@ export async function createAuOptionMetaData(): Promise<
 					range,
 				};
 				initialValueData[auOptionId] = index;
+
+				globalSearchItems.push({
+					id: `au-opt-${auOptionId}`,
+					term: opt.TranslatedTitle,
+					context: category.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: auOptionId,
+					},
+				});
 			}
 		}
 	}

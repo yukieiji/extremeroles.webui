@@ -518,7 +518,8 @@ export interface AuCategorySearchTargetInfo {
 
 export interface SearchItem {
 	id: string;
-	tearm: string;
+	term: string;
+	context?: string;
 	info:
 		| AuCategorySearchTargetInfo
 		| AuOptionSearchTargetInfo

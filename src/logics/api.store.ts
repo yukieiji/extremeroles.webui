@@ -12,6 +12,7 @@ import {
 	createExROptionMetaData,
 	fetchRoleFilterData,
 	fetchTranslationMetaData,
+	globalSearchItems,
 	updateAuOption,
 	updateExrOption,
 } from "./api";
@@ -192,6 +193,7 @@ export async function refetchAll(): Promise<void> {
 		createAuOptionMetaDataWithStore(),
 		fetchRoleFilterDataWithStore(),
 	]);
+	useStore.getState().setGlobalSearchItems([...globalSearchItems]);
 }
 
 export function getAllOptions(): Promise<void> {
