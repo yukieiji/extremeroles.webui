@@ -33,6 +33,11 @@ export function AuRoleViewerSection({
 							return false;
 						}
 
+						// 科学者～バイパー（バニラ役職）はサマリーに表示するため、ここでは除外する
+						if (categoryId >= 5 && categoryId <= 13) {
+							return false;
+						}
+
 						const chanceOptionId = categoryMeta.options[0];
 						const maxCountOptionId = categoryMeta.options[1];
 
