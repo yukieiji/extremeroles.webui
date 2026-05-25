@@ -36,7 +36,7 @@ export function VanillaRoleSummaryRow({
 				name: catMeta.name,
 				display: `${maxCount} - ${chance}%`,
 				chanceId,
-				tabId: categoryId >= 5 && categoryId <= 10 ? 1 : 2, // Crew or Impostor tab
+				tabId: catMeta.tabId,
 			};
 		}),
 	);

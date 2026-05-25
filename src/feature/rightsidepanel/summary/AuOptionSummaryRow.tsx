@@ -8,16 +8,16 @@ import { useStore } from "@/useStore";
 
 interface AuOptionSummaryRowProps {
 	optionId: AuOptionId;
-	fallbackTitle: string;
-	tabId: number;
-	categoryId: number;
+	fallbackTitle?: string;
+	tabId?: number;
+	categoryId?: number;
 }
 
 export function AuOptionSummaryRow({
 	optionId,
 	fallbackTitle,
-	tabId,
-	categoryId,
+	tabId: propTabId,
+	categoryId: propCategoryId,
 }: AuOptionSummaryRowProps) {
 	const navigateAu = useAuOptionNavigationInline();
 	const value = useStore((state) => {
@@ -25,10 +25,14 @@ export function AuOptionSummaryRow({
 		return String(auOptionMetaData.options[optionId]?.range[selection] ?? "");
 	});
 
+	const meta = auOptionMetaData.options[optionId];
 	const title = useMemo(
-		() => auOptionMetaData.options[optionId]?.title ?? fallbackTitle,
-		[optionId, fallbackTitle],
+		() => meta?.title ?? fallbackTitle ?? "",
+		[meta, fallbackTitle],
 	);
+
+	const tabId = propTabId ?? meta?.tabId ?? 0;
+	const categoryId = propCategoryId ?? meta?.categoryId ?? 0;
 
 	return (
 		<ViewerOptionRow

@@ -29,23 +29,14 @@ export function RightSidePanelSummary() {
 			data-testid="right-panel-summary"
 		>
 			<PresetSummaryRow />
-			<AuOptionSummaryRow
-				optionId={AU_MAP_OPTION_ID}
-				fallbackTitle="マップ"
-				tabId={0}
-				categoryId={0}
-			/>
+			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} fallbackTitle="マップ" />
 			<AuOptionSummaryRow
 				optionId={AU_KILL_COOLDOWN_OPTION_ID}
 				fallbackTitle="キルのクールダウン時間"
-				tabId={0}
-				categoryId={1}
 			/>
 			<AuOptionSummaryRow
 				optionId={AU_IMPOSTOR_COUNT_OPTION_ID}
 				fallbackTitle="インポスター人数"
-				tabId={0}
-				categoryId={1}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_LIBERAL_MIN_ID}

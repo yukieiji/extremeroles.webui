@@ -334,6 +334,7 @@ export async function createAuOptionMetaData(): Promise<
 		auOptionMetaData.categoryMetaData[categoryId] = {
 			name: category.TranslatedTitle,
 			options: [],
+			tabId: currentTab,
 		};
 
 		for (const opt of category.Options) {
@@ -350,6 +351,8 @@ export async function createAuOptionMetaData(): Promise<
 					title: opt.TranslatedTitle,
 					format: opt.TranslatedFormat,
 					range: Array.from({ length: 11 }, (_, i) => i * 10), // 0～100％を10％刻みで用意するため
+					tabId: currentTab,
+					categoryId: categoryId,
 				};
 				initialValueData[chanceId] = Math.floor(roleValue.Chance / 10);
 
@@ -364,6 +367,8 @@ export async function createAuOptionMetaData(): Promise<
 					title: opt.TranslatedTitle,
 					format: opt.TranslatedFormat,
 					range: Array.from({ length: 16 }, (_, i) => i), // 0～15を1刻みで用意するため
+					tabId: currentTab,
+					categoryId: categoryId,
 				};
 				initialValueData[maxCountId] = roleValue.MaxCount;
 			} else {
@@ -389,6 +394,8 @@ export async function createAuOptionMetaData(): Promise<
 					title: opt.TranslatedTitle,
 					format: opt.TranslatedFormat,
 					range,
+					tabId: currentTab,
+					categoryId: categoryId,
 				};
 				initialValueData[auOptionId] = index;
 			}
