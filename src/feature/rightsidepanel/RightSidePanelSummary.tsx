@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
-import type { AuOptionId } from "@/type";
 import {
 	useAuOptionNavigationInline,
 	useExROptionNavigationInline,
@@ -24,7 +23,7 @@ import {
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
-import type { UniqueOptionId } from "@/type";
+import type { AuOptionId, UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
 /**
