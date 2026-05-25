@@ -1,5 +1,6 @@
 import {
 	AU_IMPOSTOR_COUNT_OPTION_ID,
+	AU_KILL_COOLDOWN_OPTION_ID,
 	AU_MAP_OPTION_ID,
 	EXR_CREW_MAX_ID,
 	EXR_CREW_MIN_ID,
@@ -33,6 +34,12 @@ export function RightSidePanelSummary() {
 				fallbackTitle="マップ"
 				tabId={0}
 				categoryId={0}
+			/>
+			<AuOptionSummaryRow
+				optionId={AU_KILL_COOLDOWN_OPTION_ID}
+				fallbackTitle="キルのクールダウン時間"
+				tabId={0}
+				categoryId={1}
 			/>
 			<AuOptionSummaryRow
 				optionId={AU_IMPOSTOR_COUNT_OPTION_ID}

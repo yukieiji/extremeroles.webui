@@ -1,7 +1,10 @@
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { auOptionMetaData } from "@/logics/api";
-import { AU_IMPOSTOR_COUNT_OPTION_ID } from "@/logics/optionUtils";
+import {
+	AU_IMPOSTOR_COUNT_OPTION_ID,
+	AU_KILL_COOLDOWN_OPTION_ID,
+} from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
 
@@ -28,7 +31,8 @@ export function AuTab0GeneralCategory({
 	}
 
 	const filteredOptions = categoryMeta.options.filter(
-		(id) => id !== AU_IMPOSTOR_COUNT_OPTION_ID,
+		(id) =>
+			id !== AU_IMPOSTOR_COUNT_OPTION_ID && id !== AU_KILL_COOLDOWN_OPTION_ID,
 	);
 
 	if (filteredOptions.length === 0) {

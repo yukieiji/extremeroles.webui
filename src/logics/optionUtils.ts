@@ -72,6 +72,10 @@ export const AU_IMPOSTOR_COUNT_OPTION_ID = getAuOptionId(
 	1,
 	OptionValueType.Int,
 );
+export const AU_KILL_COOLDOWN_OPTION_ID = getAuOptionId(
+	1,
+	OptionValueType.Float,
+);
 
 export const EXR_CREW_MIN_ID = getUniqueOptionId(0, 5, 0);
 export const EXR_CREW_MAX_ID = getUniqueOptionId(0, 5, 1);
