@@ -10,7 +10,7 @@ import {
 import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
-import { RightSidePanelSummary } from "./RightSidePanelSummary";
+import { RightSidePanelSummary } from "./summary/RightSidePanelSummary";
 
 interface RightSidePanelBodyProps {
 	children: ReactNode;
