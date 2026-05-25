@@ -26,7 +26,8 @@ export function ExRMinMaxSummaryRow({
 			const maxOption = state.exrValue[maxUniqueId];
 			const minVal = minOption?.values[minOption?.selection ?? 0] ?? 0;
 			const maxVal = maxOption?.values[maxOption?.selection ?? 0] ?? 0;
-			return `${minVal} - ${maxVal}`;
+
+			return minVal === maxVal ? `${minVal}` : `${minVal} - ${maxVal}`;
 		}),
 	);
 

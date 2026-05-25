@@ -50,7 +50,9 @@ export function VanillaRoleSummaryRow({
 			data-testid="vanilla-role-summary"
 			title={<ColoredText text={roleData.name} />}
 			value={roleData.display}
-			onDoubleClick={() => navigateAu(roleData.tabId, 0, roleData.chanceId)}
+			onDoubleClick={() =>
+				navigateAu(roleData.tabId, categoryId, roleData.chanceId)
+			}
 		/>
 	);
 }
