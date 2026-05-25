@@ -39,9 +39,10 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 
 	// プリセット名が表示されていることを確認。モックデータでは初期値 "1"
 	// Summaryに移動したので、名前が変わっている
+	// 翻訳データに基づいているため、正規表現で柔軟にマッチング
 	const presetRow = page
 		.getByTestId("right-panel-summary")
-		.getByRole("button", { name: /プリセット/ });
+		.getByRole("button", { name: /プリセット|Preset/ });
 	await expect(presetRow).toBeVisible();
 
 	// 3. ダブルクリックでナビゲーションを確認
@@ -91,10 +92,11 @@ test("Updating preset name reflects in right sidebar", async ({ page }) => {
 	await exrSettingsTitle.scrollIntoViewIfNeeded();
 
 	// 変更後の名前が表示されていることを確認
+	// 翻訳データに基づいているため、正規表現で柔軟にマッチング
 	const presetRow = page
 		.getByTestId("right-panel-summary")
 		.getByRole("button", {
-			name: /プリセット New Custom Preset/,
+			name: /(プリセット|Preset) New Custom Preset/,
 		});
 	await expect(presetRow).toBeVisible();
 });

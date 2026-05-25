@@ -31,10 +31,11 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 
 		// 3. Tab 0の内容が表示されていることを確認 (インポスター数)
 		// Summaryに移動したので、パネルを開けば直接見えるはず
+		// 翻訳データに基づいているため、正規表現で柔軟にマッチング
 		const impCountSetting = rightPanel
 			.getByTestId("right-panel-summary")
 			.getByRole("button", {
-				name: /インポスター人数/,
+				name: /^(インポスター数|Impostor Count)/,
 			});
 
 		// スクロールが必要な場合がある

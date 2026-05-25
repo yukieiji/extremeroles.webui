@@ -1,10 +1,11 @@
 import { useCallback, useMemo } from "react";
+import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
 import {
 	useAuOptionNavigationInline,
 	useExROptionNavigationInline,
 } from "@/hooks/useOptionNavigation";
-import { auOptionMetaData } from "@/logics/api";
+import { auOptionMetaData, exrOptionMetaData } from "@/logics/api";
 import {
 	AU_IMPOSTOR_COUNT_OPTION_ID,
 	AU_MAP_OPTION_ID,
@@ -18,6 +19,7 @@ import {
 	EXR_MILITANT_MIN_ID,
 	EXR_NEUTRAL_MAX_ID,
 	EXR_NEUTRAL_MIN_ID,
+	getBaseOptionName,
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
@@ -37,26 +39,39 @@ export function RightSidePanelSummary() {
 	const presetName =
 		presetNames[presetSelection] ??
 		String(presetOption?.values[presetSelection] ?? "");
+	const presetTitle =
+		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID]?.metaData
+			.translatedName ?? "プリセット";
 
 	// 2. Map
 	const mapMeta = auOptionMetaData.options[AU_MAP_OPTION_ID];
 	const mapValue = mapMeta?.range[auValue[AU_MAP_OPTION_ID] ?? 0] ?? "";
+	const mapTitle = mapMeta?.title ?? "マップ";
 
 	// 3. Impostor Count
 	const impCountMeta = auOptionMetaData.options[AU_IMPOSTOR_COUNT_OPTION_ID];
 	const impCountValue =
 		impCountMeta?.range[auValue[AU_IMPOSTOR_COUNT_OPTION_ID] ?? 0] ?? "";
+	const impCountTitle = impCountMeta?.title ?? "インポスター人数";
 
 	// Helper for ExR Min-Max
 	const getExRMinMax = (
 		minUniqueId: UniqueOptionId,
 		maxUniqueId: UniqueOptionId,
+		fallbackTitle: string,
 	) => {
-		const minVal =
-			exrValue[minUniqueId]?.values[exrValue[minUniqueId]?.selection ?? 0] ?? 0;
-		const maxVal =
-			exrValue[maxUniqueId]?.values[exrValue[maxUniqueId]?.selection ?? 0] ?? 0;
+		const minOption = exrValue[minUniqueId];
+		const maxOption = exrValue[maxUniqueId];
+		const minVal = minOption?.values[minOption?.selection ?? 0] ?? 0;
+		const maxVal = maxOption?.values[maxOption?.selection ?? 0] ?? 0;
+
+		const minMeta = exrOptionMetaData.options[minUniqueId]?.metaData;
+		const title = minMeta
+			? getBaseOptionName(minMeta.translatedName)
+			: fallbackTitle;
+
 		return {
+			title,
 			display: `${minVal} - ${maxVal}`,
 			minUniqueId,
 			maxUniqueId,
@@ -64,19 +79,39 @@ export function RightSidePanelSummary() {
 	};
 
 	// 4. Liberal Count
-	const liberal = getExRMinMax(EXR_LIBERAL_MIN_ID, EXR_LIBERAL_MAX_ID);
+	const liberal = getExRMinMax(
+		EXR_LIBERAL_MIN_ID,
+		EXR_LIBERAL_MAX_ID,
+		"リベラル人数",
+	);
 
 	// 5. Militant Count
-	const militant = getExRMinMax(EXR_MILITANT_MIN_ID, EXR_MILITANT_MAX_ID);
+	const militant = getExRMinMax(
+		EXR_MILITANT_MIN_ID,
+		EXR_MILITANT_MAX_ID,
+		"ミリタント",
+	);
 
 	// 6. Crew Role Count
-	const crewRoles = getExRMinMax(EXR_CREW_MIN_ID, EXR_CREW_MAX_ID);
+	const crewRoles = getExRMinMax(
+		EXR_CREW_MIN_ID,
+		EXR_CREW_MAX_ID,
+		"クルー陣営役職数",
+	);
 
 	// 7. Impostor Role Count
-	const impRoles = getExRMinMax(EXR_IMPOSTOR_MIN_ID, EXR_IMPOSTOR_MAX_ID);
+	const impRoles = getExRMinMax(
+		EXR_IMPOSTOR_MIN_ID,
+		EXR_IMPOSTOR_MAX_ID,
+		"インポスター陣営役職数",
+	);
 
 	// 8. Neutral Role Count
-	const neutralRoles = getExRMinMax(EXR_NEUTRAL_MIN_ID, EXR_NEUTRAL_MAX_ID);
+	const neutralRoles = getExRMinMax(
+		EXR_NEUTRAL_MIN_ID,
+		EXR_NEUTRAL_MAX_ID,
+		"ニュートラル陣営役職数",
+	);
 
 	// 9. Vanilla Roles
 	const getVanillaRoleData = useCallback(
@@ -120,42 +155,42 @@ export function RightSidePanelSummary() {
 			data-testid="right-panel-summary"
 		>
 			<ViewerOptionRow
-				title="プリセット"
+				title={<ColoredText text={presetTitle} />}
 				value={presetName}
 				onDoubleClick={() => navigateExR(PRESET_OPTION_UNIQUE_ID)}
 			/>
 			<ViewerOptionRow
-				title="マップ"
+				title={<ColoredText text={mapTitle} />}
 				value={String(mapValue)}
 				onDoubleClick={() => navigateAu(0, 0, AU_MAP_OPTION_ID)}
 			/>
 			<ViewerOptionRow
-				title="インポスター人数"
+				title={<ColoredText text={impCountTitle} />}
 				value={String(impCountValue)}
 				onDoubleClick={() => navigateAu(0, 1, AU_IMPOSTOR_COUNT_OPTION_ID)}
 			/>
 			<ViewerOptionRow
-				title="リベラル人数"
+				title={<ColoredText text={liberal.title} />}
 				value={liberal.display}
 				onDoubleClick={() => navigateExR(liberal.minUniqueId)}
 			/>
 			<ViewerOptionRow
-				title="ミリタント"
+				title={<ColoredText text={militant.title} />}
 				value={militant.display}
 				onDoubleClick={() => navigateExR(militant.minUniqueId)}
 			/>
 			<ViewerOptionRow
-				title="クルー陣営役職数"
+				title={<ColoredText text={crewRoles.title} />}
 				value={crewRoles.display}
 				onDoubleClick={() => navigateExR(crewRoles.minUniqueId)}
 			/>
 			<ViewerOptionRow
-				title="インポスター陣営役職数"
+				title={<ColoredText text={impRoles.title} />}
 				value={impRoles.display}
 				onDoubleClick={() => navigateExR(impRoles.minUniqueId)}
 			/>
 			<ViewerOptionRow
-				title="ニュートラル陣営役職数"
+				title={<ColoredText text={neutralRoles.title} />}
 				value={neutralRoles.display}
 				onDoubleClick={() => navigateExR(neutralRoles.minUniqueId)}
 			/>
@@ -165,7 +200,7 @@ export function RightSidePanelSummary() {
 						<ViewerOptionRow
 							key={role.name}
 							data-testid="vanilla-role-summary"
-							title={role.name}
+							title={<ColoredText text={role.name} />}
 							value={role.display}
 							onDoubleClick={() => navigateAu(role.tabId, 0, role.chanceId)}
 						/>
