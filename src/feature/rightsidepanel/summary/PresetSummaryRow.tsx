@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
 import { useExROptionNavigationInline } from "@/hooks/useOptionNavigation";
@@ -8,13 +9,15 @@ import { useStore } from "@/useStore";
 
 export function PresetSummaryRow() {
 	const navigateExR = useExROptionNavigationInline();
-	const presetName = useStore((state) => {
-		const option = state.exrValue[PRESET_OPTION_UNIQUE_ID];
-		const selection = option?.selection ?? 0;
-		return (
-			state.presetNames[selection] ?? String(option?.values[selection] ?? "")
-		);
-	});
+	const presetName = useStore(
+		useShallow((state) => {
+			const option = state.exrValue[PRESET_OPTION_UNIQUE_ID];
+			const selection = option?.selection ?? 0;
+			return (
+				state.presetNames[selection] ?? String(option?.values[selection] ?? "")
+			);
+		}),
+	);
 
 	const presetTitle = useMemo(
 		() =>
