@@ -54,7 +54,7 @@ export function getTabColorStyle(tabId: number, text: string) {
 
 	if (colors.length === 0) {
 		return {
-			borderColor: "", // Use default
+			borderColor: "var(--border)",
 			indicatorColor: "var(--foreground)",
 			isGradient: false,
 		};

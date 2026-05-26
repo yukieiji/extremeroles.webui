@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { LoadingCycle } from "../parts/LoadingCycle";
 
@@ -14,6 +15,8 @@ export function CategoryContainer({
 	isGradient,
 	children,
 }: CategoryContainerProps) {
+	const hasCustomBorder = Boolean(borderColor);
+
 	const borderStyle = isGradient
 		? {
 				backgroundImage:
@@ -23,16 +26,22 @@ export function CategoryContainer({
 				backgroundClip: "padding-box, border-box",
 				border: "2px solid transparent",
 			}
-		: {
-				borderColor: borderColor || "var(--border)",
-				borderWidth: "2px",
-				borderStyle: "solid",
-			};
+		: hasCustomBorder
+			? {
+					borderColor: borderColor,
+					borderWidth: "2px",
+					borderStyle: "solid",
+				}
+			: {};
 
 	return (
 		<div
 			data-testid="category-list"
-			className={`pb-20 flex flex-col relative transition-opacity duration-200 flex-1 overflow-y-auto [scrollbar-gutter:stable] gap-2 *:shrink-0 rounded-xl ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
+			className={cn(
+				"pb-20 flex flex-col relative transition-opacity duration-200 flex-1 overflow-y-auto [scrollbar-gutter:stable] gap-2 *:shrink-0",
+				hasCustomBorder && "rounded-xl",
+				isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100",
+			)}
 			style={borderStyle}
 		>
 			{isPending && (
