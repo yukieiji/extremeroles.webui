@@ -8,9 +8,13 @@ import { useStore } from "@/useStore";
 
 interface AuOptionSummaryRowProps {
 	optionId: AuOptionId;
+	fallbackTitle: string;
 }
 
-export function AuOptionSummaryRow({ optionId }: AuOptionSummaryRowProps) {
+export function AuOptionSummaryRow({
+	optionId,
+	fallbackTitle,
+}: AuOptionSummaryRowProps) {
 	const navigateAu = useAuOptionNavigationInline();
 	const value = useStore((state) => {
 		const selection = state.auValue[optionId] ?? 0;
@@ -18,7 +22,10 @@ export function AuOptionSummaryRow({ optionId }: AuOptionSummaryRowProps) {
 	});
 
 	const meta = auOptionMetaData.options[optionId];
-	const title = useMemo(() => meta?.title ?? "", [meta]);
+	const title = useMemo(
+		() => meta?.title ?? fallbackTitle,
+		[meta, fallbackTitle],
+	);
 
 	if (!meta) {
 		return null;
