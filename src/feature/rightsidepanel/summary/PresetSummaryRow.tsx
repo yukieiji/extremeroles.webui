@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
@@ -19,12 +18,9 @@ export function PresetSummaryRow() {
 		}),
 	);
 
-	const presetTitle = useMemo(
-		() =>
-			exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID]?.metaData
-				.translatedName ?? "プリセット",
-		[],
-	);
+	const presetTitle =
+		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID]?.metaData
+			.translatedName ?? "プリセット";
 
 	return (
 		<ViewerOptionRow

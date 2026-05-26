@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
@@ -31,10 +30,10 @@ export function ExRMinMaxSummaryRow({
 		}),
 	);
 
-	const title = useMemo(() => {
-		const minMeta = exrOptionMetaData.options[minUniqueId]?.metaData;
-		return minMeta ? getBaseOptionName(minMeta.translatedName) : fallbackTitle;
-	}, [minUniqueId, fallbackTitle]);
+	const minMeta = exrOptionMetaData.options[minUniqueId]?.metaData;
+	const title = minMeta
+		? getBaseOptionName(minMeta.translatedName)
+		: fallbackTitle;
 
 	return (
 		<ViewerOptionRow
