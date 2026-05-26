@@ -6,6 +6,7 @@ interface TabButtonContainerProps<T extends Key | undefined | null> {
 	tabs: T[];
 	onValueChange: (value: string) => void;
 	getValue: (tab: T, index: number) => string;
+	getTriggerProps?: (tab: T, index: number) => Record<string, any>;
 	children: (tab: T) => ReactNode;
 }
 
@@ -14,15 +15,17 @@ export function TabButtonContainer<T extends Key | undefined | null>({
 	tabs,
 	onValueChange,
 	getValue,
+	getTriggerProps,
 	children,
 }: TabButtonContainerProps<T>) {
 	return (
 		<Tabs value={value} onValueChange={onValueChange} className="w-full">
 			<TabsList className="w-full grid grid-cols-4 group-data-horizontal/tabs:h-auto min-h-10">
 				{tabs.map((tab, index) => {
-					const value = getValue(tab, index);
+					const val = getValue(tab, index);
+					const extraProps = getTriggerProps?.(tab, index) ?? {};
 					return (
-						<TabsTrigger key={tab} value={value}>
+						<TabsTrigger key={tab} value={val} {...extraProps}>
 							{children(tab)}
 						</TabsTrigger>
 					);

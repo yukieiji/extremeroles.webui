@@ -1,7 +1,7 @@
 import { useEffect, useTransition } from "react";
-import { ColoredText } from "@/components/parts/ColoredText";
 import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
 import { exrOptionMetaData } from "@/logics/api";
+import { getPlainText, getTabColorStyle } from "@/logics/colorUtils";
 import type { ExRTabId } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -45,12 +45,19 @@ export function ExRTabSelector() {
 			tabs={Object.keys(exrOptionMetaData.tabs)}
 			onValueChange={handleValueChange}
 			getValue={(t, _) => t}
+			getTriggerProps={(t) => {
+				const castedTabId = Number(t) as ExRTabId;
+				const tabName = exrOptionMetaData.tabs[castedTabId]?.name ?? "";
+				const colorStyle = getTabColorStyle(castedTabId, tabName);
+				return {
+					"data-indicator-color": colorStyle.indicatorColor,
+				};
+			}}
 		>
 			{(t) => {
 				const castedTabId = Number(t) as ExRTabId;
-				return (
-					<ColoredText text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""} />
-				);
+				const tabName = exrOptionMetaData.tabs[castedTabId]?.name ?? "";
+				return getPlainText(tabName);
 			}}
 		</TabButtonContainer>
 	);
