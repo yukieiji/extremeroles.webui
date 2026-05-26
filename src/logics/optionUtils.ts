@@ -32,7 +32,11 @@ export function getAuOptionId(
 	return (optionName * 10000 + valueType * 100 + prefix) as AuOptionId;
 }
 
-export function parseAuOptionId(id: number) {
+export function parseAuOptionId(id: AuOptionId): {
+	optionName: number;
+	valueType: number;
+	prefix: number;
+} {
 	const prefix = id % 100;
 	const valueType = Math.floor(id / 100) % 100;
 	const optionName = Math.floor(id / 10000);
