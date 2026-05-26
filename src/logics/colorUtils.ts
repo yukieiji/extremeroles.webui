@@ -42,9 +42,9 @@ export function darkenColor(hex: string, amount: number): string {
 }
 
 /**
- * タブIDとテキストから適用すべきボーダー/インジケーターのスタイルを生成します。
+ * タブIDとテキストから適用すべき色の情報を取得します。
  */
-export function getTabColorStyle(tabId: number, text: string) {
+export function getTabColors(tabId: number, text: string): string[] {
 	const isGhostTab = tabId >= 5 && tabId <= 7;
 	let colors = extractColors(text);
 
@@ -52,28 +52,31 @@ export function getTabColorStyle(tabId: number, text: string) {
 		colors = colors.map((c) => darkenColor(c, 0.5));
 	}
 
-	if (colors.length === 0) {
-		return {
-			borderColor: "var(--border)",
-			indicatorColor: "var(--foreground)",
-			isGradient: false,
-		};
-	}
+	return colors;
+}
 
-	if (tabId === 4 && colors.length > 1) {
-		// CombinationTab
-		const gradient = `linear-gradient(to right, ${colors.join(", ")})`;
-		return {
-			borderColor: gradient,
-			indicatorColor: gradient,
-			isGradient: true,
-		};
+/**
+ * 色の配列からインジケーター用のCSS値を生成します。
+ */
+export function getIndicatorColor(colors?: string[]): string {
+	if (!colors || colors.length === 0) {
+		return "var(--foreground)";
 	}
+	if (colors.length > 1) {
+		return `linear-gradient(to right, ${colors.join(", ")})`;
+	}
+	return colors[0];
+}
 
-	const color = colors[0];
-	return {
-		borderColor: color,
-		indicatorColor: color,
-		isGradient: false,
-	};
+/**
+ * 色の配列からボーダー用のCSS値を生成します。
+ */
+export function getBorderColor(colors?: string[]): string {
+	if (!colors || colors.length === 0) {
+		return "var(--border)";
+	}
+	if (colors.length > 1) {
+		return `linear-gradient(to right, ${colors.join(", ")})`;
+	}
+	return colors[0];
 }

@@ -28,7 +28,7 @@ import {
 	UpdatedOptionsSchema,
 } from "../type";
 
-import { getPlainText, getTabColorStyle } from "./colorUtils";
+import { getPlainText, getTabColors } from "./colorUtils";
 import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
 
 /**
@@ -263,13 +263,10 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 	};
 
 	for (const tab of data) {
-		const colorStyle = getTabColorStyle(tab.Id, tab.Name);
 		exrOptionMetaData.tabs[tab.Id] = {
 			name: tab.Name,
 			displayName: getPlainText(tab.Name),
-			borderColor: colorStyle.borderColor,
-			indicatorColor: colorStyle.indicatorColor,
-			isGradient: colorStyle.isGradient,
+			colors: getTabColors(tab.Id, tab.Name),
 			categoryIds: tab.Categories.map((c) => c.Id),
 		};
 		for (const category of tab.Categories) {

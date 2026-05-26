@@ -1,6 +1,7 @@
 import { useEffect, useTransition } from "react";
 import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
 import { exrOptionMetaData } from "@/logics/api";
+import { getIndicatorColor } from "@/logics/colorUtils";
 import type { ExRTabId } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -48,7 +49,7 @@ export function ExRTabSelector() {
 				const castedTabId = Number(t) as ExRTabId;
 				const tabMeta = exrOptionMetaData.tabs[castedTabId];
 				return {
-					"data-indicator-color": tabMeta?.indicatorColor,
+					"data-indicator-color": getIndicatorColor(tabMeta?.colors),
 				};
 			}}
 		>

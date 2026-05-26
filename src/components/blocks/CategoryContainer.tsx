@@ -1,21 +1,22 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { getBorderColor } from "@/logics/colorUtils";
 import { LoadingCycle } from "../parts/LoadingCycle";
 
 interface CategoryContainerProps {
 	isPending: boolean;
-	borderColor?: string;
-	isGradient?: boolean;
+	colors?: string[];
 	children: ReactNode;
 }
 
 export function CategoryContainer({
 	isPending,
-	borderColor,
-	isGradient,
+	colors,
 	children,
 }: CategoryContainerProps) {
-	const hasCustomBorder = Boolean(borderColor);
+	const hasCustomBorder = Boolean(colors);
+	const isGradient = Boolean(colors && colors.length > 1);
+	const borderColor = getBorderColor(colors);
 
 	const borderStyle = isGradient
 		? {

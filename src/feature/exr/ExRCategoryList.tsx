@@ -49,11 +49,7 @@ export function ExRCategoryList() {
 	const isRoleTab = selectedExRTabId !== ExRTabId.GeneralTab;
 
 	return (
-		<CategoryContainer
-			isPending={isTabPending}
-			borderColor={tabMeta?.borderColor}
-			isGradient={tabMeta?.isGradient}
-		>
+		<CategoryContainer isPending={isTabPending} colors={tabMeta?.colors}>
 			{isRoleTab ? (
 				<ExRRoleCategoryList categoryIds={tabCategory} />
 			) : (
