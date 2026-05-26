@@ -29,6 +29,10 @@ export interface ExROptionValueData {
 
 export interface ExRTabMetaData {
 	name: string;
+	displayName: string;
+	borderColor: string;
+	indicatorColor: string;
+	isGradient: boolean;
 	categoryIds: number[];
 }
 

@@ -1,7 +1,6 @@
 import { CategoryContainer } from "@/components/blocks/CategoryContainer";
 import { useVisibleCategories } from "@/hooks/useExROptionData";
 import { exrOptionMetaData } from "@/logics/api";
-import { getTabColorStyle } from "@/logics/colorUtils";
 import { ExRTabId } from "@/type";
 import { useStore } from "@/useStore";
 import { ExRRoleCategoryItem } from "./ExRRoleCategoryItem";
@@ -45,18 +44,15 @@ export function ExRCategoryList() {
 		return state.isExRTabPending;
 	});
 
-	const tabCategory =
-		exrOptionMetaData.tabs[selectedExRTabId]?.categoryIds || [];
+	const tabMeta = exrOptionMetaData.tabs[selectedExRTabId];
+	const tabCategory = tabMeta?.categoryIds || [];
 	const isRoleTab = selectedExRTabId !== ExRTabId.GeneralTab;
-
-	const tabName = exrOptionMetaData.tabs[selectedExRTabId]?.name ?? "";
-	const colorStyle = getTabColorStyle(selectedExRTabId, tabName);
 
 	return (
 		<CategoryContainer
 			isPending={isTabPending}
-			borderColor={colorStyle.borderColor}
-			isGradient={colorStyle.isGradient}
+			borderColor={tabMeta?.borderColor}
+			isGradient={tabMeta?.isGradient}
 		>
 			{isRoleTab ? (
 				<ExRRoleCategoryList categoryIds={tabCategory} />
