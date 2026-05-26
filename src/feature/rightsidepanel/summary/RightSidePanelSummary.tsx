@@ -29,15 +29,9 @@ export function RightSidePanelSummary() {
 			data-testid="right-panel-summary"
 		>
 			<PresetSummaryRow />
-			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} fallbackTitle="マップ" />
-			<AuOptionSummaryRow
-				optionId={AU_KILL_COOLDOWN_OPTION_ID}
-				fallbackTitle="キルのクールダウン時間"
-			/>
-			<AuOptionSummaryRow
-				optionId={AU_IMPOSTOR_COUNT_OPTION_ID}
-				fallbackTitle="インポスター人数"
-			/>
+			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} />
+			<AuOptionSummaryRow optionId={AU_KILL_COOLDOWN_OPTION_ID} />
+			<AuOptionSummaryRow optionId={AU_IMPOSTOR_COUNT_OPTION_ID} />
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_LIBERAL_MIN_ID}
 				maxUniqueId={EXR_LIBERAL_MAX_ID}

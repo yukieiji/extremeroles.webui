@@ -8,17 +8,9 @@ import { useStore } from "@/useStore";
 
 interface AuOptionSummaryRowProps {
 	optionId: AuOptionId;
-	fallbackTitle?: string;
-	tabId?: number;
-	categoryId?: number;
 }
 
-export function AuOptionSummaryRow({
-	optionId,
-	fallbackTitle,
-	tabId: propTabId,
-	categoryId: propCategoryId,
-}: AuOptionSummaryRowProps) {
+export function AuOptionSummaryRow({ optionId }: AuOptionSummaryRowProps) {
 	const navigateAu = useAuOptionNavigationInline();
 	const value = useStore((state) => {
 		const selection = state.auValue[optionId] ?? 0;
@@ -26,19 +18,17 @@ export function AuOptionSummaryRow({
 	});
 
 	const meta = auOptionMetaData.options[optionId];
-	const title = useMemo(
-		() => meta?.title ?? fallbackTitle ?? "",
-		[meta, fallbackTitle],
-	);
+	const title = useMemo(() => meta?.title ?? "", [meta]);
 
-	const tabId = propTabId ?? meta?.tabId ?? 0;
-	const categoryId = propCategoryId ?? meta?.categoryId ?? 0;
+	if (!meta) {
+		return null;
+	}
 
 	return (
 		<ViewerOptionRow
 			title={<ColoredText text={title} />}
 			value={value}
-			onDoubleClick={() => navigateAu(tabId, categoryId, optionId)}
+			onDoubleClick={() => navigateAu(meta.tabId, meta.categoryId, optionId)}
 		/>
 	);
 }
