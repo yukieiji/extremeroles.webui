@@ -3,7 +3,7 @@ import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { exrOptionMetaData } from "@/logics/api";
-import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
+import { MOVED_EXR_OPTION_UNIQUE_IDS } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
 import { ExROptionItemView } from "./ExROptionItemView";
 
@@ -29,8 +29,9 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 			}
 			return uniqueOptions.filter((uniqueId) => {
 				return (
-					uniqueId !== PRESET_OPTION_UNIQUE_ID &&
-					state.isExROptionActive[uniqueId]
+					!(MOVED_EXR_OPTION_UNIQUE_IDS as readonly number[]).includes(
+						uniqueId,
+					) && state.isExROptionActive[uniqueId]
 				);
 			});
 		}),

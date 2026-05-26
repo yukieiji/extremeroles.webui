@@ -34,14 +34,19 @@ export function RightSidePanelResizeHandle() {
 				return;
 			}
 
-			const newWidth = window.innerWidth - e.clientX;
+			// トグルボタンの幅を差し引いて、コンテンツ部分の幅を計算する
+			const targetContentWidth =
+				window.innerWidth - e.clientX - RIGHT_PANEL_TOGGLE_WIDTH;
 			const maxWidth = calculateMaxRightPanelWidth(window.innerWidth);
 
-			if (newWidth >= MIN_RIGHT_PANEL_WIDTH && newWidth <= maxWidth) {
-				setRightPanelWidth(newWidth);
-			} else if (newWidth > maxWidth) {
+			if (
+				targetContentWidth >= MIN_RIGHT_PANEL_WIDTH &&
+				targetContentWidth <= maxWidth
+			) {
+				setRightPanelWidth(targetContentWidth);
+			} else if (targetContentWidth > maxWidth) {
 				setRightPanelWidth(maxWidth);
-			} else if (newWidth < MIN_RIGHT_PANEL_WIDTH) {
+			} else if (targetContentWidth < MIN_RIGHT_PANEL_WIDTH) {
 				setRightPanelWidth(MIN_RIGHT_PANEL_WIDTH);
 			}
 		},

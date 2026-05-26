@@ -1,4 +1,10 @@
-import type { AuOptionId, ExRTabId, OptionData, UniqueOptionId } from "../type";
+import {
+	type AuOptionId,
+	type ExRTabId,
+	type OptionData,
+	OptionValueType,
+	type UniqueOptionId,
+} from "../type";
 import { exrOptionMetaData } from "./api";
 
 const TAB_ID_MULTIPLIER = 1_000_000_000_000;
@@ -64,6 +70,46 @@ export function isPresetOption(categoryId: number, optionId: number): boolean {
 }
 
 export const PRESET_OPTION_UNIQUE_ID = getUniqueOptionId(0, 0, 0);
+
+export const AU_MAP_OPTION_ID = getAuOptionId(1, OptionValueType.Byte);
+export const AU_IMPOSTOR_COUNT_OPTION_ID = getAuOptionId(
+	1,
+	OptionValueType.Int,
+);
+export const AU_KILL_COOLDOWN_OPTION_ID = getAuOptionId(
+	1,
+	OptionValueType.Float,
+);
+
+export const EXR_CREW_MIN_ID = getUniqueOptionId(0, 5, 0);
+export const EXR_CREW_MAX_ID = getUniqueOptionId(0, 5, 1);
+export const EXR_NEUTRAL_MIN_ID = getUniqueOptionId(0, 5, 2);
+export const EXR_NEUTRAL_MAX_ID = getUniqueOptionId(0, 5, 3);
+export const EXR_IMPOSTOR_MIN_ID = getUniqueOptionId(0, 5, 4);
+export const EXR_IMPOSTOR_MAX_ID = getUniqueOptionId(0, 5, 5);
+export const EXR_LIBERAL_MIN_ID = getUniqueOptionId(0, 5, 6);
+export const EXR_LIBERAL_MAX_ID = getUniqueOptionId(0, 5, 7);
+export const EXR_MILITANT_MIN_ID = getUniqueOptionId(0, 7, 22);
+export const EXR_MILITANT_MAX_ID = getUniqueOptionId(0, 7, 23);
+
+export const VANILLA_ROLE_CATEGORY_IDS = [
+	5, 6, 7, 8, 9, 10, 11, 12, 13,
+] as const;
+
+// Summaryに移動したオプションのリスト
+export const MOVED_EXR_OPTION_UNIQUE_IDS = [
+	PRESET_OPTION_UNIQUE_ID,
+	EXR_CREW_MIN_ID,
+	EXR_CREW_MAX_ID,
+	EXR_NEUTRAL_MIN_ID,
+	EXR_NEUTRAL_MAX_ID,
+	EXR_IMPOSTOR_MIN_ID,
+	EXR_IMPOSTOR_MAX_ID,
+	EXR_LIBERAL_MIN_ID,
+	EXR_LIBERAL_MAX_ID,
+	EXR_MILITANT_MIN_ID,
+	EXR_MILITANT_MAX_ID,
+] as const;
 
 const MIN_SUFFIXES = [
 	" 最小",

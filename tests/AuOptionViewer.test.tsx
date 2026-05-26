@@ -117,9 +117,9 @@ describe("AuOptionViewer", () => {
 			);
 		});
 
-		// マップカテゴリ（index 0）はカテゴリ名ではなくオプション名が表示される
-		expect(screen.getByText("Map")).toBeInTheDocument();
-		expect(screen.getByText("The Skeld")).toBeInTheDocument();
+		// マップカテゴリ（index 0）は AuOptionViewer からは非表示になった（RightSidePanelSummary で表示される）
+		expect(screen.queryByText("Map")).not.toBeInTheDocument();
+		expect(screen.queryByText("The Skeld")).not.toBeInTheDocument();
 	});
 
 	it("uses translation data for boolean values", async () => {
@@ -143,7 +143,7 @@ describe("AuOptionViewer", () => {
 	});
 
 	it("calls store actions and scroll on double click", async () => {
-		const optionId = auOptionMetaData.categoryMetaData[0].options[0];
+		const optionId = auOptionMetaData.categoryMetaData[1].options[0];
 
 		const setSelectedTabSpy = vi.spyOn(useStore.getState(), "setSelectedTab");
 		const setSelectedAuTabIdSpy = vi.spyOn(
@@ -172,7 +172,7 @@ describe("AuOptionViewer", () => {
 			);
 		});
 
-		const row = screen.getByText("Map").closest("button");
+		const row = screen.getByText("Anonymous Voting").closest("button");
 		if (!row) {
 			throw new Error("Row not found");
 		}

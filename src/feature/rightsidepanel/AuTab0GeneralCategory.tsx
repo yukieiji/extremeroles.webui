@@ -1,6 +1,10 @@
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { auOptionMetaData } from "@/logics/api";
+import {
+	AU_IMPOSTOR_COUNT_OPTION_ID,
+	AU_KILL_COOLDOWN_OPTION_ID,
+} from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
 import { AuTab0OptionRow } from "./AuTab0OptionRow";
 
@@ -26,6 +30,15 @@ export function AuTab0GeneralCategory({
 		return null;
 	}
 
+	const filteredOptions = categoryMeta.options.filter(
+		(id) =>
+			id !== AU_IMPOSTOR_COUNT_OPTION_ID && id !== AU_KILL_COOLDOWN_OPTION_ID,
+	);
+
+	if (filteredOptions.length === 0) {
+		return null;
+	}
+
 	return (
 		<ViewerGroupAccordion
 			title={<span className="text-base">{categoryMeta.name}</span>}
@@ -34,7 +47,7 @@ export function AuTab0GeneralCategory({
 				toggleAuTab0Category(categoryId);
 			}}
 		>
-			<RightPanelContainer arr={categoryMeta.options} ignoreIndex={0}>
+			<RightPanelContainer arr={filteredOptions} ignoreIndex={0}>
 				{(optionId) => (
 					<AuTab0OptionRow optionId={optionId} categoryId={categoryId} />
 				)}

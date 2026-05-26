@@ -13,8 +13,8 @@ describe("AuRoleViewerSection", () => {
 
 	it("filters and renders active roles only", () => {
 		const tabId = 1;
-		const activeCategoryId = 10;
-		const inactiveCategoryId = 11;
+		const activeCategoryId = 20;
+		const inactiveCategoryId = 21;
 
 		const activeChanceId = 101 as unknown as AuOptionId;
 		const activeCountId = 102 as unknown as AuOptionId;
@@ -74,6 +74,46 @@ describe("AuRoleViewerSection", () => {
 
 		expect(screen.getByText("Active Role")).toBeInTheDocument();
 		expect(screen.queryByText("Inactive Role")).not.toBeInTheDocument();
+	});
+
+	it("filters out vanilla roles", () => {
+		const tabId = 1;
+		const vanillaCategoryId = 5; // 科学者
+
+		const chanceId = 101 as unknown as AuOptionId;
+		const countId = 102 as unknown as AuOptionId;
+
+		auOptionMetaData.tabCategoryMap[tabId] = [vanillaCategoryId];
+		auOptionMetaData.categoryMetaData[vanillaCategoryId] = {
+			name: "Scientist",
+			options: [chanceId, countId],
+		};
+		auOptionMetaData.options[chanceId] = {
+			title: "C",
+			format: "",
+			range: [0, 100],
+		};
+		auOptionMetaData.options[countId] = {
+			title: "M",
+			format: "",
+			range: [0, 1],
+		};
+
+		useStore.getState().setAuValue({
+			[chanceId]: 1, // 100%
+			[countId]: 1, // 1
+		});
+
+		render(
+			<AuRoleViewerSection
+				tabId={tabId}
+				title="Crew Roles"
+				isOpen={true}
+				onToggle={() => {}}
+			/>,
+		);
+
+		expect(screen.queryByText("Scientist")).not.toBeInTheDocument();
 	});
 
 	it("returns null if no active roles", () => {

@@ -30,24 +30,14 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		}
 
 		// 3. Tab 0の内容が表示されていることを確認 (インポスター数)
-		// インポスターカテゴリを展開する必要がある
-		// 右パネル内のアコーディオンを指定する
-		const imposterCategory = rightPanel.getByRole("button", {
-			name: "インポスター",
-			exact: true,
-		});
-
-		// getAttribute("aria-expanded") は要素が描画されるまで待機しないため、
-		// toBeVisible() で待機してから判定する
-		await expect(imposterCategory).toBeVisible({ timeout: 15000 });
-		if ((await imposterCategory.getAttribute("aria-expanded")) === "false") {
-			await imposterCategory.click();
-		}
-
-		// テキストとタイトルの組み合わせで特定 (右パネル内)
+		// Summaryに移動したので、パネルを開けば直接見えるはず
+		// 翻訳データに基づいているため、正規表現で柔軟にマッチング
 		const impCountSetting = rightPanel
-			.getByTitle("ダブルクリックで設定場所へ移動")
-			.filter({ hasText: "インポスター数" });
+			.getByTestId("right-panel-summary")
+			.getByRole("button", {
+				name: /^(インポスター数|Impostor Count)/,
+			});
+
 		// スクロールが必要な場合がある
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await expect(impCountSetting).toBeVisible({ timeout: 15000 });

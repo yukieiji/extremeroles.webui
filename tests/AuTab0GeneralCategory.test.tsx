@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuTab0GeneralCategory } from "@/feature/rightsidepanel/AuTab0GeneralCategory";
 import { auOptionMetaData, resetAuOptionMetaData } from "@/logics/api";
@@ -63,16 +63,41 @@ describe("AuTab0GeneralCategory", () => {
 			options: [],
 		};
 
-		const toggleSpy = vi.spyOn(useStore.getState(), "toggleAuTab0Category");
+		const _toggleSpy = vi.spyOn(useStore.getState(), "toggleAuTab0Category");
 
 		render(<AuTab0GeneralCategory categoryId={categoryId} />);
 
-		const accordionButton = screen.getByRole("button", {
+		const accordionButton = screen.queryByRole("button", {
 			name: /Test Category/i,
 		});
-		fireEvent.click(accordionButton);
+		// オプションがない場合、filteredOptionsが空になり、nullが返るようになった
+		expect(accordionButton).not.toBeInTheDocument();
+	});
 
-		expect(toggleSpy).toHaveBeenCalledWith(categoryId);
+	it("filters out Impostor Count option", () => {
+		const categoryId = 1;
+		const impCountOptionId = 10200 as unknown as AuOptionId; // OptionName 1, ValueType Int (1*10000 + 2*100)
+		const otherOptionId = 10103 as unknown as AuOptionId;
+
+		auOptionMetaData.categoryMetaData[categoryId] = {
+			name: "Test Category",
+			options: [impCountOptionId, otherOptionId],
+		};
+		auOptionMetaData.options[impCountOptionId] = {
+			title: "Impostor Count",
+			format: "{0}",
+			range: [1],
+		};
+		auOptionMetaData.options[otherOptionId] = {
+			title: "Other Option",
+			format: "{0}",
+			range: ["Value"],
+		};
+
+		render(<AuTab0GeneralCategory categoryId={categoryId} />);
+
+		expect(screen.queryByText("Impostor Count")).not.toBeInTheDocument();
+		expect(screen.getByText("Other Option")).toBeInTheDocument();
 	});
 
 	it("reflects the open state from the store", () => {

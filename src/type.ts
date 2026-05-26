@@ -168,11 +168,14 @@ export interface AuOptionMeta {
 	title: string;
 	format: string;
 	range: number[] | string[] | boolean[];
+	tabId: number;
+	categoryId: number;
 }
 
 export interface AuOptionCategoryMetaData {
 	name: string;
 	options: AuOptionId[];
+	tabId: number;
 }
 
 export interface AuOptionMetaDataRecords {

@@ -10,6 +10,7 @@ import {
 import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
+import { RightSidePanelSummary } from "./summary/RightSidePanelSummary";
 
 interface RightSidePanelBodyProps {
 	children: ReactNode;
@@ -30,29 +31,32 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 				<div className="flex items-center justify-between p-4 border-b border-gray-100">
 					<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
 				</div>
-				<div className="flex-1 overflow-y-scroll p-3">
-					<ViewerGroupAccordion
-						title={SETTING_VALUES_TITLE}
-						isOpen={isSettingsOpen}
-						onToggle={toggleSettings}
-					>
-						<RightPanelGroupColumnLayout>
-							<ViewerGroupAccordion
-								title={AU_SETTINGS_TITLE}
-								isOpen={isAuSettingsOpen}
-								onToggle={toggleAuSettings}
-							>
-								<AuOptionViewer />
-							</ViewerGroupAccordion>
-							<ViewerGroupAccordion
-								title={EXR_SETTINGS_TITLE}
-								isOpen={isExrSettingsOpen}
-								onToggle={toggleExrSettings}
-							>
-								<ExROptionViewer />
-							</ViewerGroupAccordion>
-						</RightPanelGroupColumnLayout>
-					</ViewerGroupAccordion>
+				<div className="flex-1 overflow-y-scroll">
+					<RightSidePanelSummary />
+					<div className="p-3">
+						<ViewerGroupAccordion
+							title={SETTING_VALUES_TITLE}
+							isOpen={isSettingsOpen}
+							onToggle={toggleSettings}
+						>
+							<RightPanelGroupColumnLayout>
+								<ViewerGroupAccordion
+									title={AU_SETTINGS_TITLE}
+									isOpen={isAuSettingsOpen}
+									onToggle={toggleAuSettings}
+								>
+									<AuOptionViewer />
+								</ViewerGroupAccordion>
+								<ViewerGroupAccordion
+									title={EXR_SETTINGS_TITLE}
+									isOpen={isExrSettingsOpen}
+									onToggle={toggleExrSettings}
+								>
+									<ExROptionViewer />
+								</ViewerGroupAccordion>
+							</RightPanelGroupColumnLayout>
+						</ViewerGroupAccordion>
+					</div>
 				</div>
 			</div>
 		</div>
