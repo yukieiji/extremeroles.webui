@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
 import { useAuOptionNavigationInline } from "@/hooks/useOptionNavigation";
@@ -22,10 +21,7 @@ export function AuOptionSummaryRow({
 	});
 
 	const meta = auOptionMetaData.options[optionId];
-	const title = useMemo(
-		() => meta?.title ?? fallbackTitle,
-		[meta, fallbackTitle],
-	);
+	const title = meta?.title ?? fallbackTitle;
 
 	if (!meta) {
 		return null;
