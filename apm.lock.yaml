@@ -29,7 +29,6 @@ dependencies:
   - .gemini/skills/pdf
   - .gemini/skills/pptx
   - .gemini/skills/skill-creator
-  - .gemini/skills/slack-gif-creator
   - .gemini/skills/theme-factory
   - .gemini/skills/web-artifacts-builder
   - .gemini/skills/webapp-testing
