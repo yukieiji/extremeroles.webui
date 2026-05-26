@@ -6,7 +6,7 @@ interface TabButtonContainerProps<T extends Key | undefined | null> {
 	tabs: T[];
 	onValueChange: (value: string) => void;
 	getValue: (tab: T, index: number) => string;
-	getTriggerProps?: (tab: T, index: number) => Record<string, any>;
+	getTriggerProps?: (tab: T, index: number) => Record<string, unknown>;
 	children: (tab: T) => ReactNode;
 }
 

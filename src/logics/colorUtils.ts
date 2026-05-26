@@ -2,7 +2,9 @@
  * カラータグ（<color=#RRGGBB>...</color>）からプレーンテキストを抽出します。
  */
 export function getPlainText(text: string): string {
-	return text.replace(/<color=#[0-9A-F]{6,8}>/gi, "").replace(/<\/color>/gi, "");
+	return text
+		.replace(/<color=#[0-9A-F]{6,8}>/gi, "")
+		.replace(/<\/color>/gi, "");
 }
 
 /**
@@ -42,10 +44,7 @@ export function darkenColor(hex: string, amount: number): string {
 /**
  * タブIDとテキストから適用すべきボーダー/インジケーターのスタイルを生成します。
  */
-export function getTabColorStyle(
-	tabId: number,
-	text: string,
-) {
+export function getTabColorStyle(tabId: number, text: string) {
 	const isGhostTab = tabId >= 5 && tabId <= 7;
 	let colors = extractColors(text);
 

@@ -51,7 +51,11 @@ function TabsList({
 	);
 }
 
-function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
+function TabsTrigger({
+	className,
+	style,
+	...props
+}: TabsPrimitive.Tab.Props & { "data-indicator-color"?: string }) {
 	return (
 		<TabsPrimitive.Tab
 			data-slot="tabs-trigger"
@@ -64,9 +68,9 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
 			)}
 			style={
 				{
-					"--indicator-color": (props as any)["data-indicator-color"],
-					...props.style,
-				} as any
+					"--indicator-color": props["data-indicator-color"],
+					...style,
+				} as React.CSSProperties & Record<string, string | undefined>
 			}
 			{...props}
 		/>
