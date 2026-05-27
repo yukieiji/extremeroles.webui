@@ -28,6 +28,7 @@ import {
 	UpdatedOptionsSchema,
 } from "../type";
 
+import { extractColors, stripColorTags } from "./colorUtils";
 import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
 
 /**
@@ -263,7 +264,8 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 
 	for (const tab of data) {
 		exrOptionMetaData.tabs[tab.Id] = {
-			name: tab.Name,
+			name: stripColorTags(tab.Name),
+			colors: extractColors(tab.Name),
 			categoryIds: tab.Categories.map((c) => c.Id),
 		};
 		for (const category of tab.Categories) {

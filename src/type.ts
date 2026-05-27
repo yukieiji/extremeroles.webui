@@ -30,6 +30,7 @@ export interface ExROptionValueData {
 export interface ExRTabMetaData {
 	name: string;
 	categoryIds: number[];
+	colors: string[];
 }
 
 export interface ExRCategoryMetaData {

@@ -44,12 +44,21 @@ export function ExRCategoryList() {
 		return state.isExRTabPending;
 	});
 
-	const tabCategory =
-		exrOptionMetaData.tabs[selectedExRTabId]?.categoryIds || [];
+	const tabMeta = exrOptionMetaData.tabs[selectedExRTabId];
+	const tabCategory = tabMeta?.categoryIds || [];
 	const isRoleTab = selectedExRTabId !== ExRTabId.GeneralTab;
 
+	const isGhost =
+		selectedExRTabId === ExRTabId.GhostCrewmateTab ||
+		selectedExRTabId === ExRTabId.GhostImpostorTab ||
+		selectedExRTabId === ExRTabId.GhostNeutralTab;
+
 	return (
-		<CategoryContainer isPending={isTabPending}>
+		<CategoryContainer
+			isPending={isTabPending}
+			colors={tabMeta?.colors || []}
+			isGhost={isGhost}
+		>
 			{isRoleTab ? (
 				<ExRRoleCategoryList categoryIds={tabCategory} />
 			) : (
