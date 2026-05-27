@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 interface TabButtonContainerProps<T extends Key | undefined | null> {
 	value: string;
 	tabs: T[];
+	variant?: "default" | "line";
 	onValueChange: (value: string) => void;
 	getValue: (tab: T, index: number) => string;
 	getTriggerProps?: (tab: T, index: number) => Record<string, unknown>;
@@ -13,6 +14,7 @@ interface TabButtonContainerProps<T extends Key | undefined | null> {
 export function TabButtonContainer<T extends Key | undefined | null>({
 	value,
 	tabs,
+	variant = "default",
 	onValueChange,
 	getValue,
 	getTriggerProps,
@@ -21,7 +23,7 @@ export function TabButtonContainer<T extends Key | undefined | null>({
 	return (
 		<Tabs value={value} onValueChange={onValueChange} className="w-full">
 			<TabsList
-				variant="line"
+				variant={variant}
 				className="w-full grid grid-cols-4 group-data-horizontal/tabs:h-auto min-h-10"
 			>
 				{tabs.map((tab, index) => {
