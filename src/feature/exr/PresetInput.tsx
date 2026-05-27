@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { useRef } from "react";
+import { SelectTrigger } from "@/components/ui/select";
 import { PRESET_INPUT_PLACEHOLDER, PRESET_SELECT_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 
@@ -20,9 +21,6 @@ export function PresetInput({
 	});
 	const isDropdownOpen = useStore((state) => state.isPresetDropdownOpen);
 	const updatePresetName = useStore((state) => state.updatePresetName);
-	const setPresetDropdownOpen = useStore(
-		(state) => state.setPresetDropdownOpen,
-	);
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -58,10 +56,6 @@ export function PresetInput({
 		}
 	};
 
-	const toggleDropdown = () => {
-		setPresetDropdownOpen(!isDropdownOpen);
-	};
-
 	return (
 		<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
 			<input
@@ -74,18 +68,15 @@ export function PresetInput({
 				className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
 				placeholder={PRESET_INPUT_PLACEHOLDER}
 			/>
-			<button
-				type="button"
-				onClick={toggleDropdown}
-				className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors"
+			<SelectTrigger
+				className="h-auto w-auto rounded-none border-t-0 border-r-0 border-b-0 border-l border-gray-600 bg-gray-700 px-2 py-1.5 transition-colors hover:bg-gray-600 data-[placeholder]:text-gray-400 [&_svg:not([class*='size-'])]:size-4"
 				aria-label={PRESET_SELECT_ARIA}
 			>
 				<ChevronDown
-					size={16}
 					className={`text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
 					aria-hidden="true"
 				/>
-			</button>
+			</SelectTrigger>
 		</div>
 	);
 }

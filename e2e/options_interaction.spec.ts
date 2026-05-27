@@ -33,11 +33,13 @@ test("Options interaction behavior", async ({ page }) => {
 	await presetInput.press("Enter");
 
 	// ドロップダウンを開いて名前が反映されているか確認
-	await page.getByRole("button", { name: "プリセットを選択" }).click();
+	await page.getByRole("combobox", { name: "プリセットを選択" }).click();
 	// ドロップダウン内の項目を特定するため、より具体的なロケータを使用（サイドバーにも同じテキストが表示されるため）
 	await expect(
-		page.getByRole("button", { name: "Test Preset" }).first(),
+		page.getByRole("option", { name: "Test Preset" }).first(),
 	).toBeVisible();
+	// ドロップダウンを閉じる (Escapeキーを押す)
+	await page.keyboard.press("Escape");
 
 	// 別のカテゴリの操作を確認
 	const shuffleCategory = page
