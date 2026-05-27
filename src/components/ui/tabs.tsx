@@ -56,18 +56,21 @@ function TabsTrigger({
 	style,
 	...props
 }: TabsPrimitive.Tab.Props & { "data-indicator-color"?: string }) {
+	const indicatorColor = props["data-indicator-color"];
+
 	return (
 		<TabsPrimitive.Tab
 			data-slot="tabs-trigger"
 			className={cn(
 				"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 				"data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground",
-				"after:absolute after:[background:var(--indicator-color,var(--foreground))] after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-0 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+				"after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-b-md after:pointer-events-none",
+				"data-active:after:bg-[var(--indicator-color,transparent)]",
 				className,
 			)}
 			style={
 				{
-					"--indicator-color": props["data-indicator-color"],
+					"--indicator-color": indicatorColor,
 					...style,
 				} as React.CSSProperties & Record<string, string | undefined>
 			}
