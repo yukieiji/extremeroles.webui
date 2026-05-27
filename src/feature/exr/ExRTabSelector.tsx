@@ -43,7 +43,6 @@ export function ExRTabSelector() {
 		<TabButtonContainer
 			value={selectedExRTabId.toString()}
 			tabs={Object.keys(exrOptionMetaData.tabs)}
-			variant="line"
 			onValueChange={handleValueChange}
 			getValue={(t, _) => t}
 			getTriggerProps={(t) => {

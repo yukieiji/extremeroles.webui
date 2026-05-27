@@ -25,7 +25,7 @@ test("Tab selection indicators and colors are applied correctly", async ({
 	await expect(crewmateTab).toHaveAttribute("data-active", "");
 
 	const tabsList = page.locator('[data-slot="tabs-list"]');
-	await expect(tabsList).toHaveAttribute("data-variant", "line");
+	await expect(tabsList).toHaveAttribute("data-variant", "default");
 
 	// Check Ghost Crewmate tab (TabId 5)
 	const ghostCrewmateTab = page.locator('[data-slot="tabs-trigger"]').nth(5);
