@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { PresetSelector } from "@/feature/exr/PresetSelector";
 import { useOptionData } from "@/hooks/useExROptionData";
-import { updateExrOption } from "@/logics/api";
 import { useStore } from "@/useStore";
 
 vi.mock("@/hooks/useExROptionData");
