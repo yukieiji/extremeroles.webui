@@ -1,3 +1,5 @@
+import { type ExRTabId, isGhostTabId } from "@/type";
+
 /**
  * カラータグ（<color=#RRGGBB>...</color>）からプレーンテキストを抽出します。
  */
@@ -44,8 +46,8 @@ export function darkenColor(hex: string, amount: number): string {
 /**
  * タブIDとテキストから適用すべき色の情報を取得します。
  */
-export function getTabColors(tabId: number, text: string): string[] {
-	const isGhostTab = tabId >= 5 && tabId <= 7;
+export function getTabColors(tabId: ExRTabId, text: string): string[] {
+	const isGhostTab = isGhostTabId(tabId);
 	let colors = extractColors(text);
 
 	if (isGhostTab) {

@@ -20,7 +20,10 @@ export function TabButtonContainer<T extends Key | undefined | null>({
 }: TabButtonContainerProps<T>) {
 	return (
 		<Tabs value={value} onValueChange={onValueChange} className="w-full">
-			<TabsList className="w-full grid grid-cols-4 group-data-horizontal/tabs:h-auto min-h-10">
+			<TabsList
+				variant="line"
+				className="w-full grid grid-cols-4 group-data-horizontal/tabs:h-auto min-h-10"
+			>
 				{tabs.map((tab, index) => {
 					const val = getValue(tab, index);
 					const extraProps = getTriggerProps?.(tab, index) ?? {};

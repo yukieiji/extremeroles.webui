@@ -68,6 +68,17 @@ export const ExRTabId = {
 
 export type ExRTabId = (typeof ExRTabId)[keyof typeof ExRTabId];
 
+/**
+ * 指定されたタブIDがゴースト役職のものかどうかを判定します。
+ */
+export function isGhostTabId(tabId: ExRTabId | number): boolean {
+	return (
+		tabId === ExRTabId.GhostCrewmateTab ||
+		tabId === ExRTabId.GhostImpostorTab ||
+		tabId === ExRTabId.GhostNeutralTab
+	);
+}
+
 export const ExRTabIdSchema = z.preprocess((val) => {
 	if (typeof val === "string" && val in ExRTabId) {
 		return ExRTabId[val as keyof typeof ExRTabId];
