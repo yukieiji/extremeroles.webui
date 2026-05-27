@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
-import { LoadingCycle } from "../parts/LoadingCycle";
-
 import { getLinearGradient } from "@/logics/colorUtils";
+import { LoadingCycle } from "../parts/LoadingCycle";
 
 interface CategoryContainerProps {
 	isPending: boolean;

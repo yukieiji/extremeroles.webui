@@ -19,7 +19,7 @@ export function stripColorTags(text: string): string {
  * #RRGGBB または #RRGGBBAA 形式をサポート
  */
 export function darkenColor(hex: string, percent = 0.5): string {
-	let color = hex.replace("#", "");
+	const color = hex.replace("#", "");
 
 	// 文字数が足りない場合はそのまま返す
 	if (color.length !== 6 && color.length !== 8) {
@@ -54,9 +54,7 @@ export function getLinearGradient(
 		return isGhost ? darkenColor("#4b5563") : "#4b5563"; // デフォルト色
 	}
 
-	const processedColors = isGhost
-		? colors.map((c) => darkenColor(c))
-		: colors;
+	const processedColors = isGhost ? colors.map((c) => darkenColor(c)) : colors;
 
 	if (processedColors.length === 1) {
 		return processedColors[0];
