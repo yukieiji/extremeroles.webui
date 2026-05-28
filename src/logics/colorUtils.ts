@@ -2,9 +2,16 @@
  * <color=#RRGGBB>...</color> タグからカラーコードを抽出する
  */
 export function extractColors(text: string): string[] {
-	const COLOR_HEX_REGEX = /#[0-9A-F]{6,8}/gi;
-	const matches = text.match(COLOR_HEX_REGEX);
-	return matches ? Array.from(new Set(matches)) : [];
+	const COLOR_TAG_HEX_REGEX = /<color=(#[0-9A-F]{6,8})>/gi;
+	const colors: string[] = [];
+	let match: RegExpExecArray | null;
+
+	// biome-ignore lint/suspicious/noAssignInExpressions: standard regex loop
+	while ((match = COLOR_TAG_HEX_REGEX.exec(text)) !== null) {
+		colors.push(match[1]);
+	}
+
+	return Array.from(new Set(colors));
 }
 
 /**

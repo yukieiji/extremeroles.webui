@@ -14,6 +14,10 @@ export function CategoryContainer({
 	children,
 }: CategoryContainerProps) {
 	const containerStyle = (() => {
+		if (colors.length === 0) {
+			return {};
+		}
+
 		const gradient = getLinearGradient(colors);
 		if (gradient.startsWith("linear-gradient")) {
 			return {
