@@ -16,7 +16,7 @@ jobs:
   setup-cache:
     runs-on: ubuntu-latest
     outputs:
-      pw_version: ${{ steps.pw.outputs.version }}
+      pw_cache_key: ${{ steps.pw-cache.outputs.key }}
       node_cache_key: ${{ steps.node.outputs.key }}
 
     steps:
@@ -55,6 +55,7 @@ jobs:
       # Playwright browser cache
       - name: Cache Playwright browsers
         uses: actions/cache@v5
+        id: pw-cache
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
@@ -96,14 +97,14 @@ jobs:
           path: |
             node_modules
             ~/.pnpm-store
-          key: node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ needs.setup-cache.outputs.node_cache_key }}
 
       # Playwright cache復元
       - name: Restore Playwright cache
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ needs.setup-cache.outputs.pw_version }}
+          key: ${{ needs.setup-cache.outputs.pw_cache_key }}
 
       - name: Run E2E tests
         run: pnpm run e2e --project=${{ matrix.browser }}

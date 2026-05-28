@@ -20,8 +20,8 @@ jobs:
   setup-cache:
     runs-on: ubuntu-latest
     outputs:
-      pnpm_store_path: ${{ steps.pnpm-cache.outputs.store-path }}
-      pw_cache_key: ${{ steps.pw.outputs.key }}
+      node_cache_key: ${{ steps.node.outputs.key }}
+      pw_cache_key: ${{ steps.pw-cache.outputs.key }}
 
     steps:
       - uses: actions/checkout@v6
@@ -47,6 +47,7 @@ jobs:
       # node_modules + pnpm store キャッシュ
       - name: Cache node_modules + pnpm store
         uses: actions/cache@v5
+        id: node
         with:
           path: |
             node_modules
@@ -61,9 +62,10 @@ jobs:
       # Playwright browser cache
       - name: Cache Playwright browsers
         uses: actions/cache@v5
+        id: pw-cache
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ steps.pw.outputs.key }}
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
 
       # browser install（ここで1回だけ実行）
       - name: Install Playwright browsers
@@ -96,7 +98,7 @@ jobs:
           path: |
             node_modules
             ~/.pnpm-store
-          key: node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ needs.setup-cache.outputs.node_cache_key }}
 
       - name: Run check
         run: pnpm check
@@ -137,14 +139,14 @@ jobs:
           path: |
             node_modules
             ~/.pnpm-store
-          key: node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ needs.setup-cache.outputs.node_cache_key }}
 
       # Playwright browser cache復元
       - name: Restore Playwright cache
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ needs.setup-cache.outputs.pw_cache_key }}
+          key: ${{ needs.setup-cache.outputs.pw_cache_key }}
 
       - name: Run Playwright tests
         run: pnpm run e2e --project=${{ matrix.browser }}
