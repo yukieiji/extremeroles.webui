@@ -37,7 +37,7 @@ jobs:
       # node cache key
       - name: Generate node cache key
         id: node
-        run: echo "key=node-${{ runner.os }}-$(hashFiles('pnpm-lock.yaml'))" >> $GITHUB_OUTPUT
+        run: echo "key=node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}" >> $GITHUB_OUTPUT
 
       - name: Cache node modules
         uses: actions/cache@v5
