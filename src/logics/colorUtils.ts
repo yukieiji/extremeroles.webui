@@ -53,11 +53,7 @@ export function darkenColor(hex: string, percent = 0.5): string {
 /**
  * グラデーション文字列を生成する
  */
-export function getLinearGradient(colors: string[] | undefined): string {
-	if (!colors || colors.length === 0) {
-		return "#4b5563"; // デフォルト色
-	}
-
+export function getLinearGradient(colors: string[]): string {
 	if (colors.length === 1) {
 		return colors[0];
 	}
