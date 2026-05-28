@@ -1,5 +1,4 @@
 import { useEffect, useTransition } from "react";
-import { ColoredText } from "@/components/parts/ColoredText";
 import { TabButtonContainer } from "@/components/parts/TabButtonContainer";
 import { exrOptionMetaData } from "@/logics/api";
 import type { ExRTabId } from "@/type";
@@ -48,9 +47,7 @@ export function ExRTabSelector() {
 		>
 			{(t) => {
 				const castedTabId = Number(t) as ExRTabId;
-				return (
-					<ColoredText text={exrOptionMetaData.tabs[castedTabId]?.name ?? ""} />
-				);
+				return exrOptionMetaData.tabs[castedTabId]?.name ?? "";
 			}}
 		</TabButtonContainer>
 	);
