@@ -17,7 +17,9 @@ export function CategoryContainer({
 		const gradient = getLinearGradient(colors);
 		if (gradient.startsWith("linear-gradient")) {
 			return {
-				background: `linear-gradient(var(--background), var(--background)) padding-box, ${gradient} border-box`,
+				backgroundImage: `linear-gradient(var(--background), var(--background)), ${gradient}`,
+				backgroundOrigin: "border-box",
+				backgroundClip: "padding-box, border-box",
 				border: "2px solid transparent",
 			};
 		}
