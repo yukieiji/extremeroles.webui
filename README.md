@@ -84,3 +84,4 @@ export default defineConfig([
 
 ## 追加知識
 - [showSaveFilePicker の使用とテスト](.gemini/knowledge/showSaveFilePicker/README.md)
+- [GitHub Actions での Playwright ブラウザキャッシュ](.gemini/knowledge/github-actions-cache/playwright.md)
