@@ -5,14 +5,20 @@ on:
     branches:
       - main
 
+      
+permissions:
+  contents: write
+
 jobs:
-  e2e:
-    timeout-minutes: 60
+  # =========================================
+  # 1. キャッシュ & 依存準備（CI/CD共通化ポイント）
+  # =========================================
+  setup-cache:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chromium, firefox, webkit]
+    outputs:
+      pw_version: ${{ steps.pw.outputs.version }}
+      node_cache_key: ${{ steps.node.outputs.key }}
+
     steps:
       - uses: actions/checkout@v6
 
@@ -23,42 +29,102 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'pnpm'
+          cache: pnpm
 
-      - name: Install dependencies
+      - name: Install dependencies (single source)
         run: pnpm i --frozen-lockfile
 
+      # node cache key
+      - name: Generate node cache key
+        id: node
+        run: echo "key=node-${{ runner.os }}-$(hashFiles('pnpm-lock.yaml'))" >> $GITHUB_OUTPUT
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules
+            ~/.pnpm-store
+          key: ${{ steps.node.outputs.key }}
+
+      # Playwright version
       - name: Get Playwright version
-        id: playwright-version
+        id: pw
         run: echo "version=$(pnpm exec playwright --version | cut -d' ' -f2)" >> $GITHUB_OUTPUT
 
-      - name: Cache Playwright Browsers
-        id: cache-playwright
+      # Playwright browser cache
+      - name: Cache Playwright browsers
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ matrix.browser }}
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
 
-      - name: Install Playwright Browsers
-        if: steps.cache-playwright.outputs.cache-hit != 'true'
-        run: pnpm run setup:browser ${{ matrix.browser }}
+      # browser install（1回だけ）
+      - name: Install Playwright browsers
+        run: pnpm run setup:browser
+
+
+  # =========================================
+  # 2. E2E（matrix・実行専用）
+  # =========================================
+  e2e:
+    needs: setup-cache
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      # cache復元（installしない）
+      - name: Restore node cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules
+            ~/.pnpm-store
+          key: node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      # Playwright cache復元
+      - name: Restore Playwright cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ needs.setup-cache.outputs.pw_version }}
 
       - name: Run E2E tests
         run: pnpm run e2e --project=${{ matrix.browser }}
 
-      - uses: actions/upload-artifact@v7
+      - name: Upload artifact
         if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
           retention-days: 30
 
+
+  # =========================================
+  # 3. Release（buildのみ・軽量化）
+  # =========================================
   release:
-    needs: e2e
-    timeout-minutes: 60
+    needs: [e2e, setup-cache]
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    timeout-minutes: 15
+
     steps:
       - uses: actions/checkout@v6
 
@@ -69,10 +135,16 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'pnpm'
+          cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+      # 依存復元（installしない）
+      - name: Restore cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules
+            ~/.pnpm-store
+          key: node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Build
         run: pnpm build
