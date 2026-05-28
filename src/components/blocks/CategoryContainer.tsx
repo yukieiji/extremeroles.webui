@@ -5,18 +5,16 @@ import { LoadingCycle } from "../parts/LoadingCycle";
 interface CategoryContainerProps {
 	isPending: boolean;
 	colors?: string[];
-	isGhost?: boolean;
 	children: ReactNode;
 }
 
 export function CategoryContainer({
 	isPending,
 	colors = [],
-	isGhost = false,
 	children,
 }: CategoryContainerProps) {
 	const containerStyle = (() => {
-		const gradient = getLinearGradient(colors, isGhost);
+		const gradient = getLinearGradient(colors);
 		if (gradient.startsWith("linear-gradient")) {
 			return {
 				background: `linear-gradient(var(--background), var(--background)) padding-box, ${gradient} border-box`,

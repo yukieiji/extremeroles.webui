@@ -46,19 +46,14 @@ export function darkenColor(hex: string, percent = 0.5): string {
 /**
  * グラデーション文字列を生成する
  */
-export function getLinearGradient(
-	colors: string[] | undefined,
-	isGhost: boolean,
-): string {
+export function getLinearGradient(colors: string[] | undefined): string {
 	if (!colors || colors.length === 0) {
-		return isGhost ? darkenColor("#4b5563") : "#4b5563"; // デフォルト色
+		return "#4b5563"; // デフォルト色
 	}
 
-	const processedColors = isGhost ? colors.map((c) => darkenColor(c)) : colors;
-
-	if (processedColors.length === 1) {
-		return processedColors[0];
+	if (colors.length === 1) {
+		return colors[0];
 	}
 
-	return `linear-gradient(to right, ${processedColors.join(", ")})`;
+	return `linear-gradient(to right, ${colors.join(", ")})`;
 }

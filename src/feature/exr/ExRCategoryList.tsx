@@ -48,17 +48,8 @@ export function ExRCategoryList() {
 	const tabCategory = tabMeta?.categoryIds || [];
 	const isRoleTab = selectedExRTabId !== ExRTabId.GeneralTab;
 
-	const isGhost =
-		selectedExRTabId === ExRTabId.GhostCrewmateTab ||
-		selectedExRTabId === ExRTabId.GhostImpostorTab ||
-		selectedExRTabId === ExRTabId.GhostNeutralTab;
-
 	return (
-		<CategoryContainer
-			isPending={isTabPending}
-			colors={tabMeta?.colors || []}
-			isGhost={isGhost}
-		>
+		<CategoryContainer isPending={isTabPending} colors={tabMeta?.colors || []}>
 			{isRoleTab ? (
 				<ExRRoleCategoryList categoryIds={tabCategory} />
 			) : (

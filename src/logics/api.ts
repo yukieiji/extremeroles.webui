@@ -28,7 +28,7 @@ import {
 	UpdatedOptionsSchema,
 } from "../type";
 
-import { extractColors, stripColorTags } from "./colorUtils";
+import { darkenColor, extractColors, stripColorTags } from "./colorUtils";
 import { getAuOptionId, getUniqueOptionId } from "./optionUtils";
 
 /**
@@ -263,9 +263,19 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 	};
 
 	for (const tab of data) {
+		const isGhost =
+			tab.Id === ExRTabId.GhostCrewmateTab ||
+			tab.Id === ExRTabId.GhostImpostorTab ||
+			tab.Id === ExRTabId.GhostNeutralTab;
+
+		const extractedColors = extractColors(tab.Name);
+		const colors = isGhost
+			? extractedColors.map((c) => darkenColor(c))
+			: extractedColors;
+
 		exrOptionMetaData.tabs[tab.Id] = {
 			name: stripColorTags(tab.Name),
-			colors: extractColors(tab.Name),
+			colors,
 			categoryIds: tab.Categories.map((c) => c.Id),
 		};
 		for (const category of tab.Categories) {
