@@ -56,7 +56,7 @@ jobs:
       # Playwright version取得
       - name: Get Playwright version
         id: pw
-        run: echo "key=node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}" >> $GITHUB_OUTPUT
+        run: echo "version=$(pnpm exec playwright --version | cut -d' ' -f2)" >> $GITHUB_OUTPUT
 
       # Playwright browser cache
       - name: Cache Playwright browsers
