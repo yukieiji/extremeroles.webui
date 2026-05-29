@@ -14,7 +14,7 @@ jobs:
       matrix:
         browser: [chromium, firefox, webkit]
     container:
-      image: mcr.microsoft.com/playwright:latest
+      image: mcr.microsoft.com/playwright:v1.59.1
     steps:
       - uses: actions/checkout@v6
 
@@ -31,6 +31,8 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Run E2E tests
+        env:
+          HOME: /root
         run: pnpm run e2e --project=${{ matrix.browser }}
 
       - uses: actions/upload-artifact@v7
