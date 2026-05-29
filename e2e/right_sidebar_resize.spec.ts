@@ -23,8 +23,8 @@ test("isResizing state is correctly managed", async ({ page }) => {
 
 	await toggleButton.click();
 	// Wait for panel to open fully and transition to finish
-	await expect(rightPanel).toHaveCSS("transition-property", "width");
-	await page.waitForTimeout(500); // Wait for transition
+	// Initial width 320 + Toggle width 24 = 344
+	await expect(rightPanel).toHaveCSS("width", "344px");
 
 	const handle = page.getByTestId("resize-handle");
 	await expect(handle).toBeVisible();
@@ -57,14 +57,15 @@ test("right sidebar can be resized", async ({ page }) => {
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
+	// Wait for panel to open fully and transition to finish
+	await expect(rightPanel).toHaveCSS("width", "344px");
 
 	const viewport = page.viewportSize();
 	if (!viewport) {
 		throw new Error("Viewport not found");
 	}
 
-	// Wait for panel to be fully open and transition to finish
-	await page.waitForTimeout(500);
+	// Wait for panel to be fully open
 	await expect
 		.poll(
 			async () => {
@@ -146,7 +147,7 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
-	await page.waitForTimeout(500); // Wait for transition
+	await expect(rightPanel).toHaveCSS("width", "344px");
 
 	const viewport = page.viewportSize();
 	if (!viewport) {
