@@ -68,9 +68,6 @@ jobs:
     - name: Install dependencies
       run: pnpm i --frozen-lockfile
 
-    - name: Install Playwright Browsers
-      run: pnpm run setup:browser ${{ matrix.browser }}
-
     - name: Run Playwright tests
       run: pnpm run e2e --project=${{ matrix.browser }}
 
