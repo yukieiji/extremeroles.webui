@@ -1,7 +1,12 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// Ensure localStorage is clean for tests before page load
+	await page.addInitScript(() => {
+		window.localStorage.clear();
+	});
 	await page.goto("/");
+
 	await expect(page.locator("body")).not.toContainText("Loading data...", {
 		timeout: 60000,
 	});
@@ -17,18 +22,9 @@ test("isResizing state is correctly managed", async ({ page }) => {
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
-	// Wait for panel to open
-	await expect
-		.poll(
-			async () => {
-				const box = await rightPanel.boundingBox();
-				return box ? box.width : 0;
-			},
-			{
-				timeout: 15000,
-			},
-		)
-		.toBeGreaterThan(100);
+	// Wait for panel to open fully and transition to finish
+	// Initial width 320 + Toggle width 24 = 344
+	await expect(rightPanel).toHaveCSS("width", "344px");
 
 	const handle = page.getByTestId("resize-handle");
 	await expect(handle).toBeVisible();
@@ -37,26 +33,22 @@ test("isResizing state is correctly managed", async ({ page }) => {
 		throw new Error("Handle box not found");
 	}
 
-	// Dispatch event instead of mouse actions to avoid potential issues with thin handles
-	await handle.dispatchEvent("mousedown", { button: 0 });
+	// Use page.mouse for more realistic interaction
+	const x = handleBox.x + handleBox.width / 2;
+	const y = handleBox.y + handleBox.height / 2;
+	await page.mouse.move(x, y);
+	await page.mouse.down();
 
 	// Move a bit to ensure resize state is active
-	await page.evaluate((targetX) => {
-		window.dispatchEvent(
-			new MouseEvent("mousemove", {
-				bubbles: true,
-				clientX: targetX,
-				clientY: 300,
-			}),
-		);
-	}, handleBox.x - 20);
+	await page.mouse.move(x - 50, y);
+
+	// transition should be removed during resizing
+	await expect(rightPanel).not.toHaveCSS("transition-property", "width");
 
 	await expect(page.locator("body")).toHaveCSS("cursor", "ew-resize", {
 		timeout: 5000,
 	});
-	await page.evaluate(() => {
-		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
-	});
+	await page.mouse.up();
 });
 
 test("right sidebar can be resized", async ({ page }) => {
@@ -65,6 +57,8 @@ test("right sidebar can be resized", async ({ page }) => {
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
+	// Wait for panel to open fully and transition to finish
+	await expect(rightPanel).toHaveCSS("width", "344px");
 
 	const viewport = page.viewportSize();
 	if (!viewport) {
@@ -92,25 +86,19 @@ test("right sidebar can be resized", async ({ page }) => {
 
 	const handle = page.getByTestId("resize-handle");
 	await expect(handle).toBeVisible();
-
-	// Drag left (increase width)
 	const handleBox = await handle.boundingBox();
 	if (!handleBox) {
 		throw new Error("Handle box not found");
 	}
-	await handle.dispatchEvent("mousedown", { button: 0 });
-	await page.evaluate((startX) => {
-		window.dispatchEvent(
-			new MouseEvent("mousemove", {
-				bubbles: true,
-				clientX: startX - 200,
-				clientY: 300,
-			}),
-		);
-	}, handleBox.x);
-	await page.evaluate(() => {
-		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
-	});
+
+	const startX = handleBox.x + handleBox.width / 2;
+	const startY = handleBox.y + 100;
+
+	// Drag left (increase width)
+	await page.mouse.move(startX, startY);
+	await page.mouse.down();
+	await page.mouse.move(startX - 200, startY);
+	await page.mouse.up();
 
 	// Verify increased width
 	await expect
@@ -121,7 +109,7 @@ test("right sidebar can be resized", async ({ page }) => {
 			},
 			{ timeout: 15000 },
 		)
-		.toBeGreaterThan(initialBox.width + 50);
+		.toBeGreaterThan(initialBox.width + 150);
 
 	const resizedBox = await rightPanel.boundingBox();
 	if (!resizedBox) {
@@ -129,37 +117,26 @@ test("right sidebar can be resized", async ({ page }) => {
 	}
 
 	// Drag right (decrease width)
-	const newHandle = page.getByTestId("resize-handle");
-	const newHandleBox = await newHandle.boundingBox();
+	const newHandleBox = await handle.boundingBox();
 	if (!newHandleBox) {
 		throw new Error("New handle box not found");
 	}
-	await newHandle.dispatchEvent("mousedown", { button: 0 });
-	await page.evaluate((startX) => {
-		window.dispatchEvent(
-			new MouseEvent("mousemove", {
-				bubbles: true,
-				clientX: startX + 150,
-				clientY: 300,
-			}),
-		);
-	}, newHandleBox.x);
-	await page.evaluate(() => {
-		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
-	});
+	const nextX = newHandleBox.x + newHandleBox.width / 2;
+	await page.mouse.move(nextX, startY);
+	await page.mouse.down();
+	await page.mouse.move(nextX + 150, startY);
+	await page.mouse.up();
 
 	// Verify decreased width
 	await expect
 		.poll(
 			async () => {
 				const box = await rightPanel.boundingBox();
-				// Use a more lenient check for decreasing width, as high DPI or rounding might cause slight variations
-				// but it should definitely be less than resizedBox.width.
 				return box ? box.width : 9999;
 			},
 			{ timeout: 15000 },
 		)
-		.toBeLessThan(resizedBox.width - 10);
+		.toBeLessThan(resizedBox.width - 100);
 });
 
 test("right sidebar width is clamped and does not cause overflow", async ({
@@ -170,6 +147,7 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
 	await toggleButton.click();
+	await expect(rightPanel).toHaveCSS("width", "344px");
 
 	const viewport = page.viewportSize();
 	if (!viewport) {
@@ -183,20 +161,14 @@ test("right sidebar width is clamped and does not cause overflow", async ({
 		throw new Error("Handle box not found");
 	}
 
+	const startX = handleBox.x + handleBox.width / 2;
+	const startY = handleBox.y + 100;
+
 	// Attempt to drag to the far left (beyond 80% width)
-	await handle.dispatchEvent("mousedown", { button: 0 });
-	await page.evaluate(() => {
-		window.dispatchEvent(
-			new MouseEvent("mousemove", {
-				bubbles: true,
-				clientX: 0, // Far left
-				clientY: 300,
-			}),
-		);
-	});
-	await page.evaluate(() => {
-		window.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
-	});
+	await page.mouse.move(startX, startY);
+	await page.mouse.down();
+	await page.mouse.move(0, startY);
+	await page.mouse.up();
 
 	// Verify that the width is clamped (e.g., should not be 100% of viewport)
 	await expect
