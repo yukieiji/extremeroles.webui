@@ -1,10 +1,11 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+	// Ensure localStorage is clean for tests before page load
+	await page.addInitScript(() => {
+		window.localStorage.clear();
+	});
 	await page.goto("/");
-	// Ensure localStorage is clean for tests
-	await page.evaluate(() => localStorage.clear());
-	await page.goto("/"); // Reload after clear
 
 	await expect(page.locator("body")).not.toContainText("Loading data...", {
 		timeout: 60000,
