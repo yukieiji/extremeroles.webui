@@ -5,79 +5,16 @@ on:
     branches:
       - main
 
-      
-permissions:
-  contents: write
-
 jobs:
-  # =========================================
-  # 1. キャッシュ & 依存準備（CI/CD共通化ポイント）
-  # =========================================
-  setup-cache:
-    runs-on: ubuntu-latest
-    outputs:
-      pw_cache_key: ${{ steps.pw-cache.outputs.key }}
-      node_cache_key: ${{ steps.node.outputs.key }}
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 10
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: pnpm
-
-      - name: Install dependencies (single source)
-        run: pnpm i --frozen-lockfile
-
-      # node cache key
-      - name: Generate node cache key
-        id: node
-        run: echo "key=node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}" >> $GITHUB_OUTPUT
-
-      - name: Cache node modules
-        uses: actions/cache@v5
-        with:
-          path: |
-            node_modules
-            ~/.pnpm-store
-          key: ${{ steps.node.outputs.key }}
-
-      # Playwright version
-      - name: Get Playwright version
-        id: pw
-        run: echo "version=$(pnpm exec playwright --version | cut -d' ' -f2)" >> $GITHUB_OUTPUT
-
-      # Playwright browser cache
-      - name: Cache Playwright browsers
-        uses: actions/cache@v5
-        id: pw-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
-
-      # browser install（1回だけ）
-      - name: Install Playwright browsers
-        run: pnpm run setup:browser
-
-
-  # =========================================
-  # 2. E2E（matrix・実行専用）
-  # =========================================
   e2e:
-    needs: setup-cache
+    timeout-minutes: 60
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
     strategy:
       fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
-
+    container:
+      image: mcr.microsoft.com/playwright:latest
     steps:
       - uses: actions/checkout@v6
 
@@ -88,44 +25,27 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: pnpm
+          cache: 'pnpm'
 
-      # cache復元（installしない）
-      - name: Restore node cache
-        uses: actions/cache@v5
-        with:
-          path: |
-            node_modules
-            ~/.pnpm-store
-          key: ${{ needs.setup-cache.outputs.node_cache_key }}
-
-      # Playwright cache復元
-      - name: Restore Playwright cache
-        uses: actions/cache@v5
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ needs.setup-cache.outputs.pw_cache_key }}
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
 
       - name: Run E2E tests
         run: pnpm run e2e --project=${{ matrix.browser }}
 
-      - name: Upload artifact
+      - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
         with:
           name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
           retention-days: 30
 
-
-  # =========================================
-  # 3. Release（buildのみ・軽量化）
-  # =========================================
   release:
-    needs: [e2e, setup-cache]
+    needs: e2e
+    timeout-minutes: 60
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
 
@@ -136,16 +56,10 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: pnpm
+          cache: 'pnpm'
 
-      # 依存復元（installしない）
-      - name: Restore cache
-        uses: actions/cache@v5
-        with:
-          path: |
-            node_modules
-            ~/.pnpm-store
-          key: node-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
 
       - name: Build
         run: pnpm build
