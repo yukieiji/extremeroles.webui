@@ -24,14 +24,29 @@ vi.mock("@/components/ui/select", () => ({
 		onValueChange: (v: string) => void;
 		value: string;
 	}) => (
-		<button
-			type="button"
+		<div
 			data-testid="mock-select"
 			data-value={value}
-			onClick={() => onValueChange("1")}
+			onClick={(e) => {
+				const target = e.target as HTMLElement;
+				const item = target.closest("[data-value]");
+				if (item) {
+					const val = item.getAttribute("data-value");
+					if (val) {
+						onValueChange(val);
+					}
+				}
+			}}
+			onKeyDown={(e) => {
+				if (e.key === "Enter") {
+					onValueChange("1");
+				}
+			}}
+			role="listbox"
+			tabIndex={0}
 		>
 			{children}
-		</button>
+		</div>
 	),
 	SelectTrigger: ({
 		className,
@@ -41,17 +56,23 @@ vi.mock("@/components/ui/select", () => ({
 		className?: string;
 		children?: ReactNode;
 	}) => (
-		<span className={className} {...props}>
+		<button type="button" className={className} {...props}>
 			{children}
-		</span>
+		</button>
 	),
 	SelectContent: ({ children }: { children: ReactNode }) => (
 		<div data-testid="select-content">{children}</div>
 	),
 	SelectItem: ({ children, value }: { children: ReactNode; value: string }) => (
-		<div data-testid={`select-item-${value}`} data-value={value}>
+		<button
+			type="button"
+			data-testid={`select-item-${value}`}
+			data-value={value}
+			role="option"
+			aria-selected={false}
+		>
 			{children}
-		</div>
+		</button>
 	),
 	SelectValue: ({ children }: { children?: ReactNode }) => (
 		<span>{children}</span>
@@ -161,9 +182,9 @@ describe("PresetSelector", () => {
 
 		render(<PresetSelector />);
 
-		// Trigger selection via mock Select (which is a button)
-		const mockSelect = screen.getByTestId("mock-select");
-		fireEvent.click(mockSelect);
+		// Trigger selection by clicking a mock SelectItem
+		const option2 = screen.getByTestId("select-item-1");
+		fireEvent.click(option2);
 
 		expect(mockOpenBlockDialog).toHaveBeenCalled();
 		const dialogConfig = mockOpenBlockDialog.mock.calls[0][0];
@@ -192,8 +213,8 @@ describe("PresetSelector", () => {
 
 		render(<PresetSelector />);
 
-		const mockSelect = screen.getByTestId("mock-select");
-		fireEvent.click(mockSelect);
+		const option2 = screen.getByTestId("select-item-1");
+		fireEvent.click(option2);
 
 		expect(mockOpenBlockDialog).toHaveBeenCalled();
 		const dialogConfig = mockOpenBlockDialog.mock.calls[0][0];
