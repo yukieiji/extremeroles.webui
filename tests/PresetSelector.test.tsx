@@ -1,4 +1,5 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { PresetSelector } from "@/feature/exr/PresetSelector";
 import { useOptionData } from "@/hooks/useExROptionData";
@@ -14,29 +15,47 @@ vi.mock("@/hooks/useBackend", () => ({
 
 // Mock Select component to avoid JSDOM issues with portals/Radix
 vi.mock("@/components/ui/select", () => ({
-	Select: ({ children, onValueChange, value }: any) => (
-		<div
+	Select: ({
+		children,
+		onValueChange,
+		value,
+	}: {
+		children: ReactNode;
+		onValueChange: (v: string) => void;
+		value: string;
+	}) => (
+		<button
+			type="button"
 			data-testid="mock-select"
 			data-value={value}
 			onClick={() => onValueChange("1")}
 		>
 			{children}
-		</div>
-	),
-	SelectTrigger: ({ className, children, ...props }: any) => (
-		<button className={className} {...props}>
-			{children}
 		</button>
 	),
-	SelectContent: ({ children }: any) => (
+	SelectTrigger: ({
+		className,
+		children,
+		...props
+	}: {
+		className?: string;
+		children?: ReactNode;
+	}) => (
+		<span className={className} {...props}>
+			{children}
+		</span>
+	),
+	SelectContent: ({ children }: { children: ReactNode }) => (
 		<div data-testid="select-content">{children}</div>
 	),
-	SelectItem: ({ children, value }: any) => (
+	SelectItem: ({ children, value }: { children: ReactNode; value: string }) => (
 		<div data-testid={`select-item-${value}`} data-value={value}>
 			{children}
 		</div>
 	),
-	SelectValue: ({ children }: any) => <div>{children}</div>,
+	SelectValue: ({ children }: { children?: ReactNode }) => (
+		<span>{children}</span>
+	),
 }));
 
 describe("PresetSelector", () => {
@@ -141,7 +160,7 @@ describe("PresetSelector", () => {
 
 		render(<PresetSelector />);
 
-		// Trigger selection via mock Select
+		// Trigger selection via mock Select (which is a button)
 		const mockSelect = screen.getByTestId("mock-select");
 		fireEvent.click(mockSelect);
 
@@ -176,6 +195,7 @@ describe("PresetSelector", () => {
 
 		expect(mockOpenBlockDialog).toHaveBeenCalled();
 		const dialogConfig = mockOpenBlockDialog.mock.calls[0][0];
+		// Message should contain default names "10" and "20"
 		expect(dialogConfig.message).toContain("10");
 		expect(dialogConfig.message).toContain("20");
 	});
@@ -195,7 +215,9 @@ describe("PresetSelector", () => {
 		);
 
 		render(<PresetSelector />);
-		// Both items should show their original values in parentheses
+		// Current input value
+		expect(screen.getByRole("textbox")).toHaveValue("Custom 1");
+		// Check dropdown items (rendered by mock)
 		expect(screen.getByText("(123)")).toBeInTheDocument();
 		expect(screen.getByText("(456)")).toBeInTheDocument();
 	});
