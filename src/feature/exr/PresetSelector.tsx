@@ -45,11 +45,7 @@ export function PresetSelector() {
 		setBlockDialog({
 			type: "confirm",
 			title: PRESET_SWITCH_TITLE,
-			message: format(
-				PRESET_SWITCH_MESSAGE,
-				currentPresetName,
-				newPresetName,
-			),
+			message: format(PRESET_SWITCH_MESSAGE, currentPresetName, newPresetName),
 			onConfirm: () =>
 				backendUpdator(async () => {
 					await updateExrOption(0, 0, 0, index);
