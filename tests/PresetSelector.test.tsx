@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { PresetSelector } from "@/feature/exr/PresetSelector";
 import { useOptionData } from "@/hooks/useExROptionData";
@@ -12,23 +13,87 @@ vi.mock("@/hooks/useBackend", () => ({
 	useBackendUpdate: () => vi.fn((callback: () => Promise<void>) => callback()),
 }));
 
+// Mock Select component to avoid JSDOM issues with portals/Radix
+vi.mock("@/components/ui/select", () => ({
+	Select: ({
+		children,
+		onValueChange,
+		value,
+	}: {
+		children: ReactNode;
+		onValueChange: (v: string) => void;
+		value: string;
+	}) => (
+		<div
+			data-testid="mock-select"
+			data-value={value}
+			onClick={(e) => {
+				const target = e.target as HTMLElement;
+				const item = target.closest("[data-value]");
+				if (item) {
+					const val = item.getAttribute("data-value");
+					if (val) {
+						onValueChange(val);
+					}
+				}
+			}}
+			onKeyDown={(e) => {
+				if (e.key === "Enter") {
+					onValueChange("1");
+				}
+			}}
+			role="listbox"
+			tabIndex={0}
+		>
+			{children}
+		</div>
+	),
+	SelectTrigger: ({
+		className,
+		children,
+		...props
+	}: {
+		className?: string;
+		children?: ReactNode;
+	}) => (
+		<button type="button" className={className} {...props}>
+			{children}
+		</button>
+	),
+	SelectContent: ({ children }: { children: ReactNode }) => (
+		<div data-testid="select-content">{children}</div>
+	),
+	SelectItem: ({ children, value }: { children: ReactNode; value: string }) => (
+		<button
+			type="button"
+			data-testid={`select-item-${value}`}
+			data-value={value}
+			role="option"
+			aria-selected={false}
+		>
+			{children}
+		</button>
+	),
+	SelectValue: ({ children }: { children?: ReactNode }) => (
+		<span>{children}</span>
+	),
+}));
+
 describe("PresetSelector", () => {
-	const mockSetPresetDropdownOpen = vi.fn();
 	const mockUpdatePresetName = vi.fn();
 	const mockOpenBlockDialog = vi.fn();
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: ["Preset 1", "Preset 2"],
-				isPresetDropdownOpen: false,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
+		const state = {
+			presetNames: { 0: "Preset 1", 1: "Preset 2" },
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(state));
+		// @ts-expect-error
+		useStore.getState = () => state;
 	});
 
 	it("renders preset name in input", () => {
@@ -43,43 +108,7 @@ describe("PresetSelector", () => {
 		expect(input).toHaveValue("Preset 1");
 	});
 
-	it("toggles dropdown when button clicked", () => {
-		vi.mocked(useOptionData).mockReturnValue({
-			selection: 0,
-			values: [0, 1],
-		});
-
-		render(<PresetSelector />);
-
-		const button = screen.getByRole("button", { name: /プリセットを選択/i });
-		fireEvent.click(button);
-
-		expect(mockSetPresetDropdownOpen).toHaveBeenCalled();
-	});
-
-	it("shows dropdown items when open", () => {
-		vi.mocked(useOptionData).mockReturnValue({
-			selection: 0,
-			values: [0, 1],
-		});
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: ["Preset 1", "Preset 2"],
-				isPresetDropdownOpen: true,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
-
-		render(<PresetSelector />);
-
-		expect(screen.getByText("Preset 1")).toBeInTheDocument();
-		expect(screen.getByText("Preset 2")).toBeInTheDocument();
-	});
-
-	it("calls updatePresetName on blur", () => {
+	it("calls updatePresetName on blur with new name", () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: [0, 1],
@@ -92,6 +121,20 @@ describe("PresetSelector", () => {
 		fireEvent.blur(input);
 
 		expect(mockUpdatePresetName).toHaveBeenCalledWith(0, "New Name");
+	});
+
+	it("skips update if name is unchanged on blur", () => {
+		vi.mocked(useOptionData).mockReturnValue({
+			selection: 0,
+			values: [0, 1],
+		});
+
+		render(<PresetSelector />);
+
+		const input = screen.getByRole("textbox");
+		fireEvent.blur(input);
+
+		expect(mockUpdatePresetName).not.toHaveBeenCalled();
 	});
 
 	it("handles Enter key in input", () => {
@@ -125,77 +168,69 @@ describe("PresetSelector", () => {
 		expect(input).toHaveValue("100");
 	});
 
-	it("skips update if name is unchanged on blur", () => {
-		vi.mocked(useOptionData).mockReturnValue({
-			selection: 0,
-			values: [0, 1],
-		});
-
-		render(<PresetSelector />);
-
-		const input = screen.getByRole("textbox");
-		fireEvent.blur(input);
-
-		expect(mockUpdatePresetName).not.toHaveBeenCalled();
-	});
-
-	it("handles preset selection from dropdown and confirm dialog", async () => {
-		vi.mocked(useOptionData).mockReturnValue({
-			selection: 0,
-			values: [10, 20],
-		});
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: ["P1", "P2"],
-				isPresetDropdownOpen: true,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
-
-		render(<PresetSelector />);
-
-		const optionButton = screen.getByText("P2");
-		fireEvent.click(optionButton);
-
-		expect(mockSetPresetDropdownOpen).toHaveBeenCalledWith(false);
-		expect(mockOpenBlockDialog).toHaveBeenCalled();
-
-		const { onConfirm } = mockOpenBlockDialog.mock.calls[0][0];
-		await onConfirm();
-		expect(updateExrOption).toHaveBeenCalledWith(0, 0, 0, 1);
-	});
-
-	it("closes dropdown on outside click", () => {
-		vi.mocked(useOptionData).mockReturnValue({
-			selection: 0,
-			values: [0, 1],
-		});
-
-		render(<PresetSelector />);
-
-		fireEvent.mouseDown(document.body);
-		expect(mockSetPresetDropdownOpen).toHaveBeenCalledWith(false);
-	});
-
 	it("renders nothing if presetOption is missing", () => {
 		vi.mocked(useOptionData).mockReturnValue(null as never);
 		const { container } = render(<PresetSelector />);
 		expect(container.firstChild).toBeNull();
 	});
 
-	it("shows original values in dropdown if names are custom", () => {
+	it("handles preset selection and confirm dialog", async () => {
+		vi.mocked(useOptionData).mockReturnValue({
+			selection: 0,
+			values: [10, 20],
+		});
+
+		render(<PresetSelector />);
+
+		// Trigger selection by clicking a mock SelectItem
+		const option2 = screen.getByTestId("select-item-1");
+		fireEvent.click(option2);
+
+		expect(mockOpenBlockDialog).toHaveBeenCalled();
+		const dialogConfig = mockOpenBlockDialog.mock.calls[0][0];
+		expect(dialogConfig.type).toBe("confirm");
+
+		// Test onConfirm
+		await dialogConfig.onConfirm();
+		expect(updateExrOption).toHaveBeenCalledWith(0, 0, 0, 1);
+	});
+
+	it("covers default name branch in handlePresetSelect", async () => {
+		vi.mocked(useOptionData).mockReturnValue({
+			selection: 0,
+			values: [10, 20],
+		});
+		// No custom names in store
+		const state = {
+			presetNames: {},
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(state));
+		// @ts-expect-error
+		useStore.getState = () => state;
+
+		render(<PresetSelector />);
+
+		const option2 = screen.getByTestId("select-item-1");
+		fireEvent.click(option2);
+
+		expect(mockOpenBlockDialog).toHaveBeenCalled();
+		const dialogConfig = mockOpenBlockDialog.mock.calls[0][0];
+		// Message should contain default names "10" and "20"
+		expect(dialogConfig.message).toContain("10");
+		expect(dialogConfig.message).toContain("20");
+	});
+
+	it("renders additional info in dropdown items when name is custom", () => {
 		vi.mocked(useOptionData).mockReturnValue({
 			selection: 0,
 			values: [123, 456],
 		});
 		vi.mocked(useStore).mockImplementation((selector) =>
 			selector({
-				presetNames: ["Custom Name", "Preset 2"],
-				isPresetDropdownOpen: true,
-				setPresetDropdownOpen: mockSetPresetDropdownOpen,
+				presetNames: { 0: "Custom 1", 1: "Custom 2" },
 				updatePresetName: mockUpdatePresetName,
 				openBlockDialog: mockOpenBlockDialog,
 				highlightedExROptionId: null,
@@ -203,6 +238,28 @@ describe("PresetSelector", () => {
 		);
 
 		render(<PresetSelector />);
+		// Current input value
+		expect(screen.getByRole("textbox")).toHaveValue("Custom 1");
+		// Check dropdown items (rendered by mock)
 		expect(screen.getByText("(123)")).toBeInTheDocument();
+		expect(screen.getByText("(456)")).toBeInTheDocument();
+	});
+
+	it("does not render parentheses when name matches value", () => {
+		vi.mocked(useOptionData).mockReturnValue({
+			selection: 0,
+			values: [123],
+		});
+		vi.mocked(useStore).mockImplementation((selector) =>
+			selector({
+				presetNames: { 0: "123" },
+				updatePresetName: mockUpdatePresetName,
+				openBlockDialog: mockOpenBlockDialog,
+				highlightedExROptionId: null,
+			}),
+		);
+
+		render(<PresetSelector />);
+		expect(screen.queryByText("(123)")).not.toBeInTheDocument();
 	});
 });
