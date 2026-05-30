@@ -33,7 +33,9 @@ test("Options interaction behavior", async ({ page }) => {
 	await presetInput.press("Enter");
 
 	// ドロップダウンを開いて名前が反映されているか確認
-	await page.getByRole("combobox", { name: "プリセットを選択" }).click({ force: true });
+	await page
+		.getByRole("combobox", { name: "プリセットを選択" })
+		.click({ force: true });
 	// ドロップダウン内の項目を特定するため、より具体的なロケータを使用（サイドバーにも同じテキストが表示されるため）
 	await expect(
 		page.getByRole("option", { name: "Test Preset" }).first(),

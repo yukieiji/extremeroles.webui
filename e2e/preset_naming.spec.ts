@@ -37,7 +37,7 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	const selectButton = page.getByRole("combobox", { name: "プリセットを選択" });
 	await expect(selectButton).toBeVisible();
 	await selectButton.click({ force: true });
-	await page.waitForSelector("[data-slot=\"select-content\"]");
+	await page.waitForSelector('[data-slot="select-content"]');
 
 	// プリセット 2 (index 1) に切り替える
 	const preset2Button = page.getByRole("option", { name: "10", exact: true });
@@ -80,7 +80,7 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	// ドロップダウンを開いて index 1 の名前が保持されていることを確認
 	await expect(selectButton).toBeVisible();
 	await selectButton.click({ force: true });
-	await page.waitForSelector("[data-slot=\"select-content\"]");
+	await page.waitForSelector('[data-slot="select-content"]');
 	const casualFunButton = page.getByRole("option", { name: "Casual Fun" });
 	await expect(casualFunButton).toBeVisible();
 
