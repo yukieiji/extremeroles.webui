@@ -1,8 +1,11 @@
-import { useEffect, useRef } from "react";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { Select } from "@/components/ui/select";
+import { useBackendUpdate } from "@/hooks/useBackend";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
+import { updateExrOption } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
+import { format, PRESET_SWITCH_MESSAGE, PRESET_SWITCH_TITLE } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { PresetDropdown } from "./PresetDropdown";
 import { PresetInput } from "./PresetInput";
@@ -10,39 +13,18 @@ import { PresetInput } from "./PresetInput";
 /**
  * プリセットを選択・編集するためのコンポーネント。
  * CategoryId: 0, OptionId: 0 の設定を操作します。
- * AGENT.md のガイドラインに従い、useState を使用せず、グローバルストアで状態を管理します。
  */
 
 export function PresetSelector() {
 	const presetOption = useOptionData(PRESET_OPTION_UNIQUE_ID);
 
-	const isDropdownOpen = useStore((state) => {
-		return state.isPresetDropdownOpen;
-	});
-	const setPresetDropdownOpen = useStore((state) => {
-		return state.setPresetDropdownOpen;
-	});
 	const isHighlighted = useStore((state) => {
 		return state.highlightedExROptionId === PRESET_OPTION_UNIQUE_ID;
 	});
+	const currentPresetNames = useStore((state) => state.presetNames);
+	const setBlockDialog = useStore((state) => state.openBlockDialog);
 
-	const dropdownRef = useRef<HTMLDivElement>(null);
-
-	// 外部クリックでドロップダウンを閉じる
-	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
-			) {
-				setPresetDropdownOpen(false);
-			}
-		};
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, [setPresetDropdownOpen]);
+	const backendUpdator = useBackendUpdate();
 
 	if (!presetOption) {
 		return null;
@@ -52,6 +34,25 @@ export function PresetSelector() {
 	const presetValues = presetOption.values as number[];
 	const currentPresetValue = presetValues[currentSelection];
 
+	const currentPresetName =
+		currentPresetNames[currentSelection] ?? String(currentPresetValue);
+
+	const handleValueChange = (value: string) => {
+		const index = Number.parseInt(value, 10);
+		const newPresetValue = presetValues[index];
+		const newPresetName = currentPresetNames[index] ?? String(newPresetValue);
+
+		setBlockDialog({
+			type: "confirm",
+			title: PRESET_SWITCH_TITLE,
+			message: format(PRESET_SWITCH_MESSAGE, currentPresetName, newPresetName),
+			onConfirm: () =>
+				backendUpdator(async () => {
+					await updateExrOption(0, 0, 0, index);
+				}),
+		});
+	};
+
 	const navigateId = createExRNavigateId(PRESET_OPTION_UNIQUE_ID);
 
 	return (
@@ -60,19 +61,22 @@ export function PresetSelector() {
 			isHighlighted={isHighlighted}
 			isInset={false}
 		>
-			<div className="relative flex items-center gap-2" ref={dropdownRef}>
-				<PresetInput
-					currentSelection={currentSelection}
-					currentPresetValue={currentPresetValue}
-				/>
+			<Select
+				value={String(currentSelection)}
+				onValueChange={handleValueChange}
+			>
+				<div className="relative flex items-center gap-2">
+					<PresetInput
+						currentSelection={currentSelection}
+						currentPresetValue={currentPresetValue}
+					/>
 
-				{isDropdownOpen && (
 					<PresetDropdown
 						currentSelection={currentSelection}
 						presetValues={presetValues}
 					/>
-				)}
-			</div>
+				</div>
+			</Select>
 		</HighlightWrapper>
 	);
 }

@@ -21,7 +21,6 @@ export interface ExROptionViewerSlice {
 	openedExRCategoryIds: Record<number, boolean>;
 	openedExROptionIds: Record<number, boolean>;
 	presetNames: Record<number, string>;
-	isPresetDropdownOpen: boolean;
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	highlightedExROptionId: UniqueOptionId | null;
@@ -32,7 +31,6 @@ export interface ExROptionViewerSlice {
 	openExROptions: (uniqueOptionIds: UniqueOptionId[]) => void;
 	updateExROption: (updateOptions: (UpdatedOptions | null)[]) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
-	setPresetDropdownOpen: (isOpen: boolean) => void;
 	setHighlightedExROptionId: (id: UniqueOptionId | null) => void;
 	resetViewer: () => void;
 	setExROptions: (
@@ -57,7 +55,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		isExROptionActive: {},
 		highlightedExROptionId: null,
 		presetNames: loadPresetNamesFromLocalStorage(),
-		isPresetDropdownOpen: false,
 		setSelectedExRTabId: (id: ExRTabId) => {
 			console.log(
 				JSON.stringify({
@@ -77,7 +74,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 				isExRTabPending: false,
 				openedExRCategoryIds: {},
 				openedExROptionIds: {},
-				isPresetDropdownOpen: false,
 			});
 		},
 		toggleExRCategory: (categoryId: number) => {
@@ -167,9 +163,6 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 					presetNames: newPresetNames,
 				};
 			});
-		},
-		setPresetDropdownOpen: (isOpen: boolean) => {
-			set({ isPresetDropdownOpen: isOpen });
 		},
 		setHighlightedExROptionId: (id) => {
 			set({ highlightedExROptionId: id });
