@@ -22,7 +22,6 @@ export function PresetSelector() {
 		return state.highlightedExROptionId === PRESET_OPTION_UNIQUE_ID;
 	});
 
-	const presetNames = useStore((state) => state.presetNames);
 	const setBlockDialog = useStore((state) => state.openBlockDialog);
 
 	const backendUpdator = useBackendUpdate();
@@ -38,6 +37,7 @@ export function PresetSelector() {
 	const handlePresetSelect = (value: string) => {
 		const index = Number(value);
 		const val = presetValues[index];
+		const presetNames = useStore.getState().presetNames;
 		const currentPresetName =
 			presetNames[currentSelection] ?? String(currentPresetValue);
 		const newPresetName = presetNames[index] ?? String(val);

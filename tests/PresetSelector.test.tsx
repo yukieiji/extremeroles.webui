@@ -37,10 +37,7 @@ vi.mock("@/components/ui/select", () => ({
 		className,
 		children,
 		...props
-	}: {
-		className?: string;
-		children?: ReactNode;
-	}) => (
+	}: { className?: string; children?: ReactNode }) => (
 		<span className={className} {...props}>
 			{children}
 		</span>
@@ -64,14 +61,15 @@ describe("PresetSelector", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: { 0: "Preset 1", 1: "Preset 2" },
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
+		const state = {
+			presetNames: { 0: "Preset 1", 1: "Preset 2" },
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(state));
+		// @ts-ignore
+		useStore.getState = () => state;
 	});
 
 	it("renders preset name in input", () => {
@@ -179,14 +177,15 @@ describe("PresetSelector", () => {
 			values: [10, 20],
 		});
 		// No custom names in store
-		vi.mocked(useStore).mockImplementation((selector) =>
-			selector({
-				presetNames: {},
-				updatePresetName: mockUpdatePresetName,
-				openBlockDialog: mockOpenBlockDialog,
-				highlightedExROptionId: null,
-			}),
-		);
+		const state = {
+			presetNames: {},
+			updatePresetName: mockUpdatePresetName,
+			openBlockDialog: mockOpenBlockDialog,
+			highlightedExROptionId: null,
+		};
+		vi.mocked(useStore).mockImplementation((selector) => selector(state));
+		// @ts-ignore
+		useStore.getState = () => state;
 
 		render(<PresetSelector />);
 
