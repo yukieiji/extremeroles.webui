@@ -8,15 +8,14 @@ import { useStore } from "@/useStore";
 
 export function PresetSummaryRow() {
 	const navigateExR = useExROptionNavigationInline();
-
-	const selection = useStore(
-		(state) => state.exrValue[PRESET_OPTION_UNIQUE_ID]?.selection ?? 0,
-	);
-	const presetValue = useStore(
-		(state) => state.exrValue[PRESET_OPTION_UNIQUE_ID]?.values[selection] ?? "",
-	);
 	const presetName = useStore(
-		(state) => state.presetNames[selection] ?? String(presetValue),
+		useShallow((state) => {
+			const option = state.exrValue[PRESET_OPTION_UNIQUE_ID];
+			const selection = option?.selection ?? 0;
+			return (
+				state.presetNames[selection] ?? String(option?.values[selection] ?? "")
+			);
+		}),
 	);
 
 	const presetTitle =

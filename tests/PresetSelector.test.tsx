@@ -37,7 +37,10 @@ vi.mock("@/components/ui/select", () => ({
 		className,
 		children,
 		...props
-	}: { className?: string; children?: ReactNode }) => (
+	}: {
+		className?: string;
+		children?: ReactNode;
+	}) => (
 		<span className={className} {...props}>
 			{children}
 		</span>
@@ -68,7 +71,7 @@ describe("PresetSelector", () => {
 			highlightedExROptionId: null,
 		};
 		vi.mocked(useStore).mockImplementation((selector) => selector(state));
-		// @ts-ignore
+		// @ts-expect-error
 		useStore.getState = () => state;
 	});
 
@@ -184,7 +187,7 @@ describe("PresetSelector", () => {
 			highlightedExROptionId: null,
 		};
 		vi.mocked(useStore).mockImplementation((selector) => selector(state));
-		// @ts-ignore
+		// @ts-expect-error
 		useStore.getState = () => state;
 
 		render(<PresetSelector />);
