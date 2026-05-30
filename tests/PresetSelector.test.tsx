@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { PresetSelector } from "@/feature/exr/PresetSelector";
 import { useOptionData } from "@/hooks/useExROptionData";
-import { updateExrOption } from "@/logics/api";
 import { useStore } from "@/useStore";
 
 vi.mock("@/hooks/useExROptionData");
@@ -51,7 +50,7 @@ describe("PresetSelector", () => {
 
 		render(<PresetSelector />);
 
-		const button = screen.getByRole("button", { name: /プリセットを選択/i });
+		const button = screen.getByRole("combobox", { name: /プリセットを選択/i });
 		expect(button).toBeInTheDocument();
 	});
 
@@ -115,11 +114,9 @@ describe("PresetSelector", () => {
 		expect(mockUpdatePresetName).not.toHaveBeenCalled();
 	});
 
-
 	it("renders nothing if presetOption is missing", () => {
 		vi.mocked(useOptionData).mockReturnValue(null as never);
 		const { container } = render(<PresetSelector />);
 		expect(container.firstChild).toBeNull();
 	});
-
 });

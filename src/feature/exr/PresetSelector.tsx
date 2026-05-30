@@ -71,10 +71,7 @@ export function PresetSelector() {
 						currentPresetValue={currentPresetValue}
 					/>
 
-					<PresetDropdown
-						currentSelection={currentSelection}
-						presetValues={presetValues}
-					/>
+					<PresetDropdown presetValues={presetValues} />
 				</div>
 			</Select>
 		</HighlightWrapper>

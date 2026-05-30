@@ -68,21 +68,15 @@ export function PresetInput({
 				placeholder={PRESET_INPUT_PLACEHOLDER}
 			/>
 			<SelectTrigger
-				asChild
 				hideIcon
-				className="h-auto p-0 border-none rounded-none focus-visible:ring-0"
+				className="h-auto p-0 border-none rounded-none focus-visible:ring-0 px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors data-open:[&_svg]:rotate-180"
+				aria-label={PRESET_SELECT_ARIA}
 			>
-				<button
-					type="button"
-					className="px-2 py-1.5 bg-gray-700 hover:bg-gray-600 border-l border-gray-600 transition-colors data-open:[&_svg]:rotate-180"
-					aria-label={PRESET_SELECT_ARIA}
-				>
-					<ChevronDown
-						size={16}
-						className="text-gray-400 transition-transform"
-						aria-hidden="true"
-					/>
-				</button>
+				<ChevronDown
+					size={16}
+					className="text-gray-400 transition-transform"
+					aria-hidden="true"
+				/>
 			</SelectTrigger>
 		</div>
 	);
