@@ -71,13 +71,10 @@ export function PresetSelector() {
 				value={String(currentSelection)}
 				onValueChange={handlePresetSelect}
 			>
-				<div className="relative flex items-center gap-2">
-					<PresetInput
-						currentSelection={currentSelection}
-						currentPresetValue={currentPresetValue}
-					/>
-				</div>
-
+				<PresetInput
+					currentSelection={currentSelection}
+					currentPresetValue={currentPresetValue}
+				/>
 				<PresetDropdown presetValues={presetValues} />
 			</Select>
 		</HighlightWrapper>

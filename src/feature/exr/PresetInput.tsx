@@ -55,7 +55,7 @@ export function PresetInput({
 	};
 
 	return (
-		<div className="relative flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
+		<div className="flex items-center bg-gray-800 border border-gray-700 rounded overflow-hidden focus-within:bg-gray-600">
 			<input
 				ref={inputRef}
 				type="text"
@@ -63,11 +63,11 @@ export function PresetInput({
 				defaultValue={currentPresetName}
 				onBlur={handleBlur}
 				onKeyDown={handleKeyDown}
-				className="px-3 py-1.5 text-sm bg-transparent text-gray-200 outline-none w-48"
+				className="px-3 text-sm bg-transparent w-48"
 				placeholder={PRESET_INPUT_PLACEHOLDER}
 			/>
 			<SelectTrigger
-				className="px-2 py-1.5 h-auto bg-gray-700 hover:bg-gray-600 border-l border-gray-600 rounded-none transition-colors border-y-0 border-r-0"
+				className="px-2 py-1.5 h-auto"
 				aria-label={PRESET_SELECT_ARIA}
 			/>
 		</div>
