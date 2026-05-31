@@ -34,10 +34,16 @@ export function PresetSelector() {
 	const presetValues = presetOption.values as number[];
 	const currentPresetValue = presetValues[currentSelection];
 
-	const handlePresetSelect = (value: string) => {
+	const handlePresetSelect = (value: string | null) => {
+		if (!value) {
+			return;
+		}
 		const index = Number(value);
 		const val = presetValues[index];
-		const presetNames = useStore.getState().presetNames;
+		if (val === presetValues[currentSelection]) {
+			return;
+		}
+		const { presetNames } = useStore.getState();
 		const currentPresetName =
 			presetNames[currentSelection] ?? String(currentPresetValue);
 		const newPresetName = presetNames[index] ?? String(val);
