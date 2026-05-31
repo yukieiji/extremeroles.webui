@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -25,17 +24,11 @@ export function PresetInput({
 	});
 	const updatePresetName = useStore((state) => state.updatePresetName);
 
-	const inputRef = useRef<HTMLInputElement>(null);
-
 	/**
 	 * ストアと LocalStorage を更新する
 	 */
-	const commitNameChange = () => {
-		if (!inputRef.current) {
-			return;
-		}
-
-		const newValue = inputRef.current.value.trim();
+	const commitNameChange = (input: HTMLInputElement) => {
+		const newValue = input.value.trim();
 		const finalValue = newValue === "" ? String(currentPresetValue) : newValue;
 
 		// 値が変更されている場合のみ更新を行う
@@ -44,25 +37,24 @@ export function PresetInput({
 		}
 
 		// 入力欄の表示を確定後の値に更新する
-		inputRef.current.value = finalValue;
+		input.value = finalValue;
 	};
 
-	const handleBlur = () => {
-		commitNameChange();
+	const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+		commitNameChange(e.currentTarget);
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
-			commitNameChange();
+			commitNameChange(e.currentTarget);
 			// Enter 入力後はフォーカスを外して確定を視覚的に示す
 			e.currentTarget.blur();
 		}
 	};
 
 	return (
-		<InputGroup>
+		<InputGroup className="w-48">
 			<InputGroupInput
-				ref={inputRef}
 				type="text"
 				key={currentSelection}
 				defaultValue={currentPresetName}
