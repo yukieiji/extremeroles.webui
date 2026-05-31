@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	createExROptionMetaData,
 	exrOptionMetaData,
@@ -6,13 +6,17 @@ import {
 } from "@/logics/api";
 import { ExRTabId } from "@/type";
 
-// Mock global fetch
-global.fetch = vi.fn();
-
 describe("exrOptionMetaData color assignment", () => {
+	const mockFetch = vi.fn();
+
 	beforeEach(() => {
-		vi.clearAllMocks();
+		vi.stubGlobal("fetch", mockFetch);
 		resetExrOptionMetaData();
+	});
+
+	afterEach(() => {
+		vi.unstubAllGlobals();
+		vi.clearAllMocks();
 	});
 
 	it("should assign default color #FFFFFF to GeneralTab if no color tags are present", async () => {
@@ -30,7 +34,7 @@ describe("exrOptionMetaData color assignment", () => {
 			},
 		];
 
-		vi.mocked(fetch).mockResolvedValue({
+		mockFetch.mockResolvedValue({
 			ok: true,
 			json: async () => mockData,
 		} as Response);
@@ -57,7 +61,7 @@ describe("exrOptionMetaData color assignment", () => {
 			},
 		];
 
-		vi.mocked(fetch).mockResolvedValue({
+		mockFetch.mockResolvedValue({
 			ok: true,
 			json: async () => mockData,
 		} as Response);
@@ -84,7 +88,7 @@ describe("exrOptionMetaData color assignment", () => {
 			},
 		];
 
-		vi.mocked(fetch).mockResolvedValue({
+		mockFetch.mockResolvedValue({
 			ok: true,
 			json: async () => mockData,
 		} as Response);
