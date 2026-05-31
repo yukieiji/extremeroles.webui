@@ -269,9 +269,13 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 			tab.Id === ExRTabId.GhostNeutralTab;
 
 		const extractedColors = extractColors(tab.Name);
-		const colors = isGhost
+		let colors = isGhost
 			? extractedColors.map((c) => darkenColor(c))
 			: extractedColors;
+
+		if (colors.length === 0 && tab.Id === ExRTabId.GeneralTab) {
+			colors = ["#FFFFFF"];
+		}
 
 		exrOptionMetaData.tabs[tab.Id] = {
 			name: stripColorTags(tab.Name),
