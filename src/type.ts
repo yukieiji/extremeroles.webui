@@ -156,6 +156,8 @@ export const AU_PREFIX = {
 	CHANCE: 2,
 } as const;
 
+export const AU_TAB_COLORS = ["#FFFFFF", "#8CFF00", "#FF0000"];
+
 // 全ての値（1 | 2）を型として抽出
 export type AuOptionPrefix = (typeof AU_PREFIX)[keyof typeof AU_PREFIX];
 
@@ -181,6 +183,7 @@ export interface AuOptionCategoryMetaData {
 
 export interface AuOptionMetaDataRecords {
 	tabNames: string[]; // タブの名前
+	tabColors: string[]; // タブのカラー
 	tabCategoryMap: Record<number, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
 	categoryMetaData: Record<number, AuOptionCategoryMetaData>; // カテゴリIDとカテゴリメタデータの対応
 	options: Record<AuOptionId, AuOptionMeta>; // 全オプションのメタデータ
