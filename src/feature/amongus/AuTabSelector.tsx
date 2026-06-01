@@ -42,10 +42,12 @@ export function AuTabSelector() {
 			value={selectedAuTabId.toString()}
 			tabs={auOptionMetaData.tabNames}
 			onValueChange={handleValueChange}
-			getValue={(_, index) => index.toString()}
-			getColors={(_, index) => {
+			getTabProps={(_, index) => {
 				const color = auOptionMetaData.tabColors[index];
-				return color ? [color] : [];
+				return {
+					value: index.toString(),
+					colors: color ? [color] : [],
+				};
 			}}
 		>
 			{(t) => t}

@@ -43,10 +43,12 @@ export function ExRTabSelector() {
 			value={selectedExRTabId.toString()}
 			tabs={Object.keys(exrOptionMetaData.tabs)}
 			onValueChange={handleValueChange}
-			getValue={(t, _) => t}
-			getColors={(t) => {
+			getTabProps={(t) => {
 				const castedTabId = Number(t) as ExRTabId;
-				return exrOptionMetaData.tabs[castedTabId]?.colors ?? [];
+				return {
+					value: t,
+					colors: exrOptionMetaData.tabs[castedTabId]?.colors ?? [],
+				};
 			}}
 		>
 			{(t) => {
