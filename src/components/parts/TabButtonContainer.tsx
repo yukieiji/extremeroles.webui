@@ -1,4 +1,4 @@
-import type { Key, ReactNode } from "react";
+import type { CSSProperties, Key, ReactNode } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getLinearGradient } from "@/logics/colorUtils";
 
@@ -31,7 +31,7 @@ export function TabButtonContainer<T extends Key | undefined | null>({
 						colors.length > 0
 							? ({
 									"--tab-color": getLinearGradient(colors),
-								} as React.CSSProperties)
+								} as CSSProperties)
 							: undefined;
 					return (
 						<TabsTrigger
