@@ -55,6 +55,7 @@ export const exrOptionMetaData: ExROptionMetaDataRecords = {
 
 export const auOptionMetaData: AuOptionMetaDataRecords = {
 	tabNames: [],
+	tabColors: [],
 	tabCategoryMap: {},
 	categoryMetaData: {},
 	options: {},
@@ -84,6 +85,7 @@ export function resetExrOptionMetaData() {
  */
 export function resetAuOptionMetaData() {
 	auOptionMetaData.tabNames = [];
+	auOptionMetaData.tabColors = [];
 	auOptionMetaData.tabCategoryMap = {};
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
@@ -326,6 +328,7 @@ export async function createAuOptionMetaData(): Promise<
 
 	const initialValueData: Record<number, number> = {};
 	auOptionMetaData.tabNames = ["0", "1", "2"];
+	auOptionMetaData.tabColors = [["#FFFFFF"], ["#8CFF00"], ["#FF0000"]];
 	auOptionMetaData.tabCategoryMap = { 0: [], 1: [], 2: [] };
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};

@@ -14,9 +14,10 @@ export function AuCategoryList() {
 
 	const tabCategoryIds = auOptionMetaData.tabCategoryMap[selectedAuTabId] || [];
 	const isRoleTab = selectedAuTabId === 1 || selectedAuTabId === 2;
+	const tabColors = auOptionMetaData.tabColors[selectedAuTabId] || [];
 
 	return (
-		<CategoryContainer isPending={isTabPending}>
+		<CategoryContainer isPending={isTabPending} colors={tabColors}>
 			{tabCategoryIds.map((categoryId, index) => {
 				if (isRoleTab) {
 					return (
