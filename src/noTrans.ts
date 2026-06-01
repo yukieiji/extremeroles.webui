@@ -58,6 +58,7 @@ export const ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE =
 export const ROLE_FILTER_NO_ROLES = "No roles selected";
 export const ROLE_FILTER_DELETE_ARIA = "Delete filter";
 export const ROLE_SELECT_SEARCH_PLACEHOLDER = "役職を検索...";
+export const OPTION_SEARCH_PLACEHOLDER = "オプションを検索...";
 export const ROLE_SELECT_DEFAULT_TITLE = "役職の選択";
 export const CSV_FILE_DESCRIPTION = "CSV File";
 
