@@ -181,7 +181,7 @@ export interface AuOptionCategoryMetaData {
 
 export interface AuOptionMetaDataRecords {
 	tabNames: string[]; // タブの名前
-	tabColors: string[][]; // タブのカラー
+	tabColors: string[]; // タブのカラー
 	tabCategoryMap: Record<number, number[]>; // タブIDとそのタブに属するカテゴリIDの対応
 	categoryMetaData: Record<number, AuOptionCategoryMetaData>; // カテゴリIDとカテゴリメタデータの対応
 	options: Record<AuOptionId, AuOptionMeta>; // 全オプションのメタデータ

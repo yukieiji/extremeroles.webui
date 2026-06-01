@@ -328,7 +328,7 @@ export async function createAuOptionMetaData(): Promise<
 
 	const initialValueData: Record<number, number> = {};
 	auOptionMetaData.tabNames = ["0", "1", "2"];
-	auOptionMetaData.tabColors = [["#FFFFFF"], ["#8CFF00"], ["#FF0000"]];
+	auOptionMetaData.tabColors = ["#FFFFFF", "#8CFF00", "#FF0000"];
 	auOptionMetaData.tabCategoryMap = { 0: [], 1: [], 2: [] };
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
