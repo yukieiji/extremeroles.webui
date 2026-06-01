@@ -156,6 +156,8 @@ export const AU_PREFIX = {
 	CHANCE: 2,
 } as const;
 
+export const AU_TAB_COLORS = ["#FFFFFF", "#8CFF00", "#FF0000"];
+
 // 全ての値（1 | 2）を型として抽出
 export type AuOptionPrefix = (typeof AU_PREFIX)[keyof typeof AU_PREFIX];
 

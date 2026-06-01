@@ -18,6 +18,7 @@ import type {
 } from "../type";
 import {
 	AU_PREFIX,
+	AU_TAB_COLORS,
 	AuOptionCategoryDtoArraySchema,
 	ExRTabDtoArraySchema,
 	ExRTabId,
@@ -328,7 +329,7 @@ export async function createAuOptionMetaData(): Promise<
 
 	const initialValueData: Record<number, number> = {};
 	auOptionMetaData.tabNames = ["0", "1", "2"];
-	auOptionMetaData.tabColors = ["#FFFFFF", "#8CFF00", "#FF0000"];
+	auOptionMetaData.tabColors = [...AU_TAB_COLORS];
 	auOptionMetaData.tabCategoryMap = { 0: [], 1: [], 2: [] };
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
