@@ -42,7 +42,13 @@ export function AuTabSelector() {
 			value={selectedAuTabId.toString()}
 			tabs={auOptionMetaData.tabNames}
 			onValueChange={handleValueChange}
-			getValue={(_, index) => index.toString()}
+			getTabProps={(_, index) => {
+				const color = auOptionMetaData.tabColors[index];
+				return {
+					value: index.toString(),
+					colors: color ? [color] : [],
+				};
+			}}
 		>
 			{(t) => t}
 		</TabButtonContainer>
