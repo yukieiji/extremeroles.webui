@@ -22,13 +22,19 @@ test.describe("Au Tab Outline Colors", () => {
 	test("Tab 0 (General) should have white outline", async ({ page }) => {
 		await page.getByRole("tab", { name: "0", exact: true }).click();
 		const categoryList = page.getByTestId("category-list");
-		await expect(categoryList).toHaveCSS("border-top-color", "rgb(255, 255, 255)");
+		await expect(categoryList).toHaveCSS(
+			"border-top-color",
+			"rgb(255, 255, 255)",
+		);
 	});
 
 	test("Tab 1 (Crewmate) should have lime green outline", async ({ page }) => {
 		await page.getByRole("tab", { name: "1", exact: true }).click();
 		const categoryList = page.getByTestId("category-list");
-		await expect(categoryList).toHaveCSS("border-top-color", "rgb(140, 255, 0)");
+		await expect(categoryList).toHaveCSS(
+			"border-top-color",
+			"rgb(140, 255, 0)",
+		);
 	});
 
 	test("Tab 2 (Impostor) should have red outline", async ({ page }) => {
