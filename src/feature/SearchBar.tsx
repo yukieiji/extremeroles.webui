@@ -25,7 +25,6 @@ export function SearchBar() {
 	return (
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
 			<PopoverTrigger
-				onMouseEnter={() => setIsOpen(true)}
 				render={
 					<InputGroup className="w-64">
 						<InputGroupAddon align="inline-start">
@@ -35,6 +34,9 @@ export function SearchBar() {
 							placeholder={OPTION_SEARCH_PLACEHOLDER}
 							type="search"
 							className="flex-1"
+							onFocus={() => {
+								setIsOpen(true);
+							}}
 							onChange={(e) => {
 								setQuery(e.target.value);
 							}}
@@ -43,7 +45,13 @@ export function SearchBar() {
 					</InputGroup>
 				}
 			/>
-			<PopoverContent className="w-64" align="start">
+			<PopoverContent
+				className="w-64"
+				align="start"
+				onCloseAutoFocus={(e) => {
+					e.preventDefault();
+				}}
+			>
 				<SearchSuggestion />
 			</PopoverContent>
 		</Popover>

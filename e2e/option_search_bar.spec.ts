@@ -33,4 +33,40 @@ test.describe("Option Search Bar", () => {
 			page.getByPlaceholder("オプションを検索..."),
 		).not.toBeVisible();
 	});
+
+	test("should open popover on focus and update query", async ({ page }) => {
+		await page.getByRole("button", { name: "Au Options" }).click();
+		const searchInput = page.getByPlaceholder("オプションを検索...");
+		await searchInput.focus();
+
+		const popover = page.getByRole("dialog");
+		await expect(popover).toBeVisible();
+
+		await searchInput.fill("test query");
+		const queryDisplay = page.getByTestId("search-query-display");
+		await expect(queryDisplay).toHaveText("test query");
+
+		// Ensure popover is still open and input is still focused
+		await expect(popover).toBeVisible();
+		await expect(searchInput).toBeFocused();
+	});
+
+	test("should maintain popover and focus during continuous typing", async ({
+		page,
+	}) => {
+		await page.getByRole("button", { name: "Au Options" }).click();
+		const searchInput = page.getByPlaceholder("オプションを検索...");
+		await searchInput.focus();
+
+		const popover = page.getByRole("dialog");
+		await expect(popover).toBeVisible();
+
+		await searchInput.pressSequentially("continuous typing", { delay: 50 });
+
+		const queryDisplay = page.getByTestId("search-query-display");
+		await expect(queryDisplay).toHaveText("continuous typing");
+
+		await expect(popover).toBeVisible();
+		await expect(searchInput).toBeFocused();
+	});
 });
