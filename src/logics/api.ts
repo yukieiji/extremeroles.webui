@@ -79,7 +79,12 @@ export function resetExrOptionMetaData() {
 	exrOptionMetaData.categories = {};
 	exrOptionMetaData.options = {};
 	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
+
+	const nextItems = globalSearchItems.filter((item) => {
+		return !item.info.mode.startsWith("exr-");
+	});
 	globalSearchItems.length = 0;
+	globalSearchItems.push(...nextItems);
 }
 
 /**
@@ -91,7 +96,12 @@ export function resetAuOptionMetaData() {
 	auOptionMetaData.tabCategoryMap = {};
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
+
+	const nextItems = globalSearchItems.filter((item) => {
+		return !item.info.mode.startsWith("au-");
+	});
 	globalSearchItems.length = 0;
+	globalSearchItems.push(...nextItems);
 }
 
 /**
