@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { SearchBar } from "@/feature/SearchBar";
 import { globalSearchItems } from "@/logics/api";
 import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
+import type { AuOptionId, UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
 // Mock the navigation hooks
@@ -30,12 +31,18 @@ describe("SearchBar", () => {
 			{
 				id: "exr-opt-1",
 				term: "Active Option",
-				info: { mode: "exr-opt", uniqueOptionId: 1 as any },
+				info: {
+					mode: "exr-opt",
+					uniqueOptionId: 1 as unknown as UniqueOptionId,
+				},
 			},
 			{
 				id: "exr-opt-2",
 				term: "Inactive Option",
-				info: { mode: "exr-opt", uniqueOptionId: 2 as any },
+				info: {
+					mode: "exr-opt",
+					uniqueOptionId: 2 as unknown as UniqueOptionId,
+				},
 			},
 			{
 				id: "au-opt-3",
@@ -44,14 +51,17 @@ describe("SearchBar", () => {
 					mode: "au-opt",
 					tabId: 0,
 					categoryId: 0,
-					auOptionId: 3 as any,
+					auOptionId: 3 as unknown as AuOptionId,
 				},
 			},
 		);
 
 		// Mock store state
 		useStore.setState({
-			isExROptionActive: { 1: true, 2: false } as any,
+			isExROptionActive: {
+				[1 as unknown as UniqueOptionId]: true,
+				[2 as unknown as UniqueOptionId]: false,
+			},
 		});
 
 		render(<SearchBar />);

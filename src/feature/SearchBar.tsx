@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -18,37 +18,35 @@ import { useStore } from "@/useStore";
  * オプションやカテゴリをを検索するための検索バーコンポーネント。
  */
 export function SearchBar() {
-	const [query, setQuery] = useState("");
-	const [isOpen, setIsOpen] = useState(false);
-	const [results, setResults] = useState<SearchItem[]>([]);
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const isExROptionActive = useStore((state) => state.isExROptionActive);
+	const query = useStore((state) => state.optionSearchQuery);
+	const setQuery = useStore((state) => state.setOptionSearchQuery);
+	const isOpen = useStore((state) => state.isOptionSearchOpen);
+	const setIsOpen = useStore((state) => state.setIsOptionSearchOpen);
+
 	const navigateToExR = useExROptionNavigationInline();
 	const navigateToAu = useAuOptionNavigationInline();
 
-	useEffect(() => {
-		if (query.trim() === "") {
-			setResults([]);
-			return;
-		}
+	const lowerQuery = query.toLowerCase();
+	const results =
+		query.trim() === ""
+			? []
+			: globalSearchItems
+					.filter((item) => {
+						if (!item.term.toLowerCase().includes(lowerQuery)) {
+							return false;
+						}
 
-		const lowerQuery = query.toLowerCase();
-		const filtered = globalSearchItems.filter((item) => {
-			if (!item.term.toLowerCase().includes(lowerQuery)) {
-				return false;
-			}
+						// ExRオプションの場合はアクティブチェックを行う
+						if (item.info.mode === "exr-opt") {
+							return isExROptionActive[item.info.uniqueOptionId] ?? false;
+						}
 
-			// ExRオプションの場合はアクティブチェックを行う
-			if (item.info.mode === "exr-opt") {
-				return isExROptionActive[item.info.uniqueOptionId] ?? false;
-			}
-
-			return true;
-		});
-
-		setResults(filtered.slice(0, 10)); // 最大10件表示
-	}, [query, isExROptionActive]);
+						return true;
+					})
+					.slice(0, 10); // 最大10件表示
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -64,7 +62,7 @@ export function SearchBar() {
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, []);
+	}, [setIsOpen]);
 
 	const handleSelect = (item: SearchItem) => {
 		if (item.info.mode === "exr-opt") {
