@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { OptionSearchBar } from "@/feature/SearchBar";
+import { SearchBar } from "@/feature/SearchBar";
 import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
 
 describe("SearchBar", () => {
 	it("renders correctly with search icon and placeholder", () => {
-		render(<OptionSearchBar />);
+		render(<SearchBar />);
 
 		const input = screen.getByPlaceholderText(OPTION_SEARCH_PLACEHOLDER);
 		expect(input).toBeInTheDocument();
