@@ -79,6 +79,7 @@ export function resetExrOptionMetaData() {
 	exrOptionMetaData.categories = {};
 	exrOptionMetaData.options = {};
 	exrOptionMetaData.globalCategoryIdTopLevelMap = {};
+	globalSearchItems.length = 0;
 }
 
 /**
@@ -90,6 +91,7 @@ export function resetAuOptionMetaData() {
 	auOptionMetaData.tabCategoryMap = {};
 	auOptionMetaData.categoryMetaData = {};
 	auOptionMetaData.options = {};
+	globalSearchItems.length = 0;
 }
 
 /**
@@ -226,6 +228,15 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 					exrOptionMetaData.options[uniqueId]?.childOptionIds ?? [],
 				parentOptionIds: ancestorIds,
 			};
+
+			globalSearchItems.push({
+				id: `exr-opt-${uniqueId}`,
+				term: opt.TranslatedName,
+				info: {
+					mode: "exr-opt",
+					uniqueOptionId: uniqueId,
+				},
+			});
 
 			valueData[uniqueId] = {
 				selection: opt.Selection,
@@ -391,6 +402,17 @@ export async function createAuOptionMetaData(): Promise<
 					categoryId: categoryId,
 				};
 				initialValueData[maxCountId] = roleValue.MaxCount;
+
+				globalSearchItems.push({
+					id: `au-opt-${chanceId}`,
+					term: opt.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: chanceId,
+					},
+				});
 			} else {
 				const auOptionId = getAuOptionId(optionName, valueType);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(auOptionId);
@@ -418,6 +440,17 @@ export async function createAuOptionMetaData(): Promise<
 					categoryId: categoryId,
 				};
 				initialValueData[auOptionId] = index;
+
+				globalSearchItems.push({
+					id: `au-opt-${auOptionId}`,
+					term: opt.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: auOptionId,
+					},
+				});
 			}
 		}
 	}

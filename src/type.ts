@@ -525,7 +525,7 @@ export interface AuCategorySearchTargetInfo {
 
 export interface SearchItem {
 	id: string;
-	tearm: string;
+	term: string;
 	info:
 		| AuCategorySearchTargetInfo
 		| AuOptionSearchTargetInfo
