@@ -28,17 +28,17 @@ export function SearchBar() {
 			onOpenChange={(open, details) => {
 				if (open) {
 					setIsOpen(true);
+					return;
+				}
+				if (
+					details.reason === "outside-press" ||
+					details.reason === "escape-key" ||
+					details.reason === "focus-out"
+				) {
+					setIsOpen(false);
 				} else {
-					if (
-						details.reason === "outside-press" ||
-						details.reason === "escape-key" ||
-						details.reason === "focus-out"
-					) {
-						setIsOpen(false);
-					} else {
-						// Prevent closing when clicking the input (trigger-press)
-						details.cancel();
-					}
+					// Prevent closing when clicking the input (trigger-press)
+					details.cancel();
 				}
 			}}
 		>
@@ -68,7 +68,7 @@ export function SearchBar() {
 					</InputGroup>
 				}
 			/>
-			<PopoverContent className="w-64" align="start" initialFocus={false}>
+			<PopoverContent className="w-64" align="start">
 				<SearchSuggestion />
 			</PopoverContent>
 		</Popover>
