@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { OptionSearchBar } from "@/feature/OptionSearchBar";
+import { OptionSearchBar } from "@/feature/SearchBar";
 import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
 
-describe("OptionSearchBar", () => {
+describe("SearchBar", () => {
 	it("renders correctly with search icon and placeholder", () => {
 		render(<OptionSearchBar />);
 

@@ -7,10 +7,10 @@ import {
 import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
 
 /**
- * オプションを検索するための検索バーコンポーネント。
+ * オプションやカテゴリをを検索するための検索バーコンポーネント。
  * UIのみを提供し、メインのロジックはまだ実装されていません。
  */
-export function OptionSearchBar() {
+export function SearchBar() {
 	return (
 		<InputGroup className="w-64">
 			<InputGroupAddon align="inline-start">

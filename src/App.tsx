@@ -12,9 +12,9 @@ import { BlockableLoading } from "./feature/BlockableLoading";
 import { ExROptionEditor } from "./feature/exr/ExROptionEditor";
 import { PresetSelector } from "./feature/exr/PresetSelector";
 import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
-import { OptionSearchBar } from "./feature/OptionSearchBar";
 import { RightSidePanel } from "./feature/rightsidepanel/RightSidePanel";
 import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
+import { SearchBar } from "./feature/SearchBar";
 import {
 	useBackendUpdate,
 	useExportCsv,
@@ -110,9 +110,7 @@ function MainContent() {
 							<PresetSelectorContainer />
 						</Suspense>
 					)}
-					{(selectedTab === "ExR" || selectedTab === "Au") && (
-						<OptionSearchBar />
-					)}
+					{(selectedTab === "ExR" || selectedTab === "Au") && <SearchBar />}
 					{isSidebarPending && (
 						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
