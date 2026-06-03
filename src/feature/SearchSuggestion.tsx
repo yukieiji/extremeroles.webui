@@ -35,6 +35,7 @@ export function SearchSuggestion() {
 	const navigateToExR = useExROptionNavigationInline();
 	const navigateToAu = useAuOptionNavigationInline();
 	const setIsOpen = useStore((state) => state.setSuggestOpen);
+	const optionSearchQuery = useStore((state) => state.optionSearchQuery);
 
 	const _handleSelect = (item: SearchItem) => {
 		if (item.info.mode === "exr-opt") {
@@ -47,8 +48,11 @@ export function SearchSuggestion() {
 
 	return (
 		<PopoverHeader>
-			<PopoverTitle>Dimensions</PopoverTitle>
-			<PopoverDescription>Set the dimensions for the layer.</PopoverDescription>
+			<PopoverTitle>Search Results</PopoverTitle>
+			<PopoverDescription>
+				Query:{" "}
+				<span data-testid="search-query-display">{optionSearchQuery}</span>
+			</PopoverDescription>
 		</PopoverHeader>
 	);
 }

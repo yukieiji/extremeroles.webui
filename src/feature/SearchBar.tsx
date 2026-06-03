@@ -23,9 +23,25 @@ export function SearchBar() {
 	const setIsOpen = useStore((state) => state.setSuggestOpen);
 
 	return (
-		<Popover open={isOpen} onOpenChange={setIsOpen}>
+		<Popover
+			open={isOpen}
+			onOpenChange={(open, details) => {
+				if (open) {
+					setIsOpen(true);
+				} else if (
+					details.reason === "outside-press" ||
+					details.reason === "escape-key" ||
+					details.reason === "focus-out"
+				) {
+					setIsOpen(false);
+				} else {
+					// Prevent closing when clicking the input (trigger-press)
+					details.cancel();
+				}
+			}}
+		>
 			<PopoverTrigger
-				onMouseEnter={() => setIsOpen(true)}
+				nativeButton={false}
 				render={
 					<InputGroup className="w-64">
 						<InputGroupAddon align="inline-start">
@@ -35,6 +51,13 @@ export function SearchBar() {
 							placeholder={OPTION_SEARCH_PLACEHOLDER}
 							type="search"
 							className="flex-1"
+							autoComplete="off"
+							onFocus={() => {
+								setIsOpen(true);
+							}}
+							onClick={(e) => {
+								e.stopPropagation();
+							}}
 							onChange={(e) => {
 								setQuery(e.target.value);
 							}}
