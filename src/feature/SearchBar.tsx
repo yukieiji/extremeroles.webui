@@ -28,9 +28,7 @@ export function SearchBar() {
 			onOpenChange={(open, details) => {
 				if (open) {
 					setIsOpen(true);
-					return;
-				}
-				if (
+				} else if (
 					details.reason === "outside-press" ||
 					details.reason === "escape-key" ||
 					details.reason === "focus-out"
