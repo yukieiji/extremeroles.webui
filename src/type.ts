@@ -497,11 +497,10 @@ export const DeltRoleAssignFilterSchema = z.object({
 
 export type DeltRoleAssignFilter = z.infer<typeof DeltRoleAssignFilterSchema>;
 
-export type SearchItemMode = "Au" | "ExR";
-
 export interface ExROptionSearchTargetInfo {
 	mode: "exr-opt";
 	uniqueOptionId: UniqueOptionId;
+	parentUniqueOptionIds: UniqueOptionId[];
 }
 
 export interface AuOptionSearchTargetInfo {
@@ -524,8 +523,7 @@ export interface AuCategorySearchTargetInfo {
 }
 
 export interface SearchItem {
-	id: string;
-	tearm: string;
+	term: string;
 	info:
 		| AuCategorySearchTargetInfo
 		| AuOptionSearchTargetInfo

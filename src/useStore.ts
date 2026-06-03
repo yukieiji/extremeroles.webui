@@ -11,12 +11,15 @@ import type { RightSidePanelSlice } from "./slices/rightSidePanelSlice";
 import { createRightSidePanelSlice } from "./slices/rightSidePanelSlice";
 import type { RoleFilterSlice } from "./slices/roleFilterSlice";
 import { createRoleFilterSlice } from "./slices/roleFilterSlice";
+import type { SearchBarSlice } from "./slices/searchBarSlice";
+import { createSearchBarSlice } from "./slices/searchBarSlice";
 
 /**
  * Zustand ストアの作成
  */
 export const useStore = create<
 	GlobalUiSlice &
+		SearchBarSlice &
 		OptionGroupToggleSidebarSlice &
 		RightSidePanelSlice &
 		AuOptionViewerSlice &
@@ -25,6 +28,7 @@ export const useStore = create<
 >()((...a) => {
 	return {
 		...createGlobalUiSlice(...a),
+		...createSearchBarSlice(...a),
 		...createOptionGroupToggleSidebarSlice(...a),
 		...createRightSidePanelSlice(...a),
 		...createAuOptionViewerSlice(...a),
