@@ -45,13 +45,7 @@ export function SearchBar() {
 					</InputGroup>
 				}
 			/>
-			<PopoverContent
-				className="w-64"
-				align="start"
-				onCloseAutoFocus={(e) => {
-					e.preventDefault();
-				}}
-			>
+			<PopoverContent className="w-64" align="start">
 				<SearchSuggestion />
 			</PopoverContent>
 		</Popover>
