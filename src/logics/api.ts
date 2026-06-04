@@ -427,16 +427,6 @@ export async function createAuOptionMetaData(): Promise<
 					categoryId: categoryId,
 				};
 				initialValueData[maxCountId] = roleValue.MaxCount;
-
-				globalSearchItems.push({
-					term: opt.TranslatedTitle,
-					info: {
-						mode: "au-opt",
-						tabId: currentTab,
-						categoryId: categoryId,
-						auOptionId: maxCountId,
-					},
-				});
 			} else {
 				const auOptionId = getAuOptionId(optionName, valueType);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(auOptionId);
