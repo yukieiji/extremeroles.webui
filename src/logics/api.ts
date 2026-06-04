@@ -227,6 +227,15 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				parentOptionIds: ancestorIds,
 			};
 
+			globalSearchItems.push({
+				term: opt.TranslatedName,
+				info: {
+					mode: "exr-opt",
+					uniqueOptionId: uniqueId,
+					parentUniqueOptionIds: ancestorIds,
+				},
+			});
+
 			valueData[uniqueId] = {
 				selection: opt.Selection,
 				values: opt.RangeMeta.Values,
@@ -290,6 +299,14 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				name: category.Name,
 				tabId: tab.Id,
 			};
+			globalSearchItems.push({
+				term: category.Name,
+				info: {
+					mode: "exr-cat",
+					tabId: tab.Id,
+					categoryId: category.Id,
+				},
+			});
 			if (tab.Id === ExRTabId.GeneralTab) {
 				// 一般タブのカテゴリは、トップレベルオプションIDを直接カテゴリIDに紐づける
 				exrOptionMetaData.globalCategoryIdTopLevelMap[category.Id] =
@@ -357,6 +374,15 @@ export async function createAuOptionMetaData(): Promise<
 			tabId: currentTab,
 		};
 
+		globalSearchItems.push({
+			term: category.TranslatedTitle,
+			info: {
+				mode: "au-cat",
+				tabId: currentTab,
+				categoryId: categoryId,
+			},
+		});
+
 		for (const opt of category.Options) {
 			const valueType = opt.Info.ValueType;
 			const optionName = opt.Info.OptionName;
@@ -376,6 +402,16 @@ export async function createAuOptionMetaData(): Promise<
 				};
 				initialValueData[chanceId] = Math.floor(roleValue.Chance / 10);
 
+				globalSearchItems.push({
+					term: opt.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: chanceId,
+					},
+				});
+
 				// MaxCount
 				const maxCountId = getAuOptionId(
 					optionName,
@@ -391,6 +427,16 @@ export async function createAuOptionMetaData(): Promise<
 					categoryId: categoryId,
 				};
 				initialValueData[maxCountId] = roleValue.MaxCount;
+
+				globalSearchItems.push({
+					term: opt.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: maxCountId,
+					},
+				});
 			} else {
 				const auOptionId = getAuOptionId(optionName, valueType);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(auOptionId);
@@ -418,6 +464,16 @@ export async function createAuOptionMetaData(): Promise<
 					categoryId: categoryId,
 				};
 				initialValueData[auOptionId] = index;
+
+				globalSearchItems.push({
+					term: opt.TranslatedTitle,
+					info: {
+						mode: "au-opt",
+						tabId: currentTab,
+						categoryId: categoryId,
+						auOptionId: auOptionId,
+					},
+				});
 			}
 		}
 	}
