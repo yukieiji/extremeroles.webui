@@ -4,10 +4,7 @@ import { ColoredText } from "@/components/parts/ColoredText";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Separator } from "@/components/ui/separator";
-import {
-	useAuOptionNavigationInline,
-	useExROptionNavigationInline,
-} from "@/hooks/useOptionNavigation";
+import { useSearchSelection } from "@/hooks/useSearchSelection";
 import type { SearchItem } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -30,20 +27,10 @@ function getKeyByMode(item: SearchItem) {
 export function SearchSuggestionResult({
 	results,
 }: SearchSuggestionResultProps) {
-	const navigateToExR = useExROptionNavigationInline();
-	const navigateToAu = useAuOptionNavigationInline();
-	const setIsOpen = useStore((state) => state.setSuggestOpen);
+	const handleSelect = useSearchSelection();
 	const selectedIndex = useStore((state) => state.selectedSuggestIndex);
-
-	const handleSelect = (item: SearchItem) => {
-		if (item.info.mode === "exr-opt") {
-			navigateToExR(item.info.uniqueOptionId);
-			setIsOpen(false);
-		} else if (item.info.mode === "au-opt") {
-			navigateToAu(item.info.tabId, item.info.categoryId, item.info.auOptionId);
-			setIsOpen(false);
-		}
-	};
+	const actualIndex =
+		results.length > 0 && selectedIndex < results.length ? selectedIndex : 0;
 
 	return (
 		<ButtonGroup orientation="vertical" className="w-full">
@@ -51,8 +38,8 @@ export function SearchSuggestionResult({
 				<Fragment key={getKeyByMode(item)}>
 					<Button
 						className="h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left"
-						variant={index === selectedIndex ? "secondary" : "ghost"}
-						data-selected={index === selectedIndex}
+						variant={index === actualIndex ? "secondary" : "ghost"}
+						data-selected={index === actualIndex}
 						onClick={() => handleSelect(item)}
 					>
 						<div className="w-full min-w-0 truncate">

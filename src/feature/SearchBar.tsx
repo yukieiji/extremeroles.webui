@@ -10,11 +10,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-	useAuOptionNavigationInline,
-	useExROptionNavigationInline,
-} from "@/hooks/useOptionNavigation";
 import { useSearchResults } from "@/hooks/useSearchResults";
+import { useSearchSelection } from "@/hooks/useSearchSelection";
 import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { SearchSuggestion } from "./SearchSuggestion";
@@ -31,35 +28,26 @@ export function SearchBar() {
 	const setSelectedIndex = useStore((state) => state.setSelectedSuggestIndex);
 
 	const results = useSearchResults();
-	const navigateToExR = useExROptionNavigationInline();
-	const navigateToAu = useAuOptionNavigationInline();
+	const handleSelect = useSearchSelection();
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (!isOpen || results.length === 0) {
 			return;
 		}
 
+		const actualIndex = selectedIndex < results.length ? selectedIndex : 0;
+
 		if (e.key === "ArrowDown") {
 			e.preventDefault();
-			setSelectedIndex((selectedIndex + 1) % results.length);
+			setSelectedIndex((actualIndex + 1) % results.length);
 		} else if (e.key === "ArrowUp") {
 			e.preventDefault();
-			setSelectedIndex((selectedIndex - 1 + results.length) % results.length);
+			setSelectedIndex((actualIndex - 1 + results.length) % results.length);
 		} else if (e.key === "Enter") {
 			e.preventDefault();
-			const selectedItem = results[selectedIndex];
+			const selectedItem = results[actualIndex];
 			if (selectedItem) {
-				if (selectedItem.info.mode === "exr-opt") {
-					navigateToExR(selectedItem.info.uniqueOptionId);
-					setIsOpen(false);
-				} else if (selectedItem.info.mode === "au-opt") {
-					navigateToAu(
-						selectedItem.info.tabId,
-						selectedItem.info.categoryId,
-						selectedItem.info.auOptionId,
-					);
-					setIsOpen(false);
-				}
+				handleSelect(selectedItem);
 			}
 		}
 	};
