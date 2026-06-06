@@ -49,7 +49,7 @@ export function SearchSuggestionResult({
 			{results.map((item, index) => (
 				<Fragment key={getKeyByMode(item)}>
 					<Button
-						className="h-auto w-full min-w-0 flex-col items-start justify-start py-2 text-left"
+						className="h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left"
 						variant="ghost"
 						onClick={() => handleSelect(item)}
 					>
