@@ -73,6 +73,7 @@ export const EXR_SHORT_LABEL = "E";
 export const ROLE_FILTER_SHORT_LABEL = "R";
 export const ON = "ON";
 export const OFF = "OFF";
+export const RANDOM_MAP_LABEL = "ランダム";
 
 export const ERROR_TITLE = "エラーが発生しました";
 export const ERROR_RETRY_BUTTON = "再試行";
