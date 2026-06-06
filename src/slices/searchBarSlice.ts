@@ -22,17 +22,21 @@ export interface SearchBarSlice {
 /**
  * サイドバーの状態管理を行うスライスの生成
  */
-export const createSearchBarSlice: StateCreator<SearchBarSlice> = (
-	set,
-	get,
-) => {
+import type { ExROptionViewerSlice } from "./exrOptionViewerSlice";
+
+export const createSearchBarSlice: StateCreator<
+	SearchBarSlice & ExROptionViewerSlice,
+	[],
+	[],
+	SearchBarSlice
+> = (set, get) => {
 	return {
 		optionSearchQuery: "",
 		setOptionSearchQuery: (query: string) => {
 			const lowerQuery = query.toLowerCase().trim();
 			let filteredResults: SearchItem[] = [];
 			if (lowerQuery !== "") {
-				const state = get() as any; // FIXME: state type
+				const state = get();
 				filteredResults = globalSearchItems
 					.filter((item) => {
 						if (!item.term.toLowerCase().includes(lowerQuery)) {
@@ -61,14 +65,19 @@ export const createSearchBarSlice: StateCreator<SearchBarSlice> = (
 		filteredResults: [],
 		selectNextSuggestion: () => {
 			const { filteredResults, selectedSuggestIndex } = get();
-			if (filteredResults.length === 0) return;
+			if (filteredResults.length === 0) {
+				return;
+			}
 			set({
-				selectedSuggestIndex: (selectedSuggestIndex + 1) % filteredResults.length,
+				selectedSuggestIndex:
+					(selectedSuggestIndex + 1) % filteredResults.length,
 			});
 		},
 		selectPrevSuggestion: () => {
 			const { filteredResults, selectedSuggestIndex } = get();
-			if (filteredResults.length === 0) return;
+			if (filteredResults.length === 0) {
+				return;
+			}
 			set({
 				selectedSuggestIndex:
 					(selectedSuggestIndex - 1 + filteredResults.length) %

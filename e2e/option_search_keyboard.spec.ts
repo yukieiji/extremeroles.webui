@@ -49,7 +49,7 @@ test.describe("Option Search Keyboard Navigation", () => {
 		const suggestions = popover.getByRole("button");
 
 		// Navigate to the second suggestion if exists
-		if (await suggestions.count() > 1) {
+		if ((await suggestions.count()) > 1) {
 			await searchInput.press("ArrowDown");
 		}
 

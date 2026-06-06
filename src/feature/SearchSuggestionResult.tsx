@@ -3,9 +3,9 @@ import { SearchParentData } from "@/components/blocks/SearchParentData";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { Separator } from "@/components/ui/separator";
 import { useSearchNavigation } from "@/hooks/useSearchNavigation";
 import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
 import type { SearchItem } from "@/type";
 
 interface SearchSuggestionResultProps {
@@ -36,7 +36,8 @@ export function SearchSuggestionResult({
 					<Button
 						className={cn(
 							"h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left",
-							index === selectedSuggestIndex && "bg-secondary text-secondary-foreground",
+							index === selectedSuggestIndex &&
+								"bg-secondary text-secondary-foreground",
 						)}
 						variant="ghost"
 						onClick={() => handleSelect(item)}

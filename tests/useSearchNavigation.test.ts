@@ -1,13 +1,22 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useSearchNavigation } from "@/hooks/useSearchNavigation";
-import { useStore } from "@/useStore";
 import { globalSearchItems } from "@/logics/api";
+import type { SearchItem } from "@/type";
+import { useStore } from "@/useStore";
 
 // Reset globalSearchItems for testing
-(globalSearchItems as any).push(
-	{ term: "Item 1", info: { mode: "au-opt", tabId: 0, categoryId: 0, auOptionId: 1 }, parentData: { tabName: "Tab", categoryName: "Cat", parentOptionNames: [] } },
-	{ term: "Item 2", info: { mode: "au-opt", tabId: 0, categoryId: 0, auOptionId: 2 }, parentData: { tabName: "Tab", categoryName: "Cat", parentOptionNames: [] } },
+(globalSearchItems as SearchItem[]).push(
+	{
+		term: "Item 1",
+		info: { mode: "au-opt", tabId: 0, categoryId: 0, auOptionId: 1 },
+		parentData: { tabName: "Tab", categoryName: "Cat", parentOptionNames: [] },
+	},
+	{
+		term: "Item 2",
+		info: { mode: "au-opt", tabId: 0, categoryId: 0, auOptionId: 2 },
+		parentData: { tabName: "Tab", categoryName: "Cat", parentOptionNames: [] },
+	},
 );
 
 vi.mock("@/hooks/useOptionNavigation", () => ({
@@ -32,7 +41,7 @@ describe("useSearchNavigation", () => {
 			result.current.onKeyDown({
 				key: "ArrowDown",
 				preventDefault: vi.fn(),
-			} as any);
+			} as unknown as React.KeyboardEvent<HTMLInputElement>);
 		});
 
 		expect(useStore.getState().selectedSuggestIndex).toBe(1);
@@ -50,22 +59,22 @@ describe("useSearchNavigation", () => {
 			result.current.onKeyDown({
 				key: "ArrowUp",
 				preventDefault: vi.fn(),
-			} as any);
+			} as unknown as React.KeyboardEvent<HTMLInputElement>);
 		});
 
 		expect(useStore.getState().selectedSuggestIndex).toBe(1);
 	});
 
-    it("resets selection index when search query changes", () => {
-        act(() => {
-            useStore.getState().setOptionSearchQuery("Item");
-            useStore.getState().setSelectedSuggestIndex(1);
-        });
+	it("resets selection index when search query changes", () => {
+		act(() => {
+			useStore.getState().setOptionSearchQuery("Item");
+			useStore.getState().setSelectedSuggestIndex(1);
+		});
 
-        act(() => {
-            useStore.getState().setOptionSearchQuery("new");
-        });
+		act(() => {
+			useStore.getState().setOptionSearchQuery("new");
+		});
 
-        expect(useStore.getState().selectedSuggestIndex).toBe(0);
-    });
+		expect(useStore.getState().selectedSuggestIndex).toBe(0);
+	});
 });
