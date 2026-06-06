@@ -45,9 +45,9 @@ test.describe("Random Map Display and Hiding", () => {
 			.filter({ hasText: "毎回マップがランダムに変わるか" })
 			.last();
 		const toggleSwitch = optionRow.getByTestId("option-toggle");
-		await expect(optionRow.getByText("オフ")).toBeVisible();
+		await expect(optionRow.getByText("オフ", { exact: true })).toBeVisible();
 		await toggleSwitch.click();
-		await expect(optionRow.getByText("オン")).toBeVisible();
+		await expect(optionRow.getByText("オン", { exact: true })).toBeVisible();
 
 		// 4. 右パネルのサマリー表示が「ランダム」に変わったことを確認
 		const summary = page.getByTestId("right-panel-summary");
