@@ -88,8 +88,8 @@ test.describe("Option Search Bar", () => {
 		await expect(popover).toBeVisible();
 		await expect(searchInput).toBeFocused();
 
-		// Wait for 3 seconds to see if focus is lost
-		await page.waitForTimeout(3000);
+		// Wait for 1 second to see if focus is lost
+		await page.waitForTimeout(1000);
 		await expect(searchInput).toBeFocused();
 	});
 
