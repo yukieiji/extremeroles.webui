@@ -1,19 +1,11 @@
 import { useShallow } from "zustand/react/shallow";
-import {
-	PopoverDescription,
-	PopoverHeader,
-	PopoverTitle,
-} from "@/components/ui/popover";
-import {
-	useAuOptionNavigationInline,
-	useExROptionNavigationInline,
-} from "@/hooks/useOptionNavigation";
+import { PopoverHeader, PopoverTitle } from "@/components/ui/popover";
 import { globalSearchItems } from "@/logics/api";
-import type { SearchItem } from "@/type";
 import { useStore } from "@/useStore";
+import { SearchSuggestionResult } from "./SearchSuggestionResult";
 
 export function SearchSuggestion() {
-	const _results = useStore(
+	const results = useStore(
 		useShallow((state) => {
 			if (state.optionSearchQuery.trim() === "") {
 				return [];
@@ -32,27 +24,13 @@ export function SearchSuggestion() {
 		}),
 	);
 
-	const navigateToExR = useExROptionNavigationInline();
-	const navigateToAu = useAuOptionNavigationInline();
-	const setIsOpen = useStore((state) => state.setSuggestOpen);
-	const optionSearchQuery = useStore((state) => state.optionSearchQuery);
+	const optionSearchQuery = useStore((state) => state.optionSearchQuery.trim());
 
-	const _handleSelect = (item: SearchItem) => {
-		if (item.info.mode === "exr-opt") {
-			navigateToExR(item.info.uniqueOptionId);
-		} else if (item.info.mode === "au-opt") {
-			navigateToAu(item.info.tabId, item.info.categoryId, item.info.auOptionId);
-		}
-		setIsOpen(false);
-	};
-
-	return (
-		<PopoverHeader>
-			<PopoverTitle>Search Results</PopoverTitle>
-			<PopoverDescription>
-				Query:{" "}
-				<span data-testid="search-query-display">{optionSearchQuery}</span>
-			</PopoverDescription>
+	return optionSearchQuery === "" || results.length === 0 ? (
+		<PopoverHeader className="p-2">
+			<PopoverTitle>Search No Results</PopoverTitle>
 		</PopoverHeader>
+	) : (
+		<SearchSuggestionResult results={results} />
 	);
 }

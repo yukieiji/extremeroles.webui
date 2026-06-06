@@ -66,7 +66,7 @@ export function SearchBar() {
 					</InputGroup>
 				}
 			/>
-			<PopoverContent className="w-64" align="start">
+			<PopoverContent className="min-w-64 w-full" align="start">
 				<SearchSuggestion />
 			</PopoverContent>
 		</Popover>
