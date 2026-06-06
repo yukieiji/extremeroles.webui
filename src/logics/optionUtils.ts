@@ -92,6 +92,8 @@ export const EXR_LIBERAL_MAX_ID = getUniqueOptionId(0, 5, 7);
 export const EXR_MILITANT_MIN_ID = getUniqueOptionId(0, 7, 22);
 export const EXR_MILITANT_MAX_ID = getUniqueOptionId(0, 7, 23);
 
+export const EXR_RANDOM_MAP_OPTION_ID = getUniqueOptionId(0, 20, 0);
+
 export const VANILLA_ROLE_CATEGORY_IDS = [
 	5, 6, 7, 8, 9, 10, 11, 12, 13,
 ] as const;
@@ -109,6 +111,7 @@ export const MOVED_EXR_OPTION_UNIQUE_IDS = [
 	EXR_LIBERAL_MAX_ID,
 	EXR_MILITANT_MIN_ID,
 	EXR_MILITANT_MAX_ID,
+	EXR_RANDOM_MAP_OPTION_ID,
 ] as const;
 
 const MIN_SUFFIXES = [
