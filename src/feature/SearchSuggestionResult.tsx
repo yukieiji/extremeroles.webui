@@ -49,11 +49,11 @@ export function SearchSuggestionResult({
 			{results.map((item, index) => (
 				<Fragment key={getKeyByMode(item)}>
 					<Button
-						className="h-auto w-full min-w-0 flex-col items-start justify-start py-2"
+						className="h-auto w-full min-w-0 flex-col items-start justify-start py-2 text-left"
 						variant="ghost"
 						onClick={() => handleSelect(item)}
 					>
-						<div className="w-full min-w-0 truncate text-left">
+						<div className="w-full min-w-0 truncate">
 							<ColoredText text={item.term} />
 						</div>
 						<SearchParentData parentData={item.parentData} />
