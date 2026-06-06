@@ -16,7 +16,8 @@ describe("searchBarSlice", () => {
 	});
 
 	it("should set option search query and reset index", () => {
-		const { setOptionSearchQuery, setSelectedSuggestIndex } = useStore.getState();
+		const { setOptionSearchQuery, setSelectedSuggestIndex } =
+			useStore.getState();
 
 		setSelectedSuggestIndex(5);
 		expect(useStore.getState().selectedSuggestIndex).toBe(5);

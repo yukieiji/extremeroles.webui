@@ -12,7 +12,7 @@ vi.mock("@/components/ui/popover", () => ({
 		open,
 	}: {
 		children: React.ReactNode;
-		onOpenChange: (open: boolean, details: any) => void;
+		onOpenChange: (open: boolean, details: unknown) => void;
 		open: boolean;
 	}) => (
 		<div data-testid="popover-mock" data-open={open}>
