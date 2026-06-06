@@ -1,4 +1,6 @@
+import { Fragment } from "react";
 import { ColoredText } from "@/components/parts/ColoredText";
+import { SearchParentData } from "@/components/parts/SearchParentData";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Separator } from "@/components/ui/separator";
@@ -44,17 +46,17 @@ export function SearchSuggestionResult({
 	return (
 		<ButtonGroup orientation="vertical" className="w-full">
 			{results.map((item, index) => (
-				<>
+				<Fragment key={getKeyByMode(item)}>
 					<Button
-						className="justify-start"
-						key={getKeyByMode(item)}
+						className="h-auto w-full flex-col items-start justify-start py-2"
 						variant="ghost"
 						onClick={() => handleSelect(item)}
 					>
 						<ColoredText text={item.term} />
+						<SearchParentData parentData={item.parentData} />
 					</Button>
 					{index < results.length - 1 && <Separator />}
-				</>
+				</Fragment>
 			))}
 		</ButtonGroup>
 	);
