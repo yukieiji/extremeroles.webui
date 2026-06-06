@@ -38,9 +38,6 @@ function useAuNavigationInner() {
 	const setHighlightedAuOptionId = useStore((state) => {
 		return state.setHighlightedAuOptionId;
 	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
 
 	const nav = useNavigate();
 
@@ -51,8 +48,6 @@ function useAuNavigationInner() {
 		navId: string,
 	) => {
 		const { openedAuCategoryIds } = useStore.getState();
-
-		setRightPanelOpen(false);
 		setSelectedTab("Au");
 		setSelectedAuTabId(tabId);
 		if (!openedAuCategoryIds[categoryId]) {
@@ -121,9 +116,6 @@ function useExROptionNavigationInner() {
 	const setHighlightedExROptionId = useStore((state) => {
 		return state.setHighlightedExROptionId;
 	});
-	const setRightPanelOpen = useStore((state) => {
-		return state.setRightPanelOpen;
-	});
 
 	const nav = useNavigate();
 
@@ -135,7 +127,6 @@ function useExROptionNavigationInner() {
 	) => {
 		const { openedExRCategoryIds } = useStore.getState();
 
-		setRightPanelOpen(false);
 		setSelectedTab("ExR");
 		setSelectedExRTabId(tabId as ExRTabId);
 		if (!openedExRCategoryIds[categoryId]) {
