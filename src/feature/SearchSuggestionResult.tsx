@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+import { SearchParentData } from "@/components/blocks/SearchParentData";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -35,26 +37,29 @@ export function SearchSuggestionResult({
 	const handleSelect = (item: SearchItem) => {
 		if (item.info.mode === "exr-opt") {
 			navigateToExR(item.info.uniqueOptionId);
+			setIsOpen(false);
 		} else if (item.info.mode === "au-opt") {
 			navigateToAu(item.info.tabId, item.info.categoryId, item.info.auOptionId);
+			setIsOpen(false);
 		}
-		setIsOpen(false);
 	};
 
 	return (
 		<ButtonGroup orientation="vertical" className="w-full">
 			{results.map((item, index) => (
-				<>
+				<Fragment key={getKeyByMode(item)}>
 					<Button
-						className="justify-start"
-						key={getKeyByMode(item)}
+						className="h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left"
 						variant="ghost"
 						onClick={() => handleSelect(item)}
 					>
-						<ColoredText text={item.term} />
+						<div className="w-full min-w-0 truncate">
+							<ColoredText text={item.term} />
+						</div>
+						<SearchParentData parentData={item.parentData} />
 					</Button>
 					{index < results.length - 1 && <Separator />}
-				</>
+				</Fragment>
 			))}
 		</ButtonGroup>
 	);
