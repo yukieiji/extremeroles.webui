@@ -20,12 +20,20 @@ vi.mock("@/components/ui/popover", () => ({
 describe("SearchSuggestion", () => {
 	it("renders no results when query is empty", () => {
 		vi.mocked(useStore).mockReturnValue("");
-		render(<SearchSuggestion results={[]} selectedIndex={0} />);
+		render(<SearchSuggestion results={[]} />);
 		expect(screen.getByText("Search No Results")).toBeInTheDocument();
 	});
 
 	it("renders results", () => {
-		vi.mocked(useStore).mockReturnValue("Item");
+		// Mock for optionSearchQuery in SearchSuggestion and selectedIndex in SearchSuggestionResult
+		vi.mocked(useStore).mockImplementation((selector) => {
+			const state = {
+				optionSearchQuery: "Item",
+				selectedSuggestIndex: 0,
+			};
+			return (selector as (state: unknown) => unknown)(state);
+		});
+
 		const mockResults = Array.from({ length: 5 }, (_, i) => ({
 			term: `Item ${i}`,
 			info: { mode: "au-cat", tabId: 0, categoryId: i },
@@ -36,12 +44,20 @@ describe("SearchSuggestion", () => {
 			},
 		}));
 
-		render(<SearchSuggestion results={mockResults} selectedIndex={0} />);
+		render(<SearchSuggestion results={mockResults} />);
 		expect(screen.getAllByRole("button")).toHaveLength(5);
 	});
 
 	it("highlights the selected index", () => {
-		vi.mocked(useStore).mockReturnValue("Item");
+		let selectedIndex = 0;
+		vi.mocked(useStore).mockImplementation((selector) => {
+			const state = {
+				optionSearchQuery: "Item",
+				selectedSuggestIndex: selectedIndex,
+			};
+			return (selector as (state: unknown) => unknown)(state);
+		});
+
 		const mockResults = [
 			{
 				term: "Item 0",
@@ -56,13 +72,14 @@ describe("SearchSuggestion", () => {
 		];
 
 		const { rerender } = render(
-			<SearchSuggestion results={mockResults} selectedIndex={0} />,
+			<SearchSuggestion results={mockResults} key={0} />,
 		);
 		let buttons = screen.getAllByRole("button");
-		expect(buttons[0]).toHaveClass("bg-secondary"); // secondary variant uses this class usually
+		expect(buttons[0].getAttribute("data-selected")).toBe("true");
 
-		rerender(<SearchSuggestion results={mockResults} selectedIndex={1} />);
+		selectedIndex = 1;
+		rerender(<SearchSuggestion results={mockResults} key={1} />);
 		buttons = screen.getAllByRole("button");
-		expect(buttons[1]).toHaveClass("bg-secondary");
+		expect(buttons[1].getAttribute("data-selected")).toBe("true");
 	});
 });

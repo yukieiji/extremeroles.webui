@@ -5,13 +5,9 @@ import { SearchSuggestionResult } from "./SearchSuggestionResult";
 
 interface SearchSuggestionProps {
 	results: SearchItem[];
-	selectedIndex: number;
 }
 
-export function SearchSuggestion({
-	results,
-	selectedIndex,
-}: SearchSuggestionProps) {
+export function SearchSuggestion({ results }: SearchSuggestionProps) {
 	const optionSearchQuery = useStore((state) => state.optionSearchQuery.trim());
 
 	return optionSearchQuery === "" || results.length === 0 ? (
@@ -19,6 +15,6 @@ export function SearchSuggestion({
 			<PopoverTitle>Search No Results</PopoverTitle>
 		</PopoverHeader>
 	) : (
-		<SearchSuggestionResult results={results} selectedIndex={selectedIndex} />
+		<SearchSuggestionResult results={results} />
 	);
 }

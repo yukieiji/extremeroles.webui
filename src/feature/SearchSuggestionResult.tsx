@@ -13,7 +13,6 @@ import { useStore } from "@/useStore";
 
 interface SearchSuggestionResultProps {
 	results: SearchItem[];
-	selectedIndex: number;
 }
 
 function getKeyByMode(item: SearchItem) {
@@ -30,11 +29,11 @@ function getKeyByMode(item: SearchItem) {
 
 export function SearchSuggestionResult({
 	results,
-	selectedIndex,
 }: SearchSuggestionResultProps) {
 	const navigateToExR = useExROptionNavigationInline();
 	const navigateToAu = useAuOptionNavigationInline();
 	const setIsOpen = useStore((state) => state.setSuggestOpen);
+	const selectedIndex = useStore((state) => state.selectedSuggestIndex);
 
 	const handleSelect = (item: SearchItem) => {
 		if (item.info.mode === "exr-opt") {
@@ -53,6 +52,7 @@ export function SearchSuggestionResult({
 					<Button
 						className="h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left"
 						variant={index === selectedIndex ? "secondary" : "ghost"}
+						data-selected={index === selectedIndex}
 						onClick={() => handleSelect(item)}
 					>
 						<div className="w-full min-w-0 truncate">

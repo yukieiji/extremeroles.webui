@@ -110,7 +110,7 @@ export function SearchBar() {
 				}
 			/>
 			<PopoverContent className="min-w-64 w-full" align="start">
-				<SearchSuggestion results={results} selectedIndex={selectedIndex} />
+				<SearchSuggestion results={results} />
 			</PopoverContent>
 		</Popover>
 	);
