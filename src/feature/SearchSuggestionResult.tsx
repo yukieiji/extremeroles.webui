@@ -1,6 +1,6 @@
 import { Fragment } from "react";
+import { SearchParentData } from "@/components/blocks/SearchParentData";
 import { ColoredText } from "@/components/parts/ColoredText";
-import { SearchParentData } from "@/components/parts/SearchParentData";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Separator } from "@/components/ui/separator";
