@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Separator } from "@/components/ui/separator";
 import { useSearchSelection } from "@/hooks/useSearchSelection";
+import { cn } from "@/lib/utils";
 import type { SearchItem } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -37,8 +38,11 @@ export function SearchSuggestionResult({
 			{results.map((item, index) => (
 				<Fragment key={getKeyByMode(item)}>
 					<Button
-						className="h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left"
-						variant={index === actualIndex ? "secondary" : "ghost"}
+						className={cn(
+							"h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left",
+							index === actualIndex && "bg-muted text-foreground",
+						)}
+						variant="ghost"
 						data-selected={index === actualIndex}
 						onClick={() => handleSelect(item)}
 					>
