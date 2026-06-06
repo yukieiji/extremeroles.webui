@@ -9,6 +9,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSearchNavigation } from "@/hooks/useSearchNavigation";
 import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { SearchSuggestion } from "./SearchSuggestion";
@@ -21,6 +22,7 @@ export function SearchBar() {
 	const setQuery = useStore((state) => state.setOptionSearchQuery);
 	const isOpen = useStore((state) => state.isSuggestOpen);
 	const setIsOpen = useStore((state) => state.setSuggestOpen);
+	const { onKeyDown } = useSearchNavigation();
 
 	return (
 		<Popover
@@ -61,6 +63,7 @@ export function SearchBar() {
 							onChange={(e) => {
 								setQuery(e.target.value);
 							}}
+							onKeyDown={onKeyDown}
 							value={optionSearchQuery}
 						/>
 					</InputGroup>
