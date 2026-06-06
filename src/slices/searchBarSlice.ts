@@ -10,6 +10,8 @@ export interface SearchBarSlice {
 	setOptionSearchQuery: (query: string) => void;
 	isSuggestOpen: boolean;
 	setSuggestOpen: (isOpen: boolean) => void;
+	selectedSuggestIndex: number;
+	setSelectedSuggestIndex: (index: number) => void;
 }
 
 /**
@@ -19,11 +21,15 @@ export const createSearchBarSlice: StateCreator<SearchBarSlice> = (set) => {
 	return {
 		optionSearchQuery: "",
 		setOptionSearchQuery: (query: string) => {
-			set({ optionSearchQuery: query });
+			set({ optionSearchQuery: query, selectedSuggestIndex: 0 });
 		},
 		isSuggestOpen: false,
 		setSuggestOpen: (isOpen: boolean) => {
 			set({ isSuggestOpen: isOpen });
+		},
+		selectedSuggestIndex: 0,
+		setSelectedSuggestIndex: (index: number) => {
+			set({ selectedSuggestIndex: index });
 		},
 	};
 };

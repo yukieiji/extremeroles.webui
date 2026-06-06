@@ -24,6 +24,8 @@ describe("SearchSuggestionResult", () => {
 		vi.clearAllMocks();
 	});
 
+	const mockOnSelect = vi.fn();
+
 	const mockResults: SearchItem[] = [
 		{
 			term: "ExR Opt",
@@ -81,43 +83,51 @@ describe("SearchSuggestionResult", () => {
 	];
 
 	it("renders all result terms", () => {
-		render(<SearchSuggestionResult results={mockResults} />);
+		render(
+			<SearchSuggestionResult
+				results={mockResults}
+				selectedIndex={0}
+				onSelect={mockOnSelect}
+			/>,
+		);
 		expect(screen.getByText("ExR Opt")).toBeInTheDocument();
 		expect(screen.getByText("Au Opt")).toBeInTheDocument();
 		expect(screen.getByText("Au Cat")).toBeInTheDocument();
 		expect(screen.getByText("ExR Cat")).toBeInTheDocument();
 	});
 
-	it("calls navigation and closes suggest on click (exr-opt)", () => {
-		render(<SearchSuggestionResult results={mockResults} />);
+	it("calls onSelect on click", () => {
+		render(
+			<SearchSuggestionResult
+				results={mockResults}
+				selectedIndex={0}
+				onSelect={mockOnSelect}
+			/>,
+		);
 		fireEvent.click(screen.getByText("ExR Opt"));
-		expect(mockNavigateToExR).toHaveBeenCalledWith(1);
-		expect(mockSetIsOpen).toHaveBeenCalledWith(false);
+		expect(mockOnSelect).toHaveBeenCalledWith(mockResults[0]);
 	});
 
-	it("calls navigation and closes suggest on click (au-opt)", () => {
-		render(<SearchSuggestionResult results={mockResults} />);
-		fireEvent.click(screen.getByText("Au Opt"));
-		expect(mockNavigateToAu).toHaveBeenCalledWith(0, 1, 100);
-		expect(mockSetIsOpen).toHaveBeenCalledWith(false);
-	});
-
-	it("does nothing on click for categories", () => {
-		render(<SearchSuggestionResult results={mockResults} />);
-		fireEvent.click(screen.getByText("Au Cat"));
-		expect(mockNavigateToExR).not.toHaveBeenCalled();
-		expect(mockNavigateToAu).not.toHaveBeenCalled();
-		expect(mockSetIsOpen).not.toHaveBeenCalled();
-
-		fireEvent.click(screen.getByText("ExR Cat"));
-		expect(mockNavigateToExR).not.toHaveBeenCalled();
-		expect(mockNavigateToAu).not.toHaveBeenCalled();
-		expect(mockSetIsOpen).not.toHaveBeenCalled();
+	it("applies highlight class to selected index", () => {
+		render(
+			<SearchSuggestionResult
+				results={mockResults}
+				selectedIndex={1}
+				onSelect={mockOnSelect}
+			/>,
+		);
+		const buttons = screen.getAllByRole("button");
+		expect(buttons[0]).not.toHaveClass("bg-muted");
+		expect(buttons[1]).toHaveClass("bg-muted");
 	});
 
 	it("renders icons in SearchParentData", () => {
 		const { container } = render(
-			<SearchSuggestionResult results={[mockResults[0]]} />,
+			<SearchSuggestionResult
+				results={[mockResults[0]]}
+				selectedIndex={0}
+				onSelect={mockOnSelect}
+			/>,
 		);
 		const icons = container.querySelectorAll("svg");
 		expect(icons.length).toBeGreaterThanOrEqual(3);
