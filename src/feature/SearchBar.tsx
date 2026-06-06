@@ -1,4 +1,5 @@
 import { Search } from "lucide-react";
+import type React from "react";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -9,6 +10,11 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+	useAuOptionNavigationInline,
+	useExROptionNavigationInline,
+} from "@/hooks/useOptionNavigation";
+import { useSearchResults } from "@/hooks/useSearchResults";
 import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { SearchSuggestion } from "./SearchSuggestion";
@@ -21,6 +27,42 @@ export function SearchBar() {
 	const setQuery = useStore((state) => state.setOptionSearchQuery);
 	const isOpen = useStore((state) => state.isSuggestOpen);
 	const setIsOpen = useStore((state) => state.setSuggestOpen);
+	const selectedIndex = useStore((state) => state.selectedSuggestIndex);
+	const setSelectedIndex = useStore((state) => state.setSelectedSuggestIndex);
+
+	const results = useSearchResults();
+	const navigateToExR = useExROptionNavigationInline();
+	const navigateToAu = useAuOptionNavigationInline();
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (!isOpen || results.length === 0) {
+			return;
+		}
+
+		if (e.key === "ArrowDown") {
+			e.preventDefault();
+			setSelectedIndex((selectedIndex + 1) % results.length);
+		} else if (e.key === "ArrowUp") {
+			e.preventDefault();
+			setSelectedIndex((selectedIndex - 1 + results.length) % results.length);
+		} else if (e.key === "Enter") {
+			e.preventDefault();
+			const selectedItem = results[selectedIndex];
+			if (selectedItem) {
+				if (selectedItem.info.mode === "exr-opt") {
+					navigateToExR(selectedItem.info.uniqueOptionId);
+					setIsOpen(false);
+				} else if (selectedItem.info.mode === "au-opt") {
+					navigateToAu(
+						selectedItem.info.tabId,
+						selectedItem.info.categoryId,
+						selectedItem.info.auOptionId,
+					);
+					setIsOpen(false);
+				}
+			}
+		}
+	};
 
 	return (
 		<Popover
@@ -61,13 +103,14 @@ export function SearchBar() {
 							onChange={(e) => {
 								setQuery(e.target.value);
 							}}
+							onKeyDown={handleKeyDown}
 							value={optionSearchQuery}
 						/>
 					</InputGroup>
 				}
 			/>
 			<PopoverContent className="min-w-64 w-full" align="start">
-				<SearchSuggestion />
+				<SearchSuggestion results={results} selectedIndex={selectedIndex} />
 			</PopoverContent>
 		</Popover>
 	);

@@ -13,6 +13,7 @@ import { useStore } from "@/useStore";
 
 interface SearchSuggestionResultProps {
 	results: SearchItem[];
+	selectedIndex: number;
 }
 
 function getKeyByMode(item: SearchItem) {
@@ -29,6 +30,7 @@ function getKeyByMode(item: SearchItem) {
 
 export function SearchSuggestionResult({
 	results,
+	selectedIndex,
 }: SearchSuggestionResultProps) {
 	const navigateToExR = useExROptionNavigationInline();
 	const navigateToAu = useAuOptionNavigationInline();
@@ -50,7 +52,7 @@ export function SearchSuggestionResult({
 				<Fragment key={getKeyByMode(item)}>
 					<Button
 						className="h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left"
-						variant="ghost"
+						variant={index === selectedIndex ? "secondary" : "ghost"}
 						onClick={() => handleSelect(item)}
 					>
 						<div className="w-full min-w-0 truncate">
