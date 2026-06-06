@@ -522,8 +522,15 @@ export interface AuCategorySearchTargetInfo {
 	categoryId: number;
 }
 
+export interface ParentData {
+	tabName: string;
+	categoryName: string;
+	parentOptionNames: string[];
+}
+
 export interface SearchItem {
 	term: string;
+	parentData: ParentData; // 上位のタブ名やカテゴリ名など、検索語以外の表示用データ
 	info:
 		| AuCategorySearchTargetInfo
 		| AuOptionSearchTargetInfo

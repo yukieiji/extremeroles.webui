@@ -227,15 +227,6 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 				parentOptionIds: ancestorIds,
 			};
 
-			globalSearchItems.push({
-				term: opt.TranslatedName,
-				info: {
-					mode: "exr-opt",
-					uniqueOptionId: uniqueId,
-					parentUniqueOptionIds: ancestorIds,
-				},
-			});
-
 			valueData[uniqueId] = {
 				selection: opt.Selection,
 				values: opt.RangeMeta.Values,
@@ -264,6 +255,23 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 					);
 				}
 			}
+
+			globalSearchItems.push({
+				term: opt.TranslatedName,
+				parentData: {
+					tabName: stripColorTags(exrOptionMetaData.tabs[tabId].name),
+					categoryName: exrOptionMetaData.categories[categoryId]?.name || "",
+					parentOptionNames: ancestorIds.map(
+						(id) =>
+							exrOptionMetaData.options[id]?.metaData.translatedName || "",
+					),
+				},
+				info: {
+					mode: "exr-opt",
+					uniqueOptionId: uniqueId,
+					parentUniqueOptionIds: ancestorIds,
+				},
+			});
 
 			if (opt.Childs && opt.Childs.length > 0) {
 				processOptions(opt.Childs, tabId, categoryId, [
@@ -301,6 +309,11 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 			};
 			globalSearchItems.push({
 				term: category.Name,
+				parentData: {
+					tabName: stripColorTags(tab.Name),
+					categoryName: "", // カテゴリはタブの直下にあるため、親カテゴリは存在しない
+					parentOptionNames: [],
+				},
 				info: {
 					mode: "exr-cat",
 					tabId: tab.Id,
@@ -376,6 +389,11 @@ export async function createAuOptionMetaData(): Promise<
 
 		globalSearchItems.push({
 			term: category.TranslatedTitle,
+			parentData: {
+				tabName: auOptionMetaData.tabNames[currentTab],
+				categoryName: "", // カテゴリはタブの直下にあるため、親カテゴリは存在しない
+				parentOptionNames: [],
+			},
 			info: {
 				mode: "au-cat",
 				tabId: currentTab,
@@ -386,6 +404,7 @@ export async function createAuOptionMetaData(): Promise<
 		for (const opt of category.Options) {
 			const valueType = opt.Info.ValueType;
 			const optionName = opt.Info.OptionName;
+			const tlanslatedTitle = opt.TranslatedTitle;
 
 			if (valueType === OptionValueType.RoleBase) {
 				const roleValue = opt.Value as AuRoleOption;
@@ -402,16 +421,6 @@ export async function createAuOptionMetaData(): Promise<
 				};
 				initialValueData[chanceId] = Math.floor(roleValue.Chance / 10);
 
-				globalSearchItems.push({
-					term: opt.TranslatedTitle,
-					info: {
-						mode: "au-opt",
-						tabId: currentTab,
-						categoryId: categoryId,
-						auOptionId: chanceId,
-					},
-				});
-
 				// MaxCount
 				const maxCountId = getAuOptionId(
 					optionName,
@@ -420,7 +429,7 @@ export async function createAuOptionMetaData(): Promise<
 				);
 				auOptionMetaData.categoryMetaData[categoryId].options.push(maxCountId);
 				auOptionMetaData.options[maxCountId] = {
-					title: opt.TranslatedTitle,
+					title: tlanslatedTitle,
 					format: opt.TranslatedFormat,
 					range: Array.from({ length: 16 }, (_, i) => i), // 0～15を1刻みで用意するため
 					tabId: currentTab,
@@ -447,7 +456,7 @@ export async function createAuOptionMetaData(): Promise<
 				}
 
 				auOptionMetaData.options[auOptionId] = {
-					title: opt.TranslatedTitle,
+					title: tlanslatedTitle,
 					format: opt.TranslatedFormat,
 					range,
 					tabId: currentTab,
@@ -456,7 +465,12 @@ export async function createAuOptionMetaData(): Promise<
 				initialValueData[auOptionId] = index;
 
 				globalSearchItems.push({
-					term: opt.TranslatedTitle,
+					term: tlanslatedTitle,
+					parentData: {
+						tabName: auOptionMetaData.tabNames[currentTab],
+						categoryName: category.TranslatedTitle,
+						parentOptionNames: [],
+					},
 					info: {
 						mode: "au-opt",
 						tabId: currentTab,
