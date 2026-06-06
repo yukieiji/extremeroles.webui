@@ -1,8 +1,8 @@
 import { RoleCategoryAccordion } from "@/components/blocks/RoleCategoryAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
-import { createExRCategoryNavigateId } from "@/hooks/useOptionNavigation";
 import { useOptionData } from "@/hooks/useExROptionData";
+import { createExRCategoryNavigateId } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { getUniqueOptionId } from "@/logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "@/type";
