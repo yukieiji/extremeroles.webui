@@ -64,7 +64,7 @@ export function SearchBar() {
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (!isOpen || results.length === 0) {
+		if (e.isComposing || !isOpen || results.length === 0) {
 			return;
 		}
 
@@ -75,6 +75,7 @@ export function SearchBar() {
 			e.preventDefault();
 			setSelectedIndex((selectedIndex - 1 + results.length) % results.length);
 		} else if (e.key === "Enter") {
+			e.preventDefault();
 			const item = results[selectedIndex];
 			if (item) {
 				handleSelect(item);
