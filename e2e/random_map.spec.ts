@@ -40,9 +40,13 @@ test.describe("Random Map Display and Hiding", () => {
 		await categoryHeader.click();
 
 		// トグルをオンにする
+		const optionLabel = page.getByText("毎回マップがランダムに変わるか", {
+			exact: true,
+		});
 		const optionRow = page
 			.locator("div")
-			.filter({ hasText: "毎回マップがランダムに変わるか" })
+			.filter({ has: optionLabel })
+			.filter({ has: page.getByTestId("option-toggle") })
 			.last();
 		const toggleSwitch = optionRow.getByTestId("option-toggle");
 		await expect(optionRow.getByText("オフ", { exact: true })).toBeVisible();
@@ -55,7 +59,8 @@ test.describe("Random Map Display and Hiding", () => {
 
 		// 5. 右パネルの ExR 設定リストから「ランダムマップに関する設定」が消えていることを確認
 		// 右パネル内の "ExRの設定" アコーディオンの中身を確認
-		const exrSettingsInRightPanel = page
+		const rightPanel = page.getByTestId("right-side-panel");
+		const exrSettingsInRightPanel = rightPanel
 			.locator("div")
 			.filter({ hasText: "ExRの設定" })
 			.locator("..");
