@@ -49,6 +49,8 @@ vi.mock("@/components/ui/popover", () => ({
 
 const mockNavigateToExR = vi.fn();
 const mockNavigateToAu = vi.fn();
+const mockNavigateToExRCat = vi.fn();
+const mockNavigateToAuCat = vi.fn();
 
 vi.mock("@/useStore", () => ({
 	useStore: vi.fn(),
@@ -57,6 +59,8 @@ vi.mock("@/useStore", () => ({
 vi.mock("@/hooks/useOptionNavigation", () => ({
 	useAuOptionNavigationInline: () => mockNavigateToAu,
 	useExROptionNavigationInline: () => mockNavigateToExR,
+	useExRCategoryNavigationInline: () => mockNavigateToExRCat,
+	useAuCategoryNavigationInline: () => mockNavigateToAuCat,
 }));
 
 vi.mock("@/hooks/useSearchResults", () => ({

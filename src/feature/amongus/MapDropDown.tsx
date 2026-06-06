@@ -1,6 +1,9 @@
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
-import { createAuNavigateId } from "@/hooks/useOptionNavigation";
+import {
+	createAuCategoryNavigateId,
+	createAuNavigateId,
+} from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useUpdateAuOptionSelection } from "@/logics/api.store";
 import { useStore } from "@/useStore";
@@ -23,6 +26,9 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const highlightedAuOptionId = useStore(
 		(state) => state.highlightedAuOptionId,
 	);
+	const highlightedAuCategoryId = useStore(
+		(state) => state.highlightedAuCategoryId,
+	);
 
 	const optionMeta = auOptionMetaData.options[mapOptionId];
 
@@ -34,16 +40,23 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const displayValues = optionMeta.range.map((v) => v.toString());
 
 	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
+	const isCategoryHighlighted = highlightedAuCategoryId === categoryId;
 
 	const navigateId = createAuNavigateId(mapOptionId);
+	const categoryNavigateId = createAuCategoryNavigateId(categoryId);
 
 	return (
-		<div className="border border-gray-700 rounded-lg overflow-hidden">
-			<HighlightWrapper
-				id={navigateId}
-				isHighlighted={isHighlighted}
-				isInset={true}
-			>
+		<HighlightWrapper
+			id={categoryNavigateId}
+			isHighlighted={isCategoryHighlighted}
+			isInset={false}
+		>
+			<div className="border border-gray-700 rounded-lg overflow-hidden">
+				<HighlightWrapper
+					id={navigateId}
+					isHighlighted={isHighlighted}
+					isInset={true}
+				>
 				<div className="flex items-center justify-between py-2 px-4">
 					<div className="flex items-center gap-3">
 						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
@@ -63,7 +76,8 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 						}}
 					/>
 				</div>
-			</HighlightWrapper>
-		</div>
+				</HighlightWrapper>
+			</div>
+		</HighlightWrapper>
 	);
 }

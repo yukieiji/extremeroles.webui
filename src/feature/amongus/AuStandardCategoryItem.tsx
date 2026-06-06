@@ -1,4 +1,6 @@
 import { OptionEditorAccordion } from "@/components/blocks/OptionEditorAccordion";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { createAuCategoryNavigateId } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
@@ -17,18 +19,30 @@ export function AuStandardCategoryItem({
 		(state) => state.openedAuCategoryIds[categoryId] ?? false,
 	);
 	const toggleAuCategory = useStore((state) => state.toggleAuCategory);
+	const highlightedAuCategoryId = useStore(
+		(state) => state.highlightedAuCategoryId,
+	);
 	const categoryMeta = auOptionMetaData.categoryMetaData[categoryId];
 	if (!categoryMeta) {
 		return null;
 	}
 
+	const isHighlighted = highlightedAuCategoryId === categoryId;
+	const navigateId = createAuCategoryNavigateId(categoryId);
+
 	return (
-		<OptionEditorAccordion
-			title={categoryMeta.name}
-			isOpen={isOpen}
-			onToggle={() => toggleAuCategory(categoryId)}
+		<HighlightWrapper
+			id={navigateId}
+			isHighlighted={isHighlighted}
+			isInset={false}
 		>
-			<AuCategoryOptionList optionIds={categoryMeta.options} />
-		</OptionEditorAccordion>
+			<OptionEditorAccordion
+				title={categoryMeta.name}
+				isOpen={isOpen}
+				onToggle={() => toggleAuCategory(categoryId)}
+			>
+				<AuCategoryOptionList optionIds={categoryMeta.options} />
+			</OptionEditorAccordion>
+		</HighlightWrapper>
 	);
 }
