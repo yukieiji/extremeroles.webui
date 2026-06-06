@@ -22,8 +22,8 @@ export function SearchParentData({ parentData }: SearchParentDataProps) {
 					<span className="truncate">{categoryName}</span>
 				</>
 			)}
-			{orderedParents.map((name, index) => (
-				<div key={`${name}-${index}`} className="flex items-center gap-1 truncate">
+			{orderedParents.map((name) => (
+				<div key={name} className="flex items-center gap-1 truncate">
 					<ChevronRight className="size-3 shrink-0" />
 					<span className="truncate">{name}</span>
 				</div>

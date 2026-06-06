@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { SearchSuggestionResult } from "@/feature/SearchSuggestionResult";
-import type { SearchItem } from "@/type";
+import type { SearchItem, UniqueOptionId } from "@/type";
 
 // Mock dependencies
 vi.mock("@/hooks/useOptionNavigation", () => ({
@@ -10,7 +10,8 @@ vi.mock("@/hooks/useOptionNavigation", () => ({
 }));
 
 vi.mock("@/useStore", () => ({
-	useStore: (fn: any) => fn({ setSuggestOpen: vi.fn() }),
+	useStore: (fn: (state: { setSuggestOpen: () => void }) => void) =>
+		fn({ setSuggestOpen: vi.fn() }),
 }));
 
 describe("SearchSuggestionResult", () => {
@@ -24,7 +25,7 @@ describe("SearchSuggestionResult", () => {
 			},
 			info: {
 				mode: "exr-opt",
-				uniqueOptionId: 1 as any,
+				uniqueOptionId: 1 as unknown as UniqueOptionId,
 				parentUniqueOptionIds: [],
 			},
 		},
@@ -39,11 +40,13 @@ describe("SearchSuggestionResult", () => {
 		expect(screen.getByText("Parent 1")).toBeInTheDocument();
 	});
 
-    it("renders icons in SearchParentData", () => {
-        const { container } = render(<SearchSuggestionResult results={mockResults} />);
+	it("renders icons in SearchParentData", () => {
+		const { container } = render(
+			<SearchSuggestionResult results={mockResults} />,
+		);
 
-        // CornerDownRight and ChevronRight icons should be present
-        const icons = container.querySelectorAll("svg");
-        expect(icons.length).toBeGreaterThanOrEqual(3); // 1 for CornerDownRight, 2 for ChevronRight
-    });
+		// CornerDownRight and ChevronRight icons should be present
+		const icons = container.querySelectorAll("svg");
+		expect(icons.length).toBeGreaterThanOrEqual(3); // 1 for CornerDownRight, 2 for ChevronRight
+	});
 });
