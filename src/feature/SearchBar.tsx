@@ -97,7 +97,11 @@ export function SearchBar() {
 					</InputGroup>
 				}
 			/>
-			<PopoverContent className="min-w-64 w-full" align="start">
+			<PopoverContent
+				className="min-w-64 w-full"
+				align="start"
+				initialFocus={false}
+			>
 				<SearchSuggestion results={results} />
 			</PopoverContent>
 		</Popover>
