@@ -78,10 +78,8 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 	it("disables buttons while updating", async () => {
 		const guid = "test-guid";
-		// biome-ignore lint/suspicious/noExplicitAny: Mocking API function
-		let resolveUpdate: any;
-		// biome-ignore lint/suspicious/noExplicitAny: Mocking API function
-		(postRoleFilterUpdate as any).mockReturnValue(
+		let resolveUpdate: (value: unknown) => void = () => {};
+		vi.mocked(postRoleFilterUpdate).mockReturnValue(
 			new Promise((resolve) => {
 				resolveUpdate = resolve;
 			}),

@@ -30,8 +30,7 @@ describe("AuOptionSummaryRow", () => {
 		};
 
 		// useStore の振る舞いをモック
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		(useStore as any).mockImplementation((selector: any) => {
+		vi.mocked(useStore).mockImplementation((selector) => {
 			return selector({
 				auValue: {
 					[AU_MAP_OPTION_ID]: 0,
@@ -42,7 +41,7 @@ describe("AuOptionSummaryRow", () => {
 						values: ["オフ", "オン"],
 					},
 				},
-			});
+			} as unknown as Parameters<typeof selector>[0]);
 		});
 
 		render(
@@ -54,8 +53,7 @@ describe("AuOptionSummaryRow", () => {
 	});
 
 	it("renders the normal map name when randomization is OFF", () => {
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		(useStore as any).mockImplementation((selector: any) => {
+		vi.mocked(useStore).mockImplementation((selector) => {
 			return selector({
 				auValue: {
 					[AU_MAP_OPTION_ID]: 1, // MiraHQ
@@ -66,7 +64,7 @@ describe("AuOptionSummaryRow", () => {
 						values: ["オフ", "オン"],
 					},
 				},
-			});
+			} as unknown as Parameters<typeof selector>[0]);
 		});
 
 		render(

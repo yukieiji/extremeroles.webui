@@ -245,7 +245,7 @@ describe("ExROptionControl", () => {
 			values: [0, 1],
 		});
 
-		let renderResult: RenderResult;
+		let renderResult: RenderResult | undefined;
 		await act(async () => {
 			renderResult = render(
 				<ExROptionControl
@@ -256,7 +256,6 @@ describe("ExROptionControl", () => {
 			);
 		});
 
-		// biome-ignore lint/style/noNonNullAssertion: test
-		expect(renderResult!.container.firstChild).toBeNull();
+		expect(renderResult?.container.firstChild).toBeNull();
 	});
 });

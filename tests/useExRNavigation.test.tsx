@@ -31,7 +31,7 @@ describe("useExRNavigation", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(useStore).mockImplementation((selector: unknown) => {
+		vi.mocked(useStore).mockImplementation((selector) => {
 			const state = {
 				setSelectedTab,
 				setSelectedExRTabId,
@@ -40,10 +40,9 @@ describe("useExRNavigation", () => {
 				setHighlightedExROptionId,
 				setRightPanelOpen,
 			};
-			return (selector as (s: typeof state) => unknown)(state);
+			return selector(state as unknown as Parameters<typeof selector>[0]);
 		});
-		// biome-ignore lint/suspicious/noExplicitAny: mock useStore.getState
-		(useStore as any).getState = vi.fn().mockReturnValue({
+		vi.mocked(useStore).getState = vi.fn().mockReturnValue({
 			openedExRCategoryIds: {},
 		});
 	});
