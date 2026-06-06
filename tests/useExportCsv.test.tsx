@@ -19,8 +19,7 @@ describe("useExportCsv", () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		// biome-ignore lint/suspicious/noExplicitAny: mock
-		(fetchCsvData as any).mockResolvedValue(mockCsvData);
+		vi.mocked(fetchCsvData).mockResolvedValue(mockCsvData);
 
 		// URL.createObjectURL のモック化
 		vi.stubGlobal("URL", {
@@ -29,8 +28,7 @@ describe("useExportCsv", () => {
 		});
 
 		// showSaveFilePicker をデフォルトで未定義にする
-		// biome-ignore lint/suspicious/noExplicitAny: mock
-		delete (window as any).showSaveFilePicker;
+		vi.stubGlobal("showSaveFilePicker", undefined);
 	});
 
 	afterEach(() => {
