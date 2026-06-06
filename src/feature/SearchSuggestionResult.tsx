@@ -37,10 +37,11 @@ export function SearchSuggestionResult({
 	const handleSelect = (item: SearchItem) => {
 		if (item.info.mode === "exr-opt") {
 			navigateToExR(item.info.uniqueOptionId);
+			setIsOpen(false);
 		} else if (item.info.mode === "au-opt") {
 			navigateToAu(item.info.tabId, item.info.categoryId, item.info.auOptionId);
+			setIsOpen(false);
 		}
-		setIsOpen(false);
 	};
 
 	return (
@@ -48,11 +49,13 @@ export function SearchSuggestionResult({
 			{results.map((item, index) => (
 				<Fragment key={getKeyByMode(item)}>
 					<Button
-						className="h-auto w-full flex-col items-start justify-start py-2"
+						className="h-auto w-full min-w-0 flex-col items-start justify-start py-2"
 						variant="ghost"
 						onClick={() => handleSelect(item)}
 					>
-						<ColoredText text={item.term} />
+						<div className="w-full min-w-0 truncate text-left">
+							<ColoredText text={item.term} />
+						</div>
 						<SearchParentData parentData={item.parentData} />
 					</Button>
 					{index < results.length - 1 && <Separator />}

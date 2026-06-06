@@ -1,4 +1,5 @@
 import { ChevronRight, CornerDownRight } from "lucide-react";
+import { Fragment } from "react";
 import type { ParentData } from "@/type";
 
 interface SearchParentDataProps {
@@ -13,20 +14,20 @@ export function SearchParentData({ parentData }: SearchParentDataProps) {
 	const orderedParents = [...parentOptionNames].reverse().filter(Boolean);
 
 	return (
-		<div className="flex items-center gap-1 text-muted-foreground text-[10px] leading-tight">
+		<div className="flex w-full min-w-0 items-center gap-1 text-muted-foreground text-[10px] leading-tight">
 			<CornerDownRight className="size-3 shrink-0" />
-			<span className="truncate">{tabName}</span>
+			<span className="min-w-0 truncate">{tabName}</span>
 			{categoryName && (
 				<>
 					<ChevronRight className="size-3 shrink-0" />
-					<span className="truncate">{categoryName}</span>
+					<span className="min-w-0 truncate">{categoryName}</span>
 				</>
 			)}
 			{orderedParents.map((name) => (
-				<div key={name} className="flex items-center gap-1 truncate">
+				<Fragment key={name}>
 					<ChevronRight className="size-3 shrink-0" />
-					<span className="truncate">{name}</span>
-				</div>
+					<span className="min-w-0 truncate">{name}</span>
+				</Fragment>
 			))}
 		</div>
 	);
