@@ -10,7 +10,7 @@ import {
 import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto, RoleAssignFilterDto } from '@/type';
 
 // JSONファイルのロード
-import exrOptionData from './get/exr/setting-webui-dev_20260503.json';
+import exrOptionData from './get/exr/setting-webui-dev_20260607.json';
 import auOptionData from './get/au/setting-webui-dev_20260421.json';
 import roleFilterData from './get/exr/roleassign-dev_20260503.json';
 
