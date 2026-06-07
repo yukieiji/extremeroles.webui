@@ -1,9 +1,6 @@
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
-import {
-	createAuCategoryNavigateId,
-	createAuNavigateId,
-} from "@/hooks/useOptionNavigation";
+import { createAuNavigateId } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useUpdateAuOptionSelection } from "@/logics/api.store";
 import { useStore } from "@/useStore";
