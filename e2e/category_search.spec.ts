@@ -17,7 +17,11 @@ test.describe("Category Search", () => {
 		const popover = page.locator('[role="dialog"]'); // Popover standard role
 
 		// Find a button that has both "会議" and "0" (Au tab number)
-		const suggestion = popover.getByRole("button").filter({ hasText: "会議" }).filter({ hasText: "0" }).first();
+		const suggestion = popover
+			.getByRole("button")
+			.filter({ hasText: "会議" })
+			.filter({ hasText: "0" })
+			.first();
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
 
@@ -25,7 +29,9 @@ test.describe("Category Search", () => {
 		await page.waitForTimeout(2000);
 
 		// The title should change to Au Options
-		await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
+		await expect(
+			page.getByRole("heading", { name: "Au Options" }),
+		).toBeVisible();
 
 		// Check if it's highlighted.
 		const highlighted = page.locator('[data-highlighted="true"]').first();
@@ -43,7 +49,10 @@ test.describe("Category Search", () => {
 		const popover = page.locator('[role="dialog"]');
 
 		// "シェリフ" is a category in ExR tab (implied by missing tab number or "クルーメイト役職設定")
-		const suggestion = popover.getByRole("button").filter({ hasText: "シェリフ" }).first();
+		const suggestion = popover
+			.getByRole("button")
+			.filter({ hasText: "シェリフ" })
+			.first();
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
 
