@@ -111,13 +111,27 @@ describe("globalSearchItems population", () => {
 	it("should populate globalSearchItems with Au data", async () => {
 		const mockAuData = [
 			{
-				TranslatedTitle: "Au Category",
+				// First category in Tab 0 is treated as Map
+				TranslatedTitle: "Map Category",
 				Options: [
 					{
-						TranslatedTitle: "Au Option",
+						TranslatedTitle: "map",
 						TranslatedFormat: "Format",
 						Value: 0,
 						Info: { ValueType: 2, OptionName: 1000 },
+						Range: [0, 1],
+					},
+				],
+			},
+			{
+				// Second category in Tab 0 is treated normally
+				TranslatedTitle: "Normal Category",
+				Options: [
+					{
+						TranslatedTitle: "Normal Option",
+						TranslatedFormat: "Format",
+						Value: 0,
+						Info: { ValueType: 2, OptionName: 1001 },
 						Range: [0, 1],
 					},
 				],
@@ -141,16 +155,26 @@ describe("globalSearchItems population", () => {
 
 		await createAuOptionMetaData();
 
-		expect(globalSearchItems).toContainEqual(
+		// Map category itself should NOT be in globalSearchItems as au-cat
+		expect(globalSearchItems).not.toContainEqual(
 			expect.objectContaining({
-				term: "Au Category",
-				info: expect.objectContaining({ mode: "au-cat" }),
+				info: expect.objectContaining({ mode: "au-cat", categoryId: 0 }),
 			}),
 		);
+
+		// Normal category should be in globalSearchItems as au-cat
 		expect(globalSearchItems).toContainEqual(
 			expect.objectContaining({
-				term: "Au Option",
-				info: expect.objectContaining({ mode: "au-opt" }),
+				term: "Normal Category",
+				info: expect.objectContaining({ mode: "au-cat", categoryId: 1 }),
+			}),
+		);
+
+		// Normal option should be in globalSearchItems as au-opt
+		expect(globalSearchItems).toContainEqual(
+			expect.objectContaining({
+				term: "Normal Option",
+				info: expect.objectContaining({ mode: "au-opt", categoryId: 1 }),
 			}),
 		);
 	});

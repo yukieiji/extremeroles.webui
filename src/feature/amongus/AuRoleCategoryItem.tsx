@@ -1,6 +1,9 @@
 import { RoleCategoryAccordion } from "@/components/blocks/RoleCategoryAccordion";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
-import { createAuNavigateId } from "@/hooks/useOptionNavigation";
+import {
+	createAuCategoryNavigateId,
+	createAuNavigateId,
+} from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 import { AuCategoryOptionList } from "./AuCategoryOptionList";
@@ -29,6 +32,9 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	const highlightedAuOptionId = useStore(
 		(state) => state.highlightedAuOptionId,
 	);
+	const highlightedAuCategoryId = useStore(
+		(state) => state.highlightedAuCategoryId,
+	);
 
 	const chanceOptionMeta = auOptionMetaData.options[chanceOptionId];
 
@@ -42,16 +48,20 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	const otherOptionIds = categoryMeta.options.slice(2);
 
 	const isHighlighted =
-		highlightedAuOptionId !== null &&
-		categoryMeta.options.includes(highlightedAuOptionId);
+		(highlightedAuOptionId !== null &&
+			categoryMeta.options.includes(highlightedAuOptionId)) ||
+		highlightedAuCategoryId === categoryId;
 
-	const navigateId = createAuNavigateId(chanceOptionId);
+	const navigateId =
+		highlightedAuCategoryId === categoryId
+			? createAuCategoryNavigateId(categoryId)
+			: createAuNavigateId(chanceOptionId);
 
 	return (
 		<HighlightWrapper
 			id={navigateId}
 			isHighlighted={isHighlighted}
-			isInset={false}
+			isInset={true}
 		>
 			<RoleCategoryAccordion
 				isOpen={isOpen}

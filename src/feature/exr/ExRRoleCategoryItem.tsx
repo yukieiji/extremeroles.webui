@@ -1,6 +1,8 @@
 import { RoleCategoryAccordion } from "@/components/blocks/RoleCategoryAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { useOptionData } from "@/hooks/useExROptionData";
+import { createExRCategoryNavigateId } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { getUniqueOptionId } from "@/logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "@/type";
@@ -22,6 +24,9 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
+	const highlightedExRCategoryId = useStore(
+		(state) => state.highlightedExRCategoryId,
+	);
 
 	const selectedExRTabId = useStore((state) => {
 		return state.selectedExRTabId;
@@ -62,23 +67,32 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		return null;
 	}
 
+	const isHighlighted = highlightedExRCategoryId === categoryId;
+	const navigateId = createExRCategoryNavigateId(categoryId);
+
 	return (
-		<RoleCategoryAccordion
-			isOpen={isOpen}
-			onClick={() => toggleExRCategory(categoryId)}
-			text={<ColoredText text={category} />}
-			spawnControl={
-				<ExRRoleSpawnControls
-					tabId={selectedExRTabId}
-					categoryId={categoryId}
-				/>
-			}
-			disable={isSpawnRateZero}
+		<HighlightWrapper
+			id={navigateId}
+			isHighlighted={isHighlighted}
+			isInset={true}
 		>
-			<ExRCategoryOptionList
-				categoryId={categoryId}
-				uniqueOptionIds={filteredChildOptionIds}
-			/>
-		</RoleCategoryAccordion>
+			<RoleCategoryAccordion
+				isOpen={isOpen}
+				onClick={() => toggleExRCategory(categoryId)}
+				text={<ColoredText text={category} />}
+				spawnControl={
+					<ExRRoleSpawnControls
+						tabId={selectedExRTabId}
+						categoryId={categoryId}
+					/>
+				}
+				disable={isSpawnRateZero}
+			>
+				<ExRCategoryOptionList
+					categoryId={categoryId}
+					uniqueOptionIds={filteredChildOptionIds}
+				/>
+			</RoleCategoryAccordion>
+		</HighlightWrapper>
 	);
 }

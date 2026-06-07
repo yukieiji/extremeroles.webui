@@ -11,6 +11,14 @@ export function createAuNavigateId(auOptionId: AuOptionId) {
 	return `au-option-${auOptionId}`;
 }
 
+export function createExRCategoryNavigateId(categoryId: number) {
+	return `exr-category-${categoryId}`;
+}
+
+export function createAuCategoryNavigateId(categoryId: number) {
+	return `au-category-${categoryId}`;
+}
+
 function useNavigate() {
 	return (navId: string, timeoutFunc: () => void) => {
 		setTimeout(() => {
@@ -20,7 +28,7 @@ function useNavigate() {
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
 			}
-			setTimeout(timeoutFunc, 2000);
+			setTimeout(timeoutFunc, 5000);
 		}, 100);
 	};
 }
@@ -80,6 +88,37 @@ export function useAuOptionNavigation(
 	return navigateToOption;
 }
 
+function useAuCategoryNavigationInner() {
+	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setSelectedAuTabId = useStore((state) => state.setSelectedAuTabId);
+	const setAuCategoryOpen = useStore((state) => state.setAuCategoryOpen);
+	const setHighlightedAuCategoryId = useStore(
+		(state) => state.setHighlightedAuCategoryId,
+	);
+
+	const nav = useNavigate();
+
+	return (tabId: number, categoryId: number, navId: string) => {
+		setSelectedTab("Au");
+		setSelectedAuTabId(tabId);
+		setAuCategoryOpen(categoryId, true);
+		setHighlightedAuCategoryId(categoryId);
+
+		nav(navId, () => {
+			setHighlightedAuCategoryId(null);
+		});
+	};
+}
+
+export function useAuCategoryNavigationInline() {
+	const navigateToAuCategory = useAuCategoryNavigationInner();
+
+	return (tabId: number, categoryId: number) => {
+		const navigateId = createAuCategoryNavigateId(categoryId);
+		navigateToAuCategory(tabId, categoryId, navigateId);
+	};
+}
+
 export function useAuOptionNavigationInline() {
 	const navigateToAuOption = useAuNavigationInner();
 
@@ -93,6 +132,37 @@ export function useAuOptionNavigationInline() {
 	};
 
 	return navigateToOption;
+}
+
+function useExRCategoryNavigationInner() {
+	const setSelectedTab = useStore((state) => state.setSelectedTab);
+	const setSelectedExRTabId = useStore((state) => state.setSelectedExRTabId);
+	const setExRCategoryOpen = useStore((state) => state.setExRCategoryOpen);
+	const setHighlightedExRCategoryId = useStore(
+		(state) => state.setHighlightedExRCategoryId,
+	);
+
+	const nav = useNavigate();
+
+	return (tabId: ExRTabId, categoryId: number, navId: string) => {
+		setSelectedTab("ExR");
+		setSelectedExRTabId(tabId);
+		setExRCategoryOpen(categoryId, true);
+		setHighlightedExRCategoryId(categoryId);
+
+		nav(navId, () => {
+			setHighlightedExRCategoryId(null);
+		});
+	};
+}
+
+export function useExRCategoryNavigationInline() {
+	const navigateToExRCategory = useExRCategoryNavigationInner();
+
+	return (tabId: ExRTabId, categoryId: number) => {
+		const navigateId = createExRCategoryNavigateId(categoryId);
+		navigateToExRCategory(tabId, categoryId, navigateId);
+	};
 }
 
 /**

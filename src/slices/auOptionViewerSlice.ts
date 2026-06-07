@@ -9,13 +9,16 @@ export interface AuOptionViewerSlice {
 	isAuTabPending: boolean;
 	openedAuCategoryIds: Record<number, boolean>;
 	highlightedAuOptionId: AuOptionId | null;
+	highlightedAuCategoryId: number | null;
 	auValue: Record<AuOptionId, number>; // セレクション
 	setSelectedAuTabId: (id: number) => void;
 	setIsAuTabPending: (isPending: boolean) => void;
 	setAuValue: (value: Record<AuOptionId, number>) => void;
 	setOpenedAuCategoryIds: (ids: Record<number, boolean>) => void;
 	setHighlightedAuOptionId: (id: AuOptionId | null) => void;
+	setHighlightedAuCategoryId: (id: number | null) => void;
 	toggleAuCategory: (categoryId: number) => void;
+	setAuCategoryOpen: (categoryId: number, isOpen: boolean) => void;
 	updateAuOptionSelection: (...args: UpdateAuArg[]) => void;
 }
 
@@ -30,6 +33,7 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 		isAuTabPending: false,
 		openedAuCategoryIds: {},
 		highlightedAuOptionId: null,
+		highlightedAuCategoryId: null,
 		auValue: {},
 		setSelectedAuTabId: (id: number) => {
 			console.log(
@@ -53,6 +57,9 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 		setHighlightedAuOptionId: (id) => {
 			set({ highlightedAuOptionId: id });
 		},
+		setHighlightedAuCategoryId: (id) => {
+			set({ highlightedAuCategoryId: id });
+		},
 		toggleAuCategory: (categoryId) => {
 			console.log(
 				JSON.stringify({
@@ -64,6 +71,13 @@ export const createAuOptionViewerSlice: StateCreator<AuOptionViewerSlice> = (
 			set((state) => {
 				const next = { ...state.openedAuCategoryIds };
 				next[categoryId] = !next[categoryId];
+				return { openedAuCategoryIds: next };
+			});
+		},
+		setAuCategoryOpen: (categoryId, isOpen) => {
+			set((state) => {
+				const next = { ...state.openedAuCategoryIds };
+				next[categoryId] = isOpen;
 				return { openedAuCategoryIds: next };
 			});
 		},

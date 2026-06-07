@@ -5,12 +5,16 @@ import type { AuOptionId, ExRTabId, SearchItem, UniqueOptionId } from "@/type";
 
 const mockNavigateToExR = vi.fn();
 const mockNavigateToAu = vi.fn();
+const mockNavigateToExRCat = vi.fn();
+const mockNavigateToAuCat = vi.fn();
 const mockSetIsOpen = vi.fn();
 
 // Mock dependencies
 vi.mock("@/hooks/useOptionNavigation", () => ({
 	useAuOptionNavigationInline: () => mockNavigateToAu,
 	useExROptionNavigationInline: () => mockNavigateToExR,
+	useExRCategoryNavigationInline: () => mockNavigateToExRCat,
+	useAuCategoryNavigationInline: () => mockNavigateToAuCat,
 }));
 
 vi.mock("@/useStore", () => ({
@@ -102,17 +106,18 @@ describe("SearchSuggestionResult", () => {
 		expect(mockSetIsOpen).toHaveBeenCalledWith(false);
 	});
 
-	it("does nothing on click for categories", () => {
+	it("calls navigation and closes suggest on click (au-cat)", () => {
 		render(<SearchSuggestionResult results={mockResults} />);
 		fireEvent.click(screen.getByText("Au Cat"));
-		expect(mockNavigateToExR).not.toHaveBeenCalled();
-		expect(mockNavigateToAu).not.toHaveBeenCalled();
-		expect(mockSetIsOpen).not.toHaveBeenCalled();
+		expect(mockNavigateToAuCat).toHaveBeenCalledWith(0, 2);
+		expect(mockSetIsOpen).toHaveBeenCalledWith(false);
+	});
 
+	it("calls navigation and closes suggest on click (exr-cat)", () => {
+		render(<SearchSuggestionResult results={mockResults} />);
 		fireEvent.click(screen.getByText("ExR Cat"));
-		expect(mockNavigateToExR).not.toHaveBeenCalled();
-		expect(mockNavigateToAu).not.toHaveBeenCalled();
-		expect(mockSetIsOpen).not.toHaveBeenCalled();
+		expect(mockNavigateToExRCat).toHaveBeenCalledWith(0, 3);
+		expect(mockSetIsOpen).toHaveBeenCalledWith(false);
 	});
 
 	it("renders icons in SearchParentData", () => {

@@ -24,14 +24,17 @@ export interface ExROptionViewerSlice {
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
 	highlightedExROptionId: UniqueOptionId | null;
+	highlightedExRCategoryId: number | null;
 	setSelectedExRTabId: (id: ExRTabId) => void;
 	setIsExRTabPending: (isPending: boolean) => void;
 	toggleExRCategory: (categoryId: number) => void;
+	setExRCategoryOpen: (categoryId: number, isOpen: boolean) => void;
 	toggleExROption: (uniqueOptionId: UniqueOptionId) => void;
 	openExROptions: (uniqueOptionIds: UniqueOptionId[]) => void;
 	updateExROption: (updateOptions: (UpdatedOptions | null)[]) => void;
 	updatePresetName: (presetIndex: number, name: string) => void;
 	setHighlightedExROptionId: (id: UniqueOptionId | null) => void;
+	setHighlightedExRCategoryId: (id: number | null) => void;
 	resetViewer: () => void;
 	setExROptions: (
 		valueData: Record<UniqueOptionId, ExROptionValueData>,
@@ -54,6 +57,7 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		exrValue: {},
 		isExROptionActive: {},
 		highlightedExROptionId: null,
+		highlightedExRCategoryId: null,
 		presetNames: loadPresetNamesFromLocalStorage(),
 		setSelectedExRTabId: (id: ExRTabId) => {
 			console.log(
@@ -89,6 +93,16 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 					openedExRCategoryIds: {
 						...state.openedExRCategoryIds,
 						[categoryId]: !state.openedExRCategoryIds[categoryId],
+					},
+				};
+			});
+		},
+		setExRCategoryOpen: (categoryId: number, isOpen: boolean) => {
+			set((state) => {
+				return {
+					openedExRCategoryIds: {
+						...state.openedExRCategoryIds,
+						[categoryId]: isOpen,
 					},
 				};
 			});
@@ -166,6 +180,9 @@ export const createExROptionViewerSlice: StateCreator<ExROptionViewerSlice> = (
 		},
 		setHighlightedExROptionId: (id) => {
 			set({ highlightedExROptionId: id });
+		},
+		setHighlightedExRCategoryId: (id) => {
+			set({ highlightedExRCategoryId: id });
 		},
 		setExROptions: (
 			valueData: Record<number, ExROptionValueData>,

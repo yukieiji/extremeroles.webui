@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { OptionEditorAccordion } from "@/components/blocks/OptionEditorAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { createExRCategoryNavigateId } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
@@ -22,6 +24,9 @@ export function ExRStandardCategoryItem({
 	const toggleExRCategory = useStore((state) => {
 		return state.toggleExRCategory;
 	});
+	const highlightedExRCategoryId = useStore(
+		(state) => state.highlightedExRCategoryId,
+	);
 
 	const uniqueOptions =
 		exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
@@ -38,24 +43,33 @@ export function ExRStandardCategoryItem({
 		return null;
 	}
 
+	const isHighlighted = highlightedExRCategoryId === categoryId;
+	const navigateId = createExRCategoryNavigateId(categoryId);
+
 	return (
-		<div data-testid={`exr-category-${categoryId}`}>
-			<OptionEditorAccordion
-				title={
-					<ColoredText
-						text={exrOptionMetaData.categories[categoryId]?.name ?? ""}
+		<HighlightWrapper
+			id={navigateId}
+			isHighlighted={isHighlighted}
+			isInset={false}
+		>
+			<div data-testid={`exr-category-${categoryId}`}>
+				<OptionEditorAccordion
+					title={
+						<ColoredText
+							text={exrOptionMetaData.categories[categoryId]?.name ?? ""}
+						/>
+					}
+					isOpen={isOpen}
+					onToggle={() => {
+						toggleExRCategory(categoryId);
+					}}
+				>
+					<ExRCategoryOptionList
+						categoryId={categoryId}
+						uniqueOptionIds={filteredOptions}
 					/>
-				}
-				isOpen={isOpen}
-				onToggle={() => {
-					toggleExRCategory(categoryId);
-				}}
-			>
-				<ExRCategoryOptionList
-					categoryId={categoryId}
-					uniqueOptionIds={filteredOptions}
-				/>
-			</OptionEditorAccordion>
-		</div>
+				</OptionEditorAccordion>
+			</div>
+		</HighlightWrapper>
 	);
 }
