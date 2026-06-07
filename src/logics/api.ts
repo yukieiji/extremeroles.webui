@@ -470,7 +470,7 @@ export async function createAuOptionMetaData(): Promise<
 				initialValueData[auOptionId] = index;
 
 				globalSearchItems.push({
-					term: isMapCategory ? "マップ" : tlanslatedTitle,
+					term: tlanslatedTitle,
 					parentData: {
 						tabName: auOptionMetaData.tabNames[currentTab],
 						categoryName: isMapCategory ? "" : category.TranslatedTitle,
