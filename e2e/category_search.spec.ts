@@ -39,6 +39,40 @@ test.describe("Category Search", () => {
 		await expect(highlighted).toContainText("会議");
 	});
 
+	test("should navigate to and highlight map option when selected from search (Au Map)", async ({
+		page,
+	}) => {
+		const searchInput = page.getByPlaceholder("オプションを検索...");
+		await searchInput.click();
+		await searchInput.fill("マップ");
+
+		// Wait for suggestions in popover
+		const popover = page.locator('[role="dialog"]');
+
+		// Map should now be an option (term "マップ")
+		const suggestion = popover
+			.getByRole("button")
+			.filter({ hasText: "マップ" })
+			.filter({ hasText: "0" })
+			.first();
+		await expect(suggestion).toBeVisible({ timeout: 10000 });
+		await suggestion.click();
+
+		// Wait for potential navigation and state update
+		await page.waitForTimeout(2000);
+
+		// The title should change to Au Options
+		await expect(
+			page.getByRole("heading", { name: "Au Options" }),
+		).toBeVisible();
+
+		// Check if it's highlighted.
+		const highlighted = page.locator('[data-highlighted="true"]').first();
+		await expect(highlighted).toBeVisible({ timeout: 15000 });
+		// In MapDropDown.tsx, the title comes from optionMeta.title which might be "map" in mock data
+		// but the highlight wrapper should be there.
+	});
+
 	test("should navigate to and highlight category when selected from search (ExR)", async ({
 		page,
 	}) => {

@@ -387,19 +387,24 @@ export async function createAuOptionMetaData(): Promise<
 			tabId: currentTab,
 		};
 
-		globalSearchItems.push({
-			term: category.TranslatedTitle,
-			parentData: {
-				tabName: auOptionMetaData.tabNames[currentTab],
-				categoryName: "", // カテゴリはタブの直下にあるため、親カテゴリは存在しない
-				parentOptionNames: [],
-			},
-			info: {
-				mode: "au-cat",
-				tabId: currentTab,
-				categoryId: categoryId,
-			},
-		});
+		const isMapCategory =
+			currentTab === 0 && auOptionMetaData.tabCategoryMap[0].length === 1;
+
+		if (!isMapCategory) {
+			globalSearchItems.push({
+				term: category.TranslatedTitle,
+				parentData: {
+					tabName: auOptionMetaData.tabNames[currentTab],
+					categoryName: "", // カテゴリはタブの直下にあるため、親カテゴリは存在しない
+					parentOptionNames: [],
+				},
+				info: {
+					mode: "au-cat",
+					tabId: currentTab,
+					categoryId: categoryId,
+				},
+			});
+		}
 
 		for (const opt of category.Options) {
 			const valueType = opt.Info.ValueType;
@@ -465,10 +470,10 @@ export async function createAuOptionMetaData(): Promise<
 				initialValueData[auOptionId] = index;
 
 				globalSearchItems.push({
-					term: tlanslatedTitle,
+					term: isMapCategory ? "マップ" : tlanslatedTitle,
 					parentData: {
 						tabName: auOptionMetaData.tabNames[currentTab],
-						categoryName: category.TranslatedTitle,
+						categoryName: isMapCategory ? "" : category.TranslatedTitle,
 						parentOptionNames: [],
 					},
 					info: {
