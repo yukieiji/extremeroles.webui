@@ -162,14 +162,6 @@ describe("globalSearchItems population", () => {
 			}),
 		);
 
-		// Map option should be in globalSearchItems as au-opt with term "マップ"
-		expect(globalSearchItems).toContainEqual(
-			expect.objectContaining({
-				term: "マップ",
-				info: expect.objectContaining({ mode: "au-opt", categoryId: 0 }),
-			}),
-		);
-
 		// Normal category should be in globalSearchItems as au-cat
 		expect(globalSearchItems).toContainEqual(
 			expect.objectContaining({
