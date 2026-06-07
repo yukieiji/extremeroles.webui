@@ -77,6 +77,10 @@ export function getUpdatedExRState(
 			processCategory(x.UpdatedCategory);
 		}
 
+		if (x.ChainUpdateCategory) {
+			processCategory(x.ChainUpdateCategory);
+		}
+
 		for (const chain of x.ChainUpdatedOption) {
 			const tId = exrOptionMetaData.categories[chain.Id]?.tabId;
 			if (tId === undefined) {

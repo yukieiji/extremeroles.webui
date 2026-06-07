@@ -311,11 +311,13 @@ export const CategoryOptionDtoSchema = z.object({
 export interface UpdatedOptions {
 	UpdatedCategory?: ExRCategoryDto | null;
 	ChainUpdatedOption: CategoryOptionDto[];
+	ChainUpdateCategory?: ExRCategoryDto | null;
 }
 
 export const UpdatedOptionsSchema = z.object({
 	UpdatedCategory: ExRCategoryDtoSchema.nullish(),
 	ChainUpdatedOption: z.array(CategoryOptionDtoSchema),
+	ChainUpdateCategory: ExRCategoryDtoSchema.nullish(),
 });
 
 // 内部データ向け

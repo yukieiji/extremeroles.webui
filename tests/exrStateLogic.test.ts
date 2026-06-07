@@ -139,6 +139,54 @@ describe("exrStateLogic", () => {
 		expect(result.isOptionActiveChanged).toBe(true);
 	});
 
+	it("should update state from ChainUpdateCategory", () => {
+		const catId = 250;
+		const tabId = ExRTabId.GeneralTab;
+		const optId = 3;
+		const uId = getUniqueOptionId(tabId, catId, optId);
+
+		exrOptionMetaData.categories[catId] = {
+			name: "Chain Update Category",
+			tabId,
+		};
+
+		const updateResults: (UpdatedOptions | null)[] = [
+			{
+				UpdatedCategory: null,
+				ChainUpdatedOption: [],
+				ChainUpdateCategory: {
+					Id: catId,
+					Name: "Chain Update Category",
+					Options: [
+						{
+							Id: optId,
+							IsActive: true,
+							TranslatedName: "Chain Update Option",
+							Selection: 7,
+							Format: "Format",
+							RangeMeta: { Type: "Int32", Values: [0, 7, 14] },
+							Childs: [],
+						},
+					],
+				},
+			},
+		];
+
+		const currentExrValue: Record<UniqueOptionId, ExROptionValueData> = {};
+		const currentIsExROptionActive: Record<UniqueOptionId, boolean> = {};
+
+		const result = getUpdatedExRState(
+			updateResults,
+			currentExrValue,
+			currentIsExROptionActive,
+		);
+
+		expect(result.nextValueData[uId].selection).toBe(7);
+		expect(result.nextIsOptionActive[uId]).toBe(true);
+		expect(result.valueDataChanged).toBe(true);
+		expect(result.isOptionActiveChanged).toBe(true);
+	});
+
 	it("should process child options recursively", () => {
 		const catId = 300;
 		const tabId = ExRTabId.NeutralTab;

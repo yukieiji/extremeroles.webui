@@ -69,6 +69,11 @@ describe("ExROptionPutRequest and UpdatedOptions Validation", () => {
 					],
 				},
 			],
+			ChainUpdateCategory: {
+				Id: 3,
+				Name: "Chain Update Category",
+				Options: [],
+			},
 		};
 
 		const result = UpdatedOptionsSchema.safeParse(data);
