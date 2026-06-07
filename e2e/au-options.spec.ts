@@ -26,12 +26,12 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("tab", { name: "0", exact: true }).click();
 
 		// Map is now a direct dropdown (select element)
-		// モックデータでは "map" (小文字)
-		// "map" というテキストと combobox の両方を含む行要素を特定する
+		// モックデータでは「マップ」
+		// 「マップ」というテキストと combobox の両方を含む行要素を特定する
 		const mapCategoryRow = page
 			.locator("main")
 			.locator("div")
-			.filter({ hasText: "map" })
+			.filter({ hasText: "マップ" })
 			.filter({ has: page.getByRole("combobox") })
 			.first();
 		await expect(mapCategoryRow).toBeVisible();
