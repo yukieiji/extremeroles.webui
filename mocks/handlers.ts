@@ -47,6 +47,7 @@ const mockUpdatedOptions: UpdatedOptions = {
     ],
   },
   ChainUpdatedOption: [],
+  ChainUpdateCategory: null,
 };
 
 const validatedUpdatedOptions = UpdatedOptionsSchema.parse(mockUpdatedOptions);
@@ -112,6 +113,7 @@ export const handlers = [
     const mockUpdatedOptions: UpdatedOptions = {
       UpdatedCategory: updatedCategory,
       ChainUpdatedOption: chainUpdatedOptions,
+      ChainUpdateCategory: null,
     };
 
     // レスポンスデータのバリデーション
