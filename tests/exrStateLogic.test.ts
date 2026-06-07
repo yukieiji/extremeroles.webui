@@ -145,7 +145,10 @@ describe("exrStateLogic", () => {
 		const optId = 3;
 		const uId = getUniqueOptionId(tabId, catId, optId);
 
-		exrOptionMetaData.categories[catId] = { name: "Chain Update Category", tabId };
+		exrOptionMetaData.categories[catId] = {
+			name: "Chain Update Category",
+			tabId,
+		};
 
 		const updateResults: (UpdatedOptions | null)[] = [
 			{
