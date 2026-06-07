@@ -26,9 +26,6 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const highlightedAuOptionId = useStore(
 		(state) => state.highlightedAuOptionId,
 	);
-	const highlightedAuCategoryId = useStore(
-		(state) => state.highlightedAuCategoryId,
-	);
 
 	const optionMeta = auOptionMetaData.options[mapOptionId];
 
@@ -40,44 +37,36 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const displayValues = optionMeta.range.map((v) => v.toString());
 
 	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
-	const isCategoryHighlighted = highlightedAuCategoryId === categoryId;
 
 	const navigateId = createAuNavigateId(mapOptionId);
-	const categoryNavigateId = createAuCategoryNavigateId(categoryId);
 
 	return (
-		<HighlightWrapper
-			id={categoryNavigateId}
-			isHighlighted={isCategoryHighlighted}
-			isInset={false}
-		>
-			<div className="border border-gray-700 rounded-lg overflow-hidden">
-				<HighlightWrapper
-					id={navigateId}
-					isHighlighted={isHighlighted}
-					isInset={true}
-				>
-					<div className="flex items-center justify-between py-2 px-4">
-						<div className="flex items-center gap-3">
-							{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
-							<div className="w-5" />
-							<span className="font-semibold text-gray-200">
-								{optionMeta.title}
-							</span>
-						</div>
-						<OptionDropdownControl
-							values={displayValues}
-							selection={selection}
-							onChange={(newSelectionValue) => {
-								updateAuOption({
-									auOptionId: mapOptionId,
-									selection: newSelectionValue,
-								});
-							}}
-						/>
+		<div className="border border-gray-700 rounded-lg overflow-hidden">
+			<HighlightWrapper
+				id={navigateId}
+				isHighlighted={isHighlighted}
+				isInset={true}
+			>
+				<div className="flex items-center justify-between py-2 px-4">
+					<div className="flex items-center gap-3">
+						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
+						<div className="w-5" />
+						<span className="font-semibold text-gray-200">
+							{optionMeta.title}
+						</span>
 					</div>
-				</HighlightWrapper>
-			</div>
-		</HighlightWrapper>
+					<OptionDropdownControl
+						values={displayValues}
+						selection={selection}
+						onChange={(newSelectionValue) => {
+							updateAuOption({
+								auOptionId: mapOptionId,
+								selection: newSelectionValue,
+							});
+						}}
+					/>
+				</div>
+			</HighlightWrapper>
+		</div>
 	);
 }
