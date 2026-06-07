@@ -74,7 +74,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 		<HighlightWrapper
 			id={navigateId}
 			isHighlighted={isHighlighted}
-			isInset={false}
+			isInset={true}
 		>
 			<RoleCategoryAccordion
 				isOpen={isOpen}
