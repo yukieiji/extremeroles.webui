@@ -28,7 +28,7 @@ function useNavigate() {
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
 				}
 			}
-			setTimeout(timeoutFunc, 2000);
+			setTimeout(timeoutFunc, 5000);
 		}, 100);
 	};
 }
