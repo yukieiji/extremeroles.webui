@@ -17,11 +17,11 @@ test.describe("Random Map Display and Hiding", () => {
 		page,
 	}) => {
 		// 1. 右サイドパネルを開く
-		const toggleButton = page.getByRole("button", { name: "パネルを開く" });
-		if (await toggleButton.isVisible()) {
-			await toggleButton.click();
+		const summary = page.getByTestId("right-panel-summary");
+		if (!(await summary.isVisible())) {
+			await page.getByTestId("right-panel-toggle").click();
 		}
-		await expect(page.getByTestId("right-panel-summary")).toBeVisible();
+		await expect(summary).toBeVisible();
 
 		// 2. 初期状態の確認（マップのサマリーが表示されていること）
 		// モックの初期値は map: 4
@@ -54,7 +54,6 @@ test.describe("Random Map Display and Hiding", () => {
 		await expect(optionRow.getByText("オン", { exact: true })).toBeVisible();
 
 		// 4. 右パネルのサマリー表示が「ランダム」に変わったことを確認
-		const summary = page.getByTestId("right-panel-summary");
 		await expect(summary.getByText("ランダム")).toBeVisible();
 
 		// 5. 右パネルの ExR 設定リストから「ランダムマップに関する設定」が消えていることを確認
