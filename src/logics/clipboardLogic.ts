@@ -86,7 +86,11 @@ export function generateClipboardText(
 		if (!meta?.format) {
 			return String(value);
 		}
-		return meta.format.replace("{0}", String(value));
+		if (meta.format.includes("{0}")) {
+			return meta.format.replace("{0}", String(value));
+		}
+		// {0}が含まれていない場合（例: "%" のみ）、値を前に付ける
+		return `${value}${meta.format}`;
 	};
 
 	const getAuValue = (optionId: AuOptionId) => {
@@ -214,16 +218,16 @@ export function generateClipboardText(
 
 	const vanillaRoles = getVanillaRoles();
 	const crewRolesList = [
-		...getRolesForTab(ExRTabId.CrewmateTab),
 		...vanillaRoles.filter((r) => r.faction === "Crew"),
+		...getRolesForTab(ExRTabId.CrewmateTab),
 	];
 	const impostorRolesList = [
-		...getRolesForTab(ExRTabId.ImpostorTab),
 		...vanillaRoles.filter((r) => r.faction === "Impostor"),
+		...getRolesForTab(ExRTabId.ImpostorTab),
 	];
 	const neutralRolesList = [
-		...getRolesForTab(ExRTabId.NeutralTab),
 		...vanillaRoles.filter((r) => r.faction === "Neutral"),
+		...getRolesForTab(ExRTabId.NeutralTab),
 	];
 
 	const liberalRolesList = getRolesForTab(ExRTabId.GeneralTab);
@@ -350,7 +354,9 @@ export function generateClipboardText(
 	}
 	if (liberalRolesCount !== "0") {
 		text += `- ${CLIPBOARD_LIBERAL_ROLES}: ${liberalRolesCount}\n`;
-		text += `  - ${CLIPBOARD_MILITANT_ROLES}: ${militantRolesCount}\n`;
+		if (militantRolesCount !== "0") {
+			text += `  - ${CLIPBOARD_MILITANT_ROLES}: ${militantRolesCount}\n`;
+		}
 	}
 
 	text += `## ${CLIPBOARD_ROLES}\n`;

@@ -34,6 +34,7 @@ import {
 	ExRTabId,
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
+	type UniqueOptionId,
 } from "@/type";
 
 describe("generateClipboardText", () => {
@@ -172,28 +173,28 @@ describe("generateClipboardText", () => {
 			["1000" as AuOptionId]: {
 				title: "Chance",
 				range: [0, 100],
-				tabId: 1,
+				tabId: 0, // Crew
 				categoryId: 5,
 				format: "",
 			},
 			["1001" as AuOptionId]: {
 				title: "Max",
 				range: [0, 1],
-				tabId: 1,
+				tabId: 0, // Crew
 				categoryId: 5,
 				format: "",
 			},
 			["1002" as AuOptionId]: {
 				title: "Chance",
 				range: [0, 100],
-				tabId: 2,
+				tabId: 1, // Impostor
 				categoryId: 6,
 				format: "",
 			},
 			["1003" as AuOptionId]: {
 				title: "Max",
 				range: [0, 1],
-				tabId: 2,
+				tabId: 1, // Impostor
 				categoryId: 6,
 				format: "",
 			},
@@ -221,12 +222,12 @@ describe("generateClipboardText", () => {
 			5: {
 				name: "Scientist",
 				options: ["1000" as AuOptionId, "1001" as AuOptionId],
-				tabId: 1,
+				tabId: 0, // Crew
 			},
 			6: {
 				name: "Shapeshifter",
 				options: ["1002" as AuOptionId, "1003" as AuOptionId],
-				tabId: 2,
+				tabId: 1, // Impostor
 			},
 		},
 	};
@@ -241,10 +242,6 @@ describe("generateClipboardText", () => {
 			[EXR_IMPOSTOR_MAX_ID]: { selection: 0, values: [0] },
 			[EXR_NEUTRAL_MIN_ID]: { selection: 0, values: [0] },
 			[EXR_NEUTRAL_MAX_ID]: { selection: 0, values: [0] },
-			[EXR_LIBERAL_MIN_ID]: { selection: 0, values: [0] },
-			[EXR_LIBERAL_MAX_ID]: { selection: 0, values: [0] },
-			[EXR_MILITANT_MIN_ID]: { selection: 0, values: [0] },
-			[EXR_MILITANT_MAX_ID]: { selection: 0, values: [0] },
 			[getUniqueOptionId(ExRTabId.CrewmateTab, 2, SPAWN_RATE_OPTION_ID)]: {
 				selection: 1,
 				values: [0, 100],
@@ -295,11 +292,15 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("- マップ: ランダム");
 	});
 
-	it("should handle liberal/militant roles", () => {
+	it("should handle liberal/militant roles and omit militant if 0", () => {
 		const stateWithLiberal = {
 			...mockState,
 			exrValue: {
 				...mockState.exrValue,
+				[EXR_LIBERAL_MIN_ID]: { selection: 0, values: [1] },
+				[EXR_LIBERAL_MAX_ID]: { selection: 0, values: [1] },
+				[EXR_MILITANT_MIN_ID]: { selection: 0, values: [0] },
+				[EXR_MILITANT_MAX_ID]: { selection: 0, values: [0] },
 				[getUniqueOptionId(ExRTabId.GeneralTab, 3, SPAWN_RATE_OPTION_ID)]: {
 					selection: 1,
 					values: [0, 100],
@@ -320,18 +321,17 @@ describe("generateClipboardText", () => {
 			mockAuMeta,
 		);
 		expect(text).toContain("### リベラル");
-		expect(text).toContain("| Liberal Category | 100% | 1 |");
+		expect(text).toContain("リベラルのロール数: 1");
+		expect(text).not.toContain("ミリタントのロール数");
 	});
 
-	it("should include vanilla roles with suffix", () => {
+	it("should include vanilla roles with suffix and order them before ExR roles", () => {
 		const stateWithVanilla = {
 			...mockState,
 			auValue: {
 				...mockState.auValue,
 				["1000" as AuOptionId]: 1, // 100%
 				["1001" as AuOptionId]: 1, // 1
-				["1002" as AuOptionId]: 1, // 100%
-				["1003" as AuOptionId]: 1, // 1
 			},
 		};
 		const text = generateClipboardText(
@@ -340,7 +340,10 @@ describe("generateClipboardText", () => {
 			mockAuMeta,
 		);
 		expect(text).toContain("| Scientist※バニラ | 100% | 1 |");
-		expect(text).toContain("| Shapeshifter※バニラ | 100% | 1 |");
+		// Scientist (Vanilla) should be before ExR Role in Crew section
+		const vanillaPos = text.indexOf("Scientist※バニラ");
+		const exrPos = text.indexOf("ExR Role");
+		expect(vanillaPos).toBeLessThan(exrPos);
 	});
 
 	it("should include detailed settings including child options", () => {
@@ -410,6 +413,27 @@ describe("generateClipboardText", () => {
 		expect(text).not.toContain("クルーのロール数");
 		expect(text).not.toContain("インポスターのロール数");
 		expect(text).not.toContain("第3陣営のロール数");
+		expect(text).not.toContain("リベラルのロール数");
+	});
+
+	it("should correctly format values even if {0} is missing in format string", () => {
+		const metaWithPercent = {
+			...mockExrMeta,
+			options: {
+				...mockExrMeta.options,
+				[getUniqueOptionId(ExRTabId.CrewmateTab, 2, SPAWN_RATE_OPTION_ID)]: {
+					metaData: { translatedName: "Spawn Rate", format: "%", type: "Int32" },
+					childOptionIds: [],
+					parentOptionIds: [],
+				},
+			},
+		};
+		const text = generateClipboardText(
+			mockState,
+			metaWithPercent as any,
+			mockAuMeta,
+		);
+		expect(text).toContain("| ExR Role | 100% | 1 |");
 	});
 
 	it("should handle impostor and neutral roles", () => {
