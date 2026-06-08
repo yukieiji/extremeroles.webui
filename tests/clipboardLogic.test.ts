@@ -440,6 +440,27 @@ describe("generateClipboardText", () => {
 		expect(text).toContain(" - ExR Role - 1 / 100％");
 	});
 
+	it("should clean color tags and replace newlines with spaces", () => {
+		const metaWithTags = {
+			...mockExrMeta,
+			categories: {
+				...mockExrMeta.categories,
+				2: {
+					name: "<color=#FF0000>Spawn\nRate</color>",
+					tabId: ExRTabId.CrewmateTab,
+				},
+			},
+		};
+		const text = generateClipboardText(
+			mockState,
+			metaWithTags as unknown as ExROptionMetaDataRecords,
+			mockAuMeta,
+		);
+		expect(text).toContain(" - Spawn Rate - 1 / 100％");
+		expect(text).not.toContain("<color");
+		expect(text).not.toContain("\nRate");
+	});
+
 	it("should handle impostor and neutral roles", () => {
 		const stateWithRoles = {
 			...mockState,

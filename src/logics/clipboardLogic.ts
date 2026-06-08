@@ -58,6 +58,16 @@ export interface ClipboardState {
 	presetNames: Record<number, string>;
 }
 
+/**
+ * カラータグを除去し、改行をスペースに置換します
+ */
+function cleanText(text: string): string {
+	if (!text) {
+		return "";
+	}
+	return stripColorTags(text).replace(/\r?\n/g, " ");
+}
+
 export function generateClipboardText(
 	state: ClipboardState,
 	exrMeta: ExROptionMetaDataRecords,
@@ -79,13 +89,16 @@ export function generateClipboardText(
 		const value = data.values[data.selection];
 		const meta = exrMeta.options[uniqueId]?.metaData;
 		if (!meta?.format) {
-			return String(value);
+			return cleanText(String(value));
 		}
+		let formatted = "";
 		if (meta.format.includes("{0}")) {
-			return meta.format.replace("{0}", String(value));
+			formatted = meta.format.replace("{0}", String(value));
+		} else {
+			// {0}が含まれていない場合（例: "%" のみ）、値を前に付ける
+			formatted = `${value}${meta.format}`;
 		}
-		// {0}が含まれていない場合（例: "%" のみ）、値を前に付ける
-		return `${value}${meta.format}`;
+		return cleanText(formatted);
 	};
 
 	const getAuValue = (optionId: AuOptionId) => {
@@ -96,18 +109,21 @@ export function generateClipboardText(
 	// 1. プリセット名
 	const presetSelection =
 		state.exrValue[PRESET_OPTION_UNIQUE_ID]?.selection ?? 0;
-	const presetName =
+	const presetName = cleanText(
 		state.presetNames[presetSelection] ??
-		String(getExRValue(PRESET_OPTION_UNIQUE_ID) ?? "");
+			String(getExRValue(PRESET_OPTION_UNIQUE_ID) ?? ""),
+	);
 
 	// 2. マップ
-	let mapName = String(getAuValue(AU_MAP_OPTION_ID) ?? "");
+	let mapName = cleanText(String(getAuValue(AU_MAP_OPTION_ID) ?? ""));
 	if (state.exrValue[EXR_RANDOM_MAP_OPTION_ID]?.selection === 1) {
 		mapName = RANDOM_MAP_LABEL;
 	}
 
 	// 3. キルクール
-	const killCooldown = String(getAuValue(AU_KILL_COOLDOWN_OPTION_ID) ?? "");
+	const killCooldown = cleanText(
+		String(getAuValue(AU_KILL_COOLDOWN_OPTION_ID) ?? ""),
+	);
 
 	// 4. 陣営数
 	const getMinMax = (minId: UniqueOptionId, maxId: UniqueOptionId) => {
@@ -123,7 +139,9 @@ export function generateClipboardText(
 		EXR_IMPOSTOR_MIN_ID,
 		EXR_IMPOSTOR_MAX_ID,
 	);
-	const impostorCount = String(getAuValue(AU_IMPOSTOR_COUNT_OPTION_ID) ?? "");
+	const impostorCount = cleanText(
+		String(getAuValue(AU_IMPOSTOR_COUNT_OPTION_ID) ?? ""),
+	);
 	const neutralRolesCount = getMinMax(EXR_NEUTRAL_MIN_ID, EXR_NEUTRAL_MAX_ID);
 	const liberalRolesCount = getMinMax(EXR_LIBERAL_MIN_ID, EXR_LIBERAL_MAX_ID);
 	const militantRolesCount = getMinMax(
@@ -161,7 +179,7 @@ export function generateClipboardText(
 			const rate = getExRValue(spawnRateId);
 			if (typeof rate === "number" && rate > 0) {
 				roles.push({
-					name: stripColorTags(category.name),
+					name: cleanText(category.name),
 					rate: getExRFormattedValue(spawnRateId),
 					count: getExRFormattedValue(spawnCountId),
 					isVanilla: false,
@@ -200,7 +218,7 @@ export function generateClipboardText(
 				}
 
 				roles.push({
-					name: stripColorTags(catMeta.name),
+					name: cleanText(catMeta.name),
 					rate: `${chance}%`,
 					count: `${maxCount}`,
 					isVanilla: true,
@@ -278,9 +296,10 @@ export function generateClipboardText(
 				continue;
 			}
 			const value = getAuValue(optId);
-			detailedSettings += `- ${stripColorTags(meta.title)} : ${value}${
-				meta.format ? meta.format.replace("{0}", "") : ""
-			}\n`;
+			const formattedValue = cleanText(
+				`${value}${meta.format ? meta.format.replace("{0}", "") : ""}`,
+			);
+			detailedSettings += `- ${cleanText(meta.title)} : ${formattedValue}\n`;
 		}
 	}
 
@@ -319,7 +338,7 @@ export function generateClipboardText(
 			if (state.isExROptionActive[optId]) {
 				if (!summaryOptionIds.includes(optId)) {
 					const indentStr = "  ".repeat(indent);
-					detailedSettings += `${indentStr}- ${stripColorTags(
+					detailedSettings += `${indentStr}- ${cleanText(
 						meta.translatedName,
 					)} : ${getExRFormattedValue(optId)}\n`;
 				}
