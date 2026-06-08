@@ -36,6 +36,7 @@ export interface ExRTabMetaData {
 export interface ExRCategoryMetaData {
 	name: string;
 	tabId: ExRTabId;
+	categoryColors: string[];
 }
 
 export interface ExROptionMetaDataDetail {
@@ -119,12 +120,14 @@ export const ExROptionDtoSchema: z.ZodType<ExROptionDto> = z.lazy(() =>
 export interface ExRCategoryDto {
 	Id: number;
 	Name: string;
+	ColorCode: string | null;
 	Options: ExROptionDto[];
 }
 
 export const ExRCategoryDtoSchema = z.object({
 	Id: z.number(),
 	Name: z.string(),
+	ColorCode: z.string().nullable(),
 	Options: z.array(ExROptionDtoSchema),
 });
 

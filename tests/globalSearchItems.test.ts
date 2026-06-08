@@ -61,6 +61,7 @@ describe("globalSearchItems population", () => {
 					{
 						Id: 10,
 						Name: "Category 10",
+						ColorCode: null,
 						Options: [
 							{
 								Id: 100,

@@ -303,12 +303,21 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 			categoryIds: tab.Categories.map((c) => c.Id),
 		};
 		for (const category of tab.Categories) {
+			const categoryColors = category.ColorCode
+				? [
+						category.ColorCode.startsWith("#")
+							? category.ColorCode
+							: `#${category.ColorCode}`,
+					]
+				: extractColors(category.Name);
+
 			exrOptionMetaData.categories[category.Id] = {
-				name: category.Name,
+				name: stripColorTags(category.Name),
 				tabId: tab.Id,
+				categoryColors,
 			};
 			globalSearchItems.push({
-				term: category.Name,
+				term: exrOptionMetaData.categories[category.Id].name,
 				parentData: {
 					tabName: stripColorTags(tab.Name),
 					categoryName: "", // カテゴリはタブの直下にあるため、親カテゴリは存在しない
