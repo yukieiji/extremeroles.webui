@@ -49,8 +49,6 @@ test.describe("Random Map Display and Hiding", () => {
 			.filter({ has: page.getByTestId("option-toggle") })
 			.last();
 		const toggleSwitch = optionRow.getByTestId("option-toggle");
-		await expect(optionRow.getByText("オフ", { exact: true })).toBeVisible();
-		await toggleSwitch.click();
 		await expect(optionRow.getByText("オン", { exact: true })).toBeVisible();
 
 		// 4. 右パネルのサマリー表示が「ランダム」に変わったことを確認
@@ -63,8 +61,21 @@ test.describe("Random Map Display and Hiding", () => {
 			.locator("div")
 			.filter({ hasText: "ExRの設定" })
 			.locator("..");
-		await expect(
-			exrSettingsInRightPanel.getByText("ランダムマップに関する設定"),
-		).not.toBeVisible();
+
+		const randomMapSetting = exrSettingsInRightPanel.getByText(
+			"ランダムマップに関する設定",
+		);
+		await randomMapSetting.scrollIntoViewIfNeeded();
+		await expect(randomMapSetting).not.toBeVisible();
+
+		await categoryHeader.scrollIntoViewIfNeeded();
+		await toggleSwitch.click();
+
+		await expect(optionRow.getByText("オン", { exact: true })).toBeVisible();
+
+		// 5. 右パネルの ExR 設定リストから「ランダムマップに関する設定」が表示されていることを確認
+		// 右パネル内の "ExRの設定" アコーディオンの中身を確認
+		await randomMapSetting.scrollIntoViewIfNeeded();
+		await expect(randomMapSetting).toBeVisible();
 	});
 });

@@ -60,12 +60,12 @@ test("Options interaction behavior", async ({ page }) => {
 		.getByTestId("category-list")
 		.getByTestId("option-toggle")
 		.first();
-	// モックの初期値がオン(true)のため
-	await expect(toggle).toHaveAttribute("aria-checked", "true");
-	await expect(page.getByText("オン", { exact: true }).first()).toBeVisible();
-
-	// トグルを切り替え (オン -> オフ)
-	await toggle.click();
+	// モックの初期値がオフ(false)のため
 	await expect(toggle).toHaveAttribute("aria-checked", "false");
-	await expect(page.getByText("オフ").first()).toBeVisible();
+	await expect(page.getByText("オフ", { exact: true }).first()).toBeVisible();
+
+	// トグルを切り替え (オフ -> オン)
+	await toggle.click();
+	await expect(toggle).toHaveAttribute("aria-checked", "true");
+	await expect(page.getByText("オン").first()).toBeVisible();
 });

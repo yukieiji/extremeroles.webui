@@ -42,27 +42,27 @@ test("ExR toggle switch should be visible and functional", async ({ page }) => {
 		.first(); // 最初のトグルを取得
 	await expect(toggle).toBeVisible();
 
-	// 初期状態は オン (Selection 1) ※モックの初期値が1のため
-	await expect(toggle).toHaveAttribute("aria-checked", "true");
+	// 初期状態は オフ (Selection 0) ※モックの初期値がのため
+	await expect(toggle).toHaveAttribute("aria-checked", "false");
 	// 曖昧さを回避するため、特定のカテゴリ内を確認
 	const categoryContainer = page.getByTestId("exr-category-1");
-	await expect(
-		categoryContainer.getByText("オン", { exact: true }),
-	).toBeVisible();
-
-	// クリックして オフ にする
-	await toggle.click();
-
-	// 状態が オフ (Selection 0) になったことを確認
-	await expect(toggle).toHaveAttribute("aria-checked", "false");
 	await expect(
 		categoryContainer.getByText("オフ", { exact: true }),
 	).toBeVisible();
 
-	// 再度クリックして オン に戻す
+	// クリックして オン にする
 	await toggle.click();
+
+	// 状態が オフ (Selection 0) になったことを確認
 	await expect(toggle).toHaveAttribute("aria-checked", "true");
 	await expect(
 		categoryContainer.getByText("オン", { exact: true }),
+	).toBeVisible();
+
+	// 再度クリックして オフ に戻す
+	await toggle.click();
+	await expect(toggle).toHaveAttribute("aria-checked", "false");
+	await expect(
+		categoryContainer.getByText("オフ", { exact: true }),
 	).toBeVisible();
 });
