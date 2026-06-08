@@ -320,7 +320,7 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("- キルクールダウン時間: 10");
 		expect(text).toContain(`## ${CLIPBOARD_ROLES}`);
 		expect(text).toContain(`### ${CLIPBOARD_CREW}`);
-		expect(text).toContain(" - ExR Role - 1 / 100％");
+		expect(text).toContain(" - ExR Role --- **1 / 100%**");
 	});
 
 	it("should handle random map", () => {
@@ -386,9 +386,9 @@ describe("generateClipboardText", () => {
 			mockExrMeta,
 			mockAuMeta,
 		);
-		expect(text).toContain(" - Scientist※バニラ - 1 / 100％");
+		expect(text).toContain(" - Scientist(※バニラ) --- **1 / 100%**");
 		// Scientist (Vanilla) should be before ExR Role in Crew section
-		const vanillaPos = text.indexOf("Scientist※バニラ");
+		const vanillaPos = text.indexOf("Scientist(※バニラ)");
 		const exrPos = text.indexOf("ExR Role");
 		expect(vanillaPos).toBeLessThan(exrPos);
 	});
@@ -458,8 +458,8 @@ describe("generateClipboardText", () => {
 			mockAuMeta,
 		);
 		expect(text).toBeDefined();
-		expect(text).not.toContain("クルーのロール数");
-		expect(text).not.toContain("インポスターのロール数");
+		expect(text).toContain("クルーのロール数");
+		expect(text).toContain("インポスターのロール数");
 		expect(text).not.toContain("第3陣営のロール数");
 		expect(text).not.toContain("リベラルのロール数");
 	});
@@ -485,7 +485,7 @@ describe("generateClipboardText", () => {
 			metaWithPercent as unknown as ExROptionMetaDataRecords,
 			mockAuMeta,
 		);
-		expect(text).toContain(" - ExR Role - 1 / 100％");
+		expect(text).toContain(" - ExR Role --- **1 / 100%**");
 	});
 
 	it("should handle impostor and neutral roles", () => {
@@ -519,9 +519,9 @@ describe("generateClipboardText", () => {
 		};
 		const text = generateClipboardText(stateWithRoles, mockExrMeta, mockAuMeta);
 		expect(text).toContain(`### ${CLIPBOARD_IMPOSTOR}`);
-		expect(text).toContain(" - ExR Impostor - 1 / 100％");
+		expect(text).toContain(" - ExR Impostor --- **1 / 100%**");
 		expect(text).toContain(`### ${CLIPBOARD_NEUTRAL}`);
-		expect(text).toContain(" - ExR Neutral - 1 / 100％");
+		expect(text).toContain(" - ExR Neutral --- **1 / 100%**");
 	});
 
 	it("should clean color tags and replace newlines with spaces", () => {
@@ -540,7 +540,7 @@ describe("generateClipboardText", () => {
 			metaWithTags as unknown as ExROptionMetaDataRecords,
 			mockAuMeta,
 		);
-		expect(text).toContain(" - Spawn Rate - 1 / 100％");
+		expect(text).toContain(" - Spawn Rate --- **1 / 100%**");
 		expect(text).not.toContain("<color");
 		expect(text).not.toContain("\nRate");
 	});
