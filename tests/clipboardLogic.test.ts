@@ -394,7 +394,7 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("| 　Child Option | ChildVal |");
 	});
 
-	it("should handle missing data gracefully", () => {
+	it("should handle missing data gracefully and omit zero counts", () => {
 		const emptyState = {
 			exrValue: {},
 			auValue: {},
@@ -407,6 +407,9 @@ describe("generateClipboardText", () => {
 			mockAuMeta,
 		);
 		expect(text).toBeDefined();
+		expect(text).not.toContain("クルーのロール数");
+		expect(text).not.toContain("インポスターのロール数");
+		expect(text).not.toContain("第3陣営のロール数");
 	});
 
 	it("should handle impostor and neutral roles", () => {

@@ -112,8 +112,10 @@ export function generateClipboardText(
 
 	// 4. 陣営数
 	const getMinMax = (minId: UniqueOptionId, maxId: UniqueOptionId) => {
-		const min = getExRValue(minId);
-		const max = getExRValue(maxId);
+		const minOption = state.exrValue[minId];
+		const maxOption = state.exrValue[maxId];
+		const min = minOption?.values[minOption?.selection ?? 0] ?? 0;
+		const max = maxOption?.values[maxOption?.selection ?? 0] ?? 0;
 		return min === max ? `${min}` : `${min} - ${max}`;
 	};
 
@@ -336,10 +338,16 @@ export function generateClipboardText(
 	text += `- ${CLIPBOARD_MAP}: ${mapName}\n`;
 	text += `- ${CLIPBOARD_KILL_COOLDOWN}: ${killCooldown}\n`;
 	text += `## ${CLIPBOARD_FACTION_COUNTS}\n`;
-	text += `- ${CLIPBOARD_CREW_ROLES}: ${crewRolesCount}\n`;
-	text += `- ${CLIPBOARD_IMPOSTOR_ROLES}: ${impostorRolesCount}\n`;
-	text += `  - ${CLIPBOARD_IMPOSTOR_COUNT}: ${impostorCount}\n`;
-	text += `- ${CLIPBOARD_NEUTRAL_ROLES}: ${neutralRolesCount}\n`;
+	if (crewRolesCount !== "0") {
+		text += `- ${CLIPBOARD_CREW_ROLES}: ${crewRolesCount}\n`;
+	}
+	if (impostorRolesCount !== "0") {
+		text += `- ${CLIPBOARD_IMPOSTOR_ROLES}: ${impostorRolesCount}\n`;
+		text += `  - ${CLIPBOARD_IMPOSTOR_COUNT}: ${impostorCount}\n`;
+	}
+	if (neutralRolesCount !== "0") {
+		text += `- ${CLIPBOARD_NEUTRAL_ROLES}: ${neutralRolesCount}\n`;
+	}
 	if (liberalRolesCount !== "0") {
 		text += `- ${CLIPBOARD_LIBERAL_ROLES}: ${liberalRolesCount}\n`;
 		text += `  - ${CLIPBOARD_MILITANT_ROLES}: ${militantRolesCount}\n`;
