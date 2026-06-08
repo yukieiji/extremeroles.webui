@@ -1,4 +1,6 @@
+import { ClipboardCopy } from "lucide-react";
 import type { ReactNode } from "react";
+import { toast } from "sonner";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupColumnLayout";
 import { Button } from "@/components/ui/button";
@@ -11,8 +13,6 @@ import {
 	SETTING_VALUES_TITLE,
 } from "@/noTrans";
 import { useStore } from "@/useStore";
-import { ClipboardCopy } from "lucide-react";
-import { toast } from "sonner";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
 import { RightSidePanelSummary } from "./summary/RightSidePanelSummary";

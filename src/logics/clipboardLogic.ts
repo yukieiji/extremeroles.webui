@@ -14,17 +14,17 @@ import {
 	EXR_NEUTRAL_MAX_ID,
 	EXR_NEUTRAL_MIN_ID,
 	EXR_RANDOM_MAP_OPTION_ID,
+	getUniqueOptionId,
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
-	getUniqueOptionId,
 } from "@/logics/optionUtils";
 import { RANDOM_MAP_LABEL } from "@/noTrans";
 import {
 	type AuOptionId,
 	type AuOptionMetaDataRecords,
-	ExRTabId,
 	type ExROptionMetaDataRecords,
 	type ExROptionValueData,
+	ExRTabId,
 	SPAWN_COUNT_OPTION_ID,
 	SPAWN_RATE_OPTION_ID,
 	type UniqueOptionId,
@@ -44,16 +44,22 @@ export function generateClipboardText(
 ) {
 	const getExRValue = (uniqueId: UniqueOptionId) => {
 		const data = state.exrValue[uniqueId];
-		if (!data) return null;
+		if (!data) {
+			return null;
+		}
 		return data.values[data.selection];
 	};
 
 	const getExRFormattedValue = (uniqueId: UniqueOptionId) => {
 		const data = state.exrValue[uniqueId];
-		if (!data) return "";
+		if (!data) {
+			return "";
+		}
 		const value = data.values[data.selection];
 		const meta = exrMeta.options[uniqueId]?.metaData;
-		if (!meta || !meta.format) return String(value);
+		if (!meta?.format) {
+			return String(value);
+		}
 		return meta.format.replace("{0}", String(value));
 	};
 
@@ -86,7 +92,10 @@ export function generateClipboardText(
 	};
 
 	const crewRolesCount = getMinMax(EXR_CREW_MIN_ID, EXR_CREW_MAX_ID);
-	const impostorRolesCount = getMinMax(EXR_IMPOSTOR_MIN_ID, EXR_IMPOSTOR_MAX_ID);
+	const impostorRolesCount = getMinMax(
+		EXR_IMPOSTOR_MIN_ID,
+		EXR_IMPOSTOR_MAX_ID,
+	);
 	const impostorCount = String(getAuValue(AU_IMPOSTOR_COUNT_OPTION_ID) ?? "");
 	const neutralRolesCount = getMinMax(EXR_NEUTRAL_MIN_ID, EXR_NEUTRAL_MAX_ID);
 	const liberalRolesCount = getMinMax(EXR_LIBERAL_MIN_ID, EXR_LIBERAL_MAX_ID);
@@ -104,11 +113,15 @@ export function generateClipboardText(
 			isVanilla: boolean;
 		}[] = [];
 		const tab = exrMeta.tabs[tabId];
-		if (!tab) return roles;
+		if (!tab) {
+			return roles;
+		}
 
 		for (const catId of tab.categoryIds) {
 			const category = exrMeta.categories[catId];
-			if (!category) continue;
+			if (!category) {
+				continue;
+			}
 
 			// ExR役職
 			const spawnRateId = getUniqueOptionId(tabId, catId, SPAWN_RATE_OPTION_ID);
@@ -142,7 +155,9 @@ export function generateClipboardText(
 		}[] = [];
 		for (const catId of VANILLA_ROLE_CATEGORY_IDS) {
 			const catMeta = auMeta.categoryMetaData[catId];
-			if (!catMeta) continue;
+			if (!catMeta) {
+				continue;
+			}
 			const chanceId = catMeta.options[0];
 			const maxCountId = catMeta.options[1];
 			const chance = Number(getAuValue(chanceId) ?? 0);
@@ -150,8 +165,12 @@ export function generateClipboardText(
 
 			if (chance > 0 && maxCount > 0) {
 				let faction: "Crew" | "Impostor" | "Neutral" = "Crew";
-				if (catMeta.tabId === 1) faction = "Impostor";
-				if (catMeta.tabId === 2) faction = "Neutral";
+				if (catMeta.tabId === 1) {
+					faction = "Impostor";
+				}
+				if (catMeta.tabId === 2) {
+					faction = "Neutral";
+				}
 
 				roles.push({
 					name: stripColorTags(catMeta.name),
@@ -184,7 +203,9 @@ export function generateClipboardText(
 	const formatRoleTable = (
 		roles: { name: string; rate: string; count: string; isVanilla: boolean }[],
 	) => {
-		if (roles.length === 0) return "";
+		if (roles.length === 0) {
+			return "";
+		}
 		let table = "|  役職名  | スポーンレート | スポーン数 |\n| | | |\n";
 		for (const role of roles) {
 			const name = role.isVanilla ? `${role.name}※バニラ` : role.name;
@@ -201,17 +222,22 @@ export function generateClipboardText(
 	for (const catId of auTab0Categories) {
 		const catMeta = auMeta.categoryMetaData[catId];
 		// サマリーにあるものは除く
-		if (catId === 0) continue; // Map category (approx)
+		if (catId === 0) {
+			continue; // Map category (approx)
+		}
 
 		for (const optId of catMeta.options) {
 			if (
 				optId === AU_MAP_OPTION_ID ||
 				optId === AU_KILL_COOLDOWN_OPTION_ID ||
 				optId === AU_IMPOSTOR_COUNT_OPTION_ID
-			)
+			) {
 				continue;
+			}
 			const meta = auMeta.options[optId];
-			if (!meta) continue;
+			if (!meta) {
+				continue;
+			}
 			const value = getAuValue(optId);
 			detailedSettings += `| ${stripColorTags(meta.title)} | ${value}${
 				meta.format ? meta.format.replace("{0}", "") : ""
@@ -224,7 +250,9 @@ export function generateClipboardText(
 	if (exrGeneralTab) {
 		for (const catId of exrGeneralTab.categoryIds) {
 			const category = exrMeta.categories[catId];
-			if (!category) continue;
+			if (!category) {
+				continue;
+			}
 
 			const topLevelOptionIds =
 				exrMeta.globalCategoryIdTopLevelMap[catId] || [];
@@ -245,12 +273,15 @@ export function generateClipboardText(
 						EXR_MILITANT_MAX_ID,
 						EXR_RANDOM_MAP_OPTION_ID,
 					].includes(optId)
-				)
+				) {
 					continue;
+				}
 
 				if (state.isExROptionActive[optId]) {
 					const meta = exrMeta.options[optId]?.metaData;
-					if (!meta) continue;
+					if (!meta) {
+						continue;
+					}
 					detailedSettings += `| ${stripColorTags(
 						meta.translatedName,
 					)} | ${getExRFormattedValue(optId)} |\n`;
