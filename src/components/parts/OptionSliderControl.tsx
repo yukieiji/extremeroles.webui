@@ -46,7 +46,7 @@ export function OptionSliderControl({
 				{label && (
 					<FieldLabel
 						htmlFor={id}
-						className="text-sm font-medium"
+						className="text-sm font-medium select-text"
 						aria-hidden="true"
 					>
 						{label}
@@ -61,7 +61,7 @@ export function OptionSliderControl({
 					onKeyDown={handleKeyDown}
 				/>
 				{format && (
-					<Label htmlFor={id}>
+					<Label htmlFor={id} className="select-text">
 						<OptionFormat format={format} />
 					</Label>
 				)}
