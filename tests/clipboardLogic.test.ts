@@ -218,28 +218,28 @@ describe("generateClipboardText", () => {
 			["1000" as AuOptionId]: {
 				title: "Chance",
 				range: [0, 100],
-				tabId: 0, // Crew
+				tabId: 1, // Crew
 				categoryId: 5,
 				format: "",
 			},
 			["1001" as AuOptionId]: {
 				title: "Max",
 				range: [0, 1],
-				tabId: 0, // Crew
+				tabId: 1, // Crew
 				categoryId: 5,
 				format: "",
 			},
 			["1002" as AuOptionId]: {
 				title: "Chance",
 				range: [0, 100],
-				tabId: 1, // Impostor
+				tabId: 2, // Impostor
 				categoryId: 6,
 				format: "",
 			},
 			["1003" as AuOptionId]: {
 				title: "Max",
 				range: [0, 1],
-				tabId: 1, // Impostor
+				tabId: 2, // Impostor
 				categoryId: 6,
 				format: "",
 			},
@@ -250,11 +250,18 @@ describe("generateClipboardText", () => {
 				categoryId: 2,
 				format: "",
 			},
+			["3000" as AuOptionId]: {
+				title: "Extra Game Setting",
+				range: ["Value"],
+				tabId: 0,
+				categoryId: 3,
+				format: "",
+			},
 		} as unknown as AuOptionMetaDataRecords["options"],
 		tabCategoryMap: {
-			0: [0, 1, 2],
-			1: [],
-			2: [],
+			0: [0, 1, 2, 3],
+			1: [5],
+			2: [6],
 		},
 		categoryMetaData: {
 			0: { name: "Map Category", options: [AU_MAP_OPTION_ID], tabId: 0 },
@@ -264,15 +271,16 @@ describe("generateClipboardText", () => {
 				tabId: 0,
 			},
 			2: { name: "Other Settings", options: ["2000" as AuOptionId], tabId: 0 },
+			3: { name: "Game Extra", options: ["3000" as AuOptionId], tabId: 0 },
 			5: {
 				name: "Scientist",
 				options: ["1000" as AuOptionId, "1001" as AuOptionId],
-				tabId: 0, // Crew
+				tabId: 1, // Crew
 			},
 			6: {
 				name: "Shapeshifter",
 				options: ["1002" as AuOptionId, "1003" as AuOptionId],
-				tabId: 1, // Impostor
+				tabId: 2, // Impostor
 			},
 		},
 	};
@@ -301,6 +309,7 @@ describe("generateClipboardText", () => {
 			[AU_KILL_COOLDOWN_OPTION_ID]: 0,
 			[AU_IMPOSTOR_COUNT_OPTION_ID]: 0,
 			["2000" as AuOptionId]: 0,
+			["3000" as AuOptionId]: 0,
 		},
 		isExROptionActive: {
 			[PRESET_OPTION_UNIQUE_ID]: true,
@@ -321,6 +330,9 @@ describe("generateClipboardText", () => {
 		expect(text).toContain(`## ${CLIPBOARD_ROLES}`);
 		expect(text).toContain(`### ${CLIPBOARD_CREW}`);
 		expect(text).toContain(" - ExR Role --- **1 / 100%**");
+		expect(text).toContain("### Game Extra");
+		// Preset Category is empty because both PRESET_OPTION_UNIQUE_ID and EXR_RANDOM_MAP_OPTION_ID are excluded
+		expect(text).not.toContain("### Preset Category");
 	});
 
 	it("should handle random map", () => {
@@ -393,7 +405,7 @@ describe("generateClipboardText", () => {
 		expect(vanillaPos).toBeLessThan(exrPos);
 	});
 
-	it("should include detailed settings including child options", () => {
+	it("should include detailed settings including child options and category names", () => {
 		const childOptionId = 500 as unknown as UniqueOptionId;
 		const metaWithChild = {
 			...mockExrMeta,
@@ -440,7 +452,9 @@ describe("generateClipboardText", () => {
 			mockAuMeta,
 		);
 		expect(text).toContain("## 詳細設定");
+		expect(text).toContain("### Other Settings");
 		expect(text).toContain("- Setting A : On");
+		expect(text).toContain("### Preset Category");
 		expect(text).toContain("- Parent Option : Val");
 		expect(text).toContain("  - Child Option : ChildVal");
 	});

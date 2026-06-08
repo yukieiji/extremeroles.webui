@@ -16,6 +16,7 @@ import {
 	EXR_RANDOM_MAP_OPTION_ID,
 	getBaseOptionName,
 	getUniqueOptionId,
+	MOVED_EXR_OPTION_UNIQUE_IDS,
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
@@ -314,56 +315,55 @@ export function generateClipboardText(
 	const exrGeneralTab = exrMeta.tabs[ExRTabId.GeneralTab];
 	if (exrGeneralTab) {
 		const processedOptions = new Set<UniqueOptionId>();
-		const addOptionAndChildren = (optId: UniqueOptionId, indent = 0) => {
-			if (processedOptions.has(optId)) {
-				return;
-			}
-			processedOptions.add(optId);
-
-			const optionDetail = exrMeta.options[optId];
-			const meta = optionDetail?.metaData;
-			if (!meta) {
-				return;
-			}
-
-			// サマリーにあるものは除く
-			const summaryOptionIds = [
-				PRESET_OPTION_UNIQUE_ID,
-				EXR_CREW_MIN_ID,
-				EXR_CREW_MAX_ID,
-				EXR_IMPOSTOR_MIN_ID,
-				EXR_IMPOSTOR_MAX_ID,
-				EXR_NEUTRAL_MIN_ID,
-				EXR_NEUTRAL_MAX_ID,
-				EXR_LIBERAL_MIN_ID,
-				EXR_LIBERAL_MAX_ID,
-				EXR_MILITANT_MIN_ID,
-				EXR_MILITANT_MAX_ID,
-				EXR_RANDOM_MAP_OPTION_ID,
-			];
-
-			if (!state.isExROptionActive[optId]) {
-				return;
-			}
-
-			if (!summaryOptionIds.includes(optId)) {
-				const indentStr = "  ".repeat(indent);
-				detailedSettings += `${indentStr} - ${cleanText(
-					meta.translatedName,
-				)} : ${getExRFormattedValue(optId)}\n`;
-			}
-
-			// 子オプションを再帰的に追加
-			for (const childId of optionDetail.childOptionIds) {
-				addOptionAndChildren(childId, indent + 1);
-			}
-		};
+		const movedOptionIds = new Set<number>(MOVED_EXR_OPTION_UNIQUE_IDS);
 
 		for (const catId of exrGeneralTab.categoryIds) {
+			const category = exrMeta.categories[catId];
+			if (!category) {
+				continue;
+			}
+
+			let categoryContent = "";
+			const addOptionAndChildren = (optId: UniqueOptionId, indent = 0) => {
+				if (processedOptions.has(optId)) {
+					return;
+				}
+				processedOptions.add(optId);
+
+				const optionDetail = exrMeta.options[optId];
+				const meta = optionDetail?.metaData;
+				if (!meta) {
+					return;
+				}
+
+				if (!state.isExROptionActive[optId]) {
+					return;
+				}
+
+				// サマリーにあるものは除く
+				if (movedOptionIds.has(optId)) {
+					return;
+				}
+
+				const indentStr = "  ".repeat(indent);
+				categoryContent += `${indentStr} - ${cleanText(
+					meta.translatedName,
+				)} : ${getExRFormattedValue(optId)}\n`;
+
+				// 子オプションを再帰的に追加
+				for (const childId of optionDetail.childOptionIds) {
+					addOptionAndChildren(childId, indent + 1);
+				}
+			};
+
 			const topLevelOptionIds =
 				exrMeta.globalCategoryIdTopLevelMap[catId] || [];
 			for (const optId of topLevelOptionIds) {
 				addOptionAndChildren(optId);
+			}
+
+			if (categoryContent) {
+				detailedSettings += `### ${cleanText(category.name)}\n${categoryContent}`;
 			}
 		}
 	}
