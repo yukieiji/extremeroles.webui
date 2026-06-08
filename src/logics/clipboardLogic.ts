@@ -279,44 +279,55 @@ export function generateClipboardText(
 	// ExR General Tab
 	const exrGeneralTab = exrMeta.tabs[ExRTabId.GeneralTab];
 	if (exrGeneralTab) {
-		for (const catId of exrGeneralTab.categoryIds) {
-			const category = exrMeta.categories[catId];
-			if (!category) {
-				continue;
+		const processedOptions = new Set<UniqueOptionId>();
+		const addOptionAndChildren = (optId: UniqueOptionId, indent = 0) => {
+			if (processedOptions.has(optId)) {
+				return;
+			}
+			processedOptions.add(optId);
+
+			const optionDetail = exrMeta.options[optId];
+			const meta = optionDetail?.metaData;
+			if (!meta) {
+				return;
 			}
 
-			const topLevelOptionIds =
-				exrMeta.globalCategoryIdTopLevelMap[catId] || [];
-			for (const optId of topLevelOptionIds) {
-				const meta = exrMeta.options[optId]?.metaData;
-				if (!meta) {
-					continue;
-				}
-				// サマリーにあるものは除く
-				if (
-					[
-						PRESET_OPTION_UNIQUE_ID,
-						EXR_CREW_MIN_ID,
-						EXR_CREW_MAX_ID,
-						EXR_IMPOSTOR_MIN_ID,
-						EXR_IMPOSTOR_MAX_ID,
-						EXR_NEUTRAL_MIN_ID,
-						EXR_NEUTRAL_MAX_ID,
-						EXR_LIBERAL_MIN_ID,
-						EXR_LIBERAL_MAX_ID,
-						EXR_MILITANT_MIN_ID,
-						EXR_MILITANT_MAX_ID,
-						EXR_RANDOM_MAP_OPTION_ID,
-					].includes(optId)
-				) {
-					continue;
-				}
+			// サマリーにあるものは除く
+			const summaryOptionIds = [
+				PRESET_OPTION_UNIQUE_ID,
+				EXR_CREW_MIN_ID,
+				EXR_CREW_MAX_ID,
+				EXR_IMPOSTOR_MIN_ID,
+				EXR_IMPOSTOR_MAX_ID,
+				EXR_NEUTRAL_MIN_ID,
+				EXR_NEUTRAL_MAX_ID,
+				EXR_LIBERAL_MIN_ID,
+				EXR_LIBERAL_MAX_ID,
+				EXR_MILITANT_MIN_ID,
+				EXR_MILITANT_MAX_ID,
+				EXR_RANDOM_MAP_OPTION_ID,
+			];
 
-				if (state.isExROptionActive[optId]) {
-					detailedSettings += `| ${stripColorTags(
+			if (state.isExROptionActive[optId]) {
+				if (!summaryOptionIds.includes(optId)) {
+					const indentStr = "　".repeat(indent);
+					detailedSettings += `| ${indentStr}${stripColorTags(
 						meta.translatedName,
 					)} | ${getExRFormattedValue(optId)} |\n`;
 				}
+
+				// 子オプションを再帰的に追加
+				for (const childId of optionDetail.childOptionIds) {
+					addOptionAndChildren(childId, indent + 1);
+				}
+			}
+		};
+
+		for (const catId of exrGeneralTab.categoryIds) {
+			const topLevelOptionIds =
+				exrMeta.globalCategoryIdTopLevelMap[catId] || [];
+			for (const optId of topLevelOptionIds) {
+				addOptionAndChildren(optId);
 			}
 		}
 	}

@@ -343,21 +343,55 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("| Shapeshifter※バニラ | 100% | 1 |");
 	});
 
-	it("should include detailed settings", () => {
+	it("should include detailed settings including child options", () => {
+		const childOptionId = 500 as unknown as UniqueOptionId;
+		const metaWithChild = {
+			...mockExrMeta,
+			options: {
+				...mockExrMeta.options,
+				[100 as unknown as UniqueOptionId]: {
+					metaData: { translatedName: "Parent Option", format: "", type: "" },
+					childOptionIds: [childOptionId],
+					parentOptionIds: [],
+				},
+				[childOptionId]: {
+					metaData: { translatedName: "Child Option", format: "", type: "" },
+					childOptionIds: [],
+					parentOptionIds: [100 as unknown as UniqueOptionId],
+				},
+			},
+			globalCategoryIdTopLevelMap: {
+				...mockExrMeta.globalCategoryIdTopLevelMap,
+				1: [PRESET_OPTION_UNIQUE_ID, 100 as unknown as UniqueOptionId],
+			},
+		};
+
 		const stateWithSettings = {
 			...mockState,
+			exrValue: {
+				...mockState.exrValue,
+				[100 as unknown as UniqueOptionId]: { selection: 0, values: ["Val"] },
+				[childOptionId]: { selection: 0, values: ["ChildVal"] },
+			},
 			auValue: {
 				...mockState.auValue,
 				["2000" as AuOptionId]: 1, // On
 			},
+			isExROptionActive: {
+				...mockState.isExROptionActive,
+				[100 as unknown as UniqueOptionId]: true,
+				[childOptionId]: true,
+			},
 		};
 		const text = generateClipboardText(
 			stateWithSettings,
-			mockExrMeta,
+			metaWithChild as any,
 			mockAuMeta,
 		);
 		expect(text).toContain("## 詳細設定");
 		expect(text).toContain("| Setting A | On |");
+		expect(text).toContain("| Parent Option | Val |");
+		expect(text).toContain("| 　Child Option | ChildVal |");
 	});
 
 	it("should handle missing data gracefully", () => {
