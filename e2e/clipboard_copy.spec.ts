@@ -15,9 +15,14 @@ test.beforeEach(async ({ page }) => {
 test("clipboard copy button works and shows toast", async ({
 	page,
 	context,
+	browserName,
 }) => {
-	// Grant clipboard permissions
-	await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+	const isChromium = browserName === "chromium";
+
+	if (isChromium) {
+		// Grant clipboard permissions - only supported in Chromium
+		await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+	}
 
 	// Open the panel
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
@@ -38,9 +43,10 @@ test("clipboard copy button works and shows toast", async ({
 		page.getByText("設定をクリップボードにコピーしました"),
 	).toBeVisible();
 
-	// Verify clipboard content (optional, but good for robust E2E)
-	// Note: Reading from clipboard in headless CI can be tricky, but let's try.
-	const clipboardText = await page.evaluate("navigator.clipboard.readText()");
-	expect(clipboardText).toContain("# 設定");
-	expect(clipboardText).toContain("## 陣営数");
+	if (isChromium) {
+		// Verify clipboard content (only possible in Chromium in headless CI)
+		const clipboardText = await page.evaluate("navigator.clipboard.readText()");
+		expect(clipboardText).toContain("# 設定");
+		expect(clipboardText).toContain("## 陣営数");
+	}
 });
