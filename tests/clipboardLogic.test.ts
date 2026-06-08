@@ -273,7 +273,7 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("- キルクールダウン時間: 10");
 		expect(text).toContain(`## ${CLIPBOARD_ROLES}`);
 		expect(text).toContain(`### ${CLIPBOARD_CREW}`);
-		expect(text).toContain("| ExR Role | 100% | 1 |");
+		expect(text).toContain(" - ExR Role - 1 / 100％");
 	});
 
 	it("should handle random map", () => {
@@ -339,7 +339,7 @@ describe("generateClipboardText", () => {
 			mockExrMeta,
 			mockAuMeta,
 		);
-		expect(text).toContain("| Scientist※バニラ | 100% | 1 |");
+		expect(text).toContain(" - Scientist※バニラ - 1 / 100％");
 		// Scientist (Vanilla) should be before ExR Role in Crew section
 		const vanillaPos = text.indexOf("Scientist※バニラ");
 		const exrPos = text.indexOf("ExR Role");
@@ -388,13 +388,13 @@ describe("generateClipboardText", () => {
 		};
 		const text = generateClipboardText(
 			stateWithSettings,
-			metaWithChild as any,
+			metaWithChild as unknown as ExROptionMetaDataRecords,
 			mockAuMeta,
 		);
 		expect(text).toContain("## 詳細設定");
-		expect(text).toContain("| Setting A | On |");
-		expect(text).toContain("| Parent Option | Val |");
-		expect(text).toContain("| 　Child Option | ChildVal |");
+		expect(text).toContain("- Setting A : On");
+		expect(text).toContain("- Parent Option : Val");
+		expect(text).toContain("  - Child Option : ChildVal");
 	});
 
 	it("should handle missing data gracefully and omit zero counts", () => {
@@ -405,7 +405,7 @@ describe("generateClipboardText", () => {
 			presetNames: {},
 		};
 		const text = generateClipboardText(
-			emptyState as any,
+			emptyState as unknown as ClipboardState,
 			mockExrMeta,
 			mockAuMeta,
 		);
@@ -422,7 +422,11 @@ describe("generateClipboardText", () => {
 			options: {
 				...mockExrMeta.options,
 				[getUniqueOptionId(ExRTabId.CrewmateTab, 2, SPAWN_RATE_OPTION_ID)]: {
-					metaData: { translatedName: "Spawn Rate", format: "%", type: "Int32" },
+					metaData: {
+						translatedName: "Spawn Rate",
+						format: "％",
+						type: "Int32",
+					},
 					childOptionIds: [],
 					parentOptionIds: [],
 				},
@@ -430,10 +434,10 @@ describe("generateClipboardText", () => {
 		};
 		const text = generateClipboardText(
 			mockState,
-			metaWithPercent as any,
+			metaWithPercent as unknown as ExROptionMetaDataRecords,
 			mockAuMeta,
 		);
-		expect(text).toContain("| ExR Role | 100% | 1 |");
+		expect(text).toContain(" - ExR Role - 1 / 100％");
 	});
 
 	it("should handle impostor and neutral roles", () => {
@@ -467,8 +471,8 @@ describe("generateClipboardText", () => {
 		};
 		const text = generateClipboardText(stateWithRoles, mockExrMeta, mockAuMeta);
 		expect(text).toContain(`### ${CLIPBOARD_IMPOSTOR}`);
-		expect(text).toContain("| ExR Impostor | 100% | 1 |");
+		expect(text).toContain(" - ExR Impostor - 1 / 100％");
 		expect(text).toContain(`### ${CLIPBOARD_NEUTRAL}`);
-		expect(text).toContain("| ExR Neutral | 100% | 1 |");
+		expect(text).toContain(" - ExR Neutral - 1 / 100％");
 	});
 });

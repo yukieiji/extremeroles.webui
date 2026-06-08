@@ -35,13 +35,8 @@ import {
 	CLIPBOARD_NEUTRAL_ROLES,
 	CLIPBOARD_OTHERS,
 	CLIPBOARD_OTHERS_NOTE,
-	CLIPBOARD_ROLE_NAME,
 	CLIPBOARD_ROLES,
-	CLIPBOARD_SETTING_ITEM,
 	CLIPBOARD_SETTING_TITLE,
-	CLIPBOARD_SPAWN_COUNT,
-	CLIPBOARD_SPAWN_RATE,
-	CLIPBOARD_VALUE,
 	CLIPBOARD_VANILLA_SUFFIX,
 	RANDOM_MAP_LABEL,
 } from "@/noTrans";
@@ -232,24 +227,31 @@ export function generateClipboardText(
 
 	const liberalRolesList = getRolesForTab(ExRTabId.GeneralTab);
 
-	const formatRoleTable = (
+	const formatRoleList = (
 		roles: { name: string; rate: string; count: string; isVanilla: boolean }[],
 	) => {
 		if (roles.length === 0) {
 			return "";
 		}
-		let table = `|  ${CLIPBOARD_ROLE_NAME}  | ${CLIPBOARD_SPAWN_RATE} | ${CLIPBOARD_SPAWN_COUNT} |\n| | | |\n`;
+		let list = "";
 		for (const role of roles) {
 			const name = role.isVanilla
 				? `${role.name}${CLIPBOARD_VANILLA_SUFFIX}`
 				: role.name;
-			table += `| ${name} | ${role.rate} | ${role.count} |\n`;
+			// - {役職名}{※バニラ} - {スポーン数} / {スポーンレート}％
+			// ％が重複しないように調整
+			const rate = role.rate.endsWith("%")
+				? role.rate.slice(0, -1)
+				: role.rate.endsWith("％")
+					? role.rate.slice(0, -1)
+					: role.rate;
+			list += ` - ${name} - ${role.count} / ${rate}％\n`;
 		}
-		return table;
+		return list;
 	};
 
 	// 詳細設定の構築
-	let detailedSettings = `| ${CLIPBOARD_SETTING_ITEM} | ${CLIPBOARD_VALUE} |\n| | |\n`;
+	let detailedSettings = "";
 
 	// AmongUs Tab 0
 	const auTab0Categories = auMeta.tabCategoryMap[0] || [];
@@ -276,9 +278,9 @@ export function generateClipboardText(
 				continue;
 			}
 			const value = getAuValue(optId);
-			detailedSettings += `| ${stripColorTags(meta.title)} | ${value}${
+			detailedSettings += `- ${stripColorTags(meta.title)} : ${value}${
 				meta.format ? meta.format.replace("{0}", "") : ""
-			} |\n`;
+			}\n`;
 		}
 	}
 
@@ -316,10 +318,10 @@ export function generateClipboardText(
 
 			if (state.isExROptionActive[optId]) {
 				if (!summaryOptionIds.includes(optId)) {
-					const indentStr = "　".repeat(indent);
-					detailedSettings += `| ${indentStr}${stripColorTags(
+					const indentStr = "  ".repeat(indent);
+					detailedSettings += `${indentStr}- ${stripColorTags(
 						meta.translatedName,
-					)} | ${getExRFormattedValue(optId)} |\n`;
+					)} : ${getExRFormattedValue(optId)}\n`;
 				}
 
 				// 子オプションを再帰的に追加
@@ -361,16 +363,16 @@ export function generateClipboardText(
 
 	text += `## ${CLIPBOARD_ROLES}\n`;
 	if (crewRolesList.length > 0) {
-		text += `### ${CLIPBOARD_CREW}\n${formatRoleTable(crewRolesList)}\n`;
+		text += `### ${CLIPBOARD_CREW}\n${formatRoleList(crewRolesList)}`;
 	}
 	if (impostorRolesList.length > 0) {
-		text += `### ${CLIPBOARD_IMPOSTOR}\n${formatRoleTable(impostorRolesList)}\n`;
+		text += `### ${CLIPBOARD_IMPOSTOR}\n${formatRoleList(impostorRolesList)}`;
 	}
 	if (neutralRolesList.length > 0) {
-		text += `### ${CLIPBOARD_NEUTRAL}\n${formatRoleTable(neutralRolesList)}\n`;
+		text += `### ${CLIPBOARD_NEUTRAL}\n${formatRoleList(neutralRolesList)}`;
 	}
 	if (liberalRolesList.length > 0) {
-		text += `### ${CLIPBOARD_LIBERAL}\n${formatRoleTable(liberalRolesList)}\n`;
+		text += `### ${CLIPBOARD_LIBERAL}\n${formatRoleList(liberalRolesList)}`;
 	}
 
 	text += `\n## ${CLIPBOARD_DETAILED_SETTINGS}\n<summary>\n${detailedSettings}\n</summary>\n`;
