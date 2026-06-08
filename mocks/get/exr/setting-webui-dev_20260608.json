@@ -6,6 +6,7 @@
       {
         "Id": 0,
         "Name": "\u30D7\u30EA\u30BB\u30C3\u30C8",
+        "ColorCode": "CCCC00FF",
         "Options": [
           {
             "Id": 0,
@@ -45,12 +46,13 @@
       {
         "Id": 1,
         "Name": "\u4E71\u6570\u306B\u95A2\u3059\u308B\u8A2D\u5B9A",
+        "ColorCode": "CCCC00FF",
         "Options": [
           {
             "Id": 0,
             "IsActive": true,
             "TranslatedName": "\u5F37\u529B\u306A\u30B7\u30E3\u30C3\u30D5\u30EB\u3092\u4F7F\u7528\u3059\u308B",
-            "Selection": 1,
+            "Selection": 0,
             "Format": "",
             "RangeMeta": {
               "Type": "String",
@@ -62,7 +64,7 @@
             "Childs": [
               {
                 "Id": 1,
-                "IsActive": true,
+                "IsActive": false,
                 "TranslatedName": "\u4F7F\u7528\u3059\u308B\u4E71\u6570\u751F\u6210\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0",
                 "Selection": 3,
                 "Format": "",
@@ -92,12 +94,13 @@
       {
         "Id": 5,
         "Name": "\u5F79\u8077\u306E\u30B9\u30DD\u30FC\u30F3\u6570",
+        "ColorCode": "CCCC00FF",
         "Options": [
           {
             "Id": 0,
             "IsActive": true,
             "TranslatedName": "\u30AF\u30EB\u30FC\u306E\u30ED\u30FC\u30EB\u6570\u3000\u6700\u5C11",
-            "Selection": 2,
+            "Selection": 10,
             "Format": "",
             "RangeMeta": {
               "Type": "Int32",
@@ -139,19 +142,11 @@
             "Id": 1,
             "IsActive": true,
             "TranslatedName": "\u30AF\u30EB\u30FC\u306E\u30ED\u30FC\u30EB\u6570\u3000\u6700\u5927",
-            "Selection": 13,
+            "Selection": 5,
             "Format": "",
             "RangeMeta": {
               "Type": "Int32",
               "Values": [
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
                 10,
                 11,
                 12,
@@ -343,7 +338,7 @@
             "Id": 6,
             "IsActive": true,
             "TranslatedName": "\u30EA\u30D9\u30E9\u30EB\u306E\u30ED\u30FC\u30EB\u6570\u3000\u6700\u5C11",
-            "Selection": 1,
+            "Selection": 0,
             "Format": "",
             "RangeMeta": {
               "Type": "Int32",
@@ -385,11 +380,12 @@
             "Id": 7,
             "IsActive": true,
             "TranslatedName": "\u30EA\u30D9\u30E9\u30EB\u306E\u30ED\u30FC\u30EB\u6570\u3000\u6700\u5927",
-            "Selection": 0,
+            "Selection": 1,
             "Format": "",
             "RangeMeta": {
               "Type": "Int32",
               "Values": [
+                0,
                 1,
                 2,
                 3,
@@ -427,6 +423,7 @@
       {
         "Id": 6,
         "Name": "\u5E7D\u970A\u5F79\u8077\u306E\u30ED\u30FC\u30EB\u6570\u8A2D\u5B9A",
+        "ColorCode": "CCCC00FF",
         "Options": [
           {
             "Id": 0,
@@ -681,6 +678,7 @@
       {
         "Id": 369,
         "Name": "\u30B7\u30AA\u30F3",
+        "ColorCode": "6D81FFFF",
         "Options": [
           {
             "Id": 0,
@@ -702,6 +700,7 @@
       {
         "Id": 7,
         "Name": "\u30EA\u30D9\u30E9\u30EB\u306E\u5171\u901A\u8A2D\u5B9A",
+        "ColorCode": "CCCC00FF",
         "Options": [
           {
             "Id": 0,
@@ -4069,7 +4068,7 @@
             "Id": 10,
             "IsActive": true,
             "TranslatedName": "\u003Ccolor=#F9F06F\u003E\u30EA\u30FC\u30C0\u30FC\u003C/color\u003E\n\u5225\u306E\u8996\u754C\u8A2D\u5B9A\u3092\u6301\u3064\u304B",
-            "Selection": 0,
+            "Selection": 1,
             "Format": "",
             "RangeMeta": {
               "Type": "String",
@@ -4081,7 +4080,7 @@
             "Childs": [
               {
                 "Id": 11,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u8996\u754C",
                 "Selection": 7,
                 "Format": "Multiplier",
@@ -7565,7 +7564,7 @@
             "Id": 0,
             "IsActive": true,
             "TranslatedName": "\u8FFD\u653E\u3092\u78BA\u8A8D\u3059\u308B\u9663\u55B6",
-            "Selection": 0,
+            "Selection": 3,
             "Format": "",
             "RangeMeta": {
               "Type": "String",
@@ -7582,7 +7581,7 @@
             "Id": 1,
             "IsActive": true,
             "TranslatedName": "\u8FFD\u653E\u6642\u3001\u5F79\u8077\u3082\u78BA\u8A8D\u3059\u308B\u304B",
-            "Selection": 0,
+            "Selection": 1,
             "Format": "",
             "RangeMeta": {
               "Type": "String",
@@ -9667,7 +9666,7 @@
             "Id": 0,
             "IsActive": true,
             "TranslatedName": "\u6BCE\u56DE\u30DE\u30C3\u30D7\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u5909\u308F\u308B\u304B",
-            "Selection": 0,
+            "Selection": 1,
             "Format": "",
             "RangeMeta": {
               "Type": "String",
@@ -9688,7 +9687,7 @@
             "Id": 0,
             "IsActive": true,
             "TranslatedName": "\u30BF\u30B9\u30AF\u3092\u6301\u3064\u30AF\u30EB\u30FC\u304C\u5C45\u306A\u3044\u5834\u5408\u3001\u30BF\u30B9\u30AF\u52DD\u5229\u3092\u7121\u52B9\u5316\u3059\u308B",
-            "Selection": 0,
+            "Selection": 1,
             "Format": "",
             "RangeMeta": {
               "Type": "String",
@@ -9700,7 +9699,7 @@
             "Childs": [
               {
                 "Id": 1,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u30BF\u30B9\u30AF\u52DD\u5229\u3092\u7121\u52B9\u5316\u3059\u308B",
                 "Selection": 0,
                 "Format": "",
@@ -9892,12 +9891,13 @@
       {
         "Id": 269,
         "Name": "\u30B9\u30DA\u30B7\u30E3\u30EB\u30AF\u30EB\u30FC",
+        "ColorCode": "8CFFFFFF",
         "Options": [
           {
             "Id": 50,
             "IsActive": true,
             "TranslatedName": "\u30B9\u30DD\u30FC\u30F3\u30EC\u30FC\u30C8",
-            "Selection": 3,
+            "Selection": 2,
             "Format": "Percentage",
             "RangeMeta": {
               "Type": "Int32",
@@ -11027,6 +11027,7 @@
       {
         "Id": 270,
         "Name": "\u30B7\u30A7\u30EA\u30D5",
+        "ColorCode": "FF8C00FF",
         "Options": [
           {
             "Id": 50,
@@ -11055,7 +11056,7 @@
                 "Id": 51,
                 "IsActive": false,
                 "TranslatedName": "\u30B9\u30DD\u30FC\u30F3\u6570",
-                "Selection": 1,
+                "Selection": 0,
                 "Format": "",
                 "RangeMeta": {
                   "Type": "Int32",
@@ -12744,12 +12745,13 @@
       {
         "Id": 271,
         "Name": "\u30E1\u30F3\u30C6\u30CA\u30FC",
+        "ColorCode": "4682B4FF",
         "Options": [
           {
             "Id": 50,
             "IsActive": true,
             "TranslatedName": "\u30B9\u30DD\u30FC\u30F3\u30EC\u30FC\u30C8",
-            "Selection": 0,
+            "Selection": 5,
             "Format": "Percentage",
             "RangeMeta": {
               "Type": "Int32",
@@ -12770,9 +12772,9 @@
             "Childs": [
               {
                 "Id": 51,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u30B9\u30DD\u30FC\u30F3\u6570",
-                "Selection": 0,
+                "Selection": 13,
                 "Format": "",
                 "RangeMeta": {
                   "Type": "Int32",
@@ -12797,7 +12799,7 @@
               },
               {
                 "Id": 52,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u30A2\u30B5\u30A4\u30F3\u30A6\u30A7\u30A4\u30C8",
                 "Selection": 499,
                 "Format": "",
@@ -13810,7 +13812,7 @@
               },
               {
                 "Id": 53,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u5225\u306E\u8996\u754C\u8A2D\u5B9A\u3092\u6301\u3064\u304B",
                 "Selection": 0,
                 "Format": "",
@@ -13874,7 +13876,7 @@
               },
               {
                 "Id": 70,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u300C\u7DCA\u6025\u4FEE\u7406\u300D\u306E\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0",
                 "Selection": 59,
                 "Format": "Second",
@@ -14127,7 +14129,7 @@
               },
               {
                 "Id": 71,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u300C\u7DCA\u6025\u4FEE\u7406\u300D\u306E\u56DE\u6570",
                 "Selection": 1,
                 "Format": "Shot",
@@ -14155,6 +14157,7 @@
       {
         "Id": 272,
         "Name": "\u30CB\u30FC\u30C8",
+        "ColorCode": "C0C0C0FF",
         "Options": [
           {
             "Id": 50,
@@ -14183,7 +14186,7 @@
                 "Id": 51,
                 "IsActive": false,
                 "TranslatedName": "\u30B9\u30DD\u30FC\u30F3\u6570",
-                "Selection": 0,
+                "Selection": 1,
                 "Format": "",
                 "RangeMeta": {
                   "Type": "Int32",
@@ -15351,6 +15354,7 @@
       {
         "Id": 273,
         "Name": "\u30A6\u30A9\u30C3\u30C1\u30C9\u30C3\u30B0",
+        "ColorCode": "6633FFFF",
         "Options": [
           {
             "Id": 50,
@@ -16872,6 +16876,7 @@
       {
         "Id": 274,
         "Name": "\u30B9\u30FC\u30D1\u30FC\u30D0\u30A4\u30B6\u30FC",
+        "ColorCode": "33CC66FF",
         "Options": [
           {
             "Id": 50,
@@ -18433,6 +18438,7 @@
       {
         "Id": 275,
         "Name": "\u30DC\u30C7\u30A3\u30FC\u30AC\u30FC\u30C9",
+        "ColorCode": "FFCC66FF",
         "Options": [
           {
             "Id": 50,
@@ -19968,6 +19974,7 @@
       {
         "Id": 276,
         "Name": "\u30A6\u30A3\u30B9\u30D1\u30FC",
+        "ColorCode": "CC00CCFF",
         "Options": [
           {
             "Id": 50,
@@ -21282,6 +21289,7 @@
       {
         "Id": 277,
         "Name": "\u30BF\u30A4\u30E0\u30DE\u30B9\u30BF\u30FC",
+        "ColorCode": "708EEFFF",
         "Options": [
           {
             "Id": 50,
@@ -22935,6 +22943,7 @@
       {
         "Id": 278,
         "Name": "\u30A8\u30FC\u30B8\u30A7\u30F3\u30B7\u30FC",
+        "ColorCode": "B5FF14FF",
         "Options": [
           {
             "Id": 50,
@@ -24401,6 +24410,7 @@
       {
         "Id": 279,
         "Name": "\u30D1\u30F3\u5C4B",
+        "ColorCode": "E4A343FF",
         "Options": [
           {
             "Id": 50,
@@ -25700,6 +25710,7 @@
       {
         "Id": 280,
         "Name": "\u30AB\u30FC\u30B9\u30E1\u30FC\u30AB\u30FC",
+        "ColorCode": "643D61FF",
         "Options": [
           {
             "Id": 50,
@@ -28100,6 +28111,7 @@
       {
         "Id": 281,
         "Name": "\u30D5\u30A7\u30F3\u30B5\u30FC",
+        "ColorCode": "005756FF",
         "Options": [
           {
             "Id": 50,
@@ -29710,6 +29722,7 @@
       {
         "Id": 282,
         "Name": "\u30AA\u30FC\u30D7\u30CA\u30FC",
+        "ColorCode": "00FA9AFF",
         "Options": [
           {
             "Id": 50,
@@ -31302,6 +31315,7 @@
       {
         "Id": 283,
         "Name": "\u30AB\u30FC\u30DA\u30F3\u30BF\u30FC",
+        "ColorCode": "C3B25FFF",
         "Options": [
           {
             "Id": 50,
@@ -32818,6 +32832,7 @@
       {
         "Id": 284,
         "Name": "\u30B5\u30D0\u30A4\u30D0\u30FC",
+        "ColorCode": "FFFF99FF",
         "Options": [
           {
             "Id": 50,
@@ -34011,6 +34026,7 @@
       {
         "Id": 285,
         "Name": "\u30AD\u30E3\u30D7\u30C6\u30F3",
+        "ColorCode": "225593FF",
         "Options": [
           {
             "Id": 50,
@@ -37197,6 +37213,7 @@
       {
         "Id": 286,
         "Name": "\u30D5\u30A9\u30C8\u30B0\u30E9\u30D5\u30A1\u30FC",
+        "ColorCode": "3B813CFF",
         "Options": [
           {
             "Id": 50,
@@ -38805,6 +38822,7 @@
       {
         "Id": 287,
         "Name": "\u30C7\u30EA\u30E5\u30FC\u30B8\u30E7\u30CA\u30FC",
+        "ColorCode": "FBDADEFF",
         "Options": [
           {
             "Id": 50,
@@ -40470,6 +40488,7 @@
       {
         "Id": 288,
         "Name": "\u30EA\u30B6\u30EC\u30AF\u30BF\u30FC",
+        "ColorCode": "0069E1FF",
         "Options": [
           {
             "Id": 50,
@@ -42542,6 +42561,7 @@
       {
         "Id": 289,
         "Name": "\u30AE\u30E3\u30F3\u30D6\u30E9\u30FC",
+        "ColorCode": "C7B994FF",
         "Options": [
           {
             "Id": 50,
@@ -43935,6 +43955,7 @@
       {
         "Id": 290,
         "Name": "\u30C6\u30EC\u30DD\u30FC\u30BF\u30FC",
+        "ColorCode": "BCE1CFFF",
         "Options": [
           {
             "Id": 50,
@@ -45378,6 +45399,7 @@
       {
         "Id": 291,
         "Name": "\u30E2\u30C7\u30EC\u30FC\u30BF\u30FC",
+        "ColorCode": "CAE3BFFF",
         "Options": [
           {
             "Id": 50,
@@ -46898,6 +46920,7 @@
       {
         "Id": 292,
         "Name": "\u30B5\u30A4\u30AD\u30C3\u30AF",
+        "ColorCode": "9295BAFF",
         "Options": [
           {
             "Id": 50,
@@ -48551,6 +48574,7 @@
       {
         "Id": 293,
         "Name": "\u30D9\u30A4\u30C8",
+        "ColorCode": "00F7FFFF",
         "Options": [
           {
             "Id": 50,
@@ -49924,6 +49948,7 @@
       {
         "Id": 294,
         "Name": "\u30B8\u30A7\u30A4\u30E9\u30FC",
+        "ColorCode": "3A674FFF",
         "Options": [
           {
             "Id": 50,
@@ -52046,6 +52071,7 @@
       {
         "Id": 296,
         "Name": "\u30B5\u30E2\u30CA\u30FC",
+        "ColorCode": "ED7B8CFF",
         "Options": [
           {
             "Id": 50,
@@ -53569,6 +53595,7 @@
       {
         "Id": 297,
         "Name": "\u30A8\u30AF\u30BD\u30B7\u30B9\u30C8",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -55216,6 +55243,7 @@
       {
         "Id": 298,
         "Name": "\u30ED\u30A6\u30EF\u30FC",
+        "ColorCode": "191970FF",
         "Options": [
           {
             "Id": 50,
@@ -56640,6 +56668,7 @@
       {
         "Id": 299,
         "Name": "C.E.O",
+        "ColorCode": "CBAFD6FF",
         "Options": [
           {
             "Id": 50,
@@ -57829,6 +57858,7 @@
       {
         "Id": 300,
         "Name": "\u30A8\u30B3\u30FC",
+        "ColorCode": "DCE4FFFF",
         "Options": [
           {
             "Id": 50,
@@ -59463,6 +59493,7 @@
       {
         "Id": 301,
         "Name": "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u30FC",
+        "ColorCode": "FFBF00FF",
         "Options": [
           {
             "Id": 50,
@@ -61058,6 +61089,7 @@
       {
         "Id": 302,
         "Name": "\u30B9\u30DA\u30B7\u30E3\u30EB\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -62493,12 +62525,13 @@
       {
         "Id": 303,
         "Name": "\u30A8\u30DC\u30EB\u30D0\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
             "IsActive": true,
             "TranslatedName": "\u30B9\u30DD\u30FC\u30F3\u30EC\u30FC\u30C8",
-            "Selection": 0,
+            "Selection": 5,
             "Format": "Percentage",
             "RangeMeta": {
               "Type": "Int32",
@@ -62519,7 +62552,7 @@
             "Childs": [
               {
                 "Id": 51,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u30B9\u30DD\u30FC\u30F3\u6570",
                 "Selection": 0,
                 "Format": "",
@@ -62546,7 +62579,7 @@
               },
               {
                 "Id": 52,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u30A2\u30B5\u30A4\u30F3\u30A6\u30A7\u30A4\u30C8",
                 "Selection": 499,
                 "Format": "",
@@ -63559,7 +63592,7 @@
               },
               {
                 "Id": 53,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u5225\u306E\u8996\u754C\u8A2D\u5B9A\u3092\u6301\u3064\u304B",
                 "Selection": 0,
                 "Format": "",
@@ -63623,7 +63656,7 @@
               },
               {
                 "Id": 62,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u5225\u306E\u30AD\u30EB\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u3092\u6301\u3064\u304B",
                 "Selection": 0,
                 "Format": "",
@@ -63891,7 +63924,7 @@
               },
               {
                 "Id": 60,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u5225\u306E\u30AD\u30EB\u30EC\u30F3\u30B8\u3092\u6301\u3064\u304B",
                 "Selection": 0,
                 "Format": "",
@@ -63923,7 +63956,7 @@
               },
               {
                 "Id": 0,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u9032\u5316\u6642\u3001\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u3092\u884C\u3046\u304B",
                 "Selection": 1,
                 "Format": "",
@@ -63938,7 +63971,7 @@
               },
               {
                 "Id": 1,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u9032\u5316\u5F8C\u3001\u6B7B\u4F53\u3092\u6D88\u3059\u304B",
                 "Selection": 1,
                 "Format": "",
@@ -63953,7 +63986,7 @@
               },
               {
                 "Id": 2,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u300C\u6355\u98DF\u300D\u3092\u884C\u3048\u308B\u7BC4\u56F2",
                 "Selection": 4,
                 "Format": "",
@@ -63976,7 +64009,7 @@
               },
               {
                 "Id": 3,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u9032\u5316\u5F8C\u306E\u30AD\u30EB\u30AF\u30FC\u30EB\u6E1B\u5C11\u7387",
                 "Selection": 9,
                 "Format": "Percentage",
@@ -64039,7 +64072,7 @@
               },
               {
                 "Id": 4,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u9032\u5316\u6BCE\u306E\u30AD\u30EB\u30AF\u30FC\u30EB\u6E1B\u5C11\u7387\u306E\u500D\u7387",
                 "Selection": 0,
                 "Format": "Multiplier",
@@ -64093,7 +64126,7 @@
               },
               {
                 "Id": 70,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u9032\u5316\u306E\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0",
                 "Selection": 59,
                 "Format": "Second",
@@ -64346,7 +64379,7 @@
               },
               {
                 "Id": 72,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u300C\u6355\u98DF\u300D\u3092\u884C\u3046\u6642\u9593",
                 "Selection": 9,
                 "Format": "Second",
@@ -64479,7 +64512,7 @@
               },
               {
                 "Id": 71,
-                "IsActive": false,
+                "IsActive": true,
                 "TranslatedName": "\u6700\u7D42\u9032\u5316\u307E\u3067\u306E\u56DE\u6570",
                 "Selection": 4,
                 "Format": "Shot",
@@ -64507,6 +64540,7 @@
       {
         "Id": 304,
         "Name": "\u30AD\u30E3\u30EA\u30E4\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -66365,6 +66399,7 @@
       {
         "Id": 305,
         "Name": "\u30B5\u30A4\u30B3\u30AD\u30E9\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -68266,6 +68301,7 @@
       {
         "Id": 306,
         "Name": "\u30D0\u30A6\u30F3\u30C6\u30A3\u30FC\u30CF\u30F3\u30BF\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -70547,6 +70583,7 @@
       {
         "Id": 307,
         "Name": "\u30DA\u30A4\u30F3\u30BF\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -72257,6 +72294,7 @@
       {
         "Id": 308,
         "Name": "\u30D5\u30A7\u30A4\u30AB\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -73960,6 +73998,7 @@
       {
         "Id": 309,
         "Name": "\u30AA\u30FC\u30D0\u30FC\u30ED\u30FC\u30C0\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -75913,6 +75952,7 @@
       {
         "Id": 310,
         "Name": "\u30AF\u30E9\u30C3\u30AB\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -77656,6 +77696,7 @@
       {
         "Id": 311,
         "Name": "\u30DC\u30DE\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -79730,6 +79771,7 @@
       {
         "Id": 312,
         "Name": "\u30E1\u30EA\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -81497,6 +81539,7 @@
       {
         "Id": 313,
         "Name": "\u30B9\u30EC\u30A4\u30F4\u30C9\u30E9\u30A4\u30D0\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -83268,6 +83311,7 @@
       {
         "Id": 314,
         "Name": "\u30B5\u30F3\u30C9\u30EF\u30FC\u30E0",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -85363,6 +85407,7 @@
       {
         "Id": 315,
         "Name": "\u30B9\u30DE\u30C3\u30B7\u30E3\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -87152,6 +87197,7 @@
       {
         "Id": 316,
         "Name": "\u30A2\u30B5\u30EB\u30C8\u30DE\u30B9\u30BF\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -89141,6 +89187,7 @@
       {
         "Id": 317,
         "Name": "\u30B7\u30E5\u30FC\u30BF\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -90864,6 +90911,7 @@
       {
         "Id": 318,
         "Name": "\u30E9\u30B9\u30C8\u30A6\u30EB\u30D5",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -92929,6 +92977,7 @@
       {
         "Id": 319,
         "Name": "\u30B3\u30DE\u30F3\u30C0\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -94751,6 +94800,7 @@
       {
         "Id": 320,
         "Name": "\u30D2\u30D7\u30CE\u30C6\u30A3\u30B9\u30C8",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -97283,6 +97333,7 @@
       {
         "Id": 321,
         "Name": "\u30A2\u30F3\u30C0\u30FC\u30EF\u30FC\u30D1\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -98841,6 +98892,7 @@
       {
         "Id": 322,
         "Name": "\u30DE\u30B8\u30B7\u30E3\u30F3",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -100620,6 +100672,7 @@
       {
         "Id": 323,
         "Name": "\u30B9\u30E9\u30A4\u30E0",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -102456,6 +102509,7 @@
       {
         "Id": 324,
         "Name": "\u30BE\u30F3\u30D3",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -104990,6 +105044,7 @@
       {
         "Id": 325,
         "Name": "\u30B7\u30FC\u30D5",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -107056,6 +107111,7 @@
       {
         "Id": 326,
         "Name": "\u30AF\u30EB\u30FC\u30B7\u30E5\u30EB\u30FC\u30E0",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -108880,6 +108936,7 @@
       {
         "Id": 327,
         "Name": "\u30C6\u30ED\u30EA\u30B9\u30C8",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -111084,6 +111141,7 @@
       {
         "Id": 328,
         "Name": "\u30EC\u30A4\u30C0\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -113821,6 +113879,7 @@
       {
         "Id": 329,
         "Name": "\u30B0\u30EA\u30C3\u30C1",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -115858,6 +115917,7 @@
       {
         "Id": 330,
         "Name": "\u30CF\u30A4\u30B8\u30E3\u30C3\u30AB\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -117717,6 +117777,7 @@
       {
         "Id": 331,
         "Name": "\u30BF\u30A4\u30E0\u30D6\u30EC\u30FC\u30AB\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -119816,6 +119877,7 @@
       {
         "Id": 332,
         "Name": "\u30B9\u30AB\u30D9\u30F3\u30B8\u30E3\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -123147,6 +123209,7 @@
       {
         "Id": 333,
         "Name": "\u30DC\u30AF\u30B5\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -125862,6 +125925,7 @@
       {
         "Id": 334,
         "Name": "\u30EC\u30B8\u30B9\u30EC\u30A4\u30BF\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -129345,6 +129409,7 @@
       {
         "Id": 335,
         "Name": "\u30A2\u30EA\u30B9",
+        "ColorCode": "FFD700FF",
         "Options": [
           {
             "Id": 50,
@@ -131291,6 +131356,7 @@
       {
         "Id": 336,
         "Name": "\u30B8\u30E3\u30C3\u30AB\u30EB",
+        "ColorCode": "4169FFFF",
         "Options": [
           {
             "Id": 50,
@@ -133556,6 +133622,7 @@
       {
         "Id": 338,
         "Name": "\u30BF\u30B9\u30AF\u30DE\u30B9\u30BF\u30FC",
+        "ColorCode": "808080FF",
         "Options": [
           {
             "Id": 50,
@@ -134793,6 +134860,7 @@
       {
         "Id": 339,
         "Name": "\u30DF\u30C3\u30B7\u30E7\u30CA\u30EA\u30FC",
+        "ColorCode": "6776A1FF",
         "Options": [
           {
             "Id": 50,
@@ -136540,6 +136608,7 @@
       {
         "Id": 340,
         "Name": "\u30B8\u30A7\u30B9\u30BF\u30FC",
+        "ColorCode": "F57DA7FF",
         "Options": [
           {
             "Id": 50,
@@ -138223,6 +138292,7 @@
       {
         "Id": 341,
         "Name": "\u30E4\u30F3\u30C7\u30EC",
+        "ColorCode": "C71585FF",
         "Options": [
           {
             "Id": 50,
@@ -140142,6 +140212,7 @@
       {
         "Id": 342,
         "Name": "\u5996\u72D0",
+        "ColorCode": "867BA9FF",
         "Options": [
           {
             "Id": 50,
@@ -142724,6 +142795,7 @@
       {
         "Id": 343,
         "Name": "\u30C8\u30C8\u30AB\u30EB\u30C1\u30E7",
+        "ColorCode": "00FF00FF",
         "Options": [
           {
             "Id": 50,
@@ -145528,6 +145600,7 @@
       {
         "Id": 344,
         "Name": "\u30DE\u30A4\u30CA\u30FC",
+        "ColorCode": "4C6733FF",
         "Options": [
           {
             "Id": 50,
@@ -147305,6 +147378,7 @@
       {
         "Id": 345,
         "Name": "\u30A4\u30FC\u30BF\u30FC",
+        "ColorCode": "662B2CFF",
         "Options": [
           {
             "Id": 50,
@@ -149067,6 +149141,7 @@
       {
         "Id": 347,
         "Name": "\u30AF\u30A4\u30FC\u30F3",
+        "ColorCode": "F0F0D2FF",
         "Options": [
           {
             "Id": 50,
@@ -151270,6 +151345,7 @@
       {
         "Id": 349,
         "Name": "\u30DE\u30C3\u30C9\u30E1\u30A4\u30C8",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -152783,6 +152859,7 @@
       {
         "Id": 350,
         "Name": "\u30A2\u30F3\u30D6\u30EC\u30A4\u30E4\u30FC",
+        "ColorCode": "C80015FF",
         "Options": [
           {
             "Id": 50,
@@ -155244,6 +155321,7 @@
       {
         "Id": 352,
         "Name": "\u30CF\u30C3\u30BF\u30FC",
+        "ColorCode": "91AD70FF",
         "Options": [
           {
             "Id": 50,
@@ -156799,6 +156877,7 @@
       {
         "Id": 353,
         "Name": "\u30A2\u30FC\u30C6\u30A3\u30B9\u30C8",
+        "ColorCode": "DC915BFF",
         "Options": [
           {
             "Id": 50,
@@ -158448,6 +158527,7 @@
       {
         "Id": 355,
         "Name": "\u30BF\u30C3\u30AB\u30FC",
+        "ColorCode": "715B41FF",
         "Options": [
           {
             "Id": 50,
@@ -163386,6 +163466,7 @@
       {
         "Id": 357,
         "Name": "\u30A2\u30A4\u30A2\u30F3\u30E1\u30A4\u30C8",
+        "ColorCode": "808C88FF",
         "Options": [
           {
             "Id": 50,
@@ -165270,6 +165351,7 @@
       {
         "Id": 358,
         "Name": "\u30E2\u30CB\u30AB",
+        "ColorCode": "F49B83FF",
         "Options": [
           {
             "Id": 50,
@@ -166776,6 +166858,7 @@
       {
         "Id": 359,
         "Name": "\u30D8\u30EC\u30C6\u30A3\u30C3\u30AF",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -168315,6 +168398,7 @@
       {
         "Id": 360,
         "Name": "\u30B7\u30A7\u30D1\u30FC\u30C9",
+        "ColorCode": "4169FFFF",
         "Options": [
           {
             "Id": 50,
@@ -169866,6 +169950,7 @@
       {
         "Id": 361,
         "Name": "\u30D5\u30A1\u30FC\u30EA\u30FC",
+        "ColorCode": "4169FFFF",
         "Options": [
           {
             "Id": 50,
@@ -171056,6 +171141,7 @@
       {
         "Id": 362,
         "Name": "\u30A4\u30F3\u30C6\u30A3\u30E1\u30A4\u30C8",
+        "ColorCode": "C71585FF",
         "Options": [
           {
             "Id": 50,
@@ -172607,6 +172693,7 @@
       {
         "Id": 363,
         "Name": "\u30B5\u30ED\u30B2\u30FC\u30BF\u30FC",
+        "ColorCode": "C71585FF",
         "Options": [
           {
             "Id": 50,
@@ -174347,6 +174434,7 @@
       {
         "Id": 364,
         "Name": "\u30CA\u30A4\u30C8",
+        "ColorCode": "F0F0D2FF",
         "Options": [
           {
             "Id": 50,
@@ -175882,6 +175970,7 @@
       {
         "Id": 365,
         "Name": "\u30DD\u30FC\u30F3",
+        "ColorCode": "F0F0D2FF",
         "Options": [
           {
             "Id": 50,
@@ -184876,6 +184965,7 @@
       {
         "Id": 1003,
         "Name": "\u30EF\u30EB\u30AC\u30AD",
+        "ColorCode": "8CAA00FF",
         "Options": [
           {
             "Id": 50,
@@ -187593,6 +187683,7 @@
       {
         "Id": 1004,
         "Name": "\u30E9\u30D0\u30FC\u30BA",
+        "ColorCode": "FF6BE4FF",
         "Options": [
           {
             "Id": 50,
@@ -189265,6 +189356,7 @@
       {
         "Id": 1005,
         "Name": "\u30D0\u30C7\u30A3\u30FC\u30BA",
+        "ColorCode": "E8C04EFF",
         "Options": [
           {
             "Id": 50,
@@ -190465,6 +190557,7 @@
       {
         "Id": 1006,
         "Name": "\u30B7\u30A7\u30A2\u30FC\u30BA",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -191956,6 +192049,7 @@
       {
         "Id": 1007,
         "Name": "\u30B5\u30DD\u30FC\u30BF\u30FC",
+        "ColorCode": "99FF99FF",
         "Options": [
           {
             "Id": 50,
@@ -193510,6 +193604,7 @@
       {
         "Id": 1008,
         "Name": "\u30B2\u30C3\u30B5\u30FC",
+        "ColorCode": "FFFF00FF",
         "Options": [
           {
             "Id": 50,
@@ -195198,6 +195293,7 @@
       {
         "Id": 1009,
         "Name": "\u30E0\u30FC\u30D0\u30FC",
+        "ColorCode": "669999FF",
         "Options": [
           {
             "Id": 50,
@@ -197161,6 +197257,7 @@
       {
         "Id": 1010,
         "Name": "\u30A2\u30AF\u30BB\u30E9\u30EC\u30FC\u30BF\u30FC",
+        "ColorCode": "D8D6D5FF",
         "Options": [
           {
             "Id": 50,
@@ -199182,6 +199279,7 @@
       {
         "Id": 1011,
         "Name": "\u30B9\u30B1\u30FC\u30BF\u30FC",
+        "ColorCode": "ACDBDAFF",
         "Options": [
           {
             "Id": 50,
@@ -202255,6 +202353,7 @@
       {
         "Id": 1012,
         "Name": "\u30D0\u30FC\u30BF\u30FC",
+        "ColorCode": "871C40FF",
         "Options": [
           {
             "Id": 50,
@@ -204113,6 +204212,7 @@
       {
         "Id": 1013,
         "Name": "\u30C8\u30EC\u30A4\u30BF\u30FC",
+        "ColorCode": "4C1050FF",
         "Options": [
           {
             "Id": 50,
@@ -205982,6 +206082,7 @@
       {
         "Id": 514,
         "Name": "\u30DD\u30EB\u30BF\u30FC\u30AC\u30A4\u30B9\u30C8",
+        "ColorCode": "54524BFF",
         "Options": [
           {
             "Id": 50,
@@ -207445,6 +207546,7 @@
       {
         "Id": 515,
         "Name": "\u30D5\u30A1\u30A6\u30CC\u30B9",
+        "ColorCode": "FAEBD7FF",
         "Options": [
           {
             "Id": 50,
@@ -208866,6 +208968,7 @@
       {
         "Id": 516,
         "Name": "\u30B7\u30E3\u30C3\u30BF\u30FC",
+        "ColorCode": "3B813CFF",
         "Options": [
           {
             "Id": 50,
@@ -210317,6 +210420,7 @@
       {
         "Id": 517,
         "Name": "\u30D9\u30F3\u30C8\u30AC\u30A4\u30B9\u30C8",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -211712,6 +211816,7 @@
       {
         "Id": 518,
         "Name": "\u30B5\u30DC\u308A\u9B54",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -213075,6 +213180,7 @@
       {
         "Id": 519,
         "Name": "\u30A4\u30B0\u30CA\u30A4\u30BF\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -214531,6 +214637,7 @@
       {
         "Id": 520,
         "Name": "\u30C9\u30C3\u30DA\u30EB\u30B2\u30F3\u30AC\u30FC",
+        "ColorCode": "FF1919FF",
         "Options": [
           {
             "Id": 50,
@@ -215963,6 +216070,7 @@
       {
         "Id": 521,
         "Name": "\u30D5\u30A9\u30E9\u30B9",
+        "ColorCode": "CBAED6FF",
         "Options": [
           {
             "Id": 50,
