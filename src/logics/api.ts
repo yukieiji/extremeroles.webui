@@ -304,7 +304,11 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 		};
 		for (const category of tab.Categories) {
 			const categoryColors = category.ColorCode
-				? [`#${category.ColorCode}`]
+				? [
+						category.ColorCode.startsWith("#")
+							? category.ColorCode
+							: `#${category.ColorCode}`,
+					]
 				: extractColors(category.Name);
 
 			exrOptionMetaData.categories[category.Id] = {
