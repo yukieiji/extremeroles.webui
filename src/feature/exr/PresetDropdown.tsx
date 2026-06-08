@@ -10,7 +10,7 @@ interface PresetDropdownProps {
  */
 export function PresetDropdown({ presetValues }: PresetDropdownProps) {
 	return (
-		<SelectContent>
+		<SelectContent align="end">
 			{presetValues.map((val, index) => {
 				return (
 					<PresetDropdownItem key={`preset-${val}`} index={index} value={val} />
