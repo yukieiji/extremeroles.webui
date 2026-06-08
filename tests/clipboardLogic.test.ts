@@ -74,6 +74,51 @@ describe("generateClipboardText", () => {
 				childOptionIds: [],
 				parentOptionIds: [],
 			},
+			[EXR_CREW_MIN_ID]: {
+				metaData: {
+					translatedName: "クルーのロール数 最小",
+					format: "",
+					type: "",
+				},
+				childOptionIds: [],
+				parentOptionIds: [],
+			},
+			[EXR_IMPOSTOR_MIN_ID]: {
+				metaData: {
+					translatedName: "インポスターのロール数 最小",
+					format: "",
+					type: "",
+				},
+				childOptionIds: [],
+				parentOptionIds: [],
+			},
+			[EXR_NEUTRAL_MIN_ID]: {
+				metaData: {
+					translatedName: "第3陣営のロール数 最小",
+					format: "",
+					type: "",
+				},
+				childOptionIds: [],
+				parentOptionIds: [],
+			},
+			[EXR_LIBERAL_MIN_ID]: {
+				metaData: {
+					translatedName: "リベラルのロール数 最小",
+					format: "",
+					type: "",
+				},
+				childOptionIds: [],
+				parentOptionIds: [],
+			},
+			[EXR_MILITANT_MIN_ID]: {
+				metaData: {
+					translatedName: "ミリタントのロール数 最小",
+					format: "",
+					type: "",
+				},
+				childOptionIds: [],
+				parentOptionIds: [],
+			},
 			[EXR_RANDOM_MAP_OPTION_ID]: {
 				metaData: { translatedName: "Random Map", format: "", type: "Bool" },
 				childOptionIds: [],
@@ -150,21 +195,21 @@ describe("generateClipboardText", () => {
 		tabColors: [],
 		options: {
 			[AU_MAP_OPTION_ID]: {
-				title: "Map",
+				title: "マップ",
 				range: ["Skeld", "Mira", "Polus", "Airship"],
 				tabId: 0,
 				categoryId: 0,
 				format: "",
 			},
 			[AU_KILL_COOLDOWN_OPTION_ID]: {
-				title: "Kill Cooldown",
+				title: "キルクールダウン時間",
 				range: [10, 15, 20],
 				tabId: 0,
 				categoryId: 1,
 				format: "",
 			},
 			[AU_IMPOSTOR_COUNT_OPTION_ID]: {
-				title: "Impostor Count",
+				title: "インポスター人数",
 				range: [1, 2, 3],
 				tabId: 0,
 				categoryId: 1,
@@ -255,11 +300,13 @@ describe("generateClipboardText", () => {
 			[AU_MAP_OPTION_ID]: 0,
 			[AU_KILL_COOLDOWN_OPTION_ID]: 0,
 			[AU_IMPOSTOR_COUNT_OPTION_ID]: 0,
+			["2000" as AuOptionId]: 0,
 		},
 		isExROptionActive: {
 			[PRESET_OPTION_UNIQUE_ID]: true,
 			[EXR_RANDOM_MAP_OPTION_ID]: true,
 			[getUniqueOptionId(ExRTabId.CrewmateTab, 2, SPAWN_RATE_OPTION_ID)]: true,
+			["2000" as AuOptionId]: true,
 		},
 		presetNames: {
 			0: "Test Preset",
@@ -384,6 +431,7 @@ describe("generateClipboardText", () => {
 				...mockState.isExROptionActive,
 				[100 as unknown as UniqueOptionId]: true,
 				[childOptionId]: true,
+				["2000" as AuOptionId]: true,
 			},
 		};
 		const text = generateClipboardText(
@@ -440,27 +488,6 @@ describe("generateClipboardText", () => {
 		expect(text).toContain(" - ExR Role - 1 / 100％");
 	});
 
-	it("should clean color tags and replace newlines with spaces", () => {
-		const metaWithTags = {
-			...mockExrMeta,
-			categories: {
-				...mockExrMeta.categories,
-				2: {
-					name: "<color=#FF0000>Spawn\nRate</color>",
-					tabId: ExRTabId.CrewmateTab,
-				},
-			},
-		};
-		const text = generateClipboardText(
-			mockState,
-			metaWithTags as unknown as ExROptionMetaDataRecords,
-			mockAuMeta,
-		);
-		expect(text).toContain(" - Spawn Rate - 1 / 100％");
-		expect(text).not.toContain("<color");
-		expect(text).not.toContain("\nRate");
-	});
-
 	it("should handle impostor and neutral roles", () => {
 		const stateWithRoles = {
 			...mockState,
@@ -495,5 +522,26 @@ describe("generateClipboardText", () => {
 		expect(text).toContain(" - ExR Impostor - 1 / 100％");
 		expect(text).toContain(`### ${CLIPBOARD_NEUTRAL}`);
 		expect(text).toContain(" - ExR Neutral - 1 / 100％");
+	});
+
+	it("should clean color tags and replace newlines with spaces", () => {
+		const metaWithTags = {
+			...mockExrMeta,
+			categories: {
+				...mockExrMeta.categories,
+				2: {
+					name: "<color=#FF0000>Spawn\nRate</color>",
+					tabId: ExRTabId.CrewmateTab,
+				},
+			},
+		};
+		const text = generateClipboardText(
+			mockState,
+			metaWithTags as unknown as ExROptionMetaDataRecords,
+			mockAuMeta,
+		);
+		expect(text).toContain(" - Spawn Rate - 1 / 100％");
+		expect(text).not.toContain("<color");
+		expect(text).not.toContain("\nRate");
 	});
 });

@@ -14,6 +14,7 @@ import {
 	EXR_NEUTRAL_MAX_ID,
 	EXR_NEUTRAL_MIN_ID,
 	EXR_RANDOM_MAP_OPTION_ID,
+	getBaseOptionName,
 	getUniqueOptionId,
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
@@ -115,13 +116,20 @@ export function generateClipboardText(
 	);
 
 	// 2. マップ
-	let mapName = cleanText(String(getAuValue(AU_MAP_OPTION_ID) ?? ""));
+	const mapTitle = cleanText(
+		auMeta.options[AU_MAP_OPTION_ID]?.title ?? CLIPBOARD_MAP,
+	);
+	let mapValue = cleanText(String(getAuValue(AU_MAP_OPTION_ID) ?? ""));
 	if (state.exrValue[EXR_RANDOM_MAP_OPTION_ID]?.selection === 1) {
-		mapName = RANDOM_MAP_LABEL;
+		mapValue = RANDOM_MAP_LABEL;
 	}
 
 	// 3. キルクール
-	const killCooldown = cleanText(
+	const killCooldownTitle = cleanText(
+		auMeta.options[AU_KILL_COOLDOWN_OPTION_ID]?.title ??
+			CLIPBOARD_KILL_COOLDOWN,
+	);
+	const killCooldownValue = cleanText(
 		String(getAuValue(AU_KILL_COOLDOWN_OPTION_ID) ?? ""),
 	);
 
@@ -134,16 +142,47 @@ export function generateClipboardText(
 		return min === max ? `${min}` : `${min} - ${max}`;
 	};
 
+	const getExRLabel = (uniqueId: UniqueOptionId, fallback: string) => {
+		const meta = exrMeta.options[uniqueId]?.metaData;
+		return meta ? cleanText(getBaseOptionName(meta.translatedName)) : fallback;
+	};
+
+	const crewRolesLabel = getExRLabel(EXR_CREW_MIN_ID, CLIPBOARD_CREW_ROLES);
 	const crewRolesCount = getMinMax(EXR_CREW_MIN_ID, EXR_CREW_MAX_ID);
+
+	const impostorRolesLabel = getExRLabel(
+		EXR_IMPOSTOR_MIN_ID,
+		CLIPBOARD_IMPOSTOR_ROLES,
+	);
 	const impostorRolesCount = getMinMax(
 		EXR_IMPOSTOR_MIN_ID,
 		EXR_IMPOSTOR_MAX_ID,
 	);
-	const impostorCount = cleanText(
+
+	const impostorCountTitle = cleanText(
+		auMeta.options[AU_IMPOSTOR_COUNT_OPTION_ID]?.title ??
+			CLIPBOARD_IMPOSTOR_COUNT,
+	);
+	const impostorCountValue = cleanText(
 		String(getAuValue(AU_IMPOSTOR_COUNT_OPTION_ID) ?? ""),
 	);
+
+	const neutralRolesLabel = getExRLabel(
+		EXR_NEUTRAL_MIN_ID,
+		CLIPBOARD_NEUTRAL_ROLES,
+	);
 	const neutralRolesCount = getMinMax(EXR_NEUTRAL_MIN_ID, EXR_NEUTRAL_MAX_ID);
+
+	const liberalRolesLabel = getExRLabel(
+		EXR_LIBERAL_MIN_ID,
+		CLIPBOARD_LIBERAL_ROLES,
+	);
 	const liberalRolesCount = getMinMax(EXR_LIBERAL_MIN_ID, EXR_LIBERAL_MAX_ID);
+
+	const militantRolesLabel = getExRLabel(
+		EXR_MILITANT_MIN_ID,
+		CLIPBOARD_MILITANT_ROLES,
+	);
 	const militantRolesCount = getMinMax(
 		EXR_MILITANT_MIN_ID,
 		EXR_MILITANT_MAX_ID,
@@ -360,23 +399,23 @@ export function generateClipboardText(
 	}
 
 	let text = `# ${CLIPBOARD_SETTING_TITLE}(${presetName})\n`;
-	text += `- ${CLIPBOARD_MAP}: ${mapName}\n`;
-	text += `- ${CLIPBOARD_KILL_COOLDOWN}: ${killCooldown}\n`;
+	text += `- ${mapTitle}: ${mapValue}\n`;
+	text += `- ${killCooldownTitle}: ${killCooldownValue}\n`;
 	text += `## ${CLIPBOARD_FACTION_COUNTS}\n`;
 	if (crewRolesCount !== "0") {
-		text += `- ${CLIPBOARD_CREW_ROLES}: ${crewRolesCount}\n`;
+		text += `- ${crewRolesLabel}: ${crewRolesCount}\n`;
 	}
 	if (impostorRolesCount !== "0") {
-		text += `- ${CLIPBOARD_IMPOSTOR_ROLES}: ${impostorRolesCount}\n`;
-		text += `  - ${CLIPBOARD_IMPOSTOR_COUNT}: ${impostorCount}\n`;
+		text += `- ${impostorRolesLabel}: ${impostorRolesCount}\n`;
+		text += `  - ${impostorCountTitle}: ${impostorCountValue}\n`;
 	}
 	if (neutralRolesCount !== "0") {
-		text += `- ${CLIPBOARD_NEUTRAL_ROLES}: ${neutralRolesCount}\n`;
+		text += `- ${neutralRolesLabel}: ${neutralRolesCount}\n`;
 	}
 	if (liberalRolesCount !== "0") {
-		text += `- ${CLIPBOARD_LIBERAL_ROLES}: ${liberalRolesCount}\n`;
+		text += `- ${liberalRolesLabel}: ${liberalRolesCount}\n`;
 		if (militantRolesCount !== "0") {
-			text += `  - ${CLIPBOARD_MILITANT_ROLES}: ${militantRolesCount}\n`;
+			text += `  - ${militantRolesLabel}: ${militantRolesCount}\n`;
 		}
 	}
 
