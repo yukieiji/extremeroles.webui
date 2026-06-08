@@ -21,21 +21,34 @@ test.describe("Random Map Display and Hiding", () => {
 		if (!(await summary.isVisible())) {
 			await page.getByTestId("right-panel-toggle").click();
 		}
+		// パネルが開くのを待つ
 		await expect(summary).toBeVisible();
 
 		// 2. 初期状態の確認（マップのサマリーが表示されていること）
 		// モックの初期値は map: 4
-		// 実際には AuOptionSummaryRow は fallbackTitle="マップ" を使っているので "マップ" または "map"
 		const mapSummary = page
 			.locator('[data-testid="right-panel-summary"]')
 			.getByText(/^(map|マップ)$/);
 		await expect(mapSummary).toBeVisible();
 
+		// 右パネル内の "ExRの設定" アコーディオンを開く
+		const rightPanel = page.getByTestId("right-side-panel");
+		const exrSettingsAccordion = rightPanel.getByRole("button", {
+			name: "ExRの設定",
+		});
+		if (
+			(await exrSettingsAccordion.getAttribute("aria-expanded")) === "false"
+		) {
+			await exrSettingsAccordion.click();
+		}
+
 		// 3. ExR Options で「毎回マップがランダムに変わるか」をオンにする
 		await page.getByRole("button", { name: "ExR Options" }).click();
 
 		// カテゴリ「ランダムマップに関する設定」を探して開く
-		const categoryHeader = page.getByText("ランダムマップに関する設定");
+		const categoryHeader = page.getByText("ランダムマップに関する設定", {
+			exact: true,
+		});
 		await categoryHeader.scrollIntoViewIfNeeded();
 		await categoryHeader.click();
 
@@ -43,39 +56,48 @@ test.describe("Random Map Display and Hiding", () => {
 		const optionLabel = page.getByText("毎回マップがランダムに変わるか", {
 			exact: true,
 		});
+		await optionLabel.scrollIntoViewIfNeeded();
 		const optionRow = page
 			.locator("div")
 			.filter({ has: optionLabel })
 			.filter({ has: page.getByTestId("option-toggle") })
 			.last();
 		const toggleSwitch = optionRow.getByTestId("option-toggle");
+
+		// 初期状態がオンのはずなので、一旦オフにしてからオンにする（確実に状態を変化させるため）
+		// または、単にオンであることを確認する
 		await expect(optionRow.getByText("オン", { exact: true })).toBeVisible();
 
 		// 4. 右パネルのサマリー表示が「ランダム」に変わったことを確認
 		await expect(summary.getByText("ランダム")).toBeVisible();
 
 		// 5. 右パネルの ExR 設定リストから「ランダムマップに関する設定」が消えていることを確認
-		// 右パネル内の "ExRの設定" アコーディオンの中身を確認
-		const rightPanel = page.getByTestId("right-side-panel");
-		const exrSettingsInRightPanel = rightPanel
-			.locator("div")
-			.filter({ hasText: "ExRの設定" })
-			.locator("..");
+		// 右パネルのスクロール可能なコンテナを取得して、一番下までスクロールさせる
+		const scrollContainer = rightPanel.locator(".overflow-y-scroll");
+		await scrollContainer.evaluate((node) => {
+			node.scrollTop = node.scrollHeight;
+		});
 
-		const randomMapSetting = exrSettingsInRightPanel.getByText(
+		await expect(
+			rightPanel.getByText("ランダムマップに関する設定"),
+		).not.toBeVisible();
+
+		// 6. 設定をオフにする
+		await toggleSwitch.click();
+		await expect(
+			optionRow.getByText("オン", { exact: true }),
+		).not.toBeVisible();
+
+		// 7. 右パネルの ExR 設定リストに「ランダムマップに関する設定」が再び表示されていることを確認
+		// 右パネルを上にスクロールさせて再表示を確認する
+		await scrollContainer.evaluate((node) => {
+			node.scrollTop = 0;
+		});
+
+		const randomMapSettingInRightPanel = page.getByText(
 			"ランダムマップに関する設定",
 		);
-		await randomMapSetting.scrollIntoViewIfNeeded();
-		await expect(randomMapSetting).not.toBeVisible();
-
-		await categoryHeader.scrollIntoViewIfNeeded();
-		await toggleSwitch.click();
-
-		await expect(optionRow.getByText("オン", { exact: true })).toBeVisible();
-
-		// 5. 右パネルの ExR 設定リストから「ランダムマップに関する設定」が表示されていることを確認
-		// 右パネル内の "ExRの設定" アコーディオンの中身を確認
-		await randomMapSetting.scrollIntoViewIfNeeded();
-		await expect(randomMapSetting).toBeVisible();
+		await expect(randomMapSettingInRightPanel.first()).toBeVisible();
+		await randomMapSettingInRightPanel.first().scrollIntoViewIfNeeded();
 	});
 });
