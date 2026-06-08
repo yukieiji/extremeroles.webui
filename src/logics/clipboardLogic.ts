@@ -289,7 +289,7 @@ export function generateClipboardText(
 		if (catId === 0) {
 			continue;
 		} // Map category (approx)
-
+		detailedSettings += `### ${catMeta.name}\n`;
 		for (const optId of catMeta.options) {
 			const meta = auMeta.options[optId];
 			if (!meta) {
@@ -342,18 +342,20 @@ export function generateClipboardText(
 				EXR_RANDOM_MAP_OPTION_ID,
 			];
 
-			if (state.isExROptionActive[optId]) {
-				if (!summaryOptionIds.includes(optId)) {
-					const indentStr = "  ".repeat(indent);
-					detailedSettings += `${indentStr} - ${cleanText(
-						meta.translatedName,
-					)} : ${getExRFormattedValue(optId)}\n`;
-				}
+			if (!state.isExROptionActive[optId]) {
+				return;
+			}
 
-				// 子オプションを再帰的に追加
-				for (const childId of optionDetail.childOptionIds) {
-					addOptionAndChildren(childId, indent + 1);
-				}
+			if (!summaryOptionIds.includes(optId)) {
+				const indentStr = "  ".repeat(indent);
+				detailedSettings += `${indentStr} - ${cleanText(
+					meta.translatedName,
+				)} : ${getExRFormattedValue(optId)}\n`;
+			}
+
+			// 子オプションを再帰的に追加
+			for (const childId of optionDetail.childOptionIds) {
+				addOptionAndChildren(childId, indent + 1);
 			}
 		};
 
