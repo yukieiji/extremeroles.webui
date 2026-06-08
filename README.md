@@ -1,15 +1,15 @@
 # ExtremeRoles.WebUI
 
-ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)がインストールされた環境の設定を、高速かつ直感的に行うためのWebユーザーインターフェースです。
+ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)がインストールされたAmoungAuの設定を、高速かつ直感的に行うためのWebユーザーインターフェースです。
 
 ## 🚀 技術スタック
 
-- **Frontend**: React 19, TypeScript, Vite
-- **Styling**: Tailwind CSS v4
-- **Lint/Format**: Biome
-- **Testing**: Vitest, Playwright (E2E)
-- **State Management**: Zustand
-- **Icons**: Lucide React
+- **フロントエンド**: React 19, TypeScript, Vite
+- **スタイル**: Tailwind CSS v4/Shadcn/UI
+- **フォーマッター/リンター**: Biome
+- **テスト**: Vitest, Playwright (E2E)
+- **ステータス管理**: Zustand
+- **アイコン**: Lucide React
 
 ## 📂 ディレクトリ構造
 
@@ -20,15 +20,15 @@ ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)
 ├── public/             # 静的アセット
 ├── src/
 │   ├── assets/         # 画像、フォントなどのアセット
-│   ├── components/     # 再利用可能なUIコンポーネント
+│   ├── components/     # 再利用可能なステートレスなUIコンポーネント
 │   │   ├── blocks/     # 複数のパーツを組み合わせたコンポーネント
 │   │   ├── parts/      # 最小単位のUIパーツ
 │   │   └── ui/         # Shadcn/UIベースの基本コンポーネント
-│   ├── feature/        # 機能ごとのコンポーネント
-│   │   ├── amongus/    # Among Us向け設定
-│   │   ├── exr/        # ExtremeRoles向け設定
+│   ├── feature/        # 機能ごとのステートフルなコンポーネント
+│   │   ├── amongus/    # Among Usビューのコンポーネント
+│   │   ├── exr/        # ExtremeRolesビューのコンポーネント
 │   │   ├── rightsidepanel/ # 右側プレビューパネル
-│   │   └── rolefilter/ # ロールフィルター機能
+│   │   └── rolefilter/ # ロールアサインフィルター機能
 │   ├── hooks/          # カスタムフック
 │   ├── lib/            # 外部ライブラリの設定やユーティリティ
 │   ├── logics/         # ビジネスロジック
@@ -41,9 +41,9 @@ ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)
 └── ...
 ```
 
-## 🛠 インストールと開発
+## 🛠️ 開発
 
-このプロジェクトでは `pnpm` を使用しています。
+このプロジェクトでは `pnpm` の使用を推奨しています
 
 ### セットアップ
 
@@ -59,7 +59,7 @@ pnpm setup:dev
 
 ### 開発サーバーの起動
 
-通常モード：
+通常モード(AmongUsが起動していることを想定)：
 ```bash
 pnpm dev
 ```
@@ -94,13 +94,13 @@ pnpm e2e
 
 ### リンター・フォーマッター
 
-Biomeによるチェックと修正：
+Biomeによるチェック：
 ```bash
-pnpm check   # チェックのみ
-pnpm format  # 整形
-pnpm lint    # リンター実行
+pnpm check   # リンターと整形チェック
+pnpm format  # 整形チェック
+pnpm lint    # リンターチェック
 ```
 
-## 📄 ライセンス
+## ⚖️ ライセンス
 
 このプロジェクトは **AGPLv3** ライセンスの下で公開されています。詳細は [LICENSE](./LICENSE) ファイルを参照してください。
