@@ -211,7 +211,7 @@ export function generateClipboardText(
 			rate: string;
 			count: string;
 			isVanilla: boolean;
-			faction: "Crew" | "Impostor" | "Neutral";
+			faction: "Crew" | "Impostor";
 		}[] = [];
 		for (const catId of VANILLA_ROLE_CATEGORY_IDS) {
 			const catMeta = auMeta.categoryMetaData[catId];
@@ -224,13 +224,8 @@ export function generateClipboardText(
 			const maxCount = Number(getAuValue(maxCountId) ?? 0);
 
 			if (chance > 0 && maxCount > 0) {
-				let faction: "Crew" | "Impostor" | "Neutral" = "Crew";
-				if (catMeta.tabId === 1) {
-					faction = "Impostor";
-				}
-				if (catMeta.tabId === 2) {
-					faction = "Neutral";
-				}
+				const faction: "Crew" | "Impostor" =
+					catMeta.tabId === 2 ? "Impostor" : "Crew";
 
 				roles.push({
 					name: cleanText(catMeta.name),
@@ -253,10 +248,7 @@ export function generateClipboardText(
 		...vanillaRoles.filter((r) => r.faction === "Impostor"),
 		...getRolesForTab(ExRTabId.ImpostorTab),
 	];
-	const neutralRolesList = [
-		...vanillaRoles.filter((r) => r.faction === "Neutral"),
-		...getRolesForTab(ExRTabId.NeutralTab),
-	];
+	const neutralRolesList = getRolesForTab(ExRTabId.NeutralTab);
 
 	const liberalRolesList = getRolesForTab(ExRTabId.GeneralTab);
 
@@ -269,7 +261,7 @@ export function generateClipboardText(
 		let list = "";
 		for (const role of roles) {
 			const name = role.isVanilla
-				? `${role.name}${CLIPBOARD_VANILLA_SUFFIX}`
+				? `${role.name}(${CLIPBOARD_VANILLA_SUFFIX})`
 				: role.name;
 			// - {役職名}{※バニラ} - {スポーン数} / {スポーンレート}％
 			// ％が重複しないように調整
@@ -278,7 +270,7 @@ export function generateClipboardText(
 				: role.rate.endsWith("％")
 					? role.rate.slice(0, -1)
 					: role.rate;
-			list += ` - ${name} - ${role.count} / ${rate}％\n`;
+			list += ` - ${name} --- **${role.count} / ${rate}%**\n`;
 		}
 		return list;
 	};
@@ -353,7 +345,7 @@ export function generateClipboardText(
 			if (state.isExROptionActive[optId]) {
 				if (!summaryOptionIds.includes(optId)) {
 					const indentStr = "  ".repeat(indent);
-					detailedSettings += `${indentStr}- ${cleanText(
+					detailedSettings += `${indentStr} - ${cleanText(
 						meta.translatedName,
 					)} : ${getExRFormattedValue(optId)}\n`;
 				}
@@ -409,7 +401,7 @@ export function generateClipboardText(
 		text += `### ${CLIPBOARD_LIBERAL}\n${formatRoleList(liberalRolesList)}`;
 	}
 
-	text += `\n## ${CLIPBOARD_DETAILED_SETTINGS}\n<summary>\n${detailedSettings}\n</summary>\n`;
+	text += `\n## ${CLIPBOARD_DETAILED_SETTINGS}\n\`\`\`text\n${detailedSettings}\n\`\`\`\n`;
 	text += `\n## ${CLIPBOARD_OTHERS}\n${CLIPBOARD_OTHERS_NOTE}\n`;
 
 	return text;
