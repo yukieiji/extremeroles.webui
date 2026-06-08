@@ -18,7 +18,33 @@ import {
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
-import { RANDOM_MAP_LABEL } from "@/noTrans";
+import {
+	CLIPBOARD_CREW,
+	CLIPBOARD_CREW_ROLES,
+	CLIPBOARD_DETAILED_SETTINGS,
+	CLIPBOARD_FACTION_COUNTS,
+	CLIPBOARD_IMPOSTOR,
+	CLIPBOARD_IMPOSTOR_COUNT,
+	CLIPBOARD_IMPOSTOR_ROLES,
+	CLIPBOARD_KILL_COOLDOWN,
+	CLIPBOARD_LIBERAL,
+	CLIPBOARD_LIBERAL_ROLES,
+	CLIPBOARD_MAP,
+	CLIPBOARD_MILITANT_ROLES,
+	CLIPBOARD_NEUTRAL,
+	CLIPBOARD_NEUTRAL_ROLES,
+	CLIPBOARD_OTHERS,
+	CLIPBOARD_OTHERS_NOTE,
+	CLIPBOARD_ROLE_NAME,
+	CLIPBOARD_ROLES,
+	CLIPBOARD_SETTING_ITEM,
+	CLIPBOARD_SETTING_TITLE,
+	CLIPBOARD_SPAWN_COUNT,
+	CLIPBOARD_SPAWN_RATE,
+	CLIPBOARD_VALUE,
+	CLIPBOARD_VANILLA_SUFFIX,
+	RANDOM_MAP_LABEL,
+} from "@/noTrans";
 import {
 	type AuOptionId,
 	type AuOptionMetaDataRecords,
@@ -206,16 +232,18 @@ export function generateClipboardText(
 		if (roles.length === 0) {
 			return "";
 		}
-		let table = "|  役職名  | スポーンレート | スポーン数 |\n| | | |\n";
+		let table = `|  ${CLIPBOARD_ROLE_NAME}  | ${CLIPBOARD_SPAWN_RATE} | ${CLIPBOARD_SPAWN_COUNT} |\n| | | |\n`;
 		for (const role of roles) {
-			const name = role.isVanilla ? `${role.name}※バニラ` : role.name;
+			const name = role.isVanilla
+				? `${role.name}${CLIPBOARD_VANILLA_SUFFIX}`
+				: role.name;
 			table += `| ${name} | ${role.rate} | ${role.count} |\n`;
 		}
 		return table;
 	};
 
 	// 詳細設定の構築
-	let detailedSettings = "| 設定項目 | 値 |\n| | |\n";
+	let detailedSettings = `| ${CLIPBOARD_SETTING_ITEM} | ${CLIPBOARD_VALUE} |\n| | |\n`;
 
 	// Au Tab 0
 	const auTab0Categories = auMeta.tabCategoryMap[0] || [];
@@ -223,10 +251,11 @@ export function generateClipboardText(
 		const catMeta = auMeta.categoryMetaData[catId];
 		// サマリーにあるものは除く
 		if (catId === 0) {
-			continue; // Map category (approx)
-		}
+			continue;
+		} // Map category (approx)
 
 		for (const optId of catMeta.options) {
+			const meta = auMeta.options[optId];
 			if (
 				optId === AU_MAP_OPTION_ID ||
 				optId === AU_KILL_COOLDOWN_OPTION_ID ||
@@ -234,7 +263,6 @@ export function generateClipboardText(
 			) {
 				continue;
 			}
-			const meta = auMeta.options[optId];
 			if (!meta) {
 				continue;
 			}
@@ -257,6 +285,7 @@ export function generateClipboardText(
 			const topLevelOptionIds =
 				exrMeta.globalCategoryIdTopLevelMap[catId] || [];
 			for (const optId of topLevelOptionIds) {
+				const meta = exrMeta.options[optId]?.metaData;
 				// サマリーにあるものは除く
 				if (
 					[
@@ -278,7 +307,6 @@ export function generateClipboardText(
 				}
 
 				if (state.isExROptionActive[optId]) {
-					const meta = exrMeta.options[optId]?.metaData;
 					if (!meta) {
 						continue;
 					}
@@ -290,35 +318,35 @@ export function generateClipboardText(
 		}
 	}
 
-	let text = `# 設定(${presetName})\n`;
-	text += `- マップ: ${mapName}\n`;
-	text += `- キルクールダウン時間: ${killCooldown}\n`;
-	text += `## 陣営数\n`;
-	text += `- クルーのロール数: ${crewRolesCount}\n`;
-	text += `- インポスターのロール数: ${impostorRolesCount}\n`;
-	text += `  - インポスター数: ${impostorCount}\n`;
-	text += `- 第3陣営のロール数: ${neutralRolesCount}\n`;
+	let text = `# ${CLIPBOARD_SETTING_TITLE}(${presetName})\n`;
+	text += `- ${CLIPBOARD_MAP}: ${mapName}\n`;
+	text += `- ${CLIPBOARD_KILL_COOLDOWN}: ${killCooldown}\n`;
+	text += `## ${CLIPBOARD_FACTION_COUNTS}\n`;
+	text += `- ${CLIPBOARD_CREW_ROLES}: ${crewRolesCount}\n`;
+	text += `- ${CLIPBOARD_IMPOSTOR_ROLES}: ${impostorRolesCount}\n`;
+	text += `  - ${CLIPBOARD_IMPOSTOR_COUNT}: ${impostorCount}\n`;
+	text += `- ${CLIPBOARD_NEUTRAL_ROLES}: ${neutralRolesCount}\n`;
 	if (liberalRolesCount !== "0") {
-		text += `- リベラルのロール数: ${liberalRolesCount}\n`;
-		text += `  - ミリタントのロール数: ${militantRolesCount}\n`;
+		text += `- ${CLIPBOARD_LIBERAL_ROLES}: ${liberalRolesCount}\n`;
+		text += `  - ${CLIPBOARD_MILITANT_ROLES}: ${militantRolesCount}\n`;
 	}
 
-	text += "## 役職\n";
+	text += `## ${CLIPBOARD_ROLES}\n`;
 	if (crewRolesList.length > 0) {
-		text += `### クルー\n${formatRoleTable(crewRolesList)}\n`;
+		text += `### ${CLIPBOARD_CREW}\n${formatRoleTable(crewRolesList)}\n`;
 	}
 	if (impostorRolesList.length > 0) {
-		text += `### インポスター\n${formatRoleTable(impostorRolesList)}\n`;
+		text += `### ${CLIPBOARD_IMPOSTOR}\n${formatRoleTable(impostorRolesList)}\n`;
 	}
 	if (neutralRolesList.length > 0) {
-		text += `### ニュートラル\n${formatRoleTable(neutralRolesList)}\n`;
+		text += `### ${CLIPBOARD_NEUTRAL}\n${formatRoleTable(neutralRolesList)}\n`;
 	}
 	if (liberalRolesList.length > 0) {
-		text += `### リベラル\n${formatRoleTable(liberalRolesList)}\n`;
+		text += `### ${CLIPBOARD_LIBERAL}\n${formatRoleTable(liberalRolesList)}\n`;
 	}
 
-	text += `\n## 詳細設定\n<summary>\n${detailedSettings}\n</summary>\n`;
-	text += "\n## その他\n※ : 何かあればここに書くとよろし\n";
+	text += `\n## ${CLIPBOARD_DETAILED_SETTINGS}\n<summary>\n${detailedSettings}\n</summary>\n`;
+	text += `\n## ${CLIPBOARD_OTHERS}\n${CLIPBOARD_OTHERS_NOTE}\n`;
 
 	return text;
 }

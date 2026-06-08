@@ -79,6 +79,31 @@ export const ERROR_TITLE = "エラーが発生しました";
 export const ERROR_RETRY_BUTTON = "再試行";
 export const ERROR_DETAIL_LABEL = "エラー詳細:";
 
+export const CLIPBOARD_SETTING_TITLE = "設定";
+export const CLIPBOARD_MAP = "マップ";
+export const CLIPBOARD_KILL_COOLDOWN = "キルクールダウン時間";
+export const CLIPBOARD_FACTION_COUNTS = "陣営数";
+export const CLIPBOARD_CREW_ROLES = "クルーのロール数";
+export const CLIPBOARD_IMPOSTOR_ROLES = "インポスターのロール数";
+export const CLIPBOARD_IMPOSTOR_COUNT = "インポスター数";
+export const CLIPBOARD_NEUTRAL_ROLES = "第3陣営のロール数";
+export const CLIPBOARD_LIBERAL_ROLES = "リベラルのロール数";
+export const CLIPBOARD_MILITANT_ROLES = "ミリタントのロール数";
+export const CLIPBOARD_ROLES = "役職";
+export const CLIPBOARD_CREW = "クルー";
+export const CLIPBOARD_IMPOSTOR = "インポスター";
+export const CLIPBOARD_NEUTRAL = "ニュートラル";
+export const CLIPBOARD_LIBERAL = "リベラル";
+export const CLIPBOARD_ROLE_NAME = "役職名";
+export const CLIPBOARD_SPAWN_RATE = "スポーンレート";
+export const CLIPBOARD_SPAWN_COUNT = "スポーン数";
+export const CLIPBOARD_DETAILED_SETTINGS = "詳細設定";
+export const CLIPBOARD_SETTING_ITEM = "設定項目";
+export const CLIPBOARD_VALUE = "値";
+export const CLIPBOARD_OTHERS = "その他";
+export const CLIPBOARD_OTHERS_NOTE = "※ : 何かあればここに書くとよろし";
+export const CLIPBOARD_VANILLA_SUFFIX = "※バニラ";
+
 /**
  * プレースホルダーを含む文字列を置換します。
  * @param template テンプレート文字列（例: "こんにちは {0} さん"）
