@@ -5,6 +5,7 @@ import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
 import { ImportButton } from "./components/parts/ImportButton";
 import { SyncButton } from "./components/parts/SyncButton";
+import { Toaster } from "./components/ui/sonner";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
 import { BlockableDialog } from "./feature/BlockableDialog";
@@ -149,6 +150,7 @@ function RootContent() {
 
 	return (
 		<SidebarProvider>
+			<Toaster />
 			<BlockableLoading />
 			<BlockableDialog />
 			<OptionGroupToggleSidebar />
