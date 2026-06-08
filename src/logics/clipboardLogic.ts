@@ -370,13 +370,9 @@ export function generateClipboardText(
 	text += `- ${mapTitle}: ${mapValue}\n`;
 	text += `- ${killCooldownTitle}: ${killCooldownValue}\n`;
 	text += `## ${CLIPBOARD_FACTION_COUNTS}\n`;
-	if (crewRolesCount !== "0") {
-		text += `- ${crewRolesLabel}: ${crewRolesCount}\n`;
-	}
-	if (impostorRolesCount !== "0") {
-		text += `- ${impostorRolesLabel}: ${impostorRolesCount}\n`;
-		text += `  - ${impostorCountTitle}: ${impostorCountValue}\n`;
-	}
+	text += `- ${crewRolesLabel}: ${crewRolesCount}\n`;
+	text += `- ${impostorRolesLabel}: ${impostorRolesCount}\n`;
+	text += `  - ${impostorCountTitle}: ${impostorCountValue}\n`;
 	if (neutralRolesCount !== "0") {
 		text += `- ${neutralRolesLabel}: ${neutralRolesCount}\n`;
 	}
@@ -401,7 +397,7 @@ export function generateClipboardText(
 		text += `### ${CLIPBOARD_LIBERAL}\n${formatRoleList(liberalRolesList)}`;
 	}
 
-	text += `\n## ${CLIPBOARD_DETAILED_SETTINGS}\n\`\`\`text\n${detailedSettings}\n\`\`\`\n`;
+	text += `\n## ${CLIPBOARD_DETAILED_SETTINGS}\n${detailedSettings}\n`;
 	text += `\n## ${CLIPBOARD_OTHERS}\n${CLIPBOARD_OTHERS_NOTE}\n`;
 
 	return text;
