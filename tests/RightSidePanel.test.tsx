@@ -42,7 +42,6 @@ describe("RightSidePanel Component", () => {
 		});
 
 		expect(screen.getByText("Right Panel")).toBeInTheDocument();
-		expect(screen.getByText("設定値")).toBeInTheDocument();
 		expect(screen.getByText("AmongUsの設定")).toBeInTheDocument();
 		expect(screen.getByText("ExRの設定")).toBeInTheDocument();
 	});

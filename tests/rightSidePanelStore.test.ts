@@ -40,14 +40,6 @@ describe("RightSidePanelStore", () => {
 		expect(useStore.getState().isRightPanelOpen).toBe(false);
 	});
 
-	it("toggleSettings で isSettingsOpen が切り替わること", () => {
-		useStore.getState().toggleSettings();
-		expect(useStore.getState().isSettingsOpen).toBe(false);
-
-		useStore.getState().toggleSettings();
-		expect(useStore.getState().isSettingsOpen).toBe(true);
-	});
-
 	it("toggleAuSettings で isAuSettingsOpen が切り替わること", () => {
 		useStore.getState().toggleAuSettings();
 		expect(useStore.getState().isAuSettingsOpen).toBe(false);

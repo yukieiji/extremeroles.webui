@@ -55,10 +55,6 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 		)
 		.toBeGreaterThan(30);
 
-	// Verify "Setting Values" accordion is visible
-	const settingsAccordion = page.getByRole("button", { name: "設定値" });
-	await expect(settingsAccordion).toBeVisible();
-
 	// Verify AmongUs and ExR settings accordions
 	const auSettings = page.getByRole("button", { name: "AmongUsの設定" });
 	const exrSettings = page.getByRole("button", { name: "ExRの設定" });
