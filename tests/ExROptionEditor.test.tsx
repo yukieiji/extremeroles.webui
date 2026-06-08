@@ -15,7 +15,8 @@ describe("ExROptionEditor", () => {
 			Categories: [
 				{
 					Id: 1,
-					Name: "Category 1", ColorCode: null,
+					Name: "Category 1",
+					ColorCode: null,
 					Options: [
 						{
 							Id: 101,
@@ -30,7 +31,8 @@ describe("ExROptionEditor", () => {
 				},
 				{
 					Id: 0,
-					Name: "Preset Category", ColorCode: null,
+					Name: "Preset Category",
+					ColorCode: null,
 					Options: [
 						{
 							Id: 0,
@@ -45,12 +47,14 @@ describe("ExROptionEditor", () => {
 				},
 				{
 					Id: 2,
-					Name: "Empty Category", ColorCode: null,
+					Name: "Empty Category",
+					ColorCode: null,
 					Options: [],
 				},
 				{
 					Id: 3,
-					Name: "Inactive Category", ColorCode: null,
+					Name: "Inactive Category",
+					ColorCode: null,
 					Options: [
 						{
 							Id: 102,
@@ -71,7 +75,8 @@ describe("ExROptionEditor", () => {
 			Categories: [
 				{
 					Id: 4,
-					Name: "Category 2", ColorCode: null,
+					Name: "Category 2",
+					ColorCode: null,
 					Options: [
 						{
 							Id: 50,
