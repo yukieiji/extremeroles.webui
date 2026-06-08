@@ -8,8 +8,6 @@ export interface RightSidePanelSlice {
 	isRightPanelOpen: boolean;
 	toggleRightPanel: () => void;
 	setRightPanelOpen: (isOpen: boolean) => void;
-	isSettingsOpen: boolean;
-	toggleSettings: () => void;
 	isAuSettingsOpen: boolean;
 	toggleAuSettings: () => void;
 	isExrSettingsOpen: boolean;
@@ -51,12 +49,6 @@ export const createRightSidePanelSlice: StateCreator<RightSidePanelSlice> = (
 		},
 		setRightPanelOpen: (isOpen: boolean) => {
 			set({ isRightPanelOpen: isOpen });
-		},
-		isSettingsOpen: true,
-		toggleSettings: () => {
-			set((state) => {
-				return { isSettingsOpen: !state.isSettingsOpen };
-			});
 		},
 		isAuSettingsOpen: true,
 		toggleAuSettings: () => {

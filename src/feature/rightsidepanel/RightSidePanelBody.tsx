@@ -42,9 +42,6 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 			toast.success(CLIPBOARD_COPY_SUCCESS);
 		});
 	};
-
-	const isSettingsOpen = useStore((state) => state.isSettingsOpen);
-	const toggleSettings = useStore((state) => state.toggleSettings);
 	const isAuSettingsOpen = useStore((state) => state.isAuSettingsOpen);
 	const toggleAuSettings = useStore((state) => state.toggleAuSettings);
 	const isExrSettingsOpen = useStore((state) => state.isExrSettingsOpen);
@@ -71,28 +68,22 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 				<div className="flex-1 overflow-y-scroll">
 					<RightSidePanelSummary />
 					<div className="p-3">
-						<ViewerGroupAccordion
-							title={SETTING_VALUES_TITLE}
-							isOpen={isSettingsOpen}
-							onToggle={toggleSettings}
-						>
-							<RightPanelGroupColumnLayout>
-								<ViewerGroupAccordion
-									title={AU_SETTINGS_TITLE}
-									isOpen={isAuSettingsOpen}
-									onToggle={toggleAuSettings}
-								>
-									<AuOptionViewer />
-								</ViewerGroupAccordion>
-								<ViewerGroupAccordion
-									title={EXR_SETTINGS_TITLE}
-									isOpen={isExrSettingsOpen}
-									onToggle={toggleExrSettings}
-								>
-									<ExROptionViewer />
-								</ViewerGroupAccordion>
-							</RightPanelGroupColumnLayout>
-						</ViewerGroupAccordion>
+						<RightPanelGroupColumnLayout>
+							<ViewerGroupAccordion
+								title={AU_SETTINGS_TITLE}
+								isOpen={isAuSettingsOpen}
+								onToggle={toggleAuSettings}
+							>
+								<AuOptionViewer />
+							</ViewerGroupAccordion>
+							<ViewerGroupAccordion
+								title={EXR_SETTINGS_TITLE}
+								isOpen={isExrSettingsOpen}
+								onToggle={toggleExrSettings}
+							>
+								<ExROptionViewer />
+							</ViewerGroupAccordion>
+						</RightPanelGroupColumnLayout>
 					</div>
 				</div>
 			</div>
