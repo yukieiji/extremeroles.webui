@@ -48,6 +48,7 @@ describe("ExROptionPutRequest and UpdatedOptions Validation", () => {
 			UpdatedCategory: {
 				Id: 1,
 				Name: "Test Category",
+				ColorCode: null,
 				Options: [],
 			},
 			ChainUpdatedOption: [
@@ -72,6 +73,7 @@ describe("ExROptionPutRequest and UpdatedOptions Validation", () => {
 			ChainUpdateCategory: {
 				Id: 3,
 				Name: "Chain Update Category",
+				ColorCode: null,
 				Options: [],
 			},
 		};
@@ -132,6 +134,7 @@ describe("UpdatedOptions Validation", () => {
 			UpdatedCategory: {
 				Id: 1,
 				Name: "Category",
+				ColorCode: null,
 				Options: [],
 			},
 			ChainUpdatedOption: [],

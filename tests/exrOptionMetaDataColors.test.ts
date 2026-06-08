@@ -28,6 +28,7 @@ describe("exrOptionMetaData color assignment", () => {
 					{
 						Id: 1,
 						Name: "Category 1",
+						ColorCode: null,
 						Options: [],
 					},
 				],
@@ -55,6 +56,7 @@ describe("exrOptionMetaData color assignment", () => {
 					{
 						Id: 1,
 						Name: "Category 1",
+						ColorCode: null,
 						Options: [],
 					},
 				],
@@ -82,6 +84,7 @@ describe("exrOptionMetaData color assignment", () => {
 					{
 						Id: 2,
 						Name: "Category 2",
+						ColorCode: null,
 						Options: [],
 					},
 				],

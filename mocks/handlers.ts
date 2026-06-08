@@ -31,6 +31,7 @@ const mockUpdatedOptions: UpdatedOptions = {
   UpdatedCategory: {
     Id: 1,
     Name: 'ゲーム設定',
+    ColorCode: null,
     Options: [
       {
         Id: 101,

@@ -11,6 +11,7 @@ describe("ExRTabDto Validation", () => {
 					{
 						Id: 1,
 						Name: "Test Category",
+						ColorCode: null,
 						Options: [
 							{
 								Id: 101,
@@ -87,6 +88,7 @@ describe("ExRTabDto Validation", () => {
 					{
 						Id: 1,
 						Name: "Category",
+						ColorCode: null,
 						Options: [
 							{
 								Id: 101,
