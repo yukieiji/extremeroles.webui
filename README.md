@@ -1,87 +1,106 @@
 # ExtremeRoles.WebUI
 
-このリポジトリは開発中です、そのため「NO LICENSE」(最も使用が厳しいライセンス)になります
-リリース前には何らかのライセンスをつける想定
+ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)がインストールされたAmoungAuの設定を、高速かつ直感的に行うためのWebユーザーインターフェースです。
 
-# React + TypeScript + Vite
+## 🚀 技術スタック
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **フロントエンド**: React 19, TypeScript, Vite
+- **スタイル**: Tailwind CSS v4/Shadcn/UI
+- **フォーマッター/リンター**: Biome
+- **テスト**: Vitest, Playwright (E2E)
+- **ステータス管理**: Zustand
+- **アイコン**: Lucide React
 
-Currently, two official plugins are available:
+## 📂 ディレクトリ構造
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-
-## 開発の知見 (Skills)
-- [GitHub ActionsでのPlaywrightテストの並列化](.gemini/skills/github-actions-playwright-matrix/github-actions-playwright-matrix.md)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+.
+├── e2e/                # PlaywrightによるE2Eテスト
+├── mocks/              # MSWのモック定義
+├── public/             # 静的アセット
+├── src/
+│   ├── assets/         # 画像、フォントなどのアセット
+│   ├── components/     # 再利用可能なステートレスなUIコンポーネント
+│   │   ├── blocks/     # 複数のパーツを組み合わせたコンポーネント
+│   │   ├── parts/      # 最小単位のUIパーツ
+│   │   └── ui/         # Shadcn/UIベースの基本コンポーネント
+│   ├── feature/        # 機能ごとのステートフルなコンポーネント
+│   │   ├── amongus/    # Among Usビューのコンポーネント
+│   │   ├── exr/        # ExtremeRolesビューのコンポーネント
+│   │   ├── rightsidepanel/ # 右側プレビューパネル
+│   │   └── rolefilter/ # ロールアサインフィルター機能
+│   ├── hooks/          # カスタムフック
+│   ├── lib/            # 外部ライブラリの設定やユーティリティ
+│   ├── logics/         # ビジネスロジック
+│   ├── slices/         # Zustandのステート分割
+│   ├── App.tsx         # メインアプリケーションコンポーネント
+│   ├── main.tsx        # エントリーポイント
+│   ├── useStore.ts     # メインのステート管理
+│   └── type.ts         # 型定義
+├── tests/              # Vitestによるユニット/統合テスト
+└── ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ 開発
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+このプロジェクトでは `pnpm` の使用を推奨しています
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### セットアップ
+
+依存関係をインストールします：
+```bash
+pnpm install
 ```
 
-## 追加知識
-- [showSaveFilePicker の使用とテスト](.gemini/knowledge/showSaveFilePicker/README.md)
-- [GitHub Actions での Playwright ブラウザキャッシュ](.gemini/knowledge/github-actions-cache/playwright.md)
+開発環境の初期セットアップ（Lefthookのインストールなど）：
+```bash
+pnpm setup:dev
+```
+
+### 開発サーバーの起動
+
+通常モード(AmongUsが起動していることを想定)：
+```bash
+pnpm dev
+```
+
+モックサーバー（MSW）を使用した開発：
+```bash
+pnpm dev:mock
+```
+
+### ビルド
+
+本番環境向けにビルドします：
+```bash
+pnpm build
+```
+
+### テスト
+
+ユニットテスト（Vitest）の実行：
+```bash
+pnpm test
+```
+
+E2Eテスト（Playwright）の実行：
+```bash
+# 初回実行時はブラウザのインストールが必要です
+pnpm setup:browser
+
+# E2Eテストの実行
+pnpm e2e
+```
+
+### リンター・フォーマッター
+
+Biomeによるチェック：
+```bash
+pnpm check   # リンターと整形チェック
+pnpm format  # 整形チェック
+pnpm lint    # リンターチェック
+```
+
+## ⚖️ ライセンス
+
+このプロジェクトは **AGPLv3** ライセンスの下で公開されています。詳細は [LICENSE](./LICENSE) ファイルを参照してください。
