@@ -82,7 +82,7 @@ export function ExRRoleSpawnControls({
 					uniqueOptionId: uniqueRateId,
 					selection: findClosestIndex(rateValues, 0),
 				},
-				{ uniqueOptionId: uniqueCountId, selection: 1 }, // 表示上は0だけど、実際の選択肢は1（最小値）にする
+				{ uniqueOptionId: uniqueCountId, selection: 0 }, // スポーン数を実際の最小値（通常は1、モック環境でも0番目）にリセット
 			);
 			if (isOpenedCategory) {
 				toggleExRCategory(categoryId);

@@ -64,22 +64,20 @@ export function useUpdateExROptionSelection(): (
 				payload: updateInfos,
 			}),
 		);
-		let updateResult: (UpdatedOptions | null)[];
+		const updateResult: (UpdatedOptions | null)[] = [];
 		try {
-			updateResult = await Promise.all(
-				updateInfos.map(async (info) => {
-					const { tabId, categoryId, optionId } = parseUniqueOptionId(
-						info.uniqueOptionId,
-					);
-					const result = await updateExrOption(
-						tabId,
-						categoryId,
-						optionId,
-						info.selection,
-					);
-					return result;
-				}),
-			);
+			for (const info of updateInfos) {
+				const { tabId, categoryId, optionId } = parseUniqueOptionId(
+					info.uniqueOptionId,
+				);
+				const result = await updateExrOption(
+					tabId,
+					categoryId,
+					optionId,
+					info.selection,
+				);
+				updateResult.push(result);
+			}
 		} catch (error) {
 			console.error("Error updating ExR option:", error);
 			return;

@@ -79,6 +79,21 @@ export const ERROR_TITLE = "エラーが発生しました";
 export const ERROR_RETRY_BUTTON = "再試行";
 export const ERROR_DETAIL_LABEL = "エラー詳細:";
 
+export const CLIPBOARD_SETTING_TITLE = "設定";
+export const CLIPBOARD_FACTION_COUNTS = "陣営数";
+export const CLIPBOARD_ROLES = "役職";
+export const CLIPBOARD_CREW = "クルー";
+export const CLIPBOARD_IMPOSTOR = "インポスター";
+export const CLIPBOARD_NEUTRAL = "ニュートラル";
+export const CLIPBOARD_LIBERAL = "リベラル";
+export const CLIPBOARD_DETAILED_SETTINGS = "詳細設定";
+export const CLIPBOARD_OTHERS = "その他";
+export const CLIPBOARD_OTHERS_NOTE = "※ : 何かあればここに書くとよろし";
+export const CLIPBOARD_VANILLA_SUFFIX = "※バニラ";
+
+export const CLIPBOARD_COPY_BUTTON = "クリップボードにコピー";
+export const CLIPBOARD_COPY_SUCCESS = "設定をクリップボードにコピーしました";
+
 /**
  * プレースホルダーを含む文字列を置換します。
  * @param template テンプレート文字列（例: "こんにちは {0} さん"）
