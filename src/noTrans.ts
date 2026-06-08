@@ -104,6 +104,9 @@ export const CLIPBOARD_OTHERS = "その他";
 export const CLIPBOARD_OTHERS_NOTE = "※ : 何かあればここに書くとよろし";
 export const CLIPBOARD_VANILLA_SUFFIX = "※バニラ";
 
+export const CLIPBOARD_COPY_BUTTON = "クリップボードにコピー";
+export const CLIPBOARD_COPY_SUCCESS = "設定をクリップボードにコピーしました";
+
 /**
  * プレースホルダーを含む文字列を置換します。
  * @param template テンプレート文字列（例: "こんにちは {0} さん"）

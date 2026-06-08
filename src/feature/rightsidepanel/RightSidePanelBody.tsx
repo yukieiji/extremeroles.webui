@@ -8,6 +8,8 @@ import { auOptionMetaData, exrOptionMetaData } from "@/logics/api";
 import { generateClipboardText } from "@/logics/clipboardLogic";
 import {
 	AU_SETTINGS_TITLE,
+	CLIPBOARD_COPY_BUTTON,
+	CLIPBOARD_COPY_SUCCESS,
 	EXR_SETTINGS_TITLE,
 	RIGHT_PANEL_TITLE,
 	SETTING_VALUES_TITLE,
@@ -29,8 +31,15 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 			exrOptionMetaData,
 			auOptionMetaData,
 		);
+		console.log(
+			JSON.stringify({
+				type: "user_action",
+				action: "copyToClipboard",
+				payload: { length: text.length },
+			}),
+		);
 		navigator.clipboard.writeText(text).then(() => {
-			toast.success("クリップボードにコピーしました");
+			toast.success(CLIPBOARD_COPY_SUCCESS);
 		});
 	};
 
@@ -56,7 +65,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 						onClick={handleCopy}
 					>
 						<ClipboardCopy className="w-4 h-4" />
-						設定をコピー
+						{CLIPBOARD_COPY_BUTTON}
 					</Button>
 				</div>
 				<div className="flex-1 overflow-y-scroll">

@@ -56,7 +56,7 @@ import {
 	type UniqueOptionId,
 } from "@/type";
 
-interface ClipboardState {
+export interface ClipboardState {
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
 	auValue: Record<AuOptionId, number>;
 	isExROptionActive: Record<UniqueOptionId, boolean>;
@@ -67,7 +67,7 @@ export function generateClipboardText(
 	state: ClipboardState,
 	exrMeta: ExROptionMetaDataRecords,
 	auMeta: AuOptionMetaDataRecords,
-) {
+): string {
 	const getExRValue = (uniqueId: UniqueOptionId) => {
 		const data = state.exrValue[uniqueId];
 		if (!data) {
@@ -245,10 +245,13 @@ export function generateClipboardText(
 	// 詳細設定の構築
 	let detailedSettings = `| ${CLIPBOARD_SETTING_ITEM} | ${CLIPBOARD_VALUE} |\n| | |\n`;
 
-	// Au Tab 0
+	// AmongUs Tab 0
 	const auTab0Categories = auMeta.tabCategoryMap[0] || [];
 	for (const catId of auTab0Categories) {
 		const catMeta = auMeta.categoryMetaData[catId];
+		if (!catMeta) {
+			continue;
+		}
 		// サマリーにあるものは除く
 		if (catId === 0) {
 			continue;
@@ -256,14 +259,14 @@ export function generateClipboardText(
 
 		for (const optId of catMeta.options) {
 			const meta = auMeta.options[optId];
+			if (!meta) {
+				continue;
+			}
 			if (
 				optId === AU_MAP_OPTION_ID ||
 				optId === AU_KILL_COOLDOWN_OPTION_ID ||
 				optId === AU_IMPOSTOR_COUNT_OPTION_ID
 			) {
-				continue;
-			}
-			if (!meta) {
 				continue;
 			}
 			const value = getAuValue(optId);
@@ -286,6 +289,9 @@ export function generateClipboardText(
 				exrMeta.globalCategoryIdTopLevelMap[catId] || [];
 			for (const optId of topLevelOptionIds) {
 				const meta = exrMeta.options[optId]?.metaData;
+				if (!meta) {
+					continue;
+				}
 				// サマリーにあるものは除く
 				if (
 					[
@@ -307,9 +313,6 @@ export function generateClipboardText(
 				}
 
 				if (state.isExROptionActive[optId]) {
-					if (!meta) {
-						continue;
-					}
 					detailedSettings += `| ${stripColorTags(
 						meta.translatedName,
 					)} | ${getExRFormattedValue(optId)} |\n`;
