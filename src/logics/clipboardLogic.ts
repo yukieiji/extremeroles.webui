@@ -315,6 +315,7 @@ export function generateClipboardText(
 	const exrGeneralTab = exrMeta.tabs[ExRTabId.GeneralTab];
 	if (exrGeneralTab) {
 		const processedOptions = new Set<UniqueOptionId>();
+		const movedOptionIds = new Set<number>(MOVED_EXR_OPTION_UNIQUE_IDS);
 
 		for (const catId of exrGeneralTab.categoryIds) {
 			const category = exrMeta.categories[catId];
@@ -327,6 +328,7 @@ export function generateClipboardText(
 				if (processedOptions.has(optId)) {
 					return;
 				}
+				processedOptions.add(optId);
 
 				const optionDetail = exrMeta.options[optId];
 				const meta = optionDetail?.metaData;
@@ -339,13 +341,10 @@ export function generateClipboardText(
 				}
 
 				// サマリーにあるものは除く
-				if (
-					(MOVED_EXR_OPTION_UNIQUE_IDS as readonly number[]).includes(optId)
-				) {
+				if (movedOptionIds.has(optId)) {
 					return;
 				}
 
-				processedOptions.add(optId);
 				const indentStr = "  ".repeat(indent);
 				categoryContent += `${indentStr} - ${cleanText(
 					meta.translatedName,
