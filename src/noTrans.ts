@@ -28,7 +28,6 @@ export const PRESET_SELECT_ARIA = "プリセットを選択";
 export const PANEL_CLOSE_ARIA = "パネルを閉じる";
 export const PANEL_OPEN_ARIA = "パネルを開く";
 export const RIGHT_PANEL_ARIA = "右サイドパネル";
-export const SETTING_VALUES_TITLE = "設定値";
 export const AU_SETTINGS_TITLE = "AmongUsの設定";
 export const EXR_SETTINGS_TITLE = "ExRの設定";
 export const EXR_CONTENT_TEMP = "ExRの設定コンテンツ";

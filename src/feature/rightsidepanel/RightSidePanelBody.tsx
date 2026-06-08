@@ -12,7 +12,6 @@ import {
 	CLIPBOARD_COPY_SUCCESS,
 	EXR_SETTINGS_TITLE,
 	RIGHT_PANEL_TITLE,
-	SETTING_VALUES_TITLE,
 } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
