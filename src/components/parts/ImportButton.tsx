@@ -57,6 +57,7 @@ export function ImportButton({ onImport, disabled }: ImportButtonProps) {
 				disabled={disabled}
 				title={IMPORT_BUTTON_TITLE}
 				aria-label={IMPORT_BUTTON_ARIA}
+				className="select-text"
 			>
 				<Upload />
 				{IMPORT_BUTTON_TITLE}

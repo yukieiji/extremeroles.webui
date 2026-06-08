@@ -73,7 +73,7 @@ export function SearchBar() {
 			<PopoverTrigger
 				nativeButton={false}
 				render={
-					<InputGroup className="w-64">
+					<InputGroup className="w-64 select-text">
 						<InputGroupAddon align="inline-start">
 							<Search className="size-4 text-muted-foreground" />
 						</InputGroupAddon>

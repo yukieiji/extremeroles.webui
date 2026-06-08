@@ -33,7 +33,7 @@ export function OptionToggleControl({
 				className="cursor-pointer"
 				data-testid="option-toggle"
 			/>
-			<FieldLabel htmlFor={id}>
+			<FieldLabel htmlFor={id} className="select-text">
 				<ColoredText text={values[selection]} />
 			</FieldLabel>
 		</Field>
