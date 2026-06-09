@@ -120,7 +120,7 @@ export const ExROptionDtoSchema: z.ZodType<ExROptionDto> = z.lazy(() =>
 export interface ExRCategoryDto {
 	Id: number;
 	Name: string;
-	ColorCode: string | null | undefined;
+	ColorCode?: string | null;
 	Options: ExROptionDto[];
 }
 
