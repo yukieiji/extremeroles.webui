@@ -29,52 +29,52 @@ function App() {
           </h1>
         </header>
 
-        <div>
+        <div className="flex flex-1">
           <nav>
-            <div>
-              <h3>カラーシステム</h3>
+            <div className="border-2 py-2">
+              <h3 className="py-0.5">カラーシステム</h3>
               <ul>
                 <li>
-                  <Link to="/color/basic">基本テキストカラー</Link>
+                  <Link to="/color/basic" className="underline" >基本テキストカラー</Link>
                 </li>
                 <li>
-                  <Link to="/color/role">役職カラーパレット</Link>
+                  <Link to="/color/role" className="underline">役職カラーパレット</Link>
                 </li>
                 <li>
-                  <Link to="/color/primary-action">プライマリーアクション色</Link>
+                  <Link to="/color/primary-action" className="underline">プライマリーアクション色</Link>
                 </li>
                 <li>
-                  <Link to="/color/semantic">セマンティックカラー</Link>
+                  <Link to="/color/semantic" className="underline">セマンティックカラー</Link>
                 </li>
                 <li>
-                  <Link to="/color/neutral">ニュートラルカラー</Link>
+                  <Link to="/color/neutral" className="underline">ニュートラルカラー</Link>
                 </li>
                 <li>
-                  <Link to="/color/search-highlight">検索ハイライト色</Link>
+                  <Link to="/color/search-highlight" className="underline">検索ハイライト色</Link>
                 </li>
               </ul>
             </div>
 
-            <div>
-              <h3>タイポグラフィ</h3>
+            <div className="border-2 py-2">
+              <h3 className="py-0.5">タイポグラフィ</h3>
               <ul>
                 <li>
-                  <Link to="/typography/font-size-weight">フォントサイズ・ウェイト階層</Link>
+                  <Link to="/typography/font-size-weight" className="underline">フォントサイズ・ウェイト階層</Link>
                 </li>
                 <li>
-                  <Link to="/typography/line-height">行間</Link>
+                  <Link to="/typography/line-height" className="underline">行間</Link>
                 </li>
                 <li>
-                  <Link to="/typography/data-font">データ用フォント</Link>
+                  <Link to="/typography/data-font" className="underline">データ用フォント</Link>
                 </li>
                 <li>
-                  <Link to="/typography/grid">グリッドシステム</Link>
+                  <Link to="/typography/grid" className="underline">グリッドシステム</Link>
                 </li>
               </ul>
             </div>
           </nav>
 
-          <main>
+          <main className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/color/basic" element={<BasicTextColor />} />
