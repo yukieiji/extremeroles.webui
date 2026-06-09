@@ -13,8 +13,8 @@ import GridSystem from "./pages/typography/GridSystem";
 function Home() {
   return (
     <div>
-      <h2 className="text-2xl font-bold">デザイン定義チェックリスト</h2>
-      <p className="mt-4">左または上のメニューからセクションを選択してください。</p>
+      <h2>デザイン定義チェックリスト</h2>
+      <p>メニューからセクションを選択してください。</p>
     </div>
   );
 }
@@ -22,83 +22,59 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <header className="bg-white shadow-sm p-4">
-          <h1 className="text-xl font-bold text-gray-800">
+      <div>
+        <header>
+          <h1>
             <Link to="/">Design Language Checklist</Link>
           </h1>
         </header>
 
-        <div className="flex flex-1">
-          <nav className="w-64 bg-white border-r p-4 overflow-y-auto">
-            <div className="mb-6">
-              <h3 className="font-semibold text-gray-500 uppercase text-xs tracking-wider mb-2">
-                カラーシステム
-              </h3>
-              <ul className="space-y-1">
+        <div>
+          <nav>
+            <div>
+              <h3>カラーシステム</h3>
+              <ul>
                 <li>
-                  <Link to="/color/basic" className="text-blue-600 hover:underline block py-1">
-                    基本テキストカラー
-                  </Link>
+                  <Link to="/color/basic">基本テキストカラー</Link>
                 </li>
                 <li>
-                  <Link to="/color/role" className="text-blue-600 hover:underline block py-1">
-                    役職カラーパレット
-                  </Link>
+                  <Link to="/color/role">役職カラーパレット</Link>
                 </li>
                 <li>
-                  <Link to="/color/primary-action" className="text-blue-600 hover:underline block py-1">
-                    プライマリーアクション色
-                  </Link>
+                  <Link to="/color/primary-action">プライマリーアクション色</Link>
                 </li>
                 <li>
-                  <Link to="/color/semantic" className="text-blue-600 hover:underline block py-1">
-                    セマンティックカラー
-                  </Link>
+                  <Link to="/color/semantic">セマンティックカラー</Link>
                 </li>
                 <li>
-                  <Link to="/color/neutral" className="text-blue-600 hover:underline block py-1">
-                    ニュートラルカラー
-                  </Link>
+                  <Link to="/color/neutral">ニュートラルカラー</Link>
                 </li>
                 <li>
-                  <Link to="/color/search-highlight" className="text-blue-600 hover:underline block py-1">
-                    検索ハイライト色
-                  </Link>
+                  <Link to="/color/search-highlight">検索ハイライト色</Link>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-gray-500 uppercase text-xs tracking-wider mb-2">
-                タイポグラフィ
-              </h3>
-              <ul className="space-y-1">
+              <h3>タイポグラフィ</h3>
+              <ul>
                 <li>
-                  <Link to="/typography/font-size-weight" className="text-blue-600 hover:underline block py-1">
-                    フォントサイズ・ウェイト階層
-                  </Link>
+                  <Link to="/typography/font-size-weight">フォントサイズ・ウェイト階層</Link>
                 </li>
                 <li>
-                  <Link to="/typography/line-height" className="text-blue-600 hover:underline block py-1">
-                    行間
-                  </Link>
+                  <Link to="/typography/line-height">行間</Link>
                 </li>
                 <li>
-                  <Link to="/typography/data-font" className="text-blue-600 hover:underline block py-1">
-                    データ用フォント
-                  </Link>
+                  <Link to="/typography/data-font">データ用フォント</Link>
                 </li>
                 <li>
-                  <Link to="/typography/grid" className="text-blue-600 hover:underline block py-1">
-                    グリッドシステム
-                  </Link>
+                  <Link to="/typography/grid">グリッドシステム</Link>
                 </li>
               </ul>
             </div>
           </nav>
 
-          <main className="flex-1 p-8">
+          <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/color/basic" element={<BasicTextColor />} />
