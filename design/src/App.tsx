@@ -22,17 +22,17 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        <header>
-          <h1>
+      <div className="dark min-h-screen bg-background text-foreground flex flex-col">
+        <header className="border-b border-border p-4">
+          <h1 className="text-xl font-bold">
             <Link to="/">Design Language Checklist</Link>
           </h1>
         </header>
 
-        <div className="flex flex-1">
-          <nav>
-            <div className="border-2 py-2">
-              <h3 className="py-0.5">カラーシステム</h3>
+        <div className="flex flex-1 overflow-hidden">
+          <nav className="w-64 border-r border-border p-4 overflow-y-auto">
+            <div className="mb-6">
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">カラーシステム</h3>
               <ul>
                 <li>
                   <Link to="/color/basic" className="underline" >基本テキストカラー</Link>
@@ -50,31 +50,31 @@ function App() {
                   <Link to="/color/neutral" className="underline">ニュートラルカラー</Link>
                 </li>
                 <li>
-                  <Link to="/color/search-highlight" className="underline">検索ハイライト色</Link>
+                  <Link to="/color/search-highlight" className="text-sm hover:underline">検索ハイライト色</Link>
                 </li>
               </ul>
             </div>
 
-            <div className="border-2 py-2">
-              <h3 className="py-0.5">タイポグラフィ</h3>
-              <ul>
+            <div>
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">タイポグラフィ</h3>
+              <ul className="space-y-1">
                 <li>
-                  <Link to="/typography/font-size-weight" className="underline">フォントサイズ・ウェイト階層</Link>
+                  <Link to="/typography/font-size-weight" className="text-sm hover:underline">フォントサイズ・ウェイト階層</Link>
                 </li>
                 <li>
-                  <Link to="/typography/line-height" className="underline">行間</Link>
+                  <Link to="/typography/line-height" className="text-sm hover:underline">行間</Link>
                 </li>
                 <li>
-                  <Link to="/typography/data-font" className="underline">データ用フォント</Link>
+                  <Link to="/typography/data-font" className="text-sm hover:underline">データ用フォント</Link>
                 </li>
                 <li>
-                  <Link to="/typography/grid" className="underline">グリッドシステム</Link>
+                  <Link to="/typography/grid" className="text-sm hover:underline">グリッドシステム</Link>
                 </li>
               </ul>
             </div>
           </nav>
 
-          <main className="flex-1">
+          <main className="flex-1 overflow-y-auto p-8">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/color/basic" element={<BasicTextColor />} />
