@@ -12,7 +12,11 @@ interface ExportButtonProps {
  * エクスポートボタンコンポーネント
  * アイコンとテキストを表示します
  */
-export function ExportButton({ onClick, disabled, className }: ExportButtonProps) {
+export function ExportButton({
+	onClick,
+	disabled,
+	className,
+}: ExportButtonProps) {
 	return (
 		<Button
 			onClick={onClick}

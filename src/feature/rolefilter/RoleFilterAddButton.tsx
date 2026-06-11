@@ -17,7 +17,10 @@ interface RoleFilterAddButtonProps {
 /**
  * フィルターを追加するためのボタンコンポーネント (ビジネスロジックを含む)
  */
-export function RoleFilterAddButton({ className, onClick }: RoleFilterAddButtonProps) {
+export function RoleFilterAddButton({
+	className,
+	onClick,
+}: RoleFilterAddButtonProps) {
 	const addRoleFilter = useStore((state) => state.addRoleFilter);
 	const addRoleToFilter = useStore((state) => state.addRoleToFilter);
 	const openBlockDialog = useStore((state) => state.openBlockDialog);
