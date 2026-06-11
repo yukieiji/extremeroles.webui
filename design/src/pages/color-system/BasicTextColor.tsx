@@ -18,11 +18,11 @@ export default function BasicTextColor() {
       <section className="space-y-4">
         <div className="border-b pb-2">
           <h3 className="text-lg font-semibold">1. Primary Text Color</h3>
+          <span>現在の設定: {DESIGN_COLORS.textPrimary}</span>
           <p className="text-sm opacity-70">設定項目名など、最も重要なテキストに使用します。</p>
         </div>
         <div className="space-y-6">
           <div>
-            <span className="text-xs text-gray-400 block mb-2">Tailwind Class: {DESIGN_COLORS.textPrimary}</span>
             <div className={`text-2xl font-bold ${DESIGN_COLORS.textPrimary}`}>
               これはプライマリテキストです
             </div>
@@ -53,11 +53,11 @@ export default function BasicTextColor() {
       <section className="space-y-4">
         <div className="border-b pb-2">
           <h3 className="text-lg font-semibold">2. Secondary Text Color</h3>
+          <span>T現在の設定: {DESIGN_COLORS.textSecondary}</span>
           <p className="text-sm opacity-70">設定の補足説明、注釈、デフォルト値に使用します。</p>
         </div>
         <div className="space-y-6">
           <div>
-            <span className="text-xs text-gray-400 block mb-2">Tailwind Class: {DESIGN_COLORS.textSecondary}</span>
             <div className={`text-xl ${DESIGN_COLORS.textSecondary}`}>
               これはセカンダリテキストです
             </div>
@@ -80,11 +80,11 @@ export default function BasicTextColor() {
       <section className="space-y-4">
         <div className="border-b pb-2">
           <h3 className="text-lg font-semibold">3. Disabled Text Color / Tertiary Text Color</h3>
+            <span >Tailwind Class: {DESIGN_COLORS.textTertiary}</span>
           <p className="text-sm opacity-70">無効な項目やプレースホルダーに使用します。</p>
         </div>
         <div className="space-y-6">
           <div>
-            <span className="text-xs text-gray-400 block mb-2">Tailwind Class: {DESIGN_COLORS.textTertiary}</span>
             <div className={`text-lg ${DESIGN_COLORS.textTertiary}`}>
               これはターシャリ/無効テキストです
             </div>
