@@ -6,153 +6,93 @@ import { CircleCheckIcon, InfoIcon, OctagonXIcon, TriangleAlertIcon } from "luci
 import { cn } from "@/lib/utils";
 
 export default function SemanticColors() {
+  const states = [
+    {
+      id: "error",
+      name: "エラー色",
+      description: "1300項目の中からエラー箇所を見つけ出すために必須。重大な問題や制限を示します。",
+      icon: OctagonXIcon,
+      color: SEMANTIC_COLORS.error,
+    },
+    {
+      id: "warning",
+      name: "警告色",
+      description: "注意が必要な事項や、潜在的な問題を示します。",
+      icon: TriangleAlertIcon,
+      color: SEMANTIC_COLORS.warning,
+    },
+    {
+      id: "success",
+      name: "成功色",
+      description: "アクションの完了や、正常な状態を示します。",
+      icon: CircleCheckIcon,
+      color: SEMANTIC_COLORS.success,
+    },
+    {
+      id: "info",
+      name: "情報色",
+      description: "補足情報や、一般的な通知を示します。",
+      icon: InfoIcon,
+      color: SEMANTIC_COLORS.info,
+    },
+  ];
+
   return (
     <div className="p-4 space-y-12">
       <div>
         <h2 className={`text-2xl font-bold mb-4 ${BASIC_TEXT_COLOR.textPrimary}`}>セマンティックカラー（状態色）</h2>
         <p className={`mb-6 text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>
-          デザイン定義チェックリストに基づいた4種のセマンティックカラー（状態色）です。
-          <code className="bg-gray-100 p-1 rounded ml-2 text-black">design/src/designConstants.ts</code> で色味を調整できます。
+          デザイン定義チェックリストに基づいた4種のセマンティックカラー（状態色）と、3種の基本テキストカラーの組み合わせテストです。
+          計12個のサンプルを表示しています。
         </p>
       </div>
 
-      {/* Error Color */}
-      <section className="space-y-4">
-        <div className="border-b pb-2">
-          <div className="flex items-center gap-2">
-            <OctagonXIcon className="size-5" style={{ color: SEMANTIC_COLORS.error }} />
-            <h3 className={`text-lg font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>エラー色</h3>
+      {states.map((state) => (
+        <section key={state.id} className="space-y-6">
+          <div className="border-b pb-2">
+            <div className="flex items-center gap-2">
+              <state.icon className="size-5" style={{ color: state.color }} />
+              <h3 className={`text-lg font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>{state.name}</h3>
+            </div>
+            <p className={`text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>{state.description}</p>
           </div>
-          <p className={`text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>1300項目の中からエラー箇所を見つけ出すために必須。重大な問題や制限を示します。</p>
-        </div>
-        <div className="flex flex-wrap gap-4 items-end">
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Badge</div>
-            <Badge variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-              <OctagonXIcon className="size-3" style={{ color: SEMANTIC_COLORS.error }} />
-              エラーが発生しました
-            </Badge>
-          </div>
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Button</div>
-            <Button variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-               <OctagonXIcon className="size-4" style={{ color: SEMANTIC_COLORS.error }} />
-               削除する
-            </Button>
-          </div>
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>FieldError (Icon only color)</div>
-            <div className="flex items-start gap-2">
-               <OctagonXIcon className="size-4 mt-0.5" style={{ color: SEMANTIC_COLORS.error }} />
-               <FieldError className={BASIC_TEXT_COLOR.textPrimary}>
-                 この項目は必須入力です。
-               </FieldError>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Sample 1: Text Primary */}
+            <div className="space-y-3">
+              <div className={`text-xs font-mono opacity-50`}>textPrimary × Badge</div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary, "border-gray-200")}>
+                  <state.icon className="size-3" style={{ color: state.color }} />
+                  {state.name}通知
+                </Badge>
+              </div>
+            </div>
+
+            {/* Sample 2: Text Secondary */}
+            <div className="space-y-3">
+              <div className={`text-xs font-mono opacity-50`}>textSecondary × Button</div>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" className={cn(BASIC_TEXT_COLOR.textSecondary, "border-gray-200")}>
+                  <state.icon className="size-4" style={{ color: state.color }} />
+                  アクションを実行
+                </Button>
+              </div>
+            </div>
+
+            {/* Sample 3: Text Tertiary */}
+            <div className="space-y-3">
+              <div className={`text-xs font-mono opacity-50`}>textTertiary × FieldError</div>
+              <div className="flex items-start gap-2">
+                <state.icon className="size-4 mt-0.5" style={{ color: state.color }} />
+                <FieldError className={BASIC_TEXT_COLOR.textTertiary}>
+                  {state.name}に関する補足メッセージです
+                </FieldError>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Warning Color */}
-      <section className="space-y-4">
-        <div className="border-b pb-2">
-          <div className="flex items-center gap-2">
-            <TriangleAlertIcon className="size-5" style={{ color: SEMANTIC_COLORS.warning }} />
-            <h3 className={`text-lg font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>警告色</h3>
-          </div>
-          <p className={`text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>注意が必要な事項や、潜在的な問題を示します。</p>
-        </div>
-        <div className="flex flex-wrap gap-4 items-end">
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Badge</div>
-            <Badge variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-              <TriangleAlertIcon className="size-3" style={{ color: SEMANTIC_COLORS.warning }} />
-              確認が必要です
-            </Badge>
-          </div>
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Button</div>
-            <Button variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-               <TriangleAlertIcon className="size-4" style={{ color: SEMANTIC_COLORS.warning }} />
-               無視して続行
-            </Button>
-          </div>
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Text Sample</div>
-            <div className="flex items-center gap-1.5">
-               <TriangleAlertIcon className="size-4" style={{ color: SEMANTIC_COLORS.warning }} />
-               <span className={cn("text-sm font-medium", BASIC_TEXT_COLOR.textPrimary)}>未保存の変更があります。</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Success Color */}
-      <section className="space-y-4">
-        <div className="border-b pb-2">
-          <div className="flex items-center gap-2">
-            <CircleCheckIcon className="size-5" style={{ color: SEMANTIC_COLORS.success }} />
-            <h3 className={`text-lg font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>成功色</h3>
-          </div>
-          <p className={`text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>アクションの完了や、正常な状態を示します。</p>
-        </div>
-        <div className="flex flex-wrap gap-4 items-end">
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Badge</div>
-            <Badge variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-              <CircleCheckIcon className="size-3" style={{ color: SEMANTIC_COLORS.success }} />
-              保存しました
-            </Badge>
-          </div>
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Button</div>
-            <Button variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-               <CircleCheckIcon className="size-4" style={{ color: SEMANTIC_COLORS.success }} />
-               完了
-            </Button>
-          </div>
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Icon & Text</div>
-            <div className="flex items-center gap-1.5">
-              <CircleCheckIcon className="size-4" style={{ color: SEMANTIC_COLORS.success }} />
-              <span className={cn("text-sm font-medium", BASIC_TEXT_COLOR.textPrimary)}>同期済み</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Info Color */}
-      <section className="space-y-4">
-        <div className="border-b pb-2">
-          <div className="flex items-center gap-2">
-            <InfoIcon className="size-5" style={{ color: SEMANTIC_COLORS.info }} />
-            <h3 className={`text-lg font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>情報色</h3>
-          </div>
-          <p className={`text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>補足情報や、一般的な通知を示します。</p>
-        </div>
-        <div className="flex flex-wrap gap-4 items-end">
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Badge</div>
-            <Badge variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-              <InfoIcon className="size-3" style={{ color: SEMANTIC_COLORS.info }} />
-              ヒント
-            </Badge>
-          </div>
-          <div className="space-y-2">
-            <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Button</div>
-            <Button variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary)}>
-               <InfoIcon className="size-4" style={{ color: SEMANTIC_COLORS.info }} />
-               詳細を表示
-            </Button>
-          </div>
-          <div className="space-y-2">
-             <div className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>Icon & Text</div>
-             <div className="flex items-center gap-1.5">
-               <InfoIcon className="size-4" style={{ color: SEMANTIC_COLORS.info }} />
-               <span className={cn("text-sm font-medium", BASIC_TEXT_COLOR.textPrimary)}>アップデートがあります</span>
-             </div>
-           </div>
-        </div>
-      </section>
+        </section>
+      ))}
     </div>
   );
 }
