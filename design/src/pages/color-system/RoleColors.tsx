@@ -7,6 +7,7 @@ import { OptionToggleControl } from "@/components/blocks/OptionToggleControl";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
 import { getLinearGradient } from "@/logics/colorUtils";
 import { Dot } from "lucide-react";
+import { BASIC_TEXT_COLOR } from "../../designConstants";
 
 interface RoleVariant {
   id: string;
@@ -45,11 +46,11 @@ function LocalRoleAccordion({
 }) {
   return (
     <div
-      className="border rounded-lg overflow-hidden transition-all duration-300"
+      className="border rounded-lg overflow-hidden transition-all duration-300 w-full shadow-sm"
       style={{ borderColor: color }}
     >
       <div
-        className="flex items-center hover:bg-accent/5 transition-colors"
+        className="flex items-center hover:bg-accent/5 transition-colors min-h-[64px]"
         style={{
           background: `linear-gradient(to right, transparent 60%, ${color}38 100%)`
         }}
@@ -57,24 +58,21 @@ function LocalRoleAccordion({
         <button
           type="button"
           onClick={onClick}
-          className="flex-1 flex items-center gap-3 p-4 text-left"
+          className={`flex-1 flex items-center gap-3 p-4 text-left ${BASIC_TEXT_COLOR.textPrimary}`}
           aria-expanded={isOpen}
         >
-          <AccordionSvg isOpen={isOpen} className="w-5 h-5 text-muted-foreground" />
-          <span className="font-semibold text-sm text-foreground">{name}</span>
+          <AccordionSvg isOpen={isOpen} className="w-5 h-5 opacity-70" />
+          <span className="font-bold text-base tracking-tight">{name}</span>
         </button>
-        {/* Controls Container in Header */}
-        <div className="flex items-center px-4 gap-6">
+        <div className="flex items-center px-6 gap-8">
           {spawnControl}
         </div>
       </div>
       <AccordionContentContainer isOpen={isOpen}>
         <div className="min-h-0">
-          {isOpen && (
-             <div className="border-t border-border">
-               {children}
-             </div>
-          )}
+          <div className="border-t border-border">
+            {children}
+          </div>
         </div>
       </AccordionContentContainer>
     </div>
@@ -89,7 +87,7 @@ export default function RoleColors() {
     { id: "ghost", name: "幽霊 / その他 (Ghost)", colors: ["#aaaaaa"], isOpen: false, selection1: 15, selection2: 3, selection3: 1 },
   ]);
 
-  const [globalTabColors, setGlobalTabColors] = useState<string[]>(["#8cff00"]);
+  const [globalTabColor, setGlobalTabColor] = useState("#8cff00");
 
   const toggleAccordion = (id: string) => {
     setVariants(prev => prev.map(v =>
@@ -108,80 +106,73 @@ export default function RoleColors() {
   };
 
   return (
-    <div className="p-8 flex flex-col gap-12 max-w-6xl min-h-screen">
-      <section>
-        <h2 className="text-2xl font-bold mb-4 font-heading">役職カラーパレット (Role Colors) テスト調整</h2>
+    <div className="p-12 flex flex-col gap-16 max-w-4xl mx-auto min-h-screen items-center">
+      {/* Header Section */}
+      <section className="w-full text-center space-y-6">
+        <h2 className={`text-4xl font-black tracking-tighter ${BASIC_TEXT_COLOR.textPrimary}`}>役職カラーパレット</h2>
+        <p className={`text-sm max-w-2xl mx-auto leading-relaxed ${BASIC_TEXT_COLOR.textSecondary}`}>
+          DesignLanguageCheckList.md に基づく色彩設計のプレビューです。
+          BASIC_TEXT_COLOR を使用したテキスト階層と、役職ごとの動的なカラー適用を確認できます。
+        </p>
 
-        <div className="bg-card p-6 rounded-lg border border-border mb-8 text-sm space-y-4">
-          <div className="flex items-center gap-2 text-primary font-bold">
-            <Dot size={24} strokeWidth={4} />
+        <div className="bg-card p-8 rounded-2xl border border-border text-sm space-y-6 text-left shadow-sm">
+          <div className={`flex items-center gap-3 font-bold text-lg ${BASIC_TEXT_COLOR.textPrimary}`}>
+            <Dot size={32} strokeWidth={4} className="text-primary -ml-2" />
             <span>デザイン定義要件</span>
           </div>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 list-none text-muted-foreground pl-2">
-            <li className="flex gap-2">
-              <span className="text-foreground font-bold">1.</span>
-              <span>アコーディオンの<strong>外枠</strong> ➔ 役職カラーを適用</span>
+          <ul className={`grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 list-none pl-2 ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <li className="flex gap-3">
+              <span className={`${BASIC_TEXT_COLOR.textPrimary} font-black`}>01.</span>
+              <span>アコーディオンの<strong>外枠</strong>に役職カラーを適用</span>
             </li>
-            <li className="flex gap-2">
-              <span className="text-foreground font-bold">2.</span>
-              <span>ヘッダー右側の<strong>グラデーション</strong> ➔ 役職カラー(22%不透明度)</span>
+            <li className="flex gap-3">
+              <span className={`${BASIC_TEXT_COLOR.textPrimary} font-black`}>02.</span>
+              <span>ヘッダー右側に役職色の<strong>グラデーション</strong>(22%不透明度)</span>
             </li>
-            <li className="flex gap-2">
-              <span className="text-foreground font-bold">3.</span>
-              <span>タブ選択中の<strong>インジケーター</strong> ➔ タブカラーを適用</span>
+            <li className="flex gap-3">
+              <span className={`${BASIC_TEXT_COLOR.textPrimary} font-black`}>03.</span>
+              <span>タブ選択中の<strong>インジケーター</strong>にタブカラーを適用</span>
             </li>
-            <li className="flex gap-2">
-              <span className="text-foreground font-bold">4.</span>
-              <span>アクティブなタブの<strong>枠線</strong> ➔ タブカラーを適用</span>
+            <li className="flex gap-3">
+              <span className={`${BASIC_TEXT_COLOR.textPrimary} font-black`}>04.</span>
+              <span>アクティブなタブの<strong>枠線</strong>にタブカラーを適用</span>
             </li>
-            <li className="flex gap-2 col-span-full mt-2 pt-2 border-t border-border italic text-[11px]">
-              ※ 内部の境界線（ヘッダーとコンテンツの間）はデフォルトのボーダー色を使用します。
+            <li className={`col-span-full mt-4 pt-4 border-t border-border italic text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>
+              ※ アコーディオン内部の境界線（ヘッダーとコンテンツの間）はデフォルト色を維持してください。
             </li>
           </ul>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-muted/20 p-6 rounded-xl border">
+        {/* Color Tuning Panel */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-muted/30 p-8 rounded-3xl border border-border/50 text-left">
           <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">Role Variant Colors</h4>
-            <div className="grid grid-cols-2 gap-3">
+            <h4 className={`text-xs font-black uppercase tracking-widest border-b border-border pb-2 ${BASIC_TEXT_COLOR.textSecondary}`}>Role Variants Tuner</h4>
+            <div className="grid grid-cols-2 gap-4">
               {variants.map(v => (
-                <div key={v.id} className="flex items-center gap-3 bg-background/50 p-2 rounded-md border border-border/50">
+                <div key={v.id} className="flex items-center gap-3 bg-background/60 p-2 rounded-xl border border-border/50 shadow-inner">
                   <input
                     type="color"
                     value={v.colors[0]}
                     onChange={(e) => updateVariantColor(v.id, e.target.value)}
-                    className="w-7 h-7 rounded-full cursor-pointer bg-transparent border-none p-0 overflow-hidden"
+                    className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-none p-0 overflow-hidden"
                   />
-                  <span className="text-[10px] font-mono text-muted-foreground">{v.colors[0]}</span>
+                  <span className={`text-[10px] font-mono font-bold ${BASIC_TEXT_COLOR.textTertiary}`}>{v.colors[0]}</span>
                 </div>
               ))}
             </div>
           </div>
           <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">Global Tab Color</h4>
-            <div className="flex flex-col gap-3 bg-background/50 p-3 rounded-md border border-border/50">
-                <div className="flex items-center gap-4">
-                  {globalTabColors.map((c, i) => (
-                    <input
-                      key={i}
-                      type="color"
-                      value={c}
-                      onChange={(e) => {
-                        const next = [...globalTabColors];
-                        next[i] = e.target.value;
-                        setGlobalTabColors(next);
-                      }}
-                      className="w-10 h-10 rounded cursor-pointer bg-transparent"
-                    />
-                  ))}
-                  <div>
-                    <span className="block text-sm font-mono">{globalTabColors.join(', ')}</span>
-                    <span className="text-[10px] text-muted-foreground italic">タブサンプルのアクティブ色に使用</span>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => setGlobalTabColors([...globalTabColors, "#ffffff"])} className="text-[10px] bg-muted px-2 py-0.5 rounded border">Add Color for Gradient</button>
-                  <button onClick={() => setGlobalTabColors(globalTabColors.slice(0, 1))} className="text-[10px] bg-muted px-2 py-0.5 rounded border">Reset</button>
+            <h4 className={`text-xs font-black uppercase tracking-widest border-b border-border pb-2 ${BASIC_TEXT_COLOR.textSecondary}`}>Global Tab Tuner</h4>
+            <div className="flex items-center gap-5 bg-background/60 p-4 rounded-2xl border border-border/50 h-[88px] shadow-inner">
+                <input
+                  type="color"
+                  value={globalTabColor}
+                  onChange={(e) => setGlobalTabColor(e.target.value)}
+                  className="w-12 h-12 rounded-xl cursor-pointer bg-transparent shadow-sm"
+                />
+                <div>
+                  <span className={`block text-base font-mono font-black ${BASIC_TEXT_COLOR.textPrimary}`}>{globalTabColor}</span>
+                  <span className={`text-[10px] font-medium ${BASIC_TEXT_COLOR.textSecondary}`}>Active Tab / Indicator Color</span>
                 </div>
             </div>
           </div>
@@ -189,9 +180,13 @@ export default function RoleColors() {
       </section>
 
       {/* 1. アコーディオン・セクション */}
-      <section className="space-y-6">
-        <h3 className="text-xl font-semibold border-l-4 border-primary pl-4">1. 役職アコーディオン・多様なコントロール</h3>
-        <div className="flex flex-col gap-4">
+      <section className="space-y-8 w-full">
+        <div className="flex items-end justify-between border-b-2 border-primary/20 pb-2">
+           <h3 className={`text-2xl font-black ${BASIC_TEXT_COLOR.textPrimary}`}>1. 役職アコーディオン</h3>
+           <span className={`text-xs font-bold uppercase tracking-tighter ${BASIC_TEXT_COLOR.textTertiary}`}>Multiple Control Variants</span>
+        </div>
+
+        <div className="flex flex-col gap-6">
 
           {/* Variant 1: Slider (Rate) + Slider (Max) */}
           <LocalRoleAccordion
@@ -216,14 +211,21 @@ export default function RoleColors() {
               </>
             }
           >
-            <div className="p-8 bg-background/40">
-               <div className="flex items-center gap-4 mb-4 text-muted-foreground">
-                  <Dot size={18} className="text-primary" />
-                  <span className="text-sm font-medium">基本設定項目（コンテンツ領域）</span>
+            <div className="p-10 bg-background/40 space-y-6">
+               <div className={`flex items-center gap-3 ${BASIC_TEXT_COLOR.textSecondary}`}>
+                  <div className="w-1.5 h-6 bg-primary/40 rounded-full" />
+                  <span className="text-sm font-bold uppercase tracking-widest">Detail Settings</span>
                </div>
-               <div className="grid grid-cols-2 gap-8 pl-8 opacity-40">
-                  <div className="h-10 bg-muted/20 rounded border border-dashed border-border" />
-                  <div className="h-10 bg-muted/20 rounded border border-dashed border-border" />
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pl-4">
+                  <OptionSliderControl
+                    label="Internal Multiplier"
+                    values={percentValues}
+                    selection={variants[0].selection1}
+                    onChange={(idx) => updateSelection(variants[0].id, 'selection1', idx)}
+                  />
+                  <div className="h-12 bg-muted/10 rounded-lg border-2 border-dashed border-border flex items-center justify-center">
+                     <span className={`text-[10px] font-bold uppercase tracking-tighter ${BASIC_TEXT_COLOR.textTertiary}`}>Layout Placeholder</span>
+                  </div>
                </div>
             </div>
           </LocalRoleAccordion>
@@ -241,7 +243,7 @@ export default function RoleColors() {
                   values={toggleValues}
                   onChange={(idx) => updateSelection(variants[1].id, 'selection1', idx)}
                 />
-                <div className="w-48">
+                <div className="min-w-[200px]">
                   <OptionSliderControl
                     label="Cooldown"
                     values={percentValues}
@@ -252,13 +254,18 @@ export default function RoleColors() {
               </>
             }
           >
-            <div className="p-8 bg-background/40">
-               <p className="text-xs text-muted-foreground italic mb-4 pl-4 border-l border-primary/30 font-bold">
-                 インポスター専用の特殊設定セクション
-               </p>
-               <div className="space-y-3 pl-4 opacity-40">
-                  <div className="h-8 w-full bg-muted/10 rounded border border-border" />
-                  <div className="h-8 w-full bg-muted/10 rounded border border-border" />
+            <div className="p-10 bg-background/40">
+               <div className={`mb-6 p-4 rounded-xl bg-destructive/5 border border-destructive/10 ${BASIC_TEXT_COLOR.textSecondary}`}>
+                 <p className="text-xs font-bold uppercase mb-1 text-destructive opacity-70">Warning Zone</p>
+                 <p className="text-sm">インポスター専用の特殊設定セクションです。不適切な値はバランスを崩します。</p>
+               </div>
+               <div className="pl-4 space-y-4">
+                  <OptionSliderControl
+                    label="Sabotage Cooldown"
+                    values={percentValues}
+                    selection={variants[1].selection2}
+                    onChange={(idx) => updateSelection(variants[1].id, 'selection2', idx)}
+                  />
                </div>
             </div>
           </LocalRoleAccordion>
@@ -271,7 +278,7 @@ export default function RoleColors() {
             onClick={() => toggleAccordion(variants[2].id)}
             spawnControl={
               <>
-                <div className="w-32">
+                <div className="min-w-[140px]">
                   <OptionDropdownControl
                     values={roleTypeValues}
                     selection={variants[2].selection1}
@@ -286,10 +293,21 @@ export default function RoleColors() {
               </>
             }
           >
-            <div className="p-8 bg-background/40 flex items-center justify-center">
-               <div className="text-center space-y-2 opacity-60">
-                 <div className="text-sm font-bold text-foreground">第三陣営の特殊勝利条件</div>
-                 <div className="text-[10px] text-muted-foreground uppercase tracking-widest">Custom Logic Pipeline Active</div>
+            <div className="p-10 bg-background/40 flex flex-col items-center gap-8">
+               <div className="text-center space-y-2 max-w-sm">
+                 <div className={`text-lg font-black tracking-tight ${BASIC_TEXT_COLOR.textPrimary}`}>第三陣営の特殊勝利条件</div>
+                 <p className={`text-xs leading-relaxed ${BASIC_TEXT_COLOR.textSecondary}`}>
+                   この役職は独自のアルゴリズムによって勝利判定が行われます。
+                   カラーシステムが正しく視認性を確保できているか確認してください。
+                 </p>
+               </div>
+               <div className="w-full max-w-md bg-background/60 p-6 rounded-2xl border border-border shadow-inner">
+                  <OptionSliderControl
+                    label="Victory Threshold"
+                    values={percentValues}
+                    selection={50}
+                    onChange={() => {}}
+                  />
                </div>
             </div>
           </LocalRoleAccordion>
@@ -308,7 +326,7 @@ export default function RoleColors() {
                   selection={variants[3].selection1}
                   onChange={(idx) => updateSelection(variants[3].id, 'selection1', idx)}
                 />
-                <div className="w-32">
+                <div className="min-w-[140px]">
                   <OptionDropdownControl
                     values={abilityValues}
                     selection={variants[3].selection2}
@@ -323,20 +341,17 @@ export default function RoleColors() {
               </>
             }
           >
-            <div className="p-8 bg-background/40 opacity-50">
-               <div className="grid grid-cols-3 gap-4 h-24">
-                  <div className="bg-primary/5 rounded-lg border border-border p-2 flex flex-col items-center justify-center gap-1">
-                    <span className="text-[10px] font-bold">POWER A</span>
-                    <div className="h-1 w-full bg-primary/20 rounded" />
-                  </div>
-                  <div className="bg-primary/5 rounded-lg border border-border p-2 flex flex-col items-center justify-center gap-1">
-                    <span className="text-[10px] font-bold">POWER B</span>
-                    <div className="h-1 w-full bg-primary/20 rounded" />
-                  </div>
-                  <div className="bg-primary/5 rounded-lg border border-border p-2 flex flex-col items-center justify-center gap-1">
-                    <span className="text-[10px] font-bold">POWER C</span>
-                    <div className="h-1 w-full bg-primary/20 rounded" />
-                  </div>
+            <div className="p-10 bg-background/40 space-y-8">
+               <div className="grid grid-cols-3 gap-6 h-32">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="bg-card rounded-2xl border border-border p-4 flex flex-col items-center justify-center gap-3 shadow-sm group hover:border-primary/50 transition-colors">
+                      <span className={`text-[10px] font-black uppercase tracking-widest ${BASIC_TEXT_COLOR.textSecondary}`}>Module 0{i}</span>
+                      <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-primary/40 w-2/3 group-hover:bg-primary transition-all" />
+                      </div>
+                      <span className={`text-[10px] font-bold ${BASIC_TEXT_COLOR.textTertiary}`}>Status: ACTIVE</span>
+                    </div>
+                  ))}
                </div>
             </div>
           </LocalRoleAccordion>
@@ -344,37 +359,47 @@ export default function RoleColors() {
       </section>
 
       {/* 2. タブ・セクション */}
-      <section className="space-y-6">
-        <h3 className="text-xl font-semibold border-l-4 border-primary pl-4">2. タブ・システム・サンプル</h3>
-        <div className="bg-card p-10 rounded-2xl border border-border shadow-sm">
+      <section className="space-y-8 w-full">
+        <div className="flex items-end justify-between border-b-2 border-primary/20 pb-2">
+           <h3 className={`text-2xl font-black ${BASIC_TEXT_COLOR.textPrimary}`}>2. タブ・システム</h3>
+           <span className={`text-xs font-bold uppercase tracking-tighter ${BASIC_TEXT_COLOR.textTertiary}`}>Dynamic Variable Sync</span>
+        </div>
+
+        <div className="bg-card p-12 rounded-[2.5rem] border border-border shadow-lg w-full">
           <Tabs defaultValue="t1">
-            <TabsList className="w-full grid grid-cols-4 h-12 bg-muted/50 p-1.5 rounded-xl">
+            <TabsList className="w-full grid grid-cols-4 h-14 bg-muted/40 p-2 rounded-2xl border border-border/50">
               {["t1", "t2", "t3", "t4"].map((t, i) => (
                 <TabsTrigger
                   key={t}
                   value={t}
-                  style={{ "--tab-color": getLinearGradient(globalTabColors) } as React.CSSProperties}
-                  // data-active matches the convention in src/components/ui/tabs.tsx
-                  className="data-active:border-[var(--tab-color)] data-active:shadow-none transition-all duration-300"
+                  style={{ "--tab-color": globalTabColor } as React.CSSProperties}
+                  // data-active selector as seen in src/components/ui/tabs.tsx
+                  className="data-active:border-[var(--tab-color)] data-active:shadow-none transition-all duration-500 rounded-xl"
                 >
-                  Tab {i + 1}
+                  <span className="font-bold tracking-tight">TAB 0{i + 1}</span>
                 </TabsTrigger>
               ))}
             </TabsList>
-            <div className="mt-8 p-12 border border-dashed border-border rounded-2xl text-center bg-muted/5">
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                タブを切り替えて、<span className="font-bold text-foreground">インジケーター（下線）</span>と
-                <span className="font-bold text-foreground">枠線</span>の色が連動していることを確認してください。
+            <div className="mt-12 p-16 border-2 border-dashed border-border/50 rounded-[2rem] text-center bg-muted/5 relative overflow-hidden group">
+              <p className={`text-base leading-relaxed ${BASIC_TEXT_COLOR.textSecondary}`}>
+                タブを切り替えて、<span className={`font-black text-lg ${BASIC_TEXT_COLOR.textPrimary}`}>インジケーター（下線）</span>と
                 <br />
-                現在の設定色: <span className="font-mono text-primary px-1.5 py-0.5 bg-primary/10 rounded ml-1">{globalTabColors.join(' → ')}</span>
+                <span className={`font-black text-lg ${BASIC_TEXT_COLOR.textPrimary}`}>アクティブ枠線</span>の色が連動していることを確認してください。
               </p>
+              <div className="mt-8 inline-flex items-center gap-3 px-6 py-3 bg-background border border-border rounded-full shadow-sm">
+                 <div className="w-4 h-4 rounded-full shadow-inner animate-pulse" style={{ backgroundColor: globalTabColor }} />
+                 <span className={`font-mono text-sm font-black ${BASIC_TEXT_COLOR.textPrimary}`}>{globalTabColor}</span>
+              </div>
+              {/* Background Decoration */}
+              <Dot size={200} className="absolute -bottom-24 -right-24 text-primary opacity-[0.03] group-hover:scale-110 transition-transform duration-1000" />
             </div>
           </Tabs>
         </div>
       </section>
 
-      <footer className="text-[10px] text-muted-foreground text-center pt-8 border-t border-border/50">
-        Design Language Preview System - Based on DesignLanguageCheckList.md
+      <footer className={`text-[10px] text-center pt-12 border-t border-border/50 w-full pb-8 ${BASIC_TEXT_COLOR.textTertiary}`}>
+        <p className="uppercase tracking-[0.2em] font-bold">Design Language Preview System</p>
+        <p className="mt-1 opacity-50">Verified against DesignLanguageCheckList.md</p>
       </footer>
     </div>
   );
