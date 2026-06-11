@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Minus } from "lucide-react";
 
 export default function PrimaryActionColor() {
-  const primaryActionClass = `${PRIMARY_ACTION_COLOR.primary} ${PRIMARY_ACTION_COLOR.foreground}`;
+  const primaryActionClass = `${PRIMARY_ACTION_COLOR.primary} ${BASIC_TEXT_COLOR.textPrimary}`;
 
   const handleDummyClick = (name: string) => {
     console.log(`${name} clicked`);
@@ -28,7 +28,6 @@ export default function PrimaryActionColor() {
           <h3 className="text-lg font-semibold">現在の設定</h3>
           <div className="flex gap-4 items-center mt-2">
             <span>Primary: <code className="bg-gray-100 p-1 rounded text-black">{PRIMARY_ACTION_COLOR.primary}</code></span>
-            <span>Foreground: <code className="bg-gray-100 p-1 rounded text-black">{PRIMARY_ACTION_COLOR.foreground}</code></span>
           </div>
         </div>
 

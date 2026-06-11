@@ -17,5 +17,4 @@ export const PRIMARY_ACTION_COLOR = {
   // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色
   // ここを変更することで、主要なアクションボタンの色を一括で調整できます。
   primary: "bg-[#2563eb]",
-  foreground: "text-white",
 };
