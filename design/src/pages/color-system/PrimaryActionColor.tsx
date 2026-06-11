@@ -14,13 +14,12 @@ export default function PrimaryActionColor() {
 
   const handleDummyClick = (name: string) => {
     console.log(`${name} clicked`);
-    alert(`${name}がクリックされました`);
   };
 
   return (
     <div className="p-4 space-y-12">
       <div>
-        <h2 className={`text-2xl font-bold mb-4 ${BASIC_TEXT_COLOR.textPrimary}`}>
+        <h2 className="text-2xl font-bold mb-4">
           プライマリーアクション色
         </h2>
         <p className="mb-6 text-sm text-gray-500">
@@ -33,7 +32,7 @@ export default function PrimaryActionColor() {
       </div>
 
       <section className="space-y-4">
-        <div className={`border-b pb-2 ${BASIC_TEXT_COLOR.textPrimary}`}>
+        <div className="border-b pb-2">
           <h3 className="text-lg font-semibold">現在の設定</h3>
           <div className="flex gap-4 items-center mt-2">
             <span>
