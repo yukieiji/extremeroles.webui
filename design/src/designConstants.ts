@@ -18,3 +18,14 @@ export const PRIMARY_ACTION_COLOR = {
   // ここを変更することで、主要なアクションボタンの色を一括で調整できます。
   primary: "bg-[#2563eb]",
 };
+
+export const SEMANTIC_COLORS = {
+  // エラー色: 1300項目の中からエラー箇所を見つけ出すために必須。
+  error: "#ef4444",
+  // 警告色
+  warning: "#f59e0b",
+  // 成功色
+  success: "#10b981",
+  // 情報色
+  info: "#3b82f6",
+};
