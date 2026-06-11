@@ -22,7 +22,7 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
-      <div className="dark min-h-screen bg-background text-foreground">
+      <div>
         <header>
           <h1>
             <Link to="/">Design Language Checklist</Link>

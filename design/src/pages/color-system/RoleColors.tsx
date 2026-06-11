@@ -10,7 +10,7 @@ export default function RoleColors() {
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   return (
-    <div className="p-8 flex flex-col gap-12 max-w-4xl min-h-screen bg-background text-foreground">
+    <div className="p-8 flex flex-col gap-12 max-w-4xl min-h-screen">
       <section>
         <h2 className="text-2xl font-bold mb-4">役職カラーパレット (Role Colors)</h2>
         <div className="bg-card p-6 rounded-lg border border-border mb-6">
