@@ -9,18 +9,10 @@ import {
 import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
 
-interface RoleFilterAddButtonProps {
-	className?: string;
-	onClick?: () => void;
-}
-
 /**
  * フィルターを追加するためのボタンコンポーネント (ビジネスロジックを含む)
  */
-export function RoleFilterAddButton({
-	className,
-	onClick,
-}: RoleFilterAddButtonProps) {
+export function RoleFilterAddButton() {
 	const addRoleFilter = useStore((state) => state.addRoleFilter);
 	const addRoleToFilter = useStore((state) => state.addRoleToFilter);
 	const openBlockDialog = useStore((state) => state.openBlockDialog);
@@ -68,7 +60,7 @@ export function RoleFilterAddButton({
 	};
 
 	return (
-		<Button onClick={onClick || onAddFilter} className={className}>
+		<Button onClick={onAddFilter}>
 			<Plus size={20} className="mr-1" aria-hidden="true" />
 			{ROLE_FILTER_ADD_BUTTON}
 		</Button>
