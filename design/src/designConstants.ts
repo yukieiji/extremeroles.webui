@@ -2,7 +2,7 @@
  * デザインシステムで使用するカラー定数（Tailwind CSSクラス名）
  * ここで値を変更することで、テスト調整が可能です。
  */
-export const DESIGN_COLORS = {
+export const BASIC_TEXT_COLOR = {
   // Primary Text Color: 設定項目名など、最も重要なテキスト
   textPrimary: "text-[#111827]",
 
