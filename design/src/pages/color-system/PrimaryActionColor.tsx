@@ -23,7 +23,7 @@ export default function PrimaryActionColor() {
         <h2 className={`text-2xl font-bold mb-4 ${BASIC_TEXT_COLOR.textPrimary}`}>
           プライマリーアクション色
         </h2>
-        <p className={`mb-6 text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>
+        <p className="mb-6 text-sm text-gray-500">
           「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色です。
           <code className="bg-gray-100 p-1 rounded ml-2 text-black">
             design/src/designConstants.ts
@@ -48,7 +48,7 @@ export default function PrimaryActionColor() {
         <div className="space-y-8 mt-8">
           {/* SyncButton Sample */}
           <div className="space-y-2">
-            <h4 className={`text-sm font-medium ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <h4 className="text-sm font-medium text-gray-500">
               SyncButton (同期ボタン) の再現
             </h4>
             <div className="flex items-center gap-4">
@@ -60,7 +60,7 @@ export default function PrimaryActionColor() {
               >
                 <RefreshCw size={20} aria-hidden="true" />
               </Button>
-              <span className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>
+              <span className="text-xs text-gray-400">
                 アイコンのみの主要アクション
               </span>
             </div>
@@ -68,7 +68,7 @@ export default function PrimaryActionColor() {
 
           {/* ExportButton Sample */}
           <div className="space-y-2">
-            <h4 className={`text-sm font-medium ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <h4 className="text-sm font-medium text-gray-500">
               ExportButton (エクスポートボタン) の再現
             </h4>
             <div className="flex items-center gap-4">
@@ -81,7 +81,7 @@ export default function PrimaryActionColor() {
                 <Download />
                 {EXPORT_CSV_LABEL}
               </Button>
-              <span className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>
+              <span className="text-xs text-gray-400">
                 アイコンとテキストの主要アクション
               </span>
             </div>
@@ -89,7 +89,7 @@ export default function PrimaryActionColor() {
 
           {/* RoleFilterAddButton Sample */}
           <div className="space-y-2">
-            <h4 className={`text-sm font-medium ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <h4 className="text-sm font-medium text-gray-500">
               RoleFilterAddButton (フィルター追加ボタン) の再現
             </h4>
             <div className="flex items-center gap-4">
@@ -100,7 +100,7 @@ export default function PrimaryActionColor() {
                 <Plus size={20} className="mr-1" aria-hidden="true" />
                 {ROLE_FILTER_ADD_BUTTON}
               </Button>
-              <span className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>
+              <span className="text-xs text-gray-400">
                 機能を含む主要アクションボタンの見た目
               </span>
             </div>
@@ -108,7 +108,7 @@ export default function PrimaryActionColor() {
 
           {/* Simple Icon Buttons Sample */}
           <div className="space-y-2">
-            <h4 className={`text-sm font-medium ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <h4 className="text-sm font-medium text-gray-500">
               Simple Icon Buttons (+ / -)
             </h4>
             <div className="flex items-center gap-4">
@@ -128,7 +128,7 @@ export default function PrimaryActionColor() {
                   <Minus size={20} />
                 </Button>
               </div>
-              <span className={`text-xs ${BASIC_TEXT_COLOR.textTertiary}`}>
+              <span className="text-xs text-gray-400">
                 シンプルな追加・削除ボタンの例
               </span>
             </div>
