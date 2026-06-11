@@ -37,13 +37,19 @@ export default function SemanticColors() {
     },
   ];
 
+  const textColors = [
+    { label: "Semantic", class: "", isSemantic: true },
+    { label: "Primary", class: BASIC_TEXT_COLOR.textPrimary, isSemantic: false },
+    { label: "Secondary", class: BASIC_TEXT_COLOR.textSecondary, isSemantic: false },
+    { label: "Tertiary", class: BASIC_TEXT_COLOR.textTertiary, isSemantic: false },
+  ];
+
   return (
-    <div className="p-4 space-y-12">
+    <div className="p-4 space-y-16">
       <div>
         <h2 className={`text-2xl font-bold mb-4 ${BASIC_TEXT_COLOR.textPrimary}`}>セマンティックカラー（状態色）</h2>
         <p className={`mb-6 text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>
-          デザイン定義チェックリストに基づいた4種のセマンティックカラー（状態色）と、3種の基本テキストカラーの組み合わせテストです。
-          計12個のサンプルを表示しています。
+          各セマンティックカラーに対して、4つのテキスト色（Semantic, Primary, Secondary, Tertiary）と3つのコンポーネントを組み合わせた計12個のサンプルを表示しています。
         </p>
       </div>
 
@@ -57,39 +63,48 @@ export default function SemanticColors() {
             <p className={`text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>{state.description}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Sample 1: Text Primary */}
-            <div className="space-y-3">
-              <div className={`text-xs font-mono opacity-50`}>textPrimary × Badge</div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className={cn(BASIC_TEXT_COLOR.textPrimary, "border-gray-200")}>
-                  <state.icon className="size-3" style={{ color: state.color }} />
-                  {state.name}通知
-                </Badge>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {textColors.map((textColor) => (
+              <div key={textColor.label} className="space-y-6 p-3 bg-gray-50/50 rounded-lg border border-gray-100">
+                <div className="text-[10px] font-mono font-bold opacity-40 uppercase tracking-wider">{textColor.label} Text</div>
 
-            {/* Sample 2: Text Secondary */}
-            <div className="space-y-3">
-              <div className={`text-xs font-mono opacity-50`}>textSecondary × Button</div>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" className={cn(BASIC_TEXT_COLOR.textSecondary, "border-gray-200")}>
-                  <state.icon className="size-4" style={{ color: state.color }} />
-                  アクションを実行
-                </Button>
-              </div>
-            </div>
+                {/* Badge Sample */}
+                <div className="space-y-2">
+                  <div className="text-[10px] opacity-30">Badge</div>
+                  <Badge variant="outline" className="border-gray-200">
+                    <state.icon className="size-3" style={{ color: state.color }} />
+                    <span style={textColor.isSemantic ? { color: state.color } : {}} className={textColor.class}>
+                      {state.name}
+                    </span>
+                  </Badge>
+                </div>
 
-            {/* Sample 3: Text Tertiary */}
-            <div className="space-y-3">
-              <div className={`text-xs font-mono opacity-50`}>textTertiary × FieldError</div>
-              <div className="flex items-start gap-2">
-                <state.icon className="size-4 mt-0.5" style={{ color: state.color }} />
-                <FieldError className={BASIC_TEXT_COLOR.textTertiary}>
-                  {state.name}に関する補足メッセージです
-                </FieldError>
+                {/* Button Sample */}
+                <div className="space-y-2">
+                  <div className="text-[10px] opacity-30">Button</div>
+                  <Button variant="outline" className="border-gray-200 w-full justify-start h-8 px-2">
+                    <state.icon className="size-4" style={{ color: state.color }} />
+                    <span style={textColor.isSemantic ? { color: state.color } : {}} className={cn("text-xs", textColor.class)}>
+                      アクション
+                    </span>
+                  </Button>
+                </div>
+
+                {/* FieldError Sample */}
+                <div className="space-y-2">
+                  <div className="text-[10px] opacity-30">FieldError</div>
+                  <div className="flex items-start gap-1.5">
+                    <state.icon className="size-3.5 mt-0.5 shrink-0" style={{ color: state.color }} />
+                    <FieldError
+                      style={textColor.isSemantic ? { color: state.color } : {}}
+                      className={cn("text-[11px] leading-tight", textColor.class)}
+                    >
+                      補足メッセージ
+                    </FieldError>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </section>
       ))}
