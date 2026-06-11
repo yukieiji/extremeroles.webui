@@ -63,41 +63,41 @@ export default function SemanticColors() {
             <p className={`text-sm ${BASIC_TEXT_COLOR.textSecondary}`}>{state.description}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-10">
             {textColors.map((textColor) => (
-              <div key={textColor.label} className="space-y-6 p-3 bg-gray-50/50 rounded-lg border border-gray-100">
-                <div className="text-[10px] font-mono font-bold opacity-40 uppercase tracking-wider">{textColor.label} Text</div>
+              <div key={textColor.label} className="space-y-6">
+                <div className="text-[10px] font-mono font-bold opacity-40 uppercase tracking-wider border-b border-gray-100 pb-1">{textColor.label} Text</div>
 
                 {/* Badge Sample */}
-                <div className="space-y-2">
-                  <div className="text-[10px] opacity-30">Badge</div>
-                  <Badge variant="outline" className="border-gray-200 flex items-center justify-center gap-1.5 h-6 px-2">
-                    <state.icon className="size-3.5" style={{ color: state.color }} />
-                    <span style={textColor.isSemantic ? { color: state.color } : {}} className={cn("leading-none", textColor.class)}>
+                <div className="space-y-1.5">
+                  <div className="text-[10px] opacity-30 font-medium">Badge</div>
+                  <Badge variant="outline" className="border-gray-200 flex items-center w-fit gap-1.5 h-6 px-2 py-0">
+                    <state.icon className="size-3.5 shrink-0" style={{ color: state.color }} />
+                    <span style={textColor.isSemantic ? { color: state.color } : {}} className={cn("leading-none translate-y-[0.5px]", textColor.class)}>
                       {state.name}
                     </span>
                   </Badge>
                 </div>
 
                 {/* Button Sample */}
-                <div className="space-y-2">
-                  <div className="text-[10px] opacity-30">Button</div>
-                  <Button variant="outline" className="border-gray-200 w-full justify-start h-9 px-3 gap-2">
+                <div className="space-y-1.5">
+                  <div className="text-[10px] opacity-30 font-medium">Button</div>
+                  <Button variant="outline" className="border-gray-200 flex items-center w-fit gap-2 h-9 px-3 py-0">
                     <state.icon className="size-4 shrink-0" style={{ color: state.color }} />
-                    <span style={textColor.isSemantic ? { color: state.color } : {}} className={cn("text-sm font-medium", textColor.class)}>
+                    <span style={textColor.isSemantic ? { color: state.color } : {}} className={cn("text-sm font-medium leading-none translate-y-[0.5px]", textColor.class)}>
                       アクション
                     </span>
                   </Button>
                 </div>
 
                 {/* FieldError Sample */}
-                <div className="space-y-2">
-                  <div className="text-[10px] opacity-30">FieldError</div>
-                  <div className="flex items-center gap-2 min-h-6">
+                <div className="space-y-1.5">
+                  <div className="text-[10px] opacity-30 font-medium">FieldError</div>
+                  <div className="flex items-center gap-2 min-h-5 py-0.5">
                     <state.icon className="size-4 shrink-0" style={{ color: state.color }} />
                     <FieldError
                       style={textColor.isSemantic ? { color: state.color } : {}}
-                      className={cn("text-[13px] leading-none m-0", textColor.class)}
+                      className={cn("text-[13px] leading-none m-0 translate-y-[0.5px]", textColor.class)}
                     >
                       補足メッセージ
                     </FieldError>
