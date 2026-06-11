@@ -53,7 +53,7 @@ export default function BasicTextColor() {
       <section className="space-y-4">
         <div className="border-b pb-2">
           <h3 className="text-lg font-semibold">2. Secondary Text Color</h3>
-          <span>T現在の設定: {DESIGN_COLORS.textSecondary}</span>
+          <span>現在の設定: {DESIGN_COLORS.textSecondary}</span>
           <p className="text-sm opacity-70">設定の補足説明、注釈、デフォルト値に使用します。</p>
         </div>
         <div className="space-y-6">
@@ -80,7 +80,7 @@ export default function BasicTextColor() {
       <section className="space-y-4">
         <div className="border-b pb-2">
           <h3 className="text-lg font-semibold">3. Disabled Text Color / Tertiary Text Color</h3>
-            <span >Tailwind Class: {DESIGN_COLORS.textTertiary}</span>
+            <span >現在の設定: {DESIGN_COLORS.textTertiary}</span>
           <p className="text-sm opacity-70">無効な項目やプレースホルダーに使用します。</p>
         </div>
         <div className="space-y-6">
