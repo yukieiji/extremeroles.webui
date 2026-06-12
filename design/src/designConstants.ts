@@ -1,7 +1,8 @@
 /**
- * デザインシステムで使用するカラー定数（Tailwind CSSクラス名）
+ * デザインシステムで使用するカラー定数
  * ここで値を変更することで、テスト調整が可能です。
  */
+
 export const BASIC_TEXT_COLOR = {
   // Primary Text Color: 設定項目名など、最も重要なテキスト
   textPrimary: "text-[#111827]",
@@ -28,4 +29,73 @@ export const SEMANTIC_COLORS = {
   success: "#10b981",
   // 情報色
   info: "#3b82f6",
+};
+
+// ニュートラルカラーの各レベルの16進数カラーコード
+const NEUTRAL_HEX = {
+  n1: '#ffffff',
+  n2: '#fafafa',
+  n3: '#f5f5f5',
+  n4: '#e5e5e5',
+  n5: '#d4d4d4',
+  n6: '#a3a3a3',
+  n7: '#737373',
+};
+
+export const NEUTRAL_COLORS = {
+  // Level 1: Main Background (最背面背景)
+  neutral1: {
+    hex: NEUTRAL_HEX.n1,
+    bg: `bg-[${NEUTRAL_HEX.n1}]`,
+    border: `border-[${NEUTRAL_HEX.n1}]`,
+    description: "アプリ全体のメイン背景色、最背面のレイヤーに使用します。",
+  },
+  // Level 2: Surface / Card Background (コンテンツ面、カード背景)
+  neutral2: {
+    hex: NEUTRAL_HEX.n2,
+    bg: `bg-[${NEUTRAL_HEX.n2}]`,
+    border: `border-[${NEUTRAL_HEX.n2}]`,
+    description:
+      "サイドバーやカード、セクションの背景など、メイン背景より一段階上のレイヤーに使用します。",
+  },
+  // Level 3: Muted / Hover Background (サブ背景、ホバー状態)
+  neutral3: {
+    hex: NEUTRAL_HEX.n3,
+    bg: `bg-[${NEUTRAL_HEX.n3}]`,
+    border: `border-[${NEUTRAL_HEX.n3}]`,
+    description:
+      "ボタンのホバー状態や、入力フィールドの背景、情報の区切りに使用します。",
+  },
+  // Level 4: Separator / Light Border (区切り線、弱い枠線)
+  neutral4: {
+    hex: NEUTRAL_HEX.n4,
+    bg: `bg-[${NEUTRAL_HEX.n4}]`,
+    border: `border-[${NEUTRAL_HEX.n4}]`,
+    description:
+      "要素同士を分ける区切り線（Separator）や、非常に弱い枠線に使用します。",
+  },
+  // Level 5: Border / Input Border (標準的な枠線)
+  neutral5: {
+    hex: NEUTRAL_HEX.n5,
+    bg: `bg-[${NEUTRAL_HEX.n5}]`,
+    border: `border-[${NEUTRAL_HEX.n5}]`,
+    description:
+      "入力フィールドやカードの枠線など、標準的な境界の定義に使用します。",
+  },
+  // Level 6: Strong Border / Emphasis (強い枠線、強調)
+  neutral6: {
+    hex: NEUTRAL_HEX.n6,
+    bg: `bg-[${NEUTRAL_HEX.n6}]`,
+    border: `border-[${NEUTRAL_HEX.n6}]`,
+    description:
+      "フォーカス時の枠線や、より明確な区別が必要な境界に使用します。",
+  },
+  // Level 7: Deep Background / Shadow (深い背景、強いコントラスト)
+  neutral7: {
+    hex: NEUTRAL_HEX.n7,
+    bg: `bg-[${NEUTRAL_HEX.n7}]`,
+    border: `border-[${NEUTRAL_HEX.n7}]`,
+    description:
+      "情報の階層を最も深くする場合や、強いコントラストが必要な箇所に使用します。",
+  },
 };
