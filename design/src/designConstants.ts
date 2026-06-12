@@ -106,3 +106,26 @@ export const SEARCH_HIGHLIGHT_COLOR = {
   // ハイライトが自動的に消えるまでの時間（ミリ秒）
   duration: 2000,
 };
+
+export const TYPOGRAPHY_HIERARCHY = {
+  sidebar: {
+    size: "text-sm",
+    weight: "font-medium",
+    description: "サイドバーのメインナビゲーション項目に使用します。",
+  },
+  tab: {
+    size: "text-sm",
+    weight: "font-medium",
+    description: "タブのラベルに使用します。選択状態の視認性を確保します。",
+  },
+  label: {
+    size: "text-sm",
+    weight: "font-normal",
+    description: "設定項目のタイトルなど、主要なラベルに使用します。プライマリテキストを適用します。",
+  },
+  small: {
+    size: "text-xs",
+    weight: "font-normal",
+    description: "注釈、補足説明、設定値のフォーマットなど、補助的な情報に使用します。セカンダリテキストを適用します。",
+  },
+};
