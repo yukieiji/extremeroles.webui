@@ -21,18 +21,24 @@ export default function FontSizeWeight() {
           </div>
           <p className="text-sm opacity-70 mt-1">{TYPOGRAPHY_HIERARCHY.sidebar.description}</p>
         </div>
-        <div className="max-w-xs border rounded-lg overflow-hidden bg-slate-900 text-white">
+        <div
+          className="max-w-xs border rounded-lg overflow-hidden"
+          style={{ backgroundColor: NEUTRAL_COLORS.neutral7.hex, borderColor: NEUTRAL_COLORS.neutral6.hex }}
+        >
           <div className="p-4 space-y-2">
-            <div className={`flex items-center gap-3 p-2 rounded bg-slate-800 ${TYPOGRAPHY_HIERARCHY.sidebar.size} ${TYPOGRAPHY_HIERARCHY.sidebar.weight}`}>
-              <div className="w-4 h-4 bg-slate-600 rounded-sm"></div>
+            <div
+              className={`flex items-center gap-3 p-2 rounded text-white ${TYPOGRAPHY_HIERARCHY.sidebar.size} ${TYPOGRAPHY_HIERARCHY.sidebar.weight}`}
+              style={{ backgroundColor: NEUTRAL_COLORS.neutral6.hex }}
+            >
+              <div className="w-4 h-4 bg-white/20 rounded-sm"></div>
               <span>Among Us 設定</span>
             </div>
-            <div className={`flex items-center gap-3 p-2 rounded hover:bg-slate-800/50 transition-colors ${TYPOGRAPHY_HIERARCHY.sidebar.size} ${TYPOGRAPHY_HIERARCHY.sidebar.weight}`}>
-              <div className="w-4 h-4 bg-slate-600 rounded-sm"></div>
+            <div className={`flex items-center gap-3 p-2 rounded transition-colors text-white/70 ${TYPOGRAPHY_HIERARCHY.sidebar.size} ${TYPOGRAPHY_HIERARCHY.sidebar.weight}`}>
+              <div className="w-4 h-4 bg-white/20 rounded-sm"></div>
               <span>役職フィルター</span>
             </div>
-            <div className={`flex items-center gap-3 p-2 rounded hover:bg-slate-800/50 transition-colors ${TYPOGRAPHY_HIERARCHY.sidebar.size} ${TYPOGRAPHY_HIERARCHY.sidebar.weight}`}>
-              <div className="w-4 h-4 bg-slate-600 rounded-sm"></div>
+            <div className={`flex items-center gap-3 p-2 rounded transition-colors text-white/70 ${TYPOGRAPHY_HIERARCHY.sidebar.size} ${TYPOGRAPHY_HIERARCHY.sidebar.weight}`}>
+              <div className="w-4 h-4 bg-white/20 rounded-sm"></div>
               <span>全般設定</span>
             </div>
           </div>
@@ -49,15 +55,24 @@ export default function FontSizeWeight() {
           </div>
           <p className="text-sm opacity-70 mt-1">{TYPOGRAPHY_HIERARCHY.tab.description}</p>
         </div>
-        <div className="max-w-md border rounded-lg p-4 bg-slate-50">
-          <div className="flex bg-slate-200 p-1 rounded-md">
-            <div className={`flex-1 text-center py-1.5 rounded bg-white shadow-sm ${TYPOGRAPHY_HIERARCHY.tab.size} ${TYPOGRAPHY_HIERARCHY.tab.weight}`}>
+        <div
+          className="max-w-md border rounded-lg p-4"
+          style={{ backgroundColor: NEUTRAL_COLORS.neutral2.hex, borderColor: NEUTRAL_COLORS.neutral4.hex }}
+        >
+          <div
+            className="flex p-1 rounded-md"
+            style={{ backgroundColor: NEUTRAL_COLORS.neutral3.hex }}
+          >
+            <div
+              className={`flex-1 text-center py-1.5 rounded shadow-sm ${BASIC_TEXT_COLOR.textPrimary} ${TYPOGRAPHY_HIERARCHY.tab.size} ${TYPOGRAPHY_HIERARCHY.tab.weight}`}
+              style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex }}
+            >
               全般
             </div>
-            <div className={`flex-1 text-center py-1.5 rounded text-slate-600 ${TYPOGRAPHY_HIERARCHY.tab.size} ${TYPOGRAPHY_HIERARCHY.tab.weight}`}>
+            <div className={`flex-1 text-center py-1.5 rounded ${BASIC_TEXT_COLOR.textSecondary} ${TYPOGRAPHY_HIERARCHY.tab.size} ${TYPOGRAPHY_HIERARCHY.tab.weight}`}>
               インポスター
             </div>
-            <div className={`flex-1 text-center py-1.5 rounded text-slate-600 ${TYPOGRAPHY_HIERARCHY.tab.size} ${TYPOGRAPHY_HIERARCHY.tab.weight}`}>
+            <div className={`flex-1 text-center py-1.5 rounded ${BASIC_TEXT_COLOR.textSecondary} ${TYPOGRAPHY_HIERARCHY.tab.size} ${TYPOGRAPHY_HIERARCHY.tab.weight}`}>
               クルーメイト
             </div>
           </div>
@@ -85,11 +100,14 @@ export default function FontSizeWeight() {
         </div>
 
         <div className="max-w-md space-y-4">
-          <div className={`p-4 rounded-lg border ${NEUTRAL_COLORS.neutral2.bg} ${NEUTRAL_COLORS.neutral5.border}`}>
-            <h4 className={`mb-3 border-b pb-1 font-bold ${BASIC_TEXT_COLOR.textPrimary}`}>ViewerOptionRow モック</h4>
+          <div
+            className="p-4 rounded-lg border"
+            style={{ backgroundColor: NEUTRAL_COLORS.neutral2.hex, borderColor: NEUTRAL_COLORS.neutral5.hex }}
+          >
+            <h4 className={`mb-3 border-b pb-1 font-bold ${BASIC_TEXT_COLOR.textPrimary}`} style={{ borderColor: NEUTRAL_COLORS.neutral4.hex }}>ViewerOptionRow モック</h4>
             <div className="space-y-1">
               {/* Mock Row 1 */}
-              <div className="flex justify-between items-center py-1 px-2 hover:bg-slate-200 rounded transition-colors group">
+              <div className="flex justify-between items-center py-1 px-2 rounded transition-colors group">
                 <span className={`${TYPOGRAPHY_HIERARCHY.label.size} ${TYPOGRAPHY_HIERARCHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
                   インポスターの数
                 </span>
@@ -98,7 +116,10 @@ export default function FontSizeWeight() {
                 </span>
               </div>
               {/* Mock Row 2 */}
-              <div className="flex justify-between items-center py-1 px-2 hover:bg-slate-200 rounded transition-colors group">
+              <div
+                className="flex justify-between items-center py-1 px-2 rounded transition-colors group"
+                style={{ backgroundColor: NEUTRAL_COLORS.neutral3.hex }}
+              >
                 <span className={`${TYPOGRAPHY_HIERARCHY.label.size} ${TYPOGRAPHY_HIERARCHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
                   緊急会議ボタンのクールダウン
                 </span>
