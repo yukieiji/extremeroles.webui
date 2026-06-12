@@ -109,27 +109,27 @@ export default function SearchHighlightColor() {
           ハイライトテスト
         </h3>
         <div className="flex flex-wrap gap-2">
-          <Button onClick={() => {
+          <Button className="bg-amber-300" onClick={() => {
             triggerHighlight("dropdown");
           }}>
             ドロップダウンをハイライト
           </Button>
-          <Button onClick={() => {
+          <Button className="bg-amber-300" onClick={() => {
             triggerHighlight("accordion-all");
           }}>
             アコーディオン全体をハイライト
           </Button>
-          <Button onClick={() => {
+          <Button className="bg-amber-300" onClick={() => {
             triggerHighlight("row-parent-1");
           }}>
             親要素1をハイライト
           </Button>
-          <Button onClick={() => {
+          <Button className="bg-amber-300" onClick={() => {
             triggerHighlight("row-child-1");
           }}>
             子要素1をハイライト
           </Button>
-          <Button onClick={() => {
+          <Button className="bg-amber-300" onClick={() => {
             triggerHighlight("row-nested-child-1");
           }}>
             ネストされた子要素1をハイライト
@@ -152,7 +152,7 @@ export default function SearchHighlightColor() {
             <div
               className="flex items-stretch border rounded-md overflow-hidden w-48 h-9"
               style={{
-                backgroundColor: NEUTRAL_COLORS.neutral1.hex,
+                backgroundColor: NEUTRAL_COLORS.neutral2.hex,
                 borderColor: NEUTRAL_COLORS.neutral5.hex,
               }}
             >
@@ -178,7 +178,7 @@ export default function SearchHighlightColor() {
             isHighlighted={highlightedId === "accordion-all"}
             className="border rounded-md overflow-hidden"
             style={{
-              backgroundColor: NEUTRAL_COLORS.neutral1.hex,
+              backgroundColor: NEUTRAL_COLORS.neutral3.hex,
               borderColor: NEUTRAL_COLORS.neutral5.hex,
             }}
           >
