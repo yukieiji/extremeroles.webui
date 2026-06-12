@@ -99,3 +99,10 @@ export const NEUTRAL_COLORS = {
       "情報の階層を最も深くする場合や、強いコントラストが必要な箇所に使用します。",
   },
 };
+
+export const SEARCH_HIGHLIGHT_COLOR = {
+  // 検索ワードに一致した箇所を目立たせる色。
+  ring: "ring-[#3b82f6]",
+  // ハイライトが自動的に消えるまでの時間（ミリ秒）
+  duration: 2000,
+};
