@@ -55,7 +55,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 						<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
 					</div>
 					<Button
-						variant="outline"
+						variant="default"
 						size="sm"
 						className="w-full flex items-center gap-2"
 						onClick={handleCopy}
