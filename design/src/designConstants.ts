@@ -135,6 +135,13 @@ export const TYPOGRAPHY = {
   },
 };
 
+export const DATA_FONT = {
+  family: "font-mono",
+  size: "text-sm",
+  weight: "font-normal",
+  description: "IDや数値、設定値など、正確な読み取りが必要な箇所に使用します。等幅フォントを使用することで、数値の桁揃えやIDの視認性を向上させます。",
+};
+
 export const LINE_HEIGHT = {
   // 行間（Line Height）の定義: 情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定。
   standard: "leading-[1.6]",
