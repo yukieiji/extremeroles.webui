@@ -1,4 +1,4 @@
-import { BASIC_TEXT_COLOR } from "../../designConstants";
+import { BASIC_TEXT_COLOR, TYPOGRAPHY } from "../../designConstants";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -23,25 +23,25 @@ export default function BasicTextColor() {
         </div>
         <div className="space-y-6">
           <div>
-            <div className={`text-2xl font-bold ${BASIC_TEXT_COLOR.textPrimary}`}>
+            <div className={`${TYPOGRAPHY.tab.size} ${TYPOGRAPHY.tab.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
               これはプライマリテキストです
             </div>
           </div>
 
           <div className="space-y-4 max-w-md">
              <div className="space-y-1">
-                <Label className={BASIC_TEXT_COLOR.textPrimary}>ユーザー設定項目ラベル</Label>
-                <Input defaultValue="設定値のテキスト" className={BASIC_TEXT_COLOR.textPrimary} />
+                <Label className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>ユーザー設定項目ラベル</Label>
+                <Input defaultValue="設定値のテキスト" className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textPrimary}`} />
              </div>
              <div className="flex items-center justify-between py-2">
-              <span className={`font-medium ${BASIC_TEXT_COLOR.textPrimary}`}>プレイヤーの最大数</span>
-              <span className={BASIC_TEXT_COLOR.textPrimary}>10</span>
+              <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>プレイヤーの最大数</span>
+              <span className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>10</span>
             </div>
             <div className="flex gap-2">
-                <Button variant="outline" className={BASIC_TEXT_COLOR.textPrimary}>
+                <Button variant="outline" className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
                     アウトラインボタン
                 </Button>
-                <Button variant="ghost" className={BASIC_TEXT_COLOR.textPrimary}>
+                <Button variant="ghost" className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
                     ゴーストボタン
                 </Button>
             </div>

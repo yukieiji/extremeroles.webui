@@ -5,13 +5,13 @@
 
 export const BASIC_TEXT_COLOR = {
   // Primary Text Color: 設定項目名など、最も重要なテキスト
-  textPrimary: "text-[#111827]",
+  textPrimary: "text-[#0B1728]",
 
   // Secondary Text Color: 設定の補足説明、注釈、デフォルト値
-  textSecondary: "text-[#4b5563]",
+  textSecondary: "text-[#52525B]",
 
   // Disabled Text Color/Tertiary Text Color: 無効な項目やプレースホルダー
-  textTertiary: "text-[#9ca3af]",
+  textTertiary: "text-[#A1A1AA]",
 };
 
 export const PRIMARY_ACTION_COLOR = {
