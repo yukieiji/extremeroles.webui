@@ -133,19 +133,19 @@ export default function LineHeight() {
           <div
             className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner`}
           >
-            <MockAccordion title="役職設定 (Role Settings)">
+            <MockAccordion title="サンプル役職">
               <MockOptionRow
-                name={"シェリフ (Sheriff):\nクルーメイト陣営。インポスターまたは第三陣営をキルできますが、誤ってクルーメイトをキルすると自分が死亡します。"}
+                name={"クルーメイト陣営\nインポスターまたは第三陣営をキルできますが、誤ってクルーメイトをキルすると自分が死亡します。"}
                 value="1"
                 format="x 人"
               />
               <MockOptionRow
-                name={"マッドメイト (Madmate):\nインポスター陣営。インポスターの正体を知っていますが、自分はキルできません。タスクを完了させる必要があります。"}
+                name={"インポスター陣営。\nインポスターの正体を知っていますが、自分はキルできません。タスクを完了させる必要があります。"}
                 value="ON"
                 format=""
               />
               <MockOptionRow
-                name={"シーア (Seer):\n役職の確認が可能です。設定された時間ごとに生存者の役割を覗き見ることができます。"}
+                name={"役職の確認が可能です。\n設定された時間ごとに生存者の役割を覗き見ることができます。"}
                 value="2"
                 format="x 人"
               />
