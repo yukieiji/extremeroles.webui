@@ -18,6 +18,7 @@ export const PRIMARY_ACTION_COLOR = {
   // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色
   // ここを変更することで、主要なアクションボタンの色を一括で調整できます。
   primary: "bg-[#2563eb]",
+  hover: "hover:bg-[#1d4ed8]",
 };
 
 export const SEMANTIC_COLORS = {
@@ -168,7 +169,7 @@ export const GRID_SYSTEM = {
       padding: "p-6",
       margin: "m-6",
       gap: "gap-6",
-      description: "広め（24px）。セクション間の区切りや、大きなグループの余白に使用します。",
+      description: "広め（24px）。",
     },
     xl: {
       value: "32px",
