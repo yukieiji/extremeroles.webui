@@ -23,7 +23,7 @@ export function AccordionBody({
 			<button
 				type="button"
 				onClick={onToggle}
-				className="w-full flex items-center gap-3 p-4 hover:bg-gray-100 transition-colors text-left cursor-pointer"
+				className="w-full flex items-center gap-3 p-4 hover:bg-hover-on-n1 transition-colors text-left cursor-pointer"
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg
@@ -34,7 +34,9 @@ export function AccordionBody({
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
-					{isOpen && <div className="border-t border-gray-700">{children}</div>}
+					{isOpen && (
+						<div className="border-t border-n3-border-weak">{children}</div>
+					)}
 				</div>
 			</AccordionContentContainer>
 		</>

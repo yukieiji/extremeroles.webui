@@ -31,6 +31,14 @@
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
+
+	--color-n1-bg-main: var(--n1-bg-main);
+	--color-n2-border-strong: var(--n2-border-strong);
+	--color-n3-border-weak: var(--n3-border-weak);
+	--color-n4-bg-components: var(--n4-bg-components);
+	--color-n5-bg-input: var(--n5-bg-input);
+	--color-hover-on-n1: var(--hover-on-n1);
+	--color-hover-on-n4: var(--hover-on-n4);
 }
 
 @layer base {
@@ -89,6 +97,15 @@
 	--color-card: var(--card);
 	--color-foreground: var(--foreground);
 	--color-background: var(--background);
+
+	--color-n1-bg-main: var(--n1-bg-main);
+	--color-n2-border-strong: var(--n2-border-strong);
+	--color-n3-border-weak: var(--n3-border-weak);
+	--color-n4-bg-components: var(--n4-bg-components);
+	--color-n5-bg-input: var(--n5-bg-input);
+	--color-hover-on-n1: var(--hover-on-n1);
+	--color-hover-on-n4: var(--hover-on-n4);
+
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
@@ -99,29 +116,38 @@
 }
 
 :root {
+	--n1-bg-main: #f4f4f5;
+	--n2-border-strong: #d0d0d6;
+	--n3-border-weak: #e4e4e7;
+	--n4-bg-components: #ffffff;
+	--n5-bg-input: #ffffff;
+
+	--hover-on-n1: #e4e4e766; /* n3/40 */
+	--hover-on-n4: #e4e4e74d; /* n3/30 */
+
 	--text-primary: #0b1728;
 	--text-secondary: #52525b;
 	--text-tertiary: #a1a1aa;
 
-	--background: #f4f4f5;
+	--background: var(--n1-bg-main);
 	--foreground: var(--text-primary);
-	--card: #ffffff;
+	--card: var(--n4-bg-components);
 	--card-foreground: var(--text-primary);
-	--popover: #ffffff;
+	--popover: var(--n4-bg-components);
 	--popover-foreground: var(--text-primary);
 	--primary: #9ce1fd;
 	--primary-hover: #9ce1fdcc;
 	--primary-active: #7dd3fc;
 	--primary-foreground: var(--text-primary);
-	--secondary: #e4e4e7;
+	--secondary: var(--n3-border-weak);
 	--secondary-foreground: var(--text-secondary);
-	--muted: #f4f4f5;
+	--muted: var(--n1-bg-main);
 	--muted-foreground: var(--text-secondary);
-	--accent: #f4f4f5;
+	--accent: var(--n1-bg-main);
 	--accent-foreground: var(--text-primary);
 	--destructive: #f43f5e;
-	--border: #d0d0d6;
-	--input: #ffffff;
+	--border: var(--n2-border-strong);
+	--input: var(--n5-bg-input);
 	--ring: #3b82f6;
 	--chart-1: oklch(0.87 0 0);
 	--chart-2: oklch(0.556 0 0);

@@ -29,7 +29,7 @@ export function ViewerOptionRow({
 			type="button"
 			onDoubleClick={onDoubleClick}
 			{...props}
-			className="w-full flex justify-between items-center py-1 pr-2 hover:bg-gray-700/50 rounded cursor-pointer select-none gap-2 group"
+			className="w-full flex justify-between items-center py-1 pr-2 hover:bg-hover-on-n4 rounded cursor-pointer select-none gap-2 group"
 			style={{ paddingLeft }}
 			title={VIEWER_ROW_TITLE}
 		>

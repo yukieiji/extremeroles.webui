@@ -23,11 +23,11 @@ export function RoleCategoryAccordion({
 	return (
 		<div
 			id={typeof text === "string" ? `au-category-${text}` : undefined}
-			className="border border-gray-700 rounded-lg overflow-hidden"
+			className="border border-n2-border-strong rounded-lg overflow-hidden"
 			data-testid="role-category"
 		>
 			<div
-				className={`flex items-center ${!disable ? "hover:bg-gray-100 transition-colors" : ""}`}
+				className={`flex items-center ${!disable ? "hover:bg-hover-on-n1 transition-colors" : ""}`}
 			>
 				<button
 					type="button"
@@ -57,7 +57,9 @@ export function RoleCategoryAccordion({
 			</div>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
-					{isOpen && <div className="border-t border-gray-700">{children}</div>}
+					{isOpen && (
+						<div className="border-t border-n3-border-weak">{children}</div>
+					)}
 				</div>
 			</AccordionContentContainer>
 		</div>

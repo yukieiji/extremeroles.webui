@@ -80,7 +80,7 @@ export function RightSidePanelResizeHandle() {
 	return (
 		<div
 			onMouseDown={handleMouseDown}
-			className="absolute left-0 top-0 h-full w-1 cursor-ew-resize hover:bg-blue-400 transition-colors z-50"
+			className="absolute left-0 top-0 h-full w-1 cursor-ew-resize hover:bg-ring transition-colors z-50"
 			aria-hidden="true"
 			data-testid="resize-handle"
 		/>
