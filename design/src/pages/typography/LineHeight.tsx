@@ -16,12 +16,10 @@ function MockOptionRow({
   name,
   value,
   format,
-  description,
 }: {
   name: string;
   value: string;
   format: string;
-  description?: string;
 }) {
   return (
     <div
@@ -34,20 +32,13 @@ function MockOptionRow({
         {/* 右側領域 */}
         <div className="flex-1 min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-3">
-            {/* 設定名と言語説明 */}
+            {/* 設定名 */}
             <div className="flex-1 min-w-0">
               <div
                 className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words`}
               >
                 {name}
               </div>
-              {description && (
-                <div
-                  className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textSecondary} mt-1`}
-                >
-                  {description}
-                </div>
-              )}
             </div>
 
             {/* 設定値 & フォーマット */}
@@ -144,22 +135,19 @@ export default function LineHeight() {
           >
             <MockAccordion title="役職設定 (Role Settings)">
               <MockOptionRow
-                name="シェリフ (Sheriff)"
+                name="シェリフ (Sheriff): クルーメイト陣営。インポスターまたは第三陣営をキルできますが、誤ってクルーメイトをキルすると自分が死亡します。"
                 value="1"
                 format="x 人"
-                description="クルーメイト陣営。インポスターまたは第三陣営をキルできますが、誤ってクルーメイトをキルすると自分が死亡します。"
               />
               <MockOptionRow
-                name="マッドメイト (Madmate)"
+                name="マッドメイト (Madmate): インポスター陣営。インポスターの正体を知っていますが、自分はキルできません。タスクを完了させる必要があります。"
                 value="ON"
                 format=""
-                description="インポスター陣営。インポスターの正体を知っていますが、自分はキルできません。タスクを完了させる必要があります。"
               />
               <MockOptionRow
-                name="シーア (Seer)"
+                name="シーア (Seer): 役職の確認が可能です。設定された時間ごとに生存者の役割を覗き見ることができます。"
                 value="2"
                 format="x 人"
-                description="役職の確認が可能です。設定された時間ごとに生存者の役割を覗き見ることができます。"
               />
             </MockAccordion>
           </div>
