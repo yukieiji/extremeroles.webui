@@ -33,7 +33,7 @@ function VisualAidOverlay({
   label?: string;
 }) {
   const spacing = GRID_SYSTEM.spacing[level];
-  const spacingValue = spacing.value;
+  const spacingValue = spacing.px;
 
   if (type === "gap" || type === "layout") {
     const isVertical = type === "layout";
@@ -188,12 +188,12 @@ function MainHeader() {
  */
 function RoleCategoryAccordionMock({
   text,
-  isOpen: initialOpen = true,
+  initialOpen = true,
   showVisualAid,
   children,
 }: {
   text: string;
-  isOpen?: boolean;
+  initialOpen?: boolean;
   showVisualAid: boolean;
   children?: React.ReactNode;
 }) {
@@ -342,15 +342,18 @@ export default function GridSystem() {
                      </div>
                      <OptionRowMock label="クルーメイトの数" value="8" showVisualAid={showVisualAid} />
                   </RoleCategoryAccordionMock>
-
-                  <div className={`flex justify-end ${GRID_SYSTEM.spacing.s.gap}`}>
-                     <button className={`${GRID_SYSTEM.spacing.l.paddingX} ${GRID_SYSTEM.spacing.s.paddingY} rounded text-sm font-medium ${NEUTRAL_COLORS.neutral1.bg} border ${NEUTRAL_COLORS.neutral5.border} ${BASIC_TEXT_COLOR.textSecondary} ${NEUTRAL_COLORS.neutral3.hover}`}>
-                       キャンセル
-                     </button>
-                     <button className={`${GRID_SYSTEM.spacing.l.paddingX} ${GRID_SYSTEM.spacing.s.paddingY} rounded text-sm font-medium ${PRIMARY_ACTION_COLOR.primary} text-white ${PRIMARY_ACTION_COLOR.hover} shadow-sm`}>
-                       設定を保存
-                     </button>
-                  </div>
+                  <RoleCategoryAccordionMock text="役職設定2" showVisualAid={showVisualAid}>
+                     <OptionRowMock label="インポスターの数2" value="2" showVisualAid={showVisualAid} />
+                     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg ${NEUTRAL_COLORS.neutral1.bg} ${GRID_SYSTEM.spacing.s.padding}`}>
+                        <div className={`flex items-center ${GRID_SYSTEM.spacing.s.gap} ${GRID_SYSTEM.spacing.xs.marginBottom}`}>
+                           <ChevronRight size={16} className={BASIC_TEXT_COLOR.textTertiary} />
+                           <span className="font-bold text-sm">マッドメイト設定</span>
+                           <div className="flex-1" />
+                           <div className={`${GRID_SYSTEM.spacing.s.paddingX} ${GRID_SYSTEM.spacing.xs.paddingY} bg-gray-100 rounded text-xs ${DATA_FONT.family}`}>ON</div>
+                        </div>
+                     </div>
+                     <OptionRowMock label="クルーメイトの数2" value="8" showVisualAid={showVisualAid} />
+                  </RoleCategoryAccordionMock>
                </div>
             </div>
           </div>
@@ -367,19 +370,6 @@ export default function GridSystem() {
           <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg} divide-y ${NEUTRAL_COLORS.neutral4.border}`}>
              <OptionRowMock label="ルート項目" value="Value" showVisualAid={showVisualAid} />
              <OptionRowMock label="第一階層アコーディオン" value="Expand" depth={1} showVisualAid={showVisualAid} />
-          </div>
-        </div>
-
-        <div className={`${GRID_SYSTEM.spacing.l.gap} flex flex-col`}>
-          <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>設計・調整のヒント</h3>
-          <div className={`${GRID_SYSTEM.spacing.l.padding} border-l-4 border-blue-500 bg-blue-50 ${TYPOGRAPHY.label.size}`}>
-            <h4 className={`font-bold text-blue-800 ${GRID_SYSTEM.spacing.s.marginBottom}`}>実装時の注意点</h4>
-            <ul className={`list-disc list-inside ${GRID_SYSTEM.spacing.s.gap} flex flex-col text-blue-700`}>
-              <li><strong>定数の利用:</strong> <code>designConstants.ts</code> の <code>GRID_SYSTEM</code> に定義された値を使用することを推奨します。</li>
-              <li><strong>色の指定:</strong> テキストには <code>BASIC_TEXT_COLOR</code>、背景や枠線には <code>NEUTRAL_COLORS</code> を使用し、一貫性を保ちます。</li>
-              <li><strong>インタラクション:</strong> 主要なボタンには <code>PRIMARY_ACTION_COLOR</code> を適用し、視認性を高めます。</li>
-              <li><strong>階層の表現:</strong> インデントには <code>depth</code> に基づく計算ロジックを一貫して適用し、情報の階層を視覚化します。</li>
-            </ul>
           </div>
         </div>
       </section>
