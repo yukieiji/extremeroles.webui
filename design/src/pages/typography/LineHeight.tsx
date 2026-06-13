@@ -23,7 +23,7 @@ function MockOptionRow({
 }) {
   return (
     <div
-      className={`py-0.5 hover:bg-gray-800/10 transition-colors ${LINE_HEIGHT.standard}`}
+      className={`py-0.5 ${NEUTRAL_COLORS.neutral3.hover} transition-colors ${LINE_HEIGHT.standard}`}
     >
       <div className="flex items-stretch px-4">
         {/* 左側領域（スペーサー） */}
@@ -35,7 +35,7 @@ function MockOptionRow({
             {/* 設定名 */}
             <div className="flex-1 min-w-0">
               <div
-                className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words`}
+                className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words whitespace-pre-wrap`}
               >
                 {name}
               </div>
@@ -135,17 +135,17 @@ export default function LineHeight() {
           >
             <MockAccordion title="役職設定 (Role Settings)">
               <MockOptionRow
-                name="シェリフ (Sheriff): クルーメイト陣営。インポスターまたは第三陣営をキルできますが、誤ってクルーメイトをキルすると自分が死亡します。"
+                name={"シェリフ (Sheriff):\nクルーメイト陣営。インポスターまたは第三陣営をキルできますが、誤ってクルーメイトをキルすると自分が死亡します。"}
                 value="1"
                 format="x 人"
               />
               <MockOptionRow
-                name="マッドメイト (Madmate): インポスター陣営。インポスターの正体を知っていますが、自分はキルできません。タスクを完了させる必要があります。"
+                name={"マッドメイト (Madmate):\nインポスター陣営。インポスターの正体を知っていますが、自分はキルできません。タスクを完了させる必要があります。"}
                 value="ON"
                 format=""
               />
               <MockOptionRow
-                name="シーア (Seer): 役職の確認が可能です。設定された時間ごとに生存者の役割を覗き見ることができます。"
+                name={"シーア (Seer):\n役職の確認が可能です。設定された時間ごとに生存者の役割を覗き見ることができます。"}
                 value="2"
                 format="x 人"
               />
