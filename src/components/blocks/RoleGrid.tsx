@@ -24,7 +24,7 @@ export function RoleGrid({
 }: RoleGridProps) {
 	if (items.length === 0) {
 		return (
-			<div className="text-center py-8 text-gray-500 italic">
+			<div className="text-center py-8 text-text-secondary italic">
 				{emptyMessage}
 			</div>
 		);

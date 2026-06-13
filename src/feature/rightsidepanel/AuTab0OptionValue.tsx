@@ -16,7 +16,7 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 
 	return (
 		<div className="flex items-center gap-1 shrink-0">
-			<span className="text-sm text-blue-400 font-medium text-right">
+			<span className="text-sm text-text-secondary font-medium text-right">
 				{isBoolean ? (
 					<ColoredText
 						text={

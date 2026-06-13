@@ -7,7 +7,7 @@ export function OptionFormat({ format }: OptionFormatProps) {
 		? format.replace("{0}", "")
 		: format;
 	return format === "" ? null : (
-		<span className="text-sm text-white whitespace-nowrap">
+		<span className="text-sm text-text-secondary whitespace-nowrap">
 			{formattedValue}
 		</span>
 	);

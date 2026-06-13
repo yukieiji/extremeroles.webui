@@ -43,7 +43,7 @@ export function ExRPairedOptionItem({
 	return (
 		<OptionItem className="min-h-18">
 			<div className="flex-1 min-w-0">
-				<span className="text-sm font-medium text-gray-200 wrap-break-words">
+				<span className="text-sm font-medium text-text-primary wrap-break-words">
 					<OptionNameDisplay name={baseName} />
 				</span>
 			</div>

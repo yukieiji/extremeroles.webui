@@ -27,7 +27,7 @@ export function RoleCategoryAccordion({
 			data-testid="role-category"
 		>
 			<div
-				className={`flex items-center ${!disable ? "hover:bg-gray-700 transition-colors" : ""}`}
+				className={`flex items-center ${!disable ? "hover:bg-gray-100 transition-colors" : ""}`}
 			>
 				<button
 					type="button"
@@ -41,13 +41,13 @@ export function RoleCategoryAccordion({
 					disabled={disable}
 				>
 					{disable ? (
-						<div className="w-5 h-5 flex items-center justify-center text-gray-500 font-bold">
+						<div className="w-5 h-5 flex items-center justify-center text-text-tertiary font-bold">
 							<Dot size={18} aria-hidden="true" />
 						</div>
 					) : (
-						<AccordionSvg isOpen={isOpen} className="w-5 h-5 text-gray-400" />
+						<AccordionSvg isOpen={isOpen} className="w-5 h-5 text-text-tertiary" />
 					)}
-					<span className="font-semibold text-gray-200">{text}</span>
+					<span className="font-semibold text-text-primary">{text}</span>
 				</button>
 
 				<div className="flex items-center px-4">{spawnControl}</div>
