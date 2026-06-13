@@ -28,83 +28,89 @@ function Home() {
       <section>
         <h2 className="text-xl font-bold mb-6 border-b pb-2">Color Matrix</h2>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main Display: Neutral 1 + Text Colors */}
-          <div className="flex-1 space-y-4">
-            <div className={`${NEUTRAL_COLORS.neutral1.bg} ${NEUTRAL_COLORS.neutral1.border} border rounded-xl p-8 shadow-sm min-h-[200px] flex flex-col justify-center`}>
-              <div className="mb-4">
-                <span className="text-[10px] font-mono text-gray-400 uppercase">Neutral 1 (Main Background)</span>
-                <h3 className="text-sm font-bold text-gray-400">BASIC_TEXT_COLOR</h3>
-              </div>
-              <div className="space-y-3">
-                <p className={`${BASIC_TEXT_COLOR.textPrimary} text-2xl font-extrabold`}>
-                  Primary Text: The quick brown fox
-                </p>
-                <p className={`${BASIC_TEXT_COLOR.textSecondary} text-lg font-medium`}>
-                  Secondary Text: jumps over the lazy dog.
-                </p>
-                <p className={`${BASIC_TEXT_COLOR.textTertiary}`}>
-                  Tertiary Text: 1234567890 !@#$%^&*()
-                </p>
-              </div>
-              <div className="mt-8 pt-4 border-t border-gray-100 flex items-center gap-6">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono text-gray-400 uppercase">Search Highlight</span>
-                  <div className={`px-4 py-1.5 border rounded-md ring-2 ${SEARCH_HIGHLIGHT_COLOR.ring} inline-block bg-white text-sm font-medium`}>
-                    Highlighted Item
-                  </div>
-                </div>
-                <span className="text-xs font-mono text-gray-400 self-end mb-1">Duration: {SEARCH_HIGHLIGHT_COLOR.duration}ms</span>
-              </div>
+        <div className="space-y-1">
+          {/* Top Row: Primary + Semantic */}
+          <div className="grid grid-cols-4 gap-1">
+            <div className={`${PRIMARY_ACTION_COLOR.primary} row-span-2 rounded border border-gray-300 p-4 min-h-[160px] flex flex-col items-center justify-center text-white`}>
+              <span className="font-bold text-sm">PRIMARY_ACTION_COLOR</span>
+              <span className="text-[10px] opacity-80 mt-2">primary</span>
             </div>
-
-            {/* Other Neutrals (2-7) */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {[
-                NEUTRAL_COLORS.neutral2,
-                NEUTRAL_COLORS.neutral3,
-                NEUTRAL_COLORS.neutral4,
-                NEUTRAL_COLORS.neutral5,
-                NEUTRAL_COLORS.neutral6,
-                NEUTRAL_COLORS.neutral7
-              ].map((data, i) => (
-                <div key={i} className="flex flex-col items-center gap-1 min-w-[80px]">
-                  <div
-                    className={`w-full h-12 rounded border ${data.bg} ${data.border}`}
-                    title={data.description}
-                  ></div>
-                  <span className="text-[10px] font-mono">Neutral {i + 2}</span>
-                  <span className="text-[10px] font-mono text-gray-400">{data.hex}</span>
-                </div>
-              ))}
+            <div
+              className="rounded border border-gray-300 p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.error }}
+            >
+              <span className="text-xs font-bold">Error</span>
+              <span className="text-[10px] opacity-80">{SEMANTIC_COLORS.error}</span>
+            </div>
+            <div
+              className="rounded border border-gray-300 p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.warning }}
+            >
+              <span className="text-xs font-bold">Warning</span>
+              <span className="text-[10px] opacity-80">{SEMANTIC_COLORS.warning}</span>
+            </div>
+            <div
+              className="rounded border border-gray-300 p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.success }}
+            >
+              <span className="text-xs font-bold">Success</span>
+              <span className="text-[10px] opacity-80">{SEMANTIC_COLORS.success}</span>
+            </div>
+            <div
+              className="col-span-3 rounded border border-gray-300 p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.info }}
+            >
+              <span className="text-xs font-bold">info</span>
+              <span className="text-[10px] opacity-80">{SEMANTIC_COLORS.info}</span>
             </div>
           </div>
 
-          {/* Action & Semantic Colors (Adjacent) */}
-          <div className="w-full lg:w-72 space-y-4">
-             <div className="flex flex-col gap-2">
-                <div className={`${PRIMARY_ACTION_COLOR.primary} h-24 rounded-lg flex flex-col items-center justify-center text-white p-4 shadow-md`}>
-                  <span className="text-xs opacity-80 font-mono">Primary Action</span>
-                  <span className="font-bold text-lg">Save Changes</span>
-                </div>
-                <div className={`${PRIMARY_ACTION_COLOR.hover} h-10 rounded-lg flex items-center justify-center text-white text-sm opacity-90`}>
-                  Hover State
+          {/* Middle Row: Neutral 1 + Text/Highlight */}
+          <div
+            className="rounded border border-gray-300 p-6 min-h-[140px]"
+            style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex }}
+          >
+            <div className="mb-4 text-sm font-bold text-gray-500">Neutral1</div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <span className="text-xs text-gray-400">SearchhighlightColor:</span>
+                <div className={`px-4 py-1 border rounded ring-2 ${SEARCH_HIGHLIGHT_COLOR.ring} bg-white text-xs`}>
+                  Highlighted Item
                 </div>
               </div>
+              <div className="flex items-center gap-4">
+                <span className="text-xs text-gray-400">TextColor:</span>
+                <div className="flex gap-4">
+                  <span className={`${BASIC_TEXT_COLOR.textPrimary} font-bold text-sm`}>Primary</span>
+                  <span className={`${BASIC_TEXT_COLOR.textSecondary} text-sm`}>Secondary</span>
+                  <span className={`${BASIC_TEXT_COLOR.textTertiary} text-sm`}>Tertiary</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                {Object.entries(SEMANTIC_COLORS).map(([name, hex]) => (
-                  <div key={name} className="flex flex-col gap-1">
-                    <div
-                      className="h-16 rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-sm"
-                      style={{ backgroundColor: hex }}
-                    >
-                      {name.toUpperCase()}
-                    </div>
-                    <span className="text-[10px] font-mono text-center text-gray-500">{hex}</span>
-                  </div>
-                ))}
-              </div>
+          {/* Bottom Row: Neutrals 2-7 */}
+          <div className="grid grid-cols-6 gap-1">
+            {[
+              NEUTRAL_COLORS.neutral2,
+              NEUTRAL_COLORS.neutral3,
+              NEUTRAL_COLORS.neutral4,
+              NEUTRAL_COLORS.neutral5,
+              NEUTRAL_COLORS.neutral6,
+              NEUTRAL_COLORS.neutral7
+            ].map((data, i) => {
+              const isDark = i >= 4; // Neutral 6 and 7
+              return (
+                <div
+                  key={i}
+                  className="rounded border border-gray-300 p-4 h-20 flex flex-col justify-between"
+                  style={{ backgroundColor: data.hex }}
+                >
+                  <span className={`text-[10px] font-semibold ${isDark ? 'text-white opacity-90' : 'text-gray-500'}`}>Neutral {i + 2}</span>
+                  <span className={`text-[10px] font-mono ${isDark ? 'text-white opacity-70' : 'text-gray-400'}`}>{data.hex}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -147,22 +153,27 @@ function Home() {
       {/* Spacing Matrix */}
       <section>
         <h2 className="text-xl font-bold mb-6 border-b pb-2">Spacing Matrix</h2>
-        <div className="flex flex-wrap items-end gap-8">
+        <div className="space-y-8">
           {Object.entries(GRID_SYSTEM.spacing).map(([name, grid]) => (
-            <div key={name} className="flex flex-col items-center gap-2">
-              <div
-                className={`bg-blue-200 border border-blue-400 rounded`}
-                style={{ width: grid.px, height: grid.px }}
-                title={grid.description}
-              ></div>
-              <div className="flex flex-col items-center">
-                <span className="text-sm font-bold uppercase">{name}</span>
-                <span className="text-[10px] font-mono text-gray-500">{grid.px} ({grid.value})</span>
+            <div key={name} className="space-y-2">
+              <div className="flex items-center gap-2">
+                 <span className="text-sm font-bold uppercase w-8">{name}</span>
+                 <span className="text-[10px] font-mono text-gray-500">{grid.px} ({grid.value})</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
+                <div
+                  className="bg-blue-200 border-x border-blue-400 h-8 flex items-center justify-center text-[10px] text-blue-600 font-bold overflow-hidden"
+                  style={{ width: grid.px }}
+                >
+                </div>
+                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
+                <span className="ml-4 text-xs text-gray-500 italic">{grid.description}</span>
               </div>
             </div>
           ))}
         </div>
-        <p className="mt-6 text-sm text-gray-500 italic">{GRID_SYSTEM.description}</p>
+        <p className="mt-8 text-sm text-gray-500 italic border-t pt-4">{GRID_SYSTEM.description}</p>
       </section>
     </div>
   );
