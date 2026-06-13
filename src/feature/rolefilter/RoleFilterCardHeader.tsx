@@ -104,7 +104,7 @@ export function RoleFilterCardHeader({
 	return (
 		<>
 			<div className="flex items-center gap-2">
-				<span className="text-sm font-semibold text-gray-700">
+				<span className="text-sm font-semibold text-text-primary">
 					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
 				<div className="flex flex-col gap-0.5">

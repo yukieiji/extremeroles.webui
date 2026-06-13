@@ -18,7 +18,9 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 				<DialogTitle>{title}</DialogTitle>
 			</DialogHeader>
 			<div className="grid gap-4 py-4">
-				<p className="text-sm text-gray-500">設定項目は現在準備中です。</p>
+				<p className="text-sm text-text-secondary">
+					設定項目は現在準備中です。
+				</p>
 			</div>
 		</DialogContent>
 	);

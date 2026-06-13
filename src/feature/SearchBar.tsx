@@ -75,7 +75,7 @@ export function SearchBar() {
 				render={
 					<InputGroup className="w-64">
 						<InputGroupAddon align="inline-start">
-							<Search className="size-4 text-muted-foreground" />
+							<Search className="size-4 text-text-tertiary" />
 						</InputGroupAddon>
 						<InputGroupInput
 							placeholder={OPTION_SEARCH_PLACEHOLDER}

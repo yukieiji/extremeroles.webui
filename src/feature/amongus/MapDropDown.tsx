@@ -48,7 +48,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 					<div className="flex items-center gap-3">
 						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
 						<div className="w-5" />
-						<span className="font-semibold text-gray-200">
+						<span className="font-semibold text-text-primary">
 							{optionMeta.title}
 						</span>
 					</div>

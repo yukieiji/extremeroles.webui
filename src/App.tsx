@@ -99,13 +99,13 @@ function MainContent() {
 		>
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-5 flex-1 p-4">
-					<h2 className="text-2xl font-bold whitespace-nowrap">
+					<h2 className="text-2xl font-bold whitespace-nowrap text-text-primary">
 						{titleMap[selectedTab]}
 					</h2>
 					{selectedTab === "ExR" && (
 						<Suspense
 							fallback={
-								<div className="w-48 h-8 bg-gray-700 animate-pulse rounded" />
+								<div className="w-48 h-8 bg-gray-100 animate-pulse rounded" />
 							}
 						>
 							<PresetSelectorContainer />

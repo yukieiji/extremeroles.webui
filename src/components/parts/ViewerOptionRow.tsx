@@ -33,11 +33,11 @@ export function ViewerOptionRow({
 			style={{ paddingLeft }}
 			title={VIEWER_ROW_TITLE}
 		>
-			<span className="text-sm text-gray-300 flex-1 text-left group-hover:text-white transition-colors">
+			<span className="text-sm text-text-primary flex-1 text-left transition-colors">
 				{title}
 			</span>
 			<div className="flex items-center gap-1 shrink-0">
-				<div className="text-sm text-blue-400 font-medium text-right">
+				<div className="text-sm text-text-primary font-medium text-right">
 					{value}
 				</div>
 			</div>

@@ -20,7 +20,7 @@ export function PresetDropdownItem({ index, value }: PresetDropdownItemProps) {
 			<div className="flex justify-between items-center w-full">
 				<span>{name}</span>
 				{name !== String(value) && (
-					<span className="text-xs opacity-50 ml-2">({value})</span>
+					<span className="text-xs text-text-secondary ml-2">({value})</span>
 				)}
 			</div>
 		</SelectItem>

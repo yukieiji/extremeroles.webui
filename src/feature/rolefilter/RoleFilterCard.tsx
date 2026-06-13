@@ -87,7 +87,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 				);
 			})}
 			{filterSet.Roles.length === 0 && (
-				<span className="text-sm text-gray-400 italic">
+				<span className="text-sm text-text-tertiary italic">
 					{ROLE_FILTER_NO_ROLES}
 				</span>
 			)}

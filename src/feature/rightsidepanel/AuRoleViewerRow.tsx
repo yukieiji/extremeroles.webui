@@ -46,9 +46,11 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 			title={categoryMeta?.name ?? ""}
 			value={
 				<div className="flex items-center gap-2">
-					<span className="text-blue-400">{chanceValue.toString()}%</span>
-					<span className="text-gray-500">/</span>
-					<span className="text-blue-400">{maxCountValue.toString()}</span>
+					<span className="text-text-secondary">{chanceValue.toString()}%</span>
+					<span className="text-text-secondary">/</span>
+					<span className="text-text-secondary">
+						{maxCountValue.toString()}
+					</span>
 				</div>
 			}
 			onDoubleClick={navigateToOption}
