@@ -41,7 +41,7 @@ function RoleCategoryAccordionMock({
           <span className={`${TYPOGRAPHY.label.size} font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>
             {title}
           </span>
-          <span className={`${DATA_FONT.family} ${DATA_FONT.size} ${BASIC_TEXT_COLOR.textTertiary} ml-2`}>
+          <span className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary} ml-2`}>
             ({id})
           </span>
         </button>
@@ -85,10 +85,10 @@ function OptionRowMock({
         </span>
       </div>
       <div className="shrink-0 flex items-center gap-2">
-        <div className={`${DATA_FONT.family} ${DATA_FONT.size} ${DATA_FONT.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
+        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
           {value}
         </div>
-        <div className={`${DATA_FONT.family} ${DATA_FONT.size} ${BASIC_TEXT_COLOR.textSecondary}`}>
+        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textSecondary}`}>
           {format}
         </div>
         <Info size={14} style={{ color: SEMANTIC_COLORS.info }} />
@@ -132,10 +132,10 @@ function ChildOptionViewAccordionMock({
             {label}
           </span>
           <div className="shrink-0 flex items-center gap-2">
-            <div className={`${DATA_FONT.family} ${DATA_FONT.size} ${DATA_FONT.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
+            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
               {value}
             </div>
-            <div className={`${DATA_FONT.family} ${DATA_FONT.size} ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textSecondary}`}>
               {format}
             </div>
           </div>
@@ -169,7 +169,7 @@ export default function DataFont() {
               </div>
               <div>
                 <p className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary} mb-1`}>Data Font (Mono)</p>
-                <p className={`${DATA_FONT.family} ${DATA_FONT.size} ${BASIC_TEXT_COLOR.textPrimary}`}>
+                <p className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${BASIC_TEXT_COLOR.textPrimary}`}>
                   0123456789 ABCDEFGHIJKLMN
                 </p>
               </div>
