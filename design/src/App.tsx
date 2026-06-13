@@ -161,7 +161,7 @@ function Home() {
             <div key={name} className="space-y-2">
               <div className="flex items-center gap-2">
                  <span className="text-sm font-bold uppercase w-8">{name}</span>
-                 <span className="text-[10px] font-mono text-gray-500">{grid.px} ({grid.value})</span>
+                 <span className="px-5 text-[10px] font-mono text-gray-500">{grid.px} ({grid.value})</span>
               </div>
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>

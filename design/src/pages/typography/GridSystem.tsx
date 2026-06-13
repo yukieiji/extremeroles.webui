@@ -65,7 +65,7 @@ function VisualAidOverlay({
       }}
     >
         <div className="absolute inset-0 flex items-center justify-center">
-             <span className={`text-[10px] text-blue-600 font-bold bg-white/80 ${GRID_SYSTEM.spacing.xs.paddingX} rounded shadow-sm`}>
+             <span className={`text-[10px] text-blue-600 font-bold bg-white/80 ${GRID_SYSTEM.spacing.small.paddingX} rounded shadow-sm`}>
                 {label || `${level.toUpperCase()} (${spacingValue})`}
              </span>
         </div>
@@ -96,16 +96,16 @@ function SidebarMock({
         NEUTRAL_COLORS.neutral2.bg
       } transition-all duration-300 h-full shadow-sm`}
     >
-      <div className={`flex flex-row items-center justify-end ${GRID_SYSTEM.spacing.s.padding}`}>
+      <div className={`flex flex-row items-center justify-end ${GRID_SYSTEM.spacing.base.padding}`}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`${GRID_SYSTEM.spacing.xs.padding} rounded cursor-pointer ${NEUTRAL_COLORS.neutral3.hover} transition-colors ${BASIC_TEXT_COLOR.textSecondary}`}
+          className={`${GRID_SYSTEM.spacing.small.padding} rounded cursor-pointer ${NEUTRAL_COLORS.neutral3.hover} transition-colors ${BASIC_TEXT_COLOR.textSecondary}`}
         >
           {isOpen ? <ChevronLeft size={16} /> : <Menu size={16} />}
         </button>
       </div>
       <div className="flex-1 overflow-y-auto">
-        <div className={`flex flex-col ${GRID_SYSTEM.spacing.xs.gap} ${GRID_SYSTEM.spacing.s.paddingX}`}>
+        <div className={`flex flex-col ${GRID_SYSTEM.spacing.small.gap} ${GRID_SYSTEM.spacing.base.paddingX}`}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -113,7 +113,7 @@ function SidebarMock({
               className={`w-full flex items-center cursor-pointer transition-colors rounded ${
                 NEUTRAL_COLORS.neutral3.hover
               } ${activeTab === tab.id ? NEUTRAL_COLORS.neutral4.bg : ""} ${
-                isOpen ? `${GRID_SYSTEM.spacing.m.paddingX} ${GRID_SYSTEM.spacing.s.paddingY}` : "h-10 justify-center"
+                isOpen ? `${GRID_SYSTEM.spacing.large.paddingX} ${GRID_SYSTEM.spacing.base.paddingY}` : "h-10 justify-center"
               }`}
             >
               {isOpen ? (
@@ -133,11 +133,11 @@ function SidebarMock({
           ))}
         </div>
       </div>
-      <div className={`${GRID_SYSTEM.spacing.s.padding} border-t ${NEUTRAL_COLORS.neutral4.border}`}>
+      <div className={`${GRID_SYSTEM.spacing.base.padding} border-t ${NEUTRAL_COLORS.neutral4.border}`}>
         <button
-          className={`w-full flex items-center ${GRID_SYSTEM.spacing.m.gap} cursor-pointer transition-colors rounded ${
+          className={`w-full flex items-center ${GRID_SYSTEM.spacing.large.gap} cursor-pointer transition-colors rounded ${
             NEUTRAL_COLORS.neutral3.hover
-          } ${isOpen ? `${GRID_SYSTEM.spacing.m.paddingX} ${GRID_SYSTEM.spacing.s.paddingY}` : "h-10 justify-center"}`}
+          } ${isOpen ? `${GRID_SYSTEM.spacing.large.paddingX} ${GRID_SYSTEM.spacing.base.paddingY}` : "h-10 justify-center"}`}
         >
           <Settings size={20} className={`shrink-0 ${BASIC_TEXT_COLOR.textSecondary}`} />
           {isOpen && (
@@ -158,24 +158,24 @@ function SidebarMock({
  */
 function MainHeader() {
   return (
-    <div className={`flex items-center ${GRID_SYSTEM.spacing.l.padding} ${GRID_SYSTEM.spacing.l.gap} border-b ${NEUTRAL_COLORS.neutral4.border}`}>
+    <div className={`flex items-center ${GRID_SYSTEM.spacing.xLarge.padding} ${GRID_SYSTEM.spacing.xLarge.gap} border-b ${NEUTRAL_COLORS.neutral4.border}`}>
       <h2 className="text-2xl font-bold whitespace-nowrap flex-1">Extreme Roles Options</h2>
 
-      <div className={`flex items-center ${GRID_SYSTEM.spacing.s.gap} flex-1 max-w-md border ${NEUTRAL_COLORS.neutral5.border} rounded ${GRID_SYSTEM.spacing.s.paddingX} ${GRID_SYSTEM.spacing.xs.paddingY} ${NEUTRAL_COLORS.neutral1.bg}`}>
+      <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} flex-1 max-w-md border ${NEUTRAL_COLORS.neutral5.border} rounded ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} ${NEUTRAL_COLORS.neutral1.bg}`}>
         <Search size={18} className="text-gray-400" />
         <input type="text" placeholder="Search..." className="bg-transparent outline-none w-full text-sm" />
       </div>
 
-      <div className={`flex items-center ${GRID_SYSTEM.spacing.s.gap}`}>
-        <button className={`flex items-center ${GRID_SYSTEM.spacing.s.gap} ${GRID_SYSTEM.spacing.s.paddingX} ${GRID_SYSTEM.spacing.xs.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
+      <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap}`}>
+        <button className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
           <Upload size={18} />
           <span className={TYPOGRAPHY.label.size}>Import</span>
         </button>
-        <button className={`flex items-center ${GRID_SYSTEM.spacing.s.gap} ${GRID_SYSTEM.spacing.s.paddingX} ${GRID_SYSTEM.spacing.xs.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
+        <button className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
           <Download size={18} />
           <span className={TYPOGRAPHY.label.size}>Export</span>
         </button>
-        <button className={`${GRID_SYSTEM.spacing.s.padding} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
+        <button className={`${GRID_SYSTEM.spacing.base.padding} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
            <RefreshCw size={18} />
         </button>
       </div>
@@ -202,19 +202,19 @@ function RoleCategoryAccordionMock({
   return (
     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg}`}>
       <div className={`flex items-center ${NEUTRAL_COLORS.neutral3.hover} transition-colors relative`}>
-        {showVisualAid && <VisualAidOverlay level="l" />}
+        {showVisualAid && <VisualAidOverlay level="large" />}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`flex-1 flex items-center ${GRID_SYSTEM.spacing.s.gap} ${GRID_SYSTEM.spacing.l.padding} text-left cursor-pointer`}
+          className={`flex-1 flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.xLarge.padding} text-left cursor-pointer`}
         >
           <div className="w-5 h-5 flex items-center justify-center">
             {isOpen ? <ChevronDown size={20} className={BASIC_TEXT_COLOR.textTertiary} /> : <ChevronRight size={20} className={BASIC_TEXT_COLOR.textTertiary} />}
           </div>
-          <span className={`${TYPOGRAPHY.label.size} font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>
+          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
             {text}
           </span>
         </button>
-        <div className={`${GRID_SYSTEM.spacing.l.paddingX} flex items-center`}>
+        <div className={`${GRID_SYSTEM.spacing.xLarge.paddingX} flex items-center`}>
            <div className={`w-8 h-8 rounded-full border ${NEUTRAL_COLORS.neutral4.border} flex items-center justify-center ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textSecondary} ${DATA_FONT.family}`}>
              0
            </div>
@@ -246,17 +246,17 @@ function OptionRowMock({
   const paddingLeft = `${depth * 0.5 + 0.375}rem`;
 
   return (
-    <div className={`${GRID_SYSTEM.spacing.xs.paddingY} ${NEUTRAL_COLORS.neutral3.hover} transition-colors group relative`}>
+    <div className={`${GRID_SYSTEM.spacing.small.paddingY} ${NEUTRAL_COLORS.neutral3.hover} transition-colors group relative`}>
       <div className="flex items-stretch" style={{ paddingLeft }}>
         <div className="flex items-center justify-center w-10 shrink-0">
            <div className={`w-4 h-4 rounded border ${NEUTRAL_COLORS.neutral5.border}`} />
         </div>
-        <div className={`flex-1 min-w-0 flex items-center justify-between ${GRID_SYSTEM.spacing.l.paddingRight} h-10`}>
-           <span className={`${TYPOGRAPHY.label.size} ${BASIC_TEXT_COLOR.textPrimary}`}>
+        <div className={`flex-1 min-w-0 flex items-center justify-between ${GRID_SYSTEM.spacing.xLarge.paddingRight} h-10`}>
+           <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
              {label}
            </span>
-           <div className={`flex items-center ${GRID_SYSTEM.spacing.s.gap}`}>
-             <div className={`${GRID_SYSTEM.spacing.s.paddingX} ${GRID_SYSTEM.spacing.xs.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textPrimary} ${DATA_FONT.family}`}>
+           <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap}`}>
+             <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textPrimary} ${DATA_FONT.family}`}>
                 {value}
              </div>
              <Info size={14} className={BASIC_TEXT_COLOR.textTertiary} />
@@ -275,18 +275,18 @@ export default function GridSystem() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className={`${GRID_SYSTEM.spacing.l.padding} ${GRID_SYSTEM.spacing.l.gap} flex flex-col ${NEUTRAL_COLORS.neutral1.bg} min-h-screen pb-24`}>
+    <div className={`${GRID_SYSTEM.spacing.xLarge.padding} ${GRID_SYSTEM.spacing.xLarge.gap} flex flex-col ${NEUTRAL_COLORS.neutral1.bg} min-h-screen pb-24`}>
       <section>
         <div className="flex justify-between items-start">
           <div>
-            <h2 className={`text-2xl font-bold ${GRID_SYSTEM.spacing.l.marginBottom} ${BASIC_TEXT_COLOR.textPrimary}`}>グリッドシステム</h2>
+            <h2 className={`text-2xl font-bold ${GRID_SYSTEM.spacing.xLarge.marginBottom} ${BASIC_TEXT_COLOR.textPrimary}`}>グリッドシステム</h2>
             <p className={`${BASIC_TEXT_COLOR.textSecondary} max-w-2xl`}>
               余白を8の倍数で固定し、ルールに基づいて項目間の距離を制御します。
             </p>
           </div>
           <button
             onClick={() => setShowVisualAid(!showVisualAid)}
-            className={`${GRID_SYSTEM.spacing.l.paddingX} ${GRID_SYSTEM.spacing.s.paddingY} rounded border transition-colors ${
+            className={`${GRID_SYSTEM.spacing.xLarge.paddingX} ${GRID_SYSTEM.spacing.base.paddingY} rounded border transition-colors ${
               showVisualAid
                 ? "bg-blue-100 border-blue-300 text-blue-700 font-bold"
                 : `${NEUTRAL_COLORS.neutral1.bg} border-neutral-300 text-neutral-600 hover:bg-neutral-50`
@@ -298,7 +298,7 @@ export default function GridSystem() {
       </section>
 
       {/* アプリ全体の構成例 */}
-      <section className={`${GRID_SYSTEM.spacing.l.gap} flex flex-col`}>
+      <section className={`${GRID_SYSTEM.spacing.xLarge.gap} flex flex-col`}>
         <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>全体レイアウト構造 (Layout Structure)</h3>
         <p className={BASIC_TEXT_COLOR.textSecondary}>
           サイドバー、タブ（Selector）、メインコンテンツの配置とそれらの間の余白を確認できます。
@@ -315,7 +315,7 @@ export default function GridSystem() {
                 {["General", "Roles", "System"].map((tab, i) => (
                   <div
                     key={tab}
-                    className={`${GRID_SYSTEM.spacing.l.paddingX} ${GRID_SYSTEM.spacing.s.paddingY} ${TYPOGRAPHY.tab.size} ${
+                    className={`${GRID_SYSTEM.spacing.xLarge.paddingX} ${GRID_SYSTEM.spacing.base.paddingY} ${TYPOGRAPHY.tab.size} ${
                       i === 1
                         ? `${BASIC_TEXT_COLOR.textPrimary} border-b-2 border-blue-500 font-bold`
                         : BASIC_TEXT_COLOR.textSecondary
@@ -328,28 +328,28 @@ export default function GridSystem() {
             </div>
 
             {/* Main View Area */}
-            <div className={`flex-1 overflow-y-auto ${GRID_SYSTEM.spacing.l.padding} ${NEUTRAL_COLORS.neutral2.bg} relative`}>
-               <div className={`flex flex-col ${GRID_SYSTEM.spacing.l.gap}`}>
+            <div className={`flex-1 overflow-y-auto ${GRID_SYSTEM.spacing.xLarge.padding} ${NEUTRAL_COLORS.neutral2.bg} relative`}>
+               <div className={`flex flex-col ${GRID_SYSTEM.spacing.xLarge.gap}`}>
                   <RoleCategoryAccordionMock text="役職設定" showVisualAid={showVisualAid}>
                      <OptionRowMock label="インポスターの数" value="2" showVisualAid={showVisualAid} />
-                     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg ${NEUTRAL_COLORS.neutral1.bg} ${GRID_SYSTEM.spacing.s.padding}`}>
-                        <div className={`flex items-center ${GRID_SYSTEM.spacing.s.gap} ${GRID_SYSTEM.spacing.xs.marginBottom}`}>
+                     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg ${NEUTRAL_COLORS.neutral1.bg} ${GRID_SYSTEM.spacing.base.padding}`}>
+                        <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.small.marginBottom}`}>
                            <ChevronRight size={16} className={BASIC_TEXT_COLOR.textTertiary} />
-                           <span className="font-bold text-sm">マッドメイト設定</span>
+                           <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight}`}>マッドメイト設定</span>
                            <div className="flex-1" />
-                           <div className={`${GRID_SYSTEM.spacing.s.paddingX} ${GRID_SYSTEM.spacing.xs.paddingY} bg-gray-100 rounded text-xs ${DATA_FONT.family}`}>ON</div>
+                           <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} bg-gray-100 rounded text-xs ${DATA_FONT.family}`}>ON</div>
                         </div>
                      </div>
                      <OptionRowMock label="クルーメイトの数" value="8" showVisualAid={showVisualAid} />
                   </RoleCategoryAccordionMock>
                   <RoleCategoryAccordionMock text="役職設定2" showVisualAid={showVisualAid}>
                      <OptionRowMock label="インポスターの数2" value="2" showVisualAid={showVisualAid} />
-                     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg ${NEUTRAL_COLORS.neutral1.bg} ${GRID_SYSTEM.spacing.s.padding}`}>
-                        <div className={`flex items-center ${GRID_SYSTEM.spacing.s.gap} ${GRID_SYSTEM.spacing.xs.marginBottom}`}>
+                     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg ${NEUTRAL_COLORS.neutral1.bg} ${GRID_SYSTEM.spacing.base.padding}`}>
+                        <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.small.marginBottom}`}>
                            <ChevronRight size={16} className={BASIC_TEXT_COLOR.textTertiary} />
-                           <span className="font-bold text-sm">マッドメイト設定</span>
+                           <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight}`}>マッドメイト設定</span>
                            <div className="flex-1" />
-                           <div className={`${GRID_SYSTEM.spacing.s.paddingX} ${GRID_SYSTEM.spacing.xs.paddingY} bg-gray-100 rounded text-xs ${DATA_FONT.family}`}>ON</div>
+                           <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} bg-gray-100 rounded text-xs ${DATA_FONT.family}`}>ON</div>
                         </div>
                      </div>
                      <OptionRowMock label="クルーメイトの数2" value="8" showVisualAid={showVisualAid} />
@@ -361,8 +361,8 @@ export default function GridSystem() {
       </section>
 
       {/* 余白のテスト・調整ガイド */}
-      <section className={`grid grid-cols-1 md:grid-cols-2 ${GRID_SYSTEM.spacing.l.gap}`}>
-        <div className={`${GRID_SYSTEM.spacing.l.gap} flex flex-col`}>
+      <section className={`grid grid-cols-1 md:grid-cols-2 ${GRID_SYSTEM.spacing.xLarge.gap}`}>
+        <div className={`${GRID_SYSTEM.spacing.xLarge.gap} flex flex-col`}>
           <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>アコーディオン・イン・アコーディオン</h3>
           <p className={BASIC_TEXT_COLOR.textSecondary}>
             階層が深くなる場合のインデントと余白のバランスを確認します。
