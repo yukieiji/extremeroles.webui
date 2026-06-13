@@ -18,6 +18,7 @@ export const PRIMARY_ACTION_COLOR = {
   // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色
   // ここを変更することで、主要なアクションボタンの色を一括で調整できます。
   primary: "bg-[#2563eb]",
+  hover: "hover:bg-[#1d4ed8]",
 };
 
 export const SEMANTIC_COLORS = {
@@ -144,4 +145,38 @@ export const LINE_HEIGHT = {
   // 行間（Line Height）の定義: 情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定。
   standard: "leading-[1.6]",
   description: "情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定します。",
+};
+
+function createGrid(size: number, description: string) {
+  return {
+    value: size,
+    px: `${4 * size}px`,
+    padding: `p-${size}`,
+    paddingX: `px-${size}`,
+    paddingY: `py-${size}`,
+    paddingTop: `pt-${size}`,
+    paddingBottom: `pb-${size}`,
+    paddingLeft: `pl-${size}`,
+    paddingRight: `pr-${size}`,
+    margin: `m-${size}`,
+    marginX: `mx-${size}`,
+    marginY: `my-${size}`,
+    marginTop: `mt-${size}`,
+    marginBottom: `mb-${size}`,
+    marginLeft: `ml-${size}`,
+    marginRight: `mr-${size}`,
+    gap: `gap-${size}`,
+    description: description
+  }
+}
+
+export const GRID_SYSTEM = {
+  // 余白を8の倍数で固定。感覚ではなくルールで項目間の距離を制御。
+  spacing: {
+    xs: createGrid(1, "超小単位。非常に密接な要素間の距離に使用します。"),
+    s: createGrid(2, "要素内の細かな余白や、密接な関係にある要素間の距離に使用します。"),
+    m: createGrid(3, "中間単位。標準より少し詰めたい場合に使用します。"),
+    l: createGrid(4, "標準単位。カードのパディングや、一般的な項目間の距離に使用します。"),
+  },
+  description: "余白を8？の倍数で固定。感覚ではなくルールで項目間の距離を制御します。",
 };
