@@ -24,13 +24,13 @@ export const PRIMARY_ACTION_COLOR = {
 
 export const SEMANTIC_COLORS = {
   // エラー色: 1300項目の中からエラー箇所を見つけ出すために必須。
-  error: "#ef4444",
+  error: "#F43F5E",
   // 警告色
-  warning: "#f59e0b",
+  warning: "#D97706",
   // 成功色
-  success: "#10b981",
+  success: "#16A34A",
   // 情報色
-  info: "#3b82f6",
+  info: "#818CF8",
 };
 
 // ニュートラルカラーの各レベルの16進数カラーコード
