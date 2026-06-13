@@ -27,7 +27,7 @@ export function AccordionBody({
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg
-					className={"w-5 h-5 text-text-tertiary "}
+					className={"w-5 h-5 text-text-primary "}
 					isOpen={isOpen}
 				/>
 				<span className="font-semibold text-text-primary">{title}</span>

@@ -47,7 +47,7 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 			value={
 				<div className="flex items-center gap-2">
 					<span className="text-text-secondary">{chanceValue.toString()}%</span>
-					<span className="text-text-tertiary">/</span>
+					<span className="text-text-secondary">/</span>
 					<span className="text-text-secondary">
 						{maxCountValue.toString()}
 					</span>

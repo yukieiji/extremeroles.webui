@@ -29,7 +29,7 @@ export function HighlightableAccordionRow({
 						<button
 							type="button"
 							onClick={onToggle}
-							className="flex items-center justify-center text-text-secondary hover:text-text-primary w-full h-full"
+							className="flex items-center justify-center text-text-primary w-full h-full"
 							aria-expanded={isOpen}
 							aria-label={isOpen ? CLOSE : OPEN}
 						>
