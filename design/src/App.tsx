@@ -9,12 +9,175 @@ import FontSizeWeight from "./pages/typography/FontSizeWeight";
 import LineHeight from "./pages/typography/LineHeight";
 import DataFont from "./pages/typography/DataFont";
 import GridSystem from "./pages/typography/GridSystem";
+import {
+  BASIC_TEXT_COLOR,
+  PRIMARY_ACTION_COLOR,
+  SEMANTIC_COLORS,
+  NEUTRAL_COLORS,
+  SEARCH_HIGHLIGHT_COLOR,
+  TYPOGRAPHY,
+  DATA_FONT,
+  LINE_HEIGHT,
+  GRID_SYSTEM,
+} from "./designConstants";
 
 function Home() {
   return (
-    <div>
-      <h2>デザイン定義チェックリスト</h2>
-      <p>メニューからセクションを選択してください。</p>
+    <div className="p-8 space-y-12">
+      {/* Color Matrix */}
+      <section>
+        <h2 className="text-xl font-bold mb-6 border-b pb-2">Color Matrix</h2>
+
+        <div className="space-y-1  border-2">
+          {/* Top Row: Primary + Semantic */}
+          <div className="grid grid-cols-4">
+            <div className={`${PRIMARY_ACTION_COLOR.primary} row-span-2 p-4 min-h-[160px] flex flex-col items-center justify-center text-white`}>
+              <span className="font-bold text-2xl">PRIMARY_ACTION_COLOR</span>
+              <span className="text-xl opacity-80 mt-2">{PRIMARY_ACTION_COLOR.primary}</span>
+            </div>
+            <div
+              className=" p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.error }}
+            >
+              <span className="text-2xl font-bold">Error</span>
+              <span className="text-xl opacity-80">{SEMANTIC_COLORS.error}</span>
+            </div>
+            <div
+              className="p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.warning }}
+            >
+              <span className="text-2xl font-bold">Warning</span>
+              <span className="text-xl opacity-80">{SEMANTIC_COLORS.warning}</span>
+            </div>
+            <div
+              className="p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.success }}
+            >
+              <span className="text-2xl font-bold">Success</span>
+              <span className="text-xl opacity-80">{SEMANTIC_COLORS.success}</span>
+            </div>
+            <div
+              className="col-span-3 p-4 flex flex-col items-center justify-center text-white"
+              style={{ backgroundColor: SEMANTIC_COLORS.info }}
+            >
+              <span className="text-2xl font-bold">info</span>
+              <span className="text-xl opacity-80">{SEMANTIC_COLORS.info}</span>
+            </div>
+          </div>
+
+          {/* Middle Row: Neutral 1 + Text/Highlight */}
+          <div
+            className="p-6 min-h-[140px] flex flex-col justify-between"
+            style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex }}
+          >
+            <span className="mb-4 text-2xl font-bold text-gray-500">Neutral1</span>
+            <span className="mb-4 text-xl font-bold text-gray-500">{NEUTRAL_COLORS.neutral1.hex}</span>
+          </div>
+
+          {/* Bottom Row: Neutrals 2-7 */}
+          <div className="grid grid-cols-6">
+            {[
+              NEUTRAL_COLORS.neutral2,
+              NEUTRAL_COLORS.neutral3,
+              NEUTRAL_COLORS.neutral4,
+              NEUTRAL_COLORS.neutral5,
+              NEUTRAL_COLORS.neutral6,
+              NEUTRAL_COLORS.neutral7
+            ].map((data, i) => {
+              const isDark = i >= 4; // Neutral 6 and 7
+              return (
+                <div
+                  key={i}
+                  className="p-4 h-20 flex flex-col justify-between"
+                  style={{ backgroundColor: data.hex }}
+                >
+                  <span className={`text-2xl font-semibold ${isDark ? 'text-white opacity-90' : 'text-gray-500'}`}>Neutral {i + 2}</span>
+                  <span className={`text-xl font-mono ${isDark ? 'text-white opacity-70' : 'text-gray-400'}`}>{data.hex}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="flex items-center gap-4">
+          <span className="text-xl text-gray-400">Search highlight Color:</span>
+          <div className={`px-4 py-1 border rounded ring-2 ${SEARCH_HIGHLIGHT_COLOR.ring} bg-white text-xl`}>
+            Highlighted Item
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="gap-4">
+          <span className="text-xl text-gray-400">TextColor:</span>
+          <div className="grid gap-4">
+            <span className={`${BASIC_TEXT_COLOR.textPrimary} font-bold text-xl`}>Primary  The Boy who Cried Wolf.  ヤオヨロ～♪!</span>
+            <span className={`${BASIC_TEXT_COLOR.textSecondary} text-xl`}>Secondary  The Boy who Cried Wolf. ヤオヨロ～♪!</span>
+            <span className={`${BASIC_TEXT_COLOR.textTertiary} text-xl`}>Tertiary   The Boy who Cried Wolf. ヤオヨロ～♪!</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Text Matrix */}
+      <section>
+        <h2 className="text-xl font-bold mb-6 border-b pb-2">Text Matrix</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="space-y-6">
+            {Object.entries(TYPOGRAPHY).map(([name, style]) => (
+              <div key={name} className="space-y-1">
+                <span className="text-[10px] font-mono text-gray-400 uppercase">{name}</span>
+                <p className={`${style.size} ${style.weight} ${LINE_HEIGHT.standard}`}>
+                  The quick brown fox jumps over the lazy dog.
+                </p>
+                <p className="text-[10px] text-gray-500 italic">{style.description}</p>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono text-gray-400 uppercase">Data Font</span>
+              <p className={`${DATA_FONT.family} text-xl border p-4 bg-gray-50 rounded`}>
+                ID: 987,654,321.00
+              </p>
+              <p className="text-[10px] text-gray-500 italic">{DATA_FONT.description}</p>
+            </div>
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono text-gray-400 uppercase">Line Height (Standard)</span>
+              <div className="border p-4 rounded">
+                <p className={`${LINE_HEIGHT.standard} text-sm max-w-sm`}>
+                  {LINE_HEIGHT.description} このテキストは行間の確認用です。複数行にわたる文章がどのように表示されるか、読みやすさをチェックしてください。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Spacing Matrix */}
+      <section>
+        <h2 className="text-xl font-bold mb-6 border-b pb-2">Spacing Matrix</h2>
+        <div className="space-y-8 flex flex-row">
+          {Object.entries(GRID_SYSTEM.spacing).map(([name, grid]) => (
+            <div key={name} className="space-y-2">
+              <div className="flex items-center gap-2">
+                 <span className="text-sm font-bold uppercase w-8">{name}</span>
+                 <span className="text-[10px] font-mono text-gray-500">{grid.px} ({grid.value})</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
+                <div
+                  className="bg-blue-200 border-x border-blue-400 h-8 flex items-center justify-center text-[10px] text-blue-600 font-bold overflow-hidden"
+                  style={{ width: grid.px }}
+                >
+                </div>
+                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
+              </div>
+              <span className="ml-4 text-xs text-gray-500 italic">{grid.description}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 text-sm text-gray-500 italic border-t pt-4">{GRID_SYSTEM.description}</p>
+      </section>
     </div>
   );
 }
