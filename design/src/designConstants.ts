@@ -17,8 +17,9 @@ export const BASIC_TEXT_COLOR = {
 export const PRIMARY_ACTION_COLOR = {
   // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色
   // ここを変更することで、主要なアクションボタンの色を一括で調整できます。
-  primary: "bg-[#2563eb]",
-  hover: "hover:bg-[#1d4ed8]",
+  primary: "bg-[#9CE1FD]",
+  hover: "hover:bg-[#9CE1FD]/80 transition-colors",
+  active: "active:bg-[#7DD3FC]",
 };
 
 export const SEMANTIC_COLORS = {
