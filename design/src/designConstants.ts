@@ -62,6 +62,7 @@ export const NEUTRAL_COLORS = {
   neutral3: {
     hex: NEUTRAL_HEX.n3,
     bg: `bg-[${NEUTRAL_HEX.n3}]`,
+    hover: `hover:bg-[${NEUTRAL_HEX.n3}]`,
     border: `border-[${NEUTRAL_HEX.n3}]`,
     description:
       "ボタンのホバー状態や、入力フィールドの背景、情報の区切りに使用します。",

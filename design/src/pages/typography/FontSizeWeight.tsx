@@ -36,7 +36,7 @@ function SidebarMock() {
       <div className="flex justify-end p-2">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-1 rounded hover:${NEUTRAL_COLORS.neutral3.bg}`}
+          className={`p-1 rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
         >
           {isOpen ? <ChevronLeft size={16} /> : <Menu size={16} />}
         </button>
@@ -48,9 +48,11 @@ function SidebarMock() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`w-full flex items-center transition-colors rounded ${
+                NEUTRAL_COLORS.neutral3.hover
+              } ${
                 activeTab === tab.id
                   ? NEUTRAL_COLORS.neutral4.bg
-                  : `hover:${NEUTRAL_COLORS.neutral3.bg}`
+                  : ""
               } ${isOpen ? "px-3 py-2" : "h-10 justify-center"}`}
             >
               {isOpen ? (
@@ -72,8 +74,8 @@ function SidebarMock() {
       </div>
       <div className={`p-2 border-t ${NEUTRAL_COLORS.neutral4.border}`}>
         <button
-          className={`w-full flex items-center gap-3 transition-colors rounded hover:${
-            NEUTRAL_COLORS.neutral3.bg
+          className={`w-full flex items-center gap-3 transition-colors rounded ${
+            NEUTRAL_COLORS.neutral3.hover
           } ${isOpen ? "px-3 py-2" : "h-10 justify-center"}`}
         >
           <Settings size={20} className="shrink-0" />
@@ -103,7 +105,7 @@ function TabMock() {
         <button
           key={tab}
           onClick={() => setActiveTab(index)}
-          className={`px-4 py-2 relative transition-colors ${
+          className={`px-4 py-2 relative transition-colors ${NEUTRAL_COLORS.neutral3.hover} ${
             activeTab === index
               ? BASIC_TEXT_COLOR.textPrimary
               : BASIC_TEXT_COLOR.textSecondary
@@ -136,7 +138,7 @@ function OptionRowMock({
 }) {
   return (
     <div
-      className={`flex items-center gap-4 p-3 border-b ${NEUTRAL_COLORS.neutral4.border} hover:${NEUTRAL_COLORS.neutral3.bg} transition-colors ${NEUTRAL_COLORS.neutral1.bg}`}
+      className={`flex items-center gap-4 p-3 border-b ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral3.hover} transition-colors ${NEUTRAL_COLORS.neutral1.bg}`}
     >
       {/* 左側: 設定名 */}
       <div className="flex-1 min-w-0">
@@ -187,7 +189,7 @@ function AccordionMock({
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full flex items-center justify-between p-3 ${NEUTRAL_COLORS.neutral2.bg} hover:${NEUTRAL_COLORS.neutral3.bg} transition-colors`}
+        className={`w-full flex items-center justify-between p-3 ${NEUTRAL_COLORS.neutral2.bg} ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
       >
         <span
           className={`${TYPOGRAPHY.label.size} font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}
