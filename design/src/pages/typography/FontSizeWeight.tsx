@@ -36,7 +36,7 @@ function SidebarMock() {
       <div className="flex justify-end p-2">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-1 rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
+          className={`p-1 rounded cursor-pointer ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
         >
           {isOpen ? <ChevronLeft size={16} /> : <Menu size={16} />}
         </button>
@@ -47,7 +47,7 @@ function SidebarMock() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center transition-colors rounded ${
+              className={`w-full flex items-center cursor-pointer transition-colors rounded ${
                 NEUTRAL_COLORS.neutral3.hover
               } ${
                 activeTab === tab.id
@@ -74,7 +74,7 @@ function SidebarMock() {
       </div>
       <div className={`p-2 border-t ${NEUTRAL_COLORS.neutral4.border}`}>
         <button
-          className={`w-full flex items-center gap-3 transition-colors rounded ${
+          className={`w-full flex items-center gap-3 cursor-pointer transition-colors rounded ${
             NEUTRAL_COLORS.neutral3.hover
           } ${isOpen ? "px-3 py-2" : "h-10 justify-center"}`}
         >
@@ -105,7 +105,7 @@ function TabMock() {
         <button
           key={tab}
           onClick={() => setActiveTab(index)}
-          className={`px-4 py-2 relative transition-colors ${NEUTRAL_COLORS.neutral3.hover} ${
+          className={`px-4 py-2 relative cursor-pointer transition-colors ${NEUTRAL_COLORS.neutral3.hover} ${
             activeTab === index
               ? BASIC_TEXT_COLOR.textPrimary
               : BASIC_TEXT_COLOR.textSecondary
@@ -138,7 +138,7 @@ function OptionRowMock({
 }) {
   return (
     <div
-      className={`flex items-center gap-4 p-3 border-b ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral3.hover} transition-colors ${NEUTRAL_COLORS.neutral1.bg}`}
+      className={`flex items-center gap-4 p-3 border-b ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral3.hover} cursor-pointer transition-colors ${NEUTRAL_COLORS.neutral1.bg}`}
     >
       {/* 左側: 設定名 */}
       <div className="flex-1 min-w-0">
@@ -189,7 +189,7 @@ function AccordionMock({
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full flex items-center justify-between p-3 ${NEUTRAL_COLORS.neutral2.bg} ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
+        className={`w-full flex items-center justify-between p-3 cursor-pointer ${NEUTRAL_COLORS.neutral2.bg} ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
       >
         <span
           className={`${TYPOGRAPHY.label.size} font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}
@@ -230,11 +230,16 @@ export default function FontSizeWeight() {
             {TYPOGRAPHY.sidebar.size} / {TYPOGRAPHY.sidebar.weight}
           </span>
         </div>
-        <p className={BASIC_TEXT_COLOR.textSecondary}>
-          {TYPOGRAPHY.sidebar.description}
-        </p>
+        <div className="space-y-1">
+          <p className={BASIC_TEXT_COLOR.textSecondary}>
+            {TYPOGRAPHY.sidebar.description}
+          </p>
+          <p className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary}`}>
+            ※ 各項目にマウスを合わせるとホバー状態（{NEUTRAL_COLORS.neutral3.hex}）を確認できます。
+          </p>
+        </div>
         <div
-          className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral3.bg} shadow-inner flex justify-center`}
+          className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner flex justify-center`}
         >
           <SidebarMock />
         </div>
@@ -250,11 +255,16 @@ export default function FontSizeWeight() {
             {TYPOGRAPHY.tab.size} / {TYPOGRAPHY.tab.weight}
           </span>
         </div>
-        <p className={BASIC_TEXT_COLOR.textSecondary}>
-          {TYPOGRAPHY.tab.description}
-        </p>
+        <div className="space-y-1">
+          <p className={BASIC_TEXT_COLOR.textSecondary}>
+            {TYPOGRAPHY.tab.description}
+          </p>
+          <p className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary}`}>
+            ※ タブにマウスを合わせるとホバー状態（{NEUTRAL_COLORS.neutral3.hex}）を確認できます。
+          </p>
+        </div>
         <div
-          className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral3.bg} shadow-inner`}
+          className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner`}
         >
           <TabMock />
         </div>
@@ -284,9 +294,12 @@ export default function FontSizeWeight() {
           <p className={BASIC_TEXT_COLOR.textSecondary}>
             {TYPOGRAPHY.small.description}
           </p>
+          <p className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary}`}>
+            ※ アコーディオンヘッダーおよび各設定行（OptionRow）にマウスを合わせるとホバー状態（{NEUTRAL_COLORS.neutral3.hex}）を確認できます。
+          </p>
         </div>
         <div
-          className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral3.bg} shadow-inner space-y-4`}
+          className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner space-y-4`}
         >
           <AccordionMock title="ゲーム設定">
             <OptionRowMock name="インポスターの数" value="2" format="x 人" />
