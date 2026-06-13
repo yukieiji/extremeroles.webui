@@ -271,12 +271,6 @@ export default function SearchHighlightColor() {
                         <span className={cn("text-sm", BASIC_TEXT_COLOR.textSecondary)}>
                           ネストされた子要素 1
                         </span>
-                        <div
-                          className="px-2 py-0.5 rounded border-2"
-                          style={{ borderColor: NEUTRAL_COLORS.neutral6.hex }}
-                        >
-                          <span className="text-[10px] font-bold">TAG</span>
-                        </div>
                       </div>
                     </div>
                   </MockHighlightWrapper>

@@ -28,7 +28,7 @@ function Home() {
       <section>
         <h2 className="text-xl font-bold mb-6 border-b pb-2">Color Matrix</h2>
 
-        <div className="space-y-1  border-2">
+        <div className="space-y-1 border-2">
           {/* Top Row: Primary + Semantic */}
           <div className="grid grid-cols-4">
             <div className={`${PRIMARY_ACTION_COLOR.primary} row-span-2 p-4 min-h-[160px] flex flex-col items-center justify-center text-white`}>
@@ -75,14 +75,12 @@ function Home() {
           </div>
 
           {/* Bottom Row: Neutrals 2-7 */}
-          <div className="grid grid-cols-6">
+          <div className="grid grid-cols-4">
             {[
               NEUTRAL_COLORS.neutral2,
               NEUTRAL_COLORS.neutral3,
               NEUTRAL_COLORS.neutral4,
               NEUTRAL_COLORS.neutral5,
-              NEUTRAL_COLORS.neutral6,
-              NEUTRAL_COLORS.neutral7
             ].map((data, i) => {
               const isDark = i >= 4; // Neutral 6 and 7
               return (

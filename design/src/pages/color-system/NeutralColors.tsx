@@ -11,8 +11,6 @@ export default function NeutralColors() {
     { key: "neutral3", label: "Level 3: Muted / Hover Background", ...NEUTRAL_COLORS.neutral3 },
     { key: "neutral4", label: "Level 4: Separator / Light Border", ...NEUTRAL_COLORS.neutral4 },
     { key: "neutral5", label: "Level 5: Border / Input Border", ...NEUTRAL_COLORS.neutral5 },
-    { key: "neutral6", label: "Level 6: Strong Border / Emphasis", ...NEUTRAL_COLORS.neutral6 },
-    { key: "neutral7", label: "Level 7: Deep Background / Shadow", ...NEUTRAL_COLORS.neutral7 },
   ];
 
   // Logic from src/logics/optionUtils.ts
@@ -83,7 +81,7 @@ export default function NeutralColors() {
               <div className="max-w-md mx-auto">
                 <Card
                   className="shadow-sm"
-                  style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex, borderColor: NEUTRAL_COLORS.neutral5.hex }}
+                  style={{ backgroundColor: NEUTRAL_COLORS.neutral4.hex, borderColor: NEUTRAL_COLORS.neutral2.hex }}
                 >
                   <CardHeader className="py-4">
                     <CardTitle className={cn("text-lg", BASIC_TEXT_COLOR.textPrimary)}>Card Layout</CardTitle>
@@ -94,7 +92,7 @@ export default function NeutralColors() {
                     </p>
                     <div
                       className="p-3 rounded border text-xs"
-                      style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex, borderColor: NEUTRAL_COLORS.neutral4.hex }}
+                      style={{ backgroundColor: NEUTRAL_COLORS.neutral4.hex, borderColor: NEUTRAL_COLORS.neutral2.hex }}
                     >
                       <p className={BASIC_TEXT_COLOR.textSecondary}>内部セクション (Lv1 BG / Lv4 Border)</p>
                     </div>
@@ -103,7 +101,7 @@ export default function NeutralColors() {
                     <Button
                       variant="outline" size="sm"
                       className={BASIC_TEXT_COLOR.textPrimary}
-                      style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex, borderColor: NEUTRAL_COLORS.neutral5.hex }}
+                      style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex, borderColor: NEUTRAL_COLORS.neutral3.hex }}
                     >
                       閉じる
                     </Button>
@@ -119,7 +117,7 @@ export default function NeutralColors() {
             <h4 className={cn("text-sm font-medium opacity-50 uppercase tracking-wider", BASIC_TEXT_COLOR.textSecondary)}>Settings List & Accordion (Compact Layout)</h4>
             <div
               className="border overflow-hidden rounded-md"
-              style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex, borderColor: NEUTRAL_COLORS.neutral5.hex }}
+              style={{ backgroundColor: NEUTRAL_COLORS.neutral5.hex, borderColor: NEUTRAL_COLORS.neutral2.hex }}
             >
               {/* Row: Level 0 Accordion */}
               <div className="py-0.5 transition-colors"
@@ -167,7 +165,7 @@ export default function NeutralColors() {
                       <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                   </div>
-                  <div className="flex-1 flex items-center justify-between pr-4 py-1.5">
+                  <div className="flex-1 flex items-center justify-between pr-4 py-1.5" >
                     <span className={cn("text-sm", BASIC_TEXT_COLOR.textSecondary)}>インデントされた子要素 (Lv1)</span>
                     <Input
                       className="w-20 h-6 text-xs"
@@ -189,9 +187,6 @@ export default function NeutralColors() {
                   <div className="w-8 shrink-0" />
                   <div className="flex-1 flex items-center justify-between pr-4 py-1.5">
                     <span className={cn("text-sm", BASIC_TEXT_COLOR.textSecondary)}>さらに深い階層 (Lv2)</span>
-                    <div className="h-5 px-1.5 rounded flex items-center justify-center border-2" style={{ borderColor: NEUTRAL_COLORS.neutral6.hex }}>
-                       <span className="text-[10px] font-bold">TAG</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -213,10 +208,6 @@ export default function NeutralColors() {
               <div className="p-4 rounded border" style={{ borderColor: NEUTRAL_COLORS.neutral5.hex, backgroundColor: NEUTRAL_COLORS.neutral1.hex }}>
                 <div className={cn("text-xs mb-2 font-mono", BASIC_TEXT_COLOR.textSecondary)}>Level 5: Border</div>
                 <div className="h-4 border rounded" style={{ borderColor: NEUTRAL_COLORS.neutral5.hex }} />
-              </div>
-              <div className="p-4 rounded border" style={{ borderColor: NEUTRAL_COLORS.neutral6.hex, backgroundColor: NEUTRAL_COLORS.neutral1.hex }}>
-                <div className={cn("text-xs mb-2 font-mono", BASIC_TEXT_COLOR.textSecondary)}>Level 6: Emphasis</div>
-                <div className="h-4 border-2 rounded" style={{ borderColor: NEUTRAL_COLORS.neutral6.hex }} />
               </div>
             </div>
           </div>

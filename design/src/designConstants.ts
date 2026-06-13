@@ -34,16 +34,19 @@ export const SEMANTIC_COLORS = {
 
 // ニュートラルカラーの各レベルの16進数カラーコード
 const NEUTRAL_HEX = {
-  n1: '#ffffff',
-  n2: '#fafafa',
-  n3: '#f5f5f5',
-  n4: '#e5e5e5',
-  n5: '#d4d4d4',
+  n1: '#F4F4F5',
+  n2: '#D0D0D6',
+  n3: '#E4E4E7',
+  n4: '#FFFFFF',
+  n5: '#FFFFFF',
   n6: '#a3a3a3',
   n7: '#737373',
 };
 
 export const NEUTRAL_COLORS = {
+
+  // ホバーした時の色はn3かn4を/40か/30で悪
+
   // Level 1: Main Background (最背面背景)
   neutral1: {
     hex: NEUTRAL_HEX.n1,
@@ -51,54 +54,38 @@ export const NEUTRAL_COLORS = {
     border: `border-[${NEUTRAL_HEX.n1}]`,
     description: "アプリ全体のメイン背景色、最背面のレイヤーに使用します。",
   },
-  // Level 2: Surface / Card Background (コンテンツ面、カード背景)
+  // Level 2: Border / Input Border (標準的な枠線)
   neutral2: {
     hex: NEUTRAL_HEX.n2,
     bg: `bg-[${NEUTRAL_HEX.n2}]`,
     border: `border-[${NEUTRAL_HEX.n2}]`,
     description:
-      "サイドバーやカード、セクションの背景など、メイン背景より一段階上のレイヤーに使用します。",
+      "外枠のボーダーと背景との枠線などの意味が異なるコンポーネントを区切る強い枠線",
   },
-  // Level 3: Muted / Hover Background (サブ背景、ホバー状態)
+  // Level 3: Separator / Light Border (区切り線、弱い枠線)
   neutral3: {
     hex: NEUTRAL_HEX.n3,
     bg: `bg-[${NEUTRAL_HEX.n3}]`,
     hover: `hover:bg-[${NEUTRAL_HEX.n3}]`,
     border: `border-[${NEUTRAL_HEX.n3}]`,
     description:
-      "ボタンのホバー状態や、入力フィールドの背景、情報の区切りに使用します。",
+      "同じ要素同士を分ける区切り線（Separator）や、非常に弱い枠線に使用します。",
   },
-  // Level 4: Separator / Light Border (区切り線、弱い枠線)
+  // Level 4: Surface / Card Background (コンテンツ面、カード背景)
   neutral4: {
     hex: NEUTRAL_HEX.n4,
     bg: `bg-[${NEUTRAL_HEX.n4}]`,
     border: `border-[${NEUTRAL_HEX.n4}]`,
     description:
-      "要素同士を分ける区切り線（Separator）や、非常に弱い枠線に使用します。",
+      "メインコンポーネントの背景",
   },
-  // Level 5: Border / Input Border (標準的な枠線)
+  // Level 5: UserInputs (標準的な枠線)
   neutral5: {
     hex: NEUTRAL_HEX.n5,
     bg: `bg-[${NEUTRAL_HEX.n5}]`,
     border: `border-[${NEUTRAL_HEX.n5}]`,
     description:
-      "入力フィールドやカードの枠線など、標準的な境界の定義に使用します。",
-  },
-  // Level 6: Strong Border / Emphasis (強い枠線、強調)
-  neutral6: {
-    hex: NEUTRAL_HEX.n6,
-    bg: `bg-[${NEUTRAL_HEX.n6}]`,
-    border: `border-[${NEUTRAL_HEX.n6}]`,
-    description:
-      "フォーカス時の枠線や、より明確な区別が必要な境界に使用します。",
-  },
-  // Level 7: Deep Background / Shadow (深い背景、強いコントラスト)
-  neutral7: {
-    hex: NEUTRAL_HEX.n7,
-    bg: `bg-[${NEUTRAL_HEX.n7}]`,
-    border: `border-[${NEUTRAL_HEX.n7}]`,
-    description:
-      "情報の階層を最も深くする場合や、強いコントラストが必要な箇所に使用します。",
+      "最前面、ユーザーが操作する場所(入力欄)",
   },
 };
 
