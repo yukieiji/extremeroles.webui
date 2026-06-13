@@ -45,7 +45,10 @@ export function RoleCategoryAccordion({
 							<Dot size={18} aria-hidden="true" />
 						</div>
 					) : (
-						<AccordionSvg isOpen={isOpen} className="w-5 h-5 text-text-tertiary" />
+						<AccordionSvg
+							isOpen={isOpen}
+							className="w-5 h-5 text-text-tertiary"
+						/>
 					)}
 					<span className="font-semibold text-text-primary">{text}</span>
 				</button>

@@ -26,7 +26,10 @@ export function AccordionBody({
 				className="w-full flex items-center gap-3 p-4 hover:bg-gray-100 transition-colors text-left cursor-pointer"
 				aria-expanded={isOpen}
 			>
-				<AccordionSvg className={"w-5 h-5 text-text-tertiary "} isOpen={isOpen} />
+				<AccordionSvg
+					className={"w-5 h-5 text-text-tertiary "}
+					isOpen={isOpen}
+				/>
 				<span className="font-semibold text-text-primary">{title}</span>
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
