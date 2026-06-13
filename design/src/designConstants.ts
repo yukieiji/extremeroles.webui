@@ -62,6 +62,7 @@ export const NEUTRAL_COLORS = {
   neutral3: {
     hex: NEUTRAL_HEX.n3,
     bg: `bg-[${NEUTRAL_HEX.n3}]`,
+    hover: `hover:bg-[${NEUTRAL_HEX.n3}]`,
     border: `border-[${NEUTRAL_HEX.n3}]`,
     description:
       "ボタンのホバー状態や、入力フィールドの背景、情報の区切りに使用します。",
@@ -105,4 +106,31 @@ export const SEARCH_HIGHLIGHT_COLOR = {
   ring: "ring-[#3b82f6]",
   // ハイライトが自動的に消えるまでの時間（ミリ秒）
   duration: 2000,
+};
+
+export const TYPOGRAPHY = {
+  // サイドバー: ナビゲーション項目
+  sidebar: {
+    size: "text-sm",
+    weight: "font-medium",
+    description: "サイドバーのナビゲーション項目に使用します。",
+  },
+  // タブ: 選択項目の切り替え
+  tab: {
+    size: "text-base",
+    weight: "font-semibold",
+    description: "タブのラベルに使用します。",
+  },
+  // ラベル: 標準的な項目のラベル表示
+  label: {
+    size: "text-base",
+    weight: "font-normal",
+    description: "標準的な項目のラベル表示に使用します。",
+  },
+  // 小: 注釈、補足説明、セカンダリテキスト
+  small: {
+    size: "text-xs",
+    weight: "font-normal",
+    description: "注釈や補足説明などのセカンダリテキストに使用します。",
+  },
 };
