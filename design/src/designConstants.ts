@@ -130,7 +130,7 @@ export const TYPOGRAPHY = {
   },
   childlabel: {
     size: "text-sm",
-    weight: "font-medium",
+    weight: "font-medium", // 組み込んだ時に見づらかったらfont-normalへ
     description: "アコーディオン内部に展開される子オプションのラベル表示に使用します",
   },
   // 小: 注釈、補足説明、セカンダリテキスト
@@ -148,7 +148,7 @@ export const DATA_FONT = {
 
 export const LINE_HEIGHT = {
   // 行間（Line Height）の定義: 情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定。
-  standard: "leading-[1.6]",
+  standard: "leading-[1.5]",
   description: "情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定します。",
 };
 

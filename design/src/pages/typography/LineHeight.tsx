@@ -35,7 +35,7 @@ function MockOptionRow({
             {/* 設定名 */}
             <div className="flex-1 min-w-0">
               <div
-                className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words whitespace-pre-wrap`}
+                className={`${TYPOGRAPHY.label.size} ${LINE_HEIGHT.standard} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words whitespace-pre-wrap`}
               >
                 {name}
               </div>
