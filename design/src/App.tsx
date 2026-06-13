@@ -100,6 +100,7 @@ function Home() {
       <section>
         <div className="flex items-center gap-4">
           <span className="text-xl text-gray-400">Search highlight Color:</span>
+          <span className="text-xl text-gray-400">{SEARCH_HIGHLIGHT_COLOR.ring}</span>
           <div className={`px-4 py-1 border rounded ring-2 ${SEARCH_HIGHLIGHT_COLOR.ring} bg-white text-xl`}>
             Highlighted Item
           </div>
@@ -109,9 +110,9 @@ function Home() {
         <div className="gap-4">
           <span className="text-xl text-gray-400">TextColor:</span>
           <div className="grid gap-4">
-            <span className={`${BASIC_TEXT_COLOR.textPrimary} font-bold text-xl`}>Primary  The Boy who Cried Wolf.  ヤオヨロ～♪!</span>
-            <span className={`${BASIC_TEXT_COLOR.textSecondary} text-xl`}>Secondary  The Boy who Cried Wolf. ヤオヨロ～♪!</span>
-            <span className={`${BASIC_TEXT_COLOR.textTertiary} text-xl`}>Tertiary   The Boy who Cried Wolf. ヤオヨロ～♪!</span>
+            <span className={`${BASIC_TEXT_COLOR.textPrimary} font-bold text-xl`}>{BASIC_TEXT_COLOR.textPrimary} Primary  The Boy who Cried Wolf.  ヤオヨロ～♪!</span>
+            <span className={`${BASIC_TEXT_COLOR.textSecondary} text-xl`}>{BASIC_TEXT_COLOR.textSecondary} Secondary  The Boy who Cried Wolf. ヤオヨロ～♪!</span>
+            <span className={`${BASIC_TEXT_COLOR.textTertiary} text-xl`}>{BASIC_TEXT_COLOR.textTertiary} Tertiary   The Boy who Cried Wolf. ヤオヨロ～♪!</span>
           </div>
         </div>
       </section>
