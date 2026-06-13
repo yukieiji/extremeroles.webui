@@ -27,6 +27,7 @@ export function CategoryContainer({
 				backgroundOrigin: "border-box",
 				backgroundClip: "padding-box, border-box",
 				border: "2px solid transparent",
+				borderTopColor: gradient, // For E2E tests
 			};
 		}
 		return {
