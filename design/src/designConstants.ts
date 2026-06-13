@@ -145,3 +145,38 @@ export const LINE_HEIGHT = {
   standard: "leading-[1.6]",
   description: "情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定します。",
 };
+
+export const GRID_SYSTEM = {
+  // 余白を8の倍数で固定。感覚ではなくルールで項目間の距離を制御。
+  spacing: {
+    s: {
+      value: "8px",
+      padding: "p-2",
+      margin: "m-2",
+      gap: "gap-2",
+      description: "最小単位（8px）。要素内の細かな余白や、密接な関係にある要素間の距離に使用します。",
+    },
+    m: {
+      value: "16px",
+      padding: "p-4",
+      margin: "m-4",
+      gap: "gap-4",
+      description: "標準（16px）。カードのパディングや、一般的な項目間の距離に使用します。",
+    },
+    l: {
+      value: "24px",
+      padding: "p-6",
+      margin: "m-6",
+      gap: "gap-6",
+      description: "広め（24px）。セクション間の区切りや、大きなグループの余白に使用します。",
+    },
+    xl: {
+      value: "32px",
+      padding: "p-8",
+      margin: "m-8",
+      gap: "gap-8",
+      description: "最大（32px）。大きな画面領域の区切りや、非常に強い視覚的分離が必要な場合に使用します。",
+    },
+  },
+  description: "余白を8の倍数で固定。感覚ではなくルールで項目間の距離を制御します。",
+};
