@@ -143,7 +143,7 @@ function OptionRowMock({
       {/* 左側: 設定名 */}
       <div className="flex-1 min-w-0">
         <span
-          className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words`}
+          className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words`}
         >
           {name}
         </span>
@@ -152,7 +152,7 @@ function OptionRowMock({
       {/* 右側: 設定値 & フォーマット */}
       <div className="shrink-0 flex items-center gap-2">
         <div
-          className={`px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} min-w-[3.5rem] text-center`}
+          className={`px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} ${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight} ${BASIC_TEXT_COLOR.textPrimary} min-w-[3.5rem] text-center`}
         >
           {value}
         </div>

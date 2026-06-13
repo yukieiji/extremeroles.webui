@@ -112,21 +112,26 @@ export const SEARCH_HIGHLIGHT_COLOR = {
 export const TYPOGRAPHY = {
   // サイドバー: ナビゲーション項目
   sidebar: {
-    size: "text-sm",
-    weight: "font-medium",
+    size: "text-base",
+    weight: "font-semibold",
     description: "サイドバーのナビゲーション項目に使用します。",
   },
   // タブ: 選択項目の切り替え
   tab: {
     size: "text-base",
-    weight: "font-semibold",
+    weight: "font-medium",
     description: "タブのラベルに使用します。",
   },
   // ラベル: 標準的な項目のラベル表示
   label: {
     size: "text-base",
     weight: "font-normal",
-    description: "標準的な項目のラベル表示に使用します。",
+    description: "ヘッダー等の標準的な項目のラベル表示に使用します。",
+  },
+  childlabel: {
+    size: "text-sm",
+    weight: "font-medium",
+    description: "アコーディオン内部に展開される子オプションのラベル表示に使用します",
   },
   // 小: 注釈、補足説明、セカンダリテキスト
   small: {
