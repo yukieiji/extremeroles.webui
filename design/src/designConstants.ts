@@ -134,3 +134,9 @@ export const TYPOGRAPHY = {
     description: "注釈や補足説明などのセカンダリテキストに使用します。",
   },
 };
+
+export const LINE_HEIGHT = {
+  // 行間（Line Height）の定義: 情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定。
+  standard: "leading-[1.6]",
+  description: "情報密度が高いため、詰まりすぎず、かつ離れすぎない最適な行間（1.5〜1.7倍）を設定します。",
+};
