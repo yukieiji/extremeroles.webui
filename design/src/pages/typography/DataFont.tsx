@@ -27,7 +27,7 @@ function RoleCategoryAccordionMock({
       className={`border ${NEUTRAL_COLORS.neutral5.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg}`}
     >
       <div
-        className={`flex items-center hover:${NEUTRAL_COLORS.neutral3.bg} transition-colors`}
+        className={`flex items-center ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -38,10 +38,10 @@ function RoleCategoryAccordionMock({
           ) : (
             <ChevronRight size={20} className={BASIC_TEXT_COLOR.textTertiary} />
           )}
-          <span className={`${TYPOGRAPHY.label.size} font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>
+          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
             {title}
           </span>
-          <span className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary} ml-2`}>
+          <span className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textTertiary} ml-2`}>
             ({id})
           </span>
         </button>
@@ -88,7 +88,7 @@ function OptionRowMock({
         <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
           {value}
         </div>
-        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textSecondary}`}>
+        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textSecondary}`}>
           {format}
         </div>
         <Info size={14} style={{ color: SEMANTIC_COLORS.info }} />
@@ -123,7 +123,7 @@ function ChildOptionViewAccordionMock({
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-1 rounded cursor-pointer ${BASIC_TEXT_COLOR.textTertiary} hover:${BASIC_TEXT_COLOR.textSecondary}`}
+          className={`p-1 rounded cursor-pointer ${BASIC_TEXT_COLOR.textTertiary} ${NEUTRAL_COLORS.neutral3.hover}`}
         >
           {isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
         </button>
@@ -135,7 +135,7 @@ function ChildOptionViewAccordionMock({
             <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
               {value}
             </div>
-            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textSecondary}`}>
               {format}
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function DataFont() {
   return (
     <div className={`p-6 space-y-12 ${NEUTRAL_COLORS.neutral1.bg} min-h-screen`}>
       <section>
-        <h2 className="text-2xl font-bold mb-4">データ用フォント（等幅）</h2>
+        <h2 className={`text-2xl font-bold mb-4 ${BASIC_TEXT_COLOR.textPrimary}`}>データ用フォント（等幅）</h2>
         <div className="space-y-4">
           <p className={`${BASIC_TEXT_COLOR.textSecondary}`}>
             {DATA_FONT.description}
@@ -162,14 +162,14 @@ export default function DataFont() {
           <div className={`p-4 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg}`}>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary} mb-1`}>Standard Font (Sans)</p>
-                <p className={`${TYPOGRAPHY.label.size} ${BASIC_TEXT_COLOR.textPrimary}`}>
+                <p className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textTertiary} mb-1`}>Standard Font (Sans)</p>
+                <p className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
                   0123456789 ABCDEFGHIJKLMN
                 </p>
               </div>
               <div>
-                <p className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary} mb-1`}>Data Font (Mono)</p>
-                <p className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${BASIC_TEXT_COLOR.textPrimary}`}>
+                <p className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textTertiary} mb-1`}>Data Font (Mono)</p>
+                <p className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
                   0123456789 ABCDEFGHIJKLMN
                 </p>
               </div>
@@ -180,7 +180,7 @@ export default function DataFont() {
 
       {/* RoleCategoryAccordion */}
       <section className="space-y-4">
-        <h3 className="text-xl font-semibold text-gray-800">Role Category (RoleCategoryAccordion)</h3>
+        <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>Role Category (RoleCategoryAccordion)</h3>
         <p className={BASIC_TEXT_COLOR.textSecondary}>
           カテゴリー名に付随する内部IDや、項目のカウント数などに等幅フォントを適用します。
         </p>
@@ -196,7 +196,7 @@ export default function DataFont() {
 
       {/* OptionEditorCategoryOptionLayout & ExROptionRowView */}
       <section className="space-y-4">
-        <h3 className="text-xl font-semibold text-gray-800">Option Settings (ExROptionRowView)</h3>
+        <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>Option Settings (ExROptionRowView)</h3>
         <p className={BASIC_TEXT_COLOR.textSecondary}>
           設定値や単位（フォーマット）に等幅フォントを適用することで、数値の桁数に関わらずレイアウトを安定させ、視認性を高めます。
         </p>
@@ -212,7 +212,7 @@ export default function DataFont() {
 
       {/* ChildOptionViewAccordion */}
       <section className="space-y-4">
-        <h3 className="text-xl font-semibold text-gray-800">Nested Options (ChildOptionViewAccordion)</h3>
+        <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>Nested Options (ChildOptionViewAccordion)</h3>
         <p className={BASIC_TEXT_COLOR.textSecondary}>
           階層構造を持つオプションにおいても、右側に並ぶ数値とフォーマットに等幅フォントを一貫して適用します。
         </p>
