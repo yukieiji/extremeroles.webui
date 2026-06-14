@@ -18,9 +18,13 @@
 	--color-primary-action-hover: var(--primary-action-hover);
 	--color-primary-action-active: var(--primary-action-active);
 
+	/*ニュートラルカラー*/
 	--color-app-background: var(--n1-app-background);
+	--color-border-strong: var(--n2-border-strong);
+	--color-border-weak: var(--n3-border-weak);
 	--color-n4-components-background: var(--n4-components-background);
 	--color-n5-usercontrol-background: var(--n5-usercontrol-background);
+
 	--color-foreground: var(--foreground);
 	--color-card-foreground: var(--card-foreground);
 	--color-popover-foreground: var(--popover-foreground);
@@ -34,8 +38,6 @@
 	--color-destructive: var(--destructive);
 	--color-destructive-foreground: oklch(0.985 0 0);
 	--color-border: var(--border);
-	--color-border-strong: var(--n2-border-strong);
-	--color-border-weak: var(--n3-border-weak);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 }
@@ -106,6 +108,8 @@
 
 :root {
 	--n1-app-background: #f4f4f5;
+	--n2-border-strong: #d0d0d6;
+	--n3-border-weak: #e4e4e7;
 	--n4-components-background: #ffffff;
 	--n5-usercontrol-background: #ffffff;
 
@@ -116,9 +120,6 @@
 	--primary-action: #9ce1fd;
 	--primary-action-hover: #9ce1fdcc;
 	--primary-action-active: #7dd3fc;
-
-	--n2-border-strong: #d0d0d6;
-	--n3-border-weak: #e4e4e7;
 
 	--radius: 0.625rem;
 }
