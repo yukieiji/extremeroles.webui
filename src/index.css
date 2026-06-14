@@ -7,7 +7,7 @@
 
 @theme {
 	/*移行済みのもの*/
-	
+
 	/*BasicTextColor*/
 	--color-text-primary: var(--text-primary);
 	--color-text-secondary: var(--text-secondary);
