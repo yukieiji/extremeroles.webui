@@ -23,7 +23,7 @@ export function RoleCategoryAccordion({
 	return (
 		<div
 			id={typeof text === "string" ? `au-category-${text}` : undefined}
-			className="border border-gray-700 rounded-lg overflow-hidden"
+			className="border border-gray-700 rounded-lg overflow-hidden bg-n4-components-background"
 			data-testid="role-category"
 		>
 			<div

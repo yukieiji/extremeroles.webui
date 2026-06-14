@@ -12,7 +12,7 @@ const buttonVariants = cva(
 			variant: {
 				default: DEFAULT_PRIMARY_BUTTUN_COLORS,
 				outline:
-					"border-border bg-background hover:bg-muted hover:text-text-primary aria-expanded:bg-muted aria-expanded:text-text-primary dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+					"border-border bg-n4-components-background hover:bg-muted hover:text-text-primary aria-expanded:bg-muted aria-expanded:text-text-primary",
 				secondary:
 					"bg-secondary text-text-secondary hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-text-secondary",
 				ghost:
