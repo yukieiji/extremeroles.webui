@@ -36,7 +36,7 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	// 初期状態では閉じている
 	const accordionItem = page
 		.getByTestId("category-list")
-		.locator("div.border.border-gray-700")
+		.locator("div.border.border-border-strong")
 		.filter({ hasText: categoryName })
 		.first();
 	const contentContainer = accordionItem

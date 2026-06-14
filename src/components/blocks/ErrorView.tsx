@@ -49,7 +49,7 @@ export function ErrorView({ error, resetErrorBoundary }: FallbackProps) {
 				<CardContent>
 					<div className="space-y-2">
 						<p>{ERROR_DETAIL_LABEL}</p>
-						<div className="rounded-lg border ">
+						<div className="rounded-lg border border-border-strong">
 							<pre className="overflow-auto whitespace-pre-wrap">
 								{errorMessage}
 							</pre>

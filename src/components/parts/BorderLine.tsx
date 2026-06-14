@@ -12,7 +12,7 @@ export function BorderLine({
 	const paddingLeft = calculateIndentation(depth, indentMultiplier);
 	return (
 		<div style={{ paddingLeft: paddingLeft }}>
-			<hr className="w-[95%] mx-auto border-t border-gray-700" />
+			<hr className="w-[95%] mx-auto border-t border-border-weak" />
 		</div>
 	);
 }
