@@ -12,7 +12,7 @@ export function AccordionContentContainer({
 	return (
 		<div
 			data-testid="accordion-content"
-			className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden ${
+			className={`grid transition-[grid-template-rows] duration-200 ease-in-out overflow-hidden bg-n4-components-background ${
 				isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
 			}`}
 		>

@@ -19,6 +19,8 @@
 	--color-primary-action-active: var(--primary-action-active);
 
 	--color-app-background: var(--n1-app-background);
+	--color-n4-components-background: var(--n4-components-background);
+	--color-n5-usercontrol-background: var(--n5-usercontrol-background);
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-card: var(--card);
@@ -92,6 +94,8 @@
 	--color-card: var(--card);
 	--color-foreground: var(--foreground);
 	--color-app-background: var(--n1-app-background);
+	--color-n4-components-background: var(--n4-components-background);
+	--color-n5-usercontrol-background: var(--n5-usercontrol-background);
 	--color-background: var(--background);
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
@@ -104,6 +108,8 @@
 
 :root {
 	--n1-app-background: #f4f4f5;
+	--n4-components-background: #ffffff;
+	--n5-usercontrol-background: #ffffff;
 	--background: #ffffff;
 
 	--text-primary: #0b1728;
