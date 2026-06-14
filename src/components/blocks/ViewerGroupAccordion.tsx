@@ -19,7 +19,7 @@ export function ViewerGroupAccordion({
 	children,
 }: ViewerGroupAccordionProps) {
 	return (
-		<div className="border-gray-700 rounded-lg border overflow-hidden bg-n4-components-background">
+		<div className="border-border-strong rounded-lg border overflow-hidden bg-n4-components-background">
 			<button
 				type="button"
 				onClick={onToggle}
@@ -34,7 +34,7 @@ export function ViewerGroupAccordion({
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
 					{isOpen && (
-						<div className="py-2 px-1.5 border-gray-700">{children}</div>
+						<div className="py-2 px-1.5 border-border-weak">{children}</div>
 					)}
 				</div>
 			</AccordionContentContainer>

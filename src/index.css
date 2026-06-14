@@ -34,6 +34,8 @@
 	--color-destructive: var(--destructive);
 	--color-destructive-foreground: oklch(0.985 0 0);
 	--color-border: var(--border);
+	--color-border-strong: var(--n2-border-strong);
+	--color-border-weak: var(--n3-border-weak);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 }
@@ -74,6 +76,8 @@
 	--color-ring: var(--ring);
 	--color-input: var(--input);
 	--color-border: var(--border);
+	--color-border-strong: var(--n2-border-strong);
+	--color-border-weak: var(--n3-border-weak);
 	--color-destructive: var(--destructive);
 	--color-accent-foreground: var(--accent-foreground);
 	--color-accent: var(--accent);
@@ -112,6 +116,9 @@
 	--primary-action: #9ce1fd;
 	--primary-action-hover: #9ce1fdcc;
 	--primary-action-active: #7dd3fc;
+
+	--n2-border-strong: #d0d0d6;
+	--n3-border-weak: #e4e4e7;
 
 	--radius: 0.625rem;
 }

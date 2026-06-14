@@ -34,7 +34,7 @@ export function AccordionBody({
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
-					{isOpen && <div className="border-t border-gray-700">{children}</div>}
+					{isOpen && <div className="border-t border-border-weak">{children}</div>}
 				</div>
 			</AccordionContentContainer>
 		</>
