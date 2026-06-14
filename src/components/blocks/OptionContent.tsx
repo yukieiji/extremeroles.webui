@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { TYPOGRAPHY } from "@/designConstants";
 import { OptionItem } from "../parts/OptionItem";
 import { OptionNameDisplay } from "../parts/OptionNameDisplay";
 

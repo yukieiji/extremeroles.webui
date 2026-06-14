@@ -1,6 +1,6 @@
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
-import { TYPOGRAPHY } from "@/designConstants";
 import { Button } from "@/components/ui/button";
+import { TYPOGRAPHY } from "@/designConstants";
 import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
 import {
 	format,

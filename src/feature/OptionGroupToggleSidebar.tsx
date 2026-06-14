@@ -12,6 +12,7 @@ import {
 	SidebarTrigger,
 	useSidebar,
 } from "../components/ui/sidebar";
+import { TYPOGRAPHY } from "../designConstants";
 import {
 	AU_OPTIONS_TITLE,
 	AU_SHORT_LABEL,
@@ -25,7 +26,6 @@ import {
 	SIDEBAR_OPEN_ARIA,
 } from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
-import { TYPOGRAPHY } from "../designConstants";
 import { useStore } from "../useStore";
 
 /**

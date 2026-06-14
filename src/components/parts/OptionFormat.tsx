@@ -9,7 +9,9 @@ export function OptionFormat({ format }: OptionFormatProps) {
 		? format.replace("{0}", "")
 		: format;
 	return format === "" ? null : (
-		<span className={`${TYPOGRAPHY.SMALL} text-text-secondary whitespace-nowrap`}>
+		<span
+			className={`${TYPOGRAPHY.SMALL} text-text-secondary whitespace-nowrap`}
+		>
 			{formattedValue}
 		</span>
 	);

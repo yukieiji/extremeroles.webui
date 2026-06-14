@@ -1,7 +1,7 @@
 import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSliderControl";
-import { TYPOGRAPHY } from "@/designConstants";
 import { OptionItem } from "@/components/parts/OptionItem";
 import { OptionNameDisplay } from "@/components/parts/OptionNameDisplay";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import type { OptionData } from "@/type";

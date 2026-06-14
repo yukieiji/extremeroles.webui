@@ -1,7 +1,7 @@
-import { TYPOGRAPHY } from "@/designConstants";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
+import { TYPOGRAPHY } from "@/designConstants";
 import { ExROptionRowContent } from "@/feature/exr/ExROptionRowContent";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
 import type { UniqueOptionId } from "@/type";

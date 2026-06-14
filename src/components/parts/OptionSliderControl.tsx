@@ -1,6 +1,6 @@
-import { TYPOGRAPHY } from "@/designConstants";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Label } from "../ui/label";

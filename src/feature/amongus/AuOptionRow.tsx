@@ -1,8 +1,8 @@
 import { OptionRowContent } from "@/components/blocks/OptionContent";
-import { TYPOGRAPHY } from "@/designConstants";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
+import { TYPOGRAPHY } from "@/designConstants";
 import { createAuNavigateId } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useUpdateAuOptionSelection } from "@/logics/api.store";

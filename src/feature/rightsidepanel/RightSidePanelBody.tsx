@@ -2,9 +2,9 @@ import { ClipboardCopy } from "lucide-react";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
-import { TYPOGRAPHY } from "@/designConstants";
 import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupColumnLayout";
 import { Button } from "@/components/ui/button";
+import { TYPOGRAPHY } from "@/designConstants";
 import { auOptionMetaData, exrOptionMetaData } from "@/logics/api";
 import { generateClipboardText } from "@/logics/clipboardLogic";
 import {
