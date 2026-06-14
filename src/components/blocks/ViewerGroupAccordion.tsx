@@ -24,7 +24,7 @@ export function ViewerGroupAccordion({
 			<button
 				type="button"
 				onClick={onToggle}
-				className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 transition-colors text-left"
+				className="w-full flex items-center gap-2 p-2 hover:bg-component-hover transition-colors text-left"
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg className="w-4 h-4 text-text-tertiary" isOpen={isOpen} />
