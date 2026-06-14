@@ -53,7 +53,7 @@ export function PresetInput({
 	};
 
 	return (
-		<InputGroup className="w-48 border-border-strong">
+		<InputGroup className="w-48">
 			<InputGroupInput
 				type="text"
 				key={currentSelection}

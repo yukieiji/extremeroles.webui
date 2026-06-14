@@ -8,7 +8,7 @@ export function OptionEditorAccordion({
 	children,
 }: AccordionBodyProps) {
 	return (
-		<div className="border border-border-strong rounded-lg overflow-hidden">
+		<div className="border-2 border-border-strong rounded-lg overflow-hidden shadow-xl">
 			<AccordionBody title={title} isOpen={isOpen} onToggle={onToggle}>
 				{children}
 			</AccordionBody>
