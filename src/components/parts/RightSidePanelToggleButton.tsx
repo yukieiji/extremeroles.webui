@@ -1,4 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DEFAULT_PRIMARY_BUTTUN_COLORS } from "@/designConstants";
+import { cn } from "@/lib/utils";
 import { PANEL_CLOSE_ARIA, PANEL_OPEN_ARIA } from "@/noTrans";
 
 interface RightSidePanelToggleButtonProps {
@@ -14,7 +16,10 @@ export function RightSidePanelToggleButton({
 		<button
 			type="button"
 			onClick={onClick}
-			className="h-full w-6 bg-primary text-text-primary shadow-md hover:bg-primary-hover active:bg-primary-active flex items-center justify-center cursor-pointer transition-colors"
+			className={cn(
+				"h-full w-6 shadow-md flex items-center justify-center cursor-pointer transition-colors",
+				DEFAULT_PRIMARY_BUTTUN_COLORS,
+			)}
 			aria-label={isOpen ? PANEL_CLOSE_ARIA : PANEL_OPEN_ARIA}
 			data-testid="right-panel-toggle"
 		>

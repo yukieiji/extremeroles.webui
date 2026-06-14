@@ -1,6 +1,7 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
+import { DEFAULT_PRIMARY_BUTTUN_COLORS } from "@/designConstants";
 
 import { cn } from "@/lib/utils";
 
@@ -9,7 +10,7 @@ const badgeVariants = cva(
 	{
 		variants: {
 			variant: {
-				default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+				default: DEFAULT_PRIMARY_BUTTUN_COLORS,
 				secondary:
 					"bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
 				destructive:

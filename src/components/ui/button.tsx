@@ -1,6 +1,8 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { DEFAULT_PRIMARY_BUTTUN_COLORS } from "@/designConstants";
+
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -8,8 +10,7 @@ const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-				default:
-					"bg-primary text-text-primary hover:bg-primary-hover active:bg-primary-active",
+				default: DEFAULT_PRIMARY_BUTTUN_COLORS,
 				outline:
 					"border-border bg-background hover:bg-muted hover:text-text-primary aria-expanded:bg-muted aria-expanded:text-text-primary dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
 				secondary:
