@@ -28,7 +28,7 @@ export function RoleCategoryAccordion({
 			data-testid="role-category"
 		>
 			<div
-				className={`flex items-center ${!disable ? "hover:bg-gray-100 transition-colors" : ""}`}
+				className={`flex items-center ${!disable ? "hover:bg-component-hover transition-colors" : ""}`}
 			>
 				<button
 					type="button"
