@@ -23,7 +23,7 @@ export function CategoryContainer({
 		const gradient = getLinearGradient(colors);
 		if (gradient.startsWith("linear-gradient")) {
 			return {
-				backgroundImage: `linear-gradient(var(--background), var(--background)), ${gradient}`,
+				backgroundImage: `linear-gradient(var(--n1-app-background), var(--n1-app-background)), ${gradient}`,
 				backgroundOrigin: "border-box",
 				backgroundClip: "padding-box, border-box",
 				border: "2px solid transparent",
