@@ -25,7 +25,7 @@ import { VanillaRoleSummaryRow } from "./VanillaRoleSummaryRow";
 export function RightSidePanelSummary() {
 	return (
 		<div
-			className="flex flex-col gap-1 p-3 border-b border-border-weak"
+			className="flex flex-col gap-1 p-3 border-b border-border-strong"
 			data-testid="right-panel-summary"
 		>
 			<PresetSummaryRow />

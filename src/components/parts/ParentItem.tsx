@@ -8,8 +8,8 @@ interface ParentItemProps {
 export function ParentItem({ icon: Icon, text }: ParentItemProps) {
 	return (
 		<>
-			<Icon className="size-3 shrink-0" />
-			<span className="min-w-0 truncate">{text}</span>
+			<Icon className="size-3 shrink-0 text-text-secondary" />
+			<span className="min-w-0 truncate text-text-secondary">{text}</span>
 		</>
 	);
 }
