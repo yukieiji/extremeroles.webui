@@ -1,3 +1,4 @@
+import { TYPOGRAPHY } from "@/designConstants";
 import {
 	DialogContent,
 	DialogHeader,
@@ -18,7 +19,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 				<DialogTitle>{title}</DialogTitle>
 			</DialogHeader>
 			<div className="grid gap-4 py-4">
-				<p className="text-sm text-text-secondary">
+				<p className={`${TYPOGRAPHY.SMALL} text-text-secondary`}>
 					設定項目は現在準備中です。
 				</p>
 			</div>

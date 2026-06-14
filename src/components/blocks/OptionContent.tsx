@@ -11,7 +11,7 @@ export function OptionRowContent({ name, children }: OptionRowContent) {
 	return (
 		<OptionItem className="min-h-10">
 			<div className="flex-1 min-w-0">
-				<span className="text-base font-normal text-text-primary wrap-break-words">
+				<span className="text-text-primary wrap-break-words">
 					<OptionNameDisplay name={name} />
 				</span>
 			</div>

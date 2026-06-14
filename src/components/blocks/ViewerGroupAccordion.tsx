@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { TYPOGRAPHY } from "@/designConstants";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 
@@ -27,7 +28,9 @@ export function ViewerGroupAccordion({
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg className="w-4 h-4 text-text-tertiary" isOpen={isOpen} />
-				<div className="font-semibold text-text-primary flex-1 text-lg">
+				<div
+					className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary flex-1`}
+				>
 					{title}
 				</div>
 			</button>

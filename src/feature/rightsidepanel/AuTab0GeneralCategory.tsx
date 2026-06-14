@@ -1,5 +1,6 @@
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
+import { TYPOGRAPHY } from "@/designConstants";
 import { auOptionMetaData } from "@/logics/api";
 import {
 	AU_IMPOSTOR_COUNT_OPTION_ID,
@@ -41,7 +42,7 @@ export function AuTab0GeneralCategory({
 
 	return (
 		<ViewerGroupAccordion
-			title={<span className="text-base">{categoryMeta.name}</span>}
+			title={<span className={TYPOGRAPHY.LABEL}>{categoryMeta.name}</span>}
 			isOpen={isOpen}
 			onToggle={() => {
 				toggleAuTab0Category(categoryId);

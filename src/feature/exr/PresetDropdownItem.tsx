@@ -1,4 +1,5 @@
 import { SelectItem } from "@/components/ui/select";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useStore } from "@/useStore";
 
 interface PresetDropdownItemProps {
@@ -20,7 +21,9 @@ export function PresetDropdownItem({ index, value }: PresetDropdownItemProps) {
 			<div className="flex justify-between items-center w-full">
 				<span>{name}</span>
 				{name !== String(value) && (
-					<span className="text-xs text-text-secondary ml-2">({value})</span>
+					<span className={`${TYPOGRAPHY.SMALL} text-text-secondary ml-2`}>
+						({value})
+					</span>
 				)}
 			</div>
 		</SelectItem>
