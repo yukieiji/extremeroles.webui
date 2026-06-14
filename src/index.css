@@ -6,9 +6,17 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+	/*移行済みのもの*/
+	
+	/*BasicTextColor*/
 	--color-text-primary: var(--text-primary);
 	--color-text-secondary: var(--text-secondary);
 	--color-text-tertiary: var(--text-tertiary);
+
+	/*PrimaryActionColor*/
+	--color-primary: var(--primary);
+	--color-primary-hover: var(--primary-hover);
+	--color-primary-active: var(--primary-active);
 
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -16,9 +24,6 @@
 	--color-card-foreground: var(--card-foreground);
 	--color-popover: var(--popover);
 	--color-popover-foreground: var(--popover-foreground);
-	--color-primary: var(--primary);
-	--color-primary-hover: var(--primary-hover);
-	--color-primary-active: var(--primary-active);
 	--color-primary-foreground: var(--primary-foreground);
 	--color-secondary: var(--secondary);
 	--color-secondary-foreground: var(--secondary-foreground);
@@ -106,6 +111,6 @@
 	--primary: #9ce1fd;
 	--primary-hover: #9ce1fdcc;
 	--primary-active: #7dd3fc;
-	
+
 	--radius: 0.625rem;
 }
