@@ -57,7 +57,9 @@ export function RoleCategoryAccordion({
 			</div>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
-					{isOpen && <div className="border-t border-border-weak">{children}</div>}
+					{isOpen && (
+						<div className="border-t border-border-weak">{children}</div>
+					)}
 				</div>
 			</AccordionContentContainer>
 		</div>
