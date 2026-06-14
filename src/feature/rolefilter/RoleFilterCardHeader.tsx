@@ -1,4 +1,5 @@
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { TYPOGRAPHY } from "@/designConstants";
 import { Button } from "@/components/ui/button";
 import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
 import {
@@ -104,7 +105,7 @@ export function RoleFilterCardHeader({
 	return (
 		<>
 			<div className="flex items-center gap-2">
-				<span className="text-sm font-semibold text-text-primary">
+				<span className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary`}>
 					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
 				<div className="flex flex-col gap-0.5">

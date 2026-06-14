@@ -1,4 +1,5 @@
 import { Dot } from "lucide-react";
+import { TYPOGRAPHY } from "@/designConstants";
 import type { ReactNode } from "react";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
@@ -50,7 +51,9 @@ export function RoleCategoryAccordion({
 							className="w-5 h-5 text-text-primary"
 						/>
 					)}
-					<span className="font-semibold text-text-primary">{text}</span>
+					<span className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary`}>
+						{text}
+					</span>
 				</button>
 
 				<div className="flex items-center px-4">{spawnControl}</div>

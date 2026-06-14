@@ -1,6 +1,7 @@
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { TYPOGRAPHY } from "@/designConstants";
 import { cn } from "@/lib/utils";
 
 function Tabs({
@@ -56,7 +57,8 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
 		<TabsPrimitive.Tab
 			data-slot="tabs-trigger"
 			className={cn(
-				"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-text-secondary transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-text-primary focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+				"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 whitespace-nowrap text-text-secondary transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-text-primary focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+				TYPOGRAPHY.TAB,
 				"group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent",
 				"data-active:bg-n4-components-background data-active:text-text-primary",
 				"before:absolute before:inset-x-[7%] before:bottom-0 before:h-0.5 before:[background:var(--tab-color)] before:opacity-0 before:transition-opacity group-data-[variant=default]/tabs-list:data-active:before:opacity-100",

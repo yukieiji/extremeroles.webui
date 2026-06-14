@@ -1,4 +1,5 @@
 import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSliderControl";
+import { TYPOGRAPHY } from "@/designConstants";
 import { OptionItem } from "@/components/parts/OptionItem";
 import { OptionNameDisplay } from "@/components/parts/OptionNameDisplay";
 import { useOptionData } from "@/hooks/useExROptionData";
@@ -43,7 +44,9 @@ export function ExRPairedOptionItem({
 	return (
 		<OptionItem className="min-h-18">
 			<div className="flex-1 min-w-0">
-				<span className="text-sm font-medium text-text-primary wrap-break-words">
+				<span
+					className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary wrap-break-words`}
+				>
 					<OptionNameDisplay name={baseName} />
 				</span>
 			</div>

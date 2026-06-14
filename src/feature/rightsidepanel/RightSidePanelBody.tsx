@@ -2,6 +2,7 @@ import { ClipboardCopy } from "lucide-react";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
+import { TYPOGRAPHY } from "@/designConstants";
 import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupColumnLayout";
 import { Button } from "@/components/ui/button";
 import { auOptionMetaData, exrOptionMetaData } from "@/logics/api";
@@ -52,7 +53,9 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 			<div className="flex flex-col h-full">
 				<div className="flex flex-col p-4 border-b border-border-weak gap-2">
 					<div className="flex items-center justify-between">
-						<h2 className="text-lg font-semibold">{RIGHT_PANEL_TITLE}</h2>
+						<h2 className={`${TYPOGRAPHY.LABEL} font-semibold`}>
+							{RIGHT_PANEL_TITLE}
+						</h2>
 					</div>
 					<Button
 						variant="default"

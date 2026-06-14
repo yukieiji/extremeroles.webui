@@ -1,3 +1,4 @@
+import { TYPOGRAPHY } from "@/designConstants";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
@@ -48,9 +49,14 @@ export function ExROptionRow({
 	depth = 0,
 	isLeaf = false,
 }: ExROptionRowProps) {
-	return isLeaf ? (
-		<ExROptionRowInner uniqueOptionId={uniqueOptionId} depth={depth} />
-	) : (
-		<ExROptionRowContent uniqueOptionId={uniqueOptionId} />
+	const typography = depth > 0 ? TYPOGRAPHY.CHILD_LABEL : TYPOGRAPHY.LABEL;
+	return (
+		<div className={typography}>
+			{isLeaf ? (
+				<ExROptionRowInner uniqueOptionId={uniqueOptionId} depth={depth} />
+			) : (
+				<ExROptionRowContent uniqueOptionId={uniqueOptionId} />
+			)}
+		</div>
 	);
 }

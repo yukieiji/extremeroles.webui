@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { TYPOGRAPHY } from "@/designConstants";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 
@@ -30,7 +31,9 @@ export function AccordionBody({
 					className={"w-5 h-5 text-text-primary "}
 					isOpen={isOpen}
 				/>
-				<span className="font-semibold text-text-primary">{title}</span>
+				<span className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary`}>
+					{title}
+				</span>
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">

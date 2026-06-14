@@ -1,5 +1,6 @@
 import { ColoredText } from "@/components/parts/ColoredText";
 import { OptionFormat } from "@/components/parts/OptionFormat";
+import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 import { OFF, ON } from "@/noTrans";
 
@@ -16,7 +17,9 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 
 	return (
 		<div className="flex items-center gap-1 shrink-0">
-			<span className="text-sm text-text-secondary font-medium text-right">
+			<span
+				className={`${TYPOGRAPHY.CHILD_LABEL} text-text-secondary font-medium text-right`}
+			>
 				{isBoolean ? (
 					<ColoredText
 						text={

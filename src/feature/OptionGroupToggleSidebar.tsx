@@ -25,6 +25,7 @@ import {
 	SIDEBAR_OPEN_ARIA,
 } from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
+import { TYPOGRAPHY } from "../designConstants";
 import { useStore } from "../useStore";
 
 /**
@@ -103,10 +104,14 @@ export function OptionGroupToggleSidebar() {
 									}}
 									className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:font-bold"
 								>
-									<span className="group-data-[collapsible=icon]:hidden">
+									<span
+										className={`group-data-[collapsible=icon]:hidden ${TYPOGRAPHY.SIDEBAR}`}
+									>
 										{tab.label}
 									</span>
-									<span className="hidden group-data-[collapsible=icon]:block">
+									<span
+										className={`hidden group-data-[collapsible=icon]:block ${TYPOGRAPHY.SIDEBAR}`}
+									>
 										{tab.shortLabel}
 									</span>
 								</SidebarMenuButton>
@@ -127,7 +132,9 @@ export function OptionGroupToggleSidebar() {
 							className="group-data-[collapsible=icon]:justify-center"
 						>
 							<Settings />
-							<span className="group-data-[collapsible=icon]:hidden">
+							<span
+								className={`group-data-[collapsible=icon]:hidden ${TYPOGRAPHY.SIDEBAR}`}
+							>
 								{SETTINGS_TITLE}
 							</span>
 						</SidebarMenuButton>

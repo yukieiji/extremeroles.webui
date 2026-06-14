@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { TYPOGRAPHY } from "@/designConstants";
 import { calculateIndentation } from "@/logics/optionUtils";
 import { VIEWER_ROW_TITLE } from "@/noTrans";
 
@@ -33,11 +34,15 @@ export function ViewerOptionRow({
 			style={{ paddingLeft }}
 			title={VIEWER_ROW_TITLE}
 		>
-			<span className="text-sm text-text-primary flex-1 text-left transition-colors">
+			<span
+				className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary flex-1 text-left transition-colors`}
+			>
 				{title}
 			</span>
 			<div className="flex items-center gap-1 shrink-0">
-				<div className="text-sm text-text-primary font-medium text-right">
+				<div
+					className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary font-medium text-right`}
+				>
 					{value}
 				</div>
 			</div>

@@ -1,3 +1,4 @@
+import { TYPOGRAPHY } from "@/designConstants";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
@@ -46,7 +47,7 @@ export function OptionSliderControl({
 				{label && (
 					<FieldLabel
 						htmlFor={id}
-						className="text-sm font-medium select-text"
+						className={`${TYPOGRAPHY.CHILD_LABEL} select-text`}
 						aria-hidden="true"
 					>
 						{label}
