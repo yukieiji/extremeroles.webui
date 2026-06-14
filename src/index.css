@@ -22,9 +22,9 @@
 	--color-n4-components-background: var(--n4-components-background);
 	--color-n5-usercontrol-background: var(--n5-usercontrol-background);
 	--color-foreground: var(--foreground);
-	--color-card: var(--card);
+	--color-card: var(--n4-components-background);
 	--color-card-foreground: var(--card-foreground);
-	--color-popover: var(--popover);
+	--color-popover: var(--n4-components-background);
 	--color-popover-foreground: var(--popover-foreground);
 	--color-primary-foreground: var(--primary-foreground);
 	--color-secondary: var(--secondary);
@@ -88,9 +88,9 @@
 	--color-primary-hover: var(--primary-hover);
 	--color-primary-active: var(--primary-active);
 	--color-popover-foreground: var(--popover-foreground);
-	--color-popover: var(--popover);
+	--color-popover: var(--n4-components-background);
 	--color-card-foreground: var(--card-foreground);
-	--color-card: var(--card);
+	--color-card: var(--n4-components-background);
 	--color-foreground: var(--foreground);
 	--color-app-background: var(--n1-app-background);
 	--color-n4-components-background: var(--n4-components-background);
