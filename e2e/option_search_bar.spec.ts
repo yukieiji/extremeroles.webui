@@ -124,4 +124,31 @@ test.describe("Option Search Bar", () => {
 		await expect(popover).toBeVisible();
 		await expect(searchInput).toBeFocused();
 	});
+
+	test("should reopen suggest when typing again after selecting an item", async ({
+		page,
+	}) => {
+		await page.getByRole("button", { name: "Au Options" }).click();
+		const searchInput = page.getByPlaceholder("オプションを検索...");
+
+		// 1. 検索ワードを入力
+		await searchInput.fill("マップ");
+
+		// 2. サジェストが表示されるのを待つ
+		const popover = page.getByRole("dialog");
+		await expect(popover).toBeVisible();
+
+		// 3. サジェストの項目を選択 (Enterキー)
+		await searchInput.press("Enter");
+
+		// 4. サジェストが閉じるのを確認
+		await expect(popover).not.toBeVisible();
+
+		// 5. 文字列を消去して別の文字を入れる
+		await searchInput.clear();
+		await searchInput.fill("インポスター");
+
+		// 6. 再度サジェストが表示される
+		await expect(popover).toBeVisible();
+	});
 });
