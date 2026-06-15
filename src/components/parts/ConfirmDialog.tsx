@@ -31,7 +31,9 @@ export function ConfirmDialog({
 				<DialogDescription>{message}</DialogDescription>
 			</DialogHeader>
 			<DialogFooter>
-				<Button onClick={onCancel}>{CANCEL}</Button>
+				<Button variant="outline" onClick={onCancel}>
+					{CANCEL}
+				</Button>
 				<Button onClick={onConfirm}>OK</Button>
 			</DialogFooter>
 		</DialogContent>

@@ -49,9 +49,8 @@ export function ExROptionRow({
 	depth = 0,
 	isLeaf = false,
 }: ExROptionRowProps) {
-	const typography = depth > 0 ? TYPOGRAPHY.CHILD_LABEL : TYPOGRAPHY.LABEL;
 	return (
-		<div className={typography}>
+		<div className={TYPOGRAPHY.LABEL}>
 			{isLeaf ? (
 				<ExROptionRowInner uniqueOptionId={uniqueOptionId} depth={depth} />
 			) : (

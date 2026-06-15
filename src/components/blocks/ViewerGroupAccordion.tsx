@@ -28,9 +28,7 @@ export function ViewerGroupAccordion({
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg className="w-4 h-4 text-text-tertiary" isOpen={isOpen} />
-				<div
-					className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary flex-1`}
-				>
+				<div className={`${TYPOGRAPHY.LABEL} text-text-primary flex-1`}>
 					{title}
 				</div>
 			</button>

@@ -1,5 +1,6 @@
 import { AlertCircle, RefreshCw } from "lucide-react";
 import type { FallbackProps } from "react-error-boundary";
+import { TYPOGRAPHY } from "@/designConstants";
 import { resetApiCache } from "../../logics/api.store";
 import {
 	ERROR_DETAIL_LABEL,
@@ -40,24 +41,34 @@ export function ErrorView({ error, resetErrorBoundary }: FallbackProps) {
 			<Card>
 				<CardHeader className="flex flex-col items-center justify-center">
 					<CardTitle>
-						<AlertCircle size={100} />
+						<AlertCircle size={100} className="text-error" />
 					</CardTitle>
 					<CardDescription>
-						<h2>{ERROR_TITLE}</h2>
+						<h1 className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
+							{ERROR_TITLE}
+						</h1>
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div className="space-y-2">
-						<p>{ERROR_DETAIL_LABEL}</p>
-						<div className="rounded-lg border border-border-strong shadow-md">
-							<pre className="overflow-auto whitespace-pre-wrap">
+						<p className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
+							{ERROR_DETAIL_LABEL}
+						</p>
+						<div className="rounded-lg border border-border-strong shadow-sm">
+							<pre
+								className={`${TYPOGRAPHY.SMALL} overflow-auto whitespace-pre-wrap text-text-secondary`}
+							>
 								{errorMessage}
 							</pre>
 						</div>
 					</div>
 				</CardContent>
 				<CardFooter>
-					<Button size="lg" onClick={handleRetry} className="w-full gap-2">
+					<Button
+						size="lg"
+						onClick={handleRetry}
+						className={`${TYPOGRAPHY.LABEL} w-full gap-2 text-text-primar`}
+					>
 						<RefreshCw />
 						{ERROR_RETRY_BUTTON}
 					</Button>
