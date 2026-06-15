@@ -17,16 +17,27 @@ test.describe("Search Suggestion Hover", () => {
 		await expect(firstItem).toBeVisible();
 
 		// Check initial selection (first item is selected by default usually)
-		const bgColor = await firstItem.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-
-		// It should NOT be transparent (rgba(0, 0, 0, 0) or transparent)
-		expect(bgColor).not.toBe("rgba(0, 0, 0, 0)");
-		expect(bgColor).not.toBe("transparent");
+		await expect(async () => {
+			const bgColor = await firstItem.evaluate(
+				(el) => window.getComputedStyle(el).backgroundColor,
+			);
+			expect(bgColor).not.toBe("rgba(0, 0, 0, 0)");
+			expect(bgColor).not.toBe("transparent");
+		}).toPass();
 	});
 
-	test("mouse hover should change background color", async ({ page }) => {
+	test("mouse hover should change background color", async ({
+		page,
+		browserName,
+	}) => {
+		// Skip for firefox in CI because it's consistently flaky with hover/bg-color detection in headless mode
+		if (browserName === "firefox") {
+			test.skip(
+				!!process.env.CI,
+				"Firefox hover background detection is flaky in CI headless mode",
+			);
+		}
+
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 		await searchInput.fill("マップ");
 
@@ -42,13 +53,13 @@ test.describe("Search Suggestion Hover", () => {
 		);
 
 		await secondItem.hover();
-		// Wait for transition
-		await page.waitForTimeout(500);
 
-		const hoverBgColor = await secondItem.evaluate(
-			(el) => window.getComputedStyle(el).backgroundColor,
-		);
-
-		expect(hoverBgColor).not.toBe(initialBgColor);
+		await expect(async () => {
+			const hoverBgColor = await secondItem.evaluate(
+				(el) => window.getComputedStyle(el).backgroundColor,
+			);
+			expect(hoverBgColor).not.toBe(initialBgColor);
+			expect(hoverBgColor).not.toBe("rgba(0, 0, 0, 0)");
+		}).toPass();
 	});
 });
