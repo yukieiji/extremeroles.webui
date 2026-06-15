@@ -38,7 +38,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 	const navigateId = createAuNavigateId(mapOptionId);
 
 	return (
-		<div className="border-2 border-border-strong rounded-lg overflow-hidden bg-n4-components-background shadow-lg">
+		<div className="border border-border-strong rounded-lg overflow-hidden bg-n4-components-background shadow-md">
 			<HighlightWrapper
 				id={navigateId}
 				isHighlighted={isHighlighted}

@@ -113,7 +113,7 @@ function MainContent() {
 					)}
 					{(selectedTab === "ExR" || selectedTab === "Au") && <SearchBar />}
 					{isSidebarPending && (
-						<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+						<div className="w-6 h-6 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
 				<ImportButton onImport={handleImport} />

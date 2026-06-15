@@ -22,7 +22,7 @@ export function RoleFilterViewer() {
 			</div>
 
 			{filterEntries.length === 0 ? (
-				<div className="p-8 bg-n4-components-background border-2 border-dashed border-border-strong rounded-lg text-center shadow-lg">
+				<div className="p-8 bg-n4-components-background border border-dashed border-border-strong rounded-lg text-center shadow-md">
 					<p className={`${TYPOGRAPHY.LABEL} text-text-secondary`}>
 						{ROLE_FILTER_EMPTY_MESSAGE}
 					</p>
