@@ -48,7 +48,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
 
 	return (
-		<div className="h-full flex-1 min-w-0 bg-white border-l border-border-strong shadow-2xl relative">
+		<div className="h-full flex-1 min-w-0 bg-n4-components-background border-l border-border-strong shadow-2xl relative">
 			{children}
 			<div className="flex flex-col h-full">
 				<div className="flex flex-col p-4 border-b border-border-weak gap-2">
