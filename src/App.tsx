@@ -105,7 +105,7 @@ function MainContent() {
 					{selectedTab === "ExR" && (
 						<Suspense
 							fallback={
-								<div className="w-48 h-8 bg-gray-100 animate-pulse rounded" />
+								<div className="w-48 h-8 bg-app-background animate-pulse rounded" />
 							}
 						>
 							<PresetSelectorContainer />
@@ -113,7 +113,7 @@ function MainContent() {
 					)}
 					{(selectedTab === "ExR" || selectedTab === "Au") && <SearchBar />}
 					{isSidebarPending && (
-						<div className="w-6 h-6 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+						<div className="w-6 h-6 border border-info border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
 				<ImportButton onImport={handleImport} />
@@ -123,7 +123,7 @@ function MainContent() {
 			<Suspense
 				fallback={
 					<div className="flex items-center justify-center h-64">
-						<div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+						<div className="w-12 h-12 border-4 border-info border-t-transparent rounded-full animate-spin"></div>
 					</div>
 				}
 			>

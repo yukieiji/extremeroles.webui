@@ -47,6 +47,9 @@
 	);
 	--color-component-hover: var(--color-hover-n3-30);
 
+	--color-info: var(--info);
+	--color-error: var(--error);
+
 	--color-foreground: var(--foreground);
 	--color-card-foreground: var(--card-foreground);
 	--color-popover-foreground: var(--popover-foreground);
@@ -142,6 +145,9 @@
 	--primary-action: #9ce1fd;
 	--primary-action-hover: #9ce1fdcc;
 	--primary-action-active: #7dd3fc;
+
+	--info: #818CF8;
+	--error: #F43F5E;
 
 	--ring: #a1a1aa;
 

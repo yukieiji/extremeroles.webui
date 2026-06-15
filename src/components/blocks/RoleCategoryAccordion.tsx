@@ -51,9 +51,7 @@ export function RoleCategoryAccordion({
 							className="w-5 h-5 text-text-primary"
 						/>
 					)}
-					<span
-						className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary`}
-					>
+					<span className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
 						{text}
 					</span>
 				</button>

@@ -53,9 +53,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 			<div className="flex flex-col h-full">
 				<div className="flex flex-col p-4 border-b border-border-weak gap-2">
 					<div className="flex items-center justify-between">
-						<h2 className={`${TYPOGRAPHY.LABEL} font-semibold`}>
-							{RIGHT_PANEL_TITLE}
-						</h2>
+						<h2 className={TYPOGRAPHY.SIDEBAR}>{RIGHT_PANEL_TITLE}</h2>
 					</div>
 					<Button
 						variant="default"
