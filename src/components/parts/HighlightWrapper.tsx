@@ -17,7 +17,9 @@ export function HighlightWrapper({
 	isInset,
 }: HighlightWrapperProps) {
 	const highlightClass = isHighlighted
-		? `ring-1 ring-search-highlight ${isInset ? "ring-inset" : ""}`
+		? isInset
+			? "inset-ring-1 inset-ring-search-highlight"
+			: "ring-1 ring-search-highlight"
 		: "";
 
 	return (

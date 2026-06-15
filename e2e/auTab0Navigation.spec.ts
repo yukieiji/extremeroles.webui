@@ -66,10 +66,10 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		);
 
 		// ハイライト用のクラスやスタイルが適用されているか確認
-		// ハイライト状態（ring-1クラスを持つ）かつ、設定項目名を含む要素を特定する
+		// ハイライト状態（data-highlighted="true"を持つ）かつ、設定項目名を含む要素を特定する
 		const highlightedRow = page
 			.locator("main")
-			.locator("div.ring-1")
+			.locator('[data-highlighted="true"]')
 			.filter({ hasText: "インポスター数" })
 			.first();
 		await expect(highlightedRow).toBeVisible();
