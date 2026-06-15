@@ -53,7 +53,7 @@ export function PresetInput({
 	};
 
 	return (
-		<InputGroup className="w-48">
+		<InputGroup className="w-48 overflow-hidden">
 			<InputGroupInput
 				type="text"
 				key={currentSelection}
@@ -62,9 +62,12 @@ export function PresetInput({
 				onKeyDown={handleKeyDown}
 				placeholder={PRESET_INPUT_PLACEHOLDER}
 			/>
-			<InputGroupAddon align="inline-end">
+			<InputGroupAddon
+				align="inline-end"
+				className="border-l border-border-strong p-0"
+			>
 				<SelectTrigger
-					className="border-none bg-transparent p-0"
+					className="h-full w-8 justify-center rounded-none border-none bg-transparent p-0 hover:bg-component-hover"
 					aria-label={PRESET_SELECT_ARIA}
 				/>
 			</InputGroupAddon>
