@@ -45,7 +45,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		).toBeVisible();
 
 		const highlightedRow = mainEditor
-			.locator("div.ring-1")
+			.locator('[data-highlighted="true"]')
 			.filter({ hasText: "シェイプシフター" })
 			.first();
 		await expect(highlightedRow).toBeVisible({ timeout: 10000 });

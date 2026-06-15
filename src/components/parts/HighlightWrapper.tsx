@@ -17,14 +17,16 @@ export function HighlightWrapper({
 	isInset,
 }: HighlightWrapperProps) {
 	const highlightClass = isHighlighted
-		? `ring-1 ring-blue-500 ${isInset ? "ring-inset" : ""}`
+		? isInset
+			? "inset-ring-1 inset-ring-search-highlight"
+			: "ring-1 ring-search-highlight"
 		: "";
 
 	return (
 		<div
 			id={id}
 			data-highlighted={isHighlighted}
-			className={`transition-all duration-500 rounded ${highlightClass}`}
+			className={`transition-all duration-2000 rounded ${highlightClass}`}
 		>
 			{children}
 		</div>
