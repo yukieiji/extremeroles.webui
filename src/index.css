@@ -70,6 +70,7 @@
 @layer base {
 	body {
 		@apply bg-app-background text-text-primary;
+		line-height: 1.5;
 	}
 	button:not(:disabled),
 	[role="button"]:not(:disabled) {

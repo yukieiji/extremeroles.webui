@@ -15,7 +15,7 @@ export function SearchParentData({ parentData }: SearchParentDataProps) {
 	const orderedParents = [...parentOptionNames].reverse().filter(Boolean);
 
 	return (
-		<div className="flex w-full min-w-0 items-center gap-0.5 leading-tight">
+		<div className="flex w-full min-w-0 items-center gap-0.5 leading-normal">
 			<ParentItem icon={CornerDownRight} text={tabName} />
 			{categoryName !== "" && (
 				<ParentItem icon={ChevronRight} text={categoryName} />
