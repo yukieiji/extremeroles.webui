@@ -7,6 +7,7 @@ import {
 	CardDescription,
 	CardHeader,
 } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { ROLE_FILTER_DELETE_ARIA } from "@/noTrans";
 
 interface RoleFilterCardLayoutProps {
@@ -33,6 +34,7 @@ export function RoleFilterCardLayout({
 				</CardAction>
 				{header}
 			</CardHeader>
+			<Separator className="bg-border-weak" />
 			<CardDescription>{children}</CardDescription>
 		</Card>
 	);

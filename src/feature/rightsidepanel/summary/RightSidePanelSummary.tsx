@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import {
 	AU_IMPOSTOR_COUNT_OPTION_ID,
 	AU_KILL_COOLDOWN_OPTION_ID,
@@ -34,6 +35,7 @@ export function RightSidePanelSummary() {
 				optionId={AU_KILL_COOLDOWN_OPTION_ID}
 				fallbackTitle="キルのクールダウン時間"
 			/>
+			<Separator className="bg-border-strong" />
 			<AuOptionSummaryRow
 				optionId={AU_IMPOSTOR_COUNT_OPTION_ID}
 				fallbackTitle="インポスター人数"
@@ -63,6 +65,7 @@ export function RightSidePanelSummary() {
 				maxUniqueId={EXR_NEUTRAL_MAX_ID}
 				fallbackTitle="ニュートラル陣営役職数"
 			/>
+			<Separator className="bg-border-strong" />
 			{VANILLA_ROLE_CATEGORY_IDS.map((catId) => (
 				<VanillaRoleSummaryRow key={catId} categoryId={catId} />
 			))}
