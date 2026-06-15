@@ -87,9 +87,11 @@ export function SearchBar() {
 							}}
 							onClick={(e) => {
 								e.stopPropagation();
+								setIsOpen(true);
 							}}
 							onChange={(e) => {
 								setQuery(e.target.value);
+								setIsOpen(true);
 							}}
 							onKeyDown={handleKeyDown}
 							value={optionSearchQuery}
