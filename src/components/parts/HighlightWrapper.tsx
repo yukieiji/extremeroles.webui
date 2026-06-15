@@ -17,7 +17,7 @@ export function HighlightWrapper({
 	isInset,
 }: HighlightWrapperProps) {
 	const highlightClass = isHighlighted
-		? `ring-2 ring-blue-500 ${isInset ? "ring-inset" : ""}`
+		? `ring-1 ring-blue-500 ${isInset ? "ring-inset" : ""}`
 		: "";
 
 	return (

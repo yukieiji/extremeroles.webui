@@ -61,8 +61,8 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	// PRESET_OPTION_UNIQUE_ID は getUniqueOptionId(0, 0, 0) で 0
 	const highlightedElement = page.locator("#exr-option-0");
 
-	// ハイライトクラス (ring-2 ring-blue-500 など) が適用されているか確認
-	await expect(highlightedElement).toHaveClass(/ring-2/);
+	// ハイライトクラス (ring-1 ring-blue-500 など) が適用されているか確認
+	await expect(highlightedElement).toHaveClass(/ring-1/);
 });
 
 test("Updating preset name reflects in right sidebar", async ({ page }) => {

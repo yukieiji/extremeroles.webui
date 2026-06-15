@@ -20,7 +20,7 @@ export function ViewerGroupAccordion({
 	children,
 }: ViewerGroupAccordionProps) {
 	return (
-		<div className="border-border-strong rounded-lg border overflow-hidden bg-n4-components-background">
+		<div className="border-border-strong rounded-lg border overflow-hidden bg-n4-components-background shadow-md">
 			<button
 				type="button"
 				onClick={onToggle}

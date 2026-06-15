@@ -241,7 +241,7 @@ function Sidebar({
 				<div
 					data-sidebar="sidebar"
 					data-slot="sidebar-inner"
-					className="flex size-full flex-col bg-n4-components-background group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-border-strong"
+					className="flex size-full flex-col bg-n4-components-background group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:shadow-md group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-border-strong"
 				>
 					{children}
 				</div>
@@ -402,7 +402,7 @@ function SidebarGroupLabel({
 		props: mergeProps<"div">(
 			{
 				className: cn(
-					"flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-text-primary/70 ring-sidebar-ring outline-hidden transition-[margin,opacity] duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+					"flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-text-primary/70 ring-sidebar-ring outline-hidden transition-[margin,opacity] duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 focus-visible:ring-1 [&>svg]:size-4 [&>svg]:shrink-0",
 					className,
 				),
 			},
@@ -426,7 +426,7 @@ function SidebarGroupAction({
 		props: mergeProps<"button">(
 			{
 				className: cn(
-					"absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-text-primary ring-sidebar-ring outline-hidden transition-transform group-data-[collapsible=icon]:hidden after:absolute after:-inset-2 hover:bg-component-hover focus-visible:ring-2 md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
+					"absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-text-primary ring-sidebar-ring outline-hidden transition-transform group-data-[collapsible=icon]:hidden after:absolute after:-inset-2 hover:bg-component-hover focus-visible:ring-1 md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
 					className,
 				),
 			},
@@ -477,13 +477,13 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-	"peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-component-hover focus-visible:ring-2 active:bg-component-hover disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-component-hover data-active:bg-component-hover data-active:font-medium [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
+	"peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-component-hover focus-visible:ring-1 active:bg-component-hover disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-component-hover data-active:bg-component-hover data-active:font-medium [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
 	{
 		variants: {
 			variant: {
 				default: "hover:bg-component-hover",
 				outline:
-					"bg-n4-components-background shadow-[0_0_0_1px_var(--n2-border-strong)] hover:bg-component-hover hover:shadow-[0_0_0_1px_var(--n2-border-strong)]",
+					"bg-n4-components-background shadow-md ring-1 ring-border-strong hover:bg-component-hover",
 			},
 			size: {
 				default: "h-8 text-sm",
@@ -566,7 +566,7 @@ function SidebarMenuAction({
 		props: mergeProps<"button">(
 			{
 				className: cn(
-					"absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-text-primary ring-sidebar-ring outline-hidden transition-transform group-data-[collapsible=icon]:hidden peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 after:absolute after:-inset-2 hover:bg-component-hover focus-visible:ring-2 md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
+					"absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-text-primary ring-sidebar-ring outline-hidden transition-transform group-data-[collapsible=icon]:hidden peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 after:absolute after:-inset-2 hover:bg-component-hover focus-visible:ring-1 md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
 					showOnHover &&
 						"group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 aria-expanded:opacity-100 md:opacity-0",
 					className,
@@ -681,7 +681,7 @@ function SidebarMenuSubButton({
 		props: mergeProps<"a">(
 			{
 				className: cn(
-					"flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-text-primary ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-component-hover focus-visible:ring-2 active:bg-component-hover disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-xs data-active:bg-component-hover [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+					"flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-text-primary ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-component-hover focus-visible:ring-1 active:bg-component-hover disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-xs data-active:bg-component-hover [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
 					className,
 				),
 			},
