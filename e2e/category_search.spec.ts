@@ -25,9 +25,6 @@ test.describe("Category Search", () => {
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
 
-		// Wait for potential navigation and state update
-		await page.waitForTimeout(2000);
-
 		// The title should change to Au Options
 		await expect(
 			page.getByRole("heading", { name: "Au Options" }),
@@ -35,7 +32,7 @@ test.describe("Category Search", () => {
 
 		// Check if it's highlighted.
 		const highlighted = page.locator('[data-highlighted="true"]').first();
-		await expect(highlighted).toBeVisible({ timeout: 15000 });
+		await expect(highlighted).toBeVisible({ timeout: 5000 });
 		await expect(highlighted).toContainText("会議");
 	});
 
@@ -58,9 +55,6 @@ test.describe("Category Search", () => {
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
 
-		// Wait for potential navigation and state update
-		await page.waitForTimeout(2000);
-
 		// The title should change to Au Options
 		await expect(
 			page.getByRole("heading", { name: "Au Options" }),
@@ -68,7 +62,7 @@ test.describe("Category Search", () => {
 
 		// Check if it's highlighted.
 		const highlighted = page.locator('[data-highlighted="true"]').first();
-		await expect(highlighted).toBeVisible({ timeout: 15000 });
+		await expect(highlighted).toBeVisible({ timeout: 5000 });
 		// In MapDropDown.tsx, the title comes from optionMeta.title which might be "map" in mock data
 		// but the highlight wrapper should be there.
 	});
@@ -90,11 +84,9 @@ test.describe("Category Search", () => {
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
 
-		await page.waitForTimeout(2000);
-
 		// Check if it's highlighted
 		const highlighted = page.locator('[data-highlighted="true"]').first();
-		await expect(highlighted).toBeVisible({ timeout: 15000 });
+		await expect(highlighted).toBeVisible({ timeout: 5000 });
 		await expect(highlighted).toContainText("シェリフ");
 	});
 });
