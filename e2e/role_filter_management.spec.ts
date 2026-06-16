@@ -30,10 +30,10 @@ test.describe("Role Filter Management", () => {
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await expect(page.getByText("フィルター追加: 役職の選択")).toBeVisible();
-		await page
-			.getByRole("button", { name: "Bakary", exact: true })
-			.first()
-			.click();
+
+		// Use specific locator to avoid conflicts
+		const dialog = page.getByRole("dialog");
+		await dialog.getByText("Bakary", { exact: true }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// Verify new filter is added
@@ -67,10 +67,8 @@ test.describe("Role Filter Management", () => {
 
 		// Add a new filter first (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		await page
-			.getByRole("button", { name: "Bakary", exact: true })
-			.first()
-			.click();
+		const dialog = page.getByRole("dialog");
+		await dialog.getByText("Bakary", { exact: true }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// ダイアログが閉じるのを待つ
@@ -98,13 +96,12 @@ test.describe("Role Filter Management", () => {
 		await searchInput.fill("Opener");
 
 		// Select a role from the grid
-		// 検索結果が表示されるのを待つ
-		const roleButton = page.getByRole("button", {
-			name: "Opener",
+		const addRoleDialog = page.getByRole("dialog");
+		const roleItem = addRoleDialog.getByText("Opener", {
 			exact: true,
 		});
-		await expect(roleButton).toBeVisible({ timeout: 10000 });
-		await roleButton.click();
+		await expect(roleItem).toBeVisible({ timeout: 10000 });
+		await roleItem.click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// ダイアログが閉じるのを待つ
@@ -122,10 +119,8 @@ test.describe("Role Filter Management", () => {
 	test("should remove a role from filter", async ({ page }) => {
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		await page
-			.getByRole("button", { name: "Bakary", exact: true })
-			.first()
-			.click();
+		const dialog = page.getByRole("dialog");
+		await dialog.getByText("Bakary", { exact: true }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		const lastFilter = page.getByTestId("role-filter-card").last();

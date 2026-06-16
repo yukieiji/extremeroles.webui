@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
+import { Field, FieldLabel } from "../ui/field";
 
 interface RoleGridItem {
 	roleId: number;
@@ -34,28 +35,32 @@ export function RoleGrid({
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
 			{items.map(({ roleId, roleName }) => {
+				const id = `role-${roleId}`;
 				const isChecked = selectedRoleIds.includes(roleId);
 				return (
-					<button
-						type="button"
+					<Field
 						key={roleId}
+						orientation="horizontal"
 						className={cn(
-							"cursor-pointer transition-colors border border-border-strong rounded-lg p-2.5 shadow-md flex items-center gap-2 w-full",
-							isChecked && "bg-info/20 border-info/50",
+							"relative border border-border-strong rounded-lg shadow-md items-center hover:bg-muted/50",
+							isChecked && "bg-info/20 border-info/50 hover:bg-info/30",
 						)}
-						onClick={(e) => {
-							onSelect(roleId, e);
-						}}
 					>
 						<Checkbox
+							id={id}
 							checked={isChecked}
-							onCheckedChange={() => {}}
-							className="pointer-events-none"
+							onCheckedChange={(_, event) => {
+								onSelect(roleId, event as unknown as React.MouseEvent);
+							}}
+							className="ml-2.5"
 						/>
-						<span className="text-sm font-medium text-text-primary select-none">
+						<FieldLabel
+							htmlFor={id}
+							className="flex-1 p-2.5 pl-1.5 select-none text-sm font-medium text-text-primary cursor-pointer h-full flex items-center after:absolute after:inset-0"
+						>
 							{roleName}
-						</span>
-					</button>
+						</FieldLabel>
+					</Field>
 				);
 			})}
 		</div>
