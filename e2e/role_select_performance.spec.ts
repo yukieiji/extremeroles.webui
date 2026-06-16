@@ -1,0 +1,52 @@
+import { expect, test } from "@playwright/test";
+
+test.describe("Role Select Performance and Reliability", () => {
+	test.beforeEach(async ({ page }) => {
+		await page.goto("/");
+		await expect(page.getByText("Loading data...")).not.toBeVisible({
+			timeout: 30000,
+		});
+		await page
+			.getByRole("button", { name: "Role Filter" })
+			.or(page.getByTitle("Role Filter"))
+			.click();
+	});
+
+	test("confirm button should respond within 1 second after selecting 10 roles", async ({
+		page,
+	}) => {
+		await page.getByRole("button", { name: "フィルターを追加" }).click();
+
+		const roles = [
+			"Bakary",
+			"Leader",
+			"Sheriff",
+			"Dove",
+			"Militant",
+			"SpecialCrew",
+			"Maintainer",
+			"Neet",
+			"Watchdog",
+			"Supervisor",
+		];
+		for (const role of roles) {
+			const checkbox = page
+				.getByRole("checkbox", { name: role, exact: true })
+				.first();
+			await checkbox.click();
+		}
+
+		const confirmButton = page.getByRole("button", { name: /確定/ });
+		await expect(confirmButton).toContainText("(10)");
+		await expect(confirmButton).not.toBeDisabled();
+
+		const startTime = Date.now();
+		await confirmButton.click();
+		await expect(page.getByText("フィルター追加: 役職の選択")).not.toBeVisible({
+			timeout: 10000,
+		});
+		const duration = Date.now() - startTime;
+		console.log(`Confirm (10 roles) to dialog close duration: ${duration}ms`);
+		expect(duration).toBeLessThan(1000);
+	});
+});

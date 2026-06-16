@@ -80,20 +80,28 @@ export function RoleFilterCardHeader({
 			lastClickedId: null,
 			onSelect: async (roleIds: number[]) => {
 				try {
-					for (const roleId of roleIds) {
-						await postRoleFilterUpdate({
-							Op: PostExRAssignOps.FilterRoleAdd,
-							FilterId: guid,
-							MapRoleId: roleId,
-						});
-
+					const rolesToAdd = roleIds.map((roleId) => {
 						const roleName =
 							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
 							(roleFilterMetaData.CombinationId[roleId] as string) ||
 							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
 							ROLE_FILTER_UNKNOWN_ROLE;
+						return { id: roleId, name: roleName };
+					});
 
-						addRoleToFilter(guid, roleId, roleName);
+					await Promise.all(
+						roleIds.map(async (roleId) => {
+							await postRoleFilterUpdate({
+								Op: PostExRAssignOps.FilterRoleAdd,
+								FilterId: guid,
+								MapRoleId: roleId,
+							});
+						}),
+					);
+
+					// 状態更新を一括で行う
+					for (const role of rolesToAdd) {
+						addRoleToFilter(guid, role.id, role.name);
 					}
 				} catch (error) {
 					console.error("Failed to add role to filter:", error);
