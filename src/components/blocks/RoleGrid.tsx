@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
 import { Field, FieldLabel } from "../ui/field";
 
@@ -41,16 +40,13 @@ export function RoleGrid({
 					<Field
 						key={roleId}
 						orientation="horizontal"
-						className={cn(
-							"relative transition-colors border border-border-strong rounded-lg shadow-md items-center hover:bg-muted/50",
-							isChecked && "border-info/50 hover:bg-info/5",
-						)}
+						className="relative transition-colors border border-border-strong rounded-lg shadow-md items-center hover:bg-muted/50"
 					>
 						<Checkbox
 							id={id}
 							checked={isChecked}
 							onCheckedChange={() => {}}
-							className="ml-2.5 pointer-events-none data-checked:border-info data-checked:bg-info data-checked:text-info-foreground"
+							className="ml-2.5 pointer-events-none data-checked:border-border-strong data-checked:bg-transparent data-checked:text-info"
 						/>
 						<FieldLabel
 							htmlFor={id}
