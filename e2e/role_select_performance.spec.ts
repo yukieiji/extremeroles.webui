@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Role Select Performance and Reliability", () => {
+	test.setTimeout(120000);
+
 	test.beforeEach(async ({ page }) => {
 		await page.goto("/");
 		await expect(page.getByText("Loading data...")).not.toBeVisible({

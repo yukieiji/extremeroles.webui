@@ -42,21 +42,23 @@ export function RoleGrid({
 						key={roleId}
 						orientation="horizontal"
 						className={cn(
-							"relative border border-border-strong rounded-lg shadow-md items-center hover:bg-muted/50",
-							isChecked && "bg-info/20 border-info/50 hover:bg-info/30",
+							"relative transition-colors border border-border-strong rounded-lg shadow-md items-center hover:bg-muted/50",
+							isChecked && "border-info/50 hover:bg-info/5",
 						)}
 					>
 						<Checkbox
 							id={id}
 							checked={isChecked}
-							onCheckedChange={(_, event) => {
-								onSelect(roleId, event as unknown as React.MouseEvent);
-							}}
-							className="ml-2.5"
+							onCheckedChange={() => {}}
+							className="ml-2.5 pointer-events-none data-checked:border-info data-checked:bg-info data-checked:text-info-foreground"
 						/>
 						<FieldLabel
 							htmlFor={id}
 							className="flex-1 p-2.5 pl-1.5 select-none text-sm font-medium text-text-primary cursor-pointer h-full flex items-center after:absolute after:inset-0"
+							onClick={(e) => {
+								onSelect(roleId, e);
+								e.preventDefault();
+							}}
 						>
 							{roleName}
 						</FieldLabel>
