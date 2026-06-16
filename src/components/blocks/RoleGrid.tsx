@@ -31,7 +31,7 @@ export function RoleGrid({ items, onSelect, selectedRoleIds }: RoleGridProps) {
 				return (
 					<FieldLabel
 						key={roleId}
-						className="cursor-pointer hover:bg-component-hover has-[[data-checked]]:border-info/30 has-[[data-checked]]:bg-info/5"
+						className="cursor-pointer hover:bg-component-hover has-[[data-checked]]:border-primary-action/30 has-[[data-checked]]:bg-primary-action/5"
 					>
 						<Field orientation="horizontal">
 							<Checkbox
