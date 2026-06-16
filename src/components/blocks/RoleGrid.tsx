@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
-import { Field, FieldContent, FieldLabel, FieldTitle } from "../ui/field";
 
 interface RoleGridItem {
 	roleId: number;
@@ -36,18 +36,26 @@ export function RoleGrid({
 			{items.map(({ roleId, roleName }) => {
 				const isChecked = selectedRoleIds.includes(roleId);
 				return (
-					<FieldLabel key={roleId} className="cursor-pointer">
-						<Field orientation="horizontal">
-							<Checkbox
-								checked={isChecked}
-								onCheckedChange={() => {}}
-								onClick={(e) => onSelect(roleId, e)}
-							/>
-							<FieldContent>
-								<FieldTitle>{roleName}</FieldTitle>
-							</FieldContent>
-						</Field>
-					</FieldLabel>
+					<button
+						type="button"
+						key={roleId}
+						className={cn(
+							"cursor-pointer transition-colors border border-border-strong rounded-lg p-2.5 shadow-md flex items-center gap-2 w-full",
+							isChecked && "bg-info/20 border-info/50",
+						)}
+						onClick={(e) => {
+							onSelect(roleId, e);
+						}}
+					>
+						<Checkbox
+							checked={isChecked}
+							onCheckedChange={() => {}}
+							className="pointer-events-none"
+						/>
+						<span className="text-sm font-medium text-text-primary select-none">
+							{roleName}
+						</span>
+					</button>
 				);
 			})}
 		</div>

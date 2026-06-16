@@ -31,7 +31,7 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await expect(page.getByText("フィルター追加: 役職の選択")).toBeVisible();
 		await page
-			.getByRole("checkbox", { name: "Bakary", exact: true })
+			.getByRole("button", { name: "Bakary", exact: true })
 			.first()
 			.click();
 		await page.getByRole("button", { name: /確定/ }).click();
@@ -68,7 +68,7 @@ test.describe("Role Filter Management", () => {
 		// Add a new filter first (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await page
-			.getByRole("checkbox", { name: "Bakary", exact: true })
+			.getByRole("button", { name: "Bakary", exact: true })
 			.first()
 			.click();
 		await page.getByRole("button", { name: /確定/ }).click();
@@ -99,12 +99,12 @@ test.describe("Role Filter Management", () => {
 
 		// Select a role from the grid
 		// 検索結果が表示されるのを待つ
-		const roleCheckbox = page.getByRole("checkbox", {
+		const roleButton = page.getByRole("button", {
 			name: "Opener",
 			exact: true,
 		});
-		await expect(roleCheckbox).toBeVisible({ timeout: 10000 });
-		await roleCheckbox.click();
+		await expect(roleButton).toBeVisible({ timeout: 10000 });
+		await roleButton.click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		// ダイアログが閉じるのを待つ
@@ -123,7 +123,7 @@ test.describe("Role Filter Management", () => {
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await page
-			.getByRole("checkbox", { name: "Bakary", exact: true })
+			.getByRole("button", { name: "Bakary", exact: true })
 			.first()
 			.click();
 		await page.getByRole("button", { name: /確定/ }).click();
