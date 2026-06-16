@@ -40,13 +40,13 @@ export function RoleGrid({
 					<Field
 						key={roleId}
 						orientation="horizontal"
-						className="relative transition-colors border border-border-strong rounded-lg shadow-md items-center hover:bg-muted/50"
+						className="relative transition-colors border border-border-strong rounded-lg shadow-md items-center hover:bg-component-hover"
 					>
 						<Checkbox
 							id={id}
 							checked={isChecked}
 							onCheckedChange={() => {}}
-							className="ml-2.5 pointer-events-none data-checked:border-border-strong data-checked:bg-transparent data-checked:text-info"
+							className="ml-2.5 pointer-events-none data-checked:border-info data-checked:bg-info data-checked:text-n4-components-background"
 						/>
 						<FieldLabel
 							htmlFor={id}
