@@ -111,11 +111,7 @@ export function RoleSelectDialog({
 				placeholder={ROLE_SELECT_SEARCH_PLACEHOLDER}
 			/>
 			<div className="overflow-y-scroll flex-1">
-				<RoleGrid
-					items={filteredRoles}
-					onSelect={handleSelect}
-					selectedRoleIds={selectedRoleIds}
-				/>
+				<RoleGrid items={filteredRoles} onSelect={handleSelect} />
 			</div>
 			<DialogFooter>
 				<Button variant="outline" onClick={onCancel}>

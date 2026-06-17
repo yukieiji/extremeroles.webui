@@ -9,13 +9,12 @@ interface RoleGridItem {
 interface RoleGridProps {
 	items: RoleGridItem[];
 	onSelect: (roleId: number, event: React.MouseEvent) => void;
-	selectedRoleIds: number[];
 }
 
 /**
  * 役職をグリッド形式で表示するリストコンポーネント
  */
-export function RoleGrid({ items, onSelect, selectedRoleIds }: RoleGridProps) {
+export function RoleGrid({ items, onSelect }: RoleGridProps) {
 	if (items.length === 0) {
 		return (
 			<div className="text-center py-8 text-text-secondary italic">
@@ -27,17 +26,13 @@ export function RoleGrid({ items, onSelect, selectedRoleIds }: RoleGridProps) {
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
 			{items.map(({ roleId, roleName }) => {
-				const isChecked = selectedRoleIds.includes(roleId);
 				return (
 					<FieldLabel
 						key={roleId}
-						className="cursor-pointer hover:bg-component-hover has-[[data-checked]]:border-primary-action/30 has-[[data-checked]]:bg-primary-action/5"
+						className="cursor-pointer hover:bg-component-hover has-data-checked:border-primary-action/30 has-data-checked:bg-primary-action/5"
 					>
 						<Field orientation="horizontal">
-							<Checkbox
-								onClick={(e) => onSelect(roleId, e)}
-								checked={isChecked}
-							/>
+							<Checkbox onClick={(e) => onSelect(roleId, e)} />
 							<FieldContent>
 								<FieldTitle>{roleName}</FieldTitle>
 							</FieldContent>
