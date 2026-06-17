@@ -29,7 +29,10 @@ export function RoleGrid({ items, onSelect, selectedRoleIds }: RoleGridProps) {
 			{items.map(({ roleId, roleName }) => {
 				const isChecked = selectedRoleIds.includes(roleId);
 				return (
-					<FieldLabel key={roleId} className="cursor-pointer">
+					<FieldLabel
+						key={roleId}
+						className="cursor-pointer hover:bg-component-hover has-[[data-checked]]:border-primary-action/30 has-[[data-checked]]:bg-primary-action/5"
+					>
 						<Field orientation="horizontal">
 							<Checkbox
 								onClick={(e) => onSelect(roleId, e)}
