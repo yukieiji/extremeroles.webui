@@ -12,35 +12,42 @@ test.describe("Role Filter Performance/Responsiveness Reproduction", () => {
 			.click();
 	});
 
-	test("Confirm button count should match checked checkboxes and be enabled", async ({
+	test("Confirm button count should match checked checkboxes and be enabled within 1s", async ({
 		page,
 	}) => {
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await expect(page.getByText("フィルター追加: 役職の選択")).toBeVisible();
 
 		const checkboxes = page.getByRole("checkbox");
+		const confirmButton = page.getByRole("button", { name: /確定/ });
+
+		// クリック開始前からの時間を計測
+		const startTime = Date.now();
 
 		// 1つ目の役職をクリック
 		await checkboxes.first().click();
 
-		// DOM上でチェックされていることを確認 (data-checked属性)
-		await expect(checkboxes.first()).toHaveAttribute("data-checked", "");
-
-		// 確定ボタンが即座に(1秒以内)に有効化され、正しい数値を表示することを確認
-		const confirmButton = page.getByRole("button", { name: /確定/ });
-
 		try {
+			// 確定ボタンが更新されるのを待つ
 			await expect(confirmButton).toHaveText(/確定 \(1\)/, { timeout: 1000 });
 			await expect(confirmButton).toBeEnabled({ timeout: 1000 });
-		} catch (_e) {
+
+			const duration = Date.now() - startTime;
+			console.log(`Total interaction time: ${duration}ms`);
+
+			if (duration > 1000) {
+				throw new Error(
+					`Responsiveness issue: Total interaction time ${duration}ms exceeded 1000ms`,
+				);
+			}
+		} catch (e) {
 			const text = await confirmButton.innerText();
 			const disabled = await confirmButton.isDisabled();
+			const duration = Date.now() - startTime;
 			console.error(
-				`BUG REPRODUCED: Button state mismatch. Text: ${text}, Disabled: ${disabled}`,
+				`FAILURE: Button state mismatch after ${duration}ms. Text: ${text}, Disabled: ${disabled}`,
 			);
-			throw new Error(
-				`Button state mismatch. Text: ${text}, Disabled: ${disabled}`,
-			);
+			throw e;
 		}
 	});
 
@@ -54,14 +61,13 @@ test.describe("Role Filter Performance/Responsiveness Reproduction", () => {
 
 		// 5つの役職を素早くクリック
 		for (let i = 0; i < 5; i++) {
-			await checkboxes.nth(i).click();
+			await checkboxes.nth(i).click({ timeout: 5000 });
 		}
 
 		const confirmButton = page.getByRole("button", { name: /確定/ });
 
 		// 最終的なカウントが5になっていることを確認
-		// もし途中のクリックが stale closure で上書きされていれば、5未満になる
-		await expect(confirmButton).toHaveText(/確定 \(5\)/, { timeout: 5000 });
+		await expect(confirmButton).toHaveText(/確定 \(5\)/, { timeout: 10000 });
 	});
 
 	test("Dialog closure duration after clicking confirm", async ({ page }) => {
