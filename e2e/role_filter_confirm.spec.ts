@@ -23,7 +23,6 @@ test.describe("Role Filter Confirm Button Response", () => {
 		).toBeVisible();
 	});
 
-
 	test("Confirm button should be enabled immediately and after 1s when adding new filter (click label)", async ({
 		page,
 	}) => {
@@ -35,7 +34,10 @@ test.describe("Role Filter Confirm Button Response", () => {
 		).toBeVisible({ timeout: 15000 });
 
 		// Target the label which should be clickable
-		const bakaryLabel = page.locator("label").filter({ hasText: "Bakary" }).first();
+		const bakaryLabel = page
+			.locator("label")
+			.filter({ hasText: "Bakary" })
+			.first();
 		const confirmButton = page.getByRole("button", { name: /確定/ });
 
 		// Initially disabled
@@ -67,10 +69,14 @@ test.describe("Role Filter Confirm Button Response", () => {
 	}) => {
 		// First add a filter so we can add roles to it
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		await expect(page.getByRole("button", { name: /確定/ })).toBeVisible({ timeout: 15000 });
+		await expect(page.getByRole("button", { name: /確定/ })).toBeVisible({
+			timeout: 15000,
+		});
 		await page.locator("label").filter({ hasText: "Bakary" }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
-		await expect(page.getByText("フィルター追加: 役職の選択")).not.toBeVisible();
+		await expect(
+			page.getByText("フィルター追加: 役職の選択"),
+		).not.toBeVisible();
 
 		const lastFilter = page.getByTestId("role-filter-card").last();
 		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
