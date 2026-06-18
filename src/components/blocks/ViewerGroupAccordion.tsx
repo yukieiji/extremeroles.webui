@@ -34,9 +34,7 @@ export function ViewerGroupAccordion({
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
-					{isOpen && (
-						<div className="border-border-weak">{children}</div>
-					)}
+					{isOpen && <div className="border-border-weak">{children}</div>}
 				</div>
 			</AccordionContentContainer>
 		</div>
