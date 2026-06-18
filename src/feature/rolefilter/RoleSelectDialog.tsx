@@ -38,7 +38,8 @@ export function RoleSelectDialog({
 		}
 		return [];
 	});
-	const setSelectedRoleIds = useStore((state) => state.setSelectedRoleIds);
+	const toggleSelectedRoleId = useStore((state) => state.toggleSelectedRoleId);
+	const mergeSelectedRoleIds = useStore((state) => state.mergeSelectedRoleIds);
 
 	const lastClickedId = useStore((state) => {
 		if (state.blockDialog?.type === "roleSelect") {
@@ -72,13 +73,7 @@ export function RoleSelectDialog({
 			!excludeSet.has(roleId) && roleName.toLowerCase().includes(lowerQuery),
 	);
 
-	const handleSelect = (
-		roleId: number,
-		event?: React.MouseEvent | React.KeyboardEvent,
-	) => {
-		const isShift =
-			event && "shiftKey" in event ? (event.shiftKey as boolean) : false;
-
+	const handleSelect = (roleId: number, isShift: boolean) => {
 		if (isShift && lastClickedId !== null) {
 			// Range selection
 			const lastIndex = filteredRoles.findIndex(
@@ -94,17 +89,10 @@ export function RoleSelectDialog({
 					.filter((r) => !excludeRoleIds.includes(r.roleId))
 					.map((r) => r.roleId);
 
-				setSelectedRoleIds((prev) => {
-					const nextSet = new Set([...prev, ...rangeIds]);
-					return Array.from(nextSet);
-				});
+				mergeSelectedRoleIds(...rangeIds);
 			}
 		} else {
-			setSelectedRoleIds((prev) =>
-				prev.includes(roleId)
-					? prev.filter((id) => id !== roleId)
-					: [...prev, roleId],
-			);
+			toggleSelectedRoleId(roleId);
 		}
 		setLastClickedId(roleId);
 	};

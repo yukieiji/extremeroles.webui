@@ -16,9 +16,9 @@ export interface GlobalUiSlice {
 	openBlockDialog: (dialog: BlockDialog) => void;
 	closeBlockDialog: () => void;
 	setRoleSearchQuery: (query: string) => void;
-	setSelectedRoleIds: (
-		roleIdsOrUpdater: number[] | ((prev: number[]) => number[]),
-	) => void;
+	setSelectedRoleIds: (roleIds: number[]) => void;
+	toggleSelectedRoleId: (roleId: number) => void;
+	mergeSelectedRoleIds: (...roleIds: number[]) => void;
 	setLastClickedId: (roleId: number | null) => void;
 	windowWidth: number;
 	setWindowWidth: (width: number) => void;
@@ -67,18 +67,47 @@ export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 				return state;
 			});
 		},
-		setSelectedRoleIds: (roleIdsOrUpdater) => {
+		setSelectedRoleIds: (roleIds) => {
 			set((state) => {
 				const blockDialog = state.blockDialog;
 				if (blockDialog?.type === "roleSelect") {
-					const nextIds =
-						typeof roleIdsOrUpdater === "function"
-							? roleIdsOrUpdater(blockDialog.selectedRoleIds)
-							: roleIdsOrUpdater;
+					return {
+						blockDialog: {
+							...blockDialog,
+							selectedRoleIds: roleIds,
+						},
+					};
+				}
+				return state;
+			});
+		},
+		toggleSelectedRoleId: (roleId) => {
+			set((state) => {
+				const blockDialog = state.blockDialog;
+				if (blockDialog?.type === "roleSelect") {
+					const isSelected = blockDialog.selectedRoleIds.includes(roleId);
+					const nextIds = isSelected
+						? blockDialog.selectedRoleIds.filter((id) => id !== roleId)
+						: [...blockDialog.selectedRoleIds, roleId];
 					return {
 						blockDialog: {
 							...blockDialog,
 							selectedRoleIds: nextIds,
+						},
+					};
+				}
+				return state;
+			});
+		},
+		mergeSelectedRoleIds: (...roleIds) => {
+			set((state) => {
+				const blockDialog = state.blockDialog;
+				if (blockDialog?.type === "roleSelect") {
+					const nextSet = new Set([...blockDialog.selectedRoleIds, ...roleIds]);
+					return {
+						blockDialog: {
+							...blockDialog,
+							selectedRoleIds: Array.from(nextSet),
 						},
 					};
 				}
