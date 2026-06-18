@@ -38,8 +38,7 @@ export function RoleSelectDialog({
 		}
 		return [];
 	});
-	const toggleSelectedRoleId = useStore((state) => state.toggleSelectedRoleId);
-	const mergeSelectedRoleIds = useStore((state) => state.mergeSelectedRoleIds);
+	const updateSelectedRoleIds = useStore((state) => state.updateSelectedRoleIds);
 
 	const lastClickedId = useStore((state) => {
 		if (state.blockDialog?.type === "roleSelect") {
@@ -89,10 +88,10 @@ export function RoleSelectDialog({
 					.filter((r) => !excludeRoleIds.includes(r.roleId))
 					.map((r) => r.roleId);
 
-				mergeSelectedRoleIds(...rangeIds);
+				updateSelectedRoleIds(...rangeIds);
 			}
 		} else {
-			toggleSelectedRoleId(roleId);
+			updateSelectedRoleIds(roleId);
 		}
 		setLastClickedId(roleId);
 	};
