@@ -24,22 +24,26 @@ test.describe("Role Filter Shift Selection", () => {
 		// Get labels
 		const labels = page.locator("[data-slot='field-label']");
 
-        // Ensure at least 3 labels are present
-        await expect(labels.nth(4)).toBeVisible();
+		// Ensure at least 3 labels are present
+		await expect(labels.nth(4)).toBeVisible();
 
-        // Click the first label (Leader)
-        await labels.nth(0).click();
+		// Click the first label (Leader)
+		await labels.nth(0).click();
 
-        // Shift-click the fifth label (Militant)
-        // 0: Leader, 1: Leader, 2: Dove, 3: Dove, 4: Militant
-        await labels.nth(4).click({ modifiers: ["Shift"] });
+		// Shift-click the fifth label (Militant)
+		// 0: Leader, 1: Leader, 2: Dove, 3: Dove, 4: Militant
+		await labels.nth(4).click({ modifiers: ["Shift"] });
 
-        // Verify that 3 items are selected (indicated by the Confirm button text)
-        // The Confirm button text is "確定 (3)" where 3 is the number of selected items
-        await expect(page.getByRole("button", { name: /確定 \(3\)/ })).toBeVisible();
+		// Verify that 3 items are selected (indicated by the Confirm button text)
+		// The Confirm button text is "確定 (3)" where 3 is the number of selected items
+		await expect(
+			page.getByRole("button", { name: /確定 \(3\)/ }),
+		).toBeVisible();
 
-        // Checkbox status check (checked items should have data-checked attribute)
-        const checkedCheckboxes = page.locator("[data-slot='checkbox'][data-checked]");
-        await expect(checkedCheckboxes).toHaveCount(3);
+		// Checkbox status check (checked items should have data-checked attribute)
+		const checkedCheckboxes = page.locator(
+			"[data-slot='checkbox'][data-checked]",
+		);
+		await expect(checkedCheckboxes).toHaveCount(3);
 	});
 });

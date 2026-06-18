@@ -43,8 +43,10 @@ export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 							<Checkbox
 								defaultChecked={isSelected}
 								onCheckedChange={(_, eventDetails) => {
-									const event = eventDetails.event as any;
-									onSelect(roleId, !!event.shiftKey);
+									const isShift =
+										"shiftKey" in eventDetails.event &&
+										(eventDetails.event as MouseEvent | KeyboardEvent).shiftKey;
+									onSelect(roleId, !!isShift);
 								}}
 							/>
 							<FieldContent>
