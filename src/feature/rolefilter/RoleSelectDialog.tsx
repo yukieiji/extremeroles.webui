@@ -38,7 +38,9 @@ export function RoleSelectDialog({
 		}
 		return [];
 	});
-	const updateSelectedRoleIds = useStore((state) => state.updateSelectedRoleIds);
+	const updateSelectedRoleIds = useStore(
+		(state) => state.updateSelectedRoleIds,
+	);
 
 	const lastClickedId = useStore((state) => {
 		if (state.blockDialog?.type === "roleSelect") {
