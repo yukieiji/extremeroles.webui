@@ -27,26 +27,21 @@ export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
 			{items.map(({ roleId, roleName }) => {
-				const isChecked = selectedRoleIds.includes(roleId);
+				const isSelected = selectedRoleIds.includes(roleId);
 				return (
 					<FieldLabel
-						key={roleId}
+						key={`${roleId}-${isSelected}`}
 						className="cursor-pointer hover:bg-component-hover has-data-checked:border-primary-action/30 has-data-checked:bg-primary-action/5"
 						onClick={(event) => {
-							// If the user clicked the label (and not the checkbox directly),
-							// the checkbox's onCheckedChange will be triggered by a synthetic click.
-							// But the synthetic click event often loses the shiftKey state.
-							// We can handle the click here to capture the shiftKey.
-							// However, we must be careful because clicking the label also triggers onCheckedChange.
 							if (event.shiftKey) {
-								event.preventDefault(); // Stop default checkbox toggle
+								event.preventDefault();
 								onSelect(roleId, true);
 							}
 						}}
 					>
 						<Field orientation="horizontal">
 							<Checkbox
-								checked={isChecked}
+								defaultChecked={isSelected}
 								onCheckedChange={(_, eventDetails) => {
 									const event = eventDetails.event as any;
 									onSelect(roleId, !!event.shiftKey);
