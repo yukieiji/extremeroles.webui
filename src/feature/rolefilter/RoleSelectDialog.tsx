@@ -38,7 +38,9 @@ export function RoleSelectDialog({
 		}
 		return [];
 	});
-	const setSelectedRoleIds = useStore((state) => state.setSelectedRoleIds);
+	const updateSelectedRoleIds = useStore(
+		(state) => state.updateSelectedRoleIds,
+	);
 
 	const lastClickedId = useStore((state) => {
 		if (state.blockDialog?.type === "roleSelect") {
@@ -72,8 +74,8 @@ export function RoleSelectDialog({
 			!excludeSet.has(roleId) && roleName.toLowerCase().includes(lowerQuery),
 	);
 
-	const handleSelect = (roleId: number, event: React.MouseEvent) => {
-		if (event.shiftKey && lastClickedId !== null) {
+	const handleSelect = (roleId: number, isShift: boolean) => {
+		if (isShift && lastClickedId !== null) {
 			// Range selection
 			const lastIndex = filteredRoles.findIndex(
 				(r) => r.roleId === lastClickedId,
@@ -88,15 +90,10 @@ export function RoleSelectDialog({
 					.filter((r) => !excludeRoleIds.includes(r.roleId))
 					.map((r) => r.roleId);
 
-				const nextSet = new Set([...selectedRoleIds, ...rangeIds]);
-				setSelectedRoleIds(Array.from(nextSet));
+				updateSelectedRoleIds(...rangeIds);
 			}
 		} else {
-			setSelectedRoleIds(
-				selectedRoleIds.includes(roleId)
-					? selectedRoleIds.filter((id) => id !== roleId)
-					: [...selectedRoleIds, roleId],
-			);
+			updateSelectedRoleIds(roleId);
 		}
 		setLastClickedId(roleId);
 	};
@@ -111,7 +108,11 @@ export function RoleSelectDialog({
 				placeholder={ROLE_SELECT_SEARCH_PLACEHOLDER}
 			/>
 			<div className="overflow-y-scroll flex-1">
-				<RoleGrid items={filteredRoles} onSelect={handleSelect} />
+				<RoleGrid
+					items={filteredRoles}
+					selectedRoleIds={selectedRoleIds}
+					onSelect={handleSelect}
+				/>
 			</div>
 			<DialogFooter>
 				<Button variant="outline" onClick={onCancel}>
