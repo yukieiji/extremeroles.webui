@@ -23,7 +23,7 @@ export function OptionRowContainer({
 	const paddingLeft = calculateIndentation(depth, indentMultiplier, 0.375);
 
 	return (
-		<div className="py-0.5 hover:bg-component-hover transition-colors">
+		<div className="hover:bg-component-hover transition-colors">
 			<div
 				className={`flex items-stretch ${className}`}
 				style={{ paddingLeft }}

@@ -12,7 +12,7 @@ export function SyncLoadingOverlay() {
 			aria-busy="true"
 			role="status"
 		>
-			<div className="bg-n4-components-background p-6 rounded-lg shadow-md flex flex-col items-center gap-4 border border-border-strong">
+			<div className="bg-n4-components-background rounded-lg shadow-md flex flex-col items-center border border-border-strong">
 				<div className="w-12 h-12 border-4 border-info border-t-transparent rounded-full animate-spin"></div>
 				<p className={`${TYPOGRAPHY.LABEL} font-medium text-text-primary`}>
 					{SYNCHRONIZING}

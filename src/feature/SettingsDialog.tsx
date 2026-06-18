@@ -18,7 +18,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 			<DialogHeader>
 				<DialogTitle>{title}</DialogTitle>
 			</DialogHeader>
-			<div className="grid gap-4 py-4">
+			<div className="grid">
 				<p className={`${TYPOGRAPHY.SMALL} text-text-secondary`}>
 					設定項目は現在準備中です。
 				</p>

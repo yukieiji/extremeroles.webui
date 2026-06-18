@@ -95,10 +95,10 @@ function MainContent() {
 	return (
 		<section
 			data-testid="main-content-section"
-			className="flex flex-col gap-4 transition-opacity duration-200 h-full overflow-hidden"
+			className="flex flex-col transition-opacity duration-200 h-full overflow-hidden"
 		>
-			<div className="flex items-center gap-4">
-				<div className="flex items-center gap-5 flex-1 p-4">
+			<div className="flex items-center">
+				<div className="flex items-center flex-1">
 					<h2 className="text-2xl font-bold whitespace-nowrap text-text-primary">
 						{titleMap[selectedTab]}
 					</h2>

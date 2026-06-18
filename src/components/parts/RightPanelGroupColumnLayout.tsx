@@ -7,5 +7,5 @@ interface RightPanelGroupColumnLayoutProps {
 export function RightPanelGroupColumnLayout({
 	children,
 }: RightPanelGroupColumnLayoutProps) {
-	return <div className="flex flex-col gap-2">{children}</div>;
+	return <div className="flex flex-col">{children}</div>;
 }

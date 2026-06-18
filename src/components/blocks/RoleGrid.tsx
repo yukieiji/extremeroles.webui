@@ -18,14 +18,14 @@ interface RoleGridProps {
 export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 	if (items.length === 0) {
 		return (
-			<div className="text-center py-8 text-text-secondary italic">
+			<div className="text-center text-text-secondary italic">
 				{"見つかりませんでした"}
 			</div>
 		);
 	}
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
 			{items.map(({ roleId, roleName }) => {
 				const isSelected = selectedRoleIds.includes(roleId);
 				return (

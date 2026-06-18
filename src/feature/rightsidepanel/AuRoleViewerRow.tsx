@@ -45,7 +45,7 @@ export function AuRoleViewerRow({ tabId, categoryId }: AuRoleViewerRowProps) {
 		<ViewerOptionRow
 			title={categoryMeta?.name ?? ""}
 			value={
-				<div className="flex items-center gap-2">
+				<div className="flex items-center">
 					<span className="text-text-secondary">{chanceValue.toString()}%</span>
 					<span className="text-text-secondary">/</span>
 					<span className="text-text-secondary">
