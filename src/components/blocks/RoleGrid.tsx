@@ -12,13 +12,12 @@ interface RoleGridProps {
 		roleId: number,
 		event?: React.MouseEvent | React.KeyboardEvent,
 	) => void;
-	selectedRoleIds: number[];
 }
 
 /**
  * 役職をグリッド形式で表示するリストコンポーネント
  */
-export function RoleGrid({ items, onSelect, selectedRoleIds }: RoleGridProps) {
+export function RoleGrid({ items, onSelect }: RoleGridProps) {
 	if (items.length === 0) {
 		return (
 			<div className="text-center py-8 text-text-secondary italic">
@@ -37,7 +36,6 @@ export function RoleGrid({ items, onSelect, selectedRoleIds }: RoleGridProps) {
 					>
 						<Field orientation="horizontal">
 							<Checkbox
-								checked={selectedRoleIds.includes(roleId)}
 								onCheckedChange={(_, event) =>
 									onSelect(
 										roleId,
