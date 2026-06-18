@@ -51,14 +51,14 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 		<div className="h-full flex-1 min-w-0 bg-n4-components-background border-l border-border-strong shadow-2xl relative">
 			{children}
 			<div className="flex flex-col h-full">
-				<div className="flex flex-col p-4 border-b border-border-strong gap-2">
+				<div className="flex flex-col border-b border-border-strong">
 					<div className="flex items-center justify-between">
 						<h2 className={TYPOGRAPHY.SIDEBAR}>{RIGHT_PANEL_TITLE}</h2>
 					</div>
 					<Button
 						variant="default"
 						size="sm"
-						className="w-full flex items-center gap-2"
+						className="w-full flex items-center"
 						onClick={handleCopy}
 					>
 						<ClipboardCopy className="w-4 h-4" />
@@ -67,7 +67,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 				</div>
 				<div className="flex-1 overflow-y-scroll">
 					<RightSidePanelSummary />
-					<div className="p-3">
+					<div className="">
 						<RightPanelGroupColumnLayout>
 							<ViewerGroupAccordion
 								title={AU_SETTINGS_TITLE}

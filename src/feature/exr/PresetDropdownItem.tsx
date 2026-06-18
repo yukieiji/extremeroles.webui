@@ -21,7 +21,7 @@ export function PresetDropdownItem({ index, value }: PresetDropdownItemProps) {
 			<div className="flex justify-between items-center w-full">
 				<span>{name}</span>
 				{name !== String(value) && (
-					<span className={`${TYPOGRAPHY.SMALL} text-text-secondary ml-2`}>
+					<span className={`${TYPOGRAPHY.SMALL} text-text-secondary `}>
 						({value})
 					</span>
 				)}

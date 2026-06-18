@@ -8,7 +8,7 @@ export function ExRCategoryListViewer({
 	categoryIds,
 }: ExRCategoryListViewerProps) {
 	return (
-		<div className="flex flex-col gap-1.5">
+		<div className="flex flex-col">
 			{categoryIds.map((categoryId) => (
 				<ExRCategoryViewer key={categoryId} categoryId={categoryId} />
 			))}

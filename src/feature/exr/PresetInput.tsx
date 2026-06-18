@@ -64,10 +64,10 @@ export function PresetInput({
 			/>
 			<InputGroupAddon
 				align="inline-end"
-				className="border-l border-border-strong p-0"
+				className="border-l border-border-strong"
 			>
 				<SelectTrigger
-					className="h-full w-8 justify-center rounded-none border-none bg-transparent p-0 hover:bg-component-hover"
+					className="h-full w-8 justify-center rounded-none border-none bg-transparent hover:bg-component-hover"
 					aria-label={PRESET_SELECT_ARIA}
 				/>
 			</InputGroupAddon>

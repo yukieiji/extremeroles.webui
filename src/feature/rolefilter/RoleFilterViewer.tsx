@@ -16,13 +16,13 @@ export function RoleFilterViewer() {
 	const filterEntries = Object.entries(roleFilterSet);
 
 	return (
-		<div className="p-4 flex flex-col gap-4 flex-1 overflow-y-auto [scrollbar-gutter:stable] *:shrink-0">
+		<div className="flex flex-col flex-1 overflow-y-auto [scrollbar-gutter:stable] *:shrink-0">
 			<div className="flex justify-between items-center">
 				<RoleFilterAddButton />
 			</div>
 
 			{filterEntries.length === 0 ? (
-				<div className="p-8 bg-n4-components-background border border-dashed border-border-strong rounded-lg text-center shadow-md">
+				<div className="bg-n4-components-background border border-dashed border-border-strong rounded-lg text-center shadow-md">
 					<p className={`${TYPOGRAPHY.LABEL} text-text-secondary`}>
 						{ROLE_FILTER_EMPTY_MESSAGE}
 					</p>
@@ -30,7 +30,7 @@ export function RoleFilterViewer() {
 			) : (
 				<div
 					data-testid="role-filter-list"
-					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
 				>
 					{filterEntries.map(([guid, filterSet]) => {
 						return (

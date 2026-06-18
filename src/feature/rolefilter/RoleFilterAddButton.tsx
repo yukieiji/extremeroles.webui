@@ -61,7 +61,7 @@ export function RoleFilterAddButton() {
 
 	return (
 		<Button onClick={onAddFilter} className="text-text-primary">
-			<Plus size={20} className="mr-1" aria-hidden="true" />
+			<Plus size={20} className="" aria-hidden="true" />
 			{ROLE_FILTER_ADD_BUTTON}
 		</Button>
 	);
