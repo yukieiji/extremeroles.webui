@@ -44,8 +44,8 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 				isHighlighted={isHighlighted}
 				isInset={true}
 			>
-				<div className="flex items-center justify-between py-2 px-4">
-					<div className="flex items-center gap-3">
+				<div className="flex items-center justify-between">
+					<div className="flex items-center">
 						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
 						<div className="w-5" />
 						<span className="font-semibold text-text-primary">

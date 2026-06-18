@@ -67,7 +67,7 @@ export function ErrorView({ error, resetErrorBoundary }: FallbackProps) {
 					<Button
 						size="lg"
 						onClick={handleRetry}
-						className={`${TYPOGRAPHY.LABEL} w-full gap-2 text-text-primar`}
+						className={`${TYPOGRAPHY.LABEL} w-full  text-text-primar`}
 					>
 						<RefreshCw />
 						{ERROR_RETRY_BUTTON}

@@ -16,7 +16,7 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 	const isBoolean = typeof value === "boolean";
 
 	return (
-		<div className="flex items-center gap-1 shrink-0">
+		<div className="flex items-center shrink-0">
 			<span
 				className={`${TYPOGRAPHY.CHILD_LABEL} text-text-secondary font-medium text-right`}
 			>

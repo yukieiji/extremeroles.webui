@@ -9,7 +9,7 @@ interface EditorContainerProps {
 
 export function EditorContainer({ selector, mainView }: EditorContainerProps) {
 	return (
-		<div className="flex flex-col gap-1 flex-1 overflow-hidden">
+		<div className="flex flex-col flex-1 overflow-hidden">
 			{selector}
 			<Suspense
 				fallback={

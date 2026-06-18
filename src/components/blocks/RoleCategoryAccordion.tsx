@@ -37,7 +37,7 @@ export function RoleCategoryAccordion({
 							onClick();
 						}
 					}}
-					className={`flex-1 flex items-center gap-3 p-4 text-left ${disable ? "cursor-default" : ""}`}
+					className={`flex-1 flex items-center   text-left ${disable ? "cursor-default" : ""}`}
 					aria-expanded={isOpen}
 					disabled={disable}
 				>
@@ -56,7 +56,7 @@ export function RoleCategoryAccordion({
 					</span>
 				</button>
 
-				<div className="flex items-center px-4">{spawnControl}</div>
+				<div className="flex items-center">{spawnControl}</div>
 			</div>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">

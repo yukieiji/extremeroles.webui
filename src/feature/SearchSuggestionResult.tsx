@@ -39,7 +39,7 @@ export function SearchSuggestionResult({
 				<Fragment key={getKeyByMode(item)}>
 					<Button
 						className={cn(
-							"h-auto w-full min-w-0 flex-col items-start justify-start py-1 text-left hover:bg-component-hover",
+							"h-auto w-full min-w-0 flex-col items-start justify-start text-left hover:bg-component-hover",
 							index === actualIndex && "bg-component-hover text-text-primary",
 						)}
 						variant="ghost"

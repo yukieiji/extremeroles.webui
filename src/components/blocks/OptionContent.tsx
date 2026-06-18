@@ -15,7 +15,7 @@ export function OptionRowContent({ name, children }: OptionRowContent) {
 					<OptionNameDisplay name={name} />
 				</span>
 			</div>
-			<div className="shrink-0 flex items-center gap-2">{children}</div>
+			<div className="shrink-0 flex items-center">{children}</div>
 		</OptionItem>
 	);
 }
