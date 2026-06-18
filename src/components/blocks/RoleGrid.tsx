@@ -8,7 +8,7 @@ interface RoleGridItem {
 
 interface RoleGridProps {
 	items: RoleGridItem[];
-	onSelect: (roleId: number, event: React.MouseEvent) => void;
+	onSelect: (roleId: number, isShift: boolean) => void;
 }
 
 /**
@@ -32,7 +32,16 @@ export function RoleGrid({ items, onSelect }: RoleGridProps) {
 						className="cursor-pointer hover:bg-component-hover has-data-checked:border-primary-action/30 has-data-checked:bg-primary-action/5"
 					>
 						<Field orientation="horizontal">
-							<Checkbox onClick={(e) => onSelect(roleId, e)} />
+							<Checkbox
+								onCheckedChange={(_, eventDetails) => {
+									const isShift =
+										"shiftKey" in eventDetails.event
+											? (eventDetails.event as MouseEvent | KeyboardEvent)
+													.shiftKey
+											: false;
+									onSelect(roleId, isShift);
+								}}
+							/>
 							<FieldContent>
 								<FieldTitle>{roleName}</FieldTitle>
 							</FieldContent>

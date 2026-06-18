@@ -16,7 +16,7 @@ export interface GlobalUiSlice {
 	openBlockDialog: (dialog: BlockDialog) => void;
 	closeBlockDialog: () => void;
 	setRoleSearchQuery: (query: string) => void;
-	setSelectedRoleIds: (roleIds: number[]) => void;
+	updateSelectedRoleIds: (...roleIds: number[]) => void;
 	setLastClickedId: (roleId: number | null) => void;
 	windowWidth: number;
 	setWindowWidth: (width: number) => void;
@@ -65,14 +65,30 @@ export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 				return state;
 			});
 		},
-		setSelectedRoleIds: (roleIds: number[]) => {
+		updateSelectedRoleIds: (...roleIds) => {
 			set((state) => {
 				const blockDialog = state.blockDialog;
 				if (blockDialog?.type === "roleSelect") {
+					let nextIds: number[];
+					if (roleIds.length === 1) {
+						// Toggle single ID
+						const roleId = roleIds[0];
+						const isSelected = blockDialog.selectedRoleIds.includes(roleId);
+						nextIds = isSelected
+							? blockDialog.selectedRoleIds.filter((id) => id !== roleId)
+							: [...blockDialog.selectedRoleIds, roleId];
+					} else {
+						// Merge multiple IDs
+						const nextSet = new Set([
+							...blockDialog.selectedRoleIds,
+							...roleIds,
+						]);
+						nextIds = Array.from(nextSet);
+					}
 					return {
 						blockDialog: {
 							...blockDialog,
-							selectedRoleIds: roleIds,
+							selectedRoleIds: nextIds,
 						},
 					};
 				}
