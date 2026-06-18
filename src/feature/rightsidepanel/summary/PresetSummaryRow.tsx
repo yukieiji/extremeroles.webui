@@ -24,7 +24,7 @@ export function PresetSummaryRow() {
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={presetTitle} />}
+			title={<ColoredText text={presetTitle} variant="secondary" />}
 			value={presetName}
 			onDoubleClick={() => navigateExR(PRESET_OPTION_UNIQUE_ID)}
 		/>

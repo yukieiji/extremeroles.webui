@@ -48,7 +48,7 @@ export function VanillaRoleSummaryRow({
 	return (
 		<ViewerOptionRow
 			data-testid="vanilla-role-summary"
-			title={<ColoredText text={roleData.name} />}
+			title={<ColoredText text={roleData.name} variant="secondary" />}
 			value={roleData.display}
 			onDoubleClick={() =>
 				navigateAu(roleData.tabId, categoryId, roleData.chanceId)

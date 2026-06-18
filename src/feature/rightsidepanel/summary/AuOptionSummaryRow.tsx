@@ -41,7 +41,7 @@ export function AuOptionSummaryRow({
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={title} />}
+			title={<ColoredText text={title} variant="secondary" />}
 			value={value}
 			onDoubleClick={() => navigateAu(meta.tabId, meta.categoryId, optionId)}
 		/>

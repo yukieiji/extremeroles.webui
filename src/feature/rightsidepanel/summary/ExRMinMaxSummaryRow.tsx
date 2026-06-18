@@ -37,7 +37,7 @@ export function ExRMinMaxSummaryRow({
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={title} />}
+			title={<ColoredText text={title} variant="secondary" />}
 			value={display}
 			onDoubleClick={() => navigateExR(minUniqueId)}
 		/>
