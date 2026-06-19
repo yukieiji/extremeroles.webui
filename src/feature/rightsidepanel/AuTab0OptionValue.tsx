@@ -17,20 +17,20 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 
 	return (
 		<div className="flex items-center shrink-0">
-			<span
-				className={`${TYPOGRAPHY.CHILD_LABEL} text-text-secondary font-medium text-right`}
-			>
-				{isBoolean ? (
-					<ColoredText
-						text={
-							translationMetaData.booleanTransData[value ? 1 : 0] ||
-							(value ? ON : OFF)
-						}
-					/>
-				) : (
-					value.toString()
-				)}
-			</span>
+			{isBoolean ? (
+				<ColoredText
+					text={
+						translationMetaData.booleanTransData[value ? 1 : 0] ||
+						(value ? ON : OFF)
+					}
+					variant="secondary"
+					className={`${TYPOGRAPHY.CHILD_LABEL} text-right`}
+				/>
+			) : (
+				<span className={`${TYPOGRAPHY.SMALL} text-text-secondary text-right`}>
+					{value.toString()}
+				</span>
+			)}
 			{!isBoolean && (
 				<div className="text-[10px] scale-90 origin-right">
 					<OptionFormat format={format} />

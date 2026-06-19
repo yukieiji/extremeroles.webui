@@ -1,5 +1,6 @@
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useAuOptionNavigationInline } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import {
@@ -41,7 +42,7 @@ export function AuOptionSummaryRow({
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={title} variant="secondary" />}
+			title={<ColoredText text={title} className={TYPOGRAPHY.CHILD_LABEL} />}
 			value={value}
 			onDoubleClick={() => navigateAu(meta.tabId, meta.categoryId, optionId)}
 		/>

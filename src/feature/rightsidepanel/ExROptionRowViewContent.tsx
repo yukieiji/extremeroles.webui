@@ -1,5 +1,6 @@
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useExROptionNavigation } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import type { UniqueOptionId } from "@/type";
@@ -26,7 +27,12 @@ export function ExROptionRowViewContent({
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={optionData.translatedName} />}
+			title={
+				<ColoredText
+					text={optionData.translatedName}
+					className={TYPOGRAPHY.CHILD_LABEL}
+				/>
+			}
 			value={
 				<ExRValueView
 					uniqueOptionId={uniqueOptionId}

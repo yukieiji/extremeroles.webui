@@ -1,6 +1,6 @@
 import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSliderControl";
+import { ColoredText } from "@/components/parts/ColoredText";
 import { OptionItem } from "@/components/parts/OptionItem";
-import { OptionNameDisplay } from "@/components/parts/OptionNameDisplay";
 import { TYPOGRAPHY } from "@/designConstants";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
@@ -44,11 +44,10 @@ export function ExRPairedOptionItem({
 	return (
 		<OptionItem className="min-h-18">
 			<div className="flex-1 min-w-0">
-				<span
+				<ColoredText
+					text={baseName}
 					className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary wrap-break-words`}
-				>
-					<OptionNameDisplay name={baseName} />
-				</span>
+				/>
 			</div>
 			<div className="shrink-0 flex items-center">
 				<OptionPairedSliderControl

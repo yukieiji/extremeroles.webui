@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { OptionEditorAccordion } from "@/components/blocks/OptionEditorAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { TYPOGRAPHY } from "@/designConstants";
 import { createExRCategoryNavigateId } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
@@ -57,6 +58,7 @@ export function ExRStandardCategoryItem({
 					title={
 						<ColoredText
 							text={exrOptionMetaData.categories[categoryId]?.name ?? ""}
+							className={TYPOGRAPHY.CHILD_LABEL}
 						/>
 					}
 					isOpen={isOpen}

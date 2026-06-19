@@ -1,5 +1,6 @@
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useVisibleCategories } from "@/hooks/useExROptionData";
 import { exrOptionMetaData } from "@/logics/api";
 import { ExRTabId } from "@/type";
@@ -20,7 +21,7 @@ export function ExRGeneralTabOptionViewer() {
 
 	return (
 		<ViewerGroupAccordion
-			title={<ColoredText text={generalTabName} />}
+			title={<ColoredText text={generalTabName} className={TYPOGRAPHY.LABEL} />}
 			isOpen={isOpen}
 			onToggle={() => {
 				toggleTab(TARGET_TAB_ID);

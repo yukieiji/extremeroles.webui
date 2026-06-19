@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { TYPOGRAPHY } from "@/designConstants";
 import { ColoredText } from "../parts/ColoredText";
 import { Field, FieldLabel } from "../ui/field";
 import { Switch } from "../ui/switch";
@@ -34,7 +35,11 @@ export function OptionToggleControl({
 				data-testid="option-toggle"
 			/>
 			<FieldLabel htmlFor={id} className="select-text">
-				<ColoredText text={values[selection]} />
+				<ColoredText
+					text={values[selection]}
+					variant="secondary"
+					className={TYPOGRAPHY.CHILD_LABEL}
+				/>
 			</FieldLabel>
 		</Field>
 	);

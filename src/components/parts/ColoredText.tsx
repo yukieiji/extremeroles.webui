@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 interface ColoredTextProps {
 	text: string;
+	className?: string;
 	variant?: "primary" | "secondary" | "tertiary";
 }
 
@@ -15,20 +16,24 @@ const COLOR_TAG_REGEX = /(<color=#[0-9A-F]{6,8}>|<\/color>|\n)/gi;
  */
 const COLOR_HEX_REGEX = /#[0-9A-F]{6,8}/i;
 
+const VARIANT_CLASSES = {
+	primary: "text-text-primary",
+	secondary: "text-text-secondary",
+	tertiary: "text-text-tertiary",
+};
+
 /**
  * カラータグ（<color=#RRGGBB>...</color>）と改行（\n）を反映させるコンポーネント
  * ネストをサポートします。
  */
-export function ColoredText({ text, variant = "primary" }: ColoredTextProps) {
+export function ColoredText({
+	text,
+	className = "",
+	variant = "primary",
+}: ColoredTextProps) {
 	if (!text) {
 		return null;
 	}
-
-	const variantClasses = {
-		primary: "text-text-primary",
-		secondary: "text-text-secondary",
-		tertiary: "text-text-tertiary",
-	};
 
 	const parts = text.split(COLOR_TAG_REGEX);
 
@@ -83,5 +88,9 @@ export function ColoredText({ text, variant = "primary" }: ColoredTextProps) {
 		currentElements.push(coloredSpan);
 	}
 
-	return <span className={variantClasses[variant]}>{currentElements}</span>;
+	return (
+		<span className={`${VARIANT_CLASSES[variant]} ${className}`}>
+			{currentElements}
+		</span>
+	);
 }
