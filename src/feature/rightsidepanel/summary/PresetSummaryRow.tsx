@@ -1,6 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useExROptionNavigationInline } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
@@ -24,7 +25,9 @@ export function PresetSummaryRow() {
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={presetTitle} />}
+			title={
+				<ColoredText text={presetTitle} className={TYPOGRAPHY.CHILD_LABEL} />
+			}
 			value={presetName}
 			onDoubleClick={() => navigateExR(PRESET_OPTION_UNIQUE_ID)}
 		/>

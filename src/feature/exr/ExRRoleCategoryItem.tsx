@@ -1,6 +1,7 @@
 import { RoleCategoryAccordion } from "@/components/blocks/RoleCategoryAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRCategoryNavigateId } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
@@ -79,7 +80,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 			<RoleCategoryAccordion
 				isOpen={isOpen}
 				onClick={() => toggleExRCategory(categoryId)}
-				text={<ColoredText text={category} />}
+				text={<ColoredText text={category} className={TYPOGRAPHY.LABEL} />}
 				spawnControl={
 					<ExRRoleSpawnControls
 						tabId={selectedExRTabId}

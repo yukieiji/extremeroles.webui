@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 
 interface ColoredTextProps {
 	text: string;
+	className?: string;
+	variant?: "primary" | "secondary" | "tertiary";
 }
 
 /**
@@ -14,11 +16,21 @@ const COLOR_TAG_REGEX = /(<color=#[0-9A-F]{6,8}>|<\/color>|\n)/gi;
  */
 const COLOR_HEX_REGEX = /#[0-9A-F]{6,8}/i;
 
+const VARIANT_CLASSES = {
+	primary: "text-text-primary",
+	secondary: "text-text-secondary",
+	tertiary: "text-text-tertiary",
+};
+
 /**
  * カラータグ（<color=#RRGGBB>...</color>）と改行（\n）を反映させるコンポーネント
  * ネストをサポートします。
  */
-export function ColoredText({ text }: ColoredTextProps) {
+export function ColoredText({
+	text,
+	className = "",
+	variant = "primary",
+}: ColoredTextProps) {
 	if (!text) {
 		return null;
 	}
@@ -47,9 +59,7 @@ export function ColoredText({ text }: ColoredTextProps) {
 			const last = stack.pop();
 			if (last) {
 				const coloredSpan = (
-					<span key={`color-${i}-${last.color}`} style={{ color: last.color }}>
-						{currentElements}
-					</span>
+					<span key={`color-${i}-${last.color}`}>{currentElements}</span>
 				);
 				// 親の要素リストに戻り、作成した要素を追加
 				currentElements = last.elements;
@@ -72,13 +82,15 @@ export function ColoredText({ text }: ColoredTextProps) {
 			break;
 		}
 		const coloredSpan = (
-			<span key={`unclosed-${stack.length}`} style={{ color: last.color }}>
-				{currentElements}
-			</span>
+			<span key={`unclosed-${stack.length}`}>{currentElements}</span>
 		);
 		currentElements = last.elements;
 		currentElements.push(coloredSpan);
 	}
 
-	return <>{currentElements}</>;
+	return (
+		<span className={`${VARIANT_CLASSES[variant]} ${className}`}>
+			{currentElements}
+		</span>
+	);
 }

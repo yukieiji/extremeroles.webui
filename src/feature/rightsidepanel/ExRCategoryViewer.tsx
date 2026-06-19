@@ -2,6 +2,7 @@ import { useShallow } from "zustand/react/shallow";
 import { RightPanelContainer } from "@/components/blocks/RightPanelContainer";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { ColoredText } from "@/components/parts/ColoredText";
+import { TYPOGRAPHY } from "@/designConstants";
 import { exrOptionMetaData } from "@/logics/api";
 import { MOVED_EXR_OPTION_UNIQUE_IDS } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
@@ -46,6 +47,7 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 			title={
 				<ColoredText
 					text={exrOptionMetaData.categories[categoryId]?.name ?? ""}
+					className={TYPOGRAPHY.LABEL}
 				/>
 			}
 			isOpen={isOpen}

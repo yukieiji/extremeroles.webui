@@ -1,6 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useAuOptionNavigationInline } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import type { AuOptionId } from "@/type";
@@ -48,7 +49,9 @@ export function VanillaRoleSummaryRow({
 	return (
 		<ViewerOptionRow
 			data-testid="vanilla-role-summary"
-			title={<ColoredText text={roleData.name} />}
+			title={
+				<ColoredText text={roleData.name} className={TYPOGRAPHY.CHILD_LABEL} />
+			}
 			value={roleData.display}
 			onDoubleClick={() =>
 				navigateAu(roleData.tabId, categoryId, roleData.chanceId)

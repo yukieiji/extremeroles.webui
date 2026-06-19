@@ -1,6 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useExROptionNavigationInline } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { getBaseOptionName } from "@/logics/optionUtils";
@@ -37,7 +38,7 @@ export function ExRMinMaxSummaryRow({
 
 	return (
 		<ViewerOptionRow
-			title={<ColoredText text={title} />}
+			title={<ColoredText text={title} className={TYPOGRAPHY.CHILD_LABEL} />}
 			value={display}
 			onDoubleClick={() => navigateExR(minUniqueId)}
 		/>

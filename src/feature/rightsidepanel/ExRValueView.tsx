@@ -1,5 +1,6 @@
 import { ColoredText } from "@/components/parts/ColoredText";
 import { OptionFormat } from "@/components/parts/OptionFormat";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useOptionData } from "@/hooks/useExROptionData";
 import type { UniqueOptionId } from "@/type";
 
@@ -13,7 +14,10 @@ export function ExRValueView({ uniqueOptionId, format }: ExRValueViewProps) {
 	const currentSelection = optionValue.selection ?? 0;
 	return (
 		<div className="flex flex-row">
-			<ColoredText text={String(optionValue.values[currentSelection])} />
+			<ColoredText
+				text={String(optionValue.values[currentSelection])}
+				className={TYPOGRAPHY.CHILD_LABEL}
+			/>
 			<OptionFormat format={format} />
 		</div>
 	);
