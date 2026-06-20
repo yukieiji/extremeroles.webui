@@ -42,4 +42,33 @@ test.describe("Right Panel Summary Roles", () => {
 			page.getByRole("heading", { name: "ExR Options" }),
 		).toBeVisible();
 	});
+
+	test("separator between Vanilla and ExR roles should be 50% width and centered", async ({
+		page,
+	}) => {
+		const summary = page.getByTestId("right-panel-summary");
+		await expect(summary).toBeVisible();
+
+		const separators = summary.locator('[data-slot="separator"]');
+		// The separator we want is the one with w-1/2 (the 3rd one)
+		const targetSeparator = separators.nth(2);
+		await expect(targetSeparator).toBeAttached();
+
+		const box = await targetSeparator.boundingBox();
+		const containerBox = await summary.boundingBox();
+
+		if (box && containerBox) {
+			// Width should be approximately 50% of container width
+			expect(box.width).toBeGreaterThan(containerBox.width * 0.4);
+			expect(box.width).toBeLessThan(containerBox.width * 0.6);
+
+			// Centering
+			const leftMargin = box.x - containerBox.x;
+			const rightMargin =
+				containerBox.x + containerBox.width - (box.x + box.width);
+			expect(Math.abs(leftMargin - rightMargin)).toBeLessThan(5);
+		} else {
+			throw new Error("Could not get bounding boxes");
+		}
+	});
 });
