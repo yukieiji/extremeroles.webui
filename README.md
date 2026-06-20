@@ -1,6 +1,6 @@
 # ExtremeRoles.WebUI
 
-ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)がインストールされたAmoungAuの設定を、高速かつ直感的に行うためのWebユーザーインターフェースです。
+ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)がインストールされたAmoungUSの設定を、高速かつ直感的に行うためのWebユーザーインターフェースです。
 
 ## 🚀 技術スタック
 
