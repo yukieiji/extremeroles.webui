@@ -1,4 +1,5 @@
 import { TYPOGRAPHY } from "@/designConstants";
+import { SETTINGS_UNDER_PREPARATION } from "@/noTrans";
 import {
 	DialogContent,
 	DialogHeader,
@@ -20,7 +21,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 			</DialogHeader>
 			<div className="grid">
 				<p className={`${TYPOGRAPHY.SMALL} text-text-secondary`}>
-					設定項目は現在準備中です。
+					{SETTINGS_UNDER_PREPARATION}
 				</p>
 			</div>
 		</DialogContent>
