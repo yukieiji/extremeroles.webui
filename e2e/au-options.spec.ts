@@ -62,7 +62,7 @@ test.describe("Au Option Interactions", () => {
 		await page.getByRole("tab", { name: "1", exact: true }).click();
 
 		// Initially chance is probably 0, so it's disabled
-		const category = page.getByTestId("category-list").locator("> div").first();
+		const category = page.getByTestId("role-category").first();
 		const spawn = category.getByTestId("spawn-rate-control");
 		await expect(spawn).toBeVisible();
 		await expect(category.getByTestId("spawn-count-control")).toBeVisible();
@@ -87,8 +87,7 @@ test.describe("Au Option Interactions", () => {
 		// Find a non-vanilla role that is not hidden (index 6 onwards in Tab 1 should be safe if mock data follows usual pattern)
 		// Or just find the first visible category in the list
 		const category = page
-			.getByTestId("category-list")
-			.locator("> div")
+			.getByTestId("role-category")
 			.filter({ has: page.getByTestId("spawn-rate-control") })
 			.first();
 		const chanceControl = category.getByTestId("spawn-rate-control");
@@ -129,7 +128,7 @@ test.describe("Au Option Interactions", () => {
 	}) => {
 		await page.getByRole("tab", { name: "1", exact: true }).click();
 
-		const category = page.getByTestId("category-list").locator("> div").first();
+		const category = page.getByTestId("role-category").first();
 		const toggleButton = category.locator("button").first();
 
 		// Set chance to 100% to enable accordion
