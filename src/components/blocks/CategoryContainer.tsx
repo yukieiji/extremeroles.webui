@@ -47,7 +47,7 @@ export function CategoryContainer({
 					<LoadingCycle />
 				</div>
 			)}
-			<div className="flex flex-col gap-2 overflow-y-auto flex-1 px-1">
+			<div className="flex flex-col gap-2 overflow-y-auto flex-1 px-1 pb-24">
 				{children}
 			</div>
 		</div>
