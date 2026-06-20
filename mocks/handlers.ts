@@ -13,6 +13,7 @@ import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRC
 import exrOptionData from './get/exr/setting-webui-dev_20260608.json';
 import auOptionData from './get/au/setting-webui-dev_20260607.json';
 import roleFilterData from './get/exr/roleassign-dev_20260503.json';
+import roleTransData from './get/exr/role-trans-dev_20260621.json';
 
 /**
  * Zodを使用してロードしたデータのバリデーションを実施
@@ -160,6 +161,13 @@ export const handlers = [
         Result: ''
       }
     ]);
+  }),
+
+  /**
+   * GET /au/translation/batch/role/ のハンドラー
+   */
+  http.get('/au/translation/batch/role/', () => {
+    return HttpResponse.json(roleTransData);
   }),
 
   /**

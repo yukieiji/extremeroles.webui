@@ -1,0 +1,577 @@
+[
+  {
+    "Key": "SpecialCrew",
+    "Param": [],
+    "Result": "\u003Ccolor=#8CFFFFFF\u003E\u30B9\u30DA\u30B7\u30E3\u30EB\u30AF\u30EB\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Sheriff",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF8C00FF\u003E\u30B7\u30A7\u30EA\u30D5\u003C/color\u003E"
+  },
+  {
+    "Key": "Maintainer",
+    "Param": [],
+    "Result": "\u003Ccolor=#4682B4FF\u003E\u30E1\u30F3\u30C6\u30CA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Neet",
+    "Param": [],
+    "Result": "\u003Ccolor=#C0C0C0FF\u003E\u30CB\u30FC\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Watchdog",
+    "Param": [],
+    "Result": "\u003Ccolor=#6633FFFF\u003E\u30A6\u30A9\u30C3\u30C1\u30C9\u30C3\u30B0\u003C/color\u003E"
+  },
+  {
+    "Key": "Supervisor",
+    "Param": [],
+    "Result": "\u003Ccolor=#33CC66FF\u003E\u30B9\u30FC\u30D1\u30FC\u30D0\u30A4\u30B6\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "BodyGuard",
+    "Param": [],
+    "Result": "\u003Ccolor=#FFCC66FF\u003E\u30DC\u30C7\u30A3\u30FC\u30AC\u30FC\u30C9\u003C/color\u003E"
+  },
+  {
+    "Key": "Whisper",
+    "Param": [],
+    "Result": "\u003Ccolor=#CC00CCFF\u003E\u30A6\u30A3\u30B9\u30D1\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "TimeMaster",
+    "Param": [],
+    "Result": "\u003Ccolor=#708EEFFF\u003E\u30BF\u30A4\u30E0\u30DE\u30B9\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Agency",
+    "Param": [],
+    "Result": "\u003Ccolor=#B5FF14FF\u003E\u30A8\u30FC\u30B8\u30A7\u30F3\u30B7\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Bakary",
+    "Param": [],
+    "Result": "\u003Ccolor=#E4A343FF\u003E\u30D1\u30F3\u5C4B\u003C/color\u003E"
+  },
+  {
+    "Key": "CurseMaker",
+    "Param": [],
+    "Result": "\u003Ccolor=#643D61FF\u003E\u30AB\u30FC\u30B9\u30E1\u30FC\u30AB\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Fencer",
+    "Param": [],
+    "Result": "\u003Ccolor=#005756FF\u003E\u30D5\u30A7\u30F3\u30B5\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Opener",
+    "Param": [],
+    "Result": "\u003Ccolor=#00FA9AFF\u003E\u30AA\u30FC\u30D7\u30CA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Carpenter",
+    "Param": [],
+    "Result": "\u003Ccolor=#C3B25FFF\u003E\u30AB\u30FC\u30DA\u30F3\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Survivor",
+    "Param": [],
+    "Result": "\u003Ccolor=#FFFF99FF\u003E\u30B5\u30D0\u30A4\u30D0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Captain",
+    "Param": [],
+    "Result": "\u003Ccolor=#225593FF\u003E\u30AD\u30E3\u30D7\u30C6\u30F3\u003C/color\u003E"
+  },
+  {
+    "Key": "Photographer",
+    "Param": [],
+    "Result": "\u003Ccolor=#3B813CFF\u003E\u30D5\u30A9\u30C8\u30B0\u30E9\u30D5\u30A1\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Delusioner",
+    "Param": [],
+    "Result": "\u003Ccolor=#FBDADEFF\u003E\u30C7\u30EA\u30E5\u30FC\u30B8\u30E7\u30CA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Resurrecter",
+    "Param": [],
+    "Result": "\u003Ccolor=#0069E1FF\u003E\u30EA\u30B6\u30EC\u30AF\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Gambler",
+    "Param": [],
+    "Result": "\u003Ccolor=#C7B994FF\u003E\u30AE\u30E3\u30F3\u30D6\u30E9\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Teleporter",
+    "Param": [],
+    "Result": "\u003Ccolor=#BCE1CFFF\u003E\u30C6\u30EC\u30DD\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Moderator",
+    "Param": [],
+    "Result": "\u003Ccolor=#CAE3BFFF\u003E\u30E2\u30C7\u30EC\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Psychic",
+    "Param": [],
+    "Result": "\u003Ccolor=#9295BAFF\u003E\u30B5\u30A4\u30AD\u30C3\u30AF\u003C/color\u003E"
+  },
+  {
+    "Key": "Bait",
+    "Param": [],
+    "Result": "\u003Ccolor=#00F7FFFF\u003E\u30D9\u30A4\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Jailer",
+    "Param": [],
+    "Result": "\u003Ccolor=#3A674FFF\u003E\u30B8\u30A7\u30A4\u30E9\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Summoner",
+    "Param": [],
+    "Result": "\u003Ccolor=#ED7B8CFF\u003E\u30B5\u30E2\u30CA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Exorcist",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30A8\u30AF\u30BD\u30B7\u30B9\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Loner",
+    "Param": [],
+    "Result": "\u003Ccolor=#191970FF\u003E\u30ED\u30A6\u30EF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "CEO",
+    "Param": [],
+    "Result": "\u003Ccolor=#CBAFD6FF\u003EC.E.O\u003C/color\u003E"
+  },
+  {
+    "Key": "Echo",
+    "Param": [],
+    "Result": "\u003Ccolor=#DCE4FFFF\u003E\u30A8\u30B3\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Inspector",
+    "Param": [],
+    "Result": "\u003Ccolor=#FFBF00FF\u003E\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "SpecialImpostor",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B9\u30DA\u30B7\u30E3\u30EB\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Evolver",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30A8\u30DC\u30EB\u30D0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Carrier",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30AD\u30E3\u30EA\u30E4\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "PsychoKiller",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B5\u30A4\u30B3\u30AD\u30E9\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "BountyHunter",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30D0\u30A6\u30F3\u30C6\u30A3\u30FC\u30CF\u30F3\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Painter",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30DA\u30A4\u30F3\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Faker",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30D5\u30A7\u30A4\u30AB\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "OverLoader",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30AA\u30FC\u30D0\u30FC\u30ED\u30FC\u30C0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Cracker",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30AF\u30E9\u30C3\u30AB\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Bomber",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30DC\u30DE\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Mery",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30E1\u30EA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "SlaveDriver",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B9\u30EC\u30A4\u30F4\u30C9\u30E9\u30A4\u30D0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "SandWorm",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B5\u30F3\u30C9\u30EF\u30FC\u30E0\u003C/color\u003E"
+  },
+  {
+    "Key": "Smasher",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B9\u30DE\u30C3\u30B7\u30E3\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "AssaultMaster",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30A2\u30B5\u30EB\u30C8\u30DE\u30B9\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Shooter",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B7\u30E5\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "LastWolf",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30E9\u30B9\u30C8\u30A6\u30EB\u30D5\u003C/color\u003E"
+  },
+  {
+    "Key": "Commander",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B3\u30DE\u30F3\u30C0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Hypnotist",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30D2\u30D7\u30CE\u30C6\u30A3\u30B9\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "UnderWarper",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30A2\u30F3\u30C0\u30FC\u30EF\u30FC\u30D1\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Magician",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30DE\u30B8\u30B7\u30E3\u30F3\u003C/color\u003E"
+  },
+  {
+    "Key": "Slime",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B9\u30E9\u30A4\u30E0\u003C/color\u003E"
+  },
+  {
+    "Key": "Zombie",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30BE\u30F3\u30D3\u003C/color\u003E"
+  },
+  {
+    "Key": "Thief",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B7\u30FC\u30D5\u003C/color\u003E"
+  },
+  {
+    "Key": "Crewshroom",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30AF\u30EB\u30FC\u30B7\u30E5\u30EB\u30FC\u30E0\u003C/color\u003E"
+  },
+  {
+    "Key": "Terorist",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30C6\u30ED\u30EA\u30B9\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Raider",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30EC\u30A4\u30C0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Glitch",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B0\u30EA\u30C3\u30C1\u003C/color\u003E"
+  },
+  {
+    "Key": "Hijacker",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30CF\u30A4\u30B8\u30E3\u30C3\u30AB\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "TimeBreaker",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30BF\u30A4\u30E0\u30D6\u30EC\u30FC\u30AB\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Scavenger",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B9\u30AB\u30D9\u30F3\u30B8\u30E3\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Boxer",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30DC\u30AF\u30B5\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Legislator",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30EC\u30B8\u30B9\u30EC\u30A4\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Alice",
+    "Param": [],
+    "Result": "\u003Ccolor=#FFD700FF\u003E\u30A2\u30EA\u30B9\u003C/color\u003E"
+  },
+  {
+    "Key": "Jackal",
+    "Param": [],
+    "Result": "\u003Ccolor=#4169FFFF\u003E\u30B8\u30E3\u30C3\u30AB\u30EB\u003C/color\u003E"
+  },
+  {
+    "Key": "TaskMaster",
+    "Param": [],
+    "Result": "\u003Ccolor=#808080FF\u003E\u30BF\u30B9\u30AF\u30DE\u30B9\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Missionary",
+    "Param": [],
+    "Result": "\u003Ccolor=#6776A1FF\u003E\u30DF\u30C3\u30B7\u30E7\u30CA\u30EA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Jester",
+    "Param": [],
+    "Result": "\u003Ccolor=#F57DA7FF\u003E\u30B8\u30A7\u30B9\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Yandere",
+    "Param": [],
+    "Result": "\u003Ccolor=#C71585FF\u003E\u30E4\u30F3\u30C7\u30EC\u003C/color\u003E"
+  },
+  {
+    "Key": "Yoko",
+    "Param": [],
+    "Result": "\u003Ccolor=#867BA9FF\u003E\u5996\u72D0\u003C/color\u003E"
+  },
+  {
+    "Key": "Totocalcio",
+    "Param": [],
+    "Result": "\u003Ccolor=#00FF00FF\u003E\u30C8\u30C8\u30AB\u30EB\u30C1\u30E7\u003C/color\u003E"
+  },
+  {
+    "Key": "Miner",
+    "Param": [],
+    "Result": "\u003Ccolor=#4C6733FF\u003E\u30DE\u30A4\u30CA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Eater",
+    "Param": [],
+    "Result": "\u003Ccolor=#662B2CFF\u003E\u30A4\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Queen",
+    "Param": [],
+    "Result": "\u003Ccolor=#F0F0D2FF\u003E\u30AF\u30A4\u30FC\u30F3\u003C/color\u003E"
+  },
+  {
+    "Key": "Madmate",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30DE\u30C3\u30C9\u30E1\u30A4\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Umbrer",
+    "Param": [],
+    "Result": "\u003Ccolor=#C80015FF\u003E\u30A2\u30F3\u30D6\u30EC\u30A4\u30E4\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Hatter",
+    "Param": [],
+    "Result": "\u003Ccolor=#91AD70FF\u003E\u30CF\u30C3\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Artist",
+    "Param": [],
+    "Result": "\u003Ccolor=#DC915BFF\u003E\u30A2\u30FC\u30C6\u30A3\u30B9\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Tucker",
+    "Param": [],
+    "Result": "\u003Ccolor=#715B41FF\u003E\u30BF\u30C3\u30AB\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "IronMate",
+    "Param": [],
+    "Result": "\u003Ccolor=#808C88FF\u003E\u30A2\u30A4\u30A2\u30F3\u30E1\u30A4\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Monika",
+    "Param": [],
+    "Result": "\u003Ccolor=#F49B83FF\u003E\u30E2\u30CB\u30AB\u003C/color\u003E"
+  },
+  {
+    "Key": "Heretic",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30D8\u30EC\u30C6\u30A3\u30C3\u30AF\u003C/color\u003E"
+  },
+  {
+    "Key": "Shepherd",
+    "Param": [],
+    "Result": "\u003Ccolor=#4169FFFF\u003E\u30B7\u30A7\u30D1\u30FC\u30C9\u003C/color\u003E"
+  },
+  {
+    "Key": "Furry",
+    "Param": [],
+    "Result": "\u003Ccolor=#4169FFFF\u003E\u30D5\u30A1\u30FC\u30EA\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Intimate",
+    "Param": [],
+    "Result": "\u003Ccolor=#C71585FF\u003E\u30A4\u30F3\u30C6\u30A3\u30E1\u30A4\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Surrogator",
+    "Param": [],
+    "Result": "\u003Ccolor=#C71585FF\u003E\u30B5\u30ED\u30B2\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Knight",
+    "Param": [],
+    "Result": "\u003Ccolor=#F0F0D2FF\u003E\u30CA\u30A4\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Pawn",
+    "Param": [],
+    "Result": "\u003Ccolor=#F0F0D2FF\u003E\u30DD\u30FC\u30F3\u003C/color\u003E"
+  },
+  {
+    "Key": "Poltergeist",
+    "Param": [],
+    "Result": "\u003Ccolor=#54524BFF\u003E\u30DD\u30EB\u30BF\u30FC\u30AC\u30A4\u30B9\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Faunus",
+    "Param": [],
+    "Result": "\u003Ccolor=#FAEBD7FF\u003E\u30D5\u30A1\u30A6\u30CC\u30B9\u003C/color\u003E"
+  },
+  {
+    "Key": "Shutter",
+    "Param": [],
+    "Result": "\u003Ccolor=#3B813CFF\u003E\u30B7\u30E3\u30C3\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Ventgeist",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30D9\u30F3\u30C8\u30AC\u30A4\u30B9\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "SaboEvil",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B5\u30DC\u308A\u9B54\u003C/color\u003E"
+  },
+  {
+    "Key": "Igniter",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30A4\u30B0\u30CA\u30A4\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Doppelganger",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30C9\u30C3\u30DA\u30EB\u30B2\u30F3\u30AC\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Foras",
+    "Param": [],
+    "Result": "\u003Ccolor=#CBAED6FF\u003E\u30D5\u30A9\u30E9\u30B9\u003C/color\u003E"
+  },
+  {
+    "Key": "Leader",
+    "Param": [],
+    "Result": "\u003Ccolor=#F9F06FFF\u003E\u30EA\u30FC\u30C0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Dove",
+    "Param": [],
+    "Result": "\u003Ccolor=#F9F06FFF\u003E\u30C9\u30FC\u30F4\u003C/color\u003E"
+  },
+  {
+    "Key": "Militant",
+    "Param": [],
+    "Result": "\u003Ccolor=#F9F06FFF\u003E\u30DF\u30EA\u30BF\u30F3\u30C8\u003C/color\u003E"
+  },
+  {
+    "Key": "Avalon",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30A2\u30B5\u30B7\u30F3\u003C/color\u003E\u3068\u003Ccolor=#00ffff\u003E\u30DE\u30FC\u30EA\u30F3\u003C/color\u003E"
+  },
+  {
+    "Key": "HeroAca",
+    "Param": [],
+    "Result": "\u003Ccolor=#0086CC\u003E\u30D2\u30FC\u30ED\u30FC\u003C/color\u003E\u3001\u003Ccolor=#FF1919FF\u003E\u30F4\u30A3\u30E9\u30F3\u003C/color\u003E\u3001\u003Ccolor=#BAA7CC\u003E\u30F4\u30A3\u30B8\u30E9\u30F3\u30C6\u003C/color\u003E"
+  },
+  {
+    "Key": "InvestigatorOffice",
+    "Param": [],
+    "Result": "\u003Ccolor=#9E5C46\u003E\u635C\u67FB\u5B98\u003C/color\u003E\u3068\u003Ccolor=#008A99\u003E\u52A9\u624B\u003C/color\u003E"
+  },
+  {
+    "Key": "Kids",
+    "Param": [],
+    "Result": "\u003Ccolor=#8CAA00FF\u003E\u30EF\u30EB\u30AC\u30AD\u003C/color\u003E"
+  },
+  {
+    "Key": "Lover",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF6BE4FF\u003E\u30E9\u30D0\u30FC\u30BA\u003C/color\u003E"
+  },
+  {
+    "Key": "Buddy",
+    "Param": [],
+    "Result": "\u003Ccolor=#E8C04EFF\u003E\u30D0\u30C7\u30A3\u30FC\u30BA\u003C/color\u003E"
+  },
+  {
+    "Key": "Sharer",
+    "Param": [],
+    "Result": "\u003Ccolor=#FF1919FF\u003E\u30B7\u30A7\u30A2\u30FC\u30BA\u003C/color\u003E"
+  },
+  {
+    "Key": "Supporter",
+    "Param": [],
+    "Result": "\u003Ccolor=#99FF99FF\u003E\u30B5\u30DD\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Guesser",
+    "Param": [],
+    "Result": "\u003Ccolor=#FFFF00FF\u003E\u30B2\u30C3\u30B5\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Mover",
+    "Param": [],
+    "Result": "\u003Ccolor=#669999FF\u003E\u30E0\u30FC\u30D0\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Accelerator",
+    "Param": [],
+    "Result": "\u003Ccolor=#D8D6D5FF\u003E\u30A2\u30AF\u30BB\u30E9\u30EC\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Skater",
+    "Param": [],
+    "Result": "\u003Ccolor=#ACDBDAFF\u003E\u30B9\u30B1\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Barter",
+    "Param": [],
+    "Result": "\u003Ccolor=#871C40FF\u003E\u30D0\u30FC\u30BF\u30FC\u003C/color\u003E"
+  },
+  {
+    "Key": "Traitor",
+    "Param": [],
+    "Result": "\u003Ccolor=#4C1050FF\u003E\u30C8\u30EC\u30A4\u30BF\u30FC\u003C/color\u003E"
+  }
+]
