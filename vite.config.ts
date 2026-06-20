@@ -18,11 +18,11 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     proxy: {
-      '/exr/option/': `http://localhost:${port}`,
-      '/exr/role/filter/': `http://localhost:${port}`,
-      '/au/option/': `http://localhost:${port}`,
-      '/au/translation/batch/': `http://localhost:${port}`,
-      '/au/translation/batch/optionunit/': `http://localhost:${port}`,
+      '/exr/option/': `http://127.0.0.1:${port}`,
+      '/exr/role/filter/': `http://127.0.0.1:${port}`,
+      '/au/option/': `http://127.0.0.1:${port}`,
+      '/au/translation/batch/': `http://127.0.0.1:${port}`,
+      '/au/translation/batch/optionunit/': `http://127.0.0.1:${port}`,
     },
   },
   test: {
