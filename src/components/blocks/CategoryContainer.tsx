@@ -47,7 +47,9 @@ export function CategoryContainer({
 					<LoadingCycle />
 				</div>
 			)}
-			<div className="flex flex-col gap-2 overflow-y-auto flex-1 px-1 pb-24 *:shrink-0">
+			<div className="flex flex-col gap-2 overflow-y-scroll flex-1 px-1 pb-48 *:shrink-0">
+				{" "}
+				{/* 下の要素を見やすく設定するために大きめの余白を入れてる */}
 				{children}
 			</div>
 		</div>
