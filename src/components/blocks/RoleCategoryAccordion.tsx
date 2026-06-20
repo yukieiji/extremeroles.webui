@@ -1,5 +1,5 @@
 import { Dot } from "lucide-react";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { TYPOGRAPHY } from "@/designConstants";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
@@ -11,7 +11,7 @@ interface RoleCategoryAccordionProps {
 	spawnControl: ReactNode;
 	disable: boolean;
 	children: ReactNode;
-	headerStyle?: CSSProperties;
+	headerColors?: string[];
 }
 
 export function RoleCategoryAccordion({
@@ -21,8 +21,14 @@ export function RoleCategoryAccordion({
 	spawnControl,
 	disable,
 	children,
-	headerStyle,
+	headerColors,
 }: RoleCategoryAccordionProps) {
+	const headerStyle =
+		headerColors && headerColors.length > 0
+			? {
+					background: `linear-gradient(to right, var(--color-n4-components-background), ${headerColors.join(", ")})`,
+				}
+			: undefined;
 	return (
 		<div
 			id={typeof text === "string" ? `au-category-${text}` : undefined}

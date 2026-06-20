@@ -49,13 +49,6 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	const category = categoryMeta?.name ?? "";
 	const categoryColors = categoryMeta?.categoryColors ?? [];
 
-	const headerStyle =
-		categoryColors.length > 0
-			? {
-					background: `linear-gradient(to right, var(--color-n4-components-background), ${categoryColors.join(", ")})`,
-				}
-			: undefined;
-
 	const spawnRateSelection = spawnRateOptionValue.selection ?? 0;
 	const isSpawnRateZero = spawnRateSelection === 0;
 	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
@@ -97,7 +90,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 					/>
 				}
 				disable={isSpawnRateZero}
-				headerStyle={headerStyle}
+				headerColors={categoryColors}
 			>
 				<ExRCategoryOptionList
 					categoryId={categoryId}
