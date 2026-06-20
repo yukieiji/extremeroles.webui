@@ -1,10 +1,11 @@
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { TYPOGRAPHY } from "@/designConstants";
 import { Badge } from "../ui/badge";
 
 interface RolePinProps {
 	name: string;
-	onDelete?: () => void;
+	onDelete: () => void;
 }
 
 /**
@@ -12,19 +13,17 @@ interface RolePinProps {
  */
 export function RolePin({ name, onDelete }: RolePinProps) {
 	return (
-		<Badge>
+		<Badge className={TYPOGRAPHY.CHILD_LABEL}>
 			<span>{name}</span>
-			{onDelete && (
-				<Button
-					onClick={(e) => {
-						e.stopPropagation();
-						onDelete();
-					}}
-					aria-label={`Remove ${name}`}
-				>
-					<X data-icon="inline-end" />
-				</Button>
-			)}
+			<Button
+				onClick={(e) => {
+					e.stopPropagation();
+					onDelete();
+				}}
+				aria-label={`Remove ${name}`}
+			>
+				<X data-icon="inline-end" />
+			</Button>
 		</Badge>
 	);
 }
