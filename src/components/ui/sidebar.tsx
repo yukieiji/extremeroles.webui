@@ -80,7 +80,8 @@ function SidebarProvider({
 		try {
 			const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
 			return stored !== null ? stored === "true" : defaultOpen;
-		} catch {
+		} catch (error) {
+			console.error("Failed to read sidebar state from localStorage:", error);
 			return defaultOpen;
 		}
 	});
@@ -97,8 +98,8 @@ function SidebarProvider({
 			// This sets the localStorage to keep the sidebar state.
 			try {
 				localStorage.setItem(SIDEBAR_STORAGE_KEY, String(openState));
-			} catch {
-				// Ignore errors in environments where localStorage is not available.
+			} catch (error) {
+				console.error("Failed to write sidebar state to localStorage:", error);
 			}
 		},
 		[setOpenProp, open],
