@@ -17,7 +17,7 @@ export function RoleFilterViewer() {
 
 	return (
 		<div className="flex flex-col flex-1 overflow-y-auto [scrollbar-gutter:stable] *:shrink-0">
-			<div className="py-4 px-2 flex justify-between items-center">
+			<div className="p-2 flex justify-between items-center">
 				<RoleFilterAddButton />
 			</div>
 
