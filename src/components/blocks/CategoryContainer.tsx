@@ -39,7 +39,7 @@ export function CategoryContainer({
 	return (
 		<div
 			data-testid="category-list"
-			className={`p-2 flex flex-col relative transition-opacity duration-200 flex-1 [scrollbar-gutter:stable] *:shrink-0 ${hasColors ? "rounded-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
+			className={`p-2 flex flex-col relative transition-opacity duration-200 flex-1 [scrollbar-gutter:stable] min-h-0 ${hasColors ? "rounded-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
 			style={containerStyle}
 		>
 			{isPending && (
@@ -47,7 +47,9 @@ export function CategoryContainer({
 					<LoadingCycle />
 				</div>
 			)}
-			<div className="flex flex-col gap-2 overflow-y-scroll px-1">
+			<div className="flex flex-col gap-2 overflow-y-scroll flex-1 px-1 pb-48 *:shrink-0">
+				{" "}
+				{/* 下の要素を見やすく設定するために大きめの余白を入れてる */}
 				{children}
 			</div>
 		</div>
