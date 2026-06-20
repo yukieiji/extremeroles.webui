@@ -104,8 +104,8 @@ export function RoleFilterCardHeader({
 	};
 
 	return (
-		<div className="col-start-1 flex flex-col gap-2 w-full">
-			<div className="flex items-center p-2">
+		<div className="flex flex-col items-start gap-2 w-full">
+			<div className="flex items-center">
 				<span className={`${TYPOGRAPHY.LABEL} text-text-primary px-2`}>
 					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
