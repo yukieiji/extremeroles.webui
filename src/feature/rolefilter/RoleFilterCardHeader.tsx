@@ -104,8 +104,8 @@ export function RoleFilterCardHeader({
 	};
 
 	return (
-		<>
-			<div className="p-2 flex items-center">
+		<div className="col-start-1 flex flex-col gap-2 w-full">
+			<div className="flex items-center p-2">
 				<span className={`${TYPOGRAPHY.LABEL} text-text-primary px-2`}>
 					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
@@ -126,10 +126,10 @@ export function RoleFilterCardHeader({
 					</Button>
 				</ButtonGroup>
 			</div>
-			<Button onClick={onOpenRoleSelect}>
+			<Button onClick={onOpenRoleSelect} className="w-full">
 				<Plus size={12} />
 				{ROLE_FILTER_ROLE_ADD_BUTTON}
 			</Button>
-		</>
+		</div>
 	);
 }
