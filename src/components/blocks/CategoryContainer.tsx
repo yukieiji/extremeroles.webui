@@ -37,9 +37,10 @@ export function CategoryContainer({
 	})();
 
 	return (
+		// scroll分右は小さくする
 		<div
 			data-testid="category-list"
-			className={`p-2 flex flex-col relative transition-opacity duration-200 flex-1 [scrollbar-gutter:stable] min-h-0 ${hasColors ? "rounded-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
+			className={`pl-2 py-2 pr-1 flex flex-col relative transition-opacity duration-200 flex-1 [scrollbar-gutter:stable] min-h-0 ${hasColors ? "rounded-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
 			style={containerStyle}
 		>
 			{isPending && (
@@ -47,8 +48,8 @@ export function CategoryContainer({
 					<LoadingCycle />
 				</div>
 			)}
-			{/* 下の要素を見やすく設定するために大きめの余白を入れてる */}
-			<div className="flex flex-col gap-2 overflow-y-scroll flex-1 px-1 pb-48 *:shrink-0">
+			{/* 下の要素を見やすく設定するために大きめの余白を入れてる、右はscroll分はいるので大きめに余白を入れる */}
+			<div className="flex flex-col gap-2 overflow-y-scroll flex-1 pl-1 pr-2 pb-48 *:shrink-0">
 				{children}
 			</div>
 		</div>
