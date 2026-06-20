@@ -88,12 +88,12 @@ export function OptionGroupToggleSidebar() {
 
 	return (
 		<Sidebar collapsible="icon" aria-label={OPTION_SIDEBAR_ARIA}>
-			<SidebarHeader className="flex flex-row items-center justify-end group-data-[collapsible=icon]:justify-center">
+			<SidebarHeader className="flex flex-row items-center justify-end group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0">
 				<SidebarTrigger title={triggerLabel} aria-label={triggerLabel} />
 			</SidebarHeader>
 
 			<SidebarContent>
-				<SidebarMenu>
+				<SidebarMenu className="group-data-[collapsible=icon]:items-center">
 					{TABS.map((tab) => {
 						return (
 							<SidebarMenuItem key={tab.id}>
@@ -121,8 +121,8 @@ export function OptionGroupToggleSidebar() {
 				</SidebarMenu>
 			</SidebarContent>
 
-			<SidebarFooter>
-				<SidebarMenu>
+			<SidebarFooter className="group-data-[collapsible=icon]:p-0">
+				<SidebarMenu className="group-data-[collapsible=icon]:items-center">
 					<SidebarMenuItem>
 						<SidebarMenuButton
 							data-testid="sidebar-settings-button"
