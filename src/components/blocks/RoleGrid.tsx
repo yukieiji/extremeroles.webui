@@ -19,9 +19,7 @@ interface RoleGridProps {
 export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 	if (items.length === 0) {
 		return (
-			<div className="text-center text-text-secondary italic">
-				{NOT_FOUND}
-			</div>
+			<div className="text-center text-text-secondary italic">{NOT_FOUND}</div>
 		);
 	}
 
