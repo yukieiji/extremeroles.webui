@@ -128,7 +128,7 @@ export function RoleFilterCardHeader({
 			</div>
 			<Button
 				onClick={onOpenRoleSelect}
-				className={`${TYPOGRAPHY.LABEL} text-text-primary`}
+				className={`${TYPOGRAPHY.LABEL} text-text-primary w-full col-span-full`}
 			>
 				<Plus size={12} />
 				{ROLE_FILTER_ROLE_ADD_BUTTON}
