@@ -18,7 +18,7 @@ test.describe("Scroll Behavior", () => {
 		await page.setViewportSize({ width: 1280, height: 400 });
 
 		// The scrollable div inside CategoryContainer
-		const scrollableDiv = categoryList.locator("div.overflow-y-auto");
+		const scrollableDiv = categoryList.locator("div.overflow-y-scroll");
 		await expect(scrollableDiv).toBeVisible();
 
 		// Check that the category list is scrollable
