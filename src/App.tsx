@@ -134,7 +134,7 @@ function MainContent() {
 					</div>
 				}
 			>
-				<div className="p-2">
+				<div className="p-2 flex-1 min-h-0 flex flex-col">
 					<EditorContainer />
 				</div>
 			</Suspense>
@@ -163,7 +163,7 @@ function RootContent() {
 			<BlockableLoading />
 			<BlockableDialog />
 			<OptionGroupToggleSidebar />
-			<SidebarInset className="min-w-0">
+			<SidebarInset className="min-w-0 h-svh overflow-hidden">
 				<MainContent />
 			</SidebarInset>
 			<RightSidePanel />
