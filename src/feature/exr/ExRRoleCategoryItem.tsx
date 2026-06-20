@@ -45,7 +45,9 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	);
 	const spawnRateOptionValue = useOptionData(uniqueRateId);
 
-	const category = exrOptionMetaData.categories[categoryId]?.name ?? "";
+	const categoryMeta = exrOptionMetaData.categories[categoryId];
+	const category = categoryMeta?.name ?? "";
+	const categoryColors = categoryMeta?.categoryColors ?? [];
 
 	const spawnRateSelection = spawnRateOptionValue.selection ?? 0;
 	const isSpawnRateZero = spawnRateSelection === 0;
@@ -88,6 +90,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 					/>
 				}
 				disable={isSpawnRateZero}
+				headerColors={categoryColors}
 			>
 				<ExRCategoryOptionList
 					categoryId={categoryId}

@@ -11,6 +11,7 @@ interface RoleCategoryAccordionProps {
 	spawnControl: ReactNode;
 	disable: boolean;
 	children: ReactNode;
+	headerColors?: string[];
 }
 
 export function RoleCategoryAccordion({
@@ -20,7 +21,14 @@ export function RoleCategoryAccordion({
 	spawnControl,
 	disable,
 	children,
+	headerColors,
 }: RoleCategoryAccordionProps) {
+	const headerStyle =
+		headerColors && headerColors.length > 0
+			? {
+					background: `linear-gradient(to right, var(--color-n4-components-background), ${headerColors.join(", ")})`,
+				}
+			: undefined;
 	return (
 		<div
 			id={typeof text === "string" ? `au-category-${text}` : undefined}
@@ -29,6 +37,7 @@ export function RoleCategoryAccordion({
 		>
 			<div
 				className={`flex items-center ${!disable ? "hover:bg-component-hover transition-colors" : ""}`}
+				style={headerStyle}
 			>
 				<button
 					type="button"
