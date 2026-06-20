@@ -16,8 +16,8 @@ export function RoleFilterViewer() {
 	const filterEntries = Object.entries(roleFilterSet);
 
 	return (
-		<div className="flex flex-col flex-1 overflow-y-auto [scrollbar-gutter:stable] *:shrink-0">
-			<div className="p-2 flex justify-between items-center">
+		<div className="flex flex-col">
+			<div className="p-2">
 				<RoleFilterAddButton />
 			</div>
 
@@ -30,7 +30,7 @@ export function RoleFilterViewer() {
 			) : (
 				<div
 					data-testid="role-filter-list"
-					className="p-2 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+					className="p-2 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-y-scroll"
 				>
 					{filterEntries.map(([guid, filterSet]) => {
 						return (
