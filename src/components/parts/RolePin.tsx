@@ -12,17 +12,19 @@ interface RolePinProps {
  */
 export function RolePin({ name, onDelete }: RolePinProps) {
 	return (
-		<Badge>
-			<span>{name}</span>
+		<Badge className="pr-0! gap-0 hover:bg-primary-action! *:cursor-default">
+			<span className="pl-2 pr-1.5">{name}</span>
 			{onDelete && (
 				<Button
+					variant="ghost"
+					className="size-5 p-0 hover:bg-primary-action-hover! hover:text-text-primary rounded-none"
 					onClick={(e) => {
 						e.stopPropagation();
 						onDelete();
 					}}
 					aria-label={`Remove ${name}`}
 				>
-					<X data-icon="inline-end" />
+					<X size={12} />
 				</Button>
 			)}
 		</Badge>
