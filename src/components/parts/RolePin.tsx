@@ -12,7 +12,9 @@ interface RolePinProps {
  */
 export function RolePin({ name, onDelete }: RolePinProps) {
 	return (
-		<Badge className="pr-0! gap-0 hover:bg-primary-action! *:cursor-default">
+		<Badge
+			className={`gap-0 hover:bg-primary-action! *:cursor-default ${onDelete ? "pr-0!" : ""}`}
+		>
 			<span className="pl-2 pr-1.5">{name}</span>
 			{onDelete && (
 				<Button
