@@ -88,7 +88,7 @@ export function OptionGroupToggleSidebar() {
 
 	return (
 		<Sidebar collapsible="icon" aria-label={OPTION_SIDEBAR_ARIA}>
-			<SidebarHeader className="flex flex-row items-center justify-end">
+			<SidebarHeader className="flex flex-row items-center justify-end group-data-[collapsible=icon]:justify-center">
 				<SidebarTrigger title={triggerLabel} aria-label={triggerLabel} />
 			</SidebarHeader>
 
