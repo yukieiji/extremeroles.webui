@@ -7,7 +7,7 @@ test.describe("Scroll Behavior", () => {
 		await page.goto("/");
 
 		// Wait for category list to be visible - using a more robust way if data-testid is tricky
-        // It should be inside section[data-testid='main-content-section']
+		// It should be inside section[data-testid='main-content-section']
 		const categoryList = page.locator("[data-testid='category-list']");
 		await expect(categoryList).toBeVisible({ timeout: 15000 });
 
@@ -19,7 +19,7 @@ test.describe("Scroll Behavior", () => {
 
 		// The scrollable div inside CategoryContainer
 		const scrollableDiv = categoryList.locator("div.overflow-y-auto");
-        await expect(scrollableDiv).toBeVisible();
+		await expect(scrollableDiv).toBeVisible();
 
 		// Check that the category list is scrollable
 		const isScrollable = await scrollableDiv.evaluate((el) => {
@@ -29,7 +29,10 @@ test.describe("Scroll Behavior", () => {
 
 		// Check that the body is NOT scrollable
 		const bodyIsScrollable = await page.evaluate(() => {
-			return document.documentElement.scrollHeight > document.documentElement.clientHeight;
+			return (
+				document.documentElement.scrollHeight >
+				document.documentElement.clientHeight
+			);
 		});
 		expect(bodyIsScrollable).toBe(false);
 
