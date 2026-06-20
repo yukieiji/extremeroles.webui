@@ -98,9 +98,9 @@ function MainContent() {
 			data-testid="main-content-section"
 			className="flex flex-col transition-opacity duration-200 h-full overflow-hidden"
 		>
-			<div className="p-2 flex items-center flex-wrap">
+			<div className="px-2 pt-4 flex items-center flex-wrap">
 				<div className="flex items-center flex-1">
-					<h2 className="p-4 text-2xl font-bold whitespace-nowrap text-text-primary">
+					<h2 className="px-4 text-2xl font-bold whitespace-nowrap text-text-primary">
 						{titleMap[selectedTab]}
 					</h2>
 					<div className="flex flex-row gap-4 flex-wrap">
@@ -119,7 +119,7 @@ function MainContent() {
 						<div className="w-6 h-6 border border-info border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
-				<div className="px-4 flex flex-row">
+				<div className="px-4 flex flex-row gap-2">
 					<ButtonGroup>
 						<ImportButton onImport={handleImport} />
 						<ExportButton onClick={exporter} />
