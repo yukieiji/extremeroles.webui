@@ -24,7 +24,7 @@ export function ViewerGroupAccordion({
 			<button
 				type="button"
 				onClick={onToggle}
-				className="w-full flex items-center hover:bg-component-hover transition-colors text-left"
+				className="w-full flex items-center hover:bg-component-hover transition-colors text-left p-2"
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg className="w-4 h-4 text-text-tertiary" isOpen={isOpen} />
@@ -34,7 +34,9 @@ export function ViewerGroupAccordion({
 			</button>
 			<AccordionContentContainer isOpen={isOpen}>
 				<div className="min-h-0">
-					{isOpen && <div className="border-border-weak">{children}</div>}
+					{isOpen && (
+						<div className="border-border-weak border-t p-2">{children}</div>
+					)}
 				</div>
 			</AccordionContentContainer>
 		</div>

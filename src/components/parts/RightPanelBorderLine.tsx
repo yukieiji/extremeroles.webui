@@ -12,7 +12,7 @@ export function RightPanelBorderLine({
 	const paddingLeft = calculateIndentation(depth, indentMultiplier);
 	return (
 		<div style={{ paddingLeft: paddingLeft }}>
-			<hr className="w-[95%] border-t border-border-weak" />
+			<hr className="w-[95%] border-t pb-1 border-border-weak" />
 		</div>
 	);
 }

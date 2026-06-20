@@ -50,7 +50,7 @@ export function OptionPairedSliderControl({
 	};
 
 	return (
-		<div className="flex flex-col sm:flex-row items-center w-full sm:w-lg">
+		<div className="flex flex-col gap-2 sm:flex-row items-center w-full sm:w-lg">
 			<OptionSliderControl
 				label={minLabel}
 				selection={minSelection}

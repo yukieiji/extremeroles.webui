@@ -36,7 +36,7 @@ import { VanillaRoleSummaryRow } from "./VanillaRoleSummaryRow";
 export function RightSidePanelSummary() {
 	return (
 		<div
-			className="flex flex-col border-b border-border-strong"
+			className="flex py-2 flex-col border-b border-border-strong gap-1"
 			data-testid="right-panel-summary"
 		>
 			<PresetSummaryRow />

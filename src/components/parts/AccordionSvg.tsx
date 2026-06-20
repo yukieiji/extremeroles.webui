@@ -8,7 +8,7 @@ interface AccordionSvgProps {
 export function AccordionSvg({ className, isOpen }: AccordionSvgProps) {
 	return (
 		<ChevronRight
-			className={`transition-transform duration-200 ${className} ${isOpen ? "rotate-90" : ""}`}
+			className={`m-2 transition-transform duration-200 ${className} ${isOpen ? "rotate-90" : ""}`}
 			aria-hidden="true"
 		/>
 	);

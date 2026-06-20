@@ -30,7 +30,7 @@ export function ViewerOptionRow({
 			type="button"
 			onDoubleClick={onDoubleClick}
 			{...props}
-			className="w-full flex justify-between items-center hover:bg-component-hover rounded cursor-pointer select-none group"
+			className="w-full flex justify-between items-center hover:bg-component-hover rounded cursor-pointer select-none group py-1"
 			style={{ paddingLeft }}
 			title={VIEWER_ROW_TITLE}
 		>
@@ -40,7 +40,9 @@ export function ViewerOptionRow({
 				{title}
 			</span>
 			<div className="flex items-center shrink-0">
-				<div className={`${TYPOGRAPHY.SMALL} text-text-primary text-right`}>
+				<div
+					className={`${TYPOGRAPHY.SMALL} text-text-primary text-right px-2`}
+				>
 					{value}
 				</div>
 			</div>

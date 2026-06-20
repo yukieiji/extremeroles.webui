@@ -36,7 +36,7 @@ export function RoleCategoryAccordion({
 			data-testid="role-category"
 		>
 			<div
-				className={`flex items-center ${!disable ? "hover:bg-component-hover transition-colors" : ""}`}
+				className={`p-2 flex items-center ${!disable ? "hover:bg-component-hover transition-colors" : ""}`}
 				style={headerStyle}
 			>
 				<button
@@ -46,7 +46,7 @@ export function RoleCategoryAccordion({
 							onClick();
 						}
 					}}
-					className={`flex-1 flex items-center   text-left ${disable ? "cursor-default" : ""}`}
+					className={`flex-1 flex items-center text-left ${disable ? "cursor-default" : ""}`}
 					aria-expanded={isOpen}
 					disabled={disable}
 				>
@@ -60,7 +60,7 @@ export function RoleCategoryAccordion({
 							className="w-5 h-5 text-text-primary"
 						/>
 					)}
-					<span className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
+					<span className={`${TYPOGRAPHY.LABEL} text-text-primary p-1`}>
 						{text}
 					</span>
 				</button>

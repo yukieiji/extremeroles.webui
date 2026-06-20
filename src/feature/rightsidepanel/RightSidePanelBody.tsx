@@ -48,11 +48,11 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 	const toggleExrSettings = useStore((state) => state.toggleExrSettings);
 
 	return (
-		<div className="h-full flex-1 min-w-0 bg-n4-components-background border-l border-border-strong shadow-2xl relative">
+		<div className="p-2 h-full flex-1 min-w-0 bg-n4-components-background border-l border-border-strong shadow-2xl relative">
 			{children}
 			<div className="flex flex-col h-full">
-				<div className="flex flex-col border-b border-border-strong">
-					<div className="flex items-center justify-between">
+				<div className="p-2 flex flex-col border-b border-border-strong">
+					<div className="p-2 flex items-center justify-between">
 						<h2 className={TYPOGRAPHY.SIDEBAR}>{RIGHT_PANEL_TITLE}</h2>
 					</div>
 					<Button
@@ -65,9 +65,9 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 						{CLIPBOARD_COPY_BUTTON}
 					</Button>
 				</div>
-				<div className="flex-1 overflow-y-scroll">
+				<div className="py-2 flex-1 overflow-y-scroll">
 					<RightSidePanelSummary />
-					<div className="">
+					<div className="py-4">
 						<RightPanelGroupColumnLayout>
 							<ViewerGroupAccordion
 								title={AU_SETTINGS_TITLE}

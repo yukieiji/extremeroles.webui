@@ -14,7 +14,7 @@ interface RoleSpawnControlsProps {
 
 export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 	return (
-		<div className="flex items-center">
+		<div className="flex items-center gap-2">
 			<OptionSliderControl
 				label={ROLE_SPAWN_RATE}
 				values={rate.values}

@@ -44,7 +44,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 				isHighlighted={isHighlighted}
 				isInset={true}
 			>
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-between p-2">
 					<div className="flex items-center">
 						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
 						<div className="w-5" />
@@ -52,16 +52,18 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 							{optionMeta.title}
 						</span>
 					</div>
-					<OptionDropdownControl
-						values={displayValues}
-						selection={selection}
-						onChange={(newSelectionValue) => {
-							updateAuOption({
-								auOptionId: mapOptionId,
-								selection: newSelectionValue,
-							});
-						}}
-					/>
+					<div className="p-1">
+						<OptionDropdownControl
+							values={displayValues}
+							selection={selection}
+							onChange={(newSelectionValue) => {
+								updateAuOption({
+									auOptionId: mapOptionId,
+									selection: newSelectionValue,
+								});
+							}}
+						/>
+					</div>
 				</div>
 			</HighlightWrapper>
 		</div>

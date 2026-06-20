@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { TYPOGRAPHY } from "@/designConstants";
 import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
 import {
@@ -104,11 +105,11 @@ export function RoleFilterCardHeader({
 
 	return (
 		<>
-			<div className="flex items-center">
-				<span className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
+			<div className="p-2 flex items-center">
+				<span className={`${TYPOGRAPHY.LABEL} text-text-primary px-2`}>
 					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
-				<div className="flex flex-col">
+				<ButtonGroup orientation="vertical">
 					<Button
 						onClick={onIncrement}
 						disabled={assignNum >= 255 || isUpdating}
@@ -123,7 +124,7 @@ export function RoleFilterCardHeader({
 					>
 						<ChevronDown />
 					</Button>
-				</div>
+				</ButtonGroup>
 			</div>
 			<Button onClick={onOpenRoleSelect}>
 				<Plus size={12} />

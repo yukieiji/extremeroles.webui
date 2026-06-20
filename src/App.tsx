@@ -5,6 +5,7 @@ import { LoadingView } from "./components/blocks/LoadingView";
 import { ExportButton } from "./components/parts/ExportButton";
 import { ImportButton } from "./components/parts/ImportButton";
 import { SyncButton } from "./components/parts/SyncButton";
+import { ButtonGroup } from "./components/ui/button-group";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import { Toaster } from "./components/ui/sonner";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
@@ -97,28 +98,34 @@ function MainContent() {
 			data-testid="main-content-section"
 			className="flex flex-col transition-opacity duration-200 h-full overflow-hidden"
 		>
-			<div className="flex items-center">
+			<div className="p-2 flex items-center">
 				<div className="flex items-center flex-1">
-					<h2 className="text-2xl font-bold whitespace-nowrap text-text-primary">
+					<h2 className="p-4 text-2xl font-bold whitespace-nowrap text-text-primary">
 						{titleMap[selectedTab]}
 					</h2>
+					{(selectedTab === "ExR" || selectedTab === "Au") && <SearchBar />}
 					{selectedTab === "ExR" && (
 						<Suspense
 							fallback={
 								<div className="w-48 h-8 bg-app-background animate-pulse rounded" />
 							}
 						>
-							<PresetSelectorContainer />
+							<div className="px-4">
+								<PresetSelectorContainer />
+							</div>
 						</Suspense>
 					)}
-					{(selectedTab === "ExR" || selectedTab === "Au") && <SearchBar />}
 					{isSidebarPending && (
 						<div className="w-6 h-6 border border-info border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
-				<ImportButton onImport={handleImport} />
-				<ExportButton onClick={exporter} />
-				<SyncButton onClick={syncer} />
+				<div className="px-4 flex flex-row">
+					<ButtonGroup>
+						<ImportButton onImport={handleImport} />
+						<ExportButton onClick={exporter} />
+					</ButtonGroup>
+					<SyncButton onClick={syncer} />
+				</div>
 			</div>
 			<Suspense
 				fallback={
@@ -127,7 +134,9 @@ function MainContent() {
 					</div>
 				}
 			>
-				<EditorContainer />
+				<div className="p-2">
+					<EditorContainer />
+				</div>
 			</Suspense>
 		</section>
 	);

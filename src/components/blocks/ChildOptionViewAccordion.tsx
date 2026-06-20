@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { CLOSE, OPEN } from "@/noTrans";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
-import { OptionRowContainer } from "../parts/OptionRowContainer";
+import { ViewerOptionRowContainer } from "../parts/ViewerOptionRowContainer";
 
 interface ChildOptionViewAccordionProps {
 	optionItem: ReactNode;
@@ -24,7 +24,7 @@ export function ChildOptionViewAccordion({
 }: ChildOptionViewAccordionProps) {
 	return (
 		<div className="flex flex-col">
-			<OptionRowContainer
+			<ViewerOptionRowContainer
 				leading={
 					<div className="flex items-center justify-center w-full h-full">
 						<button

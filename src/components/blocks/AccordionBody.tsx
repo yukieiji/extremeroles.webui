@@ -24,14 +24,16 @@ export function AccordionBody({
 			<button
 				type="button"
 				onClick={onToggle}
-				className="w-full flex items-center hover:bg-component-hover transition-colors text-left cursor-pointer"
+				className="p-2 w-full flex items-center hover:bg-component-hover transition-colors text-left cursor-pointer"
 				aria-expanded={isOpen}
 			>
 				<AccordionSvg
 					className={"w-5 h-5 text-text-primary "}
 					isOpen={isOpen}
 				/>
-				<span className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary`}>
+				<span
+					className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary p-1`}
+				>
 					{title}
 				</span>
 			</button>

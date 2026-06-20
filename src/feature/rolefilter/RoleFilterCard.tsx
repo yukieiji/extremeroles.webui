@@ -77,20 +77,22 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 				/>
 			}
 		>
-			{filterSet.Roles.map((role) => {
-				return (
-					<RolePin
-						key={role.id}
-						name={role.name}
-						onDelete={() => onDeleteRole(role.id, role.name)}
-					/>
-				);
-			})}
-			{filterSet.Roles.length === 0 && (
-				<span className="text-sm text-text-tertiary italic">
-					{ROLE_FILTER_NO_ROLES}
-				</span>
-			)}
+			<div className="px-4 flex gap-2 flex-wrap">
+				{filterSet.Roles.map((role) => {
+					return (
+						<RolePin
+							key={role.id}
+							name={role.name}
+							onDelete={() => onDeleteRole(role.id, role.name)}
+						/>
+					);
+				})}
+				{filterSet.Roles.length === 0 && (
+					<span className="text-sm text-text-tertiary italic">
+						{ROLE_FILTER_NO_ROLES}
+					</span>
+				)}
+			</div>
 		</RoleFilterCardLayout>
 	);
 }

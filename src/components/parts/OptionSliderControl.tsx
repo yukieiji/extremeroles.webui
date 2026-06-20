@@ -47,7 +47,7 @@ export function OptionSliderControl({
 				{label && (
 					<FieldLabel
 						htmlFor={id}
-						className={`${TYPOGRAPHY.CHILD_LABEL} select-text`}
+						className={`${TYPOGRAPHY.CHILD_LABEL} select-text w-full`}
 						aria-hidden="true"
 					>
 						{label}

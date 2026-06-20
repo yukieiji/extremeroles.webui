@@ -23,7 +23,7 @@ export function TabButtonContainer<T extends Key | undefined | null>({
 	children,
 }: TabButtonContainerProps<T>) {
 	return (
-		<Tabs value={value} onValueChange={onValueChange} className="w-full">
+		<Tabs value={value} onValueChange={onValueChange} className="py-2 w-full">
 			<TabsList className="w-full grid grid-cols-4 group-data-horizontal/tabs:h-auto min-h-10">
 				{tabs.map((tab, index) => {
 					const { value: triggerValue, colors } = getTabProps(tab, index);
