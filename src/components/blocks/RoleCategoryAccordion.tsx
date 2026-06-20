@@ -1,5 +1,5 @@
 import { Dot } from "lucide-react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { TYPOGRAPHY } from "@/designConstants";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
@@ -11,6 +11,7 @@ interface RoleCategoryAccordionProps {
 	spawnControl: ReactNode;
 	disable: boolean;
 	children: ReactNode;
+	headerStyle?: CSSProperties;
 }
 
 export function RoleCategoryAccordion({
@@ -20,6 +21,7 @@ export function RoleCategoryAccordion({
 	spawnControl,
 	disable,
 	children,
+	headerStyle,
 }: RoleCategoryAccordionProps) {
 	return (
 		<div
@@ -29,6 +31,7 @@ export function RoleCategoryAccordion({
 		>
 			<div
 				className={`flex items-center ${!disable ? "hover:bg-component-hover transition-colors" : ""}`}
+				style={headerStyle}
 			>
 				<button
 					type="button"
