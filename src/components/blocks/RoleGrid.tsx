@@ -24,7 +24,7 @@ export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 	}
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2">
 			{items.map(({ roleId, roleName }) => {
 				const isSelected = selectedRoleIds.includes(roleId);
 				return (
