@@ -15,6 +15,16 @@ import {
 	EXR_NEUTRAL_MIN_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
+import {
+	AU_IMPOSTOR_COUNT_TITLE,
+	AU_KILL_COOLDOWN_TITLE,
+	AU_MAP_TITLE,
+	EXR_CREW_ROLES_COUNT_TITLE,
+	EXR_IMPOSTOR_ROLES_COUNT_TITLE,
+	EXR_LIBERAL_COUNT_TITLE,
+	EXR_MILITANT_COUNT_TITLE,
+	EXR_NEUTRAL_ROLES_COUNT_TITLE,
+} from "@/noTrans";
 import { AuOptionSummaryRow } from "./AuOptionSummaryRow";
 import { ExRMinMaxSummaryRow } from "./ExRMinMaxSummaryRow";
 import { PresetSummaryRow } from "./PresetSummaryRow";
@@ -30,40 +40,43 @@ export function RightSidePanelSummary() {
 			data-testid="right-panel-summary"
 		>
 			<PresetSummaryRow />
-			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} fallbackTitle="マップ" />
+			<AuOptionSummaryRow
+				optionId={AU_MAP_OPTION_ID}
+				fallbackTitle={AU_MAP_TITLE}
+			/>
 			<AuOptionSummaryRow
 				optionId={AU_KILL_COOLDOWN_OPTION_ID}
-				fallbackTitle="キルのクールダウン時間"
+				fallbackTitle={AU_KILL_COOLDOWN_TITLE}
 			/>
 			<Separator className="bg-border-strong" />
 			<AuOptionSummaryRow
 				optionId={AU_IMPOSTOR_COUNT_OPTION_ID}
-				fallbackTitle="インポスター人数"
+				fallbackTitle={AU_IMPOSTOR_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_LIBERAL_MIN_ID}
 				maxUniqueId={EXR_LIBERAL_MAX_ID}
-				fallbackTitle="リベラル人数"
+				fallbackTitle={EXR_LIBERAL_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_MILITANT_MIN_ID}
 				maxUniqueId={EXR_MILITANT_MAX_ID}
-				fallbackTitle="ミリタント"
+				fallbackTitle={EXR_MILITANT_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_CREW_MIN_ID}
 				maxUniqueId={EXR_CREW_MAX_ID}
-				fallbackTitle="クルー陣営役職数"
+				fallbackTitle={EXR_CREW_ROLES_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_IMPOSTOR_MIN_ID}
 				maxUniqueId={EXR_IMPOSTOR_MAX_ID}
-				fallbackTitle="インポスター陣営役職数"
+				fallbackTitle={EXR_IMPOSTOR_ROLES_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_NEUTRAL_MIN_ID}
 				maxUniqueId={EXR_NEUTRAL_MAX_ID}
-				fallbackTitle="ニュートラル陣営役職数"
+				fallbackTitle={EXR_NEUTRAL_ROLES_COUNT_TITLE}
 			/>
 			<Separator className="bg-border-strong" />
 			{VANILLA_ROLE_CATEGORY_IDS.map((catId) => (

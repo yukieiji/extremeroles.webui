@@ -1,4 +1,5 @@
 import { PopoverHeader, PopoverTitle } from "@/components/ui/popover";
+import { SEARCH_NO_RESULTS } from "@/noTrans";
 import type { SearchItem } from "@/type";
 import { useStore } from "@/useStore";
 import { SearchSuggestionResult } from "./SearchSuggestionResult";
@@ -12,7 +13,7 @@ export function SearchSuggestion({ results }: SearchSuggestionProps) {
 
 	return optionSearchQuery === "" || results.length === 0 ? (
 		<PopoverHeader className="">
-			<PopoverTitle>Search No Results</PopoverTitle>
+			<PopoverTitle>{SEARCH_NO_RESULTS}</PopoverTitle>
 		</PopoverHeader>
 	) : (
 		<SearchSuggestionResult results={results} />

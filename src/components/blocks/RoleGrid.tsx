@@ -1,3 +1,4 @@
+import { NOT_FOUND } from "@/noTrans";
 import { Checkbox } from "../ui/checkbox";
 import { Field, FieldContent, FieldLabel, FieldTitle } from "../ui/field";
 
@@ -18,9 +19,7 @@ interface RoleGridProps {
 export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 	if (items.length === 0) {
 		return (
-			<div className="text-center text-text-secondary italic">
-				{"見つかりませんでした"}
-			</div>
+			<div className="text-center text-text-secondary italic">{NOT_FOUND}</div>
 		);
 	}
 
