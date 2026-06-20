@@ -406,8 +406,7 @@ export const GetTranslationResponseArraySchema = z.array(
 );
 
 export interface TranslationMetaDataRecords {
-	booleanTransData: string[];
-	[key: string | number]: string | string[] | undefined;
+	[key: string | number]: string;
 }
 
 export const RoleAssignFilterSetDtoSchema = z.object({

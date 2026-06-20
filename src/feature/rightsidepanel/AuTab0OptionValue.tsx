@@ -19,10 +19,7 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 		<div className="flex items-center shrink-0">
 			{isBoolean ? (
 				<ColoredText
-					text={
-						translationMetaData.booleanTransData[value ? 1 : 0] ||
-						(value ? ON : OFF)
-					}
+					text={translationMetaData[value ? 1 : 0] || (value ? ON : OFF)}
 					variant="secondary"
 					className={`${TYPOGRAPHY.CHILD_LABEL} text-right`}
 				/>

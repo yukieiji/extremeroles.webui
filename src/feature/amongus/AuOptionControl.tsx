@@ -25,7 +25,7 @@ export function AuOptionControl({
 		return (
 			<OptionToggleControl
 				selection={selection}
-				values={translationMetaData.booleanTransData}
+				values={[translationMetaData[0], translationMetaData[1]]}
 				onChange={onSelectionChange}
 			/>
 		);

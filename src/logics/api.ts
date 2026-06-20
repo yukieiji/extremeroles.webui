@@ -39,12 +39,11 @@ const EXR_OPTION_URL = "/exr/option/";
 const EXR_CSV_URL = "/exr/option/csv/";
 const AU_OPTION_URL = "/au/option/";
 const EXR_ROLE_FILTER_URL = "/exr/role/filter/";
-const TRANSLATION_BATCH_URL = "/au/translation/batch/optionunit/";
 const TRANSLATION_BATCH_BASE_URL = "/au/translation/batch/";
+const OPUTION_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}optionunit/`;
+const ROLE_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}role/`;
 
-export const translationMetaData: TranslationMetaDataRecords = {
-	booleanTransData: [],
-};
+export const translationMetaData: TranslationMetaDataRecords = {};
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// ExRTabIdはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
@@ -112,7 +111,14 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		JSON.stringify({
 			type: "request",
 			method: "GET",
-			url: TRANSLATION_BATCH_URL,
+			url: OPUTION_TRANSLATION_BATCH_URL,
+		}),
+	);
+	console.log(
+		JSON.stringify({
+			type: "request",
+			method: "GET",
+			url: ROLE_TRANSLATION_BATCH_URL,
 		}),
 	);
 	console.log(
@@ -123,8 +129,9 @@ export async function fetchTranslationMetaData(): Promise<void> {
 			body: [{ Key: "optionOff" }, { Key: "optionOn" }],
 		}),
 	);
-	const [resOptionUnit, resBatch] = await Promise.all([
-		fetch(TRANSLATION_BATCH_URL),
+	const [resOptionUnit, resRoleOptionUnit, resBatch] = await Promise.all([
+		fetch(OPUTION_TRANSLATION_BATCH_URL),
+		fetch(ROLE_TRANSLATION_BATCH_URL),
 		fetch(TRANSLATION_BATCH_BASE_URL, {
 			method: "POST",
 			body: JSON.stringify([{ Key: "optionOff" }, { Key: "optionOn" }]),
@@ -134,8 +141,15 @@ export async function fetchTranslationMetaData(): Promise<void> {
 	console.log(
 		JSON.stringify({
 			type: "response",
-			url: TRANSLATION_BATCH_URL,
+			url: OPUTION_TRANSLATION_BATCH_URL,
 			status: resOptionUnit.status,
+		}),
+	);
+	console.log(
+		JSON.stringify({
+			type: "response",
+			url: ROLE_TRANSLATION_BATCH_URL,
+			status: resRoleOptionUnit.status,
 		}),
 	);
 	console.log(
@@ -151,14 +165,20 @@ export async function fetchTranslationMetaData(): Promise<void> {
 			`Failed to fetch translation data (optionunit): ${resOptionUnit.statusText}`,
 		);
 	}
+	if (!resRoleOptionUnit.ok) {
+		throw new Error(
+			`Failed to fetch translation data (optionunit): ${resRoleOptionUnit.statusText}`,
+		);
+	}
 	if (!resBatch.ok) {
 		throw new Error(
 			`Failed to fetch translation data (batch): ${resBatch.statusText}`,
 		);
 	}
 
-	const [jsonOptionUnit, jsonBatch] = await Promise.all([
+	const [jsonOptionUnit, jsonRoleOptionUnit, jsonBatch] = await Promise.all([
 		resOptionUnit.json(),
+		resRoleOptionUnit.json(),
 		resBatch.json(),
 	]);
 
@@ -168,16 +188,22 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		translationMetaData[item.Key] = item.Result;
 	}
 
+	const parseRole =
+		await GetTranslationResponseArraySchema.parseAsync(jsonRoleOptionUnit);
+	for (const item of parseRole) {
+		translationMetaData[item.Key] = item.Result;
+	}
+
 	const parseBatch =
 		await GetTranslationResponseArraySchema.parseAsync(jsonBatch);
 	const booleanMap: Record<string, string> = {};
 	for (const item of parseBatch) {
 		booleanMap[item.Key.toString()] = item.Result;
 	}
-	translationMetaData.booleanTransData = [
-		booleanMap.optionOff ?? "",
-		booleanMap.optionOn ?? "",
-	];
+
+	// オン/オフは数値キーで保存する
+	translationMetaData[0] = booleanMap.optionOff;
+	translationMetaData[1] = booleanMap.optionOn;
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {

@@ -1,5 +1,5 @@
 import { RoleFilterCardLayout } from "@/components/blocks/RoleFilterCardLayout";
-import { RolePin } from "@/components/parts/RolePin";
+import { RolePin } from "@/components/blocks/RolePin";
 import { postRoleFilterUpdate } from "@/logics/api";
 import {
 	format,

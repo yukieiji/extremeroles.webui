@@ -1,6 +1,8 @@
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TYPOGRAPHY } from "@/designConstants";
+import { translationMetaData } from "@/logics/api";
+import { ColoredText } from "../parts/ColoredText";
 import { Badge } from "../ui/badge";
 
 interface RolePinProps {
@@ -12,15 +14,17 @@ interface RolePinProps {
  * 個別の役職をピン形式で表示する最小単位のコンポーネント
  */
 export function RolePin({ name, onDelete }: RolePinProps) {
+	const transLatedName = translationMetaData[name] ?? name;
+
 	return (
 		<Badge className={TYPOGRAPHY.CHILD_LABEL}>
-			<span>{name}</span>
+			<ColoredText text={transLatedName} />
 			<Button
 				onClick={(e) => {
 					e.stopPropagation();
 					onDelete();
 				}}
-				aria-label={`Remove ${name}`}
+				aria-label={`Remove ${transLatedName}`}
 			>
 				<X data-icon="inline-end" />
 			</Button>

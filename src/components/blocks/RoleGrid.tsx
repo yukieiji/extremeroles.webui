@@ -1,4 +1,6 @@
+import { translationMetaData } from "@/logics/api";
 import { NOT_FOUND } from "@/noTrans";
+import { ColoredText } from "../parts/ColoredText";
 import { Checkbox } from "../ui/checkbox";
 import { Field, FieldContent, FieldLabel, FieldTitle } from "../ui/field";
 
@@ -27,6 +29,7 @@ export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2">
 			{items.map(({ roleId, roleName }) => {
 				const isSelected = selectedRoleIds.includes(roleId);
+				const transLatedName = translationMetaData[roleName] ?? roleName;
 				return (
 					<FieldLabel
 						key={roleId}
@@ -50,7 +53,10 @@ export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 								}}
 							/>
 							<FieldContent>
-								<FieldTitle>{roleName}</FieldTitle>
+								<FieldTitle>
+									{" "}
+									<ColoredText text={transLatedName} />{" "}
+								</FieldTitle>
 							</FieldContent>
 						</Field>
 					</FieldLabel>
