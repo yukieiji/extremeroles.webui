@@ -3,7 +3,7 @@ import { useAuOptionNavigationInline } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import type { AuOptionId } from "@/type";
 import { useStore } from "@/useStore";
-import { BaseRoleSummaryRow } from "./BaseRoleSummaryRow";
+import { BaseRoleSummaryRow } from "../../../components/blocks/BaseRoleSummaryRow";
 
 interface VanillaRoleSummaryRowProps {
 	categoryId: number;
