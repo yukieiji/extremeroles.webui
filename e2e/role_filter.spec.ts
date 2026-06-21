@@ -40,6 +40,6 @@ test.describe("Role Filter Tab", () => {
 
 		// 役職ピンが表示されていることを確認
 		// RolePinはテキストを表示するdivとして実装されている
-		await expect(page.getByText("Bakary").first()).toBeVisible();
+		await expect(page.getByText("パン屋").first()).toBeVisible();
 	});
 });

@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
+import { stripColorTags } from "@/logics/colorUtils";
 import { ColoredText } from "../parts/ColoredText";
 import { Badge } from "../ui/badge";
 
@@ -24,7 +25,7 @@ export function RolePin({ name, onDelete }: RolePinProps) {
 					e.stopPropagation();
 					onDelete();
 				}}
-				aria-label={`Remove ${transLatedName}`}
+				aria-label={`Remove ${stripColorTags(transLatedName)}`}
 			>
 				<X data-icon="inline-end" />
 			</Button>

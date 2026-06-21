@@ -83,7 +83,7 @@ test.describe("Role Filter Confirm Button Response", () => {
 		await expect(page.getByText("役職の追加")).toBeVisible();
 
 		const openerCheckbox = page.getByRole("checkbox", {
-			name: "Opener",
+			name: "オープナー",
 			exact: true,
 		});
 		const confirmButton = page.getByRole("button", { name: /確定/ });

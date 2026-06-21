@@ -100,7 +100,7 @@ test.describe("Role Filter Management", () => {
 		// Select a role from the grid
 		// 検索結果が表示されるのを待つ
 		const roleCheckbox = page.getByRole("checkbox", {
-			name: "Opener",
+			name: "オープナー",
 			exact: true,
 		});
 		await expect(roleCheckbox).toBeVisible({ timeout: 10000 });
@@ -114,7 +114,9 @@ test.describe("Role Filter Management", () => {
 
 		// Verify role is added to the filter
 		// 要素の出現を待つ
-		await expect(lastFilter.getByText("Opener", { exact: true })).toBeVisible({
+		await expect(
+			lastFilter.getByText("オープナー", { exact: true }),
+		).toBeVisible({
 			timeout: 20000,
 		});
 	});
