@@ -14,8 +14,8 @@ test.beforeEach(async ({ page }) => {
 		timeout: 30000,
 	});
 
-	// ExR Options タブに切り替え
-	await page.getByRole("button", { name: "ExR Options" }).click();
+	// Extreme Roles タブに切り替え
+	await page.getByRole("button", { name: "Extreme Roles" }).click();
 	await expect(page.getByTestId("category-list")).toBeVisible();
 });
 

@@ -19,6 +19,7 @@ vi.mock("@/logics/api", () => ({
 		CombinationId: {},
 		GhostRoleId: {},
 	},
+	translationMetaData: {},
 }));
 
 describe("RoleFilterViewer and RoleFilterCard", () => {

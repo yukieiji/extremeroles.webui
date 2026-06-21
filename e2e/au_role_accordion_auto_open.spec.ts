@@ -16,7 +16,7 @@ test.describe("Au Role Accordion Auto Open", () => {
 	test("should open accordion when role is enabled by chance or max count", async ({
 		page,
 	}) => {
-		// Au Options の 役職タブ（タブ 1）に移動
+		// Among Us の 役職タブ（タブ 1）に移動
 		await page.getByRole("tab", { name: "1", exact: true }).first().click();
 
 		// 科学者 (Scientist)

@@ -11,8 +11,8 @@ test.beforeEach(async ({ page }) => {
 		timeout: 30000,
 	});
 
-	// Au Options タブに切り替え
-	await page.getByRole("button", { name: "Au Options" }).click();
+	// Among Us タブに切り替え
+	await page.getByRole("button", { name: "Among Us" }).click();
 	await expect(page.getByTestId("category-list")).toBeVisible({
 		timeout: 10000,
 	});

@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
 	await page.goto("/");
 	// wait for main content instead of just "Loading data..." absence
-	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
+	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
 		timeout: 15000,
 	});
 });

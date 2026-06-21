@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
 
 test("Options interaction behavior", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
-	await sidebar.getByRole("button", { name: "ExR Options" }).click();
+	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// ヘッダーのプリセットセレクターを確認
 	const presetInput = page.getByPlaceholder("プリセット名を入力...");

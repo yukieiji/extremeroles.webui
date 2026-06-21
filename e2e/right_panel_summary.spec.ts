@@ -39,7 +39,7 @@ test.describe("Right Panel Summary Roles", () => {
 
 		// app.spec.ts を参考に
 		await expect(
-			page.getByRole("heading", { name: "ExR Options" }),
+			page.getByRole("heading", { name: "Extreme Roles" }),
 		).toBeVisible();
 	});
 

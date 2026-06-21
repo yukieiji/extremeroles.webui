@@ -32,9 +32,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		await expect(roleRow).toContainText("15");
 
 		// 3. ダブルクリックしてメインビューのタブが切り替わるか確認
-		await expect(
-			page.getByRole("heading", { name: "Au Options" }),
-		).toBeVisible();
+		await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
 		await roleRow.dblclick();
 
@@ -54,7 +52,7 @@ test.describe("Au Role Viewer in Right Panel", () => {
 	test("does not display inactive roles in the right panel", async ({
 		page,
 	}) => {
-		// Au Options の 役職タブ（タブ 1）に移動
+		// Among Us の 役職タブ（タブ 1）に移動
 		await page.getByRole("tab", { name: "1", exact: true }).first().click();
 
 		// 科学者を無効にしてチェック

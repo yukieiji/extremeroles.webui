@@ -18,7 +18,8 @@ describe("AuOptionViewer", () => {
 		useStore.getState().resetAll();
 		useStore.getState().resetViewer();
 		// 翻訳データの初期化
-		translationMetaData.booleanTransData = ["OFF", "ON"];
+		translationMetaData[0] = "OFF";
+		translationMetaData[1] = "ON";
 
 		const mockAuData: AuOptionCategoryDto[] = [
 			{
@@ -127,7 +128,8 @@ describe("AuOptionViewer", () => {
 		const boolOptionId = auOptionMetaData.categoryMetaData[1].options[0];
 
 		// 翻訳テキストを設定
-		translationMetaData.booleanTransData = ["無効", "有効"];
+		translationMetaData[0] = "無効";
+		translationMetaData[1] = "有効";
 		useStore.getState().setAuValue({ [boolOptionId]: 1 });
 
 		await act(async () => {

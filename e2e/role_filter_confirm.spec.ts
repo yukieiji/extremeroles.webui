@@ -36,7 +36,7 @@ test.describe("Role Filter Confirm Button Response", () => {
 		// Target the label which should be clickable
 		const bakaryLabel = page
 			.locator("label")
-			.filter({ hasText: "Bakary" })
+			.filter({ hasText: "パン屋" })
 			.first();
 		const confirmButton = page.getByRole("button", { name: /確定/ });
 
@@ -72,7 +72,7 @@ test.describe("Role Filter Confirm Button Response", () => {
 		await expect(page.getByRole("button", { name: /確定/ })).toBeVisible({
 			timeout: 15000,
 		});
-		await page.locator("label").filter({ hasText: "Bakary" }).first().click();
+		await page.locator("label").filter({ hasText: "パン屋" }).first().click();
 		await page.getByRole("button", { name: /確定/ }).click();
 		await expect(
 			page.getByText("フィルター追加: 役職の選択"),

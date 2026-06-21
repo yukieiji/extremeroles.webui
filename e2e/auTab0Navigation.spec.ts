@@ -45,12 +45,12 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 値が表示されていることを確認（モックデータでは1のはず）
 		await expect(impCountSetting).toContainText("1");
 
-		// 4. メインエディタで一旦 ExR Options に切り替えておく
+		// 4. メインエディタで一旦 Extreme Roles に切り替えておく
 		// パネルを一旦閉じる
 		await rightPanelToggle.click();
-		await page.getByRole("button", { name: "ExR Options" }).click();
+		await page.getByRole("button", { name: "Extreme Roles" }).click();
 		await expect(
-			page.getByRole("heading", { name: "ExR Options" }),
+			page.getByRole("heading", { name: "Extreme Roles" }),
 		).toBeVisible();
 
 		// 5. 右パネルの項目をダブルクリック
@@ -60,10 +60,10 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		await impCountSetting.scrollIntoViewIfNeeded();
 		await impCountSetting.dblclick();
 
-		// 6. 自動的に Au Options に戻り、項目が表示されていることを確認
-		await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible(
-			{ timeout: 10000 },
-		);
+		// 6. 自動的に Among Us に戻り、項目が表示されていることを確認
+		await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
+			timeout: 10000,
+		});
 
 		// ハイライト用のクラスやスタイルが適用されているか確認
 		// ハイライト状態（data-highlighted="true"を持つ）かつ、設定項目名を含む要素を特定する

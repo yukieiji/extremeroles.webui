@@ -19,8 +19,8 @@ test.beforeEach(async ({ page }) => {
 test("ExR toggle switch should be visible and functional", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
 
-	// ExR Options に切り替え
-	await sidebar.getByRole("button", { name: "ExR Options" }).click();
+	// Extreme Roles に切り替え
+	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// 'グローバル設定' タブをクリック (デフォルトで選択されているはずだが念のため)
 	// getByTestId('main-content-section') を使用して、右サイドパネルのボタンとの競合を避ける

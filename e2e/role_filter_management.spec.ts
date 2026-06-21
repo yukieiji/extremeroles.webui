@@ -31,7 +31,7 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await expect(page.getByText("フィルター追加: 役職の選択")).toBeVisible();
 		await page
-			.getByRole("checkbox", { name: "Bakary", exact: true })
+			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
 		await page.getByRole("button", { name: /確定/ }).click();
@@ -68,7 +68,7 @@ test.describe("Role Filter Management", () => {
 		// Add a new filter first (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await page
-			.getByRole("checkbox", { name: "Bakary", exact: true })
+			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
 		await page.getByRole("button", { name: /確定/ }).click();
@@ -123,19 +123,19 @@ test.describe("Role Filter Management", () => {
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await page
-			.getByRole("checkbox", { name: "Bakary", exact: true })
+			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
 		await page.getByRole("button", { name: /確定/ }).click();
 
 		const lastFilter = page.getByTestId("role-filter-card").last();
 
-		await expect(lastFilter.getByText("Bakary", { exact: true })).toBeVisible({
+		await expect(lastFilter.getByText("パン屋", { exact: true })).toBeVisible({
 			timeout: 15000,
 		});
 
 		// Remove the role
-		await lastFilter.getByLabel("Remove Bakary").click();
+		await lastFilter.getByLabel("Remove パン屋").click();
 
 		// Confirmation dialog
 		await expect(page.getByText("役職の削除")).toBeVisible();

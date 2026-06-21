@@ -52,7 +52,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	await expect(rightPanel).toBeVisible();
 
 	// ExR タブが選択されていることを確認
-	const exrTabButton = page.getByRole("button", { name: "ExR Options" });
+	const exrTabButton = page.getByRole("button", { name: "Extreme Roles" });
 	await expect(exrTabButton).toHaveAttribute("data-active", "");
 
 	// プリセットセレクターがハイライトされていることを確認
@@ -69,7 +69,7 @@ test("Updating preset name reflects in right sidebar", async ({ page }) => {
 	const _rightPanel = page.getByTestId("right-side-panel");
 	// 1. ExR タブに切り替え
 	const sidebar = page.getByLabel("オプションサイドバー");
-	await sidebar.getByRole("button", { name: "ExR Options" }).click();
+	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// 2. プリセット名を変更
 	const presetInput = page.getByPlaceholder("プリセット名を入力...");

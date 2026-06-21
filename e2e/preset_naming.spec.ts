@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
 
 test("Preset naming and persistence behavior", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
-	const exrButton = sidebar.getByRole("button", { name: "ExR Options" });
+	const exrButton = sidebar.getByRole("button", { name: "Extreme Roles" });
 	await exrButton.click();
 
 	// ヘッダーのプリセットセレクターを確認

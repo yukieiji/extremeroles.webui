@@ -16,8 +16,8 @@ test.describe("Tabs Indicator Styling", () => {
 	test("Au Tab active indicator should have correct color", async ({
 		page,
 	}) => {
-		// Switch to Au Options
-		await page.getByRole("button", { name: "Au Options" }).click();
+		// Switch to Among Us
+		await page.getByRole("button", { name: "Among Us" }).click();
 
 		// Select Tab 1 (Crewmate - Lime Green)
 		const tab1 = page.getByRole("tab", { name: "1", exact: true });
@@ -44,8 +44,8 @@ test.describe("Tabs Indicator Styling", () => {
 	test("ExR Tab active indicator should support gradients", async ({
 		page,
 	}) => {
-		// ExR Options is default
-		await page.getByRole("button", { name: "ExR Options" }).click();
+		// Extreme Roles is default
+		await page.getByRole("button", { name: "Extreme Roles" }).click();
 
 		// General Tab
 		const generalTab = page.getByRole("tab").first();

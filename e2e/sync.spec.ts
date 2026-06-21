@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
 	await page.goto("/");
 	// wait for main content instead of just "Loading data..." absence
-	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
+	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
 		timeout: 15000,
 	});
 });
@@ -13,12 +13,12 @@ test("synchronization updates data and preserves UI state", async ({
 	page,
 }) => {
 	// 1. Initial state check
-	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
+	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
 	// 2. Change tab to ExR and open a category
-	await page.getByRole("button", { name: "ExR Options" }).click();
+	await page.getByRole("button", { name: "Extreme Roles" }).click();
 	await expect(
-		page.getByRole("heading", { name: "ExR Options" }),
+		page.getByRole("heading", { name: "Extreme Roles" }),
 	).toBeVisible();
 
 	// Use test-id which seems more stable
@@ -52,7 +52,7 @@ test("synchronization updates data and preserves UI state", async ({
 	// 5. Verify UI state is preserved
 	// Tab should still be ExR
 	await expect(
-		page.getByRole("heading", { name: "ExR Options" }),
+		page.getByRole("heading", { name: "Extreme Roles" }),
 	).toBeVisible();
 
 	// Sidebar state check (open by default, let's close it and sync)

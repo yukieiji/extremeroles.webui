@@ -11,7 +11,7 @@ test.beforeEach(async ({ page, browserName }) => {
 		});
 	}
 	await page.goto("/");
-	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible({
+	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
 		timeout: 15000,
 	});
 });

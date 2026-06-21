@@ -26,23 +26,21 @@ test("has sidebar and au option editor", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
 
 	// サイドバー内のボタンを明示的に指定
+	await expect(sidebar.getByRole("button", { name: "Among Us" })).toBeVisible();
 	await expect(
-		sidebar.getByRole("button", { name: "Au Options" }),
-	).toBeVisible();
-	await expect(
-		sidebar.getByRole("button", { name: "ExR Options" }),
+		sidebar.getByRole("button", { name: "Extreme Roles" }),
 	).toBeVisible();
 
-	// Au Options が初期で表示されることを確認する
-	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
+	// Among Us が初期で表示されることを確認する
+	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
 	// アコーディオンが表示されていることを確認 (JSON preはなくなった)
 	await expect(page.getByTestId("category-list")).toBeVisible();
 
-	// ExR Options に切り替え
-	await sidebar.getByRole("button", { name: "ExR Options" }).click();
+	// Extreme Roles に切り替え
+	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 	await expect(
-		page.getByRole("heading", { name: "ExR Options" }),
+		page.getByRole("heading", { name: "Extreme Roles" }),
 	).toBeVisible();
 	// JSON pre はなくなったので、アコーディオンが表示されていることを確認
 	await expect(

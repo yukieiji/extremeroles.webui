@@ -25,11 +25,13 @@ test("サイドバー切り替え時にメインコンテンツが表示され�
 	const sidebar = page.getByLabel("オプションサイドバー");
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 
-	// ExR Options に切り替え
-	await page.getByRole("button", { name: "ExR Options" }).click();
+	// Extreme Roles に切り替え
+	await page.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// 切り替え後のコンテンツが表示されることを確認
-	await expect(page.getByRole("heading", { name: "ExR Options" })).toBeVisible({
+	await expect(
+		page.getByRole("heading", { name: "Extreme Roles" }),
+	).toBeVisible({
 		timeout: 20000,
 	});
 });
@@ -40,8 +42,10 @@ test("ExRタブ切り替え時にカテゴリリストが表示されること",
 		timeout: 30000,
 	});
 
-	await page.getByRole("button", { name: "ExR Options" }).click();
-	await expect(page.getByRole("heading", { name: "ExR Options" })).toBeVisible({
+	await page.getByRole("button", { name: "Extreme Roles" }).click();
+	await expect(
+		page.getByRole("heading", { name: "Extreme Roles" }),
+	).toBeVisible({
 		timeout: 15000,
 	});
 

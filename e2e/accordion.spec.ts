@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
 
 test("ExR Option Accordion behavior", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
-	await sidebar.getByRole("button", { name: "ExR Options" }).click();
+	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// プリセットカテゴリは非表示になったため、別のカテゴリ「乱数に関する設定」を使用する
 	const categoryName = "乱数に関する設定";
@@ -75,13 +75,13 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 	// サイドバーを切り替えて戻ってきても維持されることを確認
 	// TODO: レイアウト崩れの修正後、evaluate を通常の click() に戻す
 	await sidebar
-		.getByRole("button", { name: "Au Options" })
+		.getByRole("button", { name: "Among Us" })
 		.evaluate((el: HTMLElement) => el.click());
-	await expect(page.getByRole("heading", { name: "Au Options" })).toBeVisible();
+	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
 	// TODO: レイアウト崩れの修正後、evaluate を通常の click() に戻す
 	await sidebar
-		.getByRole("button", { name: "ExR Options" })
+		.getByRole("button", { name: "Extreme Roles" })
 		.evaluate((el: HTMLElement) => el.click());
 	await expect(optionName).toBeVisible();
 

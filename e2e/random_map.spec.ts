@@ -42,8 +42,8 @@ test.describe("Random Map Display and Hiding", () => {
 			await exrSettingsAccordion.click();
 		}
 
-		// 3. ExR Options で「毎回マップがランダムに変わるか」をオンにする
-		await page.getByRole("button", { name: "ExR Options" }).click();
+		// 3. Extreme Roles で「毎回マップがランダムに変わるか」をオンにする
+		await page.getByRole("button", { name: "Extreme Roles" }).click();
 
 		// カテゴリ「ランダムマップに関する設定」を探して開く
 		const categoryHeader = page.getByText("ランダムマップに関する設定", {

@@ -25,10 +25,8 @@ test.describe("Category Search", () => {
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
 
-		// The title should change to Au Options
-		await expect(
-			page.getByRole("heading", { name: "Au Options" }),
-		).toBeVisible();
+		// The title should change to Among Us
+		await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
 		// Check if it's highlighted.
 		const highlighted = page.locator('[data-highlighted="true"]').first();
@@ -55,10 +53,8 @@ test.describe("Category Search", () => {
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
 
-		// The title should change to Au Options
-		await expect(
-			page.getByRole("heading", { name: "Au Options" }),
-		).toBeVisible();
+		// The title should change to Among Us
+		await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
 		// Check if it's highlighted.
 		const highlighted = page.locator('[data-highlighted="true"]').first();

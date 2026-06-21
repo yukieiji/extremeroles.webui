@@ -23,7 +23,7 @@ test("Preset name reversion to default when cleared", async ({ page }) => {
 	const sidebar = page.getByLabel("オプションサイドバー");
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 
-	const exrButton = sidebar.getByRole("button", { name: "ExR Options" });
+	const exrButton = sidebar.getByRole("button", { name: "Extreme Roles" });
 	await expect(exrButton).toBeVisible({ timeout: 30000 });
 	await exrButton.click();
 
