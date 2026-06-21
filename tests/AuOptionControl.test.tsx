@@ -13,10 +13,8 @@ import type { AuOptionMeta } from "@/type";
 
 describe("AuOptionControl", () => {
 	const onSelectionChangeMock = vi.fn();
-	let originalBooleanTransData: string[];
 
 	beforeAll(() => {
-		originalBooleanTransData = translationMetaData.booleanTransData;
 		// Mocking setPointerCapture for Slider tests
 		if (typeof Element.prototype.setPointerCapture !== "function") {
 			Element.prototype.setPointerCapture = vi.fn();
@@ -29,11 +27,8 @@ describe("AuOptionControl", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		// Initialize translationMetaData for Boolean toggle
-		translationMetaData.booleanTransData = ["Off", "On"];
-	});
-
-	afterAll(() => {
-		translationMetaData.booleanTransData = originalBooleanTransData;
+		translationMetaData[0] = "Off";
+		translationMetaData[1] = "On";
 	});
 
 	it("renders OptionToggleControl when range is boolean", async () => {

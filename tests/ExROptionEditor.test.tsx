@@ -144,6 +144,12 @@ describe("ExROptionEditor", () => {
 						json: vi.fn().mockResolvedValue([]),
 					} as Response);
 				}
+				if (url.endsWith("/au/translation/batch/role/")) {
+					return Promise.resolve({
+						ok: true,
+						json: vi.fn().mockResolvedValue([]),
+					} as Response);
+				}
 				if (url.endsWith("/au/translation/batch/")) {
 					return Promise.resolve({
 						ok: true,
