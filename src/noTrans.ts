@@ -39,8 +39,6 @@ export const EXR_CONTENT_TEMP = "ExRの設定コンテンツ";
 export const CREW_ROLES_TITLE = "クルー役職";
 export const IMPOSTOR_ROLES_TITLE = "インポスター役職";
 export const OPTION_SIDEBAR_ARIA = "オプションサイドバー";
-export const AU_OPTION_ROW_ARIA = "{0}の設定";
-export const AU_ROLE_ROW_ARIA = "{0}の役職";
 
 export const ROLE_FILTER_ADD_TITLE = "フィルター追加: 役職の選択";
 export const ROLE_FILTER_ADD_BUTTON = "フィルターを追加";
