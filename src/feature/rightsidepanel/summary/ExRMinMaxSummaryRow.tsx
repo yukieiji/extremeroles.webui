@@ -11,13 +11,11 @@ import { useStore } from "@/useStore";
 interface ExRMinMaxSummaryRowProps {
 	minUniqueId: UniqueOptionId;
 	maxUniqueId: UniqueOptionId;
-	fallbackTitle: string;
 }
 
 export function ExRMinMaxSummaryRow({
 	minUniqueId,
 	maxUniqueId,
-	fallbackTitle,
 }: ExRMinMaxSummaryRowProps) {
 	const navigateExR = useExROptionNavigationInline();
 	const display = useStore(
@@ -34,7 +32,7 @@ export function ExRMinMaxSummaryRow({
 	const minMeta = exrOptionMetaData.options[minUniqueId]?.metaData;
 	const title = minMeta
 		? getBaseOptionName(minMeta.translatedName)
-		: fallbackTitle;
+		: "ERROR_TITLE_MISS_EXR";
 
 	return (
 		<ViewerOptionRow

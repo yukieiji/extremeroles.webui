@@ -2,11 +2,6 @@ import { AlertCircle, RefreshCw } from "lucide-react";
 import type { FallbackProps } from "react-error-boundary";
 import { TYPOGRAPHY } from "@/designConstants";
 import { resetApiCache } from "../../logics/api.store";
-import {
-	ERROR_DETAIL_LABEL,
-	ERROR_RETRY_BUTTON,
-	ERROR_TITLE,
-} from "../../noTrans";
 import { Button } from "../ui/button";
 import {
 	Card,
@@ -44,19 +39,15 @@ export function ErrorView({ error, resetErrorBoundary }: FallbackProps) {
 						<AlertCircle size={100} className="text-error" />
 					</CardTitle>
 					<CardDescription>
-						<h1 className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
-							{ERROR_TITLE}
-						</h1>
+						<h1 className={`${TYPOGRAPHY.LABEL} text-text-primary`}>ERROR</h1>
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div className="space-y-2">
-						<p className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
-							{ERROR_DETAIL_LABEL}
-						</p>
+						<p className={`${TYPOGRAPHY.LABEL} text-text-primary`}>Detail</p>
 						<div className="rounded-lg border border-border-strong shadow-sm">
 							<pre
-								className={`${TYPOGRAPHY.SMALL} overflow-auto whitespace-pre-wrap text-text-secondary`}
+								className={`${TYPOGRAPHY.SMALL} p-2 overflow-auto whitespace-pre-wrap text-text-secondary`}
 							>
 								{errorMessage}
 							</pre>
@@ -70,7 +61,7 @@ export function ErrorView({ error, resetErrorBoundary }: FallbackProps) {
 						className={`${TYPOGRAPHY.LABEL} w-full  text-text-primar`}
 					>
 						<RefreshCw />
-						{ERROR_RETRY_BUTTON}
+						Retry
 					</Button>
 				</CardFooter>
 			</Card>

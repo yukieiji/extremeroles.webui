@@ -16,16 +16,6 @@ import {
 	EXR_NEUTRAL_MIN_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
-import {
-	AU_IMPOSTOR_COUNT_TITLE,
-	AU_KILL_COOLDOWN_TITLE,
-	AU_MAP_TITLE,
-	EXR_CREW_ROLES_COUNT_TITLE,
-	EXR_IMPOSTOR_ROLES_COUNT_TITLE,
-	EXR_LIBERAL_COUNT_TITLE,
-	EXR_MILITANT_COUNT_TITLE,
-	EXR_NEUTRAL_ROLES_COUNT_TITLE,
-} from "@/noTrans";
 import { ExRTabId } from "@/type";
 import { AuOptionSummaryRow } from "./AuOptionSummaryRow";
 import { ExRMinMaxSummaryRow } from "./ExRMinMaxSummaryRow";
@@ -53,43 +43,29 @@ export function RightSidePanelSummary() {
 			data-testid="right-panel-summary"
 		>
 			<PresetSummaryRow />
-			<AuOptionSummaryRow
-				optionId={AU_MAP_OPTION_ID}
-				fallbackTitle={AU_MAP_TITLE}
-			/>
-			<AuOptionSummaryRow
-				optionId={AU_KILL_COOLDOWN_OPTION_ID}
-				fallbackTitle={AU_KILL_COOLDOWN_TITLE}
-			/>
+			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} />
+			<AuOptionSummaryRow optionId={AU_KILL_COOLDOWN_OPTION_ID} />
 			<Separator className="bg-border-strong" />
-			<AuOptionSummaryRow
-				optionId={AU_IMPOSTOR_COUNT_OPTION_ID}
-				fallbackTitle={AU_IMPOSTOR_COUNT_TITLE}
-			/>
+			<AuOptionSummaryRow optionId={AU_IMPOSTOR_COUNT_OPTION_ID} />
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_LIBERAL_MIN_ID}
 				maxUniqueId={EXR_LIBERAL_MAX_ID}
-				fallbackTitle={EXR_LIBERAL_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_MILITANT_MIN_ID}
 				maxUniqueId={EXR_MILITANT_MAX_ID}
-				fallbackTitle={EXR_MILITANT_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_CREW_MIN_ID}
 				maxUniqueId={EXR_CREW_MAX_ID}
-				fallbackTitle={EXR_CREW_ROLES_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_IMPOSTOR_MIN_ID}
 				maxUniqueId={EXR_IMPOSTOR_MAX_ID}
-				fallbackTitle={EXR_IMPOSTOR_ROLES_COUNT_TITLE}
 			/>
 			<ExRMinMaxSummaryRow
 				minUniqueId={EXR_NEUTRAL_MIN_ID}
 				maxUniqueId={EXR_NEUTRAL_MAX_ID}
-				fallbackTitle={EXR_NEUTRAL_ROLES_COUNT_TITLE}
 			/>
 			<Separator className="bg-border-strong" />
 			{VANILLA_ROLE_CATEGORY_IDS.map((catId) => (

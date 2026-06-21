@@ -80,24 +80,10 @@ export const NOT_FOUND = "見つかりませんでした";
 export const SETTINGS_UNDER_PREPARATION = "設定項目は現在準備中です。";
 export const OK = "OK";
 
-export const AU_MAP_TITLE = "マップ";
-export const AU_KILL_COOLDOWN_TITLE = "キルのクールダウン時間";
-export const AU_IMPOSTOR_COUNT_TITLE = "インポスター人数";
-export const EXR_LIBERAL_COUNT_TITLE = "リベラル人数";
-export const EXR_MILITANT_COUNT_TITLE = "ミリタント";
-export const EXR_CREW_ROLES_COUNT_TITLE = "クルー陣営役職数";
-export const EXR_IMPOSTOR_ROLES_COUNT_TITLE = "インポスター陣営役職数";
-export const EXR_NEUTRAL_ROLES_COUNT_TITLE = "ニュートラル陣営役職数";
-export const PRESET_LABEL = "プリセット";
-
 export const SEARCH_NO_RESULTS = "Search No Results";
 export const SIDEBAR_TOGGLE_ARIA = "Toggle Sidebar";
 export const SIDEBAR_TITLE = "Sidebar";
 export const SIDEBAR_DESCRIPTION = "Displays the mobile sidebar.";
-
-export const ERROR_TITLE = "エラーが発生しました";
-export const ERROR_RETRY_BUTTON = "再試行";
-export const ERROR_DETAIL_LABEL = "エラー詳細:";
 
 export const CLIPBOARD_SETTING_TITLE = "設定";
 export const CLIPBOARD_FACTION_COUNTS = "陣営数";

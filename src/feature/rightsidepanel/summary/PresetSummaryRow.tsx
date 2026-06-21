@@ -5,7 +5,6 @@ import { TYPOGRAPHY } from "@/designConstants";
 import { useExROptionNavigationInline } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
-import { PRESET_LABEL } from "@/noTrans";
 import { useStore } from "@/useStore";
 
 export function PresetSummaryRow() {
@@ -22,7 +21,7 @@ export function PresetSummaryRow() {
 
 	const presetTitle =
 		exrOptionMetaData.options[PRESET_OPTION_UNIQUE_ID]?.metaData
-			.translatedName ?? PRESET_LABEL;
+			.translatedName ?? "PRESET_LABEL_MISS";
 
 	return (
 		<ViewerOptionRow

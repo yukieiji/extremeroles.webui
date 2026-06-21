@@ -13,13 +13,9 @@ import { useStore } from "@/useStore";
 
 interface AuOptionSummaryRowProps {
 	optionId: AuOptionId;
-	fallbackTitle: string;
 }
 
-export function AuOptionSummaryRow({
-	optionId,
-	fallbackTitle,
-}: AuOptionSummaryRowProps) {
+export function AuOptionSummaryRow({ optionId }: AuOptionSummaryRowProps) {
 	const navigateAu = useAuOptionNavigationInline();
 	const value = useStore((state) => {
 		if (optionId === AU_MAP_OPTION_ID) {
@@ -34,7 +30,7 @@ export function AuOptionSummaryRow({
 	});
 
 	const meta = auOptionMetaData.options[optionId];
-	const title = meta?.title ?? fallbackTitle;
+	const title = meta?.title ?? "ERROR_TITLE_MISS_AU";
 
 	if (!meta) {
 		return null;
