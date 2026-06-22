@@ -80,7 +80,10 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		// The delete button is the one with the 'X' icon
 		const deleteButton = screen
 			.getAllByRole("button")
-			.find((btn) => btn.querySelector(".lucide-x"))!;
+			.find((btn) => btn.querySelector(".lucide-x"));
+		if (!deleteButton) {
+			throw new Error("Delete button not found");
+		}
 		await act(async () => {
 			fireEvent.click(deleteButton);
 		});
@@ -138,8 +141,16 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 		// Remove role
 		const pins = screen.getAllByTestId("role-pin");
-		const crewmatePin = pins.find((pin) => pin.textContent?.includes("Crewmate"))!;
-		const removeRoleButton = crewmatePin.querySelector("button")!;
+		const crewmatePin = pins.find((pin) =>
+			pin.textContent?.includes("Crewmate"),
+		);
+		if (!crewmatePin) {
+			throw new Error("Crewmate pin not found");
+		}
+		const removeRoleButton = crewmatePin.querySelector("button");
+		if (!removeRoleButton) {
+			throw new Error("Remove role button not found");
+		}
 		await act(async () => {
 			fireEvent.click(removeRoleButton);
 		});

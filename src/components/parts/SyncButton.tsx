@@ -13,11 +13,7 @@ interface SyncButtonProps {
  */
 export function SyncButton({ onClick, disabled }: SyncButtonProps) {
 	return (
-		<Button
-			onClick={onClick}
-			disabled={disabled}
-			title={SYNC_BUTTON_TITLE}
-		>
+		<Button onClick={onClick} disabled={disabled} title={SYNC_BUTTON_TITLE}>
 			<RefreshCw size={20} aria-hidden="true" />
 		</Button>
 	);

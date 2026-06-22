@@ -66,9 +66,7 @@ export function PresetInput({
 				align="inline-end"
 				className="border-l border-border-strong"
 			>
-				<SelectTrigger
-					className="h-full w-8 justify-center rounded-none border-none bg-transparent hover:bg-component-hover"
-				/>
+				<SelectTrigger className="h-full w-8 justify-center rounded-none border-none bg-transparent hover:bg-component-hover" />
 			</InputGroupAddon>
 		</InputGroup>
 	);

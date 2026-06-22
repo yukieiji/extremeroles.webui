@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { ExROptionRecursiveItem } from "@/feature/exr/ExROptionRecursiveItem";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
 import { getUniqueOptionId } from "@/logics/optionUtils";
@@ -48,10 +48,7 @@ describe("ExROptionRecursiveItem", () => {
 
 	it("renders parent option and toggles child options", async () => {
 		render(
-			<ExROptionRecursiveItem
-				uniqueOptionId={parentUniqueId}
-				depth={0}
-			/>,
+			<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
 		);
 
 		expect(screen.getByText("Parent Option")).toBeInTheDocument();
@@ -62,7 +59,10 @@ describe("ExROptionRecursiveItem", () => {
 		// Click the parent to toggle
 		const toggleButton = screen
 			.getAllByRole("button")
-			.find((btn) => btn.querySelector(".lucide-chevron-right"))!;
+			.find((btn) => btn.querySelector(".lucide-chevron-right"));
+		if (!toggleButton) {
+			throw new Error("Toggle button not found");
+		}
 		await act(async () => {
 			fireEvent.click(toggleButton);
 		});
@@ -88,10 +88,7 @@ describe("ExROptionRecursiveItem", () => {
 		});
 
 		render(
-			<ExROptionRecursiveItem
-				uniqueOptionId={parentUniqueId}
-				depth={0}
-			/>,
+			<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
 		);
 
 		// Child should be visible initially because of store state

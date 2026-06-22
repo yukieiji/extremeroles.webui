@@ -114,10 +114,7 @@ export function RoleFilterCardHeader({
 					>
 						<ChevronUp />
 					</Button>
-					<Button
-						onClick={onDecrement}
-						disabled={assignNum <= 1 || isUpdating}
-					>
+					<Button onClick={onDecrement} disabled={assignNum <= 1 || isUpdating}>
 						<ChevronDown />
 					</Button>
 				</ButtonGroup>

@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DEFAULT_PRIMARY_BUTTUN_COLORS } from "@/designConstants";
 import { cn } from "@/lib/utils";
+
 interface RightSidePanelToggleButtonProps {
 	isOpen: boolean;
 	onClick: () => void;
