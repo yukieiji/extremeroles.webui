@@ -7,6 +7,10 @@ updates:
       day: "monday"
     open-pull-requests-limit: 10
     target-branch: "main"
+    cooldown:
+      default-days: 7
+    exclude-paths:
+      - ".gemini"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -15,3 +19,6 @@ updates:
       day: "monday"
     open-pull-requests-limit: 10
     target-branch: "main"
+    exclude-paths:
+      - ".gemini"
+
