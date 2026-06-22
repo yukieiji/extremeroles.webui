@@ -34,7 +34,9 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await presetInput.press("Enter");
 
 	// ドロップダウンを開く
-	const selectButton = page.getByRole("combobox").filter({ has: page.locator(".lucide-chevron-down") });
+	const selectButton = page
+		.getByRole("combobox")
+		.filter({ has: page.locator(".lucide-chevron-down") });
 	await expect(selectButton).toBeVisible();
 	await selectButton.click({ force: true });
 	await page.waitForSelector('[data-slot="select-content"]');
