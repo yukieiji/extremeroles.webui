@@ -18,7 +18,7 @@ test.beforeEach(async ({ page, browserName }) => {
 
 test("export button triggers download", async ({ page }) => {
 	// エクスポートボタンが表示されていることを確認
-	const exportButton = page.getByTitle("CSVとしてエクスポート");
+	const exportButton = page.getByRole("button", { name: "エクスポート" });
 	await expect(exportButton).toBeVisible();
 
 	// ボタンをクリックしてダウンロードを待機

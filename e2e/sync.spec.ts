@@ -39,7 +39,7 @@ test("synchronization updates data and preserves UI state", async ({
 		window.__API_DELAY__ = 1000;
 	});
 
-	const syncButton = page.getByTitle("同期");
+	const syncButton = page.getByRole("button", { name: "同期" });
 	await expect(syncButton).toBeVisible();
 	await syncButton.click();
 

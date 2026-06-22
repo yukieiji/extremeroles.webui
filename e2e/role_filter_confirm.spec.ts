@@ -12,10 +12,7 @@ test.describe("Role Filter Confirm Button Response", () => {
 		});
 
 		// Open Role Filter tab
-		await page
-			.getByRole("button", { name: "Role Filter" })
-			.or(page.getByTitle("Role Filter"))
-			.click();
+		await page.getByRole("button", { name: "Role Filter" }).click();
 
 		// Verify we are in Role Filter view
 		await expect(
