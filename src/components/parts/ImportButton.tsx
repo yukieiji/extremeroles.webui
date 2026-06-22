@@ -52,7 +52,11 @@ export function ImportButton({ onImport, disabled }: ImportButtonProps) {
 				onChange={handleFileChange}
 				className="hidden"
 			/>
-			<Button onClick={handleClick} disabled={disabled}>
+			<Button
+				onClick={handleClick}
+				disabled={disabled}
+				title={IMPORT_BUTTON_TITLE}
+			>
 				<Upload />
 				{IMPORT_BUTTON_TITLE}
 			</Button>
