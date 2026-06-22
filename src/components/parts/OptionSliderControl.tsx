@@ -41,7 +41,6 @@ export function OptionSliderControl({
 			onClick={stopPropagation}
 			onKeyDown={stopPropagation}
 			data-testid={testId}
-			aria-label={label}
 		>
 			<Field orientation="horizontal">
 				{label && (
@@ -73,7 +72,6 @@ export function OptionSliderControl({
 				step={1}
 				value={[selection]}
 				onValueChange={handleSliderChange}
-				aria-label={label ?? "slider"}
 				className="cursor-pointer"
 			/>
 		</FieldSet>

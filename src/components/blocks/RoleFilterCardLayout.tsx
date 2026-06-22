@@ -8,7 +8,6 @@ import {
 	CardHeader,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ROLE_FILTER_DELETE_ARIA } from "@/noTrans";
 
 interface RoleFilterCardLayoutProps {
 	onDelete: () => void;
@@ -28,7 +27,7 @@ export function RoleFilterCardLayout({
 		<Card data-testid="role-filter-card">
 			<CardHeader>
 				<CardAction>
-					<Button onClick={onDelete} aria-label={ROLE_FILTER_DELETE_ARIA}>
+					<Button onClick={onDelete}>
 						<X />
 					</Button>
 				</CardAction>

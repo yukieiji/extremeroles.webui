@@ -5,15 +5,18 @@ import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
 import { getUniqueOptionId } from "@/logics/optionUtils";
 import { useStore } from "@/useStore";
 
+// Mock Child components if necessary, but here we want to test with real metadata
+// Setup mock for useActiveChildOptions if needed, but it uses exrOptionMetaData
 describe("ExROptionRecursiveItem", () => {
-	const parentUniqueId = getUniqueOptionId(1, 1, 1);
-	const childUniqueId = getUniqueOptionId(1, 1, 2);
+	const tabId = 1;
+	const categoryId = 1;
+	const parentOptionId = 1;
+	const childOptionId = 2;
+	const parentUniqueId = getUniqueOptionId(tabId, categoryId, parentOptionId);
+	const childUniqueId = getUniqueOptionId(tabId, categoryId, childOptionId);
 
 	beforeEach(() => {
 		resetExrOptionMetaData();
-		useStore.getState().resetViewer();
-
-		// Setup metadata
 		exrOptionMetaData.options[parentUniqueId] = {
 			metaData: {
 				translatedName: "Parent Option",
@@ -26,66 +29,69 @@ describe("ExROptionRecursiveItem", () => {
 			metaData: {
 				translatedName: "Child Option",
 				format: "{0}",
-				type: "Int32",
+				type: "Boolean",
 			},
 			childOptionIds: [],
 		};
-
-		// Setup store state
-		useStore.getState().setExROptions(
-			{
-				[parentUniqueId]: { selection: 1, values: [0, 1] },
-				[childUniqueId]: { selection: 0, values: [0, 1] },
-			},
-			{
+		useStore.setState({
+			openedExROptionIds: {},
+			isExROptionActive: {
 				[parentUniqueId]: true,
 				[childUniqueId]: true,
 			},
-		);
+			exrValue: {
+				[parentUniqueId]: { selection: 1, values: [0, 1, 2] },
+				[childUniqueId]: { selection: 0, values: [0, 1] },
+			},
+		});
 	});
 
 	it("renders parent option and toggles child options", async () => {
-		await act(async () => {
-			render(
-				<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
-			);
-		});
+		render(
+			<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
+		);
 
-		// Parent should be visible
-		expect(screen.getAllByText("Parent Option")[0]).toBeInTheDocument();
+		expect(screen.getByText("Parent Option")).toBeInTheDocument();
 
-		// Child should NOT be visible initially (accordion closed)
+		// Initially child is not visible
 		expect(screen.queryByText("Child Option")).not.toBeInTheDocument();
 
 		// Click the parent to toggle
-		const toggleButton = screen.getByRole("button", { name: "開く" });
+		const toggleButton = screen
+			.getAllByRole("button")
+			.find((btn) => btn.querySelector(".lucide-chevron-right"));
+		if (!toggleButton) {
+			throw new Error("Toggle button not found");
+		}
 		await act(async () => {
 			fireEvent.click(toggleButton);
 		});
 
-		// Child should be visible now
-		expect(screen.getAllByText("Child Option")[0]).toBeInTheDocument();
+		// Now child should be visible
+		expect(screen.getByText("Child Option")).toBeInTheDocument();
 
 		// Click again to close
 		await act(async () => {
 			fireEvent.click(toggleButton);
 		});
+
+		// Child should be hidden again
 		expect(screen.queryByText("Child Option")).not.toBeInTheDocument();
 	});
 
 	it("reflects store's opened state", async () => {
-		// Manually open in store
-		await act(async () => {
-			useStore.getState().toggleExROption(parentUniqueId);
+		// Set store state to opened
+		act(() => {
+			useStore.setState({
+				openedExROptionIds: { [parentUniqueId]: true },
+			});
 		});
 
-		await act(async () => {
-			render(
-				<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
-			);
-		});
+		render(
+			<ExROptionRecursiveItem uniqueOptionId={parentUniqueId} depth={0} />,
+		);
 
-		// Child should be visible immediately
-		expect(screen.getAllByText("Child Option")[0]).toBeInTheDocument();
+		// Child should be visible initially because of store state
+		expect(screen.getByText("Child Option")).toBeInTheDocument();
 	});
 });

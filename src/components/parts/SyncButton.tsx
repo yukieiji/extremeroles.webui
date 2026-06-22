@@ -1,6 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SYNC_BUTTON_ARIA, SYNC_BUTTON_TITLE } from "@/noTrans";
+import { SYNC_BUTTON_TITLE } from "@/noTrans";
 
 interface SyncButtonProps {
 	onClick: () => void;
@@ -13,12 +13,7 @@ interface SyncButtonProps {
  */
 export function SyncButton({ onClick, disabled }: SyncButtonProps) {
 	return (
-		<Button
-			onClick={onClick}
-			disabled={disabled}
-			title={SYNC_BUTTON_TITLE}
-			aria-label={SYNC_BUTTON_ARIA}
-		>
+		<Button onClick={onClick} disabled={disabled} title={SYNC_BUTTON_TITLE}>
 			<RefreshCw size={20} aria-hidden="true" />
 		</Button>
 	);

@@ -48,8 +48,16 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		expect(screen.getByText("AssignNum: 5")).toBeInTheDocument();
 
-		const incrementButton = screen.getByLabelText("Increment AssignNum");
-		const decrementButton = screen.getByLabelText("Decrement AssignNum");
+		const buttons = screen.getAllByRole("button");
+		const incrementButton = buttons.find((btn) =>
+			btn.querySelector(".lucide-chevron-up"),
+		);
+		const decrementButton = buttons.find((btn) =>
+			btn.querySelector(".lucide-chevron-down"),
+		);
+		if (!incrementButton || !decrementButton) {
+			throw new Error("Buttons not found");
+		}
 
 		// Increment
 		await act(async () => {
@@ -96,7 +104,12 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		render(<RoleFilterViewer />);
 
-		const incrementButton = screen.getByLabelText("Increment AssignNum");
+		const incrementButton = screen
+			.getAllByRole("button")
+			.find((btn) => btn.querySelector(".lucide-chevron-up"));
+		if (!incrementButton) {
+			throw new Error("Increment button not found");
+		}
 
 		await act(async () => {
 			fireEvent.click(incrementButton);
@@ -126,7 +139,12 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		render(<RoleFilterViewer />);
 
-		const decrementButton = screen.getByLabelText("Decrement AssignNum");
+		const decrementButton = screen
+			.getAllByRole("button")
+			.find((btn) => btn.querySelector(".lucide-chevron-down"));
+		if (!decrementButton) {
+			throw new Error("Decrement button not found");
+		}
 		expect(decrementButton).toBeDisabled();
 
 		await act(async () => {
@@ -149,7 +167,12 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		render(<RoleFilterViewer />);
 
-		const incrementButton = screen.getByLabelText("Increment AssignNum");
+		const incrementButton = screen
+			.getAllByRole("button")
+			.find((btn) => btn.querySelector(".lucide-chevron-up"));
+		if (!incrementButton) {
+			throw new Error("Increment button not found");
+		}
 		expect(incrementButton).toBeDisabled();
 
 		await act(async () => {

@@ -18,12 +18,9 @@ import {
 	AU_SHORT_LABEL,
 	EXR_OPTIONS_TITLE,
 	EXR_SHORT_LABEL,
-	OPTION_SIDEBAR_ARIA,
 	ROLE_FILTER_SHORT_LABEL,
 	ROLE_FILTER_TITLE,
 	SETTINGS_TITLE,
-	SIDEBAR_CLOSE_ARIA,
-	SIDEBAR_OPEN_ARIA,
 } from "../noTrans";
 import type { SelectedTab } from "../slices/optionGroupToggleSidebarSlice";
 import { useStore } from "../useStore";
@@ -84,12 +81,12 @@ export function OptionGroupToggleSidebar() {
 		}
 	}, [isPending, setIsSidebarPending]);
 
-	const triggerLabel = open ? SIDEBAR_CLOSE_ARIA : SIDEBAR_OPEN_ARIA;
+	const triggerLabel = open ? "Close Sidebar" : "Open Sidebar";
 
 	return (
-		<Sidebar collapsible="icon" aria-label={OPTION_SIDEBAR_ARIA}>
+		<Sidebar collapsible="icon">
 			<SidebarHeader className="flex flex-row items-center justify-end group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0">
-				<SidebarTrigger title={triggerLabel} aria-label={triggerLabel} />
+				<SidebarTrigger title={triggerLabel} />
 			</SidebarHeader>
 
 			<SidebarContent>

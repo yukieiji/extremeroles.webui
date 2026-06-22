@@ -2,7 +2,6 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
-import { stripColorTags } from "@/logics/colorUtils";
 import { ColoredText } from "../parts/ColoredText";
 import { Badge } from "../ui/badge";
 
@@ -18,14 +17,13 @@ export function RolePin({ name, onDelete }: RolePinProps) {
 	const transLatedName = translationMetaData[name] ?? name;
 
 	return (
-		<Badge className={TYPOGRAPHY.CHILD_LABEL}>
+		<Badge className={TYPOGRAPHY.CHILD_LABEL} data-testid="role-pin">
 			<ColoredText text={transLatedName} />
 			<Button
 				onClick={(e) => {
 					e.stopPropagation();
 					onDelete();
 				}}
-				aria-label={`Remove ${stripColorTags(transLatedName)}`}
 			>
 				<X data-icon="inline-end" />
 			</Button>

@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { CLOSE, OPEN } from "@/noTrans";
 import { AccordionSvg } from "../parts/AccordionSvg";
 import { HighlightWrapper } from "../parts/HighlightWrapper";
 import { OptionRowContainer } from "../parts/OptionRowContainer";
@@ -31,7 +30,6 @@ export function HighlightableAccordionRow({
 							onClick={onToggle}
 							className="flex items-center justify-center text-text-primary w-full h-full"
 							aria-expanded={isOpen}
-							aria-label={isOpen ? CLOSE : OPEN}
 						>
 							<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
 						</button>

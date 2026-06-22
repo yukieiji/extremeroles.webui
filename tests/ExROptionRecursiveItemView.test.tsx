@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExROptionRecursiveItemView } from "@/feature/rightsidepanel/ExROptionRecursiveItemView";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
 import { getUniqueOptionId } from "@/logics/optionUtils";
-import { CLOSE, OPEN } from "@/noTrans";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -114,7 +113,8 @@ describe("ExROptionRecursiveItemView", () => {
 	it("toggles the accordion state by calling store action", () => {
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={0} />);
 
-		const toggleButton = screen.getByRole("button", { name: OPEN });
+		// The toggle button is the only button in ExROptionRowView's container (ViewerOptionRowContainer)
+		const toggleButton = screen.getByRole("button");
 		fireEvent.click(toggleButton);
 
 		// Check if store state updated
@@ -128,7 +128,7 @@ describe("ExROptionRecursiveItemView", () => {
 		).toBeInTheDocument();
 
 		// Click again to close
-		fireEvent.click(screen.getByRole("button", { name: CLOSE }));
+		fireEvent.click(screen.getByRole("button"));
 		expect(useStore.getState().openedExROptionRightSidePanel[parentId]).toBe(
 			false,
 		);

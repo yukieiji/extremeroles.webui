@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ChildOptionViewAccordion } from "@/components/blocks/ChildOptionViewAccordion";
-import { CLOSE, OPEN } from "@/noTrans";
 
 describe("ChildOptionViewAccordion", () => {
 	const defaultProps = {
@@ -37,7 +36,8 @@ describe("ChildOptionViewAccordion", () => {
 		const onToggle = vi.fn();
 		render(<ChildOptionViewAccordion {...defaultProps} onToggle={onToggle} />);
 
-		const button = screen.getByRole("button", { name: OPEN });
+		// The toggle button is the only button in this component
+		const button = screen.getByRole("button");
 		fireEvent.click(button);
 
 		expect(onToggle).toHaveBeenCalledTimes(1);
@@ -46,17 +46,15 @@ describe("ChildOptionViewAccordion", () => {
 	it("should have correct accessibility attributes when closed", () => {
 		render(<ChildOptionViewAccordion {...defaultProps} isOpen={false} />);
 
-		const button = screen.getByRole("button", { name: OPEN });
+		const button = screen.getByRole("button");
 		expect(button).toHaveAttribute("aria-expanded", "false");
-		expect(button).toHaveAttribute("aria-label", OPEN);
 	});
 
 	it("should have correct accessibility attributes when open", () => {
 		render(<ChildOptionViewAccordion {...defaultProps} isOpen={true} />);
 
-		const button = screen.getByRole("button", { name: CLOSE });
+		const button = screen.getByRole("button");
 		expect(button).toHaveAttribute("aria-expanded", "true");
-		expect(button).toHaveAttribute("aria-label", CLOSE);
 	});
 
 	it("should apply indentation to the header when depth > 0", () => {
