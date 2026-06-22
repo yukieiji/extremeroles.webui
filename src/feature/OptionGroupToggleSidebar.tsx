@@ -81,12 +81,10 @@ export function OptionGroupToggleSidebar() {
 		}
 	}, [isPending, setIsSidebarPending]);
 
-	const triggerLabel = open ? "Close Sidebar" : "Open Sidebar";
-
 	return (
 		<Sidebar collapsible="icon">
 			<SidebarHeader className="flex flex-row items-center justify-end group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0">
-				<SidebarTrigger title={triggerLabel} />
+				<SidebarTrigger />
 			</SidebarHeader>
 
 			<SidebarContent>
