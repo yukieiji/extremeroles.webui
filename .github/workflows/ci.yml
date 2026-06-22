@@ -53,6 +53,7 @@ jobs:
       fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
+        shard: [1/4, 2/4, 3/4, 4/4]
     steps:
     - uses: actions/checkout@v7
 
@@ -71,11 +72,11 @@ jobs:
     - name: Run Playwright tests
       env:
         HOME: /root
-      run: pnpm run e2e --project=${{ matrix.browser }}
+      run: pnpm run e2e --project=${{ matrix.browser }} --shard=${{ matrix.shard }}
 
     - uses: actions/upload-artifact@v7
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report-${{ matrix.browser }}
+        name: playwright-report-${{ matrix.browser }}-${{ matrix.shard }}
         path: playwright-report/
         retention-days: 30
