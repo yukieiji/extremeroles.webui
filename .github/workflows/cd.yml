@@ -13,7 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
-        shard: [1/4, 2/4, 3/4, 4/4]
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     container:
       image: mcr.microsoft.com/playwright:v1.61.0
     steps:
@@ -34,12 +35,12 @@ jobs:
       - name: Run E2E tests
         env:
           HOME: /root
-        run: pnpm run e2e --project=${{ matrix.browser }} --shard=${{ matrix.shard }}
+        run: pnpm run e2e --project=${{ matrix.browser }} --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report-${{ matrix.browser }}-${{ matrix.shard }}
+          name: playwright-report-${{ matrix.browser }}-${{ matrix.shardIndex }}
           path: playwright-report/
           retention-days: 30
 
