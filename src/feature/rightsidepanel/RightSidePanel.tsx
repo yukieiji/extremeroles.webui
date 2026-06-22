@@ -1,7 +1,6 @@
 import { use, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { getAllOptions } from "@/logics/api.store";
-import { RIGHT_PANEL_ARIA } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { RightSidePanelToggleButton } from "../../components/parts/RightSidePanelToggleButton";
 import { RightSidePanelBody } from "./RightSidePanelBody";
@@ -57,7 +56,6 @@ export function RightSidePanel() {
 					: `${RIGHT_PANEL_TOGGLE_WIDTH}px`,
 				maxWidth: `${maxWidth + RIGHT_PANEL_TOGGLE_WIDTH}px`,
 			}}
-			aria-label={RIGHT_PANEL_ARIA}
 			data-testid="right-side-panel"
 		>
 			{/* パネル本体 */}

@@ -8,6 +8,7 @@ describe("OptionSliderControl", () => {
 		selection: 1,
 		values: [0, 10, 20, 30],
 		onChange: vi.fn(),
+		testId: "test-slider-control",
 	};
 
 	it("renders label and current value correctly", async () => {
@@ -18,14 +19,13 @@ describe("OptionSliderControl", () => {
 		expect(screen.getByRole("textbox")).toHaveValue("10");
 	});
 
-	it("renders slider with correct initial value and aria-label", async () => {
+	it("renders slider with correct initial value", async () => {
 		await act(async () => {
 			render(<OptionSliderControl {...defaultProps} />);
 		});
 		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toBeInTheDocument();
 		expect(slider).toHaveAttribute("aria-valuenow", "1");
-		expect(slider).toHaveAttribute("aria-label", "Test Slider");
 	});
 
 	it("renders format when provided", async () => {
@@ -97,10 +97,9 @@ describe("OptionSliderControl", () => {
 			);
 		});
 
-		const groups = screen.getAllByRole("group", { name: "Test Slider" });
-		// The first one is the FieldSet
+		const control = screen.getByTestId("test-slider-control");
 		await act(async () => {
-			fireEvent.click(groups[0]);
+			fireEvent.click(control);
 		});
 
 		expect(onParentClick).not.toHaveBeenCalled();
@@ -123,12 +122,7 @@ describe("OptionSliderControl", () => {
 				/>,
 			);
 		});
-		expect(
-			screen.queryByRole("group", { name: "Test Slider" }),
-		).not.toBeInTheDocument();
-		expect(screen.getByRole("slider", { hidden: true })).toHaveAttribute(
-			"aria-label",
-			"slider",
-		);
+		expect(screen.queryByText("Test Slider")).not.toBeInTheDocument();
+		expect(screen.getByRole("slider", { hidden: true })).toBeInTheDocument();
 	});
 });

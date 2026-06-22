@@ -48,8 +48,13 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		expect(screen.getByText("AssignNum: 5")).toBeInTheDocument();
 
-		const incrementButton = screen.getByLabelText("Increment AssignNum");
-		const decrementButton = screen.getByLabelText("Decrement AssignNum");
+		const buttons = screen.getAllByRole("button");
+		const incrementButton = buttons.find((btn) =>
+			btn.querySelector(".lucide-chevron-up"),
+		)!;
+		const decrementButton = buttons.find((btn) =>
+			btn.querySelector(".lucide-chevron-down"),
+		)!;
 
 		// Increment
 		await act(async () => {
@@ -96,7 +101,9 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		render(<RoleFilterViewer />);
 
-		const incrementButton = screen.getByLabelText("Increment AssignNum");
+		const incrementButton = screen
+			.getAllByRole("button")
+			.find((btn) => btn.querySelector(".lucide-chevron-up"))!;
 
 		await act(async () => {
 			fireEvent.click(incrementButton);
@@ -126,7 +133,9 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		render(<RoleFilterViewer />);
 
-		const decrementButton = screen.getByLabelText("Decrement AssignNum");
+		const decrementButton = screen
+			.getAllByRole("button")
+			.find((btn) => btn.querySelector(".lucide-chevron-down"))!;
 		expect(decrementButton).toBeDisabled();
 
 		await act(async () => {
@@ -149,7 +158,9 @@ describe("RoleFilter AssignNum Adjustment", () => {
 
 		render(<RoleFilterViewer />);
 
-		const incrementButton = screen.getByLabelText("Increment AssignNum");
+		const incrementButton = screen
+			.getAllByRole("button")
+			.find((btn) => btn.querySelector(".lucide-chevron-up"))!;
 		expect(incrementButton).toBeDisabled();
 
 		await act(async () => {

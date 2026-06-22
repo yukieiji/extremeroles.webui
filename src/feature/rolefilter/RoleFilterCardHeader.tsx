@@ -6,8 +6,6 @@ import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
 import {
 	format,
 	ROLE_FILTER_ASSIGN_NUM_LABEL,
-	ROLE_FILTER_DECREMENT_ARIA,
-	ROLE_FILTER_INCREMENT_ARIA,
 	ROLE_FILTER_ROLE_ADD_BUTTON,
 	ROLE_FILTER_ROLE_ADD_TITLE,
 	ROLE_FILTER_UNKNOWN_ROLE,
@@ -113,14 +111,12 @@ export function RoleFilterCardHeader({
 					<Button
 						onClick={onIncrement}
 						disabled={assignNum >= 255 || isUpdating}
-						aria-label={ROLE_FILTER_INCREMENT_ARIA}
 					>
 						<ChevronUp />
 					</Button>
 					<Button
 						onClick={onDecrement}
 						disabled={assignNum <= 1 || isUpdating}
-						aria-label={ROLE_FILTER_DECREMENT_ARIA}
 					>
 						<ChevronDown />
 					</Button>

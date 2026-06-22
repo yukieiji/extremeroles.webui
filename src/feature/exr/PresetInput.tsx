@@ -4,7 +4,7 @@ import {
 	InputGroupInput,
 } from "@/components/ui/input-group";
 import { SelectTrigger } from "@/components/ui/select";
-import { PRESET_INPUT_PLACEHOLDER, PRESET_SELECT_ARIA } from "@/noTrans";
+import { PRESET_INPUT_PLACEHOLDER } from "@/noTrans";
 import { useStore } from "@/useStore";
 
 interface PresetInputProps {
@@ -68,7 +68,6 @@ export function PresetInput({
 			>
 				<SelectTrigger
 					className="h-full w-8 justify-center rounded-none border-none bg-transparent hover:bg-component-hover"
-					aria-label={PRESET_SELECT_ARIA}
 				/>
 			</InputGroupAddon>
 		</InputGroup>

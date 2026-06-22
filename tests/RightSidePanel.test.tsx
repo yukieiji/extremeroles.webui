@@ -81,7 +81,7 @@ describe("RightSidePanel Component", () => {
 			);
 		});
 
-		const toggleButton = screen.getByLabelText("パネルを開く");
+		const toggleButton = screen.getByTestId("right-panel-toggle");
 		fireEvent.click(toggleButton);
 
 		expect(useStore.getState().isRightPanelOpen).toBe(true);

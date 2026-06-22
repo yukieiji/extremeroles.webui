@@ -17,7 +17,6 @@ export function ExportButton({ onClick, disabled }: ExportButtonProps) {
 			onClick={onClick}
 			disabled={disabled}
 			title={EXPORT_CSV_TITLE}
-			aria-label={EXPORT_CSV_TITLE}
 		>
 			<Download />
 			{EXPORT_CSV_LABEL}

@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { CLOSE, OPEN } from "@/noTrans";
 import { AccordionContentContainer } from "../parts/AccordionContentContainer";
 import { AccordionSvg } from "../parts/AccordionSvg";
 import { ViewerOptionRowContainer } from "../parts/ViewerOptionRowContainer";
@@ -32,7 +31,6 @@ export function ChildOptionViewAccordion({
 							onClick={onToggle}
 							className="flex items-center justify-center text-text-primary w-full h-full"
 							aria-expanded={isOpen}
-							aria-label={isOpen ? CLOSE : OPEN}
 						>
 							<AccordionSvg className={"w-4 h-4"} isOpen={isOpen} />
 						</button>
