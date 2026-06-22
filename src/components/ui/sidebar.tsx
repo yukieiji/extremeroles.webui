@@ -22,11 +22,6 @@ import {
 } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import {
-	SIDEBAR_DESCRIPTION,
-	SIDEBAR_TITLE,
-	SIDEBAR_TOGGLE_ARIA,
-} from "@/noTrans";
 
 const SIDEBAR_STORAGE_KEY = "sidebar_state";
 const SIDEBAR_WIDTH = "16rem";
@@ -213,8 +208,8 @@ function Sidebar({
 					side={side}
 				>
 					<SheetHeader className="sr-only">
-						<SheetTitle>{SIDEBAR_TITLE}</SheetTitle>
-						<SheetDescription>{SIDEBAR_DESCRIPTION}</SheetDescription>
+						<SheetTitle>Sidebar</SheetTitle>
+						<SheetDescription>Displays the mobile sidebar.</SheetDescription>
 					</SheetHeader>
 					<div className="flex h-full w-full flex-col">{children}</div>
 				</SheetContent>
@@ -289,7 +284,7 @@ function SidebarTrigger({
 			{...props}
 		>
 			<PanelLeftIcon />
-			<span className="sr-only">{SIDEBAR_TOGGLE_ARIA}</span>
+			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
 	);
 }
@@ -301,10 +296,10 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
 		<button
 			data-sidebar="rail"
 			data-slot="sidebar-rail"
-			aria-label={SIDEBAR_TOGGLE_ARIA}
+			aria-label="Toggle Sidebar"
 			tabIndex={-1}
 			onClick={toggleSidebar}
-			title={SIDEBAR_TOGGLE_ARIA}
+			title="Toggle Sidebar"
 			className={cn(
 				"absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:start-1/2 after:w-[2px] hover:after:bg-border-strong sm:flex ltr:-translate-x-1/2 rtl:-translate-x-1/2",
 				"in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",

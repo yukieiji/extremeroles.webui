@@ -65,9 +65,6 @@ export const SETTINGS_UNDER_PREPARATION = "設定項目は現在準備中です�
 export const OK = "OK";
 
 export const SEARCH_NO_RESULTS = "Search No Results";
-export const SIDEBAR_TOGGLE_ARIA = "Toggle Sidebar";
-export const SIDEBAR_TITLE = "Sidebar";
-export const SIDEBAR_DESCRIPTION = "Displays the mobile sidebar.";
 
 export const CLIPBOARD_SETTING_TITLE = "設定";
 export const CLIPBOARD_FACTION_COUNTS = "陣営数";
