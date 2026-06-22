@@ -81,7 +81,7 @@ export function OptionGroupToggleSidebar() {
 		}
 	}, [isPending, setIsSidebarPending]);
 
-	const triggerLabel = open ? "Close Sidebar" : "Open Sidebar";
+	const triggerLabel = open ? "サイドバーを閉じる" : "サイドバーを開く";
 
 	return (
 		<Sidebar collapsible="icon">

@@ -7,7 +7,7 @@ import svgLoader from 'vite-svg-loader'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
 
-const port = process.env.VITE_USE_MOCK ? 67700 : 57700
+const port = process.env.VITE_USE_MOCK ? 47700 : 57700
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
