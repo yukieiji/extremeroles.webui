@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Preset naming and persistence behavior", async ({ page }) => {
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 	const exrButton = sidebar.getByRole("button", { name: "Extreme Roles" });
 	await exrButton.click();
 
@@ -34,7 +34,9 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await presetInput.press("Enter");
 
 	// ドロップダウンを開く
-	const selectButton = page.getByRole("combobox", { name: "プリセットを選択" });
+	const selectButton = page
+		.getByRole("combobox")
+		.filter({ has: page.locator(".lucide-chevron-down") });
 	await expect(selectButton).toBeVisible();
 	await selectButton.click({ force: true });
 	await page.waitForSelector('[data-slot="select-content"]');

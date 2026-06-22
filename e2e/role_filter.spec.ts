@@ -11,7 +11,7 @@ test.describe("Role Filter Tab", () => {
 		});
 
 		// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
-		await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+		await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 			timeout: 30000,
 		});
 	});

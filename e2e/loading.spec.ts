@@ -14,7 +14,7 @@ test("初期ロード時にローディング画面が表示されること", as
 	await page.goto("/");
 	// index.html に仕込んだ Loading data... またはサイドバーが表示されるまで待機
 	const loadingText = page.getByText("Loading data...");
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 	await expect(loadingText.or(sidebar)).toBeVisible({ timeout: 30000 });
 });
 
@@ -22,7 +22,7 @@ test("サイドバー切り替え時にメインコンテンツが表示され�
 	page,
 }) => {
 	await page.goto("/");
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 
 	// Extreme Roles に切り替え
@@ -38,7 +38,7 @@ test("サイドバー切り替え時にメインコンテンツが表示され�
 
 test("ExRタブ切り替え時にカテゴリリストが表示されること", async ({ page }) => {
 	await page.goto("/");
-	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+	await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 		timeout: 30000,
 	});
 

@@ -17,13 +17,13 @@ test.beforeEach(async ({ page }) => {
 	});
 
 	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
-	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+	await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 		timeout: 30000,
 	});
 });
 
 test("has sidebar and au option editor", async ({ page }) => {
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 
 	// サイドバー内のボタンを明示的に指定
 	await expect(sidebar.getByRole("button", { name: "Among Us" })).toBeVisible();
@@ -51,7 +51,7 @@ test("has sidebar and au option editor", async ({ page }) => {
 
 	// サイドバーの開閉
 	// 閉じる
-	await page.getByRole("button", { name: "サイドバーを閉じる" }).click();
+	await page.getByTitle("Close Sidebar").click();
 	// shadcn sidebar collapsible="icon" doesn't remove elements from DOM,
 	// it just hides or shrinks them.
 	// We check the data-state attribute on the sidebar element.
@@ -61,7 +61,7 @@ test("has sidebar and au option editor", async ({ page }) => {
 	);
 
 	// 開く
-	await page.getByRole("button", { name: "サイドバーを開く" }).click();
+	await page.getByTitle("Open Sidebar").click();
 	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
 		"data-state",
 		"expanded",

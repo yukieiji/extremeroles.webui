@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Options interaction behavior", async ({ page }) => {
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// ヘッダーのプリセットセレクターを確認
@@ -34,7 +34,8 @@ test("Options interaction behavior", async ({ page }) => {
 
 	// ドロップダウンを開いて名前が反映されているか確認
 	await page
-		.getByRole("combobox", { name: "プリセットを選択" })
+		.getByRole("combobox")
+		.filter({ has: page.locator(".lucide-chevron-down") })
 		.click({ force: true });
 	// ドロップダウン内の項目を特定するため、より具体的なロケータを使用（サイドバーにも同じテキストが表示されるため）
 	await expect(

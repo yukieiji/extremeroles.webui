@@ -47,7 +47,11 @@ test.describe("Role Filter Management", () => {
 
 		// Delete the filter
 		const lastFilter = page.getByTestId("role-filter-card").last();
-		await lastFilter.getByLabel("Delete filter").click();
+		await lastFilter
+			.getByRole("button")
+			.filter({ has: page.locator("svg") })
+			.first()
+			.click();
 
 		// Confirmation dialog
 		await expect(page.getByText("フィルターの削除")).toBeVisible();
@@ -137,7 +141,11 @@ test.describe("Role Filter Management", () => {
 		});
 
 		// Remove the role
-		await lastFilter.getByLabel("Remove パン屋").click();
+		await lastFilter
+			.getByTestId("role-pin")
+			.filter({ hasText: "パン屋" })
+			.getByRole("button")
+			.click();
 
 		// Confirmation dialog
 		await expect(page.getByText("役職の削除")).toBeVisible();

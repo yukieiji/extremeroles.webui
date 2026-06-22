@@ -13,7 +13,7 @@ test("CSV import flow shows confirmation and triggers sync", async ({
 	page,
 }) => {
 	// 1. Check if Import Button is visible
-	const importButton = page.getByLabel("CSVファイルをインポート");
+	const importButton = page.getByTitle("CSVインポート");
 	await expect(importButton).toBeVisible();
 
 	// 2. Mock file selection

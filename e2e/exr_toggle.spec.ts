@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("ExR toggle switch should be visible and functional", async ({ page }) => {
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 
 	// Extreme Roles に切り替え
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
