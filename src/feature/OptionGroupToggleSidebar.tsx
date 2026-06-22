@@ -10,7 +10,6 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 	SidebarTrigger,
-	useSidebar,
 } from "../components/ui/sidebar";
 import { TYPOGRAPHY } from "../designConstants";
 import {
@@ -48,7 +47,6 @@ const TABS: TabItem[] = [
  * サイドバーコンポーネント
  */
 export function OptionGroupToggleSidebar() {
-	const { open } = useSidebar();
 	const selectedTab = useStore((state) => {
 		return state.selectedTab;
 	});
