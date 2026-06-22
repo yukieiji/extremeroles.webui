@@ -68,7 +68,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 test("Updating preset name reflects in right sidebar", async ({ page }) => {
 	const _rightPanel = page.getByTestId("right-side-panel");
 	// 1. ExR タブに切り替え
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// 2. プリセット名を変更

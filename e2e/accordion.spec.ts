@@ -17,13 +17,13 @@ test.beforeEach(async ({ page }) => {
 	});
 
 	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
-	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+	await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 		timeout: 30000,
 	});
 });
 
 test("ExR Option Accordion behavior", async ({ page }) => {
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// プリセットカテゴリは非表示になったため、別のカテゴリ「乱数に関する設定」を使用する

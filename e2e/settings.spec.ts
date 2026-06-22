@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
 	});
 
 	// サイドバーが表示されるまで待機
-	await expect(page.getByLabel("オプションサイドバー")).toBeVisible({
+	await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 		timeout: 30000,
 	});
 });

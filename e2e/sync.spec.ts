@@ -39,7 +39,7 @@ test("synchronization updates data and preserves UI state", async ({
 		window.__API_DELAY__ = 1000;
 	});
 
-	const syncButton = page.getByLabel("データを同期");
+	const syncButton = page.getByTitle("同期");
 	await expect(syncButton).toBeVisible();
 	await syncButton.click();
 
@@ -56,7 +56,7 @@ test("synchronization updates data and preserves UI state", async ({
 	).toBeVisible();
 
 	// Sidebar state check (open by default, let's close it and sync)
-	await page.getByRole("button", { name: "サイドバーを閉じる" }).click();
+	await page.getByTitle("Close Sidebar").click();
 	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
 		"data-state",
 		"collapsed",

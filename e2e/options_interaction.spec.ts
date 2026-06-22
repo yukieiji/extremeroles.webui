@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Options interaction behavior", async ({ page }) => {
-	const sidebar = page.getByLabel("オプションサイドバー");
+	const sidebar = page.locator('[data-slot="sidebar"]');
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// ヘッダーのプリセットセレクターを確認
