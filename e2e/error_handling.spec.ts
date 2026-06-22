@@ -37,10 +37,10 @@ test("初期ロード時にフェッチが失敗した場合、エラー画面�
 	await page.goto("/");
 
 	// エラー画面が表示されることを確認
-	const errorTitle = page.getByText("エラーが発生しました");
+	const errorTitle = page.getByText("ERROR");
 	await expect(errorTitle).toBeVisible({ timeout: 15000 });
 
-	const retryButton = page.getByRole("button", { name: "再試行" });
+	const retryButton = page.getByRole("button", { name: "Retry" });
 	await expect(retryButton).toBeVisible();
 
 	// 再試行で成功するようにルートを解除
@@ -89,10 +89,10 @@ test("再試行してもフェッチが失敗し続ける場合、エラー画�
 	await page.goto("/");
 
 	// エラー画面が表示されることを確認
-	const errorTitle = page.getByText("エラーが発生しました");
+	const errorTitle = page.getByText("ERROR");
 	await expect(errorTitle).toBeVisible({ timeout: 15000 });
 
-	const retryButton = page.getByRole("button", { name: "再試行" });
+	const retryButton = page.getByRole("button", { name: "Retry" });
 
 	// 2回再試行を試みる
 	for (let i = 0; i < 2; i++) {

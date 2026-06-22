@@ -51,7 +51,7 @@ test("has sidebar and au option editor", async ({ page }) => {
 
 	// サイドバーの開閉
 	// 閉じる
-	await page.getByTitle("サイドバーを閉じる").click();
+	await page.getByTitle("Close Sidebar").click();
 	// shadcn sidebar collapsible="icon" doesn't remove elements from DOM,
 	// it just hides or shrinks them.
 	// We check the data-state attribute on the sidebar element.
@@ -61,7 +61,7 @@ test("has sidebar and au option editor", async ({ page }) => {
 	);
 
 	// 開く
-	await page.getByTitle("サイドバーを開く").click();
+	await page.getByTitle("Open Sidebar").click();
 	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
 		"data-state",
 		"expanded",

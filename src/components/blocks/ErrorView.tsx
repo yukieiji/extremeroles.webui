@@ -39,14 +39,12 @@ export function ErrorView({ error, resetErrorBoundary }: FallbackProps) {
 						<AlertCircle size={100} className="text-error" />
 					</CardTitle>
 					<CardDescription>
-						<h1 className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
-							エラーが発生しました
-						</h1>
+						<h1 className={`${TYPOGRAPHY.LABEL} text-text-primary`}>ERROR</h1>
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div className="space-y-2">
-						<p className={`${TYPOGRAPHY.LABEL} text-text-primary`}>詳細</p>
+						<p className={`${TYPOGRAPHY.LABEL} text-text-primary`}>Detail</p>
 						<div className="rounded-lg border border-border-strong shadow-sm">
 							<pre
 								className={`${TYPOGRAPHY.SMALL} p-2 overflow-auto whitespace-pre-wrap text-text-secondary`}
@@ -60,10 +58,10 @@ export function ErrorView({ error, resetErrorBoundary }: FallbackProps) {
 					<Button
 						size="lg"
 						onClick={handleRetry}
-						className={`${TYPOGRAPHY.LABEL} w-full  text-text-primary`}
+						className={`${TYPOGRAPHY.LABEL} w-full  text-text-primar`}
 					>
 						<RefreshCw />
-						再試行
+						Retry
 					</Button>
 				</CardFooter>
 			</Card>

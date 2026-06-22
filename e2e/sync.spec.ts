@@ -56,7 +56,7 @@ test("synchronization updates data and preserves UI state", async ({
 	).toBeVisible();
 
 	// Sidebar state check (open by default, let's close it and sync)
-	await page.getByTitle("サイドバーを閉じる").click();
+	await page.getByTitle("Close Sidebar").click();
 	await expect(page.locator('[data-slot="sidebar"]')).toHaveAttribute(
 		"data-state",
 		"collapsed",
