@@ -96,7 +96,6 @@ export function OptionGroupToggleSidebar() {
 										handleTabChange(tab.id);
 									}}
 									className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:font-bold"
-									title={tab.label}
 								>
 									<span
 										className={`group-data-[collapsible=icon]:hidden ${TYPOGRAPHY.SIDEBAR}`}
