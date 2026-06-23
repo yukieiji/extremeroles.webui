@@ -1,5 +1,6 @@
 import { useShallow } from "zustand/react/shallow";
 import { globalSearchItems } from "@/logics/api";
+import { normalizeForSearch } from "@/logics/stringUtils";
 import type { SearchItem } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -13,10 +14,10 @@ export function useSearchResults(): SearchItem[] {
 			if (query === "") {
 				return [];
 			}
-			const lowerQuery = query.toLowerCase();
+			const normalizedQuery = normalizeForSearch(query);
 			return globalSearchItems
 				.filter((item) => {
-					if (!item.term.toLowerCase().includes(lowerQuery)) {
+					if (!normalizeForSearch(item.term).includes(normalizedQuery)) {
 						return false;
 					}
 					return item.info.mode === "exr-opt"

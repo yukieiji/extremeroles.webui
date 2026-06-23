@@ -10,10 +10,7 @@ test.describe("Role Filter Shift Selection", () => {
 
 	test("should select multiple roles using shift-click", async ({ page }) => {
 		// Switch to Role Filter tab
-		await page
-			.getByRole("button", { name: "Role Filter" })
-			.or(page.getByTitle("Role Filter"))
-			.click();
+		await page.getByRole("button", { name: "Role Filter" }).click();
 
 		// Open the role selection dialog
 		await page.getByRole("button", { name: "フィルターを追加" }).click();

@@ -8,6 +8,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { roleFilterMetaData } from "@/logics/api";
+import { normalizeForSearch } from "@/logics/stringUtils";
 import {
 	CLOSE,
 	CONFIRM,
@@ -68,10 +69,11 @@ export function RoleSelectDialog({
 	});
 
 	const excludeSet = new Set(excludeRoleIds);
-	const lowerQuery = searchQuery.toLowerCase();
+	const normalizedQuery = normalizeForSearch(searchQuery);
 	const filteredRoles = allRoles.filter(
 		({ roleId, roleName }) =>
-			!excludeSet.has(roleId) && roleName.toLowerCase().includes(lowerQuery),
+			!excludeSet.has(roleId) &&
+			normalizeForSearch(roleName).includes(normalizedQuery),
 	);
 
 	const handleSelect = (roleId: number, isShift: boolean) => {
