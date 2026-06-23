@@ -17,17 +17,23 @@ test.describe("Search Normalization", () => {
 		// カタカナの「インポスター」をひらがな「いんぽすたー」で検索
 		await searchInput.fill("いんぽすたー");
 		await expect(page.getByRole("dialog")).toBeVisible();
-		await expect(page.getByText("インポスター", { exact: false }).first()).toBeVisible();
+		await expect(
+			page.getByText("インポスター", { exact: false }).first(),
+		).toBeVisible();
 
 		// 全角「インポスター」を半角「ｲﾝﾎﾟｽﾀｰ」で検索
 		await searchInput.clear();
 		await searchInput.fill("ｲﾝﾎﾟｽﾀｰ");
-		await expect(page.getByText("インポスター", { exact: false }).first()).toBeVisible();
+		await expect(
+			page.getByText("インポスター", { exact: false }).first(),
+		).toBeVisible();
 
 		// 英数字の全角・半角区別なし (会議 => 議 => ｷﾞ => ぎ)
 		await searchInput.clear();
 		await searchInput.fill("かいぎ");
-		await expect(page.getByText("会議", { exact: false }).first()).toBeVisible();
+		await expect(
+			page.getByText("会議", { exact: false }).first(),
+		).toBeVisible();
 	});
 
 	test("役職選択ダイアログでひらがな・カタカナを区別せずに検索できること", async ({
@@ -44,16 +50,22 @@ test.describe("Search Normalization", () => {
 
 		// 「パン屋」を「ぱんや」で検索
 		await searchInput.fill("ぱんや");
-		await expect(page.getByText("パン屋", { exact: true }).first()).toBeVisible();
+		await expect(
+			page.getByText("パン屋", { exact: true }).first(),
+		).toBeVisible();
 
 		// 「オープナー」を「おーぷなー」で検索
 		await searchInput.clear();
 		await searchInput.fill("おーぷなー");
-		await expect(page.getByText("オープナー", { exact: true }).first()).toBeVisible();
+		await expect(
+			page.getByText("オープナー", { exact: true }).first(),
+		).toBeVisible();
 
-        // 半角カタカナ「ｵｰﾌﾟﾅｰ」で検索
+		// 半角カタカナ「ｵｰﾌﾟﾅｰ」で検索
 		await searchInput.clear();
 		await searchInput.fill("ｵｰﾌﾟﾅｰ");
-		await expect(page.getByText("オープナー", { exact: true }).first()).toBeVisible();
+		await expect(
+			page.getByText("オープナー", { exact: true }).first(),
+		).toBeVisible();
 	});
 });
