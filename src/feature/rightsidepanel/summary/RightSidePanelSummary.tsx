@@ -71,7 +71,7 @@ export function RightSidePanelSummary() {
 			{VANILLA_ROLE_CATEGORY_IDS.map((catId) => (
 				<VanillaRoleSummaryRow key={catId} categoryId={catId} />
 			))}
-			<Separator className="data-horizontal:w-3/4 mx-auto bg-border-weak" />
+			<Separator className="data-horizontal:w-4/5 mx-auto bg-border-weak" />
 			{exrRoleTabIds.map((tabId) => {
 				const categoryIds = exrOptionMetaData.tabs[tabId]?.categoryIds ?? [];
 				return categoryIds.map((catId) => (
