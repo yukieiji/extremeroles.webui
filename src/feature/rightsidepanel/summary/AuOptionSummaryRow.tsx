@@ -41,10 +41,10 @@ export function AuOptionSummaryRow({ optionId }: AuOptionSummaryRowProps) {
 		<ViewerOptionRow
 			title={<ColoredText text={title} className={TYPOGRAPHY.CHILD_LABEL} />}
 			value={
-				<>
+				<div className="flex items-end">
 					{value}
 					<OptionFormat format={meta?.format ?? ""} />
-				</>
+				</div>
 			}
 			onDoubleClick={() => navigateAu(meta.tabId, meta.categoryId, optionId)}
 		/>

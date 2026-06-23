@@ -21,10 +21,10 @@ export function BaseRoleSummaryRow({
 			data-testid={dataTestId}
 			title={<ColoredText text={name} className={TYPOGRAPHY.CHILD_LABEL} />}
 			value={
-				<>
+				<div className="flex items-end">
 					{displayValue}
 					<OptionFormat format={"%"} />
-				</>
+				</div>
 			}
 			onDoubleClick={onDoubleClick}
 		/>
