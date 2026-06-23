@@ -62,8 +62,8 @@ describe("ExRHeaderOptionControl", () => {
 		const slider = screen.getByRole("slider", { hidden: true });
 		expect(slider).toHaveValue("0");
 
-		const input = screen.getByRole("textbox");
-		expect(input).toHaveValue("0");
+		const input = screen.getByRole("spinbutton");
+		expect(input).toHaveValue(0);
 	});
 
 	it("updates selection when slider is moved", async () => {
@@ -107,7 +107,7 @@ describe("ExRHeaderOptionControl", () => {
 			);
 		});
 
-		const input = screen.getByRole("textbox");
+		const input = screen.getByRole("spinbutton");
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "100" } });
 			fireEvent.blur(input);
