@@ -1,10 +1,13 @@
 import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSliderControl";
 import { ColoredText } from "@/components/parts/ColoredText";
+import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { OptionItem } from "@/components/parts/OptionItem";
 import { TYPOGRAPHY } from "@/designConstants";
 import { useOptionData } from "@/hooks/useExROptionData";
+import { createExRNavigateId } from "@/hooks/useOptionNavigation";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import type { OptionData } from "@/type";
+import { useStore } from "@/useStore";
 
 interface ExRPairedOptionItemProps {
 	baseName: string;
@@ -22,6 +25,14 @@ export function ExRPairedOptionItem({
 }: ExRPairedOptionItemProps) {
 	const minUniqueOptionId = minData.uniqueOptionId;
 	const maxUniqueOptionId = maxData.uniqueOptionId;
+
+	const isHighlighted = useStore((state) => {
+		return (
+			state.highlightedExROptionId === minUniqueOptionId ||
+			state.highlightedExROptionId === maxUniqueOptionId
+		);
+	});
+
 	const minValueData = useOptionData(minUniqueOptionId);
 	const maxValueData = useOptionData(maxUniqueOptionId);
 
@@ -41,27 +52,35 @@ export function ExRPairedOptionItem({
 		});
 	};
 
+	const navigateId = createExRNavigateId(minUniqueOptionId);
+
 	return (
-		<OptionItem className="min-h-18">
-			<div className="flex-1 min-w-0">
-				<ColoredText
-					text={baseName}
-					className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary wrap-break-words`}
-				/>
-			</div>
-			<div className="shrink-0 flex items-center">
-				<OptionPairedSliderControl
-					minSelection={minValueData.selection}
-					maxSelection={maxValueData.selection}
-					minValues={minValueData.values as number[]}
-					maxValues={maxValueData.values as number[]}
-					format={minData.metaData.format}
-					onMinChange={handleMinChange}
-					onMaxChange={handleMaxChange}
-					minLabel={minData.label}
-					maxLabel={maxData.label}
-				/>
-			</div>
-		</OptionItem>
+		<HighlightWrapper
+			id={navigateId}
+			isHighlighted={isHighlighted}
+			isInset={true}
+		>
+			<OptionItem className="min-h-18 px-2">
+				<div className="flex-1 min-w-0">
+					<ColoredText
+						text={baseName}
+						className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary wrap-break-words`}
+					/>
+				</div>
+				<div className="shrink-0 flex items-center">
+					<OptionPairedSliderControl
+						minSelection={minValueData.selection}
+						maxSelection={maxValueData.selection}
+						minValues={minValueData.values as number[]}
+						maxValues={maxValueData.values as number[]}
+						format={minData.metaData.format}
+						onMinChange={handleMinChange}
+						onMaxChange={handleMaxChange}
+						minLabel={minData.label}
+						maxLabel={maxData.label}
+					/>
+				</div>
+			</OptionItem>
+		</HighlightWrapper>
 	);
 }

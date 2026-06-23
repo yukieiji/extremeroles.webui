@@ -21,15 +21,29 @@ export function createAuCategoryNavigateId(categoryId: number) {
 
 function useNavigate() {
 	return (navId: string, timeoutFunc: () => void) => {
-		setTimeout(() => {
+		const startTime = Date.now();
+		const timeout = 1000; // 1秒間トライする
+
+		const tryScroll = () => {
 			if (typeof document !== "undefined") {
 				const element = document.getElementById(navId);
 				if (element) {
 					element.scrollIntoView({ behavior: "smooth", block: "center" });
+					setTimeout(timeoutFunc, 2000);
+					return;
 				}
 			}
-			setTimeout(timeoutFunc, 2000);
-		}, 100);
+
+			if (Date.now() - startTime < timeout) {
+				requestAnimationFrame(tryScroll);
+			} else {
+				// タイムアウトしても一応終了処理は呼ぶ
+				setTimeout(timeoutFunc, 2000);
+			}
+		};
+
+		// 最初の呼び出しは少し待つ（タブ切り替えやアニメーションの開始を待つ）
+		setTimeout(tryScroll, 100);
 	};
 }
 
