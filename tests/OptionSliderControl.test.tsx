@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
+import { OptionSliderControl } from "@/components/blocks/OptionSliderControl";
 
 describe("OptionSliderControl", () => {
 	const defaultProps = {
