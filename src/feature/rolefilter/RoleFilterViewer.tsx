@@ -30,7 +30,7 @@ export function RoleFilterViewer() {
 			) : (
 				<div
 					data-testid="role-filter-list"
-					className="p-2 gap-4 grid role-filter-grid overflow-y-scroll"
+					className="p-2 gap-4 grid grid-cols-1 @md:grid-cols-2 @3xl:grid-cols-3 overflow-y-scroll"
 				>
 					{filterEntries.map(([guid, filterSet]) => {
 						return (
