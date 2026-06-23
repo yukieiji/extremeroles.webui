@@ -12,7 +12,7 @@ export function SearchSuggestion({ results }: SearchSuggestionProps) {
 	const optionSearchQuery = useStore((state) => state.optionSearchQuery.trim());
 
 	return optionSearchQuery === "" || results.length === 0 ? (
-		<PopoverHeader className="">
+		<PopoverHeader className="p-2">
 			<PopoverTitle>{SEARCH_NO_RESULTS}</PopoverTitle>
 		</PopoverHeader>
 	) : (
