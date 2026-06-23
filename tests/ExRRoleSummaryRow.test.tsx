@@ -44,7 +44,7 @@ describe("ExRRoleSummaryRow", () => {
 		render(<ExRRoleSummaryRow categoryId={categoryId} />);
 
 		expect(screen.getByText("Test Role")).toBeInTheDocument();
-		expect(screen.getByText("1 - 50%")).toBeInTheDocument();
+		expect(screen.getByText("1 - 50")).toBeInTheDocument();
 	});
 
 	it("returns null if role is inactive (chance 0%)", () => {
