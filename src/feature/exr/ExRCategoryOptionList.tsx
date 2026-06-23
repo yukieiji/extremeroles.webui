@@ -7,7 +7,7 @@ import { groupOptionPairs } from "@/logics/optionUtils";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 import { ExROptionItem } from "./ExROptionItem";
-import { ExRPairedOptionItem } from "./ExRPairedOptionItem";
+import { ExRPairedOptionRow } from "./ExRPairedOptionRow";
 
 const GROUPED_CATEGORY_IDS = [5, 6];
 
@@ -45,7 +45,7 @@ export function ExRCategoryOptionList({
 						{isNumber ? (
 							<ExROptionItem uniqueOptionId={item} />
 						) : (
-							<ExRPairedOptionItem
+							<ExRPairedOptionRow
 								baseName={item.baseName}
 								minData={item.minData}
 								maxData={item.maxData}
