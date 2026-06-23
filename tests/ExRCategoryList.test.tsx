@@ -172,7 +172,7 @@ describe("ExRCategoryList Component Selection", () => {
 		expect(screen.getByText("General Category")).toBeInTheDocument();
 
 		// Header should NOT have spawn controls
-		expect(screen.queryByText("レート")).not.toBeInTheDocument();
+		expect(screen.queryByText("スポーンレート")).not.toBeInTheDocument();
 	});
 
 	it("renders ExRRoleCategoryItem for Role Tab", async () => {
@@ -187,7 +187,7 @@ describe("ExRCategoryList Component Selection", () => {
 		expect(screen.getByText("Sheriff")).toBeInTheDocument();
 
 		// Header should have spawn rate control (レート)
-		expect(screen.getByText("レート")).toBeInTheDocument();
+		expect(screen.getByText("スポーンレート")).toBeInTheDocument();
 	});
 
 	it("filters out 50 and 51 from role category body", async () => {
