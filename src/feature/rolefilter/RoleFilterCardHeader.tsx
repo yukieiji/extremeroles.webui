@@ -104,7 +104,9 @@ export function RoleFilterCardHeader({
 	return (
 		<>
 			<div className="p-2 flex items-center">
-				<span className={`${TYPOGRAPHY.LABEL} text-text-primary px-2`}>
+				<span
+					className={`${TYPOGRAPHY.LABEL} text-text-primary px-2 min-w-36 tabular-nums`}
+				>
 					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
 				<ButtonGroup orientation="vertical">
