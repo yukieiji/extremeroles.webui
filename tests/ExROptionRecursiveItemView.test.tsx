@@ -19,18 +19,16 @@ vi.mock("@/feature/rightsidepanel/ExROptionItemView", () => ({
 	),
 }));
 
-vi.mock("@/feature/rightsidepanel/ExROptionRowView", () => ({
-	ExROptionRowView: ({
+vi.mock("@/feature/rightsidepanel/ExROptionRowViewContent", () => ({
+	ExROptionRowViewContent: ({
 		uniqueOptionId,
 		depth,
-		isLeaf,
 	}: {
 		uniqueOptionId: UniqueOptionId;
 		depth: number;
-		isLeaf: boolean;
 	}) => (
 		<div data-testid="ex-roption-row-view">
-			Row {uniqueOptionId} Depth {depth} Leaf {String(isLeaf)}
+			Row {uniqueOptionId} Depth {depth}
 		</div>
 	),
 }));
@@ -67,17 +65,13 @@ describe("ExROptionRecursiveItemView", () => {
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} />);
 
 		expect(screen.getByTestId("ex-roption-row-view")).toBeInTheDocument();
-		expect(
-			screen.getByText(`Row ${parentId} Depth 0 Leaf false`),
-		).toBeInTheDocument();
+		expect(screen.getByText(`Row ${parentId} Depth 0`)).toBeInTheDocument();
 	});
 
 	it("renders ExROptionRowView with specified depth", () => {
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={2} />);
 
-		expect(
-			screen.getByText(`Row ${parentId} Depth 2 Leaf false`),
-		).toBeInTheDocument();
+		expect(screen.getByText(`Row ${parentId} Depth 2`)).toBeInTheDocument();
 	});
 
 	it("shows children when store state is open", () => {
