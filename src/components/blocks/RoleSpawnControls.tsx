@@ -32,7 +32,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				onChange={num.onSelectionChange}
 				testId="spawn-count-control"
 				className="w-64"
-				inputClassName="w-32"
+				inputClassName="w-20"
 			/>
 		</div>
 	);
