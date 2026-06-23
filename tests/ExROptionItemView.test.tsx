@@ -18,8 +18,8 @@ vi.mock("@/feature/rightsidepanel/ExROptionRecursiveItemView", () => ({
 		</div>
 	),
 }));
-vi.mock("@/feature/rightsidepanel/ExROptionRowView", () => ({
-	ExROptionRowView: ({
+vi.mock("@/feature/rightsidepanel/ExROptionRowViewContent", () => ({
+	ExROptionRowViewContent: ({
 		uniqueOptionId,
 		depth,
 	}: {
