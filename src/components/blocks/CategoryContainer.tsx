@@ -48,7 +48,7 @@ export function CategoryContainer({
 		// scroll分右は小さくする
 		<div
 			data-testid="category-list"
-			className={`pl-2 py-2 pr-1 flex flex-col relative transition-opacity duration-200 flex-1 scrollbar-gutter:stable min-h-0 ${hasColors ? "rounded-t-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
+			className={`pl-2 pt-2 pr-1 flex flex-col relative transition-opacity duration-200 flex-1 scrollbar-gutter:stable min-h-0 ${hasColors ? "rounded-t-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
 			style={containerStyle}
 		>
 			{isPending && (
