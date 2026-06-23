@@ -1,5 +1,5 @@
 import { ROLE_SPAWN_COUNT, ROLE_SPAWN_RATE } from "@/noTrans";
-import { OptionSliderControl } from "../parts/OptionSliderControl";
+import { OptionSliderControl } from "./OptionSliderControl";
 
 interface ControlProps {
 	values: number[];
@@ -23,7 +23,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				format="%"
 				testId="spawn-rate-control"
 				className="w-64"
-				inputClassName="w-20"
+				inputClassName="w-24"
 			/>
 			<OptionSliderControl
 				label={ROLE_SPAWN_COUNT}
@@ -32,7 +32,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				onChange={num.onSelectionChange}
 				testId="spawn-count-control"
 				className="w-64"
-				inputClassName="w-20"
+				inputClassName="w-24"
 			/>
 		</div>
 	);
