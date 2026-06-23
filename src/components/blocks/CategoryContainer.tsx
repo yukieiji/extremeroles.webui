@@ -26,13 +26,21 @@ export function CategoryContainer({
 				backgroundImage: `linear-gradient(var(--n1-app-background), var(--n1-app-background)), ${gradient}`,
 				backgroundOrigin: "border-box",
 				backgroundClip: "padding-box, border-box",
-				border: "2px solid transparent",
+				borderTopWidth: "2px",
+				borderLeftWidth: "2px",
+				borderRightWidth: "2px",
+				borderBottomWidth: "0px",
+				borderStyle: "solid",
+				borderColor: "transparent",
 			};
 		}
 		return {
 			borderColor: gradient,
 			borderStyle: "solid",
-			borderWidth: "2px",
+			borderTopWidth: "2px",
+			borderLeftWidth: "2px",
+			borderRightWidth: "2px",
+			borderBottomWidth: "0px",
 		};
 	})();
 
@@ -40,7 +48,7 @@ export function CategoryContainer({
 		// scroll分右は小さくする
 		<div
 			data-testid="category-list"
-			className={`pl-2 py-2 pr-1 flex flex-col relative transition-opacity duration-200 flex-1 [scrollbar-gutter:stable] min-h-0 ${hasColors ? "rounded-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
+			className={`pl-2 pt-2 pr-1 flex flex-col relative transition-opacity duration-200 flex-1 [scrollbar-gutter:stable] min-h-0 ${hasColors ? "rounded-t-lg" : ""} ${isPending ? "is-pending opacity-50 pointer-events-none" : "opacity-100"}`}
 			style={containerStyle}
 		>
 			{isPending && (
