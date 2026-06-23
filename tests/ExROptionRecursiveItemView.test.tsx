@@ -65,17 +65,13 @@ describe("ExROptionRecursiveItemView", () => {
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} />);
 
 		expect(screen.getByTestId("ex-roption-row-view")).toBeInTheDocument();
-		expect(
-			screen.getByText(`Row ${parentId} Depth 0`),
-		).toBeInTheDocument();
+		expect(screen.getByText(`Row ${parentId} Depth 0`)).toBeInTheDocument();
 	});
 
 	it("renders ExROptionRowView with specified depth", () => {
 		render(<ExROptionRecursiveItemView uniqueOptionId={parentId} depth={2} />);
 
-		expect(
-			screen.getByText(`Row ${parentId} Depth 2`),
-		).toBeInTheDocument();
+		expect(screen.getByText(`Row ${parentId} Depth 2`)).toBeInTheDocument();
 	});
 
 	it("shows children when store state is open", () => {
