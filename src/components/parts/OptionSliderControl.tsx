@@ -55,7 +55,7 @@ export function OptionSliderControl({
 				<Input
 					id={id}
 					ref={inputRef}
-					type="text"
+					type="number"
 					defaultValue={currentValue.toString()}
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
