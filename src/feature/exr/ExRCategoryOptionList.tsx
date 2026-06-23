@@ -45,17 +45,10 @@ export function ExRCategoryOptionList({
 						{isNumber ? (
 							<ExROptionItem uniqueOptionId={item} />
 						) : (
-							<OptionRowContainer
-								leading={<LargePoint />}
-								depth={0}
-								indentMultiplier={1}
-								content={
-									<ExRPairedOptionItem
-										baseName={item.baseName}
-										minData={item.minData}
-										maxData={item.maxData}
-									/>
-								}
+							<ExRPairedOptionItem
+								baseName={item.baseName}
+								minData={item.minData}
+								maxData={item.maxData}
 							/>
 						)}
 					</div>
