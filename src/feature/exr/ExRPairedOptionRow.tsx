@@ -1,15 +1,10 @@
-import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSliderControl";
-import { ColoredText } from "@/components/parts/ColoredText";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
-import { OptionItem } from "@/components/parts/OptionItem";
 import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
-import { TYPOGRAPHY } from "@/designConstants";
-import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
-import { useUpdateExROptionSelection } from "@/logics/api.store";
 import type { OptionData } from "@/type";
 import { useStore } from "@/useStore";
+import { ExRPairedOptionContent } from "./ExRPairedOptionContent";
 
 interface ExRPairedOptionRowProps {
 	baseName: string;
@@ -35,25 +30,6 @@ export function ExRPairedOptionRow({
 		);
 	});
 
-	const minValueData = useOptionData(minUniqueOptionId);
-	const maxValueData = useOptionData(maxUniqueOptionId);
-
-	const updateExROptionSelection = useUpdateExROptionSelection();
-
-	const handleMinChange = async (newSelection: number) => {
-		await updateExROptionSelection({
-			uniqueOptionId: minUniqueOptionId,
-			selection: newSelection,
-		});
-	};
-
-	const handleMaxChange = async (newSelection: number) => {
-		await updateExROptionSelection({
-			uniqueOptionId: maxUniqueOptionId,
-			selection: newSelection,
-		});
-	};
-
 	const navigateId = createExRNavigateId(minUniqueOptionId);
 
 	return (
@@ -67,27 +43,11 @@ export function ExRPairedOptionRow({
 				depth={0}
 				indentMultiplier={1}
 				content={
-					<OptionItem className="min-h-18">
-						<div className="flex-1 min-w-0">
-							<ColoredText
-								text={baseName}
-								className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary wrap-break-words`}
-							/>
-						</div>
-						<div className="shrink-0 flex items-center">
-							<OptionPairedSliderControl
-								minSelection={minValueData.selection}
-								maxSelection={maxValueData.selection}
-								minValues={minValueData.values as number[]}
-								maxValues={maxValueData.values as number[]}
-								format={minData.metaData.format}
-								onMinChange={handleMinChange}
-								onMaxChange={handleMaxChange}
-								minLabel={minData.label}
-								maxLabel={maxData.label}
-							/>
-						</div>
-					</OptionItem>
+					<ExRPairedOptionContent
+						baseName={baseName}
+						minData={minData}
+						maxData={maxData}
+					/>
 				}
 			/>
 		</HighlightWrapper>
