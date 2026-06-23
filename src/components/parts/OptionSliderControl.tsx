@@ -14,7 +14,6 @@ interface OptionSliderControlProps {
 	onChange: (selection: number) => void;
 	testId?: string;
 	className?: string;
-	labelClassName?: string;
 	inputClassName?: string;
 }
 
@@ -29,7 +28,6 @@ export function OptionSliderControl({
 	onChange,
 	testId,
 	className,
-	labelClassName,
 	inputClassName,
 }: OptionSliderControlProps) {
 	const {
@@ -53,7 +51,7 @@ export function OptionSliderControl({
 				{label && (
 					<FieldLabel
 						htmlFor={id}
-						className={`${TYPOGRAPHY.CHILD_LABEL} select-text w-full ${labelClassName}`}
+						className={`${TYPOGRAPHY.CHILD_LABEL} select-text w-full`}
 						aria-hidden="true"
 					>
 						{label}
