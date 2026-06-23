@@ -9,16 +9,11 @@ import {
 } from "@/components/ui/dialog";
 import { roleFilterMetaData } from "@/logics/api";
 import { normalizeForSearch } from "@/logics/stringUtils";
-import {
-	CLOSE,
-	CONFIRM,
-	ROLE_SELECT_DEFAULT_TITLE,
-	ROLE_SELECT_SEARCH_PLACEHOLDER,
-} from "@/noTrans";
+import { CLOSE, CONFIRM, ROLE_SELECT_SEARCH_PLACEHOLDER } from "@/noTrans";
 import { useStore } from "@/useStore";
 
 interface RoleSelectDialogProps {
-	title?: string;
+	title: string;
 	onSelect: (roleIds: number[]) => void;
 	onCancel: () => void;
 	excludeRoleIds?: number[];
@@ -103,7 +98,7 @@ export function RoleSelectDialog({
 	return (
 		<DialogContent className="flex flex-col max-w-5xl h-[min(80vh,600px)]">
 			<DialogHeader>
-				<DialogTitle>{title ?? ROLE_SELECT_DEFAULT_TITLE}</DialogTitle>
+				<DialogTitle>{title}</DialogTitle>
 			</DialogHeader>
 			<RoleSearchInput
 				onChange={setSearchQuery}
