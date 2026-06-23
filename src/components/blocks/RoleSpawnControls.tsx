@@ -23,7 +23,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				format="%"
 				testId="spawn-rate-control"
 				className="w-64"
-				inputClassName="w-32"
+				inputClassName="w-20"
 			/>
 			<OptionSliderControl
 				label={ROLE_SPAWN_COUNT}
