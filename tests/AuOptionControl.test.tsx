@@ -93,7 +93,7 @@ describe("AuOptionControl", () => {
 		expect(onSelectionChangeMock).toHaveBeenCalledWith(3);
 
 		// Test handleInputChange (text input)
-		const input = screen.getByRole("textbox");
+		const input = screen.getByRole("spinbutton");
 		fireEvent.change(input, { target: { value: "4" } });
 		fireEvent.blur(input);
 		expect(onSelectionChangeMock).toHaveBeenCalledWith(4);

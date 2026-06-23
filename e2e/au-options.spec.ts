@@ -93,8 +93,8 @@ test.describe("Au Option Interactions", () => {
 		const chanceControl = category.getByTestId("spawn-rate-control");
 		const countControl = category.getByTestId("spawn-count-control");
 
-		const chanceInput = chanceControl.locator('input[type="text"]');
-		const countInput = countControl.locator('input[type="text"]');
+		const chanceInput = chanceControl.locator('input[type="number"]');
+		const countInput = countControl.locator('input[type="number"]');
 		const chanceSlider = chanceControl.locator('input[type="range"]');
 		const countSlider = countControl.locator('input[type="range"]');
 

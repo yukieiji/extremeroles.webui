@@ -13,6 +13,9 @@ interface OptionSliderControlProps {
 	format?: string;
 	onChange: (selection: number) => void;
 	testId?: string;
+	className?: string;
+	labelClassName?: string;
+	inputClassName?: string;
 }
 
 /**
@@ -25,6 +28,9 @@ export function OptionSliderControl({
 	format,
 	onChange,
 	testId,
+	className,
+	labelClassName,
+	inputClassName,
 }: OptionSliderControlProps) {
 	const {
 		id,
@@ -41,12 +47,13 @@ export function OptionSliderControl({
 			onClick={stopPropagation}
 			onKeyDown={stopPropagation}
 			data-testid={testId}
+			className={className}
 		>
 			<Field orientation="horizontal">
 				{label && (
 					<FieldLabel
 						htmlFor={id}
-						className={`${TYPOGRAPHY.CHILD_LABEL} select-text w-full`}
+						className={`${TYPOGRAPHY.CHILD_LABEL} select-text w-full ${labelClassName}`}
 						aria-hidden="true"
 					>
 						{label}
@@ -59,6 +66,7 @@ export function OptionSliderControl({
 					defaultValue={currentValue.toString()}
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
+					className={inputClassName}
 				/>
 				{format && (
 					<Label htmlFor={id} className="select-text">

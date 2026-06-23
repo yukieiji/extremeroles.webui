@@ -237,8 +237,8 @@ describe("ExRRoleSpawnControls", () => {
 		// UIが0を表示していることを確認
 		const countDisplay = screen
 			.getByTestId("spawn-count-control")
-			.querySelector('input[type="text"]');
-		expect(countDisplay).toHaveValue("0");
+			.querySelector('input[type="number"]');
+		expect(countDisplay).toHaveValue(0);
 	});
 
 	it("opens accordion when rate becomes non-zero from 0%", async () => {
