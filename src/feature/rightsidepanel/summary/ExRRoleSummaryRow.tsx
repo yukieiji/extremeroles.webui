@@ -1,5 +1,5 @@
 import { useShallow } from "zustand/react/shallow";
-import { useExROptionNavigationInline } from "@/hooks/useOptionNavigation";
+import { useExRCategoryNavigationInline } from "@/hooks/useOptionNavigation";
 import { exrOptionMetaData } from "@/logics/api";
 import { getUniqueOptionId } from "@/logics/optionUtils";
 import { SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "@/type";
@@ -11,7 +11,7 @@ interface ExRRoleSummaryRowProps {
 }
 
 export function ExRRoleSummaryRow({ categoryId }: ExRRoleSummaryRowProps) {
-	const navigateExR = useExROptionNavigationInline();
+	const navigateExRCategory = useExRCategoryNavigationInline();
 	const roleData = useStore(
 		useShallow((state) => {
 			const catMeta = exrOptionMetaData.categories[categoryId];
@@ -57,12 +57,16 @@ export function ExRRoleSummaryRow({ categoryId }: ExRRoleSummaryRowProps) {
 		return null;
 	}
 
+	const catMeta = exrOptionMetaData.categories[categoryId];
+
 	return (
 		<BaseRoleSummaryRow
 			data-testid="exr-role-summary"
 			name={roleData.name}
 			displayValue={roleData.display}
-			onDoubleClick={() => navigateExR(roleData.chanceId)}
+			onDoubleClick={() =>
+				catMeta && navigateExRCategory(catMeta.tabId, categoryId)
+			}
 		/>
 	);
 }

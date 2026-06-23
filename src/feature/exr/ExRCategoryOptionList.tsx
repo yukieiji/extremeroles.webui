@@ -1,13 +1,11 @@
 import { useShallow } from "zustand/react/shallow";
 import { BorderLine } from "@/components/parts/BorderLine";
-import { LargePoint } from "@/components/parts/LargePoint";
 import { OptionEditorOptionRowGroupLayout } from "@/components/parts/OptionEditorOptionRowLayout";
-import { OptionRowContainer } from "@/components/parts/OptionRowContainer";
 import { groupOptionPairs } from "@/logics/optionUtils";
 import type { UniqueOptionId } from "@/type";
 import { useStore } from "@/useStore";
 import { ExROptionItem } from "./ExROptionItem";
-import { ExRPairedOptionItem } from "./ExRPairedOptionItem";
+import { ExRPairedOptionRow } from "./ExRPairedOptionRow";
 
 const GROUPED_CATEGORY_IDS = [5, 6];
 
@@ -45,17 +43,10 @@ export function ExRCategoryOptionList({
 						{isNumber ? (
 							<ExROptionItem uniqueOptionId={item} />
 						) : (
-							<OptionRowContainer
-								leading={<LargePoint />}
-								depth={0}
-								indentMultiplier={1}
-								content={
-									<ExRPairedOptionItem
-										baseName={item.baseName}
-										minData={item.minData}
-										maxData={item.maxData}
-									/>
-								}
+							<ExRPairedOptionRow
+								baseName={item.baseName}
+								minData={item.minData}
+								maxData={item.maxData}
 							/>
 						)}
 					</div>

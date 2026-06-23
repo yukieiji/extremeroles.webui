@@ -6,7 +6,7 @@ import { useOptionData } from "@/hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import type { OptionData } from "@/type";
 
-interface ExRPairedOptionItemProps {
+interface ExRPairedOptionContentProps {
 	baseName: string;
 	minData: OptionData;
 	maxData: OptionData;
@@ -15,11 +15,11 @@ interface ExRPairedOptionItemProps {
 /**
  * 最小・最大ペアのオプションを1行で表示するコンポーネント
  */
-export function ExRPairedOptionItem({
+export function ExRPairedOptionContent({
 	baseName,
 	minData,
 	maxData,
-}: ExRPairedOptionItemProps) {
+}: ExRPairedOptionContentProps) {
 	const minUniqueOptionId = minData.uniqueOptionId;
 	const maxUniqueOptionId = maxData.uniqueOptionId;
 	const minValueData = useOptionData(minUniqueOptionId);
