@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExRPairedOptionItem } from "@/feature/exr/ExRPairedOptionItem";
+import { ExRPairedOptionRow } from "@/feature/exr/ExRPairedOptionRow";
 import { exrOptionMetaData, resetExrOptionMetaData } from "@/logics/api";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId } from "@/logics/optionUtils";
@@ -14,7 +14,7 @@ vi.mock("@/logics/api.store", async (importOriginal) => {
 	};
 });
 
-describe("ExRPairedOptionItem", () => {
+describe("ExRPairedOptionRow", () => {
 	const minUniqueId = getUniqueOptionId(1, 1, 10);
 	const maxUniqueId = getUniqueOptionId(1, 1, 11);
 
@@ -67,7 +67,7 @@ describe("ExRPairedOptionItem", () => {
 
 	it("renders base name and current values", () => {
 		render(
-			<ExRPairedOptionItem
+			<ExRPairedOptionRow
 				baseName="Test"
 				minData={minData}
 				maxData={maxData}
@@ -92,7 +92,7 @@ describe("ExRPairedOptionItem", () => {
 		vi.mocked(useUpdateExROptionSelection).mockReturnValue(updateMock);
 
 		render(
-			<ExRPairedOptionItem
+			<ExRPairedOptionRow
 				baseName="Test"
 				minData={minData}
 				maxData={maxData}
@@ -116,7 +116,7 @@ describe("ExRPairedOptionItem", () => {
 		vi.mocked(useUpdateExROptionSelection).mockReturnValue(updateMock);
 
 		render(
-			<ExRPairedOptionItem
+			<ExRPairedOptionRow
 				baseName="Test"
 				minData={minData}
 				maxData={maxData}
