@@ -27,8 +27,6 @@ export const PRESET_INPUT_PLACEHOLDER = "プリセット名を入力...";
 export const AU_SETTINGS_TITLE = "AmongUsの設定";
 export const EXR_SETTINGS_TITLE = "ExRの設定";
 export const EXR_CONTENT_TEMP = "ExRの設定コンテンツ";
-export const CREW_ROLES_TITLE = "クルー役職";
-export const IMPOSTOR_ROLES_TITLE = "インポスター役職";
 
 export const ROLE_FILTER_ADD_TITLE = "フィルター追加: 役職の選択";
 export const ROLE_FILTER_ADD_BUTTON = "フィルターを追加";

@@ -41,7 +41,7 @@ export function ViewerOptionRow({
 			</span>
 			<div className="flex items-center shrink-0">
 				<div
-					className={`${TYPOGRAPHY.SMALL} text-text-primary text-right px-2`}
+					className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary text-right px-2`}
 				>
 					{value}
 				</div>

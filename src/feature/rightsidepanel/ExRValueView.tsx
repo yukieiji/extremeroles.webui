@@ -13,12 +13,13 @@ export function ExRValueView({ uniqueOptionId, format }: ExRValueViewProps) {
 	const optionValue = useOptionData(uniqueOptionId);
 	const currentSelection = optionValue.selection ?? 0;
 	return (
-		<div className="flex flex-row">
+		<>
 			<ColoredText
 				text={String(optionValue.values[currentSelection])}
+				variant="secondary"
 				className={TYPOGRAPHY.CHILD_LABEL}
 			/>
 			<OptionFormat format={format} />
-		</div>
+		</>
 	);
 }

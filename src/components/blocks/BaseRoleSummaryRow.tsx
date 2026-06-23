@@ -1,6 +1,7 @@
 import { ColoredText } from "@/components/parts/ColoredText";
 import { ViewerOptionRow } from "@/components/parts/ViewerOptionRow";
 import { TYPOGRAPHY } from "@/designConstants";
+import { OptionFormat } from "../parts/OptionFormat";
 
 interface BaseRoleSummaryRowProps {
 	name: string;
@@ -19,7 +20,12 @@ export function BaseRoleSummaryRow({
 		<ViewerOptionRow
 			data-testid={dataTestId}
 			title={<ColoredText text={name} className={TYPOGRAPHY.CHILD_LABEL} />}
-			value={displayValue}
+			value={
+				<>
+					{displayValue}
+					<OptionFormat format={"%"} />
+				</>
+			}
 			onDoubleClick={onDoubleClick}
 		/>
 	);

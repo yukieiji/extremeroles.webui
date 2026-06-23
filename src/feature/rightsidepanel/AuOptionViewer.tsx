@@ -1,8 +1,5 @@
 import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupColumnLayout";
 import { auOptionMetaData } from "@/logics/api";
-import { CREW_ROLES_TITLE, IMPOSTOR_ROLES_TITLE } from "@/noTrans";
-import { useStore } from "@/useStore";
-import { AuRoleViewerSection } from "./AuRoleViewerSection";
 import { AuTab0GeneralCategory } from "./AuTab0GeneralCategory";
 
 /**
@@ -10,18 +7,6 @@ import { AuTab0GeneralCategory } from "./AuTab0GeneralCategory";
  */
 export function AuOptionViewer() {
 	const tab0CategoryIds = auOptionMetaData.tabCategoryMap[0] || [];
-	const isAuCrewmateRolesOpen = useStore(
-		(state) => state.isAuCrewmateRolesOpen,
-	);
-	const toggleAuCrewmateRoles = useStore(
-		(state) => state.toggleAuCrewmateRoles,
-	);
-	const isAuImpostorRolesOpen = useStore(
-		(state) => state.isAuImpostorRolesOpen,
-	);
-	const toggleAuImpostorRoles = useStore(
-		(state) => state.toggleAuImpostorRoles,
-	);
 
 	return (
 		<RightPanelGroupColumnLayout>
@@ -34,18 +19,6 @@ export function AuOptionViewer() {
 					<AuTab0GeneralCategory key={categoryId} categoryId={categoryId} />
 				);
 			})}
-			<AuRoleViewerSection
-				tabId={1}
-				title={CREW_ROLES_TITLE}
-				isOpen={isAuCrewmateRolesOpen}
-				onToggle={toggleAuCrewmateRoles}
-			/>
-			<AuRoleViewerSection
-				tabId={2}
-				title={IMPOSTOR_ROLES_TITLE}
-				isOpen={isAuImpostorRolesOpen}
-				onToggle={toggleAuImpostorRoles}
-			/>
 		</RightPanelGroupColumnLayout>
 	);
 }

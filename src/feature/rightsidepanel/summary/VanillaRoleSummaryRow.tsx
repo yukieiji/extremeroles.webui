@@ -33,7 +33,7 @@ export function VanillaRoleSummaryRow({
 
 			return {
 				name: catMeta.name,
-				display: `${maxCount} - ${chance}%`,
+				display: `${maxCount} - ${chance}`,
 				chanceId,
 				tabId: catMeta.tabId,
 			};

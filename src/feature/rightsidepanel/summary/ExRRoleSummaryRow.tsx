@@ -47,7 +47,7 @@ export function ExRRoleSummaryRow({ categoryId }: ExRRoleSummaryRowProps) {
 
 			return {
 				name: catMeta.name,
-				display: `${maxCount} - ${chance}%`,
+				display: `${maxCount} - ${chance}`,
 				chanceId,
 			};
 		}),

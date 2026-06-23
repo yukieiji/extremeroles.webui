@@ -24,7 +24,9 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 					className={`${TYPOGRAPHY.CHILD_LABEL} text-right`}
 				/>
 			) : (
-				<span className={`${TYPOGRAPHY.SMALL} text-text-secondary text-right`}>
+				<span
+					className={`${TYPOGRAPHY.CHILD_LABEL} text-text-secondary text-right`}
+				>
 					{value.toString()}
 				</span>
 			)}

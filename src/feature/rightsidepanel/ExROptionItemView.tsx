@@ -1,7 +1,8 @@
 import { useHasActiveOptionChild } from "@/hooks/useExROptionData";
 import type { UniqueOptionId } from "@/type";
 import { ExROptionRecursiveItemView } from "./ExROptionRecursiveItemView";
-import { ExROptionRowView } from "./ExROptionRowView";
+
+import { ExROptionRowViewContent } from "./ExROptionRowViewContent";
 
 interface ExROptionItemViewProps {
 	uniqueOptionId: UniqueOptionId;
@@ -16,10 +17,6 @@ export function ExROptionItemView({
 	return hasActiveChildren ? (
 		<ExROptionRecursiveItemView uniqueOptionId={uniqueOptionId} depth={depth} />
 	) : (
-		<ExROptionRowView
-			uniqueOptionId={uniqueOptionId}
-			depth={depth}
-			isLeaf={true}
-		/>
+		<ExROptionRowViewContent uniqueOptionId={uniqueOptionId} depth={depth} />
 	);
 }
