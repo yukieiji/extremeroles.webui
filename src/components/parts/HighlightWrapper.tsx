@@ -18,8 +18,8 @@ export function HighlightWrapper({
 }: HighlightWrapperProps) {
 	const highlightClass = isHighlighted
 		? isInset
-			? "inset-ring-1 inset-ring-search-highlight"
-			: "ring-1 ring-search-highlight"
+			? "inset-ring-2 inset-ring-search-highlight"
+			: "ring-2 ring-search-highlight"
 		: "";
 
 	return (

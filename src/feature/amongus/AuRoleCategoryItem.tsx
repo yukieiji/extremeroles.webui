@@ -61,7 +61,7 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 		<HighlightWrapper
 			id={navigateId}
 			isHighlighted={isHighlighted}
-			isInset={true}
+			isInset={false}
 		>
 			<RoleCategoryAccordion
 				isOpen={isOpen}

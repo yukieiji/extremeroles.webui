@@ -57,7 +57,7 @@ export function CategoryContainer({
 				</div>
 			)}
 			{/* 下の要素を見やすく設定するために大きめの余白を入れてる、右はscroll分はいるので大きめに余白を入れる */}
-			<div className="flex flex-col gap-2 overflow-y-scroll flex-1 pl-1 pr-2 pb-48 *:shrink-0">
+			<div className="flex flex-col gap-2 overflow-y-scroll flex-1 pl-1 pr-2 pt-1 pb-48 *:shrink-0">
 				{children}
 			</div>
 		</div>
