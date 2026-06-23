@@ -51,8 +51,8 @@ test.describe("ExR Role Spawn Options in Header", () => {
 		const rateControl = sheriffCategory.getByTestId("spawn-rate-control");
 		const countControl = sheriffCategory.getByTestId("spawn-count-control");
 
-		const rateInput = rateControl.locator('input[type="text"]');
-		const countInput = countControl.locator('input[type="text"]');
+		const rateInput = rateControl.locator('input[type="number"]');
+		const countInput = countControl.locator('input[type="number"]');
 		const rateSlider = rateControl.locator('input[type="range"]');
 		const countSlider = countControl.locator('input[type="range"]');
 

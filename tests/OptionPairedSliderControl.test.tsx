@@ -38,7 +38,7 @@ describe("OptionPairedSliderControl", () => {
 		expect(sliders[1]).toHaveValue("3");
 
 		// Values are displayed in inputs
-		const inputs = screen.getAllByRole("textbox");
+		const inputs = screen.getAllByRole("spinbutton");
 		expect(inputs.some((i) => (i as HTMLInputElement).value === "5")).toBe(
 			true,
 		);

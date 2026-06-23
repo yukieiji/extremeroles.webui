@@ -16,7 +16,7 @@ describe("OptionSliderControl", () => {
 			render(<OptionSliderControl {...defaultProps} />);
 		});
 		expect(screen.getByText("Test Slider")).toBeInTheDocument();
-		expect(screen.getByRole("textbox")).toHaveValue("10");
+		expect(screen.getByRole("spinbutton")).toHaveValue(10);
 	});
 
 	it("renders slider with correct initial value", async () => {
@@ -55,7 +55,7 @@ describe("OptionSliderControl", () => {
 			render(<OptionSliderControl {...defaultProps} onChange={onChange} />);
 		});
 
-		const input = screen.getByRole("textbox");
+		const input = screen.getByRole("spinbutton");
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "26" } });
 			fireEvent.blur(input);

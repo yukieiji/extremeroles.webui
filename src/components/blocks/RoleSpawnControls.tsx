@@ -22,6 +22,8 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				onChange={rate.onSelectionChange}
 				format="%"
 				testId="spawn-rate-control"
+				className="w-64"
+				inputClassName="w-20"
 			/>
 			<OptionSliderControl
 				label={ROLE_SPAWN_COUNT}
@@ -29,6 +31,8 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				selection={num.currentSelection}
 				onChange={num.onSelectionChange}
 				testId="spawn-count-control"
+				className="w-64"
+				inputClassName="w-20"
 			/>
 		</div>
 	);
