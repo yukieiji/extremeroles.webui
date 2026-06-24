@@ -1,14 +1,7 @@
 import { RoleFilterCardLayout } from "@/components/blocks/RoleFilterCardLayout";
 import { RolePin } from "@/components/blocks/RolePin";
-import { postRoleFilterUpdate } from "@/logics/api";
-import {
-	format,
-	ROLE_FILTER_DELETE_CONFIRM_MESSAGE,
-	ROLE_FILTER_DELETE_CONFIRM_TITLE,
-	ROLE_FILTER_NO_ROLES,
-	ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE,
-	ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE,
-} from "@/noTrans";
+import { postRoleFilterUpdate, translationMetaData } from "@/logics/api";
+import { format } from "@/logics/stringUtils";
 import type { RoleAssignFilterSetUI } from "@/type";
 import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
@@ -30,8 +23,8 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 	const onDeleteFilter = () => {
 		openBlockDialog({
 			type: "confirm",
-			title: ROLE_FILTER_DELETE_CONFIRM_TITLE,
-			message: ROLE_FILTER_DELETE_CONFIRM_MESSAGE,
+			title: translationMetaData.ROLE_FILTER_DELETE_CONFIRM_TITLE,
+			message: translationMetaData.ROLE_FILTER_DELETE_CONFIRM_MESSAGE,
 			onConfirm: async () => {
 				try {
 					await postRoleFilterUpdate({
@@ -50,8 +43,11 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 	const onDeleteRole = (roleId: number, roleName: string) => {
 		openBlockDialog({
 			type: "confirm",
-			title: ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE,
-			message: format(ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE, roleName),
+			title: translationMetaData.ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE,
+			message: format(
+				translationMetaData.ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE,
+				roleName,
+			),
 			onConfirm: async () => {
 				try {
 					await postRoleFilterUpdate({
@@ -89,7 +85,7 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 				})}
 				{filterSet.Roles.length === 0 && (
 					<span className="text-sm text-text-tertiary italic">
-						{ROLE_FILTER_NO_ROLES}
+						{translationMetaData.ROLE_FILTER_NO_ROLES}
 					</span>
 				)}
 			</div>

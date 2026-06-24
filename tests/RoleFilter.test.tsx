@@ -7,20 +7,23 @@ import {
 } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RoleFilterViewer } from "@/feature/rolefilter/RoleFilterViewer";
-import { postRoleFilterUpdate } from "@/logics/api";
+import { postRoleFilterUpdate, translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
 // Mock api.ts
-vi.mock("@/logics/api", () => ({
-	postRoleFilterUpdate: vi.fn().mockResolvedValue(undefined),
-	roleFilterMetaData: {
-		FilterRoleId: [1, 2],
-		NormalRoleId: { 1: "Crewmate", 2: "Impostor" },
-		CombinationId: {},
-		GhostRoleId: {},
-	},
-	translationMetaData: {},
-}));
+vi.mock("@/logics/api", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api")>();
+	return {
+		...actual,
+		postRoleFilterUpdate: vi.fn().mockResolvedValue(undefined),
+		roleFilterMetaData: {
+			FilterRoleId: [1, 2],
+			NormalRoleId: { 1: "Crewmate", 2: "Impostor" },
+			CombinationId: {},
+			GhostRoleId: {},
+		},
+	};
+});
 
 describe("RoleFilterViewer and RoleFilterCard", () => {
 	beforeEach(() => {
@@ -36,9 +39,15 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 	it("renders empty state and triggers role selection on add filter", async () => {
 		render(<RoleFilterViewer />);
 
-		expect(screen.getByText(/フィルターがありません/)).toBeInTheDocument();
+		expect(
+			screen.getByText(
+				new RegExp(translationMetaData.ROLE_FILTER_EMPTY_MESSAGE),
+			),
+		).toBeInTheDocument();
 
-		const addButton = screen.getByText("フィルターを追加");
+		const addButton = screen.getByText(
+			translationMetaData.ROLE_FILTER_ADD_BUTTON,
+		);
 		await act(async () => {
 			fireEvent.click(addButton);
 		});
@@ -47,7 +56,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		const state = useStore.getState();
 		expect(state.blockDialog).toBeDefined();
 		expect(state.blockDialog?.type).toBe("roleSelect");
-		expect(state.blockDialog?.title).toBe("フィルター追加: 役職の選択");
+		expect(state.blockDialog?.title).toBe(
+			translationMetaData.ROLE_FILTER_ADD_TITLE,
+		);
 
 		// Simulate role selection
 		if (state.blockDialog?.type === "roleSelect") {
@@ -92,7 +103,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		const state = useStore.getState();
 		expect(state.blockDialog).toBeDefined();
 		expect(state.blockDialog?.type).toBe("confirm");
-		expect(state.blockDialog?.title).toBe("フィルターの削除");
+		expect(state.blockDialog?.title).toBe(
+			translationMetaData.ROLE_FILTER_DELETE_CONFIRM_TITLE,
+		);
 
 		// Simulate confirm
 		if (state.blockDialog?.type === "confirm") {
@@ -118,7 +131,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		render(<RoleFilterViewer />);
 
 		// Add role
-		const addRoleButton = screen.getByText("役職を追加");
+		const addRoleButton = screen.getByText(
+			translationMetaData.ROLE_FILTER_ROLE_ADD_BUTTON,
+		);
 		await act(async () => {
 			fireEvent.click(addRoleButton);
 		});
@@ -157,7 +172,9 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 		state = useStore.getState();
 		expect(state.blockDialog?.type).toBe("confirm");
-		expect(state.blockDialog?.title).toBe("役職の削除");
+		expect(state.blockDialog?.title).toBe(
+			translationMetaData.ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE,
+		);
 
 		// Simulate confirm
 		if (state.blockDialog?.type === "confirm") {

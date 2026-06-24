@@ -1,5 +1,5 @@
 import { TYPOGRAPHY } from "@/designConstants";
-import { SYNCHRONIZING } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 
 /**
  * 同期中のオーバーレイコンポーネント
@@ -15,7 +15,7 @@ export function SyncLoadingOverlay() {
 			<div className="bg-n4-components-background rounded-lg shadow-md flex flex-col items-center border border-border-strong">
 				<div className="w-12 h-12 border-4 border-info border-t-transparent rounded-full animate-spin"></div>
 				<p className={`${TYPOGRAPHY.LABEL} font-medium text-text-primary`}>
-					{SYNCHRONIZING}
+					{translationMetaData.SYNCHRONIZING}
 				</p>
 			</div>
 		</div>

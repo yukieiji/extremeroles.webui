@@ -1,6 +1,6 @@
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { EXPORT_CSV_LABEL, EXPORT_CSV_TITLE } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 
 interface ExportButtonProps {
 	onClick: () => void;
@@ -13,9 +13,13 @@ interface ExportButtonProps {
  */
 export function ExportButton({ onClick, disabled }: ExportButtonProps) {
 	return (
-		<Button onClick={onClick} disabled={disabled} title={EXPORT_CSV_TITLE}>
+		<Button
+			onClick={onClick}
+			disabled={disabled}
+			title={translationMetaData.EXPORT_CSV_TITLE}
+		>
 			<Download />
-			{EXPORT_CSV_LABEL}
+			{translationMetaData.EXPORT_CSV_LABEL}
 		</Button>
 	);
 }

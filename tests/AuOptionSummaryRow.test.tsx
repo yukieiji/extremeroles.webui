@@ -1,12 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { AuOptionSummaryRow } from "@/feature/rightsidepanel/summary/AuOptionSummaryRow";
-import { auOptionMetaData } from "@/logics/api";
+import { auOptionMetaData, translationMetaData } from "@/logics/api";
 import {
 	AU_MAP_OPTION_ID,
 	EXR_RANDOM_MAP_OPTION_ID,
 } from "@/logics/optionUtils";
-import { RANDOM_MAP_LABEL } from "@/noTrans";
 import { useStore } from "@/useStore";
 
 // モック化
@@ -48,7 +47,9 @@ describe("AuOptionSummaryRow", () => {
 			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} fallbackTitle="マップ" />,
 		);
 
-		expect(screen.getByText(RANDOM_MAP_LABEL)).toBeInTheDocument();
+		expect(
+			screen.getByText(translationMetaData.RANDOM_MAP_LABEL),
+		).toBeInTheDocument();
 		expect(screen.queryByText("Skeld")).not.toBeInTheDocument();
 	});
 
@@ -72,6 +73,8 @@ describe("AuOptionSummaryRow", () => {
 		);
 
 		expect(screen.getByText("MiraHQ")).toBeInTheDocument();
-		expect(screen.queryByText(RANDOM_MAP_LABEL)).not.toBeInTheDocument();
+		expect(
+			screen.queryByText(translationMetaData.RANDOM_MAP_LABEL),
+		).not.toBeInTheDocument();
 	});
 });

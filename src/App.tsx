@@ -22,15 +22,9 @@ import {
 	useExportCsv,
 	useSyncBackend,
 } from "./hooks/useBackend";
-import { postExrCsv } from "./logics/api";
+import { postExrCsv, translationMetaData } from "./logics/api";
 import { getAllOptions, resetApiCache } from "./logics/api.store";
-import {
-	AU_OPTIONS_TITLE,
-	EXR_OPTIONS_TITLE,
-	IMPORT_CONFIRM_MESSAGE,
-	IMPORT_CONFIRM_TITLE,
-	ROLE_FILTER_TITLE,
-} from "./noTrans";
+import { EXR_OPTIONS_TITLE, ROLE_FILTER_TITLE } from "./noTrans";
 import { useStore } from "./useStore";
 
 /**
@@ -78,8 +72,8 @@ function MainContent() {
 	const handleImport = (csvBody: string) => {
 		openDialog({
 			type: "confirm",
-			title: IMPORT_CONFIRM_TITLE,
-			message: IMPORT_CONFIRM_MESSAGE,
+			title: translationMetaData.IMPORT_CONFIRM_TITLE,
+			message: translationMetaData.IMPORT_CONFIRM_MESSAGE,
 			onConfirm: () => {
 				backendUpdater(() => postExrCsv(csvBody));
 			},
@@ -88,7 +82,7 @@ function MainContent() {
 	const exporter = useExportCsv();
 
 	const titleMap = {
-		Au: AU_OPTIONS_TITLE,
+		Au: translationMetaData.AU_OPTIONS_TITLE,
 		ExR: EXR_OPTIONS_TITLE,
 		RoleFilter: ROLE_FILTER_TITLE,
 	};

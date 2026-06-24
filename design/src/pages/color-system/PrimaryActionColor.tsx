@@ -1,13 +1,7 @@
 import { BASIC_TEXT_COLOR, PRIMARY_ACTION_COLOR } from "../../designConstants";
 import { Button } from "@/components/ui/button";
 import { Plus, Minus, RefreshCw, Download } from "lucide-react";
-import {
-  SYNC_BUTTON_TITLE,
-  SYNC_BUTTON_ARIA,
-  EXPORT_CSV_LABEL,
-  EXPORT_CSV_TITLE,
-  ROLE_FILTER_ADD_BUTTON,
-} from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 
 export default function PrimaryActionColor() {
   const primaryActionClass = `${PRIMARY_ACTION_COLOR.primary} ${BASIC_TEXT_COLOR.textPrimary}`;
@@ -53,8 +47,8 @@ export default function PrimaryActionColor() {
             <div className="flex items-center gap-4">
               <Button
                 onClick={() => handleDummyClick("SyncButton")}
-                title={SYNC_BUTTON_TITLE}
-                aria-label={SYNC_BUTTON_ARIA}
+                title={translationMetaData.SYNC_BUTTON_TITLE}
+                aria-label={translationMetaData.SYNC_BUTTON_TITLE}
                 className={primaryActionClass}
               >
                 <RefreshCw size={20} aria-hidden="true" />
@@ -73,12 +67,12 @@ export default function PrimaryActionColor() {
             <div className="flex items-center gap-4">
               <Button
                 onClick={() => handleDummyClick("ExportButton")}
-                title={EXPORT_CSV_TITLE}
-                aria-label={EXPORT_CSV_TITLE}
+                title={translationMetaData.EXPORT_CSV_TITLE}
+                aria-label={translationMetaData.EXPORT_CSV_TITLE}
                 className={primaryActionClass}
               >
                 <Download />
-                {EXPORT_CSV_LABEL}
+                {translationMetaData.EXPORT_CSV_LABEL}
               </Button>
               <span className="text-xs text-gray-400">
                 アイコンとテキストの主要アクション
@@ -97,7 +91,7 @@ export default function PrimaryActionColor() {
                 className={primaryActionClass}
               >
                 <Plus size={20} className="mr-1" aria-hidden="true" />
-                {ROLE_FILTER_ADD_BUTTON}
+                {translationMetaData.ROLE_FILTER_ADD_BUTTON}
               </Button>
               <span className="text-xs text-gray-400">
                 機能を含む主要アクションボタンの見た目

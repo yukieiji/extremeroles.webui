@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { TYPOGRAPHY } from "@/designConstants";
+import { translationMetaData } from "@/logics/api";
 import { calculateIndentation } from "@/logics/optionUtils";
-import { VIEWER_ROW_TITLE } from "@/noTrans";
 
 interface ViewerOptionRowProps {
 	title: ReactNode;
@@ -32,7 +32,7 @@ export function ViewerOptionRow({
 			{...props}
 			className="w-full flex justify-between items-center hover:bg-component-hover rounded cursor-pointer select-none group py-1"
 			style={{ paddingLeft }}
-			title={VIEWER_ROW_TITLE}
+			title={translationMetaData.VIEWER_ROW_TITLE}
 		>
 			<span
 				className={`${TYPOGRAPHY.CHILD_LABEL} text-text-primary flex-1 text-left transition-colors`}

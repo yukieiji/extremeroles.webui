@@ -5,15 +5,12 @@ import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
 import { RightPanelGroupColumnLayout } from "@/components/parts/RightPanelGroupColumnLayout";
 import { Button } from "@/components/ui/button";
 import { TYPOGRAPHY } from "@/designConstants";
-import { auOptionMetaData, exrOptionMetaData } from "@/logics/api";
-import { generateClipboardText } from "@/logics/clipboardLogic";
 import {
-	AU_SETTINGS_TITLE,
-	CLIPBOARD_COPY_BUTTON,
-	CLIPBOARD_COPY_SUCCESS,
-	EXR_SETTINGS_TITLE,
-	RIGHT_PANEL_TITLE,
-} from "@/noTrans";
+	auOptionMetaData,
+	exrOptionMetaData,
+	translationMetaData,
+} from "@/logics/api";
+import { generateClipboardText } from "@/logics/clipboardLogic";
 import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
@@ -39,7 +36,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 			}),
 		);
 		navigator.clipboard.writeText(text).then(() => {
-			toast.success(CLIPBOARD_COPY_SUCCESS);
+			toast.success(translationMetaData.CLIPBOARD_COPY_SUCCESS);
 		});
 	};
 	const isAuSettingsOpen = useStore((state) => state.isAuSettingsOpen);
@@ -53,7 +50,9 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 			<div className="flex flex-col h-full">
 				<div className="p-2 flex flex-col border-b border-border-strong">
 					<div className="p-2 flex items-center justify-between">
-						<h2 className={TYPOGRAPHY.SIDEBAR}>{RIGHT_PANEL_TITLE}</h2>
+						<h2 className={TYPOGRAPHY.SIDEBAR}>
+							{translationMetaData.RIGHT_PANEL_TITLE}
+						</h2>
 					</div>
 					<Button
 						variant="default"
@@ -62,7 +61,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 						onClick={handleCopy}
 					>
 						<ClipboardCopy className="w-4 h-4" />
-						{CLIPBOARD_COPY_BUTTON}
+						{translationMetaData.CLIPBOARD_COPY_BUTTON}
 					</Button>
 				</div>
 				<div className="py-2 flex-1 overflow-y-scroll">
@@ -70,14 +69,14 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 					<div className="py-4">
 						<RightPanelGroupColumnLayout>
 							<ViewerGroupAccordion
-								title={AU_SETTINGS_TITLE}
+								title={translationMetaData.AU_SETTINGS_TITLE}
 								isOpen={isAuSettingsOpen}
 								onToggle={toggleAuSettings}
 							>
 								<AuOptionViewer />
 							</ViewerGroupAccordion>
 							<ViewerGroupAccordion
-								title={EXR_SETTINGS_TITLE}
+								title={translationMetaData.EXR_SETTINGS_TITLE}
 								isOpen={isExrSettingsOpen}
 								onToggle={toggleExrSettings}
 							>

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { SearchBar } from "@/feature/SearchBar";
-import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
 // Mock Popover to test onOpenChange
@@ -83,7 +83,9 @@ describe("SearchBar", () => {
 		vi.mocked(useStore).mockReturnValue("");
 		render(<SearchBar />);
 
-		const input = screen.getByPlaceholderText(OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 		expect(input).toBeInTheDocument();
 		expect(input).toHaveAttribute("type", "search");
 
@@ -109,7 +111,9 @@ describe("SearchBar", () => {
 		});
 
 		render(<SearchBar />);
-		const input = screen.getByPlaceholderText(OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 
 		// ArrowDown
 		fireEvent.keyDown(input, { key: "ArrowDown" });
@@ -142,7 +146,9 @@ describe("SearchBar", () => {
 		});
 
 		render(<SearchBar />);
-		const input = screen.getByPlaceholderText(OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 
 		fireEvent.keyDown(input, { key: "Enter" });
 		expect(mockNavigateToAu).toHaveBeenCalledWith(0, 1, 100);
@@ -166,7 +172,9 @@ describe("SearchBar", () => {
 		});
 
 		render(<SearchBar />);
-		const input = screen.getByPlaceholderText(OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 
 		// Focus
 		fireEvent.focus(input);

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { translationMetaData } from "@/logics/api";
 import {
 	type ClipboardState,
 	generateClipboardText,
@@ -21,12 +22,6 @@ import {
 	getUniqueOptionId,
 	PRESET_OPTION_UNIQUE_ID,
 } from "@/logics/optionUtils";
-import {
-	CLIPBOARD_CREW,
-	CLIPBOARD_IMPOSTOR,
-	CLIPBOARD_NEUTRAL,
-	CLIPBOARD_ROLES,
-} from "@/noTrans";
 import {
 	type AuOptionId,
 	type AuOptionMetaDataRecords,
@@ -327,8 +322,8 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("# 設定(Test Preset)");
 		expect(text).toContain("- マップ: Skeld");
 		expect(text).toContain("- キルクールダウン時間: 10");
-		expect(text).toContain(`## ${CLIPBOARD_ROLES}`);
-		expect(text).toContain(`### ${CLIPBOARD_CREW}`);
+		expect(text).toContain(`## ${translationMetaData.CLIPBOARD_ROLES}`);
+		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_CREW}`);
 		expect(text).toContain(" - ExR Role --- **1 / 100%**");
 		expect(text).toContain("### Game Extra");
 		// Preset Category is empty because both PRESET_OPTION_UNIQUE_ID and EXR_RANDOM_MAP_OPTION_ID are excluded
@@ -532,9 +527,9 @@ describe("generateClipboardText", () => {
 			},
 		};
 		const text = generateClipboardText(stateWithRoles, mockExrMeta, mockAuMeta);
-		expect(text).toContain(`### ${CLIPBOARD_IMPOSTOR}`);
+		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_IMPOSTOR}`);
 		expect(text).toContain(" - ExR Impostor --- **1 / 100%**");
-		expect(text).toContain(`### ${CLIPBOARD_NEUTRAL}`);
+		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_NEUTRAL}`);
 		expect(text).toContain(" - ExR Neutral --- **1 / 100%**");
 	});
 

@@ -11,3 +11,16 @@ export function normalizeForSearch(str: string): string {
 		}) // ひらがなをカタカナに変換
 		.toLowerCase(); // 大文字を小文字に変換
 }
+
+/**
+ * プレースホルダーを含む文字列を置換します。
+ * @param template テンプレート文字列（例: "こんにちは {0} さん"）
+ * @param args 置換する値
+ * @returns 置換後の文字列
+ */
+export function format(template: string, ...args: (string | number)[]): string {
+	return template.replace(/{(\d+)}/g, (match, index) => {
+		const arg = args[Number(index)];
+		return arg !== undefined ? String(arg) : match;
+	});
+}

@@ -3,9 +3,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useExportCsv } from "@/hooks/useBackend";
 import { fetchCsvData } from "@/logics/api";
 
-vi.mock("@/logics/api", () => ({
-	fetchCsvData: vi.fn(),
-}));
+vi.mock("@/logics/api", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api")>();
+	return {
+		...actual,
+		fetchCsvData: vi.fn(),
+	};
+});
 
 vi.mock("@/hooks/useManualBlock", () => ({
 	useBlockAsync: () => (fn: () => Promise<void>) => fn(),

@@ -4,7 +4,7 @@ import {
 	InputGroupInput,
 } from "@/components/ui/input-group";
 import { SelectTrigger } from "@/components/ui/select";
-import { PRESET_INPUT_PLACEHOLDER } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
 interface PresetInputProps {
@@ -60,7 +60,7 @@ export function PresetInput({
 				defaultValue={currentPresetName}
 				onBlur={handleBlur}
 				onKeyDown={handleKeyDown}
-				placeholder={PRESET_INPUT_PLACEHOLDER}
+				placeholder={translationMetaData.PRESET_INPUT_PLACEHOLDER}
 			/>
 			<InputGroupAddon
 				align="inline-end"

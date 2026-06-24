@@ -3,7 +3,7 @@ import { XIcon } from "lucide-react";
 import type * as React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CLOSE } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
 	return <SheetPrimitive.Root data-slot="sheet" {...props} />;
@@ -69,7 +69,7 @@ function SheetContent({
 						}
 					>
 						<XIcon />
-						<span className="sr-only">{CLOSE}</span>
+						<span className="sr-only">{translationMetaData.CLOSE}</span>
 					</SheetPrimitive.Close>
 				)}
 			</SheetPrimitive.Popup>

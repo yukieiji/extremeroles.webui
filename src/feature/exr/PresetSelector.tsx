@@ -3,9 +3,9 @@ import { Select } from "@/components/ui/select";
 import { useBackendUpdate } from "@/hooks/useBackend";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
-import { updateExrOption } from "@/logics/api";
+import { translationMetaData, updateExrOption } from "@/logics/api";
 import { PRESET_OPTION_UNIQUE_ID } from "@/logics/optionUtils";
-import { format, PRESET_SWITCH_MESSAGE, PRESET_SWITCH_TITLE } from "@/noTrans";
+import { format } from "@/logics/stringUtils";
 import { useStore } from "@/useStore";
 import { PresetDropdown } from "./PresetDropdown";
 import { PresetInput } from "./PresetInput";
@@ -50,8 +50,12 @@ export function PresetSelector() {
 
 		setBlockDialog({
 			type: "confirm",
-			title: PRESET_SWITCH_TITLE,
-			message: format(PRESET_SWITCH_MESSAGE, currentPresetName, newPresetName),
+			title: translationMetaData.PRESET_SWITCH_TITLE,
+			message: format(
+				translationMetaData.PRESET_SWITCH_MESSAGE,
+				currentPresetName,
+				newPresetName,
+			),
 			onConfirm: () =>
 				backendUpdator(async () => {
 					await updateExrOption(0, 0, 0, index);

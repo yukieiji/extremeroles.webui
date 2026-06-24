@@ -3,7 +3,7 @@ import { XIcon } from "lucide-react";
 import type * as React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CLOSE } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
 	return <DialogPrimitive.Root data-slot="dialog" {...props} />;
@@ -69,7 +69,7 @@ function DialogContent({
 						}
 					>
 						<XIcon />
-						<span className="sr-only">{CLOSE}</span>
+						<span className="sr-only">{translationMetaData.CLOSE}</span>
 					</DialogPrimitive.Close>
 				)}
 			</DialogPrimitive.Popup>
@@ -107,7 +107,7 @@ function DialogFooter({
 			{children}
 			{showCloseButton && (
 				<DialogPrimitive.Close render={<Button variant="outline" />}>
-					{CLOSE}
+					{translationMetaData.CLOSE}
 				</DialogPrimitive.Close>
 			)}
 		</div>

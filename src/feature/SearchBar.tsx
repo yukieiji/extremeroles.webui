@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { useSearchResults } from "@/hooks/useSearchResults";
 import { useSearchSelection } from "@/hooks/useSearchSelection";
-import { OPTION_SEARCH_PLACEHOLDER } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 import { SearchSuggestion } from "./SearchSuggestion";
 
@@ -78,7 +78,7 @@ export function SearchBar() {
 							<Search className="size-4 text-text-tertiary" />
 						</InputGroupAddon>
 						<InputGroupInput
-							placeholder={OPTION_SEARCH_PLACEHOLDER}
+							placeholder={translationMetaData.OPTION_SEARCH_PLACEHOLDER}
 							type="search"
 							className="flex-1"
 							autoComplete="off"

@@ -1,29 +1,31 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ImportButton } from "@/components/parts/ImportButton";
-import { IMPORT_BUTTON_ARIA, IMPORT_BUTTON_TITLE } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 
 describe("ImportButton", () => {
 	it("renders correctly with title and icon", () => {
 		render(<ImportButton onImport={vi.fn()} />);
 
-		const button = screen.getByRole("button", { name: IMPORT_BUTTON_ARIA });
+		const button = screen.getByRole("button");
 		expect(button).toBeInTheDocument();
-		expect(button).toContainElement(screen.getByText(IMPORT_BUTTON_TITLE));
+		expect(button).toContainElement(
+			screen.getByText(translationMetaData.IMPORT_BUTTON_TITLE),
+		);
 		expect(button.querySelector("svg")).toBeInTheDocument();
 	});
 
 	it("is disabled when disabled prop is true", () => {
 		render(<ImportButton onImport={vi.fn()} disabled={true} />);
 
-		const button = screen.getByRole("button", { name: IMPORT_BUTTON_ARIA });
+		const button = screen.getByRole("button");
 		expect(button).toBeDisabled();
 	});
 
 	it("triggers file input click when button is clicked", () => {
 		render(<ImportButton onImport={vi.fn()} />);
 
-		screen.getByRole("button", { name: IMPORT_BUTTON_ARIA });
+		screen.getByRole("button");
 		// In JSDOM, input[type='file'].hidden is still findable by CSS selector but maybe not by role if not labeled.
 		const input = document.querySelector("input[type='file']");
 		expect(input).toBeInTheDocument();
