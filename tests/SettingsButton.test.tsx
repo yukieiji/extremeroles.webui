@@ -63,6 +63,8 @@ describe("OptionGroupToggleSidebar", () => {
 		);
 
 		const settingsButton = screen.getByTestId("sidebar-settings-button");
-		expect(settingsButton.textContent).toContain(translationMetaData.SETTINGS_TITLE);
+		expect(settingsButton.textContent).toContain(
+			translationMetaData.SETTINGS_TITLE,
+		);
 	});
 });

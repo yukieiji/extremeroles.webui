@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { translationMetaData } from "@/logics/api";
 import {
 	type ClipboardState,
 	generateClipboardText,
@@ -21,7 +22,6 @@ import {
 	getUniqueOptionId,
 	PRESET_OPTION_UNIQUE_ID,
 } from "@/logics/optionUtils";
-import { translationMetaData } from "@/logics/api";
 import {
 	type AuOptionId,
 	type AuOptionMetaDataRecords,

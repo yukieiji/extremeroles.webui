@@ -71,7 +71,8 @@ export const translationMetaData: TranslationMetaDataRecords = {
 	ROLE_FILTER_EMPTY_MESSAGE:
 		"フィルターがありません。「フィルターを追加」ボタンから作成してください。",
 	ROLE_FILTER_DELETE_CONFIRM_TITLE: "フィルターの削除",
-	ROLE_FILTER_DELETE_CONFIRM_MESSAGE: "このフィルターを削除してもよろしいですか？",
+	ROLE_FILTER_DELETE_CONFIRM_MESSAGE:
+		"このフィルターを削除してもよろしいですか？",
 	ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE: "役職の削除",
 	ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE:
 		"役職「{0}」をフィルターから削除してもよろしいですか？",

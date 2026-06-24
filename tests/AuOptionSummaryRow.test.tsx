@@ -47,7 +47,9 @@ describe("AuOptionSummaryRow", () => {
 			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} fallbackTitle="マップ" />,
 		);
 
-		expect(screen.getByText(translationMetaData.RANDOM_MAP_LABEL)).toBeInTheDocument();
+		expect(
+			screen.getByText(translationMetaData.RANDOM_MAP_LABEL),
+		).toBeInTheDocument();
 		expect(screen.queryByText("Skeld")).not.toBeInTheDocument();
 	});
 
@@ -71,6 +73,8 @@ describe("AuOptionSummaryRow", () => {
 		);
 
 		expect(screen.getByText("MiraHQ")).toBeInTheDocument();
-		expect(screen.queryByText(translationMetaData.RANDOM_MAP_LABEL)).not.toBeInTheDocument();
+		expect(
+			screen.queryByText(translationMetaData.RANDOM_MAP_LABEL),
+		).not.toBeInTheDocument();
 	});
 });

@@ -83,7 +83,9 @@ describe("SearchBar", () => {
 		vi.mocked(useStore).mockReturnValue("");
 		render(<SearchBar />);
 
-		const input = screen.getByPlaceholderText(translationMetaData.OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 		expect(input).toBeInTheDocument();
 		expect(input).toHaveAttribute("type", "search");
 
@@ -109,7 +111,9 @@ describe("SearchBar", () => {
 		});
 
 		render(<SearchBar />);
-		const input = screen.getByPlaceholderText(translationMetaData.OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 
 		// ArrowDown
 		fireEvent.keyDown(input, { key: "ArrowDown" });
@@ -142,7 +146,9 @@ describe("SearchBar", () => {
 		});
 
 		render(<SearchBar />);
-		const input = screen.getByPlaceholderText(translationMetaData.OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 
 		fireEvent.keyDown(input, { key: "Enter" });
 		expect(mockNavigateToAu).toHaveBeenCalledWith(0, 1, 100);
@@ -166,7 +172,9 @@ describe("SearchBar", () => {
 		});
 
 		render(<SearchBar />);
-		const input = screen.getByPlaceholderText(translationMetaData.OPTION_SEARCH_PLACEHOLDER);
+		const input = screen.getByPlaceholderText(
+			translationMetaData.OPTION_SEARCH_PLACEHOLDER,
+		);
 
 		// Focus
 		fireEvent.focus(input);

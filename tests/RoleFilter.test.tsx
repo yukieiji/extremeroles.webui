@@ -40,10 +40,14 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		render(<RoleFilterViewer />);
 
 		expect(
-			screen.getByText(new RegExp(translationMetaData.ROLE_FILTER_EMPTY_MESSAGE)),
+			screen.getByText(
+				new RegExp(translationMetaData.ROLE_FILTER_EMPTY_MESSAGE),
+			),
 		).toBeInTheDocument();
 
-		const addButton = screen.getByText(translationMetaData.ROLE_FILTER_ADD_BUTTON);
+		const addButton = screen.getByText(
+			translationMetaData.ROLE_FILTER_ADD_BUTTON,
+		);
 		await act(async () => {
 			fireEvent.click(addButton);
 		});

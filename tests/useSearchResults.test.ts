@@ -12,38 +12,38 @@ vi.mock("@/logics/api", async (importOriginal) => {
 	return {
 		...actual,
 		globalSearchItems: [
-		{
-			term: "Apple",
-			info: { mode: "au-cat", tabId: 0, categoryId: 1 },
-			parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
-		},
-		{
-			term: "Banana",
-			info: { mode: "exr-opt", uniqueOptionId: 100 },
-			parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
-		},
-		{
-			term: "Cherry",
-			info: { mode: "exr-opt", uniqueOptionId: 101 },
-			parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
-		},
-		{
-			term: "リンゴ",
-			info: { mode: "au-cat", tabId: 0, categoryId: 2 },
-			parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
-		},
-		{
-			term: "みかん",
-			info: { mode: "au-cat", tabId: 0, categoryId: 3 },
-			parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
-		},
-		...Array.from({ length: 10 }, (_, i) => ({
-			term: `Item ${i}`,
-			info: { mode: "au-cat", tabId: 0, categoryId: i + 10 },
-			parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
-		})),
-	],
-};
+			{
+				term: "Apple",
+				info: { mode: "au-cat", tabId: 0, categoryId: 1 },
+				parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
+			},
+			{
+				term: "Banana",
+				info: { mode: "exr-opt", uniqueOptionId: 100 },
+				parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
+			},
+			{
+				term: "Cherry",
+				info: { mode: "exr-opt", uniqueOptionId: 101 },
+				parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
+			},
+			{
+				term: "リンゴ",
+				info: { mode: "au-cat", tabId: 0, categoryId: 2 },
+				parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
+			},
+			{
+				term: "みかん",
+				info: { mode: "au-cat", tabId: 0, categoryId: 3 },
+				parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
+			},
+			...Array.from({ length: 10 }, (_, i) => ({
+				term: `Item ${i}`,
+				info: { mode: "au-cat", tabId: 0, categoryId: i + 10 },
+				parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
+			})),
+		],
+	};
 });
 
 describe("useSearchResults", () => {

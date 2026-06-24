@@ -1,3 +1,4 @@
+import { translationMetaData } from "@/logics/api";
 import { stripColorTags } from "@/logics/colorUtils";
 import {
 	AU_IMPOSTOR_COUNT_OPTION_ID,
@@ -20,7 +21,6 @@ import {
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
-import { translationMetaData } from "@/logics/api";
 import {
 	type AuOptionId,
 	type AuOptionMetaDataRecords,
