@@ -12,15 +12,19 @@ import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
 
 // Mock api.ts
-vi.mock("@/logics/api", () => ({
-	postRoleFilterUpdate: vi.fn().mockResolvedValue(undefined),
-	roleFilterMetaData: {
-		FilterRoleId: [1, 2],
-		NormalRoleId: { 1: "Crewmate", 2: "Impostor" },
-		CombinationId: {},
-		GhostRoleId: {},
-	},
-}));
+vi.mock("@/logics/api", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api")>();
+	return {
+		...actual,
+		postRoleFilterUpdate: vi.fn().mockResolvedValue(undefined),
+		roleFilterMetaData: {
+			FilterRoleId: [1, 2],
+			NormalRoleId: { 1: "Crewmate", 2: "Impostor" },
+			CombinationId: {},
+			GhostRoleId: {},
+		},
+	};
+});
 
 describe("RoleFilter AssignNum Adjustment", () => {
 	beforeEach(() => {

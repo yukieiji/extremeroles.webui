@@ -7,9 +7,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { roleFilterMetaData } from "@/logics/api";
+import { roleFilterMetaData, translationMetaData } from "@/logics/api";
 import { normalizeForSearch } from "@/logics/stringUtils";
-import { CLOSE, CONFIRM, ROLE_SELECT_SEARCH_PLACEHOLDER } from "@/noTrans";
 import { useStore } from "@/useStore";
 
 interface RoleSelectDialogProps {
@@ -102,7 +101,7 @@ export function RoleSelectDialog({
 			</DialogHeader>
 			<RoleSearchInput
 				onChange={setSearchQuery}
-				placeholder={ROLE_SELECT_SEARCH_PLACEHOLDER}
+				placeholder={translationMetaData.ROLE_SELECT_SEARCH_PLACEHOLDER}
 			/>
 			<div className="overflow-y-scroll flex-1">
 				<RoleGrid
@@ -113,13 +112,13 @@ export function RoleSelectDialog({
 			</div>
 			<DialogFooter>
 				<Button variant="outline" onClick={onCancel}>
-					{CLOSE}
+					{translationMetaData.CLOSE}
 				</Button>
 				<Button
 					disabled={selectedRoleIds.length === 0}
 					onClick={() => onSelect(selectedRoleIds)}
 				>
-					{CONFIRM} ({selectedRoleIds.length})
+					{translationMetaData.CONFIRM} ({selectedRoleIds.length})
 				</Button>
 			</DialogFooter>
 		</DialogContent>

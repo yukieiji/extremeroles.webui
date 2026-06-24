@@ -9,11 +9,15 @@ vi.mock("@/useStore", () => ({
 	useStore: vi.fn(),
 }));
 
-vi.mock("@/logics/api", () => ({
-	exrOptionMetaData: {
-		options: {},
-	},
-}));
+vi.mock("@/logics/api", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api")>();
+	return {
+		...actual,
+		exrOptionMetaData: {
+			options: {},
+		},
+	};
+});
 
 vi.mock("@/logics/optionUtils", () => ({
 	parseUniqueOptionId: vi

@@ -1,5 +1,5 @@
 import { TYPOGRAPHY } from "@/designConstants";
-import { ROLE_FILTER_EMPTY_MESSAGE } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 import { RoleFilterAddButton } from "./RoleFilterAddButton";
 import { RoleFilterCard } from "./RoleFilterCard";
@@ -24,7 +24,7 @@ export function RoleFilterViewer() {
 			{filterEntries.length === 0 ? (
 				<div className="bg-n4-components-background border border-dashed border-border-strong rounded-lg text-center shadow-md">
 					<p className={`${TYPOGRAPHY.LABEL} text-text-secondary`}>
-						{ROLE_FILTER_EMPTY_MESSAGE}
+						{translationMetaData.ROLE_FILTER_EMPTY_MESSAGE}
 					</p>
 				</div>
 			) : (

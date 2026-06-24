@@ -2,14 +2,12 @@ import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { TYPOGRAPHY } from "@/designConstants";
-import { postRoleFilterUpdate, roleFilterMetaData } from "@/logics/api";
 import {
-	format,
-	ROLE_FILTER_ASSIGN_NUM_LABEL,
-	ROLE_FILTER_ROLE_ADD_BUTTON,
-	ROLE_FILTER_ROLE_ADD_TITLE,
-	ROLE_FILTER_UNKNOWN_ROLE,
-} from "@/noTrans";
+	postRoleFilterUpdate,
+	roleFilterMetaData,
+	translationMetaData,
+} from "@/logics/api";
+import { format } from "@/logics/stringUtils";
 import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -72,7 +70,7 @@ export function RoleFilterCardHeader({
 	const onOpenRoleSelect = () => {
 		openBlockDialog({
 			type: "roleSelect",
-			title: ROLE_FILTER_ROLE_ADD_TITLE,
+			title: translationMetaData.ROLE_FILTER_ROLE_ADD_TITLE,
 			searchQuery: "",
 			excludeRoleIds: excludeRoleIds,
 			selectedRoleIds: [],
@@ -90,7 +88,7 @@ export function RoleFilterCardHeader({
 							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
 							(roleFilterMetaData.CombinationId[roleId] as string) ||
 							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-							ROLE_FILTER_UNKNOWN_ROLE;
+							translationMetaData.ROLE_FILTER_UNKNOWN_ROLE;
 
 						addRoleToFilter(guid, roleId, roleName);
 					}
@@ -107,7 +105,7 @@ export function RoleFilterCardHeader({
 				<span
 					className={`${TYPOGRAPHY.LABEL} text-text-primary px-2 min-w-36 tabular-nums`}
 				>
-					{format(ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
+					{format(translationMetaData.ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
 				</span>
 				<ButtonGroup orientation="vertical">
 					<Button
@@ -126,7 +124,7 @@ export function RoleFilterCardHeader({
 				className={`${TYPOGRAPHY.LABEL} text-text-primary w-full col-span-full`}
 			>
 				<Plus size={12} />
-				{ROLE_FILTER_ROLE_ADD_BUTTON}
+				{translationMetaData.ROLE_FILTER_ROLE_ADD_BUTTON}
 			</Button>
 		</>
 	);

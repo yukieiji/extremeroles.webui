@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { OptionGroupToggleSidebar } from "@/feature/OptionGroupToggleSidebar";
-import { SETTINGS_TITLE } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
 // Lucideアイコンのモック
@@ -52,7 +52,7 @@ describe("OptionGroupToggleSidebar", () => {
 		const state = useStore.getState();
 		expect(state.blockDialog).toBeDefined();
 		expect(state.blockDialog?.type).toBe("settings");
-		expect(state.blockDialog?.title).toBe(SETTINGS_TITLE);
+		expect(state.blockDialog?.title).toBe(translationMetaData.SETTINGS_TITLE);
 	});
 
 	it("サイドバーが開いているとき、設定ボタンのテキストが表示されること", () => {
@@ -63,6 +63,6 @@ describe("OptionGroupToggleSidebar", () => {
 		);
 
 		const settingsButton = screen.getByTestId("sidebar-settings-button");
-		expect(settingsButton.textContent).toContain(SETTINGS_TITLE);
+		expect(settingsButton.textContent).toContain(translationMetaData.SETTINGS_TITLE);
 	});
 });

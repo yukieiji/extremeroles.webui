@@ -1,4 +1,4 @@
-import { ROLE_SPAWN_COUNT, ROLE_SPAWN_RATE } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import { OptionSliderControl } from "./OptionSliderControl";
 
 interface ControlProps {
@@ -16,7 +16,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 	return (
 		<div className="flex items-center gap-4">
 			<OptionSliderControl
-				label={ROLE_SPAWN_RATE}
+				label={translationMetaData.ROLE_SPAWN_RATE}
 				values={rate.values}
 				selection={rate.currentSelection}
 				onChange={rate.onSelectionChange}
@@ -26,7 +26,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				inputClassName="w-24"
 			/>
 			<OptionSliderControl
-				label={ROLE_SPAWN_COUNT}
+				label={translationMetaData.ROLE_SPAWN_COUNT}
 				values={num.values}
 				selection={num.currentSelection}
 				onChange={num.onSelectionChange}

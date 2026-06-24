@@ -6,7 +6,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { CANCEL, OK } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 
 interface ConfirmDialogProps {
 	title: string;
@@ -32,9 +32,9 @@ export function ConfirmDialog({
 			</DialogHeader>
 			<DialogFooter>
 				<Button variant="outline" onClick={onCancel}>
-					{CANCEL}
+					{translationMetaData.CANCEL}
 				</Button>
-				<Button onClick={onConfirm}>{OK}</Button>
+				<Button onClick={onConfirm}>{translationMetaData.OK}</Button>
 			</DialogFooter>
 		</DialogContent>
 	);

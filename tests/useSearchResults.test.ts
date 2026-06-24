@@ -7,8 +7,11 @@ vi.mock("@/useStore", () => ({
 	useStore: vi.fn(),
 }));
 
-vi.mock("@/logics/api", () => ({
-	globalSearchItems: [
+vi.mock("@/logics/api", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api")>();
+	return {
+		...actual,
+		globalSearchItems: [
 		{
 			term: "Apple",
 			info: { mode: "au-cat", tabId: 0, categoryId: 1 },
@@ -40,7 +43,8 @@ vi.mock("@/logics/api", () => ({
 			parentData: { tabName: "T", categoryName: "C", parentOptionNames: [] },
 		})),
 	],
-}));
+};
+});
 
 describe("useSearchResults", () => {
 	it("returns empty array when query is empty", () => {

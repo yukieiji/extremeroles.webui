@@ -20,20 +20,7 @@ import {
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
-import {
-	CLIPBOARD_CREW,
-	CLIPBOARD_DETAILED_SETTINGS,
-	CLIPBOARD_FACTION_COUNTS,
-	CLIPBOARD_IMPOSTOR,
-	CLIPBOARD_LIBERAL,
-	CLIPBOARD_NEUTRAL,
-	CLIPBOARD_OTHERS,
-	CLIPBOARD_OTHERS_NOTE,
-	CLIPBOARD_ROLES,
-	CLIPBOARD_SETTING_TITLE,
-	CLIPBOARD_VANILLA_SUFFIX,
-	RANDOM_MAP_LABEL,
-} from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import {
 	type AuOptionId,
 	type AuOptionMetaDataRecords,
@@ -112,7 +99,7 @@ export function generateClipboardText(
 	const mapTitle = cleanText(auMeta.options[AU_MAP_OPTION_ID].title);
 	let mapValue = cleanText(String(getAuValue(AU_MAP_OPTION_ID) ?? ""));
 	if (state.exrValue[EXR_RANDOM_MAP_OPTION_ID]?.selection === 1) {
-		mapValue = RANDOM_MAP_LABEL;
+		mapValue = translationMetaData.RANDOM_MAP_LABEL;
 	}
 
 	// 3. キルクール
@@ -262,7 +249,7 @@ export function generateClipboardText(
 		let list = "";
 		for (const role of roles) {
 			const name = role.isVanilla
-				? `${role.name}(${CLIPBOARD_VANILLA_SUFFIX})`
+				? `${role.name}(${translationMetaData.CLIPBOARD_VANILLA_SUFFIX})`
 				: role.name;
 			// - {役職名}{※バニラ} - {スポーン数} / {スポーンレート}％
 			// ％が重複しないように調整
@@ -368,10 +355,10 @@ export function generateClipboardText(
 		}
 	}
 
-	let text = `# ${CLIPBOARD_SETTING_TITLE}(${presetName})\n`;
+	let text = `# ${translationMetaData.CLIPBOARD_SETTING_TITLE}(${presetName})\n`;
 	text += `- ${mapTitle}: ${mapValue}\n`;
 	text += `- ${killCooldownTitle}: ${killCooldownValue}\n`;
-	text += `## ${CLIPBOARD_FACTION_COUNTS}\n`;
+	text += `## ${translationMetaData.CLIPBOARD_FACTION_COUNTS}\n`;
 	text += `- ${crewRolesLabel}: ${crewRolesCount}\n`;
 	text += `- ${impostorRolesLabel}: ${impostorRolesCount}\n`;
 	text += `  - ${impostorCountTitle}: ${impostorCountValue}\n`;
@@ -385,22 +372,22 @@ export function generateClipboardText(
 		}
 	}
 
-	text += `## ${CLIPBOARD_ROLES}\n`;
+	text += `## ${translationMetaData.CLIPBOARD_ROLES}\n`;
 	if (crewRolesList.length > 0) {
-		text += `### ${CLIPBOARD_CREW}\n${formatRoleList(crewRolesList)}`;
+		text += `### ${translationMetaData.CLIPBOARD_CREW}\n${formatRoleList(crewRolesList)}`;
 	}
 	if (impostorRolesList.length > 0) {
-		text += `### ${CLIPBOARD_IMPOSTOR}\n${formatRoleList(impostorRolesList)}`;
+		text += `### ${translationMetaData.CLIPBOARD_IMPOSTOR}\n${formatRoleList(impostorRolesList)}`;
 	}
 	if (neutralRolesList.length > 0) {
-		text += `### ${CLIPBOARD_NEUTRAL}\n${formatRoleList(neutralRolesList)}`;
+		text += `### ${translationMetaData.CLIPBOARD_NEUTRAL}\n${formatRoleList(neutralRolesList)}`;
 	}
 	if (liberalRolesList.length > 0) {
-		text += `### ${CLIPBOARD_LIBERAL}\n${formatRoleList(liberalRolesList)}`;
+		text += `### ${translationMetaData.CLIPBOARD_LIBERAL}\n${formatRoleList(liberalRolesList)}`;
 	}
 
-	text += `\n## ${CLIPBOARD_DETAILED_SETTINGS}\n${detailedSettings}\n`;
-	text += `\n## ${CLIPBOARD_OTHERS}\n${CLIPBOARD_OTHERS_NOTE}\n`;
+	text += `\n## ${translationMetaData.CLIPBOARD_DETAILED_SETTINGS}\n${detailedSettings}\n`;
+	text += `\n## ${translationMetaData.CLIPBOARD_OTHERS}\n${translationMetaData.CLIPBOARD_OTHERS_NOTE}\n`;
 
 	return text;
 }

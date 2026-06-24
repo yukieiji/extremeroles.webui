@@ -1,5 +1,5 @@
 import { TYPOGRAPHY } from "@/designConstants";
-import { SETTINGS_UNDER_PREPARATION } from "@/noTrans";
+import { translationMetaData } from "@/logics/api";
 import {
 	DialogContent,
 	DialogHeader,
@@ -21,7 +21,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 			</DialogHeader>
 			<div className="grid">
 				<p className={`${TYPOGRAPHY.SMALL} text-text-secondary`}>
-					{SETTINGS_UNDER_PREPARATION}
+					{translationMetaData.SETTINGS_UNDER_PREPARATION}
 				</p>
 			</div>
 		</DialogContent>
