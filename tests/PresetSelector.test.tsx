@@ -3,12 +3,18 @@ import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { PresetSelector } from "@/feature/exr/PresetSelector";
 import { useOptionData } from "@/hooks/useExROptionData";
-import { updateExrOption } from "@/logics/api";
+import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
 vi.mock("@/hooks/useExROptionData");
 vi.mock("@/useStore");
-vi.mock("@/logics/api");
+vi.mock("@/logics/api", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@/logics/api")>();
+	return {
+		...actual,
+		updateExrOption: vi.fn(),
+	};
+});
 vi.mock("@/hooks/useBackend", () => ({
 	useBackendUpdate: () => vi.fn((callback: () => Promise<void>) => callback()),
 }));
@@ -94,6 +100,11 @@ describe("PresetSelector", () => {
 		vi.mocked(useStore).mockImplementation((selector) => selector(state));
 		// @ts-expect-error
 		useStore.getState = () => state;
+
+		// Ensure translation metadata is present for the test
+		translationMetaData.PRESET_SWITCH_TITLE = "プリセットの切り替え";
+		translationMetaData.PRESET_SWITCH_MESSAGE =
+			"プリセットを「{0}」から「{1}」に切り替えます";
 	});
 
 	it("renders preset name in input", () => {
@@ -192,6 +203,7 @@ describe("PresetSelector", () => {
 
 		// Test onConfirm
 		await dialogConfig.onConfirm();
+		const { updateExrOption } = await import("@/logics/api");
 		expect(updateExrOption).toHaveBeenCalledWith(0, 0, 0, 1);
 	});
 
