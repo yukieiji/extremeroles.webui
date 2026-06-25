@@ -43,70 +43,7 @@ const TRANSLATION_BATCH_BASE_URL = "/au/translation/batch/";
 const OPUTION_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}optionunit/`;
 const ROLE_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}role/`;
 
-export const translationMetaData: TranslationMetaDataRecords = {
-	SYNC_BUTTON_TITLE: "同期",
-	IMPORT_BUTTON_TITLE: "CSVインポート",
-	IMPORT_CONFIRM_TITLE: "インポートの確認",
-	IMPORT_CONFIRM_MESSAGE: "CSVファイルをインポートして設定を上書きしますか？",
-	EXPORT_CSV_LABEL: "エクスポート",
-	EXPORT_CSV_TITLE: "CSVとしてエクスポート",
-	CANCEL: "キャンセル",
-	VIEWER_ROW_TITLE: "ダブルクリックで設定場所へ移動",
-	ROLE_SPAWN_RATE: "スポーンレート",
-	ROLE_SPAWN_COUNT: "数",
-	CLOSE: "閉じる",
-	CONFIRM: "確定",
-	PRESET_SWITCH_TITLE: "プリセットの切り替え",
-	PRESET_SWITCH_MESSAGE: "プリセットを「{0}」から「{1}」に切り替えます",
-	PRESET_INPUT_PLACEHOLDER: "プリセット名を入力...",
-	AU_SETTINGS_TITLE: "AmongUsの設定",
-	EXR_SETTINGS_TITLE: "ExRの設定",
-	EXR_CONTENT_TEMP: "ExRの設定コンテンツ",
-	ROLE_FILTER_ADD_TITLE: "フィルター追加: 役職の選択",
-	ROLE_FILTER_ADD_BUTTON: "フィルターを追加",
-	ROLE_FILTER_UNKNOWN_ROLE: "Unknown Role",
-	ROLE_FILTER_ROLE_ADD_TITLE: "役職の追加",
-	ROLE_FILTER_ASSIGN_NUM_LABEL: "AssignNum: {0}",
-	ROLE_FILTER_ROLE_ADD_BUTTON: "役職を追加",
-	ROLE_FILTER_EMPTY_MESSAGE:
-		"フィルターがありません。「フィルターを追加」ボタンから作成してください。",
-	ROLE_FILTER_DELETE_CONFIRM_TITLE: "フィルターの削除",
-	ROLE_FILTER_DELETE_CONFIRM_MESSAGE:
-		"このフィルターを削除してもよろしいですか？",
-	ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE: "役職の削除",
-	ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE:
-		"役職「{0}」をフィルターから削除してもよろしいですか？",
-	ROLE_FILTER_NO_ROLES: "No roles selected",
-	ROLE_SELECT_SEARCH_PLACEHOLDER: "役職を検索...",
-	OPTION_SEARCH_PLACEHOLDER: "オプションを検索...",
-	ROLE_SELECT_DEFAULT_TITLE: "役職の選択",
-	CSV_FILE_DESCRIPTION: "CSV File",
-	SYNCHRONIZING: "Synchronizing...",
-	RIGHT_PANEL_TITLE: "Right Panel",
-	AU_OPTIONS_TITLE: "Among Us",
-	SETTINGS_TITLE: "設定",
-	ROLE_FILTER_SHORT_LABEL: "R",
-	ON: "ON",
-	OFF: "OFF",
-	RANDOM_MAP_LABEL: "ランダム",
-	NOT_FOUND: "見つかりませんでした",
-	SETTINGS_UNDER_PREPARATION: "設定項目は現在準備中です。",
-	OK: "OK",
-	SEARCH_NO_RESULTS: "Search No Results",
-	CLIPBOARD_SETTING_TITLE: "設定",
-	CLIPBOARD_FACTION_COUNTS: "陣営数",
-	CLIPBOARD_ROLES: "役職",
-	CLIPBOARD_CREW: "クルー",
-	CLIPBOARD_IMPOSTOR: "インポスター",
-	CLIPBOARD_NEUTRAL: "ニュートラル",
-	CLIPBOARD_LIBERAL: "リベラル",
-	CLIPBOARD_DETAILED_SETTINGS: "詳細設定",
-	CLIPBOARD_OTHERS: "その他",
-	CLIPBOARD_OTHERS_NOTE: "※ : 何かあればここに書くとよろし",
-	CLIPBOARD_VANILLA_SUFFIX: "※バニラ",
-	CLIPBOARD_COPY_BUTTON: "クリップボードにコピー",
-	CLIPBOARD_COPY_SUCCESS: "設定をクリップボードにコピーしました",
-};
+export const translationMetaData: TranslationMetaDataRecords = {};
 
 export const exrOptionMetaData: ExROptionMetaDataRecords = {
 	// ExRTabIdはAPIから取得したデータに基づいて動的に構築され全てあることが保証されるため、初期値は空のオブジェクトで問題ありません
@@ -170,6 +107,73 @@ interface ExRinitializeData {
 }
 
 export async function fetchTranslationMetaData(): Promise<void> {
+	const batchKeys = [
+		"SYNC_BUTTON_TITLE",
+		"IMPORT_BUTTON_TITLE",
+		"IMPORT_CONFIRM_TITLE",
+		"IMPORT_CONFIRM_MESSAGE",
+		"EXPORT_CSV_LABEL",
+		"EXPORT_CSV_TITLE",
+		"CANCEL",
+		"VIEWER_ROW_TITLE",
+		"ROLE_SPAWN_RATE",
+		"ROLE_SPAWN_COUNT",
+		"CLOSE",
+		"CONFIRM",
+		"PRESET_SWITCH_TITLE",
+		"PRESET_SWITCH_MESSAGE",
+		"PRESET_INPUT_PLACEHOLDER",
+		"AU_SETTINGS_TITLE",
+		"EXR_SETTINGS_TITLE",
+		"EXR_CONTENT_TEMP",
+		"ROLE_FILTER_ADD_TITLE",
+		"ROLE_FILTER_ADD_BUTTON",
+		"ROLE_FILTER_UNKNOWN_ROLE",
+		"ROLE_FILTER_ROLE_ADD_TITLE",
+		"ROLE_FILTER_ASSIGN_NUM_LABEL",
+		"ROLE_FILTER_ROLE_ADD_BUTTON",
+		"ROLE_FILTER_EMPTY_MESSAGE",
+		"ROLE_FILTER_DELETE_CONFIRM_TITLE",
+		"ROLE_FILTER_DELETE_CONFIRM_MESSAGE",
+		"ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE",
+		"ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE",
+		"ROLE_FILTER_NO_ROLES",
+		"ROLE_SELECT_SEARCH_PLACEHOLDER",
+		"OPTION_SEARCH_PLACEHOLDER",
+		"ROLE_SELECT_DEFAULT_TITLE",
+		"CSV_FILE_DESCRIPTION",
+		"SYNCHRONIZING",
+		"RIGHT_PANEL_TITLE",
+		"AU_OPTIONS_TITLE",
+		"SETTINGS_TITLE",
+		"ROLE_FILTER_SHORT_LABEL",
+		"ON",
+		"OFF",
+		"RANDOM_MAP_LABEL",
+		"NOT_FOUND",
+		"SETTINGS_UNDER_PREPARATION",
+		"OK",
+		"SEARCH_NO_RESULTS",
+		"CLIPBOARD_SETTING_TITLE",
+		"CLIPBOARD_FACTION_COUNTS",
+		"CLIPBOARD_ROLES",
+		"CLIPBOARD_CREW",
+		"CLIPBOARD_IMPOSTOR",
+		"CLIPBOARD_NEUTRAL",
+		"CLIPBOARD_LIBERAL",
+		"CLIPBOARD_DETAILED_SETTINGS",
+		"CLIPBOARD_OTHERS",
+		"CLIPBOARD_OTHERS_NOTE",
+		"CLIPBOARD_VANILLA_SUFFIX",
+		"CLIPBOARD_COPY_BUTTON",
+		"CLIPBOARD_COPY_SUCCESS",
+		"optionOff",
+		"optionOn",
+	];
+	const batchBody = batchKeys.map((key) => {
+		return { Key: key };
+	});
+
 	console.log(
 		JSON.stringify({
 			type: "request",
@@ -189,7 +193,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 			type: "request",
 			method: "POST",
 			url: TRANSLATION_BATCH_BASE_URL,
-			body: [{ Key: "optionOff" }, { Key: "optionOn" }],
+			body: batchBody,
 		}),
 	);
 	const [resOptionUnit, resRoleOptionUnit, resBatch] = await Promise.all([
@@ -197,7 +201,10 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		fetch(ROLE_TRANSLATION_BATCH_URL),
 		fetch(TRANSLATION_BATCH_BASE_URL, {
 			method: "POST",
-			body: JSON.stringify([{ Key: "optionOff" }, { Key: "optionOn" }]),
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(batchBody),
 		}),
 	]);
 
@@ -230,7 +237,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 	}
 	if (!resRoleOptionUnit.ok) {
 		throw new Error(
-			`Failed to fetch translation data (optionunit): ${resRoleOptionUnit.statusText}`,
+			`Failed to fetch translation data (role): ${resRoleOptionUnit.statusText}`,
 		);
 	}
 	if (!resBatch.ok) {
@@ -261,6 +268,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		await GetTranslationResponseArraySchema.parseAsync(jsonBatch);
 	const booleanMap: Record<string, string> = {};
 	for (const item of parseBatch) {
+		translationMetaData[item.Key] = item.Result;
 		booleanMap[item.Key.toString()] = item.Result;
 	}
 

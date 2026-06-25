@@ -31,24 +31,24 @@ interface TabItem {
 	shortLabel: string;
 }
 
-const TABS: TabItem[] = [
-	{
-		id: "Au",
-		label: translationMetaData.AU_OPTIONS_TITLE,
-		shortLabel: AU_SHORT_LABEL,
-	},
-	{ id: "ExR", label: EXR_OPTIONS_TITLE, shortLabel: EXR_SHORT_LABEL },
-	{
-		id: "RoleFilter",
-		label: ROLE_FILTER_TITLE,
-		shortLabel: translationMetaData.ROLE_FILTER_SHORT_LABEL,
-	},
-];
-
 /**
  * サイドバーコンポーネント
  */
 export function OptionGroupToggleSidebar() {
+	const tabs: TabItem[] = [
+		{
+			id: "Au",
+			label: translationMetaData.AU_OPTIONS_TITLE,
+			shortLabel: AU_SHORT_LABEL,
+		},
+		{ id: "ExR", label: EXR_OPTIONS_TITLE, shortLabel: EXR_SHORT_LABEL },
+		{
+			id: "RoleFilter",
+			label: ROLE_FILTER_TITLE,
+			shortLabel: translationMetaData.ROLE_FILTER_SHORT_LABEL,
+		},
+	];
+
 	const selectedTab = useStore((state) => {
 		return state.selectedTab;
 	});
@@ -89,7 +89,7 @@ export function OptionGroupToggleSidebar() {
 
 			<SidebarContent>
 				<SidebarMenu className="group-data-[collapsible=icon]:items-center">
-					{TABS.map((tab) => {
+					{tabs.map((tab) => {
 						return (
 							<SidebarMenuItem key={tab.id}>
 								<SidebarMenuButton

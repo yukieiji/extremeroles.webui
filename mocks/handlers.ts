@@ -14,6 +14,7 @@ import exrOptionData from './get/exr/setting-webui-dev_20260608.json';
 import auOptionData from './get/au/setting-webui-dev_20260607.json';
 import roleFilterData from './get/exr/roleassign-dev_20260503.json';
 import roleTransData from './get/exr/role-trans-dev_20260621.json';
+import { mockTranslations } from './mockTranslations';
 
 /**
  * Zodを使用してロードしたデータのバリデーションを実施
@@ -173,19 +174,16 @@ export const handlers = [
   /**
    * GET /au/translation/batch/ のハンドラー
    */
-  http.post('/au/translation/batch/', () => {
-    return HttpResponse.json([
-      {
-        Key: 'optionOff',
+  http.post('/au/translation/batch/', async ({ request }) => {
+    const body = await request.json() as { Key: string }[];
+    const result = body.map(item => {
+      return {
+        Key: item.Key,
         Param: [],
-        Result: '<color=#ff0000>OFF</color>'
-      },
-      {
-        Key: 'optionOn',
-        Param: [],
-        Result: '<color=#00ff00>ON</color>'
-      }
-    ]);
+        Result: mockTranslations[item.Key] ?? item.Key
+      };
+    });
+    return HttpResponse.json(result);
   }),
 
   /**
