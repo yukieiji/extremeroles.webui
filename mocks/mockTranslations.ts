@@ -20,7 +20,7 @@ export const mockTranslations: Record<string, string> = {
 	ROLE_FILTER_ADD_BUTTON: "フィルターを追加",
 	ROLE_FILTER_UNKNOWN_ROLE: "Unknown Role",
 	RoleAssignFilterAddRole: "役職の追加",
-	ROLE_FILTER_ASSIGN_NUM_LABEL: "AssignNum: {0}",
+	RoleAssignFilterAssignNum: "AssignNum",
 	ROLE_FILTER_EMPTY_MESSAGE:
 		"フィルターがありません。「フィルターを追加」ボタンから作成してください。",
 	ROLE_FILTER_DELETE_CONFIRM_TITLE: "フィルターの削除",

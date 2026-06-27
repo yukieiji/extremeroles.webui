@@ -105,7 +105,7 @@ export function RoleFilterCardHeader({
 				<span
 					className={`${TYPOGRAPHY.LABEL} text-text-primary px-2 min-w-36 tabular-nums`}
 				>
-					{format(translationMetaData.ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
+					{translationMetaData.RoleAssignFilterAssignNum}: {assignNum}
 				</span>
 				<ButtonGroup orientation="vertical">
 					<Button

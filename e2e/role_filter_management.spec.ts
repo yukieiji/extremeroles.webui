@@ -90,7 +90,7 @@ test.describe("Role Filter Management", () => {
 		const lastFilter = page.getByTestId("role-filter-card").last();
 
 		// Open role select dialog to add another role
-		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
+		await lastFilter.getByRole("button", { name: "役職の追加" }).click();
 		await expect(page.getByText("役職の追加")).toBeVisible();
 
 		// Search for a role (using mock data role names: Opener)

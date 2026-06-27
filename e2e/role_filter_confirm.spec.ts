@@ -76,7 +76,7 @@ test.describe("Role Filter Confirm Button Response", () => {
 		).not.toBeVisible();
 
 		const lastFilter = page.getByTestId("role-filter-card").last();
-		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
+		await lastFilter.getByRole("button", { name: "役職の追加" }).click();
 		await expect(page.getByText("役職の追加")).toBeVisible();
 
 		const openerCheckbox = page.getByRole("checkbox", {

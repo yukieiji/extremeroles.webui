@@ -129,7 +129,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"ROLE_FILTER_ADD_BUTTON",
 		"ROLE_FILTER_UNKNOWN_ROLE",
 		"RoleAssignFilterAddRole",
-		"ROLE_FILTER_ASSIGN_NUM_LABEL",
+		"RoleAssignFilterAssignNum",
 		"ROLE_FILTER_EMPTY_MESSAGE",
 		"ROLE_FILTER_DELETE_CONFIRM_TITLE",
 		"ROLE_FILTER_DELETE_CONFIRM_MESSAGE",
