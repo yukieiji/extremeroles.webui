@@ -20,14 +20,7 @@ export function RoleFilterViewer() {
 			<div className="p-2">
 				<RoleFilterAddButton />
 			</div>
-
-			{filterEntries.length === 0 ? (
-				<div className="bg-n4-components-background border border-dashed border-border-strong rounded-lg text-center shadow-md">
-					<p className={`${TYPOGRAPHY.LABEL} text-text-secondary`}>
-						{translationMetaData.ROLE_FILTER_EMPTY_MESSAGE}
-					</p>
-				</div>
-			) : (
+			{filterEntries.length !== 0 && (
 				<div
 					data-testid="role-filter-list"
 					className="p-2 gap-4 grid grid-cols-1 @md:grid-cols-2 @3xl:grid-cols-3 overflow-y-scroll"
