@@ -16,7 +16,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 	return (
 		<div className="flex items-center gap-4">
 			<OptionSliderControl
-				label={translationMetaData.ROLE_SPAWN_RATE}
+				label={translationMetaData.SpawnRate}
 				values={rate.values}
 				selection={rate.currentSelection}
 				onChange={rate.onSelectionChange}
@@ -26,7 +26,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				inputClassName="w-24"
 			/>
 			<OptionSliderControl
-				label={translationMetaData.ROLE_SPAWN_COUNT}
+				label={translationMetaData.RoleNum}
 				values={num.values}
 				selection={num.currentSelection}
 				onChange={num.onSelectionChange}

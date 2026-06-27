@@ -109,15 +109,14 @@ interface ExRinitializeData {
 export async function fetchTranslationMetaData(): Promise<void> {
 	const batchKeys = [
 		"SYNC_BUTTON_TITLE",
-		"IMPORT_BUTTON_TITLE",
+		"importCsv",
 		"IMPORT_CONFIRM_TITLE",
 		"IMPORT_CONFIRM_MESSAGE",
-		"EXPORT_CSV_LABEL",
-		"EXPORT_CSV_TITLE",
+		"exportCsv",
 		"CANCEL",
 		"VIEWER_ROW_TITLE",
-		"ROLE_SPAWN_RATE",
-		"ROLE_SPAWN_COUNT",
+		"SpawnRate",
+		"RoleNum",
 		"CLOSE",
 		"CONFIRM",
 		"PRESET_SWITCH_TITLE",
@@ -129,9 +128,8 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"ROLE_FILTER_ADD_TITLE",
 		"ROLE_FILTER_ADD_BUTTON",
 		"ROLE_FILTER_UNKNOWN_ROLE",
-		"ROLE_FILTER_ROLE_ADD_TITLE",
+		"RoleAssignFilterAddRole",
 		"ROLE_FILTER_ASSIGN_NUM_LABEL",
-		"ROLE_FILTER_ROLE_ADD_BUTTON",
 		"ROLE_FILTER_EMPTY_MESSAGE",
 		"ROLE_FILTER_DELETE_CONFIRM_TITLE",
 		"ROLE_FILTER_DELETE_CONFIRM_MESSAGE",
@@ -147,8 +145,6 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"AU_OPTIONS_TITLE",
 		"SETTINGS_TITLE",
 		"ROLE_FILTER_SHORT_LABEL",
-		"ON",
-		"OFF",
 		"RANDOM_MAP_LABEL",
 		"NOT_FOUND",
 		"SETTINGS_UNDER_PREPARATION",
@@ -159,8 +155,8 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"CLIPBOARD_ROLES",
 		"CLIPBOARD_CREW",
 		"CLIPBOARD_IMPOSTOR",
-		"CLIPBOARD_NEUTRAL",
-		"CLIPBOARD_LIBERAL",
+		"Neutral",
+		"Liberal",
 		"CLIPBOARD_DETAILED_SETTINGS",
 		"CLIPBOARD_OTHERS",
 		"CLIPBOARD_OTHERS_NOTE",
@@ -275,6 +271,10 @@ export async function fetchTranslationMetaData(): Promise<void> {
 	// オン/オフは数値キーで保存する
 	translationMetaData[0] = booleanMap.optionOff;
 	translationMetaData[1] = booleanMap.optionOn;
+
+	// ON/OFFキーも設定
+	translationMetaData.OFF = booleanMap.optionOff;
+	translationMetaData.ON = booleanMap.optionOn;
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {

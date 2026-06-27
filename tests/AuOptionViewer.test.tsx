@@ -73,8 +73,8 @@ describe("AuOptionViewer", () => {
 					return Promise.resolve({
 						ok: true,
 						json: vi.fn().mockResolvedValue([
-							{ Key: "optionOff", Result: "OFF", Param: [] },
-							{ Key: "optionOn", Result: "ON", Param: [] },
+							{ Key: "OFF", Result: "OFF", Param: [] },
+							{ Key: "ON", Result: "ON", Param: [] },
 						]),
 					} as unknown as Response);
 				}

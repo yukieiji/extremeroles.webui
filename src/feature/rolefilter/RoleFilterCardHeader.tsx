@@ -70,7 +70,7 @@ export function RoleFilterCardHeader({
 	const onOpenRoleSelect = () => {
 		openBlockDialog({
 			type: "roleSelect",
-			title: translationMetaData.ROLE_FILTER_ROLE_ADD_TITLE,
+			title: translationMetaData.RoleAssignFilterAddRole,
 			searchQuery: "",
 			excludeRoleIds: excludeRoleIds,
 			selectedRoleIds: [],
@@ -124,7 +124,7 @@ export function RoleFilterCardHeader({
 				className={`${TYPOGRAPHY.LABEL} text-text-primary w-full col-span-full`}
 			>
 				<Plus size={12} />
-				{translationMetaData.ROLE_FILTER_ROLE_ADD_BUTTON}
+				{translationMetaData.RoleAssignFilterAddRole}
 			</Button>
 		</>
 	);

@@ -529,7 +529,7 @@ describe("generateClipboardText", () => {
 		const text = generateClipboardText(stateWithRoles, mockExrMeta, mockAuMeta);
 		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_IMPOSTOR}`);
 		expect(text).toContain(" - ExR Impostor --- **1 / 100%**");
-		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_NEUTRAL}`);
+		expect(text).toContain(`### ${translationMetaData.Neutral}`);
 		expect(text).toContain(" - ExR Neutral --- **1 / 100%**");
 	});
 

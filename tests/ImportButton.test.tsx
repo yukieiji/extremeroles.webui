@@ -10,7 +10,7 @@ describe("ImportButton", () => {
 		const button = screen.getByRole("button");
 		expect(button).toBeInTheDocument();
 		expect(button).toContainElement(
-			screen.getByText(translationMetaData.IMPORT_BUTTON_TITLE),
+			screen.getByText(translationMetaData.importCsv),
 		);
 		expect(button.querySelector("svg")).toBeInTheDocument();
 	});

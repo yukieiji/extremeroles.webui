@@ -380,10 +380,10 @@ export function generateClipboardText(
 		text += `### ${translationMetaData.CLIPBOARD_IMPOSTOR}\n${formatRoleList(impostorRolesList)}`;
 	}
 	if (neutralRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_NEUTRAL}\n${formatRoleList(neutralRolesList)}`;
+		text += `### ${translationMetaData.Neutral}\n${formatRoleList(neutralRolesList)}`;
 	}
 	if (liberalRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_LIBERAL}\n${formatRoleList(liberalRolesList)}`;
+		text += `### ${translationMetaData.Liberal}\n${formatRoleList(liberalRolesList)}`;
 	}
 
 	text += `\n## ${translationMetaData.CLIPBOARD_DETAILED_SETTINGS}\n${detailedSettings}\n`;

@@ -132,7 +132,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 
 		// Add role
 		const addRoleButton = screen.getByText(
-			translationMetaData.ROLE_FILTER_ROLE_ADD_BUTTON,
+			translationMetaData.RoleAssignFilterAddRole,
 		);
 		await act(async () => {
 			fireEvent.click(addRoleButton);
