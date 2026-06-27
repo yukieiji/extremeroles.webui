@@ -27,7 +27,6 @@ import { getAllOptions, resetApiCache } from "./logics/api.store";
 import {
 	AU_OPTIONS_TITLE,
 	EXR_OPTIONS_TITLE,
-	ROLE_FILTER_TITLE,
 } from "./noTrans";
 import { useStore } from "./useStore";
 
@@ -88,7 +87,7 @@ function MainContent() {
 	const titleMap = {
 		Au: AU_OPTIONS_TITLE,
 		ExR: EXR_OPTIONS_TITLE,
-		RoleFilter: ROLE_FILTER_TITLE,
+		RoleFilter: translationMetaData.RoleAssignFilter,
 	};
 
 	return (
