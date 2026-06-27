@@ -374,10 +374,10 @@ export function generateClipboardText(
 
 	text += `## ${translationMetaData.CLIPBOARD_ROLES}\n`;
 	if (crewRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_CREW}\n${formatRoleList(crewRolesList)}`;
+		text += `### ${translationMetaData.Crewmate}\n${formatRoleList(crewRolesList)}`;
 	}
 	if (impostorRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_IMPOSTOR}\n${formatRoleList(impostorRolesList)}`;
+		text += `### ${translationMetaData.Impostor}\n${formatRoleList(impostorRolesList)}`;
 	}
 	if (neutralRolesList.length > 0) {
 		text += `### ${translationMetaData.Neutral}\n${formatRoleList(neutralRolesList)}`;

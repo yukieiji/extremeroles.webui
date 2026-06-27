@@ -112,7 +112,7 @@ export function RoleSelectDialog({
 			</div>
 			<DialogFooter>
 				<Button variant="outline" onClick={onCancel}>
-					{translationMetaData.CLOSE}
+					{translationMetaData.Close}
 				</Button>
 				<Button
 					disabled={selectedRoleIds.length === 0}

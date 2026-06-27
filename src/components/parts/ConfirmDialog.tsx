@@ -32,7 +32,7 @@ export function ConfirmDialog({
 			</DialogHeader>
 			<DialogFooter>
 				<Button variant="outline" onClick={onCancel}>
-					{translationMetaData.CANCEL}
+					{translationMetaData.Cancel}
 				</Button>
 				<Button onClick={onConfirm}>{translationMetaData.OK}</Button>
 			</DialogFooter>

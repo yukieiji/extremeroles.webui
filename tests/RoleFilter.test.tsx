@@ -9,6 +9,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RoleFilterViewer } from "@/feature/rolefilter/RoleFilterViewer";
 import { postRoleFilterUpdate, translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
+import { mockTranslations } from "../mocks/mockTranslations";
 
 // Mock api.ts
 vi.mock("@/logics/api", async (importOriginal) => {
@@ -28,6 +29,7 @@ vi.mock("@/logics/api", async (importOriginal) => {
 describe("RoleFilterViewer and RoleFilterCard", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
+		Object.assign(translationMetaData, mockTranslations);
 		act(() => {
 			useStore.setState({
 				roleFilterSet: {},
@@ -72,8 +74,12 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 			expect(postRoleFilterUpdate).toHaveBeenCalledTimes(2);
 		});
 
-		expect(screen.getByText("AssignNum: 1")).toBeInTheDocument();
-		expect(screen.getByText("Crewmate")).toBeInTheDocument();
+		expect(
+			screen.getByText(
+				new RegExp(`${translationMetaData.RoleAssignFilterAssignNum}.*1`),
+			),
+		).toBeInTheDocument();
+		expect(screen.getByText(translationMetaData.Crewmate)).toBeInTheDocument();
 	});
 
 	it("deletes a filter with confirmation", async () => {
@@ -157,7 +163,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 		// Remove role
 		const pins = screen.getAllByTestId("role-pin");
 		const crewmatePin = pins.find((pin) =>
-			pin.textContent?.includes("Crewmate"),
+			pin.textContent?.includes(translationMetaData.Crewmate),
 		);
 		if (!crewmatePin) {
 			throw new Error("Crewmate pin not found");

@@ -69,7 +69,7 @@ function SheetContent({
 						}
 					>
 						<XIcon />
-						<span className="sr-only">{translationMetaData.CLOSE}</span>
+						<span className="sr-only">{translationMetaData.Close}</span>
 					</SheetPrimitive.Close>
 				)}
 			</SheetPrimitive.Popup>
