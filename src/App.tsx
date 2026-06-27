@@ -24,10 +24,7 @@ import {
 } from "./hooks/useBackend";
 import { postExrCsv, translationMetaData } from "./logics/api";
 import { getAllOptions, resetApiCache } from "./logics/api.store";
-import {
-	AU_OPTIONS_TITLE,
-	EXR_OPTIONS_TITLE,
-} from "./noTrans";
+import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE } from "./noTrans";
 import { useStore } from "./useStore";
 
 /**

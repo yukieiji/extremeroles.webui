@@ -69,7 +69,7 @@ function DialogContent({
 						}
 					>
 						<XIcon />
-					<span className="sr-only">{translationMetaData.Close}</span>
+						<span className="sr-only">{translationMetaData.Close}</span>
 					</DialogPrimitive.Close>
 				)}
 			</DialogPrimitive.Popup>
