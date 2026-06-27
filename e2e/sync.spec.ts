@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
@@ -15,8 +16,8 @@ test("synchronization updates data and preserves UI state", async ({
 	// 1. Initial state check
 	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
-	// 2. Change tab to ExR and open a category
-	await page.getByRole("button", { name: "Extreme Roles" }).click();
+	// Extreme Roles Menuに切り替え（サイドバー内のボタンに限定）
+	await getSidebarButton(page, "Extreme Roles").click();
 	await expect(
 		page.getByRole("heading", { name: "Extreme Roles" }),
 	).toBeVisible();

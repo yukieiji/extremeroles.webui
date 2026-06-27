@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSideber } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
@@ -17,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("ExR toggle switch should be visible and functional", async ({ page }) => {
-	const sidebar = page.locator('[data-slot="sidebar"]');
+	const sidebar = getSideber(page);
 
 	// Extreme Roles に切り替え
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();

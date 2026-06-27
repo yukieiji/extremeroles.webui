@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton, getSideber } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
@@ -14,7 +15,7 @@ test("初期ロード時にローディング画面が表示されること", as
 	await page.goto("/");
 	// index.html に仕込んだ Loading data... またはサイドバーが表示されるまで待機
 	const loadingText = page.getByText("Loading data...");
-	const sidebar = page.locator('[data-slot="sidebar"]');
+	const sidebar = getSideber(page);
 	await expect(loadingText.or(sidebar)).toBeVisible({ timeout: 30000 });
 });
 
@@ -22,11 +23,11 @@ test("サイドバー切り替え時にメインコンテンツが表示され�
 	page,
 }) => {
 	await page.goto("/");
-	const sidebar = page.locator('[data-slot="sidebar"]');
+	const sidebar = getSideber(page);
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 
 	// Extreme Roles に切り替え
-	await page.getByRole("button", { name: "Extreme Roles" }).click();
+	await getSidebarButton(page, "Extreme Roles").click();
 
 	// 切り替え後のコンテンツが表示されることを確認
 	await expect(
@@ -38,11 +39,11 @@ test("サイドバー切り替え時にメインコンテンツが表示され�
 
 test("ExRタブ切り替え時にカテゴリリストが表示されること", async ({ page }) => {
 	await page.goto("/");
-	await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
+	await expect(getSideber(page)).toBeVisible({
 		timeout: 30000,
 	});
 
-	await page.getByRole("button", { name: "Extreme Roles" }).click();
+	await getSidebarButton(page, "Extreme Roles").click();
 	await expect(
 		page.getByRole("heading", { name: "Extreme Roles" }),
 	).toBeVisible({

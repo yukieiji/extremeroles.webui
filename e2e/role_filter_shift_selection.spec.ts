@@ -3,7 +3,12 @@ import { expect, test } from "@playwright/test";
 test.describe("Role Filter Shift Selection", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("/");
+		// ローディング画面が消えるのを待つ
 		await expect(page.getByText("Loading data...")).not.toBeVisible({
+			timeout: 30000,
+		});
+		// サイドバーが操作可能な状態になるのを待つ（webkit対策）
+		await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 			timeout: 30000,
 		});
 	});

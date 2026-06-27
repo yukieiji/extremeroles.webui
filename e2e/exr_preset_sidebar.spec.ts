@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton, getSideber } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
@@ -52,7 +53,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	await expect(rightPanel).toBeVisible();
 
 	// ExR タブが選択されていることを確認
-	const exrTabButton = page.getByRole("button", { name: "Extreme Roles" });
+	const exrTabButton = getSidebarButton(page, "Extreme Roles");
 	await expect(exrTabButton).toHaveAttribute("data-active", "");
 
 	// プリセットセレクターがハイライトされていることを確認
@@ -66,9 +67,8 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 });
 
 test("Updating preset name reflects in right sidebar", async ({ page }) => {
-	const _rightPanel = page.getByTestId("right-side-panel");
 	// 1. ExR タブに切り替え
-	const sidebar = page.locator('[data-slot="sidebar"]');
+	const sidebar = getSideber(page);
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// 2. プリセット名を変更
