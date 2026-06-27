@@ -142,7 +142,6 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"CSV_FILE_DESCRIPTION",
 		"SYNCHRONIZING",
 		"RIGHT_PANEL_TITLE",
-		"AU_OPTIONS_TITLE",
 		"SETTINGS_TITLE",
 		"ROLE_FILTER_SHORT_LABEL",
 		"RANDOM_MAP_LABEL",

@@ -36,7 +36,6 @@ export const mockTranslations: Record<string, string> = {
 	CSV_FILE_DESCRIPTION: "CSV File",
 	SYNCHRONIZING: "Synchronizing...",
 	RIGHT_PANEL_TITLE: "Right Panel",
-	AU_OPTIONS_TITLE: "Among Us",
 	SETTINGS_TITLE: "設定",
 	ROLE_FILTER_SHORT_LABEL: "R",
 	RANDOM_MAP_LABEL: "ランダム",

@@ -24,7 +24,11 @@ import {
 } from "./hooks/useBackend";
 import { postExrCsv, translationMetaData } from "./logics/api";
 import { getAllOptions, resetApiCache } from "./logics/api.store";
-import { EXR_OPTIONS_TITLE, ROLE_FILTER_TITLE } from "./noTrans";
+import {
+	AU_OPTIONS_TITLE,
+	EXR_OPTIONS_TITLE,
+	ROLE_FILTER_TITLE,
+} from "./noTrans";
 import { useStore } from "./useStore";
 
 /**
@@ -82,7 +86,7 @@ function MainContent() {
 	const exporter = useExportCsv();
 
 	const titleMap = {
-		Au: translationMetaData.AU_OPTIONS_TITLE,
+		Au: AU_OPTIONS_TITLE,
 		ExR: EXR_OPTIONS_TITLE,
 		RoleFilter: ROLE_FILTER_TITLE,
 	};

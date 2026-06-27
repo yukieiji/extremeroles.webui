@@ -14,6 +14,7 @@ import {
 import { TYPOGRAPHY } from "../designConstants";
 import { translationMetaData } from "../logics/api";
 import {
+	AU_OPTIONS_TITLE,
 	AU_SHORT_LABEL,
 	EXR_OPTIONS_TITLE,
 	EXR_SHORT_LABEL,
@@ -38,7 +39,7 @@ export function OptionGroupToggleSidebar() {
 	const tabs: TabItem[] = [
 		{
 			id: "Au",
-			label: translationMetaData.AU_OPTIONS_TITLE,
+			label: AU_OPTIONS_TITLE,
 			shortLabel: AU_SHORT_LABEL,
 		},
 		{ id: "ExR", label: EXR_OPTIONS_TITLE, shortLabel: EXR_SHORT_LABEL },
