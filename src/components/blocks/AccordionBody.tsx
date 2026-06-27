@@ -31,9 +31,7 @@ export function AccordionBody({
 					className={"w-5 h-5 text-text-primary "}
 					isOpen={isOpen}
 				/>
-				<span
-					className={`${TYPOGRAPHY.LABEL} font-semibold text-text-primary p-1`}
-				>
+				<span className={`${TYPOGRAPHY.LABEL} text-text-primary p-1`}>
 					{title}
 				</span>
 			</button>

@@ -1,5 +1,6 @@
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { OptionDropdownControl } from "@/components/parts/OptionDropdownControl";
+import { TYPOGRAPHY } from "@/designConstants";
 import { createAuNavigateId } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useUpdateAuOptionSelection } from "@/logics/api.store";
@@ -48,7 +49,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 					<div className="flex items-center">
 						{/* アコーディオンの矢印アイコンのスペースを確保して配置を揃える */}
 						<div className="w-5" />
-						<span className="font-semibold text-text-primary">
+						<span className={`${TYPOGRAPHY.LABEL} text-text-primary`}>
 							{optionMeta.title}
 						</span>
 					</div>
