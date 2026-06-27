@@ -42,8 +42,8 @@ describe("RightSidePanel Component", () => {
 		});
 
 		expect(screen.getByText("Right Panel")).toBeInTheDocument();
-		expect(screen.getByText("AmongUsの設定")).toBeInTheDocument();
-		expect(screen.getByText("ExRの設定")).toBeInTheDocument();
+		expect(screen.getByText("Among Us")).toBeInTheDocument();
+		expect(screen.getByText("Extreme Roles")).toBeInTheDocument();
 	});
 
 	it("toggles panel visibility when toggle button is clicked", async () => {
@@ -127,7 +127,7 @@ describe("RightSidePanel Component", () => {
 		});
 
 		const auSettingsButton = screen.getByRole("button", {
-			name: /AmongUsの設定/i,
+			name: /Among Us/i,
 		});
 		fireEvent.click(auSettingsButton);
 

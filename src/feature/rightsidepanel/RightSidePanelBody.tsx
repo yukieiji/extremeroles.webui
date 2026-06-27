@@ -11,6 +11,7 @@ import {
 	translationMetaData,
 } from "@/logics/api";
 import { generateClipboardText } from "@/logics/clipboardLogic";
+import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
@@ -69,14 +70,14 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 					<div className="py-4">
 						<RightPanelGroupColumnLayout>
 							<ViewerGroupAccordion
-								title={translationMetaData.AU_SETTINGS_TITLE}
+								title={AU_OPTIONS_TITLE}
 								isOpen={isAuSettingsOpen}
 								onToggle={toggleAuSettings}
 							>
 								<AuOptionViewer />
 							</ViewerGroupAccordion>
 							<ViewerGroupAccordion
-								title={translationMetaData.EXR_SETTINGS_TITLE}
+								title={EXR_OPTIONS_TITLE}
 								isOpen={isExrSettingsOpen}
 								onToggle={toggleExrSettings}
 							>
