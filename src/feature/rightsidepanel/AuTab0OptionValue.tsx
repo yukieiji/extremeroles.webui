@@ -2,6 +2,7 @@ import { ColoredText } from "@/components/parts/ColoredText";
 import { OptionFormat } from "@/components/parts/OptionFormat";
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
+import { stripColorTags } from "@/logics/colorUtils";
 
 interface AuTab0OptionValueProps {
 	value: string | number | boolean;
@@ -18,10 +19,7 @@ export function AuTab0OptionValue({ value, format }: AuTab0OptionValueProps) {
 		<div className="flex items-end shrink-0">
 			{isBoolean ? (
 				<ColoredText
-					text={
-						translationMetaData[value ? 1 : 0] ||
-						(value ? translationMetaData.ON : translationMetaData.OFF)
-					}
+					text={stripColorTags(translationMetaData[value ? 1 : 0] || "")}
 					variant="secondary"
 					className={`${TYPOGRAPHY.CHILD_LABEL} text-right`}
 				/>

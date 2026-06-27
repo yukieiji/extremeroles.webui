@@ -271,10 +271,6 @@ export async function fetchTranslationMetaData(): Promise<void> {
 	// オン/オフは数値キーで保存する
 	translationMetaData[0] = booleanMap.optionOff;
 	translationMetaData[1] = booleanMap.optionOn;
-
-	// ON/OFFキーも設定
-	translationMetaData.OFF = booleanMap.optionOff;
-	translationMetaData.ON = booleanMap.optionOn;
 }
 
 export async function createExROptionMetaData(): Promise<ExRinitializeData> {
