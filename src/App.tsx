@@ -68,9 +68,9 @@ function MainContent() {
 			data-testid="main-content-section"
 			className="flex flex-col transition-opacity duration-200 h-full overflow-hidden"
 		>
-			<div className="px-2 pt-4 flex items-center flex-wrap">
-				<div className="flex items-center flex-1">
-					<h2 className="px-4 text-2xl font-bold whitespace-nowrap text-text-primary">
+			<div className="px-4 pt-4 flex items-center flex-wrap">
+				<div className="flex items-center flex-1 gap-4">
+					<h2 className="text-2xl font-bold whitespace-nowrap text-text-primary">
 						{titleMap[selectedTab]}
 					</h2>
 					<div className="flex flex-row gap-4 flex-wrap">
