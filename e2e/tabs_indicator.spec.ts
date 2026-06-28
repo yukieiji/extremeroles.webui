@@ -31,7 +31,7 @@ test.describe("Tabs Indicator Styling", () => {
 			(el as HTMLElement).style.getPropertyValue("--tab-color").trim(),
 		);
 		// playwright can receive hex or rgb depending on browser/how it was set
-		expect(colorVar.toLowerCase()).toMatch(/^(rgb\(140, 255, 255\)|#8cff00)$/);
+		expect(colorVar.toLowerCase()).toMatch(/^(rgb\(140, 255, 255\)|#8cffff)$/);
 
 		// Select Tab 2 (Impostor - Red)
 		const tab2 = page.getByRole("tab", { name: "インポスター", exact: true });
@@ -39,7 +39,7 @@ test.describe("Tabs Indicator Styling", () => {
 		const colorVar2 = await tab2.evaluate((el) =>
 			(el as HTMLElement).style.getPropertyValue("--tab-color").trim(),
 		);
-		expect(colorVar2.toLowerCase()).toMatch(/^(rgb\(255, 25, 25\)|#ff0000)$/);
+		expect(colorVar2.toLowerCase()).toMatch(/^(rgb\(255, 25, 25\)|#ff1919)$/);
 	});
 
 	test("ExR Tab active indicator should support gradients", async ({
