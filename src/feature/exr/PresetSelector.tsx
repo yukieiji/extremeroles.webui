@@ -1,5 +1,6 @@
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { Select } from "@/components/ui/select";
+import { TYPOGRAPHY } from "@/designConstants";
 import { useBackendUpdate } from "@/hooks/useBackend";
 import { useOptionData } from "@/hooks/useExROptionData";
 import { createExRNavigateId } from "@/hooks/useOptionNavigation";
@@ -66,21 +67,26 @@ export function PresetSelector() {
 	const navigateId = createExRNavigateId(PRESET_OPTION_UNIQUE_ID);
 
 	return (
-		<HighlightWrapper
-			id={navigateId}
-			isHighlighted={isHighlighted}
-			isInset={false}
-		>
-			<Select
-				value={String(currentSelection)}
-				onValueChange={handlePresetSelect}
+		<div className="flex flex-col gap-1">
+			<span className={`${TYPOGRAPHY.SMALL} text-text-primary`}>
+				{translationMetaData.PresetOption}
+			</span>
+			<HighlightWrapper
+				id={navigateId}
+				isHighlighted={isHighlighted}
+				isInset={false}
 			>
-				<PresetInput
-					currentSelection={currentSelection}
-					currentPresetValue={currentPresetValue}
-				/>
-				<PresetDropdown presetValues={presetValues} />
-			</Select>
-		</HighlightWrapper>
+				<Select
+					value={String(currentSelection)}
+					onValueChange={handlePresetSelect}
+				>
+					<PresetInput
+						currentSelection={currentSelection}
+						currentPresetValue={currentPresetValue}
+					/>
+					<PresetDropdown presetValues={presetValues} />
+				</Select>
+			</HighlightWrapper>
+		</div>
 	);
 }
