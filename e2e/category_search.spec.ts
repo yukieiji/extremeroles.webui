@@ -20,7 +20,7 @@ test.describe("Category Search", () => {
 		const suggestion = popover
 			.getByRole("button")
 			.filter({ hasText: "会議" })
-			.filter({ hasText: "0" })
+			.filter({ hasText: "ゲーム設定" })
 			.first();
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();
@@ -48,7 +48,7 @@ test.describe("Category Search", () => {
 		const suggestion = popover
 			.getByRole("button")
 			.filter({ hasText: "マップ" })
-			.filter({ hasText: "0" })
+			.filter({ hasText: "ゲーム設定" })
 			.first();
 		await expect(suggestion).toBeVisible({ timeout: 10000 });
 		await suggestion.click();

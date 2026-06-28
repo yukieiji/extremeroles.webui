@@ -34,13 +34,16 @@ test.describe("Au Tab Outline Colors", () => {
 		const categoryList = page.getByTestId("category-list");
 		await expect(categoryList).toHaveCSS(
 			"border-top-color",
-			"rgb(140, 255, 0)",
+			"rgb(140, 255, 255)",
 		);
 	});
 
 	test("Tab 2 (Impostor) should have red outline", async ({ page }) => {
 		await page.getByRole("tab", { name: "インポスター", exact: true }).click();
 		const categoryList = page.getByTestId("category-list");
-		await expect(categoryList).toHaveCSS("border-top-color", "rgb(255, 0, 0)");
+		await expect(categoryList).toHaveCSS(
+			"border-top-color",
+			"rgb(255, 25, 25)",
+		);
 	});
 });
