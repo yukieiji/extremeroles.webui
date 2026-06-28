@@ -13,7 +13,6 @@ export const mockTranslations: Record<string, string> = {
 	PRESET_SWITCH_TITLE: "プリセットの切り替え",
 	PRESET_SWITCH_MESSAGE: "プリセットを「{0}」から「{1}」に切り替えます",
 	PRESET_INPUT_PLACEHOLDER: "プリセット名を入力...",
-	EXR_CONTENT_TEMP: "ExRの設定コンテンツ",
 	ROLE_FILTER_ADD_TITLE: "フィルター追加: 役職の選択",
 	ROLE_FILTER_ADD_BUTTON: "フィルターを追加",
 	ROLE_FILTER_UNKNOWN_ROLE: "Unknown Role",
