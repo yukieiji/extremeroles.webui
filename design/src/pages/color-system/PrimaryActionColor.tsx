@@ -67,12 +67,10 @@ export default function PrimaryActionColor() {
             <div className="flex items-center gap-4">
               <Button
                 onClick={() => handleDummyClick("ExportButton")}
-                title={translationMetaData.EXPORT_CSV_TITLE}
-                aria-label={translationMetaData.EXPORT_CSV_TITLE}
                 className={primaryActionClass}
               >
                 <Download />
-                {translationMetaData.EXPORT_CSV_LABEL}
+                {translationMetaData.exportCsv}
               </Button>
               <span className="text-xs text-gray-400">
                 アイコンとテキストの主要アクション

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSideber } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
@@ -17,13 +18,13 @@ test.beforeEach(async ({ page }) => {
 	});
 
 	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
-	await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
+	await expect(getSideber(page)).toBeVisible({
 		timeout: 30000,
 	});
 });
 
 test("has sidebar and au option editor", async ({ page }) => {
-	const sidebar = page.locator('[data-slot="sidebar"]');
+	const sidebar = getSideber(page);
 
 	// サイドバー内のボタンを明示的に指定
 	await expect(sidebar.getByRole("button", { name: "Among Us" })).toBeVisible();

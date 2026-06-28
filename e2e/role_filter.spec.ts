@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton, getSideber } from "./conftest";
 
 test.describe("Role Filter Tab", () => {
 	test.beforeEach(async ({ page }) => {
@@ -11,7 +12,7 @@ test.describe("Role Filter Tab", () => {
 		});
 
 		// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
-		await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
+		await expect(getSideber(page)).toBeVisible({
 			timeout: 30000,
 		});
 	});
@@ -21,11 +22,11 @@ test.describe("Role Filter Tab", () => {
 	}) => {
 		// Role Filter タブをクリック (ショートカット 'R')
 		// サイドバーが開いている場合(button)と閉じている場合(titleのみ)の両方に対応
-		await page.getByRole("button", { name: "Role Filter" }).click();
+		await getSidebarButton(page, "役職フィルター").click();
 
 		// Role Filter のタイトルが表示されていることを確認
 		await expect(
-			page.getByRole("heading", { name: "Role Filter", exact: true }),
+			page.getByRole("heading", { name: "役職フィルター", exact: true }),
 		).toBeVisible();
 
 		// フィルターカードが表示されていることを確認

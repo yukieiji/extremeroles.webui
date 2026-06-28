@@ -54,7 +54,7 @@ export function ImportButton({ onImport, disabled }: ImportButtonProps) {
 			/>
 			<Button onClick={handleClick} disabled={disabled}>
 				<Upload />
-				{translationMetaData.IMPORT_BUTTON_TITLE}
+				{translationMetaData.importCsv}
 			</Button>
 		</>
 	);

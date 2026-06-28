@@ -13,13 +13,9 @@ interface ExportButtonProps {
  */
 export function ExportButton({ onClick, disabled }: ExportButtonProps) {
 	return (
-		<Button
-			onClick={onClick}
-			disabled={disabled}
-			title={translationMetaData.EXPORT_CSV_TITLE}
-		>
+		<Button onClick={onClick} disabled={disabled}>
 			<Download />
-			{translationMetaData.EXPORT_CSV_LABEL}
+			{translationMetaData.exportCsv}
 		</Button>
 	);
 }

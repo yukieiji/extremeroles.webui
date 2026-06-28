@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
@@ -14,8 +15,8 @@ test.beforeEach(async ({ page }) => {
 		timeout: 30000,
 	});
 
-	// Extreme Roles タブに切り替え
-	await page.getByRole("button", { name: "Extreme Roles" }).click();
+	// Extreme Roles Menuに切り替え（サイドバー内のボタンに限定）
+	await getSidebarButton(page, "Extreme Roles").click();
 	await expect(page.getByTestId("category-list")).toBeVisible();
 });
 

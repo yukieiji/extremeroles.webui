@@ -21,8 +21,6 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
-	await page.screenshot({ path: "temp/verification/sidebar_closed.png" });
-
 	// Initially closed (width should be 0px)
 	// We use attach state or presence because 0 width might be considered hidden by toBeVisible
 	await expect(rightPanel).toBeAttached();
@@ -39,7 +37,6 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 	// Open the panel
 	await toggleButton.click();
 	await page.waitForTimeout(500);
-	await page.screenshot({ path: "temp/verification/sidebar_open.png" });
 
 	// Wait for panel content to appear
 	await expect(page.getByText("Right Panel")).toBeVisible({ timeout: 15000 });
@@ -56,8 +53,8 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 		.toBeGreaterThan(30);
 
 	// Verify AmongUs and ExR settings accordions
-	const auSettings = page.getByRole("button", { name: "AmongUsの設定" });
-	const exrSettings = page.getByRole("button", { name: "ExRの設定" });
+	const auSettings = rightPanel.getByRole("button", { name: "Among Us" });
+	const exrSettings = rightPanel.getByRole("button", { name: "Extreme Roles" });
 	await expect(auSettings).toBeVisible();
 	await expect(exrSettings).toBeVisible();
 

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSideber } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
@@ -18,7 +19,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Options interaction behavior", async ({ page }) => {
-	const sidebar = page.locator('[data-slot="sidebar"]');
+	const sidebar = getSideber(page);
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// ヘッダーのプリセットセレクターを確認

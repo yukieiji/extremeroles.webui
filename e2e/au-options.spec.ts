@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
@@ -12,7 +13,8 @@ test.beforeEach(async ({ page }) => {
 	});
 
 	// Among Us タブに切り替え
-	await page.getByRole("button", { name: "Among Us" }).click();
+
+	await getSidebarButton(page, "Among Us").click();
 	await expect(page.getByTestId("category-list")).toBeVisible({
 		timeout: 10000,
 	});

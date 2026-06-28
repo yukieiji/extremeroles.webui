@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSideber } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
@@ -20,7 +21,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Preset name reversion to default when cleared", async ({ page }) => {
-	const sidebar = page.locator('[data-slot="sidebar"]');
+	const sidebar = getSideber(page);
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 
 	const exrButton = sidebar.getByRole("button", { name: "Extreme Roles" });

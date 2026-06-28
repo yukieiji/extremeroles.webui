@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.describe("Search Normalization", () => {
 	test.beforeEach(async ({ page }) => {
@@ -40,7 +41,7 @@ test.describe("Search Normalization", () => {
 		page,
 	}) => {
 		// ロールフィルタータブへ移動
-		await page.getByRole("button", { name: "Role Filter" }).click();
+		await getSidebarButton(page, "役職フィルター").click();
 
 		// 新規作成ボタン
 		await page.getByRole("button", { name: "フィルターを追加" }).click();

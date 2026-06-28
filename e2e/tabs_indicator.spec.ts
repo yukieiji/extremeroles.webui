@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
@@ -16,8 +17,8 @@ test.describe("Tabs Indicator Styling", () => {
 	test("Au Tab active indicator should have correct color", async ({
 		page,
 	}) => {
-		// Switch to Among Us
-		await page.getByRole("button", { name: "Among Us" }).click();
+		// Switch to Among Us（サイドバー内のボタンに限定）
+		await getSidebarButton(page, "Among Us").click();
 
 		// Select Tab 1 (Crewmate - Lime Green)
 		const tab1 = page.getByRole("tab", { name: "1", exact: true });
@@ -44,8 +45,11 @@ test.describe("Tabs Indicator Styling", () => {
 	test("ExR Tab active indicator should support gradients", async ({
 		page,
 	}) => {
-		// Extreme Roles is default
-		await page.getByRole("button", { name: "Extreme Roles" }).click();
+		// Extreme Roles is default（サイドバー内のボタンに限定）
+		await page
+			.locator('[data-slot="sidebar"]')
+			.getByRole("button", { name: "Extreme Roles" })
+			.click();
 
 		// General Tab
 		const generalTab = page.getByRole("tab").first();

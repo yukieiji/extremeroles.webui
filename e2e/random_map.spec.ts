@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await page.request.post("/mock/reset", { maxRetries: 5 });
@@ -34,7 +35,7 @@ test.describe("Random Map Display and Hiding", () => {
 		// 右パネル内の "ExRの設定" アコーディオンを開く
 		const rightPanel = page.getByTestId("right-side-panel");
 		const exrSettingsAccordion = rightPanel.getByRole("button", {
-			name: "ExRの設定",
+			name: "Extreme Roles",
 		});
 		if (
 			(await exrSettingsAccordion.getAttribute("aria-expanded")) === "false"
@@ -42,8 +43,9 @@ test.describe("Random Map Display and Hiding", () => {
 			await exrSettingsAccordion.click();
 		}
 
-		// 3. Extreme Roles で「毎回マップがランダムに変わるか」をオンにする
-		await page.getByRole("button", { name: "Extreme Roles" }).click();
+		// 3. Extreme Roles で「毎回マップがランダムに変わるか」をオンにする（サイドバー内のボタンに限定）
+		// Extreme Roles Menuに切り替え（サイドバー内のボタンに限定）
+		await getSidebarButton(page, "Extreme Roles").click();
 
 		// カテゴリ「ランダムマップに関する設定」を探して開く
 		const categoryHeader = page.getByText("ランダムマップに関する設定", {

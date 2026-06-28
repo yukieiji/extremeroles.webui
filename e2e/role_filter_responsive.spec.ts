@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.describe("Role Filter Responsive Design", () => {
 	test.beforeEach(async ({ page }) => {
@@ -15,7 +16,7 @@ test.describe("Role Filter Responsive Design", () => {
 		page,
 	}) => {
 		// Role Filter タブに切り替え
-		await page.getByRole("button", { name: "Role Filter" }).click();
+		await getSidebarButton(page, "役職フィルター").click();
 
 		const list = page.getByTestId("role-filter-list");
 		await expect(list).toBeVisible();

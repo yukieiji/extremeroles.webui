@@ -1,16 +1,22 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.describe("Role Filter Shift Selection", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("/");
+		// ローディング画面が消えるのを待つ
 		await expect(page.getByText("Loading data...")).not.toBeVisible({
+			timeout: 30000,
+		});
+		// サイドバーが操作可能な状態になるのを待つ（webkit対策）
+		await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 			timeout: 30000,
 		});
 	});
 
 	test("should select multiple roles using shift-click", async ({ page }) => {
 		// Switch to Role Filter tab
-		await page.getByRole("button", { name: "Role Filter" }).click();
+		await getSidebarButton(page, "役職フィルター").click();
 
 		// Open the role selection dialog
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
@@ -32,9 +38,9 @@ test.describe("Role Filter Shift Selection", () => {
 		await labels.nth(4).click({ modifiers: ["Shift"] });
 
 		// Verify that 3 items are selected (indicated by the Confirm button text)
-		// The Confirm button text is "確定 (3)" where 3 is the number of selected items
+		// The Confirm button text is "追加 (3)" where 3 is the number of selected items
 		await expect(
-			page.getByRole("button", { name: /確定 \(3\)/ }),
+			page.getByRole("button", { name: /追加 \(3\)/ }),
 		).toBeVisible();
 
 		// Checkbox status check (checked items should have data-checked attribute)

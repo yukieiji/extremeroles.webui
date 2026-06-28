@@ -374,16 +374,16 @@ export function generateClipboardText(
 
 	text += `## ${translationMetaData.CLIPBOARD_ROLES}\n`;
 	if (crewRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_CREW}\n${formatRoleList(crewRolesList)}`;
+		text += `### ${translationMetaData.Crewmate}\n${formatRoleList(crewRolesList)}`;
 	}
 	if (impostorRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_IMPOSTOR}\n${formatRoleList(impostorRolesList)}`;
+		text += `### ${translationMetaData.Impostor}\n${formatRoleList(impostorRolesList)}`;
 	}
 	if (neutralRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_NEUTRAL}\n${formatRoleList(neutralRolesList)}`;
+		text += `### ${translationMetaData.Neutral}\n${formatRoleList(neutralRolesList)}`;
 	}
 	if (liberalRolesList.length > 0) {
-		text += `### ${translationMetaData.CLIPBOARD_LIBERAL}\n${formatRoleList(liberalRolesList)}`;
+		text += `### ${translationMetaData.Liberal}\n${formatRoleList(liberalRolesList)}`;
 	}
 
 	text += `\n## ${translationMetaData.CLIPBOARD_DETAILED_SETTINGS}\n${detailedSettings}\n`;

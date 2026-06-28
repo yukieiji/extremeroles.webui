@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getDialog, getSidebarButton } from "./conftest";
 
 test.describe("Role Filter Management", () => {
 	test.setTimeout(60000);
@@ -12,11 +13,11 @@ test.describe("Role Filter Management", () => {
 		});
 
 		// Open Role Filter tab
-		await page.getByRole("button", { name: "Role Filter" }).click();
+		await getSidebarButton(page, "役職フィルター").click();
 
 		// Verify we are in Role Filter view
 		await expect(
-			page.getByRole("heading", { name: "Role Filter", exact: true }),
+			page.getByRole("heading", { name: "役職フィルター", exact: true }),
 		).toBeVisible();
 	});
 
@@ -31,7 +32,7 @@ test.describe("Role Filter Management", () => {
 			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		// Verify new filter is added
 		await expect(page.getByTestId("role-filter-card")).toHaveCount(
@@ -72,12 +73,12 @@ test.describe("Role Filter Management", () => {
 			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		// ダイアログが閉じるのを待つ
-		await expect(page.getByText("フィルター追加: 役職の選択")).not.toBeVisible({
-			timeout: 10000,
-		});
+		await expect(
+			getDialog(page).getByText("フィルター追加: 役職の選択"),
+		).not.toBeVisible({ timeout: 10000 });
 
 		// Verify new filter is added
 		await expect(page.getByTestId("role-filter-card")).toHaveCount(
@@ -90,8 +91,9 @@ test.describe("Role Filter Management", () => {
 		const lastFilter = page.getByTestId("role-filter-card").last();
 
 		// Open role select dialog to add another role
-		await lastFilter.getByRole("button", { name: "役職を追加" }).click();
-		await expect(page.getByText("役職の追加")).toBeVisible();
+		await lastFilter.getByRole("button", { name: "役職の追加" }).click();
+		const dialog = getDialog(page);
+		await expect(dialog.getByText("役職の追加")).toBeVisible();
 
 		// Search for a role (using mock data role names: Opener)
 		const searchInput = page.getByPlaceholder("役職を検索...");
@@ -106,10 +108,10 @@ test.describe("Role Filter Management", () => {
 		});
 		await expect(roleCheckbox).toBeVisible({ timeout: 10000 });
 		await roleCheckbox.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		// ダイアログが閉じるのを待つ
-		await expect(page.getByText("役職の追加")).not.toBeVisible({
+		await expect(dialog.getByText("役職の追加")).not.toBeVisible({
 			timeout: 10000,
 		});
 
@@ -129,7 +131,7 @@ test.describe("Role Filter Management", () => {
 			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		const lastFilter = page.getByTestId("role-filter-card").last();
 

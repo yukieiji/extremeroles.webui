@@ -7,7 +7,6 @@ import {
 	roleFilterMetaData,
 	translationMetaData,
 } from "@/logics/api";
-import { format } from "@/logics/stringUtils";
 import { PostExRAssignOps } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -70,7 +69,7 @@ export function RoleFilterCardHeader({
 	const onOpenRoleSelect = () => {
 		openBlockDialog({
 			type: "roleSelect",
-			title: translationMetaData.ROLE_FILTER_ROLE_ADD_TITLE,
+			title: translationMetaData.RoleAssignFilterAddRole,
 			searchQuery: "",
 			excludeRoleIds: excludeRoleIds,
 			selectedRoleIds: [],
@@ -105,7 +104,7 @@ export function RoleFilterCardHeader({
 				<span
 					className={`${TYPOGRAPHY.LABEL} text-text-primary px-2 min-w-36 tabular-nums`}
 				>
-					{format(translationMetaData.ROLE_FILTER_ASSIGN_NUM_LABEL, assignNum)}
+					{translationMetaData.RoleAssignFilterAssignNum}: {assignNum}
 				</span>
 				<ButtonGroup orientation="vertical">
 					<Button
@@ -124,7 +123,7 @@ export function RoleFilterCardHeader({
 				className={`${TYPOGRAPHY.LABEL} text-text-primary w-full col-span-full`}
 			>
 				<Plus size={12} />
-				{translationMetaData.ROLE_FILTER_ROLE_ADD_BUTTON}
+				{translationMetaData.RoleAssignFilterAddRole}
 			</Button>
 		</>
 	);

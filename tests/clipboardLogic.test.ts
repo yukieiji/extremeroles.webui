@@ -323,7 +323,7 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("- マップ: Skeld");
 		expect(text).toContain("- キルクールダウン時間: 10");
 		expect(text).toContain(`## ${translationMetaData.CLIPBOARD_ROLES}`);
-		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_CREW}`);
+		expect(text).toContain(`### ${translationMetaData.Crewmate}`);
 		expect(text).toContain(" - ExR Role --- **1 / 100%**");
 		expect(text).toContain("### Game Extra");
 		// Preset Category is empty because both PRESET_OPTION_UNIQUE_ID and EXR_RANDOM_MAP_OPTION_ID are excluded
@@ -527,9 +527,9 @@ describe("generateClipboardText", () => {
 			},
 		};
 		const text = generateClipboardText(stateWithRoles, mockExrMeta, mockAuMeta);
-		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_IMPOSTOR}`);
+		expect(text).toContain(`### ${translationMetaData.Impostor}`);
 		expect(text).toContain(" - ExR Impostor --- **1 / 100%**");
-		expect(text).toContain(`### ${translationMetaData.CLIPBOARD_NEUTRAL}`);
+		expect(text).toContain(`### ${translationMetaData.Neutral}`);
 		expect(text).toContain(" - ExR Neutral --- **1 / 100%**");
 	});
 
