@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 	test.beforeEach(async ({ page }) => {
@@ -48,7 +49,7 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 4. メインエディタで一旦 Extreme Roles に切り替えておく
 		// パネルを一旦閉じる
 		await rightPanelToggle.click();
-		await page.getByRole("button", { name: "Extreme Roles" }).click();
+		await getSidebarButton(page, "Extreme Roles").click();
 		await expect(
 			page.getByRole("heading", { name: "Extreme Roles" }),
 		).toBeVisible();
