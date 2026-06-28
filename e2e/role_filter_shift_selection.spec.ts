@@ -38,9 +38,9 @@ test.describe("Role Filter Shift Selection", () => {
 		await labels.nth(4).click({ modifiers: ["Shift"] });
 
 		// Verify that 3 items are selected (indicated by the Confirm button text)
-		// The Confirm button text is "確定 (3)" where 3 is the number of selected items
+		// The Confirm button text is "追加 (3)" where 3 is the number of selected items
 		await expect(
-			page.getByRole("button", { name: /確定 \(3\)/ }),
+			page.getByRole("button", { name: /追加 \(3\)/ }),
 		).toBeVisible();
 
 		// Checkbox status check (checked items should have data-checked attribute)

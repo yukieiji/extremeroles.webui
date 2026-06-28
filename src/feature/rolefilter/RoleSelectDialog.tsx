@@ -118,7 +118,7 @@ export function RoleSelectDialog({
 					disabled={selectedRoleIds.length === 0}
 					onClick={() => onSelect(selectedRoleIds)}
 				>
-					{translationMetaData.CONFIRM} ({selectedRoleIds.length})
+					{translationMetaData.ROLE_FILTER_CONFIRM} ({selectedRoleIds.length})
 				</Button>
 			</DialogFooter>
 		</DialogContent>

@@ -118,7 +118,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"SpawnRate",
 		"RoleNum",
 		"Close",
-		"CONFIRM",
+		"ROLE_FILTER_CONFIRM",
 		"PRESET_SWITCH_TITLE",
 		"PRESET_SWITCH_MESSAGE",
 		"PRESET_INPUT_PLACEHOLDER",

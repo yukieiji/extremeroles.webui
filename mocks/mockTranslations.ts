@@ -9,7 +9,7 @@ export const mockTranslations: Record<string, string> = {
 	SpawnRate: "スポーンレート",
 	RoleNum: "数",
 	Close: "閉じる",
-	CONFIRM: "確定",
+	ROLE_FILTER_CONFIRM: "追加",
 	PRESET_SWITCH_TITLE: "プリセットの切り替え",
 	PRESET_SWITCH_MESSAGE: "プリセットを「{0}」から「{1}」に切り替えます",
 	PRESET_INPUT_PLACEHOLDER: "プリセット名を入力...",

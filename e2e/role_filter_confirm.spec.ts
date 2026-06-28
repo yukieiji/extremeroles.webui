@@ -36,7 +36,7 @@ test.describe("Role Filter Confirm Button Response", () => {
 			.locator("label")
 			.filter({ hasText: "パン屋" })
 			.first();
-		const confirmButton = page.getByRole("button", { name: /確定/ });
+		const confirmButton = page.getByRole("button", { name: /追加/ });
 
 		// Initially disabled
 		await expect(confirmButton).toBeDisabled();
@@ -67,11 +67,11 @@ test.describe("Role Filter Confirm Button Response", () => {
 	}) => {
 		// First add a filter so we can add roles to it
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
-		await expect(page.getByRole("button", { name: /確定/ })).toBeVisible({
+		await expect(page.getByRole("button", { name: /追加/ })).toBeVisible({
 			timeout: 15000,
 		});
 		await page.locator("label").filter({ hasText: "パン屋" }).first().click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 		await expect(
 			page.getByText("フィルター追加: 役職の選択"),
 		).not.toBeVisible();
@@ -86,7 +86,7 @@ test.describe("Role Filter Confirm Button Response", () => {
 			name: "オープナー",
 			exact: true,
 		});
-		const confirmButton = page.getByRole("button", { name: /確定/ });
+		const confirmButton = page.getByRole("button", { name: /追加/ });
 
 		// Initially disabled
 		await expect(confirmButton).toBeDisabled();

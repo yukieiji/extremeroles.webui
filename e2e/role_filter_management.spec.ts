@@ -32,7 +32,7 @@ test.describe("Role Filter Management", () => {
 			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		// Verify new filter is added
 		await expect(page.getByTestId("role-filter-card")).toHaveCount(
@@ -73,14 +73,12 @@ test.describe("Role Filter Management", () => {
 			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		// ダイアログが閉じるのを待つ
 		await expect(
 			getDialog(page).getByText("フィルター追加: 役職の選択"),
-		).not.toBeVisible({
-			timeout: 10000,
-		});
+		).not.toBeVisible({ timeout: 10000 });
 
 		// Verify new filter is added
 		await expect(page.getByTestId("role-filter-card")).toHaveCount(
@@ -109,7 +107,7 @@ test.describe("Role Filter Management", () => {
 		});
 		await expect(roleCheckbox).toBeVisible({ timeout: 10000 });
 		await roleCheckbox.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		// ダイアログが閉じるのを待つ
 		await expect(page.getByText("役職の追加")).not.toBeVisible({
@@ -132,7 +130,7 @@ test.describe("Role Filter Management", () => {
 			.getByRole("checkbox", { name: "パン屋", exact: true })
 			.first()
 			.click();
-		await page.getByRole("button", { name: /確定/ }).click();
+		await page.getByRole("button", { name: /追加/ }).click();
 
 		const lastFilter = page.getByTestId("role-filter-card").last();
 
