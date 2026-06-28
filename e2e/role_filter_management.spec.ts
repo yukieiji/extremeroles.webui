@@ -92,7 +92,8 @@ test.describe("Role Filter Management", () => {
 
 		// Open role select dialog to add another role
 		await lastFilter.getByRole("button", { name: "役職の追加" }).click();
-		await expect(getDialog(page).getByText("役職の追加")).toBeVisible();
+		const dialog = getDialog(page);
+		await expect(dialog.getByText("役職の追加")).toBeVisible();
 
 		// Search for a role (using mock data role names: Opener)
 		const searchInput = page.getByPlaceholder("役職を検索...");
@@ -110,7 +111,7 @@ test.describe("Role Filter Management", () => {
 		await page.getByRole("button", { name: /追加/ }).click();
 
 		// ダイアログが閉じるのを待つ
-		await expect(page.getByText("役職の追加")).not.toBeVisible({
+		await expect(dialog.getByText("役職の追加")).not.toBeVisible({
 			timeout: 10000,
 		});
 
