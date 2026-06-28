@@ -105,6 +105,18 @@ describe("PresetSelector", () => {
 		translationMetaData.PRESET_SWITCH_TITLE = "プリセットの切り替え";
 		translationMetaData.PRESET_SWITCH_MESSAGE =
 			"プリセットを「{0}」から「{1}」に切り替えます";
+		translationMetaData.PresetOption = "プリセットオプション";
+	});
+
+	it("renders PresetOption label", () => {
+		vi.mocked(useOptionData).mockReturnValue({
+			selection: 0,
+			values: [0, 1],
+		});
+
+		render(<PresetSelector />);
+
+		expect(screen.getByText("プリセットオプション")).toBeInTheDocument();
 	});
 
 	it("renders preset name in input", () => {
