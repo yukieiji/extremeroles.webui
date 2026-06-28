@@ -15,8 +15,8 @@ import {
 	EXR_MILITANT_MIN_ID,
 	EXR_NEUTRAL_MAX_ID,
 	EXR_NEUTRAL_MIN_ID,
-	VANILLA_ROLE_CATEGORY_IDS,
 	getUniqueOptionId,
+	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
 import {
 	type AuOptionId,

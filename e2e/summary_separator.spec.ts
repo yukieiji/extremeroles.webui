@@ -18,7 +18,9 @@ test.describe("Summary Separator Visibility", () => {
 		await page.waitForTimeout(500);
 	});
 
-	test("should show separator when both Vanilla and ExR roles are present", async ({ page }) => {
+	test("should show separator when both Vanilla and ExR roles are present", async ({
+		page,
+	}) => {
 		// By default mock data has both
 		const summary = page.getByTestId("right-panel-summary");
 		const separators = summary.locator('[data-slot="separator"]');
@@ -26,11 +28,15 @@ test.describe("Summary Separator Visibility", () => {
 		await expect(targetSeparator).toBeVisible();
 	});
 
-	test("should hide separator when only Vanilla roles are present", async ({ page }) => {
+	test("should hide separator when only Vanilla roles are present", async ({
+		page,
+	}) => {
 		await page.evaluate(() => {
-            // @ts-expect-error - test hook
+			// biome-ignore lint/suspicious/noExplicitAny: test hook
 			const store = (window as any).useStore;
-            if (!store) return;
+			if (!store) {
+				return;
+			}
 			const state = store.getState();
 			const newExrValue = { ...state.exrValue };
 			for (const key in newExrValue) {
@@ -48,11 +54,15 @@ test.describe("Summary Separator Visibility", () => {
 		await expect(targetSeparator).not.toBeVisible();
 	});
 
-	test("should hide separator when only ExR roles are present", async ({ page }) => {
+	test("should hide separator when only ExR roles are present", async ({
+		page,
+	}) => {
 		await page.evaluate(() => {
-            // @ts-expect-error - test hook
+			// biome-ignore lint/suspicious/noExplicitAny: test hook
 			const store = (window as any).useStore;
-            if (!store) return;
+			if (!store) {
+				return;
+			}
 			const state = store.getState();
 			const newAuValue = { ...state.auValue };
 			for (const key in newAuValue) {
@@ -67,11 +77,15 @@ test.describe("Summary Separator Visibility", () => {
 		await expect(targetSeparator).not.toBeVisible();
 	});
 
-	test("should hide separator when neither roles are present", async ({ page }) => {
+	test("should hide separator when neither roles are present", async ({
+		page,
+	}) => {
 		await page.evaluate(() => {
-            // @ts-expect-error - test hook
+			// biome-ignore lint/suspicious/noExplicitAny: test hook
 			const store = (window as any).useStore;
-            if (!store) return;
+			if (!store) {
+				return;
+			}
 			const state = store.getState();
 
 			const newExrValue = { ...state.exrValue };
