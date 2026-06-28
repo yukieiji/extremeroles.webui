@@ -31,6 +31,7 @@ import {
 	SPAWN_RATE_OPTION_ID,
 	type UniqueOptionId,
 } from "@/type";
+import { reformatFormatText } from "./stringUtils";
 
 export interface ClipboardState {
 	exrValue: Record<UniqueOptionId, ExROptionValueData>;
@@ -84,7 +85,10 @@ export function generateClipboardText(
 
 	const getAuValue = (optionId: AuOptionId) => {
 		const selection = state.auValue[optionId] ?? 0;
-		return auMeta.options[optionId]?.range[selection];
+		const value = auMeta.options[optionId]?.range[selection];
+		return typeof value === "boolean"
+			? cleanText(translationMetaData[value ? 1 : 0])
+			: value;
 	};
 
 	// 1. プリセット名
@@ -106,9 +110,9 @@ export function generateClipboardText(
 	const killCooldownTitle = cleanText(
 		auMeta.options[AU_KILL_COOLDOWN_OPTION_ID].title,
 	);
-	const killCooldownValue = cleanText(
-		String(getAuValue(AU_KILL_COOLDOWN_OPTION_ID) ?? ""),
-	);
+	const killCooldownValue =
+		cleanText(String(getAuValue(AU_KILL_COOLDOWN_OPTION_ID) ?? "")) +
+		reformatFormatText(auMeta.options[AU_KILL_COOLDOWN_OPTION_ID].format);
 
 	// 4. 陣営数
 	const getMinMax = (minId: UniqueOptionId, maxId: UniqueOptionId) => {

@@ -24,3 +24,9 @@ export function format(template: string, ...args: (string | number)[]): string {
 		return arg !== undefined ? String(arg) : match;
 	});
 }
+
+export function reformatFormatText(formatText: string): string {
+	return formatText.includes("{0}")
+		? formatText.replace("{0}", "")
+		: formatText;
+}
