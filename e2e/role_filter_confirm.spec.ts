@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { getDialog, getSidebarButton } from "./conftest";
 
 test.describe("Role Filter Confirm Button Response", () => {
 	test.setTimeout(60000);
@@ -78,7 +78,9 @@ test.describe("Role Filter Confirm Button Response", () => {
 
 		const lastFilter = page.getByTestId("role-filter-card").last();
 		await lastFilter.getByRole("button", { name: "役職の追加" }).click();
-		await expect(page.getByText("役職の追加")).toBeVisible();
+
+		const dialog = getDialog(page);
+		await expect(dialog.getByText("役職の追加")).toBeVisible();
 
 		const openerCheckbox = page.getByRole("checkbox", {
 			name: "オープナー",
@@ -105,6 +107,6 @@ test.describe("Role Filter Confirm Button Response", () => {
 		await confirmButton.click();
 
 		// Verify dialog closed
-		await expect(page.getByText("役職の追加")).not.toBeVisible();
+		await expect(dialog.getByText("役職の追加")).not.toBeVisible();
 	});
 });
