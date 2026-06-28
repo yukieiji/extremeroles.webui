@@ -80,15 +80,17 @@ test("Updating preset name reflects in right sidebar", async ({ page }) => {
 	const openButton = page.getByTestId("right-panel-toggle");
 	await openButton.click();
 
-	const rightSidebar = page.getByTestId("right-panel-summary");
-
-	const exrSettingsTitle = rightSidebar.getByText("Extreme Roles");
+	const exrSettingsTitle = page
+		.getByTestId("right-side-panel")
+		.getByText("Extreme Roles");
 	await exrSettingsTitle.scrollIntoViewIfNeeded();
 
 	// 変更後の名前が表示されていることを確認
 	// 翻訳データに基づいているため、正規表現で柔軟にマッチング
-	const presetRow = rightSidebar.getByRole("button", {
-		name: /(プリセット|Preset) New Custom Preset/,
-	});
+	const presetRow = page
+		.getByTestId("right-panel-summary")
+		.getByRole("button", {
+			name: /(プリセット|Preset) New Custom Preset/,
+		});
 	await expect(presetRow).toBeVisible();
 });
