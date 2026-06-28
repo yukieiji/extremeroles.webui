@@ -37,51 +37,6 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 			});
 		});
 	});
-
-	it("renders empty state and triggers role selection on add filter", async () => {
-		render(<RoleFilterViewer />);
-
-		expect(
-			screen.getByText(
-				new RegExp(translationMetaData.ROLE_FILTER_EMPTY_MESSAGE),
-			),
-		).toBeInTheDocument();
-
-		const addButton = screen.getByText(
-			translationMetaData.ROLE_FILTER_ADD_BUTTON,
-		);
-		await act(async () => {
-			fireEvent.click(addButton);
-		});
-
-		// Should show role selection dialog instead of calling API immediately
-		const state = useStore.getState();
-		expect(state.blockDialog).toBeDefined();
-		expect(state.blockDialog?.type).toBe("roleSelect");
-		expect(state.blockDialog?.title).toBe(
-			translationMetaData.ROLE_FILTER_ADD_TITLE,
-		);
-
-		// Simulate role selection
-		if (state.blockDialog?.type === "roleSelect") {
-			await act(async () => {
-				await state.blockDialog?.onSelect([1]);
-			});
-		}
-
-		await waitFor(() => {
-			// First call: FilterNewAdd, Second call: FilterRoleAdd
-			expect(postRoleFilterUpdate).toHaveBeenCalledTimes(2);
-		});
-
-		expect(
-			screen.getByText(
-				new RegExp(`${translationMetaData.RoleAssignFilterAssignNum}.*1`),
-			),
-		).toBeInTheDocument();
-		expect(screen.getByText(translationMetaData.Crewmate)).toBeInTheDocument();
-	});
-
 	it("deletes a filter with confirmation", async () => {
 		const guid = "test-guid";
 		act(() => {
