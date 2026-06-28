@@ -2,10 +2,6 @@ import { Suspense, use, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorView } from "./components/blocks/ErrorView";
 import { LoadingView } from "./components/blocks/LoadingView";
-import { ExportButton } from "./components/parts/ExportButton";
-import { ImportButton } from "./components/parts/ImportButton";
-import { SyncButton } from "./components/parts/SyncButton";
-import { ButtonGroup } from "./components/ui/button-group";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import { Toaster } from "./components/ui/sonner";
 import { AuOptionEditor } from "./feature/amongus/AuOptionEditor";
@@ -17,12 +13,8 @@ import { OptionGroupToggleSidebar } from "./feature/OptionGroupToggleSidebar";
 import { RightSidePanel } from "./feature/rightsidepanel/RightSidePanel";
 import { RoleFilterViewer } from "./feature/rolefilter/RoleFilterViewer";
 import { SearchBar } from "./feature/SearchBar";
-import {
-	useBackendUpdate,
-	useExportCsv,
-	useSyncBackend,
-} from "./hooks/useBackend";
-import { postExrCsv, translationMetaData } from "./logics/api";
+import { SynchronizeButtons } from "./feature/SynchronizeButtons";
+import { translationMetaData } from "./logics/api";
 import { getAllOptions, resetApiCache } from "./logics/api.store";
 import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE } from "./noTrans";
 import { useStore } from "./useStore";
@@ -65,22 +57,6 @@ function MainContent() {
 		return state.isSidebarPending;
 	});
 
-	const syncer = useSyncBackend();
-	const backendUpdater = useBackendUpdate();
-	const openDialog = useStore((state) => state.openBlockDialog);
-
-	const handleImport = (csvBody: string) => {
-		openDialog({
-			type: "confirm",
-			title: translationMetaData.IMPORT_CONFIRM_TITLE,
-			message: translationMetaData.IMPORT_CONFIRM_MESSAGE,
-			onConfirm: () => {
-				backendUpdater(() => postExrCsv(csvBody));
-			},
-		});
-	};
-	const exporter = useExportCsv();
-
 	const titleMap = {
 		Au: AU_OPTIONS_TITLE,
 		ExR: EXR_OPTIONS_TITLE,
@@ -113,13 +89,7 @@ function MainContent() {
 						<div className="w-6 h-6 border border-info border-t-transparent rounded-full animate-spin"></div>
 					)}
 				</div>
-				<div className="px-4 flex flex-row gap-2">
-					<ButtonGroup>
-						<ImportButton onImport={handleImport} />
-						<ExportButton onClick={exporter} />
-					</ButtonGroup>
-					<SyncButton onClick={syncer} />
-				</div>
+				<SynchronizeButtons />
 			</div>
 			<Suspense
 				fallback={
