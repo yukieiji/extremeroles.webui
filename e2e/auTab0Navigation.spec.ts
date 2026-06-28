@@ -18,9 +18,9 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		const rightPanel = page.getByTestId("right-side-panel");
 		await expect(rightPanel).toBeVisible({ timeout: 15000 });
 
-		// 2. 「AmongUsの設定」アコーディオンを展開（デフォルトで開いているはずだが念のため）
-		const auSettingsAccordion = page.getByRole("button", {
-			name: "AmongUsの設定",
+		// 2. 「AmongUs」アコーディオンを展開（デフォルトで開いているはずだが念のため）
+		const auSettingsAccordion = rightPanel.getByRole("button", {
+			name: "Among Us",
 		});
 		await expect(auSettingsAccordion).toBeVisible();
 
