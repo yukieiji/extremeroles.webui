@@ -18,12 +18,7 @@ import {
 	getUniqueOptionId,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
-import {
-	type AuOptionId,
-	ExRTabId,
-	SPAWN_COUNT_OPTION_ID,
-	SPAWN_RATE_OPTION_ID,
-} from "@/type";
+import { ExRTabId, SPAWN_COUNT_OPTION_ID, SPAWN_RATE_OPTION_ID } from "@/type";
 import { useStore } from "@/useStore";
 import { AuOptionSummaryRow } from "./AuOptionSummaryRow";
 import { ExRMinMaxSummaryRow } from "./ExRMinMaxSummaryRow";
@@ -31,29 +26,29 @@ import { ExRRoleSummaryRow } from "./ExRRoleSummaryRow";
 import { PresetSummaryRow } from "./PresetSummaryRow";
 import { VanillaRoleSummaryRow } from "./VanillaRoleSummaryRow";
 
+const EXR_ROLE_TAB_IDS = [
+	ExRTabId.CrewmateTab,
+	ExRTabId.ImpostorTab,
+	ExRTabId.NeutralTab,
+	ExRTabId.CombinationTab,
+	ExRTabId.GhostCrewmateTab,
+	ExRTabId.GhostImpostorTab,
+	ExRTabId.GhostNeutralTab,
+];
+
 /**
  * 右パネルの上部に表示される、主要な設定のサマリー項目
  */
 export function RightSidePanelSummary() {
-	const exrRoleTabIds = [
-		ExRTabId.CrewmateTab,
-		ExRTabId.ImpostorTab,
-		ExRTabId.NeutralTab,
-		ExRTabId.CombinationTab,
-		ExRTabId.GhostCrewmateTab,
-		ExRTabId.GhostImpostorTab,
-		ExRTabId.GhostNeutralTab,
-	];
-
 	const { hasVanillaRole, hasExRRole } = useStore(
 		useShallow((state) => {
 			const hasVanilla = VANILLA_ROLE_CATEGORY_IDS.some((categoryId) => {
 				const catMeta = auOptionMetaData.categoryMetaData[categoryId];
-				if (!catMeta) {
+				const chanceId = catMeta?.options[0];
+				const maxCountId = catMeta?.options[1];
+				if (chanceId === undefined || maxCountId === undefined) {
 					return false;
 				}
-				const chanceId = catMeta.options[0] as AuOptionId;
-				const maxCountId = catMeta.options[1] as AuOptionId;
 				const chanceMeta = auOptionMetaData.options[chanceId];
 				const maxCountMeta = auOptionMetaData.options[maxCountId];
 
@@ -64,7 +59,7 @@ export function RightSidePanelSummary() {
 				return Number(chance) !== 0 && Number(maxCount) !== 0;
 			});
 
-			const hasExR = exrRoleTabIds.some((tabId) => {
+			const hasExR = EXR_ROLE_TAB_IDS.some((tabId) => {
 				const categoryIds = exrOptionMetaData.tabs[tabId]?.categoryIds ?? [];
 				return categoryIds.some((categoryId) => {
 					const catMeta = exrOptionMetaData.categories[categoryId];
@@ -139,7 +134,7 @@ export function RightSidePanelSummary() {
 			{hasVanillaRole && hasExRRole && (
 				<Separator className="data-horizontal:w-4/5 mx-auto bg-border-weak" />
 			)}
-			{exrRoleTabIds.map((tabId) => {
+			{EXR_ROLE_TAB_IDS.map((tabId) => {
 				const categoryIds = exrOptionMetaData.tabs[tabId]?.categoryIds ?? [];
 				return categoryIds.map((catId) => (
 					<ExRRoleSummaryRow key={catId} categoryId={catId} />
