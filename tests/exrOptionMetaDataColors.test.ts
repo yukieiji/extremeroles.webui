@@ -19,7 +19,7 @@ describe("exrOptionMetaData color assignment", () => {
 		vi.clearAllMocks();
 	});
 
-	it("should assign default color #FFFFFF to GeneralTab if no color tags are present", async () => {
+	it("should assign default color #CCCC00 to GeneralTab if no color tags are present", async () => {
 		const mockData = [
 			{
 				Id: ExRTabId.GeneralTab,
@@ -43,7 +43,7 @@ describe("exrOptionMetaData color assignment", () => {
 		await createExROptionMetaData();
 
 		expect(exrOptionMetaData.tabs[ExRTabId.GeneralTab].colors).toEqual([
-			"#FFFFFF",
+			"#CCCC00",
 		]);
 	});
 

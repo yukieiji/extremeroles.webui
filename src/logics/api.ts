@@ -385,7 +385,7 @@ export async function createExROptionMetaData(): Promise<ExRinitializeData> {
 			: extractedColors;
 
 		if (colors.length === 0 && tab.Id === ExRTabId.GeneralTab) {
-			colors = ["#FFFFFF"];
+			colors = ["#CCCC00"];
 		}
 
 		exrOptionMetaData.tabs[tab.Id] = {
