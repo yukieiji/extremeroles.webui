@@ -138,6 +138,7 @@ describe("RoleFilterViewer and RoleFilterCard", () => {
 			});
 		}
 
-		expect(useStore.getState().roleFilterSet[guid].Roles).toEqual([]);
+		// With the new logic, the filter itself should be deleted if the last role is removed.
+		expect(useStore.getState().roleFilterSet[guid]).toBeUndefined();
 	});
 });
