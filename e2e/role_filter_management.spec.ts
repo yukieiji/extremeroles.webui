@@ -124,7 +124,12 @@ test.describe("Role Filter Management", () => {
 		});
 	});
 
-	test("should remove a role from filter", async ({ page }) => {
+	test("should remove the entire filter when its last role is removed", async ({
+		page,
+	}) => {
+		// Initial count of filters
+		const initialFilters = await page.getByTestId("role-filter-card").count();
+
 		// Add a new filter (triggers role selection)
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
 		await page
@@ -150,9 +155,12 @@ test.describe("Role Filter Management", () => {
 		await expect(page.getByText("役職の削除")).toBeVisible();
 		await page.getByRole("button", { name: "OK" }).click();
 
-		// Verify role is removed
-		await expect(lastFilter.getByText("No roles selected")).toBeVisible({
-			timeout: 15000,
-		});
+		// Verify the entire filter is removed
+		await expect(page.getByTestId("role-filter-card")).toHaveCount(
+			initialFilters,
+			{
+				timeout: 15000,
+			},
+		);
 	});
 });
