@@ -67,7 +67,7 @@ export function PresetSelector() {
 	const navigateId = createExRNavigateId(PRESET_OPTION_UNIQUE_ID);
 
 	return (
-		<div className="flex flex-col gap-1">
+		<div className="flex flex-col -mt-3.5">
 			<span className={`${TYPOGRAPHY.SMALL} text-text-primary`}>
 				{translationMetaData.PresetOption}
 			</span>
