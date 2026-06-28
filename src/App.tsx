@@ -123,7 +123,7 @@ function RootContent() {
 
 	return (
 		<SidebarProvider>
-			<Toaster />
+			<Toaster position="top-center" />
 			<BlockableLoading />
 			<BlockableDialog />
 			<OptionGroupToggleSidebar />
