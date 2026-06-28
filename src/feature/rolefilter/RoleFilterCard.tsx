@@ -50,12 +50,21 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 			),
 			onConfirm: async () => {
 				try {
-					await postRoleFilterUpdate({
-						Op: PostExRAssignOps.FilterRoleDelete,
-						FilterId: guid,
-						MapRoleId: roleId,
-					});
-					removeRoleFromFilter(guid, roleId);
+					if (filterSet.Roles.length === 1) {
+						await postRoleFilterUpdate({
+							Op: PostExRAssignOps.FilterDelete,
+							FilterId: guid,
+							MapRoleId: null,
+						});
+						deleteRoleFilter(guid);
+					} else {
+						await postRoleFilterUpdate({
+							Op: PostExRAssignOps.FilterRoleDelete,
+							FilterId: guid,
+							MapRoleId: roleId,
+						});
+						removeRoleFromFilter(guid, roleId);
+					}
 				} catch (error) {
 					console.error("Failed to remove role from filter:", error);
 				}
@@ -83,11 +92,6 @@ export function RoleFilterCard({ guid, filterSet }: RoleFilterCardProps) {
 						/>
 					);
 				})}
-				{filterSet.Roles.length === 0 && (
-					<span className="text-sm text-text-tertiary italic">
-						{translationMetaData.ROLE_FILTER_NO_ROLES}
-					</span>
-				)}
 			</div>
 		</RoleFilterCardLayout>
 	);

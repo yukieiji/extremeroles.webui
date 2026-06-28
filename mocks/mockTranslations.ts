@@ -25,7 +25,6 @@ export const mockTranslations: Record<string, string> = {
 	ROLE_FILTER_ROLE_DELETE_CONFIRM_TITLE: "役職の削除",
 	ROLE_FILTER_ROLE_DELETE_CONFIRM_MESSAGE:
 		"役職「{0}」をフィルターから削除してもよろしいですか？",
-	ROLE_FILTER_NO_ROLES: "No roles selected",
 	ROLE_SELECT_SEARCH_PLACEHOLDER: "役職を検索...",
 	OPTION_SEARCH_PLACEHOLDER: "オプションを検索...",
 	ROLE_SELECT_DEFAULT_TITLE: "役職の選択",
