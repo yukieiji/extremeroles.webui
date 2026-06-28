@@ -7,6 +7,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { TYPOGRAPHY } from "@/designConstants";
 import { roleFilterMetaData, translationMetaData } from "@/logics/api";
 import { normalizeForSearch } from "@/logics/stringUtils";
 import { useStore } from "@/useStore";
@@ -97,7 +98,7 @@ export function RoleSelectDialog({
 	return (
 		<DialogContent className="flex flex-col max-w-5xl h-[min(80vh,600px)]">
 			<DialogHeader>
-				<DialogTitle>{title}</DialogTitle>
+				<DialogTitle className={TYPOGRAPHY.LABEL}>{title}</DialogTitle>
 			</DialogHeader>
 			<RoleSearchInput
 				onChange={setSearchQuery}
@@ -111,12 +112,17 @@ export function RoleSelectDialog({
 				/>
 			</div>
 			<DialogFooter>
-				<Button variant="outline" onClick={onCancel}>
+				<Button
+					variant="outline"
+					onClick={onCancel}
+					className={TYPOGRAPHY.LABEL}
+				>
 					{translationMetaData.Close}
 				</Button>
 				<Button
 					disabled={selectedRoleIds.length === 0}
 					onClick={() => onSelect(selectedRoleIds)}
+					className={TYPOGRAPHY.LABEL}
 				>
 					{translationMetaData.ROLE_FILTER_CONFIRM} ({selectedRoleIds.length})
 				</Button>

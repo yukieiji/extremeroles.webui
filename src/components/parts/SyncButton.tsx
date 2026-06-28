@@ -1,5 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 
 interface SyncButtonProps {
@@ -17,6 +18,7 @@ export function SyncButton({ onClick, disabled }: SyncButtonProps) {
 			onClick={onClick}
 			disabled={disabled}
 			title={translationMetaData.SYNC_BUTTON_TITLE}
+			className={TYPOGRAPHY.LABEL}
 		>
 			<RefreshCw size={20} aria-hidden="true" />
 		</Button>

@@ -1,6 +1,7 @@
 import { Upload } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 
 interface ImportButtonProps {
@@ -52,7 +53,11 @@ export function ImportButton({ onImport, disabled }: ImportButtonProps) {
 				onChange={handleFileChange}
 				className="hidden"
 			/>
-			<Button onClick={handleClick} disabled={disabled}>
+			<Button
+				onClick={handleClick}
+				disabled={disabled}
+				className={TYPOGRAPHY.LABEL}
+			>
 				<Upload />
 				{translationMetaData.importCsv}
 			</Button>

@@ -6,6 +6,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 
 interface ConfirmDialogProps {
@@ -27,14 +28,22 @@ export function ConfirmDialog({
 	return (
 		<DialogContent className="sm:max-w-md">
 			<DialogHeader>
-				<DialogTitle>{title}</DialogTitle>
-				<DialogDescription>{message}</DialogDescription>
+				<DialogTitle className={TYPOGRAPHY.LABEL}>{title}</DialogTitle>
+				<DialogDescription className={TYPOGRAPHY.LABEL}>
+					{message}
+				</DialogDescription>
 			</DialogHeader>
 			<DialogFooter>
-				<Button variant="outline" onClick={onCancel}>
+				<Button
+					variant="outline"
+					onClick={onCancel}
+					className={TYPOGRAPHY.LABEL}
+				>
 					{translationMetaData.Cancel}
 				</Button>
-				<Button onClick={onConfirm}>{translationMetaData.OK}</Button>
+				<Button onClick={onConfirm} className={TYPOGRAPHY.LABEL}>
+					{translationMetaData.OK}
+				</Button>
 			</DialogFooter>
 		</DialogContent>
 	);
