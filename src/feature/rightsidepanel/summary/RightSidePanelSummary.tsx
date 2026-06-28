@@ -1,5 +1,6 @@
+import { useShallow } from "zustand/react/shallow";
 import { Separator } from "@/components/ui/separator";
-import { exrOptionMetaData } from "@/logics/api";
+import { auOptionMetaData, exrOptionMetaData } from "@/logics/api";
 import {
 	AU_IMPOSTOR_COUNT_OPTION_ID,
 	AU_KILL_COOLDOWN_OPTION_ID,
@@ -15,8 +16,15 @@ import {
 	EXR_NEUTRAL_MAX_ID,
 	EXR_NEUTRAL_MIN_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
+	getUniqueOptionId,
 } from "@/logics/optionUtils";
-import { ExRTabId } from "@/type";
+import {
+	type AuOptionId,
+	ExRTabId,
+	SPAWN_COUNT_OPTION_ID,
+	SPAWN_RATE_OPTION_ID,
+} from "@/type";
+import { useStore } from "@/useStore";
 import { AuOptionSummaryRow } from "./AuOptionSummaryRow";
 import { ExRMinMaxSummaryRow } from "./ExRMinMaxSummaryRow";
 import { ExRRoleSummaryRow } from "./ExRRoleSummaryRow";
@@ -36,6 +44,63 @@ export function RightSidePanelSummary() {
 		ExRTabId.GhostImpostorTab,
 		ExRTabId.GhostNeutralTab,
 	];
+
+	const { hasVanillaRole, hasExRRole } = useStore(
+		useShallow((state) => {
+			const hasVanilla = VANILLA_ROLE_CATEGORY_IDS.some((categoryId) => {
+				const catMeta = auOptionMetaData.categoryMetaData[categoryId];
+				if (!catMeta) {
+					return false;
+				}
+				const chanceId = catMeta.options[0] as AuOptionId;
+				const maxCountId = catMeta.options[1] as AuOptionId;
+				const chanceMeta = auOptionMetaData.options[chanceId];
+				const maxCountMeta = auOptionMetaData.options[maxCountId];
+
+				const chance = chanceMeta?.range[state.auValue[chanceId] ?? 0] ?? 0;
+				const maxCount =
+					maxCountMeta?.range[state.auValue[maxCountId] ?? 0] ?? 0;
+
+				return Number(chance) !== 0 && Number(maxCount) !== 0;
+			});
+
+			const hasExR = exrRoleTabIds.some((tabId) => {
+				const categoryIds = exrOptionMetaData.tabs[tabId]?.categoryIds ?? [];
+				return categoryIds.some((categoryId) => {
+					const catMeta = exrOptionMetaData.categories[categoryId];
+					if (!catMeta) {
+						return false;
+					}
+
+					const chanceId = getUniqueOptionId(
+						catMeta.tabId,
+						categoryId,
+						SPAWN_RATE_OPTION_ID,
+					);
+					const maxCountId = getUniqueOptionId(
+						catMeta.tabId,
+						categoryId,
+						SPAWN_COUNT_OPTION_ID,
+					);
+
+					const chanceValueData = state.exrValue[chanceId];
+					const maxCountValueData = state.exrValue[maxCountId];
+
+					if (!chanceValueData || !maxCountValueData) {
+						return false;
+					}
+
+					const chance = chanceValueData.values[chanceValueData.selection] ?? 0;
+					const maxCount =
+						maxCountValueData.values[maxCountValueData.selection] ?? 0;
+
+					return Number(chance) !== 0 && Number(maxCount) !== 0;
+				});
+			});
+
+			return { hasVanillaRole: hasVanilla, hasExRRole: hasExR };
+		}),
+	);
 
 	return (
 		<div
@@ -71,7 +136,9 @@ export function RightSidePanelSummary() {
 			{VANILLA_ROLE_CATEGORY_IDS.map((catId) => (
 				<VanillaRoleSummaryRow key={catId} categoryId={catId} />
 			))}
-			<Separator className="data-horizontal:w-4/5 mx-auto bg-border-weak" />
+			{hasVanillaRole && hasExRRole && (
+				<Separator className="data-horizontal:w-4/5 mx-auto bg-border-weak" />
+			)}
 			{exrRoleTabIds.map((tabId) => {
 				const categoryIds = exrOptionMetaData.tabs[tabId]?.categoryIds ?? [];
 				return categoryIds.map((catId) => (

@@ -25,6 +25,10 @@ if (import.meta.env.DEV) {
 	window.resetApp = resetApiCache;
 }
 
+import { useStore } from "./useStore";
+// @ts-expect-error - テスト用
+window.useStore = useStore;
+
 /**
  * 開発環境の場合にMSWを有効化
  */
