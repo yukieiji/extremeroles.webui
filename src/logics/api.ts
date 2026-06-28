@@ -108,6 +108,7 @@ interface ExRinitializeData {
 
 export async function fetchTranslationMetaData(): Promise<void> {
 	const batchKeys = [
+		"GameSettingsLabel",
 		"SYNC_BUTTON_TITLE",
 		"importCsv",
 		"IMPORT_CONFIRM_TITLE",
@@ -457,7 +458,11 @@ export async function createAuOptionMetaData(): Promise<
 	const data = await AuOptionCategoryDtoArraySchema.parseAsync(jsonData);
 
 	const initialValueData: Record<number, number> = {};
-	auOptionMetaData.tabNames = ["0", "1", "2"];
+	auOptionMetaData.tabNames = [
+		translationMetaData.GameSettingsLabel,
+		translationMetaData.Crewmate,
+		translationMetaData.Impostor,
+	];
 	auOptionMetaData.tabColors = [...AU_TAB_COLORS];
 	auOptionMetaData.tabCategoryMap = { 0: [], 1: [], 2: [] };
 	auOptionMetaData.categoryMetaData = {};

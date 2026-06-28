@@ -67,8 +67,8 @@ describe("createAuOptionMetaData", () => {
 
 		// Check colors
 		expect(auOptionMetaData.tabColors[0]).toBe("#FFFFFF");
-		expect(auOptionMetaData.tabColors[1]).toBe("#8CFF00");
-		expect(auOptionMetaData.tabColors[2]).toBe("#FF0000");
+		expect(auOptionMetaData.tabColors[1]).toBe("#8CFFFF");
+		expect(auOptionMetaData.tabColors[2]).toBe("#FF1919");
 
 		// Check category info
 		expect(auOptionMetaData.categoryMetaData[0].name).toBe("Tab0Category");

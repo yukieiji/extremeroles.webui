@@ -1,4 +1,5 @@
 export const mockTranslations: Record<string, string> = {
+	GameSettingsLabel: "ゲーム設定",
 	SYNC_BUTTON_TITLE: "同期",
 	importCsv: "CSVインポート",
 	IMPORT_CONFIRM_TITLE: "インポートの確認",
