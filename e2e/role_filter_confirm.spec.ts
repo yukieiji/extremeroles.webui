@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.describe("Role Filter Confirm Button Response", () => {
 	test.setTimeout(60000);
@@ -12,11 +13,11 @@ test.describe("Role Filter Confirm Button Response", () => {
 		});
 
 		// Open Role Filter tab
-		await page.getByRole("button", { name: "Role Filter" }).click();
+		await getSidebarButton(page, "役職フィルター").click();
 
 		// Verify we are in Role Filter view
 		await expect(
-			page.getByRole("heading", { name: "Role Filter", exact: true }),
+			page.getByRole("heading", { name: "役職フィルター", exact: true }),
 		).toBeVisible();
 	});
 

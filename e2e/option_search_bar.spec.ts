@@ -29,7 +29,7 @@ test.describe("Option Search Bar", () => {
 	});
 
 	test("should not be visible in Role Filter tab", async ({ page }) => {
-		await getSidebarButton(page, "Role Filter").click();
+		await getSidebarButton(page, "役職フィルター").click();
 		await expect(
 			page.getByPlaceholder("オプションを検索..."),
 		).not.toBeVisible();

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { getSidebarButton } from "./conftest";
 
 test.describe("Role Filter Shift Selection", () => {
 	test.beforeEach(async ({ page }) => {
@@ -15,7 +16,7 @@ test.describe("Role Filter Shift Selection", () => {
 
 	test("should select multiple roles using shift-click", async ({ page }) => {
 		// Switch to Role Filter tab
-		await page.getByRole("button", { name: "Role Filter" }).click();
+		await getSidebarButton(page, "役職フィルター").click();
 
 		// Open the role selection dialog
 		await page.getByRole("button", { name: "フィルターを追加" }).click();
