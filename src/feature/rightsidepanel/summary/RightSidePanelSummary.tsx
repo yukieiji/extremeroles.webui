@@ -1,5 +1,4 @@
 import { Separator } from "@/components/ui/separator";
-import { exrOptionMetaData } from "@/logics/api";
 import {
 	AU_IMPOSTOR_COUNT_OPTION_ID,
 	AU_KILL_COOLDOWN_OPTION_ID,
@@ -14,29 +13,16 @@ import {
 	EXR_MILITANT_MIN_ID,
 	EXR_NEUTRAL_MAX_ID,
 	EXR_NEUTRAL_MIN_ID,
-	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
-import { ExRTabId } from "@/type";
 import { AuOptionSummaryRow } from "./AuOptionSummaryRow";
 import { ExRMinMaxSummaryRow } from "./ExRMinMaxSummaryRow";
-import { ExRRoleSummaryRow } from "./ExRRoleSummaryRow";
 import { PresetSummaryRow } from "./PresetSummaryRow";
-import { VanillaRoleSummaryRow } from "./VanillaRoleSummaryRow";
+import { RoleSummarySection } from "./RoleSummarySection";
 
 /**
  * 右パネルの上部に表示される、主要な設定のサマリー項目
  */
 export function RightSidePanelSummary() {
-	const exrRoleTabIds = [
-		ExRTabId.CrewmateTab,
-		ExRTabId.ImpostorTab,
-		ExRTabId.NeutralTab,
-		ExRTabId.CombinationTab,
-		ExRTabId.GhostCrewmateTab,
-		ExRTabId.GhostImpostorTab,
-		ExRTabId.GhostNeutralTab,
-	];
-
 	return (
 		<div
 			className="flex py-2 flex-col border-b border-border-strong gap-1"
@@ -68,16 +54,7 @@ export function RightSidePanelSummary() {
 				maxUniqueId={EXR_NEUTRAL_MAX_ID}
 			/>
 			<Separator className="bg-border-strong" />
-			{VANILLA_ROLE_CATEGORY_IDS.map((catId) => (
-				<VanillaRoleSummaryRow key={catId} categoryId={catId} />
-			))}
-			<Separator className="data-horizontal:w-4/5 mx-auto bg-border-weak" />
-			{exrRoleTabIds.map((tabId) => {
-				const categoryIds = exrOptionMetaData.tabs[tabId]?.categoryIds ?? [];
-				return categoryIds.map((catId) => (
-					<ExRRoleSummaryRow key={catId} categoryId={catId} />
-				));
-			})}
+			<RoleSummarySection />
 		</div>
 	);
 }
