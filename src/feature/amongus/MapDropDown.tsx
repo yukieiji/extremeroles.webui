@@ -4,6 +4,7 @@ import { TYPOGRAPHY } from "@/designConstants";
 import { createAuNavigateId } from "@/hooks/useOptionNavigation";
 import { auOptionMetaData } from "@/logics/api";
 import { useUpdateAuOptionSelection } from "@/logics/api.store";
+import { getMapName } from "@/noTrans";
 import { useStore } from "@/useStore";
 
 interface MapDropDownProps {
@@ -31,8 +32,8 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 		return null;
 	}
 
-	// 後で翻訳を適用するが、それまでは一旦 range に含まれる値をそのまま表示する
-	const displayValues = optionMeta.range.map((v) => v.toString());
+	// 数値のマップIDを名称に変換して表示する
+	const displayValues = optionMeta.range.map((v) => getMapName(Number(v)));
 
 	const isHighlighted = mapOptionId && highlightedAuOptionId === mapOptionId;
 

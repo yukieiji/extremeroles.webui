@@ -8,6 +8,7 @@ import {
 	AU_MAP_OPTION_ID,
 	EXR_RANDOM_MAP_OPTION_ID,
 } from "@/logics/optionUtils";
+import { getMapName } from "@/noTrans";
 import type { AuOptionId } from "@/type";
 import { useStore } from "@/useStore";
 
@@ -26,7 +27,11 @@ export function AuOptionSummaryRow({ optionId }: AuOptionSummaryRowProps) {
 			}
 		}
 		const selection = state.auValue[optionId] ?? 0;
-		return String(auOptionMetaData.options[optionId]?.range[selection] ?? "");
+		const rawValue = auOptionMetaData.options[optionId]?.range[selection];
+		if (optionId === AU_MAP_OPTION_ID) {
+			return getMapName(Number(rawValue ?? 0));
+		}
+		return String(rawValue ?? "");
 	});
 
 	const meta = auOptionMetaData.options[optionId];

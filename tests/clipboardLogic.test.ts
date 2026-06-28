@@ -191,7 +191,7 @@ describe("generateClipboardText", () => {
 		options: {
 			[AU_MAP_OPTION_ID]: {
 				title: "マップ",
-				range: ["Skeld", "Mira", "Polus", "Airship"],
+				range: [0, 1, 2, 4],
 				tabId: 0,
 				categoryId: 0,
 				format: "",

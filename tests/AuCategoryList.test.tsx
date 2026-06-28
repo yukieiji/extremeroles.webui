@@ -22,7 +22,7 @@ describe("AuCategoryList", () => {
 		auOptionMetaData.options[mapOptionId] = {
 			title: "Map",
 			format: "",
-			range: ["The Skeld", "Mira HQ"],
+			range: [0, 1],
 		};
 		await act(async () => {
 			useStore.getState().setSelectedAuTabId(0);
@@ -39,13 +39,13 @@ describe("AuCategoryList", () => {
 		).not.toBeInTheDocument();
 
 		// Should show current map name in dropdown
-		expect(screen.getByText("The Skeld")).toBeInTheDocument();
+		expect(screen.getByText("Skeld")).toBeInTheDocument();
 
 		// Open dropdown to see other options
 		const trigger = screen.getByRole("combobox");
 		await user.click(trigger);
 		expect(
-			await screen.findByRole("option", { name: "Mira HQ" }),
+			await screen.findByRole("option", { name: "MIRA HQ" }),
 		).toBeInTheDocument();
 	});
 
