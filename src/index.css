@@ -49,6 +49,7 @@
 
 	--color-info: var(--info);
 	--color-error: var(--error);
+	--color-success: var(--success);
 	--color-search-highlight: var(--search-highlight);
 
 	--color-foreground: var(--foreground);
@@ -125,6 +126,7 @@
 	--color-n4-components-background: var(--n4-components-background);
 	--color-n5-usercontrol-background: var(--n5-usercontrol-background);
 	--color-search-highlight: var(--search-highlight);
+	--color-success: var(--success);
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
@@ -151,6 +153,7 @@
 
 	--info: #818cf8;
 	--error: #f43f5e;
+	--success: #16A34A;
 	--search-highlight: #3b82f6;
 
 	--ring: #a1a1aa;
