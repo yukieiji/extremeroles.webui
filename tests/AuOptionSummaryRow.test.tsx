@@ -57,7 +57,7 @@ describe("AuOptionSummaryRow", () => {
 		vi.mocked(useStore).mockImplementation((selector) => {
 			return selector({
 				auValue: {
-					[AU_MAP_OPTION_ID]: 1, // MiraHQ
+					[AU_MAP_OPTION_ID]: 1, // MIRA HQ
 				},
 				exrValue: {
 					[EXR_RANDOM_MAP_OPTION_ID]: {
@@ -68,11 +68,20 @@ describe("AuOptionSummaryRow", () => {
 			} as unknown as Parameters<typeof selector>[0]);
 		});
 
+		// auOptionMetaData の設定
+		auOptionMetaData.options[AU_MAP_OPTION_ID] = {
+			title: "マップ",
+			format: "",
+			range: [0, 1, 2, 4, 5],
+			tabId: 0,
+			categoryId: 0,
+		};
+
 		render(
 			<AuOptionSummaryRow optionId={AU_MAP_OPTION_ID} fallbackTitle="マップ" />,
 		);
 
-		expect(screen.getByText("MiraHQ")).toBeInTheDocument();
+		expect(screen.getByText("MIRA HQ")).toBeInTheDocument();
 		expect(
 			screen.queryByText(translationMetaData.RANDOM_MAP_LABEL),
 		).not.toBeInTheDocument();

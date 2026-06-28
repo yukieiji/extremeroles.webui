@@ -21,6 +21,7 @@ import {
 	PRESET_OPTION_UNIQUE_ID,
 	VANILLA_ROLE_CATEGORY_IDS,
 } from "@/logics/optionUtils";
+import { getMapName } from "@/noTrans";
 import {
 	type AuOptionId,
 	type AuOptionMetaDataRecords,
@@ -97,7 +98,9 @@ export function generateClipboardText(
 
 	// 2. マップ
 	const mapTitle = cleanText(auMeta.options[AU_MAP_OPTION_ID].title);
-	let mapValue = cleanText(String(getAuValue(AU_MAP_OPTION_ID) ?? ""));
+	let mapValue = cleanText(
+		getMapName(Number(getAuValue(AU_MAP_OPTION_ID) ?? 0)),
+	);
 	if (state.exrValue[EXR_RANDOM_MAP_OPTION_ID]?.selection === 1) {
 		mapValue = translationMetaData.RANDOM_MAP_LABEL;
 	}
