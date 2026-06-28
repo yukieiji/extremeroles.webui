@@ -35,7 +35,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 		.toBeGreaterThan(30);
 
 	// 2. ExRの設定セクションを確認 (初期状態では開いている想定だが、必要ならスクロールして開く)
-	const exrSettingsTitle = page.getByText("ExRの設定");
+	const exrSettingsTitle = rightPanel.getByText("Extreme Roles");
 	await exrSettingsTitle.scrollIntoViewIfNeeded();
 
 	// プリセット名が表示されていることを確認。モックデータでは初期値 "1"
@@ -80,15 +80,15 @@ test("Updating preset name reflects in right sidebar", async ({ page }) => {
 	const openButton = page.getByTestId("right-panel-toggle");
 	await openButton.click();
 
-	const exrSettingsTitle = page.getByText("ExRの設定");
+	const rightSidebar = page.getByTestId("right-panel-summary");
+
+	const exrSettingsTitle = rightSidebar.getByText("Extreme Roles");
 	await exrSettingsTitle.scrollIntoViewIfNeeded();
 
 	// 変更後の名前が表示されていることを確認
 	// 翻訳データに基づいているため、正規表現で柔軟にマッチング
-	const presetRow = page
-		.getByTestId("right-panel-summary")
-		.getByRole("button", {
-			name: /(プリセット|Preset) New Custom Preset/,
-		});
+	const presetRow = rightSidebar.getByRole("button", {
+		name: /(プリセット|Preset) New Custom Preset/,
+	});
 	await expect(presetRow).toBeVisible();
 });

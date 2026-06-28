@@ -35,7 +35,7 @@ test.describe("Random Map Display and Hiding", () => {
 		// 右パネル内の "ExRの設定" アコーディオンを開く
 		const rightPanel = page.getByTestId("right-side-panel");
 		const exrSettingsAccordion = rightPanel.getByRole("button", {
-			name: "ExRの設定",
+			name: "Extreme Roles",
 		});
 		if (
 			(await exrSettingsAccordion.getAttribute("aria-expanded")) === "false"
