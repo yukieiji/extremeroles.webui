@@ -21,7 +21,7 @@ export function RoleGrid({ items, selectedRoleIds, onSelect }: RoleGridProps) {
 	if (items.length === 0) {
 		return (
 			<div className="text-center text-text-secondary italic">
-				{translationMetaData.NOT_FOUND}
+				{translationMetaData.ROLE_FILTER_NOT_FOUND}
 			</div>
 		);
 	}

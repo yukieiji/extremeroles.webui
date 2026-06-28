@@ -87,7 +87,7 @@ export function RoleFilterCardHeader({
 							(roleFilterMetaData.NormalRoleId[roleId] as string) ||
 							(roleFilterMetaData.CombinationId[roleId] as string) ||
 							(roleFilterMetaData.GhostRoleId[roleId] as string) ||
-							translationMetaData.ROLE_FILTER_UNKNOWN_ROLE;
+							"MISSING_ROLE";
 
 						addRoleToFilter(guid, roleId, roleName);
 					}
