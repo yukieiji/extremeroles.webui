@@ -24,8 +24,8 @@ test.describe("Au Option Interactions", () => {
 	test("should display dropdown for map category in general tab", async ({
 		page,
 	}) => {
-		// Tab 0 (General)
-		await page.getByRole("tab", { name: "0", exact: true }).click();
+		// Tab ゲーム設定 (General)
+		await page.getByRole("tab", { name: "ゲーム設定", exact: true }).click();
 
 		// Map is now a direct dropdown (select element)
 		// モックデータでは「マップ」
@@ -44,7 +44,7 @@ test.describe("Au Option Interactions", () => {
 		page,
 	}) => {
 		// Tab 0 (General)
-		await page.getByRole("tab", { name: "0", exact: true }).click();
+		await page.getByRole("tab", { name: "ゲーム設定", exact: true }).click();
 
 		// index 1 category should still be an accordion
 		// メインコンテンツエリアのアコーディオンボタンを探す
@@ -61,7 +61,7 @@ test.describe("Au Option Interactions", () => {
 		page,
 	}) => {
 		// Tab 1
-		await page.getByRole("tab", { name: "1", exact: true }).click();
+		await page.getByRole("tab", { name: "クルー", exact: true }).click();
 
 		// Initially chance is probably 0, so it's disabled
 		const category = page.getByTestId("role-category").first();
@@ -84,7 +84,7 @@ test.describe("Au Option Interactions", () => {
 	test("should synchronize chance and max count in Au roles", async ({
 		page,
 	}) => {
-		await page.getByRole("tab", { name: "1", exact: true }).click();
+		await page.getByRole("tab", { name: "クルー", exact: true }).click();
 
 		// Find a non-vanilla role that is not hidden (index 6 onwards in Tab 1 should be safe if mock data follows usual pattern)
 		// Or just find the first visible category in the list
@@ -128,7 +128,7 @@ test.describe("Au Option Interactions", () => {
 	test("expanding role accordion should show other options", async ({
 		page,
 	}) => {
-		await page.getByRole("tab", { name: "1", exact: true }).click();
+		await page.getByRole("tab", { name: "クルー", exact: true }).click();
 
 		const category = page.getByTestId("role-category").first();
 		const toggleButton = category.locator("button").first();

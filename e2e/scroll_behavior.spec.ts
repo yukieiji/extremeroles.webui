@@ -12,7 +12,7 @@ test.describe("Scroll Behavior", () => {
 		await expect(categoryList).toBeVisible({ timeout: 15000 });
 
 		// Switch to tab 1 which typically has more items
-		await page.getByRole("tab", { name: "1", exact: true }).click();
+		await page.getByRole("tab", { name: "クルー", exact: true }).click();
 
 		// Set a small viewport to ensure overflow
 		await page.setViewportSize({ width: 1280, height: 400 });

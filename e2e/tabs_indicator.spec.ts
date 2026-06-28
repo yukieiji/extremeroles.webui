@@ -21,7 +21,7 @@ test.describe("Tabs Indicator Styling", () => {
 		await getSidebarButton(page, "Among Us").click();
 
 		// Select Tab 1 (Crewmate - Lime Green)
-		const tab1 = page.getByRole("tab", { name: "1", exact: true });
+		const tab1 = page.getByRole("tab", { name: "クルー", exact: true });
 		await tab1.click();
 
 		// Check if the tab has the correct CSS variable for color
@@ -34,7 +34,7 @@ test.describe("Tabs Indicator Styling", () => {
 		expect(colorVar.toLowerCase()).toMatch(/^(rgb\(140, 255, 0\)|#8cff00)$/);
 
 		// Select Tab 2 (Impostor - Red)
-		const tab2 = page.getByRole("tab", { name: "2", exact: true });
+		const tab2 = page.getByRole("tab", { name: "インポスター", exact: true });
 		await tab2.click();
 		const colorVar2 = await tab2.evaluate((el) =>
 			(el as HTMLElement).style.getPropertyValue("--tab-color").trim(),

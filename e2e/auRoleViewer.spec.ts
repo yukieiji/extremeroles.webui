@@ -53,7 +53,10 @@ test.describe("Au Role Viewer in Right Panel", () => {
 		page,
 	}) => {
 		// Among Us の 役職タブ（タブ 1）に移動
-		await page.getByRole("tab", { name: "1", exact: true }).first().click();
+		await page
+			.getByRole("tab", { name: "クルー", exact: true })
+			.first()
+			.click();
 
 		// 科学者を無効にしてチェック
 		const category = page
