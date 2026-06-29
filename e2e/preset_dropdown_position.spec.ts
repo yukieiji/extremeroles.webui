@@ -8,7 +8,9 @@ test.beforeEach(async ({ page }) => {
 	});
 });
 
-test("Preset dropdown should not overlap trigger when wrapped", async ({ page }) => {
+test("Preset dropdown should not overlap trigger when wrapped", async ({
+	page,
+}) => {
 	// Set a narrow viewport to force wrapping
 	await page.setViewportSize({ width: 800, height: 600 });
 
