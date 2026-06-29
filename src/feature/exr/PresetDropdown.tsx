@@ -10,7 +10,7 @@ interface PresetDropdownProps {
  */
 export function PresetDropdown({ presetValues }: PresetDropdownProps) {
 	return (
-		<SelectContent align="end" className="w-46">
+		<SelectContent alignItemWithTrigger={false} align="end" className="w-46">
 			{presetValues.map((val, index) => {
 				return (
 					<PresetDropdownItem key={`preset-${val}`} index={index} value={val} />
