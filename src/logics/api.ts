@@ -12,6 +12,7 @@ import type {
 	RoleFilterMetaData,
 	SearchItem,
 	SimulateOption,
+	SimulateResult,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -27,6 +28,7 @@ import {
 	GetTranslationResponseArraySchema,
 	OptionValueType,
 	RoleAssignFilterDtoSchema,
+	SimulateResultArraySchema,
 	UpdatedOptionsSchema,
 } from "../type";
 
@@ -646,7 +648,9 @@ export async function updateExrOption(
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
-export async function postSimulate(options: SimulateOption): Promise<unknown> {
+export async function postSimulate(
+	options: SimulateOption,
+): Promise<SimulateResult[]> {
 	console.log(
 		JSON.stringify({
 			type: "request",
@@ -679,7 +683,7 @@ export async function postSimulate(options: SimulateOption): Promise<unknown> {
 	console.log(
 		JSON.stringify({ type: "data", url: EXR_SIMULATE_URL, data: jsonData }),
 	);
-	return jsonData;
+	return await SimulateResultArraySchema.parseAsync(jsonData);
 }
 
 export async function postExrCsv(csvBody: string): Promise<void> {
