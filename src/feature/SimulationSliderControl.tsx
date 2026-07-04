@@ -1,6 +1,5 @@
-import type React from "react";
-import { useEffect, useId, useRef } from "react";
 import { BaseSelectionSliderLayout } from "@/components/parts/BaseSelectionSliderLayout";
+import { useBaseSelectionSlider } from "@/hooks/useBaseSelectionSlider";
 
 interface SimulationSliderControlProps {
 	label: string;
@@ -12,7 +11,6 @@ interface SimulationSliderControlProps {
 
 /**
  * シミュレーション設定用のスライダーコントロール
- * シミュレーション専用のPropsを受け取ります
  */
 export function SimulationSliderControl({
 	label,
@@ -21,20 +19,6 @@ export function SimulationSliderControl({
 	max,
 	onValueChange,
 }: SimulationSliderControlProps) {
-	const id = useId();
-	const inputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		if (inputRef.current) {
-			inputRef.current.value = value.toString();
-		}
-	}, [value]);
-
-	const handleSliderChange = (val: number | readonly number[]) => {
-		const newValue = Array.isArray(val) ? val[0] : val;
-		onValueChange(newValue);
-	};
-
 	const commitValue = () => {
 		if (!inputRef.current) {
 			return;
@@ -51,18 +35,12 @@ export function SimulationSliderControl({
 		onValueChange(val);
 	};
 
-	const handleBlur = () => {
-		commitValue();
-	};
+	const { id, inputRef, handleBlur, handleKeyDown, stopPropagation } =
+		useBaseSelectionSlider(value, commitValue);
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
-			e.currentTarget.blur();
-		}
-	};
-
-	const stopPropagation = (e: React.MouseEvent | React.KeyboardEvent) => {
-		e.stopPropagation();
+	const handleSliderChange = (val: number | readonly number[]) => {
+		const newValue = Array.isArray(val) ? val[0] : val;
+		onValueChange(newValue);
 	};
 
 	return (

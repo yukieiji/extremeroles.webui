@@ -13,9 +13,6 @@ interface SimulationDialogProps {
 	title: string;
 }
 
-const CYCLE_VALUES = Array.from({ length: 100 }, (_, i) => i + 1);
-const PLAYER_NUM_VALUES = Array.from({ length: 97 }, (_, i) => i + 4);
-
 export function SimulationDialog({ title }: SimulationDialogProps) {
 	const cycle = useStore((state) => state.simulationCycle);
 	const setCycle = useStore((state) => state.setSimulationCycle);
