@@ -35,6 +35,13 @@ describe("SimulationDialog", () => {
 		expect(screen.getByText(mockTitle)).toBeInTheDocument();
 	});
 
+	it("shows message when no results are present", () => {
+		renderWithDialog(<SimulationDialog title={mockTitle} />);
+		expect(
+			screen.getByText("シュミレートボタンを押して下さい"),
+		).toBeInTheDocument();
+	});
+
 	it("renders controls with default values", () => {
 		renderWithDialog(<SimulationDialog title={mockTitle} />);
 
@@ -71,6 +78,25 @@ describe("SimulationDialog", () => {
 			expect(executeButton).not.toBeDisabled();
 			expect(screen.getByText("Execute")).toBeInTheDocument();
 		});
+	});
+
+	it("shows loading indicator when simulation is in progress", async () => {
+		(postSimulate as Mock).mockReturnValue(new Promise(() => {})); // Never resolves
+
+		renderWithDialog(<SimulationDialog title={mockTitle} />);
+
+		fireEvent.click(screen.getByRole("button", { name: /Execute/i }));
+
+		await waitFor(() => {
+			expect(useStore.getState().isSimulationLoading).toBe(true);
+		});
+
+		// LoadingCycle has animate-spin class
+		const resultArea = screen.getByText("Executing...").closest("div.flex-1");
+		expect(resultArea?.querySelector(".animate-spin")).toBeInTheDocument();
+		expect(
+			screen.queryByText("シュミレートボタンを押して下さい"),
+		).not.toBeInTheDocument();
 	});
 
 	it("updates results in store after successful simulation", async () => {
