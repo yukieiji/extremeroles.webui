@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
@@ -15,10 +15,10 @@ interface SimulationDialogProps {
 }
 
 export function SimulationDialog({ title }: SimulationDialogProps) {
-	const [cycle, setCycle] = useState(1);
-	const [playerNum, setPlayerNum] = useState(15);
-	const [result, setResult] = useState<string>("");
-	const [isLoading, setIsLoading] = useState(false);
+	const [cycle, setCycle] = React.useState(1);
+	const [playerNum, setPlayerNum] = React.useState(15);
+	const [result, setResult] = React.useState<string>("");
+	const [isLoading, setIsLoading] = React.useState(false);
 
 	const handleSimulate = async () => {
 		setIsLoading(true);
@@ -52,7 +52,9 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				{/* Controls */}
 				<div className="w-80 flex flex-col gap-6 p-2 border-l border-border-weak">
 					<div className="flex flex-col gap-4">
-						<label className={TYPOGRAPHY.LABEL}>Cycle (1 - 100)</label>
+						<label htmlFor="cycle-input" className={TYPOGRAPHY.LABEL}>
+							Cycle (1 - 100)
+						</label>
 						<div className="flex items-center gap-4">
 							<Slider
 								value={[cycle]}
@@ -62,11 +64,14 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 								step={1}
 							/>
 							<Input
+								id="cycle-input"
 								type="number"
 								value={cycle}
 								onChange={(e) => {
 									const val = Number(e.target.value);
-									if (val >= 1 && val <= 100) setCycle(val);
+									if (val >= 1 && val <= 100) {
+										setCycle(val);
+									}
 								}}
 								className="w-20"
 							/>
@@ -74,7 +79,9 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 					</div>
 
 					<div className="flex flex-col gap-4">
-						<label className={TYPOGRAPHY.LABEL}>Player Num (4 - 100)</label>
+						<label htmlFor="player-num-input" className={TYPOGRAPHY.LABEL}>
+							Player Num (4 - 100)
+						</label>
 						<div className="flex items-center gap-4">
 							<Slider
 								value={[playerNum]}
@@ -84,11 +91,14 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 								step={1}
 							/>
 							<Input
+								id="player-num-input"
 								type="number"
 								value={playerNum}
 								onChange={(e) => {
 									const val = Number(e.target.value);
-									if (val >= 4 && val <= 100) setPlayerNum(val);
+									if (val >= 4 && val <= 100) {
+										setPlayerNum(val);
+									}
 								}}
 								className="w-20"
 							/>

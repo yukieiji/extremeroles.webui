@@ -11,11 +11,7 @@ import {
 	translationMetaData,
 } from "@/logics/api";
 import { generateClipboardText } from "@/logics/clipboardLogic";
-import {
-	AU_OPTIONS_TITLE,
-	EXR_OPTIONS_TITLE,
-	SIMULATE_LABEL,
-} from "@/noTrans";
+import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE, SIMULATE_LABEL } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";

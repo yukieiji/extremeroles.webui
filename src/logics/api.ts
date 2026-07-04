@@ -11,9 +11,9 @@ import type {
 	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
 	SearchItem,
+	SimulateOption,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
-	SimulateOption,
 	UpdatedOptions,
 	VanillaOptionPutRequest,
 } from "../type";
@@ -646,9 +646,7 @@ export async function updateExrOption(
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
-export async function postSimulate(
-	options: SimulateOption,
-): Promise<unknown> {
+export async function postSimulate(options: SimulateOption): Promise<unknown> {
 	console.log(
 		JSON.stringify({
 			type: "request",
