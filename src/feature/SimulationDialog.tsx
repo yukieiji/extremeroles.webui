@@ -44,11 +44,11 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 	};
 
 	return (
-		<DialogContent className="max-w-6xl h-[80vh] flex flex-col">
+		<DialogContent className="max-w-7xl h-[80vh] flex flex-col">
 			<DialogHeader>
 				<DialogTitle className={TYPOGRAPHY.LABEL}>{title}</DialogTitle>
 			</DialogHeader>
-			<div className="flex-1 flex overflow-hidden gap-4 p-2">
+			<div className="flex-1 flex overflow-hidden gap-2 p-2">
 				{/* Result View */}
 				<div className="flex-1 border border-border-strong rounded-md bg-app-background p-2 overflow-auto font-mono text-xs break-all">
 					{result}
