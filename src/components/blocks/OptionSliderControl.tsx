@@ -1,5 +1,6 @@
+import { useOptionSlider } from "@/hooks/useOptionSlider";
+import { BaseSelectionSliderLayout } from "../parts/BaseSelectionSliderLayout";
 import { OptionFormat } from "../parts/OptionFormat";
-import { SelectionSliderControl } from "../parts/SelectionSliderControl";
 
 interface OptionSliderControlProps {
 	label?: string;
@@ -25,12 +26,29 @@ export function OptionSliderControl({
 	className,
 	inputClassName,
 }: OptionSliderControlProps) {
+	const {
+		id,
+		currentValue,
+		inputRef,
+		handleSliderChange,
+		handleBlur,
+		handleKeyDown,
+		stopPropagation,
+	} = useOptionSlider(selection, values, onChange);
+
 	return (
-		<SelectionSliderControl
+		<BaseSelectionSliderLayout
+			id={id}
+			inputRef={inputRef}
+			currentValue={currentValue}
+			sliderMin={0}
+			sliderMax={Math.max(0, values.length - 1)}
+			sliderValue={selection}
+			onSliderChange={handleSliderChange}
+			onBlur={handleBlur}
+			onKeyDown={handleKeyDown}
+			stopPropagation={stopPropagation}
 			label={label}
-			selection={selection}
-			values={values}
-			onChange={onChange}
 			renderFormat={format ? <OptionFormat format={format} /> : undefined}
 			testId={testId}
 			className={className}

@@ -1,16 +1,22 @@
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import { TYPOGRAPHY } from "@/designConstants";
-import { useSelectionSlider } from "@/hooks/useSelectionSlider";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
 
-interface SelectionSliderControlProps {
+interface BaseSelectionSliderLayoutProps {
+	id: string;
+	inputRef: RefObject<HTMLInputElement | null>;
+	currentValue: number;
+	sliderMin: number;
+	sliderMax: number;
+	sliderValue: number;
+	onSliderChange: (val: number | readonly number[]) => void;
+	onBlur: () => void;
+	onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+	stopPropagation: (e: React.MouseEvent | React.KeyboardEvent) => void;
 	label?: string;
-	selection: number;
-	values: number[];
-	onChange: (selection: number) => void;
 	renderFormat?: ReactNode;
 	testId?: string;
 	className?: string;
@@ -18,28 +24,25 @@ interface SelectionSliderControlProps {
 }
 
 /**
- * 汎用的な選択スライダーコントロール
+ * 選択スライダーのレイアウト（見た目）のみを担当するベースコンポーネント
  */
-export function SelectionSliderControl({
+export function BaseSelectionSliderLayout({
+	id,
+	inputRef,
+	currentValue,
+	sliderMin,
+	sliderMax,
+	sliderValue,
+	onSliderChange,
+	onBlur,
+	onKeyDown,
+	stopPropagation,
 	label,
-	selection,
-	values,
-	onChange,
 	renderFormat,
 	testId,
 	className,
 	inputClassName,
-}: SelectionSliderControlProps) {
-	const {
-		id,
-		currentValue,
-		inputRef,
-		handleSliderChange,
-		handleBlur,
-		handleKeyDown,
-		stopPropagation,
-	} = useSelectionSlider(selection, values, onChange);
-
+}: BaseSelectionSliderLayoutProps) {
 	return (
 		<FieldSet
 			onClick={stopPropagation}
@@ -62,8 +65,8 @@ export function SelectionSliderControl({
 					ref={inputRef}
 					type="number"
 					defaultValue={currentValue.toString()}
-					onBlur={handleBlur}
-					onKeyDown={handleKeyDown}
+					onBlur={onBlur}
+					onKeyDown={onKeyDown}
 					className={inputClassName}
 				/>
 				{renderFormat && (
@@ -73,11 +76,11 @@ export function SelectionSliderControl({
 				)}
 			</Field>
 			<Slider
-				min={0}
-				max={Math.max(0, values.length - 1)}
+				min={sliderMin}
+				max={sliderMax}
 				step={1}
-				value={[selection]}
-				onValueChange={handleSliderChange}
+				value={[sliderValue]}
+				onValueChange={onSliderChange}
 				className="cursor-pointer"
 			/>
 		</FieldSet>

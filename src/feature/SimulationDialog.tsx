@@ -1,4 +1,3 @@
-import { SelectionSliderControl } from "@/components/parts/SelectionSliderControl";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
@@ -8,13 +7,11 @@ import {
 import { TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
 import { useStore } from "@/useStore";
+import { SimulationSliderControl } from "./SimulationSliderControl";
 
 interface SimulationDialogProps {
 	title: string;
 }
-
-const CYCLE_VALUES = Array.from({ length: 100 }, (_, i) => i + 1);
-const PLAYER_NUM_VALUES = Array.from({ length: 97 }, (_, i) => i + 4);
 
 export function SimulationDialog({ title }: SimulationDialogProps) {
 	const cycle = useStore((state) => state.simulationCycle);
@@ -58,20 +55,22 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				{/* Controls */}
 				<div className="w-80 flex flex-col gap-6 p-2 border-l border-border-weak">
 					<div className="flex flex-col gap-4">
-						<SelectionSliderControl
+						<SimulationSliderControl
 							label="Cycle"
-							selection={cycle - 1}
-							values={CYCLE_VALUES}
-							onChange={(idx) => setCycle(CYCLE_VALUES[idx])}
+							value={cycle}
+							min={1}
+							max={100}
+							onValueChange={setCycle}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-4">
-						<SelectionSliderControl
+						<SimulationSliderControl
 							label="Player Num"
-							selection={playerNum - 4}
-							values={PLAYER_NUM_VALUES}
-							onChange={(idx) => setPlayerNum(PLAYER_NUM_VALUES[idx])}
+							value={playerNum}
+							min={4}
+							max={100}
+							onValueChange={setPlayerNum}
 						/>
 					</div>
 
