@@ -1,6 +1,6 @@
 import { Play } from "lucide-react";
 import { Suspense, useEffect } from "react";
-import { LobbyLoadingView } from "@/components/LobbyLoadingView";
+import { LobbyLoadingView } from "@/components/blocks/LobbyLoadingView";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
