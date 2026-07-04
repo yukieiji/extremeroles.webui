@@ -15,7 +15,7 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 
 	// パネル本体が隠れている（幅が狭いなど）場合はトグルボタンを押す
 	// 実際には transition があるので、少し待つか状態を確認する
-	if (await rightPanel.evaluate(el => el.clientWidth <= 30)) {
+	if (await rightPanel.evaluate((el) => el.clientWidth <= 30)) {
 		await toggleButton.click();
 	}
 

@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SimulateResultCard } from "@/feature/exr/SimulateResultCard";
 import { translationMetaData } from "@/logics/api";
 import type { SimulateResult } from "@/type";
@@ -77,10 +77,10 @@ describe("SimulateResultCard", () => {
 		fireEvent.click(copyButton);
 
 		expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-			expect.stringContaining("### シミュレート結果")
+			expect.stringContaining("### シミュレート結果"),
 		);
 		expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-			expect.stringContaining("- クルー陣営\n   - Player1: クルー")
+			expect.stringContaining("- クルー陣営\n   - Player1: クルー"),
 		);
 	});
 

@@ -1,5 +1,6 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import type { Mock } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Dialog } from "@/components/ui/dialog";
 import { SimulationDialog } from "@/feature/SimulationDialog";
 import { postSimulate } from "@/logics/api";
@@ -15,11 +16,7 @@ describe("SimulationDialog", () => {
 	const mockTitle = "シミュレーション";
 
 	const renderWithDialog = (ui: React.ReactElement) => {
-		return render(
-			<Dialog open={true}>
-				{ui}
-			</Dialog>
-		);
+		return render(<Dialog open={true}>{ui}</Dialog>);
 	};
 
 	beforeEach(() => {
@@ -52,7 +49,7 @@ describe("SimulationDialog", () => {
 
 	it("calls postSimulate when Execute button is clicked", async () => {
 		const mockRes = [{ CycleData: [] }];
-		(postSimulate as any).mockResolvedValue(mockRes);
+		(postSimulate as Mock).mockResolvedValue(mockRes);
 
 		renderWithDialog(<SimulationDialog title={mockTitle} />);
 
@@ -79,10 +76,10 @@ describe("SimulationDialog", () => {
 	it("updates results in store after successful simulation", async () => {
 		const mockRes = [
 			{
-				CycleData: [{ PlayerName: "P1", RoleName: "R1", Team: "T1" }]
-			}
+				CycleData: [{ PlayerName: "P1", RoleName: "R1", Team: "T1" }],
+			},
 		];
-		(postSimulate as any).mockResolvedValue(mockRes);
+		(postSimulate as Mock).mockResolvedValue(mockRes);
 
 		renderWithDialog(<SimulationDialog title={mockTitle} />);
 
@@ -97,7 +94,7 @@ describe("SimulationDialog", () => {
 
 	it("handles API error gracefully", async () => {
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-		(postSimulate as any).mockRejectedValue(new Error("API Error"));
+		(postSimulate as Mock).mockRejectedValue(new Error("API Error"));
 
 		renderWithDialog(<SimulationDialog title={mockTitle} />);
 
