@@ -81,15 +81,19 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 							<Table>
 								<TableHeader className={TYPOGRAPHY.CHILD_LABEL}>
 									<TableRow>
-										<TableHead>プレイヤーネーム</TableHead>
-										<TableHead>役職</TableHead>
+										<TableHead className="w-[60%] whitespace-normal">
+											プレイヤーネーム
+										</TableHead>
+										<TableHead className="whitespace-normal">役職</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody className={TYPOGRAPHY.SMALL}>
 									{Object.entries(players).map(([playerName, roles]) => (
 										<TableRow key={playerName}>
-											<TableCell>{playerName}</TableCell>
-											<TableCell>
+											<TableCell className="w-[60%] whitespace-normal">
+												{playerName}
+											</TableCell>
+											<TableCell className="whitespace-normal">
 												<ColoredText
 													text={roles
 														.map((x) => translationMetaData[x])
