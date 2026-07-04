@@ -59,7 +59,12 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle className={TYPOGRAPHY.LABEL}>結果 {index + 1}</CardTitle>
-				<Button variant="outline" size="sm" onClick={handleCopy}>
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={handleCopy}
+					className="shadow-md"
+				>
 					<Copy className="w-4 h-4" />
 					コピー
 				</Button>

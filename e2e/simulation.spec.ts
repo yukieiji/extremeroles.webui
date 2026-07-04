@@ -21,14 +21,20 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 
 	// シミュレートボタンをクリック
 	const simulateButton = page.getByRole("button", { name: "シミュレート" });
-	// 他の要素に遮られている場合は force: true を使うか、スクロールする
-	await simulateButton.click({ force: true });
+	await expect(simulateButton).toBeVisible();
+	await simulateButton.click();
 
 	// ダイアログが表示されることを確認
 	const dialog = page.getByRole("dialog");
-	await expect(dialog).toBeVisible();
+	await expect(dialog).toBeVisible({ timeout: 15000 });
 	await expect(dialog.getByText("シミュレート")).toBeVisible();
 
+	// 初期表示のメッセージを確認
+	await expect(
+		dialog.getByText("シュミレートボタンを押して下さい"),
+	).toBeVisible();
+
+	// スライダーの設定を確認 (Cycle: 1, Player Num: 15 がデフォルト)
 	// ロビー情報が表示されることを確認
 	await expect(dialog.getByText("ロビー情報")).toBeVisible();
 	await expect(dialog.getByText("サーバー")).toBeVisible();
@@ -53,8 +59,15 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	const executeButton = dialog.getByRole("button", { name: "Execute" });
 	await executeButton.click();
 
-	// 実行中の状態を確認 (非常に速い場合があるので、toBeVisible() ではなく存在を確認するか、スキップする)
-	// await expect(dialog.getByText("Executing...")).toBeVisible();
+	// 実行中の状態（ローディングサイクルとメッセージの非表示）を確認
+	// 非常に速い場合があるので、Executing... または 結果 1 が出ればOKとする
+	await expect(
+		dialog.getByText("Executing...").or(dialog.getByText("結果 1")),
+	).toBeVisible();
+
+	await expect(
+		dialog.getByText("シュミレートボタンを押して下さい"),
+	).not.toBeVisible();
 
 	// 結果が表示されるまで待機
 	await expect(dialog.getByText("結果 1")).toBeVisible({ timeout: 10000 });
