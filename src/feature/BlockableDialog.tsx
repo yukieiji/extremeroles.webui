@@ -3,6 +3,7 @@ import { Dialog } from "../components/ui/dialog";
 import { useStore } from "../useStore";
 import { RoleSelectDialog } from "./rolefilter/RoleSelectDialog";
 import { SettingsDialog } from "./SettingsDialog";
+import { SimulationDialog } from "./SimulationDialog";
 
 export function BlockableDialog() {
 	const blockDialog = useStore((state) => state.blockDialog);
@@ -37,6 +38,9 @@ export function BlockableDialog() {
 			)}
 			{blockDialog?.type === "settings" && (
 				<SettingsDialog title={blockDialog.title} />
+			)}
+			{blockDialog?.type === "simulate" && (
+				<SimulationDialog title={blockDialog.title} />
 			)}
 		</Dialog>
 	);
