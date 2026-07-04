@@ -52,8 +52,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 		let text = "### シミュレート結果\n";
 		for (const team of finalTeams) {
 			const players = teamGroups[team];
-			const teamName =
-				team === "Null" ? "" : translationMetaData[team] || team;
+			const teamName = team === "Null" ? "" : translationMetaData[team] || team;
 			text += teamName ? `- ${teamName}\n` : "";
 			for (const [playerName, roles] of Object.entries(players)) {
 				text += `   - ${playerName}: ${roles.map((x) => stripColorTags(translationMetaData[x])).join(" + ")}\n`;
