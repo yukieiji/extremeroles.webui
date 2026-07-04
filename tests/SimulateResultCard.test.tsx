@@ -104,4 +104,18 @@ describe("SimulateResultCard", () => {
 
 		expect(screen.getByText("Liberal")).toBeInTheDocument();
 	});
+
+	it("has correct classes for layout alignment", () => {
+		render(<SimulateResultCard result={mockResult} index={0} />);
+
+		// プレイヤーネームのセルが w-[60%] と whitespace-normal を持っていることを確認
+		const playerNameCell = screen.getByText("Player1");
+		expect(playerNameCell).toHaveClass("w-[60%]");
+		expect(playerNameCell).toHaveClass("whitespace-normal");
+
+		// 役職のセルが whitespace-normal を持っていることを確認
+		const roleCell = screen.getByText("クルー");
+		const roleTableCell = roleCell.closest("td");
+		expect(roleTableCell).toHaveClass("whitespace-normal");
+	});
 });
