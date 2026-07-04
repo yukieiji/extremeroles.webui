@@ -384,10 +384,26 @@ export interface SettingsDialogData {
 	title: string;
 }
 
+export interface SimulateDialogData {
+	type: "simulate";
+	title: string;
+}
+
 export type BlockDialog =
 	| ConfirmDialogData
 	| RoleSelectDialogData
-	| SettingsDialogData;
+	| SettingsDialogData
+	| SimulateDialogData;
+
+export interface VanillaRolePlayerMockOption {
+	PlayerNum: number;
+}
+
+export interface SimulateOption {
+	Cycle: number;
+	Option: VanillaRolePlayerMockOption;
+	MockPlayerNames?: string[] | null;
+}
 
 export interface GetTranslationResponse {
 	Key: string | number;

@@ -11,6 +11,7 @@ import type {
 	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
 	SearchItem,
+	SimulateOption,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -39,6 +40,7 @@ const EXR_OPTION_URL = "/exr/option/";
 const EXR_CSV_URL = "/exr/option/csv/";
 const AU_OPTION_URL = "/au/option/";
 const EXR_ROLE_FILTER_URL = "/exr/role/filter/";
+const EXR_SIMULATE_URL = "/exr/role/simulate/";
 const TRANSLATION_BATCH_BASE_URL = "/au/translation/batch/";
 const OPUTION_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}optionunit/`;
 const ROLE_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}role/`;
@@ -642,6 +644,42 @@ export async function updateExrOption(
 		JSON.stringify({ type: "data", url: EXR_OPTION_URL, data: jsonData }),
 	);
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
+}
+
+export async function postSimulate(options: SimulateOption): Promise<unknown> {
+	console.log(
+		JSON.stringify({
+			type: "request",
+			method: "POST",
+			url: EXR_SIMULATE_URL,
+			body: options,
+		}),
+	);
+	const res = await fetch(EXR_SIMULATE_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(options),
+	});
+
+	console.log(
+		JSON.stringify({
+			type: "response",
+			url: EXR_SIMULATE_URL,
+			status: res.status,
+		}),
+	);
+
+	if (!res.ok) {
+		throw new Error(`Failed to post simulate: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	console.log(
+		JSON.stringify({ type: "data", url: EXR_SIMULATE_URL, data: jsonData }),
+	);
+	return jsonData;
 }
 
 export async function postExrCsv(csvBody: string): Promise<void> {
