@@ -1,5 +1,5 @@
 import { translationMetaData } from "@/logics/api";
-import { OptionSliderControl } from "../parts/OptionSliderControl";
+import { OptionSliderControl } from "./OptionSliderControl";
 
 interface ControlProps {
 	values: number[];

@@ -1,4 +1,4 @@
-import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
+import { OptionSliderControl } from "@/components/blocks/OptionSliderControl";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import { getUniqueOptionId } from "@/logics/optionUtils";
 import type { ExROptionDto } from "@/type";

@@ -1,4 +1,4 @@
-import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
+import { SelectionSliderControl } from "@/components/parts/SelectionSliderControl";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
@@ -58,7 +58,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				{/* Controls */}
 				<div className="w-80 flex flex-col gap-6 p-2 border-l border-border-weak">
 					<div className="flex flex-col gap-4">
-						<OptionSliderControl
+						<SelectionSliderControl
 							label="Cycle"
 							selection={cycle - 1}
 							values={CYCLE_VALUES}
@@ -67,7 +67,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 					</div>
 
 					<div className="flex flex-col gap-4">
-						<OptionSliderControl
+						<SelectionSliderControl
 							label="Player Num"
 							selection={playerNum - 4}
 							values={PLAYER_NUM_VALUES}

@@ -2,7 +2,7 @@ import type React from "react";
 import { useEffect, useId, useRef } from "react";
 import { findClosestIndex } from "@/logics/optionUtils";
 
-export function useOptionSlider(
+export function useSelectionSlider(
 	selection: number,
 	values: number[],
 	onChange: (selection: number) => void,

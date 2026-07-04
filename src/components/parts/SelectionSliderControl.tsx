@@ -1,35 +1,35 @@
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
+import type { ReactNode } from "react";
 import { TYPOGRAPHY } from "@/designConstants";
-import { useOptionSlider } from "@/hooks/useOptionSlider";
-import { OptionFormat } from "../parts/OptionFormat";
+import { useSelectionSlider } from "@/hooks/useSelectionSlider";
 import { Field, FieldLabel, FieldSet } from "../ui/field";
+import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Slider } from "../ui/slider";
 
-interface OptionSliderControlProps {
+interface SelectionSliderControlProps {
 	label?: string;
 	selection: number;
 	values: number[];
-	format?: string;
 	onChange: (selection: number) => void;
+	renderFormat?: ReactNode;
 	testId?: string;
 	className?: string;
 	inputClassName?: string;
 }
 
 /**
- * 数値オプション（Int32, Single）用のスライダーと入力欄コンポーネント
+ * 汎用的な選択スライダーコントロール
  */
-export function OptionSliderControl({
+export function SelectionSliderControl({
 	label,
 	selection,
 	values,
-	format,
 	onChange,
+	renderFormat,
 	testId,
 	className,
 	inputClassName,
-}: OptionSliderControlProps) {
+}: SelectionSliderControlProps) {
 	const {
 		id,
 		currentValue,
@@ -38,7 +38,7 @@ export function OptionSliderControl({
 		handleBlur,
 		handleKeyDown,
 		stopPropagation,
-	} = useOptionSlider(selection, values, onChange);
+	} = useSelectionSlider(selection, values, onChange);
 
 	return (
 		<FieldSet
@@ -66,9 +66,9 @@ export function OptionSliderControl({
 					onKeyDown={handleKeyDown}
 					className={inputClassName}
 				/>
-				{format && (
+				{renderFormat && (
 					<Label htmlFor={id} className="select-text">
-						<OptionFormat format={format} />
+						{renderFormat}
 					</Label>
 				)}
 			</Field>
