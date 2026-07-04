@@ -54,15 +54,15 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 			<div className="flex-1 flex overflow-hidden gap-2 p-2">
 				{/* Result View */}
 				<div className="flex-1 rounded-md p-2 pr-4 overflow-y-scroll">
-					{isLoading ? (
+					{isLoading || result.length === 0 ? (
 						<div className="h-full flex items-center justify-center">
-							<LoadingCycle />
-						</div>
-					) : result.length === 0 ? (
-						<div className="h-full flex items-center justify-center">
-							<span className={TYPOGRAPHY.LABEL}>
-								シュミレートボタンを押して下さい
-							</span>
+							{isLoading ? (
+								<LoadingCycle />
+							) : (
+								<span className={TYPOGRAPHY.LABEL}>
+									シュミレートボタンを押して下さい
+								</span>
+							)}
 						</div>
 					) : (
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
