@@ -55,6 +55,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				<div className="flex-1 border border-border-strong rounded-md bg-app-background p-4 overflow-auto">
 					{result.map((res, i) => (
 						<SimulateResultCard
+							// biome-ignore lint/suspicious/noArrayIndexKey: シミュレーション結果には一意のIDがないため、インデックスと内容を組み合わせてキーとして使用
 							key={`${i}-${JSON.stringify(res)}`}
 							result={res}
 							index={i}

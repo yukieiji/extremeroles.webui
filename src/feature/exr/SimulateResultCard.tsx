@@ -38,7 +38,9 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 	const handleCopy = () => {
 		let text = "";
 		for (const [team, players] of Object.entries(teamGroups)) {
-			if (team === "None") continue;
+			if (team === "None") {
+				continue;
+			}
 			const teamName = translationMetaData[team] || team;
 			text += `- ${teamName}\n`;
 			for (const [playerName, roles] of Object.entries(players)) {
@@ -59,8 +61,11 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 			</CardHeader>
 			<CardContent>
 				{Object.entries(teamGroups).map(([team, players]) => {
-					if (team === "None" && Object.keys(players).length === 0) return null;
-					const teamName = team === "None" ? "" : (translationMetaData[team] || team);
+					if (team === "None" && Object.keys(players).length === 0) {
+						return null;
+					}
+					const teamName =
+						team === "None" ? "" : translationMetaData[team] || team;
 
 					return (
 						<div key={team} className="mb-4 last:mb-0">
