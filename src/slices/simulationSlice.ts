@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import type { SimulateResult } from "../type";
 
 /**
  * シミュレーションの状態を管理するスライスのインターフェース
@@ -6,11 +7,11 @@ import type { StateCreator } from "zustand";
 export interface SimulationSlice {
 	simulationCycle: number;
 	simulationPlayerNum: number;
-	simulationResult: string;
+	simulationResult: SimulateResult[];
 	isSimulationLoading: boolean;
 	setSimulationCycle: (cycle: number) => void;
 	setSimulationPlayerNum: (playerNum: number) => void;
-	setSimulationResult: (result: string) => void;
+	setSimulationResult: (result: SimulateResult[]) => void;
 	setIsSimulationLoading: (isLoading: boolean) => void;
 }
 
@@ -21,7 +22,7 @@ export const createSimulationSlice: StateCreator<SimulationSlice> = (set) => {
 	return {
 		simulationCycle: 1,
 		simulationPlayerNum: 15,
-		simulationResult: "",
+		simulationResult: [],
 		isSimulationLoading: false,
 		setSimulationCycle: (cycle: number) => {
 			set({ simulationCycle: cycle });
@@ -29,7 +30,7 @@ export const createSimulationSlice: StateCreator<SimulationSlice> = (set) => {
 		setSimulationPlayerNum: (playerNum: number) => {
 			set({ simulationPlayerNum: playerNum });
 		},
-		setSimulationResult: (result: string) => {
+		setSimulationResult: (result: SimulateResult[]) => {
 			set({ simulationResult: result });
 		},
 		setIsSimulationLoading: (isLoading: boolean) => {

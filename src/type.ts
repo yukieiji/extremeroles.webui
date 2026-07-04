@@ -405,6 +405,28 @@ export interface SimulateOption {
 	MockPlayerNames?: string[] | null;
 }
 
+export interface AssignData {
+	PlayerName: string;
+	RoleName: string;
+	Team: string | null;
+}
+
+export interface SimulateResult {
+	CycleData: AssignData[];
+}
+
+export const AssignDataSchema = z.object({
+	PlayerName: z.string(),
+	RoleName: z.string(),
+	Team: z.string().nullable(),
+});
+
+export const SimulateResultSchema = z.object({
+	CycleData: z.array(AssignDataSchema),
+});
+
+export const SimulateResultArraySchema = z.array(SimulateResultSchema);
+
 export interface GetTranslationResponse {
 	Key: string | number;
 	Param: (string | number)[];
