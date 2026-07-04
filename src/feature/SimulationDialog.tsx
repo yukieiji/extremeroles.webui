@@ -1,10 +1,12 @@
+import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { TYPOGRAPHY } from "@/designConstants";
+import { Separator } from "@/components/ui/separator";
+import { DEFAULT_PRIMARY_BUTTUN_COLORS, TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
 import { useStore } from "@/useStore";
 import { SimulationSliderControl } from "./SimulationSliderControl";
@@ -42,7 +44,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 	};
 
 	return (
-		<DialogContent className="max-w-4xl h-[80vh] flex flex-col">
+		<DialogContent className="max-w-6xl h-[80vh] flex flex-col">
 			<DialogHeader>
 				<DialogTitle className={TYPOGRAPHY.LABEL}>{title}</DialogTitle>
 			</DialogHeader>
@@ -53,36 +55,35 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				</div>
 
 				{/* Controls */}
-				<div className="w-80 flex flex-col gap-6 p-2 border-l border-border-weak">
-					<div className="flex flex-col gap-4">
-						<SimulationSliderControl
-							label="Cycle"
-							value={cycle}
-							min={1}
-							max={100}
-							onValueChange={setCycle}
-						/>
-					</div>
-
-					<div className="flex flex-col gap-4">
-						<SimulationSliderControl
-							label="Player Num"
-							value={playerNum}
-							min={4}
-							max={100}
-							onValueChange={setPlayerNum}
-						/>
-					</div>
-
-					<div className="mt-auto">
-						<Button
-							className="w-full"
-							onClick={handleSimulate}
-							disabled={isLoading}
-						>
-							{isLoading ? "Executing..." : "Execute"}
-						</Button>
-					</div>
+				<div className="w-64 flex flex-col gap-4 p-2 border-l border-border-weak">
+					<Button
+						className={`${DEFAULT_PRIMARY_BUTTUN_COLORS} w-full`}
+						onClick={handleSimulate}
+						disabled={isLoading}
+					>
+						<Play className="w-4 h-4" />
+						{isLoading ? "Executing..." : "Execute"}
+					</Button>
+					<span
+						className={`${TYPOGRAPHY.LABEL} text-text-primary mx-auto pt-4`}
+					>
+						詳細設定
+					</span>
+					<Separator />
+					<SimulationSliderControl
+						label="Cycle"
+						value={cycle}
+						min={1}
+						max={100}
+						onValueChange={setCycle}
+					/>
+					<SimulationSliderControl
+						label="Player Num"
+						value={playerNum}
+						min={4}
+						max={100}
+						onValueChange={setPlayerNum}
+					/>
 				</div>
 			</div>
 		</DialogContent>
