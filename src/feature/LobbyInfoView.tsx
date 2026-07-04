@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { ColoredText } from "@/components/parts/ColoredText";
 import { Separator } from "@/components/ui/separator";
 import { TYPOGRAPHY } from "@/designConstants";
 import type { LobbyInfo } from "@/type";
@@ -22,9 +23,10 @@ export function LobbyInfoView({ lobbyInfo }: LobbyInfoViewProps) {
 								<span className={`${TYPOGRAPHY.SMALL} text-text-secondary`}>
 									サーバー
 								</span>
-								<span className={`${TYPOGRAPHY.CHILD_LABEL} break-all`}>
-									{lobbyInfo.Online.Server}
-								</span>
+								<ColoredText
+									text={lobbyInfo.Online.Server}
+									className={TYPOGRAPHY.CHILD_LABEL}
+								/>
 							</div>
 							<div className="flex flex-col">
 								<span className={`${TYPOGRAPHY.SMALL} text-text-secondary`}>

@@ -248,10 +248,10 @@ export const handlers = [
     return HttpResponse.json({
       Online: {
         MaxPlayerNum: 15,
-        Code: 'ABCD',
-        Server: 'Asia'
+        Code: 'KLCQYH',
+        Server: '<color=#8CFFFF>ExR専用(東京)</color>'
       },
-      CurrentPlayerNames: ['Player1', 'Player2', 'Player3']
+      CurrentPlayerNames: ['Lochbass']
     });
   }),
 

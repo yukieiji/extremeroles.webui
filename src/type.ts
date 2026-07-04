@@ -429,7 +429,7 @@ export interface LobbyInfo {
 }
 
 export const LobbyInfoSchema = z.object({
-	Online: OnlineInfoSchema.nullable(),
+	Online: OnlineInfoSchema.nullish(),
 	CurrentPlayerNames: z.array(z.string()),
 });
 

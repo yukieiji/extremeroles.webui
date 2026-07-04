@@ -47,9 +47,8 @@ describe("SimulationDialog", () => {
 			isSimulationLoading: false,
 			lobbyInfo: {
 				Online: null,
-				CurrentPlayerNames: ["Player1"],
+				CurrentPlayerNames: ["Lochbass"],
 			},
-			isLobbyLoading: false,
 		});
 	});
 
