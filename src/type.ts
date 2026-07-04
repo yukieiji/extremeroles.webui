@@ -424,7 +424,7 @@ export const OnlineInfoSchema = z.object({
 });
 
 export interface LobbyInfo {
-	Online: OnlineInfo | null;
+	Online?: OnlineInfo | null;
 	CurrentPlayerNames: string[];
 }
 

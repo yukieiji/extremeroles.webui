@@ -1,4 +1,6 @@
 import { use } from "react";
+import { Separator } from "@/components/ui/separator";
+import { TYPOGRAPHY } from "@/designConstants";
 import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 import { LobbyInfoView } from "./LobbyInfoView";
@@ -15,6 +17,10 @@ export function SimulationControls() {
 
 	return (
 		<>
+			<span className={`${TYPOGRAPHY.LABEL} text-text-primary mx-auto pt-4`}>
+				詳細設定
+			</span>
+			<Separator />
 			<div className="py-2 flex flex-col gap-2">
 				<SimulationSliderControl
 					label="Cycle"

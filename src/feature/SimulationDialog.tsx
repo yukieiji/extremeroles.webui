@@ -85,12 +85,6 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 						<Play className="w-4 h-4" />
 						{isLoading ? "Executing..." : "Execute"}
 					</Button>
-					<span
-						className={`${TYPOGRAPHY.LABEL} text-text-primary mx-auto pt-4`}
-					>
-						詳細設定
-					</span>
-					<Separator />
 					<Suspense fallback={<LobbyLoadingView />}>
 						<SimulationControls />
 					</Suspense>
