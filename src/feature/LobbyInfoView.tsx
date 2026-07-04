@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
 import { ColoredText } from "@/components/parts/ColoredText";
+import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { TYPOGRAPHY } from "@/designConstants";
 import type { LobbyInfo } from "@/type";
