@@ -29,6 +29,11 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	await expect(dialog).toBeVisible();
 	await expect(dialog.getByText("シミュレート")).toBeVisible();
 
+	// 初期表示のメッセージを確認
+	await expect(
+		dialog.getByText("シュミレートボタンを押して下さい"),
+	).toBeVisible();
+
 	// スライダーの設定を確認 (Cycle: 1, Player Num: 15 がデフォルト)
 	const cycleInput = dialog.getByLabel("Cycle");
 	await expect(cycleInput).toHaveValue("1");
@@ -44,8 +49,14 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	const executeButton = dialog.getByRole("button", { name: "Execute" });
 	await executeButton.click();
 
-	// 実行中の状態を確認 (非常に速い場合があるので、toBeVisible() ではなく存在を確認するか、スキップする)
-	// await expect(dialog.getByText("Executing...")).toBeVisible();
+	// 実行中の状態（ローディングサイクルとメッセージの非表示）を確認
+	// 非常に速い場合があるので、一瞬でも表示されれば成功とする
+	// モックが速すぎると検知できないことがあるため、Promise.anyなどで柔軟に待つか、
+	// 最低限ボタンの状態を確認する
+	await expect(dialog.getByText("Executing...")).toBeVisible();
+	await expect(
+		dialog.getByText("シュミレートボタンを押して下さい"),
+	).not.toBeVisible();
 
 	// 結果が表示されるまで待機
 	await expect(dialog.getByText("結果 1")).toBeVisible({ timeout: 10000 });
