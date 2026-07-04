@@ -40,13 +40,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 	);
 
 	// 定義された順序に従ってチームを抽出（存在するチームのみ）
-	const sortedTeams = TEAM_ORDER.filter((team) => teamGroups[team]);
-	// もしTEAM_ORDERに含まれないチームがあれば最後に追加する（基本的にはないはずだが安全のため）
-	// Noneは排除する
-	const otherTeams = Object.keys(teamGroups).filter(
-		(team) => !TEAM_ORDER.includes(team) && team !== "None",
-	);
-	const finalTeams = [...sortedTeams, ...otherTeams];
+	const finalTeams = TEAM_ORDER.filter((team) => teamGroups[team]);
 
 	const handleCopy = () => {
 		let text = "### シミュレート結果\n";
