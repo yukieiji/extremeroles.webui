@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
@@ -9,16 +8,21 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
+import { useStore } from "@/useStore";
 
 interface SimulationDialogProps {
 	title: string;
 }
 
 export function SimulationDialog({ title }: SimulationDialogProps) {
-	const [cycle, setCycle] = React.useState(1);
-	const [playerNum, setPlayerNum] = React.useState(15);
-	const [result, setResult] = React.useState<string>("");
-	const [isLoading, setIsLoading] = React.useState(false);
+	const cycle = useStore((state) => state.simulationCycle);
+	const setCycle = useStore((state) => state.setSimulationCycle);
+	const playerNum = useStore((state) => state.simulationPlayerNum);
+	const setPlayerNum = useStore((state) => state.setSimulationPlayerNum);
+	const result = useStore((state) => state.simulationResult);
+	const setResult = useStore((state) => state.setSimulationResult);
+	const isLoading = useStore((state) => state.isSimulationLoading);
+	const setIsLoading = useStore((state) => state.setIsSimulationLoading);
 
 	const handleSimulate = async () => {
 		setIsLoading(true);
