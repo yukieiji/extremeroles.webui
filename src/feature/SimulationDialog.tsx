@@ -46,25 +46,27 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 	};
 
 	return (
-		<DialogContent className="max-w-7xl h-[80vh] flex flex-col">
+		<DialogContent className="max-w-[90vw] h-[90vh] flex flex-col">
 			<DialogHeader>
 				<DialogTitle className={TYPOGRAPHY.LABEL}>{title}</DialogTitle>
 			</DialogHeader>
 			<div className="flex-1 flex overflow-hidden gap-2 p-2">
 				{/* Result View */}
-				<div className="flex-1 border border-border-strong rounded-md bg-app-background p-4 overflow-auto">
-					{result.map((res, i) => (
-						<SimulateResultCard
-							// biome-ignore lint/suspicious/noArrayIndexKey: シミュレーション結果には一意のIDがないため、インデックスと内容を組み合わせてキーとして使用
-							key={`${i}-${JSON.stringify(res)}`}
-							result={res}
-							index={i}
-						/>
-					))}
+				<div className="flex-1 rounded-md p-2 pr-4 overflow-y-scroll">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+						{result.map((res, i) => (
+							<SimulateResultCard
+								// biome-ignore lint/suspicious/noArrayIndexKey: シミュレーション結果には一意のIDがないため、インデックスと内容を組み合わせてキーとして使用
+								key={`${i}-${JSON.stringify(res)}`}
+								result={res}
+								index={i}
+							/>
+						))}
+					</div>
 				</div>
 
 				{/* Controls */}
-				<div className="w-64 flex flex-col gap-4 p-2 border-l border-border-weak">
+				<div className="w-64 flex flex-col gap-4 p-2 ">
 					<Button
 						className={`${DEFAULT_PRIMARY_BUTTUN_COLORS} w-full`}
 						onClick={handleSimulate}

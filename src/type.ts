@@ -408,7 +408,7 @@ export interface SimulateOption {
 export interface AssignData {
 	PlayerName: string;
 	RoleName: string;
-	Team: string | null;
+	Team: string;
 }
 
 export interface SimulateResult {
