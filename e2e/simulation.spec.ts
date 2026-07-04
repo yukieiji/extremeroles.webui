@@ -29,7 +29,16 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	await expect(dialog).toBeVisible();
 	await expect(dialog.getByText("シミュレート")).toBeVisible();
 
-	// スライダーの設定を確認 (Cycle: 1, Player Num: 15 がデフォルト)
+	// ロビー情報が表示されることを確認
+	await expect(dialog.getByText("ロビー情報")).toBeVisible();
+	await expect(dialog.getByText("サーバー")).toBeVisible();
+	await expect(dialog.getByText("Asia")).toBeVisible();
+	await expect(dialog.getByText("ルームコード")).toBeVisible();
+	await expect(dialog.getByText("ABCD")).toBeVisible();
+	await expect(dialog.getByText("現在のプレイヤー")).toBeVisible();
+	await expect(dialog.getByText("Player1")).toBeVisible();
+
+	// スライダーの設定を確認 (OnlineInfoがある場合は MaxPlayerNum=15)
 	const cycleInput = dialog.getByLabel("Cycle");
 	await expect(cycleInput).toHaveValue("1");
 	const playerNumInput = dialog.getByLabel("Player Num");
@@ -51,7 +60,8 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	await expect(dialog.getByText("結果 1")).toBeVisible({ timeout: 10000 });
 
 	// 結果カードの内容を確認
-	await expect(dialog.getByText("Player1")).toBeVisible();
+	// Player1はバッジ（ロビー情報）とテーブルセル（結果）の両方にあるので first() を使う
+	await expect(dialog.getByText("Player1").first()).toBeVisible();
 	// handlers.ts のモックデータでは Team も翻訳対象になる可能性があるが、
 	// SimulateResultCard.tsx では translationMetaData[team] || team となっている
 	// モックでは Team: 'Impostor' で translationMetaData.Impostor = "インポスター" (mockTranslations.ts)

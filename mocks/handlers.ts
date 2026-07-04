@@ -242,6 +242,20 @@ export const handlers = [
   }),
 
   /**
+   * GET /au/lobby/ のハンドラー
+   */
+  http.get('/au/lobby/', () => {
+    return HttpResponse.json({
+      Online: {
+        MaxPlayerNum: 15,
+        Code: 'ABCD',
+        Server: 'Asia'
+      },
+      CurrentPlayerNames: ['Player1', 'Player2', 'Player3']
+    });
+  }),
+
+  /**
    * GET /exr/option/csv/ のハンドラー
    */
   http.get('/exr/option/csv/', () => {

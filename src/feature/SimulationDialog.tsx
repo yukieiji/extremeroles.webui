@@ -1,4 +1,6 @@
 import { Play } from "lucide-react";
+import { Suspense, useEffect } from "react";
+import { LobbyLoadingView } from "@/components/LobbyLoadingView";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
@@ -8,9 +10,10 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { DEFAULT_PRIMARY_BUTTUN_COLORS, TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
+import { resetLobbyInfoCache } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 import { SimulateResultCard } from "./exr/SimulateResultCard";
-import { SimulationSliderControl } from "./SimulationSliderControl";
+import { SimulationControls } from "./SimulationControls";
 
 interface SimulationDialogProps {
 	title: string;
@@ -18,13 +21,20 @@ interface SimulationDialogProps {
 
 export function SimulationDialog({ title }: SimulationDialogProps) {
 	const cycle = useStore((state) => state.simulationCycle);
-	const setCycle = useStore((state) => state.setSimulationCycle);
 	const playerNum = useStore((state) => state.simulationPlayerNum);
-	const setPlayerNum = useStore((state) => state.setSimulationPlayerNum);
 	const result = useStore((state) => state.simulationResult);
 	const setResult = useStore((state) => state.setSimulationResult);
 	const isLoading = useStore((state) => state.isSimulationLoading);
 	const setIsLoading = useStore((state) => state.setIsSimulationLoading);
+	const setLobbyInfo = useStore((state) => state.setLobbyInfo);
+
+	useEffect(() => {
+		return () => {
+			setLobbyInfo(null);
+			setResult([]);
+			resetLobbyInfoCache();
+		};
+	}, [setLobbyInfo, setResult]);
 
 	const handleSimulate = async () => {
 		setIsLoading(true);
@@ -66,7 +76,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				</div>
 
 				{/* Controls */}
-				<div className="w-64 flex flex-col p-2 gap-2">
+				<div className="w-64 flex flex-col p-2 gap-2 overflow-hidden">
 					<Button
 						className={`${DEFAULT_PRIMARY_BUTTUN_COLORS} w-full`}
 						onClick={handleSimulate}
@@ -81,22 +91,9 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 						詳細設定
 					</span>
 					<Separator />
-					<div className="py-2 flex flex-col gap-2">
-						<SimulationSliderControl
-							label="Cycle"
-							value={cycle}
-							min={1}
-							max={100}
-							onValueChange={setCycle}
-						/>
-						<SimulationSliderControl
-							label="Player Num"
-							value={playerNum}
-							min={4}
-							max={100}
-							onValueChange={setPlayerNum}
-						/>
-					</div>
+					<Suspense fallback={<LobbyLoadingView />}>
+						<SimulationControls />
+					</Suspense>
 				</div>
 			</div>
 		</DialogContent>

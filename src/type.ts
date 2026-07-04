@@ -411,6 +411,28 @@ export interface AssignData {
 	Team: string;
 }
 
+export interface OnlineInfo {
+	MaxPlayerNum: number;
+	Code: string;
+	Server: string;
+}
+
+export const OnlineInfoSchema = z.object({
+	MaxPlayerNum: z.number().int(),
+	Code: z.string(),
+	Server: z.string(),
+});
+
+export interface LobbyInfo {
+	Online: OnlineInfo | null;
+	CurrentPlayerNames: string[];
+}
+
+export const LobbyInfoSchema = z.object({
+	Online: OnlineInfoSchema.nullable(),
+	CurrentPlayerNames: z.array(z.string()),
+});
+
 export interface SimulateResult {
 	CycleData: AssignData[];
 }
