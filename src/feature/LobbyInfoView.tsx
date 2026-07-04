@@ -30,7 +30,9 @@ export function LobbyInfoView({ lobbyInfo }: LobbyInfoViewProps) {
 								<span className={`${TYPOGRAPHY.SMALL} text-text-secondary`}>
 									ルームコード
 								</span>
-								<span className={`${TYPOGRAPHY.CHILD_LABEL} break-all font-mono`}>
+								<span
+									className={`${TYPOGRAPHY.CHILD_LABEL} break-all font-mono`}
+								>
 									{lobbyInfo.Online.Code}
 								</span>
 							</div>
