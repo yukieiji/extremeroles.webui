@@ -1,11 +1,10 @@
+import { OptionSliderControl } from "@/components/parts/OptionSliderControl";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import { TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
 import { useStore } from "@/useStore";
@@ -13,6 +12,9 @@ import { useStore } from "@/useStore";
 interface SimulationDialogProps {
 	title: string;
 }
+
+const CYCLE_VALUES = Array.from({ length: 100 }, (_, i) => i + 1);
+const PLAYER_NUM_VALUES = Array.from({ length: 97 }, (_, i) => i + 4);
 
 export function SimulationDialog({ title }: SimulationDialogProps) {
 	const cycle = useStore((state) => state.simulationCycle);
@@ -56,57 +58,21 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				{/* Controls */}
 				<div className="w-80 flex flex-col gap-6 p-2 border-l border-border-weak">
 					<div className="flex flex-col gap-4">
-						<label htmlFor="cycle-input" className={TYPOGRAPHY.LABEL}>
-							Cycle (1 - 100)
-						</label>
-						<div className="flex items-center gap-4">
-							<Slider
-								value={[cycle]}
-								onValueChange={(val) => setCycle(val[0])}
-								min={1}
-								max={100}
-								step={1}
-							/>
-							<Input
-								id="cycle-input"
-								type="number"
-								value={cycle}
-								onChange={(e) => {
-									const val = Number(e.target.value);
-									if (val >= 1 && val <= 100) {
-										setCycle(val);
-									}
-								}}
-								className="w-20"
-							/>
-						</div>
+						<OptionSliderControl
+							label="Cycle"
+							selection={cycle - 1}
+							values={CYCLE_VALUES}
+							onChange={(idx) => setCycle(CYCLE_VALUES[idx])}
+						/>
 					</div>
 
 					<div className="flex flex-col gap-4">
-						<label htmlFor="player-num-input" className={TYPOGRAPHY.LABEL}>
-							Player Num (4 - 100)
-						</label>
-						<div className="flex items-center gap-4">
-							<Slider
-								value={[playerNum]}
-								onValueChange={(val) => setPlayerNum(val[0])}
-								min={4}
-								max={100}
-								step={1}
-							/>
-							<Input
-								id="player-num-input"
-								type="number"
-								value={playerNum}
-								onChange={(e) => {
-									const val = Number(e.target.value);
-									if (val >= 4 && val <= 100) {
-										setPlayerNum(val);
-									}
-								}}
-								className="w-20"
-							/>
-						</div>
+						<OptionSliderControl
+							label="Player Num"
+							selection={playerNum - 4}
+							values={PLAYER_NUM_VALUES}
+							onChange={(idx) => setPlayerNum(PLAYER_NUM_VALUES[idx])}
+						/>
 					</div>
 
 					<div className="mt-auto">

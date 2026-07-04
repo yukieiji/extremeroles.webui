@@ -1,5 +1,5 @@
 import { findClosestIndex } from "@/logics/optionUtils";
-import { OptionSliderControl } from "./OptionSliderControl";
+import { OptionSliderControl } from "../parts/OptionSliderControl";
 
 interface OptionPairedSliderControlProps {
 	minSelection: number;
