@@ -7,18 +7,18 @@ import type { SimulateResult } from "@/type";
 describe("SimulateResultCard", () => {
 	const mockResult: SimulateResult = {
 		CycleData: [
-			{ PlayerName: "Player1", RoleName: "Crewmate", Team: "TeamCrew" },
-			{ PlayerName: "Player2", RoleName: "ImpostorRole", Team: "TeamImpostor" },
-			{ PlayerName: "Player3", RoleName: "NeutralRole", Team: "TeamNeutral" },
+			{ PlayerName: "Player1", RoleName: "CrewmateRole", Team: "Crewmate" },
+			{ PlayerName: "Player2", RoleName: "ImpostorRole", Team: "Impostor" },
+			{ PlayerName: "Player3", RoleName: "NeutralRole", Team: "Neutral" },
 		],
 	};
 
 	beforeEach(() => {
 		// translationMetaData のセットアップ
-		translationMetaData.TeamCrew = "クルー陣営";
-		translationMetaData.TeamImpostor = "インポスター陣営";
-		translationMetaData.TeamNeutral = "第三陣営";
-		translationMetaData.Crewmate = "クルー";
+		translationMetaData.Crewmate = "クルー陣営";
+		translationMetaData.Impostor = "インポスター陣営";
+		translationMetaData.Neutral = "第三陣営";
+		translationMetaData.CrewmateRole = "クルー";
 		translationMetaData.ImpostorRole = "インポスター";
 		translationMetaData.NeutralRole = "ニュートラル";
 
@@ -57,11 +57,11 @@ describe("SimulateResultCard", () => {
 	it("handles multiple roles for a single player", () => {
 		const multipleRolesResult: SimulateResult = {
 			CycleData: [
-				{ PlayerName: "Player1", RoleName: "RoleA", Team: "Team1" },
-				{ PlayerName: "Player1", RoleName: "RoleB", Team: "Team1" },
+				{ PlayerName: "Player1", RoleName: "RoleA", Team: "Crewmate" },
+				{ PlayerName: "Player1", RoleName: "RoleB", Team: "Crewmate" },
 			],
 		};
-		translationMetaData.Team1 = "チーム1";
+		translationMetaData.Crewmate = "チーム1";
 		translationMetaData.RoleA = "役職A";
 		translationMetaData.RoleB = "役職B";
 
@@ -71,7 +71,14 @@ describe("SimulateResultCard", () => {
 	});
 
 	it("copies result to clipboard when copy button is clicked", async () => {
-		render(<SimulateResultCard result={mockResult} index={0} />);
+		translationMetaData.Crewmate = "クルー陣営";
+		translationMetaData.CrewmateRole = "クルー";
+		const copyMockResult: SimulateResult = {
+			CycleData: [
+				{ PlayerName: "Player1", RoleName: "CrewmateRole", Team: "Crewmate" },
+			],
+		};
+		render(<SimulateResultCard result={copyMockResult} index={0} />);
 
 		const copyButton = screen.getByRole("button", { name: /コピー/i });
 		fireEvent.click(copyButton);
@@ -85,13 +92,16 @@ describe("SimulateResultCard", () => {
 	});
 
 	it("handles team name translation fallback", () => {
-		const unknownTeamResult: SimulateResult = {
+		const fallbackResult: SimulateResult = {
 			CycleData: [
-				{ PlayerName: "Player1", RoleName: "Crewmate", Team: "UnknownTeam" },
+				{ PlayerName: "Player1", RoleName: "CrewmateRole", Team: "Liberal" },
 			],
 		};
-		render(<SimulateResultCard result={unknownTeamResult} index={0} />);
+		// translationMetaData.Liberal は未定義にする
+		delete translationMetaData.Liberal;
 
-		expect(screen.getByText("UnknownTeam")).toBeInTheDocument();
+		render(<SimulateResultCard result={fallbackResult} index={0} />);
+
+		expect(screen.getByText("Liberal")).toBeInTheDocument();
 	});
 });
