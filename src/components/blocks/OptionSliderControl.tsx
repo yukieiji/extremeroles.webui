@@ -77,8 +77,9 @@ export function OptionSliderControl({
 			id={id}
 			inputRef={inputRef}
 			currentValue={currentValue}
-			selection={selection}
-			values={values}
+			sliderMin={0}
+			sliderMax={Math.max(0, values.length - 1)}
+			sliderValue={selection}
 			onSliderChange={handleSliderChange}
 			onBlur={handleBlur}
 			onKeyDown={handleKeyDown}

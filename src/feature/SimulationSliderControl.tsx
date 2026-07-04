@@ -1,52 +1,54 @@
 import type React from "react";
 import { useEffect, useId, useRef } from "react";
 import { BaseSelectionSliderLayout } from "@/components/parts/BaseSelectionSliderLayout";
-import { findClosestIndex } from "@/logics/optionUtils";
 
 interface SimulationSliderControlProps {
 	label: string;
-	selection: number;
-	values: number[];
-	onChange: (selection: number) => void;
+	value: number;
+	min: number;
+	max: number;
+	onValueChange: (value: number) => void;
 }
 
 /**
  * シミュレーション設定用のスライダーコントロール
+ * シミュレーション専用のPropsを受け取ります
  */
 export function SimulationSliderControl({
 	label,
-	selection,
-	values,
-	onChange,
+	value,
+	min,
+	max,
+	onValueChange,
 }: SimulationSliderControlProps) {
 	const id = useId();
 	const inputRef = useRef<HTMLInputElement>(null);
-	const currentValue = values[selection] ?? values[0] ?? 0;
 
 	useEffect(() => {
 		if (inputRef.current) {
-			inputRef.current.value = currentValue.toString();
+			inputRef.current.value = value.toString();
 		}
-	}, [currentValue]);
+	}, [value]);
 
 	const handleSliderChange = (val: number | readonly number[]) => {
-		const newIndex = Array.isArray(val) ? val[0] : val;
-		onChange(newIndex);
+		const newValue = Array.isArray(val) ? val[0] : val;
+		onValueChange(newValue);
 	};
 
 	const commitValue = () => {
 		if (!inputRef.current) {
 			return;
 		}
-		const val = parseFloat(inputRef.current.value);
+		let val = parseFloat(inputRef.current.value);
 		if (Number.isNaN(val)) {
-			inputRef.current.value = currentValue.toString();
+			inputRef.current.value = value.toString();
 			return;
 		}
 
-		const closestIdx = findClosestIndex(values, val);
-		inputRef.current.value = (values[closestIdx] ?? values[0] ?? 0).toString();
-		onChange(closestIdx);
+		// 範囲内にクランプ
+		val = Math.max(min, Math.min(max, Math.round(val)));
+		inputRef.current.value = val.toString();
+		onValueChange(val);
 	};
 
 	const handleBlur = () => {
@@ -67,9 +69,10 @@ export function SimulationSliderControl({
 		<BaseSelectionSliderLayout
 			id={id}
 			inputRef={inputRef}
-			currentValue={currentValue}
-			selection={selection}
-			values={values}
+			currentValue={value}
+			sliderMin={min}
+			sliderMax={max}
+			sliderValue={value}
 			onSliderChange={handleSliderChange}
 			onBlur={handleBlur}
 			onKeyDown={handleKeyDown}

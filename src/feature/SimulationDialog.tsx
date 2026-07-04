@@ -60,18 +60,20 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 					<div className="flex flex-col gap-4">
 						<SimulationSliderControl
 							label="Cycle"
-							selection={cycle - 1}
-							values={CYCLE_VALUES}
-							onChange={(idx) => setCycle(CYCLE_VALUES[idx])}
+							value={cycle}
+							min={1}
+							max={100}
+							onValueChange={setCycle}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-4">
 						<SimulationSliderControl
 							label="Player Num"
-							selection={playerNum - 4}
-							values={PLAYER_NUM_VALUES}
-							onChange={(idx) => setPlayerNum(PLAYER_NUM_VALUES[idx])}
+							value={playerNum}
+							min={4}
+							max={100}
+							onValueChange={setPlayerNum}
 						/>
 					</div>
 

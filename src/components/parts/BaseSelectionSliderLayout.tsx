@@ -9,8 +9,9 @@ interface BaseSelectionSliderLayoutProps {
 	id: string;
 	inputRef: RefObject<HTMLInputElement | null>;
 	currentValue: number;
-	selection: number;
-	values: number[];
+	sliderMin: number;
+	sliderMax: number;
+	sliderValue: number;
 	onSliderChange: (val: number | readonly number[]) => void;
 	onBlur: () => void;
 	onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -29,8 +30,9 @@ export function BaseSelectionSliderLayout({
 	id,
 	inputRef,
 	currentValue,
-	selection,
-	values,
+	sliderMin,
+	sliderMax,
+	sliderValue,
 	onSliderChange,
 	onBlur,
 	onKeyDown,
@@ -74,10 +76,10 @@ export function BaseSelectionSliderLayout({
 				)}
 			</Field>
 			<Slider
-				min={0}
-				max={Math.max(0, values.length - 1)}
+				min={sliderMin}
+				max={sliderMax}
 				step={1}
-				value={[selection]}
+				value={[sliderValue]}
 				onValueChange={onSliderChange}
 				className="cursor-pointer"
 			/>
