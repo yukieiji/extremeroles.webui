@@ -66,7 +66,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				</div>
 
 				{/* Controls */}
-				<div className="w-64 flex flex-col gap-4 p-2 ">
+				<div className="w-64 flex flex-col p-2 gap-2">
 					<Button
 						className={`${DEFAULT_PRIMARY_BUTTUN_COLORS} w-full`}
 						onClick={handleSimulate}
@@ -81,20 +81,22 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 						詳細設定
 					</span>
 					<Separator />
-					<SimulationSliderControl
-						label="Cycle"
-						value={cycle}
-						min={1}
-						max={100}
-						onValueChange={setCycle}
-					/>
-					<SimulationSliderControl
-						label="Player Num"
-						value={playerNum}
-						min={4}
-						max={100}
-						onValueChange={setPlayerNum}
-					/>
+					<div className="py-2 flex flex-col gap-2">
+						<SimulationSliderControl
+							label="Cycle"
+							value={cycle}
+							min={1}
+							max={100}
+							onValueChange={setCycle}
+						/>
+						<SimulationSliderControl
+							label="Player Num"
+							value={playerNum}
+							min={4}
+							max={100}
+							onValueChange={setPlayerNum}
+						/>
+					</div>
 				</div>
 			</div>
 		</DialogContent>
