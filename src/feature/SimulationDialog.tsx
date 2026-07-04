@@ -1,11 +1,11 @@
 import { Play } from "lucide-react";
+import { LoadingCycle } from "@/components/parts/LoadingCycle";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { LoadingCycle } from "@/components/parts/LoadingCycle";
 import { Separator } from "@/components/ui/separator";
 import { DEFAULT_PRIMARY_BUTTUN_COLORS, TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
