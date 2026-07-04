@@ -1,5 +1,5 @@
+import { BaseSelectionSlider } from "../parts/BaseSelectionSlider";
 import { OptionFormat } from "../parts/OptionFormat";
-import { SelectionSliderControl } from "../parts/SelectionSliderControl";
 
 interface OptionSliderControlProps {
 	label?: string;
@@ -26,7 +26,7 @@ export function OptionSliderControl({
 	inputClassName,
 }: OptionSliderControlProps) {
 	return (
-		<SelectionSliderControl
+		<BaseSelectionSlider
 			label={label}
 			selection={selection}
 			values={values}
