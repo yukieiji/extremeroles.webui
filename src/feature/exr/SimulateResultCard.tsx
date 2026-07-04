@@ -20,6 +20,8 @@ interface SimulateResultCardProps {
 	index: number;
 }
 
+const TEAM_ORDER = ["Null", "Crewmate", "Impostor", "Neutral", "Liberal"];
+
 export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 	// チームごとにグループ化し、さらにプレイヤー名でグループ化（複数役職対応）
 	const teamGroups = result.CycleData.reduce(
@@ -37,14 +39,15 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 		{} as Record<string, Record<string, string[]>>,
 	);
 
+	// 定義された順序に従ってチームを抽出（存在するチームのみ）
+	const finalTeams = TEAM_ORDER.filter((team) => teamGroups[team]);
+
 	const handleCopy = () => {
 		let text = "### シミュレート結果\n";
-		for (const [team, players] of Object.entries(teamGroups)) {
-			if (team === "None") {
-				continue;
-			}
-			const teamName = translationMetaData[team] || team;
-			text += `- ${teamName}\n`;
+		for (const team of finalTeams) {
+			const players = teamGroups[team];
+			const teamName = team === "Null" ? "" : translationMetaData[team] || team;
+			text += teamName ? `- ${teamName}\n` : "";
 			for (const [playerName, roles] of Object.entries(players)) {
 				text += `   - ${playerName}: ${roles.map((x) => stripColorTags(translationMetaData[x])).join(" + ")}\n`;
 			}
@@ -62,7 +65,8 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 				</Button>
 			</CardHeader>
 			<CardContent>
-				{Object.entries(teamGroups).map(([team, players]) => {
+				{finalTeams.map((team) => {
+					const players = teamGroups[team];
 					if (Object.keys(players).length === 0) {
 						return null;
 					}
