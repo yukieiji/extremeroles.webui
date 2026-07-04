@@ -1,14 +1,13 @@
 import { Play } from "lucide-react";
-import { LoadingCycle } from "@/components/parts/LoadingCycle";
 import { Suspense, useEffect } from "react";
 import { LobbyLoadingView } from "@/components/blocks/LobbyLoadingView";
+import { LoadingCycle } from "@/components/parts/LoadingCycle";
 import { Button } from "@/components/ui/button";
 import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
 import { DEFAULT_PRIMARY_BUTTUN_COLORS, TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
 import { resetLobbyInfoCache } from "@/logics/api.store";

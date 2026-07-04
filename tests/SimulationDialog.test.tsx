@@ -65,7 +65,7 @@ describe("SimulationDialog", () => {
 			screen.getByText("シュミレートボタンを押して下さい"),
 		).toBeInTheDocument();
 	});
-  
+
 	it("renders controls with default values", async () => {
 		await act(async () => {
 			renderWithDialog(<SimulationDialog title={mockTitle} />);
