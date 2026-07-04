@@ -75,13 +75,13 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 								<h4 className={`${TYPOGRAPHY.LABEL} mb-1`}>{teamName}</h4>
 							)}
 							<Table>
-								<TableHeader>
+								<TableHeader className={TYPOGRAPHY.CHILD_LABEL}>
 									<TableRow>
 										<TableHead>プレイヤーネーム</TableHead>
 										<TableHead>役職</TableHead>
 									</TableRow>
 								</TableHeader>
-								<TableBody>
+								<TableBody className={TYPOGRAPHY.SMALL}>
 									{Object.entries(players).map(([playerName, roles]) => (
 										<TableRow key={playerName}>
 											<TableCell>{playerName}</TableCell>
