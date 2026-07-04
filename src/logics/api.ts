@@ -8,6 +8,7 @@ import type {
 	ExROptionValueData,
 	ExRTabMetaData,
 	GetCsvResult,
+	LobbyInfo,
 	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
 	SearchItem,
@@ -26,6 +27,7 @@ import {
 	ExRTabId,
 	GetCsvResultSchema,
 	GetTranslationResponseArraySchema,
+	LobbyInfoSchema,
 	OptionValueType,
 	RoleAssignFilterDtoSchema,
 	SimulateResultArraySchema,
@@ -43,6 +45,7 @@ const EXR_CSV_URL = "/exr/option/csv/";
 const AU_OPTION_URL = "/au/option/";
 const EXR_ROLE_FILTER_URL = "/exr/role/filter/";
 const EXR_SIMULATE_URL = "/exr/role/simulate/";
+const AU_LOBBY_URL = "/au/lobby/";
 const TRANSLATION_BATCH_BASE_URL = "/au/translation/batch/";
 const OPUTION_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}optionunit/`;
 const ROLE_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}role/`;
@@ -832,6 +835,29 @@ export async function fetchRoleFilterData(): Promise<
 	}
 
 	return filterSetUI;
+}
+
+export async function fetchLobbyInfo(): Promise<LobbyInfo> {
+	console.log(
+		JSON.stringify({ type: "request", method: "GET", url: AU_LOBBY_URL }),
+	);
+	const res = await fetch(AU_LOBBY_URL);
+	console.log(
+		JSON.stringify({
+			type: "response",
+			url: AU_LOBBY_URL,
+			status: res.status,
+		}),
+	);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch lobby info: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	console.log(
+		JSON.stringify({ type: "data", url: AU_LOBBY_URL, data: jsonData }),
+	);
+	return await LobbyInfoSchema.parseAsync(jsonData);
 }
 
 export async function updateAuOption(

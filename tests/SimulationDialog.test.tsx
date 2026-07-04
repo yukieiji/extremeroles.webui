@@ -1,9 +1,17 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from "@testing-library/react";
+import { Suspense } from "react";
 import type { Mock } from "vitest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Dialog } from "@/components/ui/dialog";
 import { SimulationDialog } from "@/feature/SimulationDialog";
 import { postSimulate } from "@/logics/api";
+import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
 // APIのモック
@@ -12,26 +20,42 @@ vi.mock("@/logics/api", () => ({
 	translationMetaData: {},
 }));
 
+vi.mock("@/logics/api.store", () => ({
+	getLobbyInfo: vi.fn(),
+	resetLobbyInfoCache: vi.fn(),
+}));
+
 describe("SimulationDialog", () => {
 	const mockTitle = "シミュレーション";
 
 	const renderWithDialog = (ui: React.ReactElement) => {
-		return render(<Dialog open={true}>{ui}</Dialog>);
+		return render(
+			<Dialog open={true}>
+				<Suspense fallback={<div>Loading...</div>}>{ui}</Suspense>
+			</Dialog>,
+		);
 	};
 
 	beforeEach(() => {
 		vi.clearAllMocks();
+		(getLobbyInfo as Mock).mockResolvedValue(undefined);
 		// ストアのリセット
 		useStore.setState({
 			simulationCycle: 1,
 			simulationPlayerNum: 15,
 			simulationResult: [],
 			isSimulationLoading: false,
+			lobbyInfo: {
+				Online: null,
+				CurrentPlayerNames: ["Lochbass"],
+			},
 		});
 	});
 
-	it("renders dialog with title", () => {
-		renderWithDialog(<SimulationDialog title={mockTitle} />);
+	it("renders dialog with title", async () => {
+		await act(async () => {
+			renderWithDialog(<SimulationDialog title={mockTitle} />);
+		});
 		expect(screen.getByText(mockTitle)).toBeInTheDocument();
 	});
 
@@ -41,12 +65,18 @@ describe("SimulationDialog", () => {
 			screen.getByText("シュミレートボタンを押して下さい"),
 		).toBeInTheDocument();
 	});
+  
+	it("renders controls with default values", async () => {
+		await act(async () => {
+			renderWithDialog(<SimulationDialog title={mockTitle} />);
+		});
 
-	it("renders controls with default values", () => {
-		renderWithDialog(<SimulationDialog title={mockTitle} />);
+		await waitFor(() => {
+			expect(screen.getByText("ロビー情報")).toBeInTheDocument();
+		});
 
-		expect(screen.getByText("Execute")).toBeInTheDocument();
 		expect(screen.getByText("Cycle")).toBeInTheDocument();
+		expect(screen.getByText("Execute")).toBeInTheDocument();
 		expect(screen.getByText("Player Num")).toBeInTheDocument();
 
 		const inputs = screen.getAllByRole("spinbutton");
@@ -58,7 +88,13 @@ describe("SimulationDialog", () => {
 		const mockRes = [{ CycleData: [] }];
 		(postSimulate as Mock).mockResolvedValue(mockRes);
 
-		renderWithDialog(<SimulationDialog title={mockTitle} />);
+		await act(async () => {
+			renderWithDialog(<SimulationDialog title={mockTitle} />);
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText("ロビー情報")).toBeInTheDocument();
+		});
 
 		const executeButton = screen.getByRole("button", { name: /Execute/i });
 		fireEvent.click(executeButton);
@@ -107,7 +143,13 @@ describe("SimulationDialog", () => {
 		];
 		(postSimulate as Mock).mockResolvedValue(mockRes);
 
-		renderWithDialog(<SimulationDialog title={mockTitle} />);
+		await act(async () => {
+			renderWithDialog(<SimulationDialog title={mockTitle} />);
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText("ロビー情報")).toBeInTheDocument();
+		});
 
 		fireEvent.click(screen.getByRole("button", { name: /Execute/i }));
 
@@ -122,7 +164,13 @@ describe("SimulationDialog", () => {
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		(postSimulate as Mock).mockRejectedValue(new Error("API Error"));
 
-		renderWithDialog(<SimulationDialog title={mockTitle} />);
+		await act(async () => {
+			renderWithDialog(<SimulationDialog title={mockTitle} />);
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText("ロビー情報")).toBeInTheDocument();
+		});
 
 		fireEvent.click(screen.getByRole("button", { name: /Execute/i }));
 
@@ -135,7 +183,13 @@ describe("SimulationDialog", () => {
 	});
 
 	it("updates cycle value when slider changes", async () => {
-		renderWithDialog(<SimulationDialog title={mockTitle} />);
+		await act(async () => {
+			renderWithDialog(<SimulationDialog title={mockTitle} />);
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText("ロビー情報")).toBeInTheDocument();
+		});
 
 		const cycleInput = screen.getAllByRole("spinbutton")[0];
 
