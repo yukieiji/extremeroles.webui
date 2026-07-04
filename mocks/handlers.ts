@@ -242,6 +242,20 @@ export const handlers = [
   }),
 
   /**
+   * GET /au/lobby/ のハンドラー
+   */
+  http.get('/au/lobby/', () => {
+    return HttpResponse.json({
+      Online: {
+        MaxPlayerNum: 15,
+        Code: 'KLCQYH',
+        Server: '<color=#8CFFFF>ExR専用(東京)</color>'
+      },
+      CurrentPlayerNames: ['Lochbass']
+    });
+  }),
+
+  /**
    * GET /exr/option/csv/ のハンドラー
    */
   http.get('/exr/option/csv/', () => {
