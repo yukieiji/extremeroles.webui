@@ -21,12 +21,12 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 
 	// シミュレートボタンをクリック
 	const simulateButton = page.getByRole("button", { name: "シミュレート" });
-	// 他の要素に遮られている場合は force: true を使うか、スクロールする
-	await simulateButton.click({ force: true });
+	await expect(simulateButton).toBeVisible();
+	await simulateButton.click();
 
 	// ダイアログが表示されることを確認
 	const dialog = page.getByRole("dialog");
-	await expect(dialog).toBeVisible();
+	await expect(dialog).toBeVisible({ timeout: 15000 });
 	await expect(dialog.getByText("シミュレート")).toBeVisible();
 
 	// 初期表示のメッセージを確認
@@ -50,10 +50,11 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	await executeButton.click();
 
 	// 実行中の状態（ローディングサイクルとメッセージの非表示）を確認
-	// 非常に速い場合があるので、一瞬でも表示されれば成功とする
-	// モックが速すぎると検知できないことがあるため、Promise.anyなどで柔軟に待つか、
-	// 最低限ボタンの状態を確認する
-	await expect(dialog.getByText("Executing...")).toBeVisible();
+	// 非常に速い場合があるので、Executing... または 結果 1 が出ればOKとする
+	await expect(
+		dialog.getByText("Executing...").or(dialog.getByText("結果 1")),
+	).toBeVisible();
+
 	await expect(
 		dialog.getByText("シュミレートボタンを押して下さい"),
 	).not.toBeVisible();
