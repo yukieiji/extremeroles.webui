@@ -1,6 +1,6 @@
+import { BaseSelectionSliderLayout } from "@/components/parts/BaseSelectionSliderLayout";
+import { OptionFormat } from "@/components/parts/OptionFormat";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
-import { BaseSelectionSliderLayout } from "../parts/BaseSelectionSliderLayout";
-import { OptionFormat } from "../parts/OptionFormat";
 
 interface OptionSliderControlProps {
 	label?: string;

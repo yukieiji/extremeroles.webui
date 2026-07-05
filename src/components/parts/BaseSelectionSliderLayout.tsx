@@ -1,9 +1,9 @@
 import type { ReactNode, RefObject } from "react";
+import { Field, FieldLabel, FieldSet } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import { TYPOGRAPHY } from "@/designConstants";
-import { Field, FieldLabel, FieldSet } from "../ui/field";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Slider } from "../ui/slider";
 
 interface BaseSelectionSliderLayoutProps {
 	id: string;

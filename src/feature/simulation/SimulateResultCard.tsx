@@ -49,7 +49,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 			const teamName = team === "Null" ? "" : translationMetaData[team] || team;
 			text += teamName ? `- ${teamName}\n` : "";
 			for (const [playerName, roles] of Object.entries(players)) {
-				text += `   - ${playerName}: ${roles.map((x) => stripColorTags(translationMetaData[x])).join(" + ")}\n`;
+				text += `   - ${playerName}: ${roles.map((x) => stripColorTags(translationMetaData[x] ?? x)).join(" + ")}\n`;
 			}
 		}
 		navigator.clipboard.writeText(text.trim());

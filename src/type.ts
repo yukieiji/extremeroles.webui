@@ -440,7 +440,7 @@ export interface SimulateResult {
 export const AssignDataSchema = z.object({
 	PlayerName: z.string(),
 	RoleName: z.string(),
-	Team: z.string().nullable(),
+	Team: z.string(),
 });
 
 export const SimulateResultSchema = z.object({
