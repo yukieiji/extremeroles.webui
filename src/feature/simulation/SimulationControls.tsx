@@ -2,7 +2,7 @@ import { use } from "react";
 import { SimulationControlTitleLayout } from "@/components/parts/SimulationControlTitleLayout";
 import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
-import { LobbyInfoView } from "./LobbyInfoView";
+import { LobbyInfoView } from "../LobbyInfoView";
 import { SimulationSliderControl } from "./SimulationSliderControl";
 
 export function SimulationControls() {

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { SearchSuggestion } from "@/feature/SearchSuggestion";
+import { SearchSuggestion } from "@/feature/search/SearchSuggestion";
 import { useStore } from "@/useStore";
 
 vi.mock("@/useStore", () => ({

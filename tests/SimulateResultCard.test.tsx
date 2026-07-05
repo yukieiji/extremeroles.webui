@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SimulateResultCard } from "@/feature/exr/SimulateResultCard";
+import { SimulateResultCard } from "@/feature/simulation/SimulateResultCard";
 import { translationMetaData } from "@/logics/api";
 import type { SimulateResult } from "@/type";
 

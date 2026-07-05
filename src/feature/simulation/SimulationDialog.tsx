@@ -12,7 +12,7 @@ import { DEFAULT_PRIMARY_BUTTUN_COLORS, TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
 import { resetLobbyInfoCache } from "@/logics/api.store";
 import { useStore } from "@/useStore";
-import { SimulateResultCard } from "./exr/SimulateResultCard";
+import { SimulateResultCard } from "./SimulateResultCard";
 import { SimulationControls } from "./SimulationControls";
 
 interface SimulationDialogProps {

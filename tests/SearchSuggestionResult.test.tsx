@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SearchSuggestionResult } from "@/feature/SearchSuggestionResult";
+import { SearchSuggestionResult } from "@/feature/search/SearchSuggestionResult";
 import type { AuOptionId, ExRTabId, SearchItem, UniqueOptionId } from "@/type";
 
 const mockNavigateToExR = vi.fn();

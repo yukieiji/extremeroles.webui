@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import type { Mock } from "vitest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Dialog } from "@/components/ui/dialog";
-import { SimulationDialog } from "@/feature/SimulationDialog";
+import { SimulationDialog } from "@/feature/simulation/SimulationDialog";
 import { postSimulate } from "@/logics/api";
 import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
