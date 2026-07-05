@@ -13,6 +13,13 @@ import {
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 import { stripColorTags } from "@/logics/colorUtils";
+import {
+	COPY_BUTTON_LABEL,
+	PLAYER_NAME_HEADER,
+	RESULT_TITLE,
+	ROLE_NAME_HEADER,
+	SIMULATE_RESULT_HEADER,
+} from "@/noTrans";
 import type { SimulateResult } from "@/type";
 
 interface SimulateResultCardProps {
@@ -43,7 +50,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 	const finalTeams = TEAM_ORDER.filter((team) => teamGroups[team]);
 
 	const handleCopy = () => {
-		let text = "### シミュレート結果\n";
+		let text = SIMULATE_RESULT_HEADER;
 		for (const team of finalTeams) {
 			const players = teamGroups[team];
 			const teamName = team === "Null" ? "" : translationMetaData[team] || team;
@@ -58,7 +65,9 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 	return (
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
-				<CardTitle className={TYPOGRAPHY.LABEL}>結果 {index + 1}</CardTitle>
+				<CardTitle className={TYPOGRAPHY.LABEL}>
+					{RESULT_TITLE} {index + 1}
+				</CardTitle>
 				<Button
 					variant="outline"
 					size="sm"
@@ -66,7 +75,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 					className="shadow-md"
 				>
 					<Copy className="w-4 h-4" />
-					コピー
+					{COPY_BUTTON_LABEL}
 				</Button>
 			</CardHeader>
 			<CardContent>
@@ -87,9 +96,11 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 								<TableHeader className={TYPOGRAPHY.CHILD_LABEL}>
 									<TableRow>
 										<TableHead className="w-[60%] whitespace-normal">
-											プレイヤーネーム
+											{PLAYER_NAME_HEADER}
 										</TableHead>
-										<TableHead className="whitespace-normal">役職</TableHead>
+										<TableHead className="whitespace-normal">
+											{ROLE_NAME_HEADER}
+										</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody className={TYPOGRAPHY.SMALL}>
@@ -101,7 +112,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 											<TableCell className="whitespace-normal">
 												<ColoredText
 													text={roles
-														.map((x) => translationMetaData[x])
+														.map((x) => translationMetaData[x] || x)
 														.join(" + ")}
 												/>
 											</TableCell>

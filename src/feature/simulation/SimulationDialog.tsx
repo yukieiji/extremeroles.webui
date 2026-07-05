@@ -11,6 +11,11 @@ import {
 import { DEFAULT_PRIMARY_BUTTUN_COLORS, TYPOGRAPHY } from "@/designConstants";
 import { postSimulate } from "@/logics/api";
 import { resetLobbyInfoCache } from "@/logics/api.store";
+import {
+	EMPTY_SIMULATE_MESSAGE,
+	EXECUTE_BUTTON_LABEL,
+	EXECUTING_LABEL,
+} from "@/noTrans";
 import { useStore } from "@/useStore";
 import { SimulateResultCard } from "./SimulateResultCard";
 import { SimulationControls } from "./SimulationControls";
@@ -69,7 +74,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 								<LoadingCycle />
 							) : (
 								<span className={TYPOGRAPHY.LABEL}>
-									シュミレートボタンを押して下さい
+									{EMPTY_SIMULATE_MESSAGE}
 								</span>
 							)}
 						</div>
@@ -86,8 +91,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 						</div>
 					)}
 				</div>
-
-				{/* Controls */}
+				{/* Controls View */}
 				<div className="w-64 flex flex-col p-2 gap-2 overflow-hidden">
 					<Button
 						className={`${DEFAULT_PRIMARY_BUTTUN_COLORS} w-full`}
@@ -95,7 +99,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 						disabled={isLoading}
 					>
 						<Play className="w-4 h-4" />
-						{isLoading ? "Executing..." : "Execute"}
+						{isLoading ? EXECUTING_LABEL : EXECUTE_BUTTON_LABEL}
 					</Button>
 					<Suspense fallback={<LobbyLoadingView />}>
 						<SimulationControls />
