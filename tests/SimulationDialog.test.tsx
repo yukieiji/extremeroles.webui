@@ -14,11 +14,33 @@ import { postSimulate } from "@/logics/api";
 import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
+const { mockedTranslationMetaData } = vi.hoisted(() => {
+	return {
+		mockedTranslationMetaData: {},
+	};
+});
+
 // APIのモック
 vi.mock("@/logics/api", () => ({
 	postSimulate: vi.fn(),
-	translationMetaData: {},
+	translationMetaData: mockedTranslationMetaData,
 }));
+
+Object.assign(mockedTranslationMetaData, {
+	SIMULATE_LABEL: "シミュレート",
+	SIMULATE_RESULT_HEADER: "シミュレート結果",
+	SIMULATE_RESULT_TITLE: "結果",
+	COPY_BUTTON_LABEL: "コピー",
+	playerName: "プレイヤーネーム",
+	roleName: "役職",
+	SIMULATE_DETAILS_SETTING: "詳細設定",
+	LOBBY_INFO_TITLE: "ロビー情報",
+	CYCLE_LABEL: "Cycle",
+	PLAYER_NUM_LABEL: "Player Num",
+	EMPTY_SIMULATE_MESSAGE: "シミュレートボタンを押して下さい",
+	SIMULATE_EXECUTING_LABEL: "Executing...",
+	EXECUTE_BUTTON_LABEL: "Execute",
+});
 
 vi.mock("@/logics/api.store", () => ({
 	getLobbyInfo: vi.fn(),
@@ -62,7 +84,7 @@ describe("SimulationDialog", () => {
 	it("shows message when no results are present", () => {
 		renderWithDialog(<SimulationDialog title={mockTitle} />);
 		expect(
-			screen.getByText("シュミレートボタンを押して下さい"),
+			screen.getByText("シミュレートボタンを押して下さい"),
 		).toBeInTheDocument();
 	});
 
@@ -131,7 +153,7 @@ describe("SimulationDialog", () => {
 		const resultArea = screen.getByText("Executing...").closest("div.flex-1");
 		expect(resultArea?.querySelector(".animate-spin")).toBeInTheDocument();
 		expect(
-			screen.queryByText("シュミレートボタンを押して下さい"),
+			screen.queryByText("シミュレートボタンを押して下さい"),
 		).not.toBeInTheDocument();
 	});
 

@@ -27,11 +27,14 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	// ダイアログが表示されることを確認
 	const dialog = page.getByRole("dialog");
 	await expect(dialog).toBeVisible({ timeout: 15000 });
-	await expect(dialog.getByText("シミュレート")).toBeVisible();
+	// タイトルの確認（getByText("シミュレート") はメッセージとも被るので heading を使う）
+	await expect(
+		dialog.getByRole("heading", { name: "シミュレート" }),
+	).toBeVisible();
 
 	// 初期表示のメッセージを確認
 	await expect(
-		dialog.getByText("シュミレートボタンを押して下さい"),
+		dialog.getByText("シミュレートボタンを押して下さい"),
 	).toBeVisible();
 
 	// スライダーの設定を確認 (Cycle: 1, Player Num: 15 がデフォルト)
@@ -66,7 +69,7 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	).toBeVisible();
 
 	await expect(
-		dialog.getByText("シュミレートボタンを押して下さい"),
+		dialog.getByText("シミュレートボタンを押して下さい"),
 	).not.toBeVisible();
 
 	// 結果が表示されるまで待機

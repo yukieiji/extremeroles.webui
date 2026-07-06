@@ -52,7 +52,7 @@ describe("OptionGroupToggleSidebar", () => {
 		const state = useStore.getState();
 		expect(state.blockDialog).toBeDefined();
 		expect(state.blockDialog?.type).toBe("settings");
-		expect(state.blockDialog?.title).toBe(translationMetaData.SETTINGS_TITLE);
+		expect(state.blockDialog?.title).toBe(translationMetaData.SettingsLabel);
 	});
 
 	it("サイドバーが開いているとき、設定ボタンのテキストが表示されること", () => {
@@ -64,7 +64,7 @@ describe("OptionGroupToggleSidebar", () => {
 
 		const settingsButton = screen.getByTestId("sidebar-settings-button");
 		expect(settingsButton.textContent).toContain(
-			translationMetaData.SETTINGS_TITLE,
+			translationMetaData.SettingsLabel,
 		);
 	});
 });

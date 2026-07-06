@@ -1,12 +1,7 @@
 import { use } from "react";
 import { SimulationControlTitleLayout } from "@/components/parts/SimulationControlTitleLayout";
+import { translationMetaData } from "@/logics/api";
 import { getLobbyInfo } from "@/logics/api.store";
-import {
-	CYCLE_LABEL,
-	DETAILS_SETTING_TITLE,
-	LOBBY_INFO_TITLE,
-	PLAYER_NUM_LABEL,
-} from "@/noTrans";
 import { useStore } from "@/useStore";
 import { LobbyInfoView } from "../LobbyInfoView";
 import { SimulationSliderControl } from "./SimulationSliderControl";
@@ -22,24 +17,28 @@ export function SimulationControls() {
 
 	return (
 		<>
-			<SimulationControlTitleLayout text={DETAILS_SETTING_TITLE} />
+			<SimulationControlTitleLayout
+				text={translationMetaData.SIMULATE_DETAILS_SETTING}
+			/>
 			<div className="py-2 flex flex-col gap-2">
 				<SimulationSliderControl
-					label={CYCLE_LABEL}
+					label={translationMetaData.CYCLE_LABEL}
 					value={cycle}
 					min={1}
 					max={100}
 					onValueChange={setCycle}
 				/>
 				<SimulationSliderControl
-					label={PLAYER_NUM_LABEL}
+					label={translationMetaData.PLAYER_NUM_LABEL}
 					value={playerNum}
 					min={4}
 					max={lobbyInfo?.Online?.MaxPlayerNum ?? 100}
 					onValueChange={setPlayerNum}
 				/>
 			</div>
-			<SimulationControlTitleLayout text={LOBBY_INFO_TITLE} />
+			<SimulationControlTitleLayout
+				text={translationMetaData.LOBBY_INFO_TITLE}
+			/>
 			<LobbyInfoView lobbyInfo={lobbyInfo} />
 		</>
 	);
