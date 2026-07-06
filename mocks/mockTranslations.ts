@@ -35,7 +35,6 @@ export const mockTranslations: Record<string, string> = {
 	ROLE_FILTER_SHORT_LABEL: "R",
 	RANDOM_MAP_LABEL: "ランダム",
 	ROLE_FILTER_NOT_FOUND: "見つかりませんでした",
-	SETTINGS_UNDER_PREPARATION: "設定項目は現在準備中です。",
 	OK: "OK",
 	SEARCH_NO_RESULTS: "Search No Results",
 	CLIPBOARD_SETTING_TITLE: "設定",

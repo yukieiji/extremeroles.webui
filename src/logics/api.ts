@@ -151,7 +151,6 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"ROLE_FILTER_SHORT_LABEL",
 		"RANDOM_MAP_LABEL",
 		"ROLE_FILTER_NOT_FOUND",
-		"SETTINGS_UNDER_PREPARATION",
 		"OK",
 		"SEARCH_NO_RESULTS",
 		"CLIPBOARD_SETTING_TITLE",
