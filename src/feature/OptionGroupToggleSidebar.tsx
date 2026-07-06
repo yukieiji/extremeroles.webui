@@ -124,7 +124,7 @@ export function OptionGroupToggleSidebar() {
 							onClick={() => {
 								openDialog({
 									type: "settings",
-									title: translationMetaData.SETTINGS_TITLE,
+									title: translationMetaData.SettingsLabel,
 								});
 							}}
 							className="group-data-[collapsible=icon]:justify-center"
@@ -133,7 +133,7 @@ export function OptionGroupToggleSidebar() {
 							<span
 								className={`group-data-[collapsible=icon]:hidden ${TYPOGRAPHY.SIDEBAR}`}
 							>
-								{translationMetaData.SETTINGS_TITLE}
+								{translationMetaData.SettingsLabel}
 							</span>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

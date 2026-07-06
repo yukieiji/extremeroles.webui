@@ -20,7 +20,9 @@ export default defineConfig(({ mode }) => ({
     proxy: {
       '/exr/option/': `http://localhost:${port}`,
       '/exr/role/filter/': `http://localhost:${port}`,
+      '/exr/role/simulate/': `http://localhost:${port}`,
       '/au/option/': `http://localhost:${port}`,
+      '/au/lobby/': `http://localhost:${port}`,
       '/au/translation/batch/': `http://localhost:${port}`,
       '/au/translation/batch/optionunit/': `http://localhost:${port}`,
     },

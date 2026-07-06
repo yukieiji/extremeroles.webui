@@ -10,6 +10,7 @@ import {
 	auOptionMetaData,
 	createAuOptionMetaData,
 	createExROptionMetaData,
+	fetchLobbyInfo,
 	fetchRoleFilterData,
 	fetchTranslationMetaData,
 	globalSearchItems,
@@ -23,12 +24,21 @@ import { parseAuOptionId, parseUniqueOptionId } from "./optionUtils";
  * React 19 の use() で扱うためにリクエストを一度だけ実行するようにします
  */
 let allOptionsPromise: Promise<void> | null = null;
+let lobbyInfoPromise: Promise<void> | null = null;
 
 /**
  * キャッシュをリセットする（テスト用）
  */
 export function resetApiCache() {
 	allOptionsPromise = null;
+	lobbyInfoPromise = null;
+}
+
+/**
+ * ロビー情報のキャッシュをリセットする
+ */
+export function resetLobbyInfoCache() {
+	lobbyInfoPromise = null;
 }
 
 async function waitDelay(): Promise<void> {
@@ -200,4 +210,23 @@ export function getAllOptions(): Promise<void> {
 	}
 	allOptionsPromise = refetchAll();
 	return allOptionsPromise;
+}
+
+export function getLobbyInfo(): Promise<void> {
+	if (lobbyInfoPromise) {
+		return lobbyInfoPromise;
+	}
+	lobbyInfoPromise = (async () => {
+		await waitDelay();
+		try {
+			const info = await fetchLobbyInfo();
+			const store = useStore.getState();
+			store.setLobbyInfo(info);
+			store.setSimulationPlayerNum(info.Online ? info.Online.MaxPlayerNum : 15);
+		} catch (error) {
+			console.error("Failed to fetch lobby info:", error);
+			throw error;
+		}
+	})();
+	return lobbyInfoPromise;
 }

@@ -5,7 +5,8 @@ import {
   ExROptionPutRequestSchema,
   UpdatedOptionsSchema,
   VanillaOptionPutRequestSchema,
-  RoleAssignFilterDtoSchema
+  RoleAssignFilterDtoSchema,
+  SimulateResultArraySchema
 } from '@/type';
 import type { UpdatedOptions, ExRTabDto, AuOptionCategoryDto, ExROptionDto, ExRCategoryDto, CategoryOptionDto, RoleAssignFilterDto } from '@/type';
 
@@ -221,6 +222,37 @@ export const handlers = [
       return new HttpResponse(null, { status: 500 });
     }
     return new HttpResponse(null, { status: 200 });
+  }),
+
+  /**
+   * POST /exr/role/simulate/ のハンドラー
+   */
+  http.post('/exr/role/simulate/', async () => {
+    const mockResult = [
+      {
+        CycleData: [
+          { PlayerName: 'Player1', RoleName: 'Impostor', Team: 'Impostor' },
+          { PlayerName: 'Player2', RoleName: 'Crewmate', Team: 'Crewmate' },
+          { PlayerName: 'Player3', RoleName: 'Madmate', Team: 'Impostor' },
+          { PlayerName: 'Player4', RoleName: 'Sheriff', Team: 'Crewmate' },
+        ]
+      }
+    ];
+    return HttpResponse.json(SimulateResultArraySchema.parse(mockResult));
+  }),
+
+  /**
+   * GET /au/lobby/ のハンドラー
+   */
+  http.get('/au/lobby/', () => {
+    return HttpResponse.json({
+      Online: {
+        MaxPlayerNum: 15,
+        Code: 'KLCQYH',
+        Server: '<color=#8CFFFF>ExR専用(東京)</color>'
+      },
+      CurrentPlayerNames: ['Lochbass']
+    });
   }),
 
   /**

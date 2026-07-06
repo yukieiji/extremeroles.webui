@@ -89,7 +89,7 @@ export default function PrimaryActionColor() {
                 className={primaryActionClass}
               >
                 <Plus size={20} className="mr-1" aria-hidden="true" />
-                {translationMetaData.ROLE_FILTER_ADD_BUTTON}
+                {translationMetaData.RoleAssignFilterAddFilter}
               </Button>
               <span className="text-xs text-gray-400">
                 機能を含む主要アクションボタンの見た目

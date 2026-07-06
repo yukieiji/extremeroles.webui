@@ -322,7 +322,7 @@ describe("generateClipboardText", () => {
 		expect(text).toContain("# 設定(Test Preset)");
 		expect(text).toContain("- マップ: Skeld");
 		expect(text).toContain("- キルクールダウン時間: 10");
-		expect(text).toContain(`## ${translationMetaData.CLIPBOARD_ROLES}`);
+		expect(text).toContain(`## ${translationMetaData.roleName}`);
 		expect(text).toContain(`### ${translationMetaData.Crewmate}`);
 		expect(text).toContain(" - ExR Role --- **1 / 100%**");
 		expect(text).toContain("### Game Extra");

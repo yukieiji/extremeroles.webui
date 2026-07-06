@@ -1,10 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
-import { TYPOGRAPHY } from "@/designConstants";
+import { BaseSelectionSliderLayout } from "@/components/parts/BaseSelectionSliderLayout";
+import { OptionFormat } from "@/components/parts/OptionFormat";
 import { useOptionSlider } from "@/hooks/useOptionSlider";
-import { OptionFormat } from "../parts/OptionFormat";
-import { Field, FieldLabel, FieldSet } from "../ui/field";
-import { Label } from "../ui/label";
 
 interface OptionSliderControlProps {
 	label?: string;
@@ -41,45 +37,22 @@ export function OptionSliderControl({
 	} = useOptionSlider(selection, values, onChange);
 
 	return (
-		<FieldSet
-			onClick={stopPropagation}
-			onKeyDown={stopPropagation}
-			data-testid={testId}
+		<BaseSelectionSliderLayout
+			id={id}
+			inputRef={inputRef}
+			currentValue={currentValue}
+			sliderMin={0}
+			sliderMax={Math.max(0, values.length - 1)}
+			sliderValue={selection}
+			onSliderChange={handleSliderChange}
+			onBlur={handleBlur}
+			onKeyDown={handleKeyDown}
+			stopPropagation={stopPropagation}
+			label={label}
+			renderFormat={format ? <OptionFormat format={format} /> : undefined}
+			testId={testId}
 			className={className}
-		>
-			<Field orientation="horizontal">
-				{label && (
-					<FieldLabel
-						htmlFor={id}
-						className={`${TYPOGRAPHY.CHILD_LABEL} select-text w-full`}
-						aria-hidden="true"
-					>
-						{label}
-					</FieldLabel>
-				)}
-				<Input
-					id={id}
-					ref={inputRef}
-					type="number"
-					defaultValue={currentValue.toString()}
-					onBlur={handleBlur}
-					onKeyDown={handleKeyDown}
-					className={inputClassName}
-				/>
-				{format && (
-					<Label htmlFor={id} className="select-text">
-						<OptionFormat format={format} />
-					</Label>
-				)}
-			</Field>
-			<Slider
-				min={0}
-				max={Math.max(0, values.length - 1)}
-				step={1}
-				value={[selection]}
-				onValueChange={handleSliderChange}
-				className="cursor-pointer"
-			/>
-		</FieldSet>
+			inputClassName={inputClassName}
+		/>
 	);
 }

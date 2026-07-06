@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { SearchBar } from "@/feature/SearchBar";
+import { SearchBar } from "@/feature/search/SearchBar";
 import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 

@@ -1,4 +1,4 @@
-import { ClipboardCopy } from "lucide-react";
+import { ClipboardCopy, Play } from "lucide-react";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { ViewerGroupAccordion } from "@/components/blocks/ViewerGroupAccordion";
@@ -40,6 +40,16 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 			toast.success(translationMetaData.CLIPBOARD_COPY_SUCCESS);
 		});
 	};
+
+	const openSimulate = useStore((state) => state.openBlockDialog);
+
+	const handleSimulate = () => {
+		openSimulate({
+			type: "simulate",
+			title: translationMetaData.SIMULATE_LABEL,
+		});
+	};
+
 	const isAuSettingsOpen = useStore((state) => state.isAuSettingsOpen);
 	const toggleAuSettings = useStore((state) => state.toggleAuSettings);
 	const isExrSettingsOpen = useStore((state) => state.isExrSettingsOpen);
@@ -63,6 +73,15 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 					>
 						<ClipboardCopy className="w-4 h-4" />
 						{translationMetaData.CLIPBOARD_COPY_BUTTON}
+					</Button>
+					<Button
+						variant="outline"
+						size="sm"
+						className="w-full flex items-center mt-2"
+						onClick={handleSimulate}
+					>
+						<Play className="w-4 h-4" />
+						{translationMetaData.SIMULATE_LABEL}
 					</Button>
 				</div>
 				<div className="py-2 flex-1 overflow-y-scroll">

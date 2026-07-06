@@ -8,9 +8,12 @@ import type {
 	ExROptionValueData,
 	ExRTabMetaData,
 	GetCsvResult,
+	LobbyInfo,
 	RoleAssignFilterSetUI,
 	RoleFilterMetaData,
 	SearchItem,
+	SimulateOption,
+	SimulateResult,
 	TranslationMetaDataRecords,
 	UniqueOptionId,
 	UpdatedOptions,
@@ -24,8 +27,10 @@ import {
 	ExRTabId,
 	GetCsvResultSchema,
 	GetTranslationResponseArraySchema,
+	LobbyInfoSchema,
 	OptionValueType,
 	RoleAssignFilterDtoSchema,
+	SimulateResultArraySchema,
 	UpdatedOptionsSchema,
 } from "../type";
 
@@ -39,6 +44,8 @@ const EXR_OPTION_URL = "/exr/option/";
 const EXR_CSV_URL = "/exr/option/csv/";
 const AU_OPTION_URL = "/au/option/";
 const EXR_ROLE_FILTER_URL = "/exr/role/filter/";
+const EXR_SIMULATE_URL = "/exr/role/simulate/";
+const AU_LOBBY_URL = "/au/lobby/";
 const TRANSLATION_BATCH_BASE_URL = "/au/translation/batch/";
 const OPUTION_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}optionunit/`;
 const ROLE_TRANSLATION_BATCH_URL = `${TRANSLATION_BATCH_BASE_URL}role/`;
@@ -124,7 +131,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"PRESET_SWITCH_MESSAGE",
 		"PRESET_INPUT_PLACEHOLDER",
 		"ROLE_FILTER_ADD_TITLE",
-		"ROLE_FILTER_ADD_BUTTON",
+		"RoleAssignFilterAddFilter",
 		"RoleAssignFilterAddRole",
 		"RoleAssignFilter",
 		"RoleAssignFilterAssignNum",
@@ -140,7 +147,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"PresetOption",
 		"SYNCHRONIZING",
 		"RIGHT_PANEL_TITLE",
-		"SETTINGS_TITLE",
+		"SettingsLabel",
 		"ROLE_FILTER_SHORT_LABEL",
 		"RANDOM_MAP_LABEL",
 		"ROLE_FILTER_NOT_FOUND",
@@ -149,19 +156,34 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"SEARCH_NO_RESULTS",
 		"CLIPBOARD_SETTING_TITLE",
 		"CLIPBOARD_FACTION_COUNTS",
-		"CLIPBOARD_ROLES",
+		"roleName",
 		"Crewmate",
 		"Impostor",
 		"Neutral",
 		"Liberal",
 		"CLIPBOARD_DETAILED_SETTINGS",
-		"CLIPBOARD_OTHERS",
+		"OtherLanguage",
 		"CLIPBOARD_OTHERS_NOTE",
 		"CLIPBOARD_VANILLA_SUFFIX",
 		"CLIPBOARD_COPY_BUTTON",
 		"CLIPBOARD_COPY_SUCCESS",
 		"optionOff",
 		"optionOn",
+		"SIMULATE_LABEL",
+		"SIMULATE_RESULT_HEADER",
+		"SIMULATE_RESULT_TITLE",
+		"COPY_BUTTON_LABEL",
+		"playerName",
+		"SIMULATE_DETAILS_SETTING",
+		"LOBBY_INFO_TITLE",
+		"CYCLE_LABEL",
+		"PLAYER_NUM_LABEL",
+		"EMPTY_SIMULATE_MESSAGE",
+		"SIMULATE_EXECUTING_LABEL",
+		"EXECUTE_BUTTON_LABEL",
+		"RoomCodeLabel",
+		"SERVER_TITLE",
+		"CURRENT_PLAYER_LABEL",
 	];
 	const batchBody = batchKeys.map((key) => {
 		return { Key: key };
@@ -644,6 +666,44 @@ export async function updateExrOption(
 	return await UpdatedOptionsSchema.parseAsync(jsonData);
 }
 
+export async function postSimulate(
+	options: SimulateOption,
+): Promise<SimulateResult[]> {
+	console.log(
+		JSON.stringify({
+			type: "request",
+			method: "POST",
+			url: EXR_SIMULATE_URL,
+			body: options,
+		}),
+	);
+	const res = await fetch(EXR_SIMULATE_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(options),
+	});
+
+	console.log(
+		JSON.stringify({
+			type: "response",
+			url: EXR_SIMULATE_URL,
+			status: res.status,
+		}),
+	);
+
+	if (!res.ok) {
+		throw new Error(`Failed to post simulate: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	console.log(
+		JSON.stringify({ type: "data", url: EXR_SIMULATE_URL, data: jsonData }),
+	);
+	return await SimulateResultArraySchema.parseAsync(jsonData);
+}
+
 export async function postExrCsv(csvBody: string): Promise<void> {
 	const body = { CsvBody: csvBody };
 	console.log(
@@ -790,6 +850,29 @@ export async function fetchRoleFilterData(): Promise<
 	}
 
 	return filterSetUI;
+}
+
+export async function fetchLobbyInfo(): Promise<LobbyInfo> {
+	console.log(
+		JSON.stringify({ type: "request", method: "GET", url: AU_LOBBY_URL }),
+	);
+	const res = await fetch(AU_LOBBY_URL);
+	console.log(
+		JSON.stringify({
+			type: "response",
+			url: AU_LOBBY_URL,
+			status: res.status,
+		}),
+	);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch lobby info: ${res.statusText}`);
+	}
+
+	const jsonData = await res.json();
+	console.log(
+		JSON.stringify({ type: "data", url: AU_LOBBY_URL, data: jsonData }),
+	);
+	return await LobbyInfoSchema.parseAsync(jsonData);
 }
 
 export async function updateAuOption(

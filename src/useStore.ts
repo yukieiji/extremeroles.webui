@@ -13,6 +13,8 @@ import type { RoleFilterSlice } from "./slices/roleFilterSlice";
 import { createRoleFilterSlice } from "./slices/roleFilterSlice";
 import type { SearchBarSlice } from "./slices/searchBarSlice";
 import { createSearchBarSlice } from "./slices/searchBarSlice";
+import type { SimulationSlice } from "./slices/simulationSlice";
+import { createSimulationSlice } from "./slices/simulationSlice";
 
 /**
  * Zustand ストアの作成
@@ -24,7 +26,8 @@ export const useStore = create<
 		RightSidePanelSlice &
 		AuOptionViewerSlice &
 		ExROptionViewerSlice &
-		RoleFilterSlice
+		RoleFilterSlice &
+		SimulationSlice
 >()((...a) => {
 	return {
 		...createGlobalUiSlice(...a),
@@ -34,5 +37,6 @@ export const useStore = create<
 		...createAuOptionViewerSlice(...a),
 		...createExROptionViewerSlice(...a),
 		...createRoleFilterSlice(...a),
+		...createSimulationSlice(...a),
 	};
 });
