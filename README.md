@@ -43,7 +43,10 @@ ExtremeRoles.WebUIは、[ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)
 
 ## 🛠️ 開発
 
-このプロジェクトでは `pnpm` の使用を推奨しています
+このプロジェクトでは **AIエージェント向けの特別なルール** が [AGENTS.md](./AGENTS.md) に定義されています。
+開発に参加する際は、必ずこのファイルの内容を遵守してください。
+
+また、パッケージマネージャーは `pnpm` を使用してください。
 
 ### セットアップ
 
