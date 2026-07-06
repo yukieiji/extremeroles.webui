@@ -51,7 +51,7 @@ test("sidebar state is persisted in localStorage", async ({
 
 	// 3. Reload and check if it's still collapsed
 	const { newPage, newContext } = await reloadWithPersistence(page, browser);
-    await newPage.waitForSelector('[data-slot="sidebar"]');
+	await newPage.waitForSelector('[data-slot="sidebar"]');
 
 	await check(newPage, false);
 
@@ -59,11 +59,9 @@ test("sidebar state is persisted in localStorage", async ({
 	await toggle(newPage);
 	await check(newPage, true);
 
-	const { newPage: newPage2, newContext: newContext2 } = await reloadWithPersistence(
-		newPage,
-		browser,
-	);
-    await newPage2.waitForSelector('[data-slot="sidebar"]');
+	const { newPage: newPage2, newContext: newContext2 } =
+		await reloadWithPersistence(newPage, browser);
+	await newPage2.waitForSelector('[data-slot="sidebar"]');
 
 	// 5. Reload and check if it's still expanded
 	await check(newPage2, true);

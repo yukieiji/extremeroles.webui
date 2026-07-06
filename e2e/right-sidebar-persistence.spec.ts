@@ -44,7 +44,9 @@ test("right sidebar state is persisted in localStorage", async ({
 
 	// 3. Reload and check if it's still open
 	const { newPage, newContext } = await reloadWithPersistence(page, browser);
-	const reloadedRightPanel = newPage.locator('[data-testid="right-side-panel"]');
+	const reloadedRightPanel = newPage.locator(
+		'[data-testid="right-side-panel"]',
+	);
 	await reloadedRightPanel.waitFor({ state: "attached", timeout: 15000 });
 
 	const reloadedWidth = await getRightSidebarWidth(newPage);
@@ -60,8 +62,11 @@ test("right sidebar state is persisted in localStorage", async ({
 		.toBeCloseTo(24, 1);
 
 	// 5. Reload and check if it's still closed
-	const { newPage: newPage2, newContext: newContext2 } = await reloadWithPersistence(newPage, browser);
-	const reloadedRightPanel2 = newPage2.locator('[data-testid="right-side-panel"]');
+	const { newPage: newPage2, newContext: newContext2 } =
+		await reloadWithPersistence(newPage, browser);
+	const reloadedRightPanel2 = newPage2.locator(
+		'[data-testid="right-side-panel"]',
+	);
 	await reloadedRightPanel2.waitFor({ state: "attached", timeout: 15000 });
 
 	const finalWidth = await getRightSidebarWidth(newPage2);
