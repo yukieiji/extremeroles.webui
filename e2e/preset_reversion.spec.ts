@@ -1,9 +1,5 @@
 import { expect, test } from "@playwright/test";
-import {
-	getLeftSidebarButton,
-	getSideber as getLeftSideber,
-	prepare,
-} from "./conftest";
+import { getLeftSidebarButton, getLeftSideber, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await prepare(page, 100);
