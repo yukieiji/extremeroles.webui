@@ -379,7 +379,7 @@ export function generateClipboardText(
 		}
 	}
 
-	text += `## ${translationMetaData.CLIPBOARD_ROLES}\n`;
+	text += `## ${translationMetaData.roleName}\n`;
 	if (crewRolesList.length > 0) {
 		text += `### ${translationMetaData.Crewmate}\n${formatRoleList(crewRolesList)}`;
 	}
@@ -394,7 +394,7 @@ export function generateClipboardText(
 	}
 
 	text += `\n## ${translationMetaData.CLIPBOARD_DETAILED_SETTINGS}\n${detailedSettings}\n`;
-	text += `\n## ${translationMetaData.CLIPBOARD_OTHERS}\n${translationMetaData.CLIPBOARD_OTHERS_NOTE}\n`;
+	text += `\n## ${translationMetaData.OtherLanguage}\n${translationMetaData.CLIPBOARD_OTHERS_NOTE}\n`;
 
 	return text;
 }

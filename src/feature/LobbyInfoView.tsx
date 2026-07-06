@@ -2,6 +2,7 @@ import { ColoredText } from "@/components/parts/ColoredText";
 import { LobbyInfoViewItemLayout } from "@/components/parts/LobbyInfoViewItemLayout";
 import { Badge } from "@/components/ui/badge";
 import { TYPOGRAPHY } from "@/designConstants";
+import { translationMetaData } from "@/logics/api";
 import type { LobbyInfo } from "@/type";
 
 interface LobbyInfoViewProps {
@@ -14,13 +15,13 @@ export function LobbyInfoView({ lobbyInfo }: LobbyInfoViewProps) {
 			<div className="flex flex-col gap-2 h-full overflow-hidden">
 				{lobbyInfo?.Online && (
 					<>
-						<LobbyInfoViewItemLayout title={"サーバー"}>
+						<LobbyInfoViewItemLayout title={translationMetaData.SERVER_TITLE}>
 							<ColoredText
 								text={lobbyInfo.Online.Server}
 								className={TYPOGRAPHY.CHILD_LABEL}
 							/>
 						</LobbyInfoViewItemLayout>
-						<LobbyInfoViewItemLayout title={"ルームコード"}>
+						<LobbyInfoViewItemLayout title={translationMetaData.RoomCodeLabel}>
 							<span className={`${TYPOGRAPHY.CHILD_LABEL} break-all`}>
 								{lobbyInfo.Online.Code}
 							</span>
@@ -29,7 +30,7 @@ export function LobbyInfoView({ lobbyInfo }: LobbyInfoViewProps) {
 				)}
 				<div className="flex-1 flex flex-col overflow-hidden">
 					<span className={`${TYPOGRAPHY.SMALL} text-text-secondary py-2`}>
-						現在のプレイヤー
+						{translationMetaData.CURRENT_PLAYER_LABEL}
 					</span>
 					<div className="flex-1 overflow-y-auto">
 						<div className="flex flex-wrap gap-1 items-start">

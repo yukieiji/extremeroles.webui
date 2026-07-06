@@ -18,7 +18,7 @@ export function SimulationControls() {
 	return (
 		<>
 			<SimulationControlTitleLayout
-				text={translationMetaData.DETAILS_SETTING_TITLE}
+				text={translationMetaData.SIMULATE_DETAILS_SETTING}
 			/>
 			<div className="py-2 flex flex-col gap-2">
 				<SimulationSliderControl

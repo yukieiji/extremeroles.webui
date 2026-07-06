@@ -43,7 +43,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 	const finalTeams = TEAM_ORDER.filter((team) => teamGroups[team]);
 
 	const handleCopy = () => {
-		let text = translationMetaData.SIMULATE_RESULT_HEADER;
+		let text = `### ${translationMetaData.SIMULATE_RESULT_HEADER}\n`;
 		for (const team of finalTeams) {
 			const players = teamGroups[team];
 			const teamName = team === "Null" ? "" : translationMetaData[team] || team;
@@ -59,7 +59,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle className={TYPOGRAPHY.LABEL}>
-					{translationMetaData.RESULT_TITLE} {index + 1}
+					{translationMetaData.SIMULATE_RESULT_TITLE} {index + 1}
 				</CardTitle>
 				<Button
 					variant="outline"
@@ -89,10 +89,10 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 								<TableHeader className={TYPOGRAPHY.CHILD_LABEL}>
 									<TableRow>
 										<TableHead className="w-[60%] whitespace-normal">
-											{translationMetaData.PLAYER_NAME_HEADER}
+											{translationMetaData.playerName}
 										</TableHead>
 										<TableHead className="whitespace-normal">
-											{translationMetaData.ROLE_NAME_HEADER}
+											{translationMetaData.roleName}
 										</TableHead>
 									</TableRow>
 								</TableHeader>
