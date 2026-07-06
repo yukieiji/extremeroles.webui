@@ -38,6 +38,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 
 	const handleSimulate = async () => {
 		setIsLoading(true);
+		setResult([]);
 		try {
 			const res = await postSimulate({
 				Cycle: cycle,
@@ -48,8 +49,8 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 			});
 			setResult(res);
 		} catch (error) {
-			console.error(error);
-			setResult([]);
+			console.error("Failed to simulate role assign:", error);
+			throw error;
 		} finally {
 			setIsLoading(false);
 		}
