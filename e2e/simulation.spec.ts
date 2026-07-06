@@ -28,7 +28,9 @@ test("can open simulation dialog and run simulation", async ({ page }) => {
 	const dialog = page.getByRole("dialog");
 	await expect(dialog).toBeVisible({ timeout: 15000 });
 	// タイトルの確認（getByText("シミュレート") はメッセージとも被るので heading を使う）
-	await expect(dialog.getByRole("heading", { name: "シミュレート" })).toBeVisible();
+	await expect(
+		dialog.getByRole("heading", { name: "シミュレート" }),
+	).toBeVisible();
 
 	// 初期表示のメッセージを確認
 	await expect(
