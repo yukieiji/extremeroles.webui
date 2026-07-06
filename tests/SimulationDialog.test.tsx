@@ -26,9 +26,21 @@ vi.mock("@/logics/api", () => ({
 	translationMetaData: mockedTranslationMetaData,
 }));
 
-import { mockTranslations } from "../mocks/mockTranslations";
-
-Object.assign(mockedTranslationMetaData, mockTranslations);
+Object.assign(mockedTranslationMetaData, {
+	SIMULATE_LABEL: "シミュレート",
+	SIMULATE_RESULT_HEADER: "### シミュレート結果\n",
+	RESULT_TITLE: "結果",
+	COPY_BUTTON_LABEL: "コピー",
+	PLAYER_NAME_HEADER: "プレイヤーネーム",
+	ROLE_NAME_HEADER: "役職",
+	DETAILS_SETTING_TITLE: "詳細設定",
+	LOBBY_INFO_TITLE: "ロビー情報",
+	CYCLE_LABEL: "Cycle",
+	PLAYER_NUM_LABEL: "Player Num",
+	EMPTY_SIMULATE_MESSAGE: "シミュレートボタンを押して下さい",
+	EXECUTING_LABEL: "Executing...",
+	EXECUTE_BUTTON_LABEL: "Execute",
+});
 
 vi.mock("@/logics/api.store", () => ({
 	getLobbyInfo: vi.fn(),
