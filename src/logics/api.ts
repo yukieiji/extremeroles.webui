@@ -184,6 +184,12 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"RoomCodeLabel",
 		"SERVER_TITLE",
 		"CURRENT_PLAYER_LABEL",
+		"LEFT_SIDEBAR_SETTING",
+		"RIGHT_SIDEBAR_SETTING",
+		"INITIAL_OPEN_STATE",
+		"SAVE_STATE_TO_BROWSER",
+		"OPEN_LABEL",
+		"CLOSE_LABEL",
 	];
 	const batchBody = batchKeys.map((key) => {
 		return { Key: key };

@@ -68,4 +68,10 @@ export const mockTranslations: Record<string, string> = {
 	SERVER_TITLE: "サーバー",
 	RoomCodeLabel: "ルームコード",
 	CURRENT_PLAYER_LABEL: "現在のプレイヤー",
+	LEFT_SIDEBAR_SETTING: "左サイドバー設定",
+	RIGHT_SIDEBAR_SETTING: "右サイドバー設定",
+	INITIAL_OPEN_STATE: "初期状態",
+	SAVE_STATE_TO_BROWSER: "状態をブラウザに保存する",
+	OPEN_LABEL: "開く",
+	CLOSE_LABEL: "閉じる",
 };
