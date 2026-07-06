@@ -44,6 +44,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 							{translationMetaData.INITIAL_OPEN_STATE}
 						</Label>
 						<Select
+							disabled={appSetting.leftSidebar.saveState}
 							value={appSetting.leftSidebar.initialOpen ? "open" : "close"}
 							onValueChange={(value) =>
 								updateAppSetting({
@@ -97,6 +98,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 							{translationMetaData.INITIAL_OPEN_STATE}
 						</Label>
 						<Select
+							disabled={appSetting.rightSidebar.saveState}
 							value={appSetting.rightSidebar.initialOpen ? "open" : "close"}
 							onValueChange={(value) =>
 								updateAppSetting({
