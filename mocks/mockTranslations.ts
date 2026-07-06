@@ -65,4 +65,7 @@ export const mockTranslations: Record<string, string> = {
 	EMPTY_SIMULATE_MESSAGE: "シミュレートボタンを押して下さい",
 	SIMULATE_EXECUTING_LABEL: "Executing...",
 	EXECUTE_BUTTON_LABEL: "Execute",
+	SERVER_TITLE: "サーバー",
+	RoomCodeLabel: "ルームコード",
+	CURRENT_PLAYER_LABEL: "現在のプレイヤー",
 };

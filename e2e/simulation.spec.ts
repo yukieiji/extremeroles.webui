@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-	await page.request.post("/mock/reset");
+	await page.request.post("/mock/reset", { maxRetries: 5 });
 	await page.goto("/");
 	await expect(page.getByText("Loading data...")).not.toBeVisible({
 		timeout: 30000,
