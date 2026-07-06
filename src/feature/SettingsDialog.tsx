@@ -40,7 +40,10 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						{translationMetaData.LEFT_SIDEBAR_SETTING}
 					</h3>
 					<div className="flex items-center justify-between">
-						<Label htmlFor="left-sidebar-initial-state" className={TYPOGRAPHY.SMALL}>
+						<Label
+							htmlFor="left-sidebar-initial-state"
+							className={TYPOGRAPHY.SMALL}
+						>
 							{translationMetaData.INITIAL_OPEN_STATE}
 						</Label>
 						<Select
@@ -70,7 +73,10 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						</Select>
 					</div>
 					<div className="flex items-center justify-between">
-						<Label htmlFor="left-sidebar-save-state" className={TYPOGRAPHY.SMALL}>
+						<Label
+							htmlFor="left-sidebar-save-state"
+							className={TYPOGRAPHY.SMALL}
+						>
 							{translationMetaData.SAVE_STATE_TO_BROWSER}
 						</Label>
 						<Switch
@@ -96,7 +102,10 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						{translationMetaData.RIGHT_SIDEBAR_SETTING}
 					</h3>
 					<div className="flex items-center justify-between">
-						<Label htmlFor="right-sidebar-initial-state" className={TYPOGRAPHY.SMALL}>
+						<Label
+							htmlFor="right-sidebar-initial-state"
+							className={TYPOGRAPHY.SMALL}
+						>
 							{translationMetaData.INITIAL_OPEN_STATE}
 						</Label>
 						<Select
@@ -126,7 +135,10 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						</Select>
 					</div>
 					<div className="flex items-center justify-between">
-						<Label htmlFor="right-sidebar-save-state" className={TYPOGRAPHY.SMALL}>
+						<Label
+							htmlFor="right-sidebar-save-state"
+							className={TYPOGRAPHY.SMALL}
+						>
 							{translationMetaData.SAVE_STATE_TO_BROWSER}
 						</Label>
 						<Switch
