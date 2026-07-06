@@ -44,9 +44,9 @@ test.describe("ExR Navigation from Summary", () => {
 	test("should switch to ExR tab and highlight paired option row when double-clicking min-max summary row", async ({
 		page,
 	}) => {
-		// Find a min-max summary row. "Liberal" is usually there in mock data.
+		// Find a min-max summary row. "リベラル" is usually there in mock data.
 		const minMaxRow = page
-			.locator('button:has-text("Liberal")')
+			.locator('button:has-text("リベラル")')
 			.filter({ hasText: / - / })
 			.first();
 		if (!(await minMaxRow.isVisible())) {
