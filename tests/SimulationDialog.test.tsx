@@ -14,17 +14,21 @@ import { postSimulate } from "@/logics/api";
 import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
-import { mockTranslations } from "../mocks/mockTranslations";
+const { mockedTranslationMetaData } = vi.hoisted(() => {
+	return {
+		mockedTranslationMetaData: {},
+	};
+});
 
 // APIのモック
 vi.mock("@/logics/api", () => ({
 	postSimulate: vi.fn(),
-	translationMetaData: {},
+	translationMetaData: mockedTranslationMetaData,
 }));
 
-import { translationMetaData } from "@/logics/api";
+import { mockTranslations } from "../mocks/mockTranslations";
 
-Object.assign(translationMetaData, mockTranslations);
+Object.assign(mockedTranslationMetaData, mockTranslations);
 
 vi.mock("@/logics/api.store", () => ({
 	getLobbyInfo: vi.fn(),

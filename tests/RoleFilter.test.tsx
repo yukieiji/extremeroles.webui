@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RoleFilterViewer } from "@/feature/rolefilter/RoleFilterViewer";
 import { postRoleFilterUpdate, translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
-import { mockTranslations } from "../mocks/mockTranslations";
 
 // Mock api.ts
 vi.mock("@/logics/api", async (importOriginal) => {
@@ -23,7 +22,6 @@ vi.mock("@/logics/api", async (importOriginal) => {
 describe("RoleFilterViewer and RoleFilterCard", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
-		Object.assign(translationMetaData, mockTranslations);
 		act(() => {
 			useStore.setState({
 				roleFilterSet: {},
