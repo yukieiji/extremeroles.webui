@@ -77,6 +77,26 @@
 - **データ取得**: バックエンドからのデータ取得は `Suspense` を使用すること。`useEffect` は原則使用しない。
 - **スタイル管理**: `margin` や `padding` は親コンポーネントが管理し、子コンポーネントには含めない。
 
+### 記載例 (Zustandの正しい使用法)
+```tsx
+interface GreetingProps {
+  name: string;
+}
+
+export function Greeting({ name }: GreetingProps) {
+  // ❌ 悪い例: const state = useStore(); (不要な再レンダリングが発生する)
+  // ✅ 良い例: 必要な値だけを個別に取得する
+  const a = useStore((state) => state.a);
+  const index = useStore((state) => state.indexs[a] ?? 0);
+
+  const handleClick = () => {
+    console.log("hello");
+  };
+
+  return <h1 onClick={handleClick}>Hello {name} (Index: {index})</h1>;
+}
+```
+
 ### ディレクトリ構造
 - `src/`: ソースディレクトリ
     - `components/`: 再利用可能なコンポーネント (基本ステートレス)
