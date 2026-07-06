@@ -31,11 +31,13 @@ export function SidebarSettingsSection({
 		<div className="grid gap-4">
 			<h3 className={TYPOGRAPHY.SMALL_BOLD}>{title}</h3>
 			<div className="flex items-center justify-between">
-				<Label htmlFor={`${idPrefix}-initial-state`} className={TYPOGRAPHY.SMALL}>
+				<Label
+					htmlFor={`${idPrefix}-initial-state`}
+					className={TYPOGRAPHY.SMALL}
+				>
 					{translationMetaData.INITIAL_OPEN_STATE}
 				</Label>
 				<Select
-					id={`${idPrefix}-initial-state`}
 					disabled={setting.saveState}
 					value={setting.initialOpen ? "open" : "close"}
 					onValueChange={(value) =>
@@ -45,7 +47,7 @@ export function SidebarSettingsSection({
 						})
 					}
 				>
-					<SelectTrigger className="w-[120px]">
+					<SelectTrigger id={`${idPrefix}-initial-state`} className="w-[120px]">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
