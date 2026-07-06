@@ -7,7 +7,6 @@ export const EXR_OPTIONS_TITLE = "Extreme Roles";
 export const AU_SHORT_LABEL = "A";
 export const EXR_SHORT_LABEL = "E";
 
-
 export const MAP_NAMES: Record<number, string> = {
 	0: "Skeld",
 	1: "MIRA HQ",

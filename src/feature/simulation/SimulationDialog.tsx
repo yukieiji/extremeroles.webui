@@ -94,7 +94,9 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 						disabled={isLoading}
 					>
 						<Play className="w-4 h-4" />
-						{isLoading ? translationMetaData.EXECUTING_LABEL : translationMetaData.EXECUTE_BUTTON_LABEL}
+						{isLoading
+							? translationMetaData.EXECUTING_LABEL
+							: translationMetaData.EXECUTE_BUTTON_LABEL}
 					</Button>
 					<Suspense fallback={<LobbyLoadingView />}>
 						<SimulationControls />

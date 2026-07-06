@@ -17,7 +17,9 @@ export function SimulationControls() {
 
 	return (
 		<>
-			<SimulationControlTitleLayout text={translationMetaData.DETAILS_SETTING_TITLE} />
+			<SimulationControlTitleLayout
+				text={translationMetaData.DETAILS_SETTING_TITLE}
+			/>
 			<div className="py-2 flex flex-col gap-2">
 				<SimulationSliderControl
 					label={translationMetaData.CYCLE_LABEL}
@@ -34,7 +36,9 @@ export function SimulationControls() {
 					onValueChange={setPlayerNum}
 				/>
 			</div>
-			<SimulationControlTitleLayout text={translationMetaData.LOBBY_INFO_TITLE} />
+			<SimulationControlTitleLayout
+				text={translationMetaData.LOBBY_INFO_TITLE}
+			/>
 			<LobbyInfoView lobbyInfo={lobbyInfo} />
 		</>
 	);

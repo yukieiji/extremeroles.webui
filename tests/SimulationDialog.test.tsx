@@ -23,6 +23,7 @@ vi.mock("@/logics/api", () => ({
 }));
 
 import { translationMetaData } from "@/logics/api";
+
 Object.assign(translationMetaData, mockTranslations);
 
 vi.mock("@/logics/api.store", () => ({
