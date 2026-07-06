@@ -106,7 +106,7 @@ export function loadSidebarState(): boolean {
 		return setting.leftSidebar.initialOpen;
 	}
 	const stored = storage.getItem(STORAGE_KEYS.SIDEBAR_STATE);
-	return stored !== null ? stored === "true" : setting.leftSidebar.initialOpen;
+	return stored !== null ? stored === "true" : true; // 保存有効時はデフォルト開
 }
 
 /**
@@ -128,7 +128,7 @@ export function loadRightSidebarState(): boolean {
 		return setting.rightSidebar.initialOpen;
 	}
 	const stored = storage.getItem(STORAGE_KEYS.RIGHT_SIDEBAR_STATE);
-	return stored !== null ? stored === "true" : setting.rightSidebar.initialOpen;
+	return stored !== null ? stored === "true" : false; // 保存有効時はデフォルト閉
 }
 
 /**

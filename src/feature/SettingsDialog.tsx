@@ -40,10 +40,11 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						{translationMetaData.LEFT_SIDEBAR_SETTING}
 					</h3>
 					<div className="flex items-center justify-between">
-						<Label className={TYPOGRAPHY.SMALL}>
+						<Label htmlFor="left-sidebar-initial-state" className={TYPOGRAPHY.SMALL}>
 							{translationMetaData.INITIAL_OPEN_STATE}
 						</Label>
 						<Select
+							id="left-sidebar-initial-state"
 							disabled={appSetting.leftSidebar.saveState}
 							value={appSetting.leftSidebar.initialOpen ? "open" : "close"}
 							onValueChange={(value) =>
@@ -69,10 +70,11 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						</Select>
 					</div>
 					<div className="flex items-center justify-between">
-						<Label className={TYPOGRAPHY.SMALL}>
+						<Label htmlFor="left-sidebar-save-state" className={TYPOGRAPHY.SMALL}>
 							{translationMetaData.SAVE_STATE_TO_BROWSER}
 						</Label>
 						<Switch
+							id="left-sidebar-save-state"
 							checked={appSetting.leftSidebar.saveState}
 							onCheckedChange={(checked) =>
 								updateAppSetting({
@@ -94,10 +96,11 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						{translationMetaData.RIGHT_SIDEBAR_SETTING}
 					</h3>
 					<div className="flex items-center justify-between">
-						<Label className={TYPOGRAPHY.SMALL}>
+						<Label htmlFor="right-sidebar-initial-state" className={TYPOGRAPHY.SMALL}>
 							{translationMetaData.INITIAL_OPEN_STATE}
 						</Label>
 						<Select
+							id="right-sidebar-initial-state"
 							disabled={appSetting.rightSidebar.saveState}
 							value={appSetting.rightSidebar.initialOpen ? "open" : "close"}
 							onValueChange={(value) =>
@@ -123,10 +126,11 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 						</Select>
 					</div>
 					<div className="flex items-center justify-between">
-						<Label className={TYPOGRAPHY.SMALL}>
+						<Label htmlFor="right-sidebar-save-state" className={TYPOGRAPHY.SMALL}>
 							{translationMetaData.SAVE_STATE_TO_BROWSER}
 						</Label>
 						<Switch
+							id="right-sidebar-save-state"
 							checked={appSetting.rightSidebar.saveState}
 							onCheckedChange={(checked) =>
 								updateAppSetting({
