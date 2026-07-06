@@ -137,7 +137,7 @@ describe("SimulationDialog", () => {
 		const resultArea = screen.getByText("Executing...").closest("div.flex-1");
 		expect(resultArea?.querySelector(".animate-spin")).toBeInTheDocument();
 		expect(
-			screen.queryByText("シュミレートボタンを押して下さい"),
+			screen.queryByText("シミュレートボタンを押して下さい"),
 		).not.toBeInTheDocument();
 	});
 
