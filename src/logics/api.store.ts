@@ -222,16 +222,9 @@ export function getLobbyInfo(): Promise<void> {
 			const info = await fetchLobbyInfo();
 			const store = useStore.getState();
 			store.setLobbyInfo(info);
-			if (info.Online) {
-				store.setSimulationPlayerNum(info.Online.MaxPlayerNum);
-			} else {
-				store.setSimulationPlayerNum(15);
-			}
+			store.setSimulationPlayerNum(info.Online ? info.Online.MaxPlayerNum : 15);
 		} catch (error) {
 			console.error("Failed to fetch lobby info:", error);
-			const store = useStore.getState();
-			store.setLobbyInfo(null);
-			store.setSimulationPlayerNum(15);
 			throw error;
 		}
 	})();
