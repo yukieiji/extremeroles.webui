@@ -3,7 +3,7 @@ import { SimulationControlTitleLayout } from "@/components/parts/SimulationContr
 import { translationMetaData } from "@/logics/api";
 import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
-import { LobbyInfoView } from "../LobbyInfoView";
+import { LobbyInfoView } from "./LobbyInfoView";
 import { SimulationSliderControl } from "./SimulationSliderControl";
 
 export function SimulationControls() {

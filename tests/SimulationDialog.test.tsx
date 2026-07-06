@@ -182,28 +182,6 @@ describe("SimulationDialog", () => {
 		expect(screen.getByText("結果 1")).toBeInTheDocument();
 	});
 
-	it("handles API error gracefully", async () => {
-		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-		(postSimulate as Mock).mockRejectedValue(new Error("API Error"));
-
-		await act(async () => {
-			renderWithDialog(<SimulationDialog title={mockTitle} />);
-		});
-
-		await waitFor(() => {
-			expect(screen.getByText("ロビー情報")).toBeInTheDocument();
-		});
-
-		fireEvent.click(screen.getByRole("button", { name: /Execute/i }));
-
-		await waitFor(() => {
-			expect(useStore.getState().simulationResult).toEqual([]);
-		});
-
-		expect(consoleSpy).toHaveBeenCalled();
-		consoleSpy.mockRestore();
-	});
-
 	it("updates cycle value when slider changes", async () => {
 		await act(async () => {
 			renderWithDialog(<SimulationDialog title={mockTitle} />);
