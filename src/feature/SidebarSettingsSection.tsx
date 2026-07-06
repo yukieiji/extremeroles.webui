@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 import type { SidebarSetting } from "@/logics/storageUtils";
@@ -12,29 +13,24 @@ import {
 import { Switch } from "../components/ui/switch";
 
 interface SidebarSettingsSectionProps {
-	idPrefix: string;
-	title: string;
 	setting: SidebarSetting;
 	onUpdate: (setting: SidebarSetting) => void;
 }
 
 /**
- * サイドバーの設定セクションコンポーネント
+ * サイドバーの設定セクション（開閉初期値と保存設定）
  */
 export function SidebarSettingsSection({
-	idPrefix,
-	title,
 	setting,
 	onUpdate,
 }: SidebarSettingsSectionProps) {
+	const initialStateId = useId();
+	const saveStateId = useId();
+
 	return (
 		<div className="grid gap-4">
-			<h3 className={TYPOGRAPHY.SMALL_BOLD}>{title}</h3>
 			<div className="flex items-center justify-between">
-				<Label
-					htmlFor={`${idPrefix}-initial-state`}
-					className={TYPOGRAPHY.SMALL}
-				>
+				<Label htmlFor={initialStateId} className={TYPOGRAPHY.SMALL}>
 					{translationMetaData.INITIAL_OPEN_STATE}
 				</Label>
 				<Select
@@ -47,7 +43,7 @@ export function SidebarSettingsSection({
 						})
 					}
 				>
-					<SelectTrigger id={`${idPrefix}-initial-state`} className="w-[120px]">
+					<SelectTrigger id={initialStateId} className="w-[120px]">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
@@ -61,11 +57,11 @@ export function SidebarSettingsSection({
 				</Select>
 			</div>
 			<div className="flex items-center justify-between">
-				<Label htmlFor={`${idPrefix}-save-state`} className={TYPOGRAPHY.SMALL}>
+				<Label htmlFor={saveStateId} className={TYPOGRAPHY.SMALL}>
 					{translationMetaData.SAVE_STATE_TO_BROWSER}
 				</Label>
 				<Switch
-					id={`${idPrefix}-save-state`}
+					id={saveStateId}
 					checked={setting.saveState}
 					onCheckedChange={(checked) =>
 						onUpdate({

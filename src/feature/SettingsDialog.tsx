@@ -25,21 +25,27 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 				<DialogTitle>{title}</DialogTitle>
 			</DialogHeader>
 			<div className="grid gap-6 py-4">
-				<SidebarSettingsSection
-					idPrefix="left-sidebar"
-					title={translationMetaData.LEFT_SIDEBAR_SETTING}
-					setting={appSetting.leftSidebar}
-					onUpdate={(leftSidebar) => updateAppSetting({ leftSidebar })}
-				/>
+				<div className="grid gap-4">
+					<h3 className="text-xs font-bold">
+						{translationMetaData.LEFT_SIDEBAR_SETTING}
+					</h3>
+					<SidebarSettingsSection
+						setting={appSetting.leftSidebar}
+						onUpdate={(leftSidebar) => updateAppSetting({ leftSidebar })}
+					/>
+				</div>
 
 				<Separator />
 
-				<SidebarSettingsSection
-					idPrefix="right-sidebar"
-					title={translationMetaData.RIGHT_SIDEBAR_SETTING}
-					setting={appSetting.rightSidebar}
-					onUpdate={(rightSidebar) => updateAppSetting({ rightSidebar })}
-				/>
+				<div className="grid gap-4">
+					<h3 className="text-xs font-bold">
+						{translationMetaData.RIGHT_SIDEBAR_SETTING}
+					</h3>
+					<SidebarSettingsSection
+						setting={appSetting.rightSidebar}
+						onUpdate={(rightSidebar) => updateAppSetting({ rightSidebar })}
+					/>
+				</div>
 			</div>
 		</DialogContent>
 	);
