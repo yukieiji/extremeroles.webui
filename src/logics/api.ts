@@ -169,6 +169,19 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"CLIPBOARD_COPY_SUCCESS",
 		"optionOff",
 		"optionOn",
+		"SIMULATE_LABEL",
+		"SIMULATE_RESULT_HEADER",
+		"RESULT_TITLE",
+		"COPY_BUTTON_LABEL",
+		"PLAYER_NAME_HEADER",
+		"ROLE_NAME_HEADER",
+		"DETAILS_SETTING_TITLE",
+		"LOBBY_INFO_TITLE",
+		"CYCLE_LABEL",
+		"PLAYER_NUM_LABEL",
+		"EMPTY_SIMULATE_MESSAGE",
+		"EXECUTING_LABEL",
+		"EXECUTE_BUTTON_LABEL",
 	];
 	const batchBody = batchKeys.map((key) => {
 		return { Key: key };

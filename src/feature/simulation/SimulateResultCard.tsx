@@ -13,13 +13,6 @@ import {
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 import { stripColorTags } from "@/logics/colorUtils";
-import {
-	COPY_BUTTON_LABEL,
-	PLAYER_NAME_HEADER,
-	RESULT_TITLE,
-	ROLE_NAME_HEADER,
-	SIMULATE_RESULT_HEADER,
-} from "@/noTrans";
 import type { SimulateResult } from "@/type";
 
 interface SimulateResultCardProps {
@@ -50,7 +43,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 	const finalTeams = TEAM_ORDER.filter((team) => teamGroups[team]);
 
 	const handleCopy = () => {
-		let text = SIMULATE_RESULT_HEADER;
+		let text = translationMetaData.SIMULATE_RESULT_HEADER;
 		for (const team of finalTeams) {
 			const players = teamGroups[team];
 			const teamName = team === "Null" ? "" : translationMetaData[team] || team;
@@ -66,7 +59,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle className={TYPOGRAPHY.LABEL}>
-					{RESULT_TITLE} {index + 1}
+					{translationMetaData.RESULT_TITLE} {index + 1}
 				</CardTitle>
 				<Button
 					variant="outline"
@@ -75,7 +68,7 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 					className="shadow-md"
 				>
 					<Copy className="w-4 h-4" />
-					{COPY_BUTTON_LABEL}
+					{translationMetaData.COPY_BUTTON_LABEL}
 				</Button>
 			</CardHeader>
 			<CardContent>
@@ -96,10 +89,10 @@ export function SimulateResultCard({ result, index }: SimulateResultCardProps) {
 								<TableHeader className={TYPOGRAPHY.CHILD_LABEL}>
 									<TableRow>
 										<TableHead className="w-[60%] whitespace-normal">
-											{PLAYER_NAME_HEADER}
+											{translationMetaData.PLAYER_NAME_HEADER}
 										</TableHead>
 										<TableHead className="whitespace-normal">
-											{ROLE_NAME_HEADER}
+											{translationMetaData.ROLE_NAME_HEADER}
 										</TableHead>
 									</TableRow>
 								</TableHeader>

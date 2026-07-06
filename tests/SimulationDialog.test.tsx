@@ -14,11 +14,16 @@ import { postSimulate } from "@/logics/api";
 import { getLobbyInfo } from "@/logics/api.store";
 import { useStore } from "@/useStore";
 
+import { mockTranslations } from "../mocks/mockTranslations";
+
 // APIのモック
 vi.mock("@/logics/api", () => ({
 	postSimulate: vi.fn(),
 	translationMetaData: {},
 }));
+
+import { translationMetaData } from "@/logics/api";
+Object.assign(translationMetaData, mockTranslations);
 
 vi.mock("@/logics/api.store", () => ({
 	getLobbyInfo: vi.fn(),
@@ -62,7 +67,7 @@ describe("SimulationDialog", () => {
 	it("shows message when no results are present", () => {
 		renderWithDialog(<SimulationDialog title={mockTitle} />);
 		expect(
-			screen.getByText("シュミレートボタンを押して下さい"),
+			screen.getByText("シミュレートボタンを押して下さい"),
 		).toBeInTheDocument();
 	});
 

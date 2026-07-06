@@ -11,7 +11,7 @@ import {
 	translationMetaData,
 } from "@/logics/api";
 import { generateClipboardText } from "@/logics/clipboardLogic";
-import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE, SIMULATE_LABEL } from "@/noTrans";
+import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE } from "@/noTrans";
 import { useStore } from "@/useStore";
 import { AuOptionViewer } from "./AuOptionViewer";
 import { ExROptionViewer } from "./ExROptionViewer";
@@ -46,7 +46,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 	const handleSimulate = () => {
 		openSimulate({
 			type: "simulate",
-			title: SIMULATE_LABEL,
+			title: translationMetaData.SIMULATE_LABEL,
 		});
 	};
 
@@ -81,7 +81,7 @@ export function RightSidePanelBody({ children }: RightSidePanelBodyProps) {
 						onClick={handleSimulate}
 					>
 						<Play className="w-4 h-4" />
-						{SIMULATE_LABEL}
+						{translationMetaData.SIMULATE_LABEL}
 					</Button>
 				</div>
 				<div className="py-2 flex-1 overflow-y-scroll">

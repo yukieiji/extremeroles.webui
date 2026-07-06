@@ -9,13 +9,8 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { DEFAULT_PRIMARY_BUTTUN_COLORS, TYPOGRAPHY } from "@/designConstants";
-import { postSimulate } from "@/logics/api";
+import { postSimulate, translationMetaData } from "@/logics/api";
 import { resetLobbyInfoCache } from "@/logics/api.store";
-import {
-	EMPTY_SIMULATE_MESSAGE,
-	EXECUTE_BUTTON_LABEL,
-	EXECUTING_LABEL,
-} from "@/noTrans";
 import { useStore } from "@/useStore";
 import { SimulateResultCard } from "./SimulateResultCard";
 import { SimulationControls } from "./SimulationControls";
@@ -74,7 +69,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 								<LoadingCycle />
 							) : (
 								<span className={TYPOGRAPHY.LABEL}>
-									{EMPTY_SIMULATE_MESSAGE}
+									{translationMetaData.EMPTY_SIMULATE_MESSAGE}
 								</span>
 							)}
 						</div>
@@ -99,7 +94,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 						disabled={isLoading}
 					>
 						<Play className="w-4 h-4" />
-						{isLoading ? EXECUTING_LABEL : EXECUTE_BUTTON_LABEL}
+						{isLoading ? translationMetaData.EXECUTING_LABEL : translationMetaData.EXECUTE_BUTTON_LABEL}
 					</Button>
 					<Suspense fallback={<LobbyLoadingView />}>
 						<SimulationControls />

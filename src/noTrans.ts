@@ -7,20 +7,6 @@ export const EXR_OPTIONS_TITLE = "Extreme Roles";
 export const AU_SHORT_LABEL = "A";
 export const EXR_SHORT_LABEL = "E";
 
-export const SIMULATE_LABEL = "シミュレート";
-
-export const SIMULATE_RESULT_HEADER = "### シミュレート結果\n";
-export const RESULT_TITLE = "結果";
-export const COPY_BUTTON_LABEL = "コピー";
-export const PLAYER_NAME_HEADER = "プレイヤーネーム";
-export const ROLE_NAME_HEADER = "役職";
-export const DETAILS_SETTING_TITLE = "詳細設定";
-export const LOBBY_INFO_TITLE = "ロビー情報";
-export const CYCLE_LABEL = "Cycle";
-export const PLAYER_NUM_LABEL = "Player Num";
-export const EMPTY_SIMULATE_MESSAGE = "シュミレートボタンを押して下さい";
-export const EXECUTING_LABEL = "Executing...";
-export const EXECUTE_BUTTON_LABEL = "Execute";
 
 export const MAP_NAMES: Record<number, string> = {
 	0: "Skeld",
