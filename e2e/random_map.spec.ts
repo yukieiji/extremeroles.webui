@@ -1,16 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { getLeftSidebarButton, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 0;
-	});
-	await page.goto("/");
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 30000,
-	});
+	await prepare(page, 0);
 });
 
 test.describe("Random Map Display and Hiding", () => {
@@ -45,7 +37,7 @@ test.describe("Random Map Display and Hiding", () => {
 
 		// 3. Extreme Roles で「毎回マップがランダムに変わるか」をオンにする（サイドバー内のボタンに限定）
 		// Extreme Roles Menuに切り替え（サイドバー内のボタンに限定）
-		await getSidebarButton(page, "Extreme Roles").click();
+		await getLeftSidebarButton(page, "Extreme Roles").click();
 
 		// カテゴリ「ランダムマップに関する設定」を探して開く
 		const categoryHeader = page.getByText("ランダムマップに関する設定", {

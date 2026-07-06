@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { accessMainPage } from "./conftest";
 
 test.describe("Search Suggestion Hover", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-		await page.waitForSelector('[data-testid="main-content-section"]');
+		await accessMainPage(page);
 	});
 
 	test("keyboard selection should have background color", async ({ page }) => {
@@ -26,18 +26,7 @@ test.describe("Search Suggestion Hover", () => {
 		}).toPass();
 	});
 
-	test("mouse hover should change background color", async ({
-		page,
-		browserName,
-	}) => {
-		// Skip for firefox in CI because it's consistently flaky with hover/bg-color detection in headless mode
-		if (browserName === "firefox") {
-			test.skip(
-				!!process.env.CI,
-				"Firefox hover background detection is flaky in CI headless mode",
-			);
-		}
-
+	test("mouse hover should change background color", async ({ page }) => {
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 		await searchInput.fill("マップ");
 

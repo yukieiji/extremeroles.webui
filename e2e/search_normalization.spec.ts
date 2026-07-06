@@ -1,12 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { accessMainPage, getLeftSidebarButton } from "./conftest";
 
 test.describe("Search Normalization", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
+		await accessMainPage(page);
 	});
 
 	test("オプション検索でひらがな・カタカナ、全角・半角を区別せずに検索できること", async ({
@@ -41,7 +38,7 @@ test.describe("Search Normalization", () => {
 		page,
 	}) => {
 		// ロールフィルタータブへ移動
-		await getSidebarButton(page, "役職フィルター").click();
+		await getLeftSidebarButton(page, "役職フィルター").click();
 
 		// 新規作成ボタン
 		await page.getByRole("button", { name: "フィルターを追加" }).click();

@@ -1,12 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	await page.goto("/");
-	// wait for main content instead of just "Loading data..." absence
-	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
-		timeout: 15000,
-	});
+	await prepare(page, 0);
 });
 
 test("CSV import flow shows confirmation and triggers sync", async ({

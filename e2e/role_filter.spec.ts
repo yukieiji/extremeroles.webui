@@ -1,18 +1,16 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton, getSideber } from "./conftest";
+import {
+	accessMainPage,
+	getLeftSidebarButton,
+	getLeftSideber,
+} from "./conftest";
 
 test.describe("Role Filter Tab", () => {
 	test.beforeEach(async ({ page }) => {
-		// モックを使用する設定でページを開く
-		await page.goto("/");
-
-		// ローディング画面が消えるのを待つ
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
+		await accessMainPage(page);
 
 		// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
-		await expect(getSideber(page)).toBeVisible({
+		await expect(getLeftSideber(page)).toBeVisible({
 			timeout: 30000,
 		});
 	});
@@ -22,7 +20,7 @@ test.describe("Role Filter Tab", () => {
 	}) => {
 		// Role Filter タブをクリック (ショートカット 'R')
 		// サイドバーが開いている場合(button)と閉じている場合(titleのみ)の両方に対応
-		await getSidebarButton(page, "役職フィルター").click();
+		await getLeftSidebarButton(page, "役職フィルター").click();
 
 		// Role Filter のタイトルが表示されていることを確認
 		await expect(

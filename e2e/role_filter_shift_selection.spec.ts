@@ -1,13 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { accessMainPage, getLeftSidebarButton } from "./conftest";
 
 test.describe("Role Filter Shift Selection", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-		// ローディング画面が消えるのを待つ
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
+		await accessMainPage(page);
+
 		// サイドバーが操作可能な状態になるのを待つ（webkit対策）
 		await expect(page.locator('[data-slot="sidebar"]')).toBeVisible({
 			timeout: 30000,
@@ -16,7 +13,7 @@ test.describe("Role Filter Shift Selection", () => {
 
 	test("should select multiple roles using shift-click", async ({ page }) => {
 		// Switch to Role Filter tab
-		await getSidebarButton(page, "役職フィルター").click();
+		await getLeftSidebarButton(page, "役職フィルター").click();
 
 		// Open the role selection dialog
 		await page.getByRole("button", { name: "フィルターを追加" }).click();

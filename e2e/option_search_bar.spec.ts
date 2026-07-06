@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { getLeftSidebarButton } from "./conftest";
 
 test.describe("Option Search Bar", () => {
 	test.beforeEach(async ({ page }) => {
@@ -19,24 +19,24 @@ test.describe("Option Search Bar", () => {
 	});
 
 	test("should be visible in Among Us tab", async ({ page }) => {
-		await getSidebarButton(page, "Among Us").click();
+		await getLeftSidebarButton(page, "Among Us").click();
 		await expect(page.getByPlaceholder("オプションを検索...")).toBeVisible();
 	});
 
 	test("should be visible in Extreme Roles tab", async ({ page }) => {
-		await getSidebarButton(page, "Extreme Roles").click();
+		await getLeftSidebarButton(page, "Extreme Roles").click();
 		await expect(page.getByPlaceholder("オプションを検索...")).toBeVisible();
 	});
 
 	test("should not be visible in Role Filter tab", async ({ page }) => {
-		await getSidebarButton(page, "役職フィルター").click();
+		await getLeftSidebarButton(page, "役職フィルター").click();
 		await expect(
 			page.getByPlaceholder("オプションを検索..."),
 		).not.toBeVisible();
 	});
 
 	test("should open popover on focus and update query", async ({ page }) => {
-		await getSidebarButton(page, "Among Us").click();
+		await getLeftSidebarButton(page, "Among Us").click();
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 		await searchInput.focus();
 
@@ -56,7 +56,7 @@ test.describe("Option Search Bar", () => {
 	test("should maintain popover and focus during and after continuous typing", async ({
 		page,
 	}) => {
-		await getSidebarButton(page, "Among Us").click();
+		await getLeftSidebarButton(page, "Among Us").click();
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 		await searchInput.focus();
 
@@ -81,7 +81,7 @@ test.describe("Option Search Bar", () => {
 	test("should keep focus for several seconds after focus in Among Us", async ({
 		page,
 	}) => {
-		await getSidebarButton(page, "Among Us").click();
+		await getLeftSidebarButton(page, "Among Us").click();
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 		await searchInput.focus();
 
@@ -97,7 +97,7 @@ test.describe("Option Search Bar", () => {
 	test("should keep focus for several seconds after focus in Extreme Roles", async ({
 		page,
 	}) => {
-		await getSidebarButton(page, "Extreme Roles").click();
+		await getLeftSidebarButton(page, "Extreme Roles").click();
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 		await searchInput.focus();
 
@@ -113,7 +113,7 @@ test.describe("Option Search Bar", () => {
 	test("should keep popover open when clicking input while open", async ({
 		page,
 	}) => {
-		await getSidebarButton(page, "Among Us").click();
+		await getLeftSidebarButton(page, "Among Us").click();
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 
 		await searchInput.focus();
@@ -129,7 +129,7 @@ test.describe("Option Search Bar", () => {
 	test("should reopen suggest when typing again after selecting an item", async ({
 		page,
 	}) => {
-		await getSidebarButton(page, "Among Us").click();
+		await getLeftSidebarButton(page, "Among Us").click();
 		const searchInput = page.getByPlaceholder("オプションを検索...");
 
 		// 1. 検索ワードを入力

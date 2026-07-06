@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { resetMock } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
+	await resetMock(page);
 });
 
 test("初期ロード時にフェッチが失敗した場合、エラー画面が表示されること", async ({

@@ -1,19 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { getDialog, getSidebarButton } from "./conftest";
+import { getDialog, getLeftSidebarButton, prepare } from "./conftest";
 
 test.describe("Role Filter Management", () => {
 	test.setTimeout(60000);
 
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-
-		// Wait for loading to finish
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
-
+		await prepare(page, 0);
 		// Open Role Filter tab
-		await getSidebarButton(page, "役職フィルター").click();
+		await getLeftSidebarButton(page, "役職フィルター").click();
 
 		// Verify we are in Role Filter view
 		await expect(

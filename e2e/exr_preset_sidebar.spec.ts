@@ -1,21 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton, getSideber } from "./conftest";
+import { getLeftSidebarButton, getLeftSideber, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	// すべてのテストで API の遅延を設定可能にする
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 100;
-	});
-
-	await page.goto("/");
-
-	// ローディング画面が消えるのを待つ
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 30000,
-	});
+	await prepare(page, 100);
 });
 
 test("ExR preset display in right sidebar and navigation", async ({ page }) => {
@@ -53,7 +40,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 	await expect(rightPanel).toBeVisible();
 
 	// ExR タブが選択されていることを確認
-	const exrTabButton = getSidebarButton(page, "Extreme Roles");
+	const exrTabButton = getLeftSidebarButton(page, "Extreme Roles");
 	await expect(exrTabButton).toHaveAttribute("data-active", "");
 
 	// プリセットセレクターがハイライトされていることを確認
@@ -68,7 +55,7 @@ test("ExR preset display in right sidebar and navigation", async ({ page }) => {
 
 test("Updating preset name reflects in right sidebar", async ({ page }) => {
 	// 1. ExR タブに切り替え
-	const sidebar = getSideber(page);
+	const sidebar = getLeftSideber(page);
 	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
 
 	// 2. プリセット名を変更

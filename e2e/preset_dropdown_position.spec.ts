@@ -1,11 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { getLeftSidebarButton, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	await page.goto("/");
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 45000,
-	});
+	await prepare(page, 0);
 });
 
 test("Preset dropdown should not overlap trigger when wrapped", async ({
@@ -14,9 +11,7 @@ test("Preset dropdown should not overlap trigger when wrapped", async ({
 	// Set a narrow viewport to force wrapping
 	await page.setViewportSize({ width: 800, height: 600 });
 
-	const sidebar = page.locator('[data-slot="sidebar"]');
-	const exrButton = sidebar.getByRole("button", { name: "Extreme Roles" });
-	await exrButton.click();
+	await getLeftSidebarButton(page, "Extreme Roles").click();
 
 	// Wait for Preset Selector
 	const presetInput = page.getByPlaceholder("プリセット名を入力...");

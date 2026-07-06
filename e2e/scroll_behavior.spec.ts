@@ -1,10 +1,11 @@
 import { expect, test } from "@playwright/test";
+import { accessMainPage } from "./conftest";
 
 test.describe("Scroll Behavior", () => {
 	test("category list should scroll independently and body should not scroll", async ({
 		page,
 	}) => {
-		await page.goto("/");
+		await accessMainPage(page);
 
 		// Wait for category list to be visible - using a more robust way if data-testid is tricky
 		// It should be inside section[data-testid='main-content-section']

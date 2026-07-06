@@ -1,11 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { prepare } from "./conftest";
 
 test.describe("ExR Navigation from Summary", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
+		await prepare(page, 0);
 
 		// Open right sidebar
 		const openButton = page.getByTestId("right-panel-toggle");

@@ -1,27 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { getSideber } from "./conftest";
+import { getLeftSidebarButton, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 100;
-	});
-
-	await page.goto("/");
-
-	// Wait for initial load
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 30000,
-	});
+	await prepare(page, 100);
 });
 
 test("ExR toggle switch should be visible and functional", async ({ page }) => {
-	const sidebar = getSideber(page);
-
 	// Extreme Roles に切り替え
-	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
+	await getLeftSidebarButton(page, "Extreme Roles").click();
 
 	// 'グローバル設定' タブをクリック (デフォルトで選択されているはずだが念のため)
 	// getByTestId('main-content-section') を使用して、右サイドパネルのボタンとの競合を避ける

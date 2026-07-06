@@ -1,9 +1,9 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
-import { accessMainPage, RIGHT_SIDEBAR_TEST_ID, reload } from "./conftest";
+import { accessMainPage, getRightSidebar, reload } from "./conftest";
 
 async function getRightSidebarWidth(p: Page) {
-	const box = await p.locator(RIGHT_SIDEBAR_TEST_ID).boundingBox();
+	const box = await getRightSidebar(p).boundingBox();
 	return box?.width ?? 0;
 }
 
@@ -20,7 +20,7 @@ test("right sidebar state is persisted in localStorage", async ({
 	browser,
 }) => {
 	// Wait for panel to be attached to the DOM
-	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	const rightPanel = getRightSidebar(page);
 	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
 
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
@@ -41,9 +41,7 @@ test("right sidebar state is persisted in localStorage", async ({
 
 	// 3. Reload and check if it's still open
 	const { newPage, newContext } = await reload(page, browser);
-	const reloadedRightPanel = newPage.locator(
-		'[data-testid="right-side-panel"]',
-	);
+	const reloadedRightPanel = getRightSidebar(newPage);
 	await reloadedRightPanel.waitFor({ state: "attached", timeout: 15000 });
 
 	const reloadedWidth = await getRightSidebarWidth(newPage);
@@ -63,9 +61,7 @@ test("right sidebar state is persisted in localStorage", async ({
 		newPage,
 		browser,
 	);
-	const reloadedRightPanel2 = newPage2.locator(
-		'[data-testid="right-side-panel"]',
-	);
+	const reloadedRightPanel2 = getRightSidebar(newPage2);
 	await reloadedRightPanel2.waitFor({ state: "attached", timeout: 15000 });
 
 	const finalWidth = await getRightSidebarWidth(newPage2);

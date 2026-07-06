@@ -1,12 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { prepare } from "./conftest";
 
 test.describe("Au Role Viewer in Right Panel", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-		// ローディング画面が消えるのを待つ
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
+		await prepare(page, 0);
 	});
 
 	test("displays active roles and navigates on double-click", async ({

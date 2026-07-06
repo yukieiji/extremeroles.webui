@@ -1,28 +1,15 @@
 import { expect, test } from "@playwright/test";
+import { getLeftSidebarButton, getLeftSideber, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
+	await prepare(page, 100);
 	// タイムアウトを延長
 	test.setTimeout(60000);
-
-	// すべてのテストで API の遅延を設定可能にする
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 100;
-	});
-
-	await page.goto("/");
-
-	// ローディング画面が消えるのを待つ
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 45000,
-	});
 });
 
 test("Preset naming and persistence behavior", async ({ page }) => {
-	const sidebar = page.locator('[data-slot="sidebar"]');
-	const exrButton = sidebar.getByRole("button", { name: "Extreme Roles" });
+	const sidebar = getLeftSideber(page);
+	const exrButton = getLeftSidebarButton(page, "Extreme Roles");
 	await exrButton.click();
 
 	// ヘッダーのプリセットセレクターを確認

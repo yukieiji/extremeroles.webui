@@ -1,25 +1,15 @@
 import { expect, test } from "@playwright/test";
+import { getLeftSidebarButton, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	// タイムアウトを延長
+	await prepare(page, 0);
 	test.setTimeout(60000);
-
-	await page.goto("/");
-
-	// ローディング画面が消えるのを待つ
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 45000,
-	});
 });
 
 test("PresetOption label is displayed above the preset selector", async ({
 	page,
 }) => {
-	const sidebar = page.locator('[data-slot="sidebar"]');
-	const exrButton = sidebar.getByRole("button", { name: "Extreme Roles" });
-	await exrButton.click();
+	await getLeftSidebarButton(page, "Extreme Roles").click();
 
 	// プリセットオプションラベルが表示されていることを確認
 	const label = page.getByText("PresetOption");

@@ -1,14 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { prepare } from "./conftest";
 
 test.describe("Right Panel Summary Roles", () => {
 	test.beforeEach(async ({ page }) => {
-		// モックデータを使用してページを開く
-		await page.goto("/");
-
-		// ローディング待機
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
+		await prepare(page, 0);
 
 		// サイドパネルが開いていない場合は開く
 		const openButton = page.getByTestId("right-panel-toggle");

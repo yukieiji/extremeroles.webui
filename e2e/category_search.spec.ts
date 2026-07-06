@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { prepare } from "./conftest";
 
 test.describe("Category Search", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-		await page.waitForSelector('[data-testid="main-content-section"]');
+		await prepare(page, 0);
 	});
 
 	test("should navigate to and highlight category when selected from search (Au)", async ({

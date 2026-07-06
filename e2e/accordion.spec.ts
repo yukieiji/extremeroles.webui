@@ -1,31 +1,16 @@
 import { expect, test } from "@playwright/test";
-import { getSideber } from "./conftest";
+import { getLeftSidebarButton, getLeftSideber, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	// すべてのテストで API の遅延を設定可能にする
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 100;
-	});
-
-	await page.goto("/");
-
-	// ローディング画面が消えるのを待つ
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 30000,
-	});
-
+	await prepare(page, 100);
 	// サイドバーが表示されるまで待機（アプリケーションがインタラクティブになったことの確認）
-	await expect(getSideber(page)).toBeVisible({
+	await expect(getLeftSideber(page)).toBeVisible({
 		timeout: 30000,
 	});
 });
 
 test("ExR Option Accordion behavior", async ({ page }) => {
-	const sidebar = getSideber(page);
-	await sidebar.getByRole("button", { name: "Extreme Roles" }).click();
+	await getLeftSidebarButton(page, "Extreme Roles").click();
 
 	// プリセットカテゴリは非表示になったため、別のカテゴリ「乱数に関する設定」を使用する
 	const categoryName = "乱数に関する設定";
@@ -75,15 +60,15 @@ test("ExR Option Accordion behavior", async ({ page }) => {
 
 	// サイドバーを切り替えて戻ってきても維持されることを確認
 	// TODO: レイアウト崩れの修正後、evaluate を通常の click() に戻す
-	await sidebar
-		.getByRole("button", { name: "Among Us" })
-		.evaluate((el: HTMLElement) => el.click());
+	await getLeftSidebarButton(page, "Among Us").evaluate((el: HTMLElement) =>
+		el.click(),
+	);
 	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible();
 
 	// TODO: レイアウト崩れの修正後、evaluate を通常の click() に戻す
-	await sidebar
-		.getByRole("button", { name: "Extreme Roles" })
-		.evaluate((el: HTMLElement) => el.click());
+	await getLeftSidebarButton(page, "Extreme Roles").evaluate(
+		(el: HTMLElement) => el.click(),
+	);
 	await expect(optionName).toBeVisible();
 
 	// アコーディオンを閉じる

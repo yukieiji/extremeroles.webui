@@ -1,16 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { getLeftSidebarButton, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 0;
-	});
-	await page.goto("/");
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 30000,
-	});
+	await prepare(page, 0);
 });
 
 test.describe("Tabs Indicator Styling", () => {
@@ -18,7 +10,7 @@ test.describe("Tabs Indicator Styling", () => {
 		page,
 	}) => {
 		// Switch to Among Us（サイドバー内のボタンに限定）
-		await getSidebarButton(page, "Among Us").click();
+		await getLeftSidebarButton(page, "Among Us").click();
 
 		// Select Tab 1 (Crewmate)
 		const tab1 = page.getByRole("tab", { name: "クルー", exact: true });

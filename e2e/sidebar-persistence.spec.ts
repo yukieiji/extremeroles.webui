@@ -1,5 +1,6 @@
-import type { Browser, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+import { reload } from "./conftest";
 
 async function getSidebarState(p: Page) {
 	return await p.getAttribute('[data-slot="sidebar"]', "data-state");
@@ -7,18 +8,6 @@ async function getSidebarState(p: Page) {
 
 async function getLocalStorageValue(p: Page) {
 	return await p.evaluate(() => localStorage.getItem("sidebar_state"));
-}
-
-async function reload(page: Page, browser: Browser) {
-	const context = page.context();
-	const storage = await context.storageState();
-
-	const newContext = await browser.newContext({ storageState: storage });
-	const newPage = await newContext.newPage();
-	await newPage.goto(page.url(), { waitUntil: "domcontentloaded" });
-	await newPage.waitForSelector('[data-slot="sidebar"]');
-
-	return { newPage, newContext };
 }
 
 async function check(page: Page, isOpen: boolean | null) {
@@ -63,6 +52,7 @@ test("sidebar state is persisted in localStorage", async ({
 
 	// 3. Reload and check if it's still collapsed
 	// new context with same storage
+
 	const { newPage, newContext } = await reload(page, browser);
 
 	await check(newPage, false);

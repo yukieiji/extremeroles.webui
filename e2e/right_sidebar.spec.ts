@@ -1,11 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { getRightSidebar, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	await page.goto("/");
-	// Wait for loading screen to disappear
-	await expect(page.locator("body")).not.toContainText("Loading data...", {
-		timeout: 60000,
-	});
+	await prepare(page, 0);
+
 	// Ensure main content is loaded
 	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
 		timeout: 30000,
@@ -16,7 +14,8 @@ test("right sidebar can be opened and accordions can be toggled", async ({
 	page,
 }) => {
 	// Wait for panel to be attached to the DOM
-	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	const rightPanel = getRightSidebar(page);
+
 	await rightPanel.waitFor({ state: "attached", timeout: 15000 });
 
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');

@@ -1,22 +1,18 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { accessMainPage, getLeftSidebarButton } from "./conftest";
 
 test.describe("Role Filter Responsive Design", () => {
 	test.beforeEach(async ({ page }) => {
 		// 初期ビューポート設定
 		await page.setViewportSize({ width: 1280, height: 720 });
-		await page.goto("/");
-		// ローディングの完了を待機
-		await expect(page.locator("body")).not.toContainText("Loading data...", {
-			timeout: 60000,
-		});
+		await accessMainPage(page);
 	});
 
 	test("RoleFilter grid layout should adapt to container size when sidebar is resized", async ({
 		page,
 	}) => {
 		// Role Filter タブに切り替え
-		await getSidebarButton(page, "役職フィルター").click();
+		await getLeftSidebarButton(page, "役職フィルター").click();
 
 		const list = page.getByTestId("role-filter-list");
 		await expect(list).toBeVisible();

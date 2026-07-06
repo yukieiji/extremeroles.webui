@@ -1,11 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	await page.goto("/");
-	// Wait for loading screen to disappear
-	await expect(page.locator("body")).not.toContainText("Loading data...", {
-		timeout: 60000,
-	});
+	await prepare(page, 0);
 	// Ensure main content is loaded
 	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
 		timeout: 30000,

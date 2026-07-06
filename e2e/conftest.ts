@@ -4,12 +4,27 @@ import { expect } from "@playwright/test";
 export const LEFT_SIDEBAR = '[data-slot="sidebar"]';
 export const RIGHT_SIDEBAR_TEST_ID = '[data-testid="right-side-panel"]';
 
-export function getSideber(page: Page) {
+export async function resetMock(page: Page) {
+	await page.request.post("/mock/reset", { maxRetries: 5 });
+}
+
+export async function setApidelay(page: Page, delay: number) {
+	await page.addInitScript(() => {
+		// @ts-expect-error - window has no __API_DELAY__ property
+		window.__API_DELAY__ = delay;
+	});
+}
+
+export function getLeftSideber(page: Page) {
 	return page.locator(LEFT_SIDEBAR);
 }
 
-export function getSidebarButton(page: Page, name: string) {
-	return getSideber(page).getByRole("button", { name: name });
+export function getRightSidebar(page: Page) {
+	return page.locator(RIGHT_SIDEBAR_TEST_ID);
+}
+
+export function getLeftSidebarButton(page: Page, name: string) {
+	return getLeftSideber(page).getByRole("button", { name: name });
 }
 
 export function getDialog(page: Page) {
@@ -22,6 +37,12 @@ export async function accessMainPage(page: Page) {
 	await expect(page.locator("body")).not.toContainText("Loading data...", {
 		timeout: 60000,
 	});
+}
+
+export async function prepare(page: Page, delay: number) {
+	await resetMock(page);
+	await setApidelay(page, delay);
+	await accessMainPage(page);
 }
 
 export async function reload(page: Page, browser: Browser) {

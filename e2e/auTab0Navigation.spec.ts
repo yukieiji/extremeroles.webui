@@ -1,13 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { getLeftSidebarButton, prepare } from "./conftest";
 
 test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/");
-		// ローディング画面が消えるのを待つ
-		await expect(page.getByText("Loading data...")).not.toBeVisible({
-			timeout: 30000,
-		});
+		await prepare(page, 0);
 	});
 
 	test("navigates and highlights when an option is double-clicked in the right panel", async ({
@@ -49,7 +45,7 @@ test.describe("AmongUs Tab 0 Navigation from Right Panel", () => {
 		// 4. メインエディタで一旦 Extreme Roles に切り替えておく
 		// パネルを一旦閉じる
 		await rightPanelToggle.click();
-		await getSidebarButton(page, "Extreme Roles").click();
+		await getLeftSidebarButton(page, "Extreme Roles").click();
 		await expect(
 			page.getByRole("heading", { name: "Extreme Roles" }),
 		).toBeVisible();

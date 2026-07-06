@@ -1,15 +1,14 @@
 import { expect, test } from "@playwright/test";
+import { accessMainPage, getRightSidebar } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// Ensure localStorage is clean for tests before page load
 	await page.addInitScript(() => {
 		window.localStorage.clear();
 	});
-	await page.goto("/");
 
-	await expect(page.locator("body")).not.toContainText("Loading data...", {
-		timeout: 60000,
-	});
+	await accessMainPage(page);
+
 	// Ensure main content is loaded
 	await expect(page.getByRole("heading", { name: "Among Us" })).toBeVisible({
 		timeout: 45000,
@@ -17,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("isResizing state is correctly managed", async ({ page }) => {
-	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	const rightPanel = getRightSidebar(page);
 	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 
@@ -52,7 +51,7 @@ test("isResizing state is correctly managed", async ({ page }) => {
 });
 
 test("right sidebar can be resized", async ({ page }) => {
-	const rightPanel = page.locator('[data-testid="right-side-panel"]');
+	const rightPanel = getRightSidebar(page);
 	await rightPanel.waitFor({ state: "attached", timeout: 20000 });
 	const toggleButton = page.locator('[data-testid="right-panel-toggle"]');
 

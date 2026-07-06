@@ -1,22 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton } from "./conftest";
+import { getLeftSidebarButton, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	// API遅延を最小限にしてテストを高速化
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 0;
-	});
-	await page.goto("/");
-	// ローディング画面が消えるのを待つ
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 30000,
-	});
+	await prepare(page, 0);
 
 	// Extreme Roles Menuに切り替え（サイドバー内のボタンに限定）
-	await getSidebarButton(page, "Extreme Roles").click();
+	await getLeftSidebarButton(page, "Extreme Roles").click();
 	await expect(page.getByTestId("category-list")).toBeVisible();
 });
 

@@ -1,11 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
-	await page.request.post("/mock/reset", { maxRetries: 5 });
-	await page.goto("/");
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
-		timeout: 30000,
-	});
+	await prepare(page, 0);
 });
 
 test("can open simulation dialog and run simulation", async ({ page }) => {

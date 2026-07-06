@@ -1,21 +1,24 @@
 import { expect, test } from "@playwright/test";
-import { getSidebarButton, getSideber } from "./conftest";
+import {
+	getLeftSidebarButton,
+	getLeftSideber,
+	resetMock,
+	setApidelay,
+} from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	// モックサーバーの状態をリセット
-	await page.request.post("/mock/reset", { maxRetries: 5 });
+	await resetMock(page);
+
 	// すべてのテストで API の遅延を設定可能にする
-	await page.addInitScript(() => {
-		// @ts-expect-error - window has no __API_DELAY__ property
-		window.__API_DELAY__ = 1000;
-	});
+	await setApidelay(page, 1000);
 });
 
 test("初期ロード時にローディング画面が表示されること", async ({ page }) => {
 	await page.goto("/");
 	// index.html に仕込んだ Loading data... またはサイドバーが表示されるまで待機
 	const loadingText = page.getByText("Loading data...");
-	const sidebar = getSideber(page);
+	const sidebar = getLeftSideber(page);
 	await expect(loadingText.or(sidebar)).toBeVisible({ timeout: 30000 });
 });
 
@@ -23,11 +26,11 @@ test("サイドバー切り替え時にメインコンテンツが表示され�
 	page,
 }) => {
 	await page.goto("/");
-	const sidebar = getSideber(page);
+	const sidebar = getLeftSideber(page);
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 
 	// Extreme Roles に切り替え
-	await getSidebarButton(page, "Extreme Roles").click();
+	await getLeftSidebarButton(page, "Extreme Roles").click();
 
 	// 切り替え後のコンテンツが表示されることを確認
 	await expect(
@@ -39,11 +42,11 @@ test("サイドバー切り替え時にメインコンテンツが表示され�
 
 test("ExRタブ切り替え時にカテゴリリストが表示されること", async ({ page }) => {
 	await page.goto("/");
-	await expect(getSideber(page)).toBeVisible({
+	await expect(getLeftSideber(page)).toBeVisible({
 		timeout: 30000,
 	});
 
-	await getSidebarButton(page, "Extreme Roles").click();
+	await getLeftSidebarButton(page, "Extreme Roles").click();
 	await expect(
 		page.getByRole("heading", { name: "Extreme Roles" }),
 	).toBeVisible({

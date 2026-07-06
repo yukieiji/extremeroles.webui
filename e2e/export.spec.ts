@@ -1,7 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { resetMock } from "./conftest";
 
 test.beforeEach(async ({ page, browserName }) => {
-	await page.request.post("/mock/reset", { maxRetries: 5 });
+	await resetMock(page);
 	if (browserName === "chromium") {
 		// showSaveFilePicker を無効化してフォールバックをテストする
 		// (showSaveFilePicker は Playwright の download イベントを発生させないため)
