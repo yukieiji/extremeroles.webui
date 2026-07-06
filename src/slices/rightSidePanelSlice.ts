@@ -1,4 +1,10 @@
 import type { StateCreator } from "zustand";
+import {
+	loadRightPanelWidth,
+	loadRightSidebarState,
+	saveRightPanelWidth,
+	saveRightSidebarState,
+} from "../logics/storageUtils";
 import type { ExRTabId, UniqueOptionId } from "../type";
 
 /**
@@ -37,17 +43,20 @@ export interface RightSidePanelSlice {
 export const createRightSidePanelSlice: StateCreator<RightSidePanelSlice> = (
 	set,
 ) => {
-	const savedWidth = localStorage.getItem("rightPanelWidth");
-	const initialWidth = savedWidth ? Number.parseInt(savedWidth, 10) : 320;
+	const initialWidth = loadRightPanelWidth(320);
+	const initialOpen = loadRightSidebarState(false);
 
 	return {
-		isRightPanelOpen: false, // デフォルトクローズ
+		isRightPanelOpen: initialOpen,
 		toggleRightPanel: () => {
 			set((state) => {
-				return { isRightPanelOpen: !state.isRightPanelOpen };
+				const nextOpen = !state.isRightPanelOpen;
+				saveRightSidebarState(nextOpen);
+				return { isRightPanelOpen: nextOpen };
 			});
 		},
 		setRightPanelOpen: (isOpen: boolean) => {
+			saveRightSidebarState(isOpen);
 			set({ isRightPanelOpen: isOpen });
 		},
 		isAuSettingsOpen: true,
@@ -83,6 +92,7 @@ export const createRightSidePanelSlice: StateCreator<RightSidePanelSlice> = (
 		},
 		rightPanelWidth: initialWidth,
 		setRightPanelWidth: (width) => {
+			saveRightPanelWidth(width);
 			set({ rightPanelWidth: width });
 		},
 		isResizing: false,

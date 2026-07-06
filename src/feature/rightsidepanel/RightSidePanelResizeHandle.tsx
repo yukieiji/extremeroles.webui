@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-
+import { saveRightPanelWidth } from "@/logics/storageUtils";
 import { useStore } from "@/useStore";
 
 export const MIN_RIGHT_PANEL_WIDTH = 320;
@@ -56,7 +56,7 @@ export function RightSidePanelResizeHandle() {
 	const handleMouseUp = useCallback(() => {
 		if (isResizing) {
 			setIsResizing(false);
-			localStorage.setItem("rightPanelWidth", rightPanelWidth.toString());
+			saveRightPanelWidth(rightPanelWidth);
 		}
 	}, [isResizing, rightPanelWidth, setIsResizing]);
 
