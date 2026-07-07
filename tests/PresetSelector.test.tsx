@@ -83,6 +83,7 @@ vi.mock("@/components/ui/select", () => ({
 	SelectValue: ({ children }: { children?: ReactNode }) => (
 		<span>{children}</span>
 	),
+	SelectGroup: ({ children }: { children?: ReactNode }) => <>{children}</>,
 }));
 
 describe("PresetSelector", () => {
