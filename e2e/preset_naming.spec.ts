@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { getLeftSidebarButton, getLeftSideber, prepare } from "./conftest";
+import {
+	getLeftSidebarButton,
+	getLeftSideber,
+	prepare,
+	reload,
+} from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await prepare(page, 100);
@@ -7,8 +12,7 @@ test.beforeEach(async ({ page }) => {
 	test.setTimeout(60000);
 });
 
-test("Preset naming and persistence behavior", async ({ page }) => {
-	const sidebar = getLeftSideber(page);
+test("Preset naming and persistence behavior", async ({ page, browser }) => {
 	const exrButton = getLeftSidebarButton(page, "Extreme Roles");
 	await exrButton.click();
 
@@ -51,37 +55,50 @@ test("Preset naming and persistence behavior", async ({ page }) => {
 	await presetInput.blur(); // onBlur での保存をテスト
 
 	// ページをリロードして LocalStorage から復元されるか確認
-	await page.goto("/");
+	const { newPage, newContext } = await reload(page, browser);
 
 	// ローディング画面が消えるのを待つ
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
+	await expect(newPage.getByText("Loading data...")).not.toBeVisible({
 		timeout: 45000,
 	});
 
+	const newSidebar = getLeftSideber(newPage);
+	const newExrButton = getLeftSidebarButton(newPage, "Extreme Roles");
+
 	// サイドバーの再表示を待つ
-	await expect(sidebar).toBeVisible({ timeout: 30000 });
-	await expect(exrButton).toBeVisible({ timeout: 30000 });
-	await exrButton.click();
+	await expect(newSidebar).toBeVisible({ timeout: 30000 });
+	await expect(newExrButton).toBeVisible({ timeout: 30000 });
+	await newExrButton.click();
+
+	const newPresetInput = newPage.getByPlaceholder("プリセット名を入力...");
 
 	// 初期状態では index 0 (プリセット 1) が選択されるはずなので、名前が Hardcore Rules であることを確認
-	await expect(presetInput).toHaveValue("Hardcore Rules", { timeout: 15000 });
+	await expect(newPresetInput).toHaveValue("Hardcore Rules", {
+		timeout: 15000,
+	});
+
+	const newSelectButton = newPage
+		.getByRole("combobox")
+		.filter({ has: page.locator(".lucide-chevron-down") });
 
 	// ドロップダウンを開いて index 1 の名前が保持されていることを確認
-	await expect(selectButton).toBeVisible();
-	await selectButton.click({ force: true });
-	await page.waitForSelector('[data-slot="select-content"]');
-	const casualFunButton = page.getByRole("option", { name: "Casual Fun" });
+	await expect(newSelectButton).toBeVisible();
+	await newSelectButton.click({ force: true });
+	await newPage.waitForSelector('[data-slot="select-content"]');
+	const casualFunButton = newPage.getByRole("option", { name: "Casual Fun" });
 	await expect(casualFunButton).toBeVisible();
 
 	// index 1 (Casual Fun) に切り替える
 	await casualFunButton.click();
 	// 確認ダイアログで OK
-	await page.getByRole("button", { name: "OK" }).click();
+	await newPage.getByRole("button", { name: "OK" }).click();
 
 	// ローディング待ち
-	await expect(page.getByText("Synchronizing...")).not.toBeVisible({
+	await expect(newPage.getByText("Synchronizing...")).not.toBeVisible({
 		timeout: 10000,
 	});
 
-	await expect(presetInput).toHaveValue("Casual Fun");
+	await expect(newPresetInput).toHaveValue("Casual Fun");
+
+	await newContext.close();
 });

@@ -1,12 +1,20 @@
 import { expect, test } from "@playwright/test";
-import { getLeftSidebarButton, getLeftSideber, prepare } from "./conftest";
+import {
+	getLeftSidebarButton,
+	getLeftSideber,
+	prepare,
+	reload,
+} from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await prepare(page, 100);
 	test.setTimeout(60000);
 });
 
-test("Preset name reversion to default when cleared", async ({ page }) => {
+test("Preset name reversion to default when cleared", async ({
+	page,
+	browser,
+}) => {
 	const sidebar = getLeftSideber(page);
 	await expect(sidebar).toBeVisible({ timeout: 30000 });
 
@@ -40,11 +48,17 @@ test("Preset name reversion to default when cleared", async ({ page }) => {
 	await expect(presetInput).toHaveValue(curValue);
 
 	// 4. ページリロード後も初期名（カスタム名なし）が維持されているか確認
-	await page.goto("/");
-	await expect(page.getByText("Loading data...")).not.toBeVisible({
+	const { newPage, newContext } = await reload(page, browser);
+
+	await expect(newPage.getByText("Loading data...")).not.toBeVisible({
 		timeout: 45000,
 	});
-	await expect(sidebar).toBeVisible({ timeout: 30000 });
-	await exrButton.click();
-	await expect(presetInput).toHaveValue(curValue);
+	const newSidebar = getLeftSideber(newPage);
+	const newExrButton = getLeftSidebarButton(newPage, "Extreme Roles");
+	const newPresetInput = newPage.getByPlaceholder("プリセット名を入力...");
+	await expect(newSidebar).toBeVisible({ timeout: 30000 });
+	await newExrButton.click();
+	await expect(newPresetInput).toHaveValue(curValue);
+
+	await newContext.close();
 });
