@@ -185,10 +185,10 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"CURRENT_PLAYER_LABEL",
 		"LEFT_SIDEBAR_SETTING",
 		"RIGHT_SIDEBAR_SETTING",
-		"INITIAL_OPEN_STATE",
+		"INITIAL_SIDEBAR_STATE",
 		"SAVE_STATE_TO_BROWSER",
-		"OPEN_LABEL",
-		"CLOSE_LABEL",
+		"SIDEBAR_OPEN_LABEL",
+		"SIDEBAR_CLOSE_LABEL",
 	];
 	const batchBody = batchKeys.map((key) => {
 		return { Key: key };

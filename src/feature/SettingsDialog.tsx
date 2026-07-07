@@ -1,3 +1,4 @@
+import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 import {
 	DialogContent,
@@ -24,9 +25,9 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 			<DialogHeader>
 				<DialogTitle>{title}</DialogTitle>
 			</DialogHeader>
-			<div className="grid gap-6 py-4">
-				<div className="grid gap-4">
-					<h3 className="text-xs font-bold">
+			<div className="grid gap-4 py-4">
+				<div className="grid gap-2">
+					<h3 className={TYPOGRAPHY.LABEL}>
 						{translationMetaData.LEFT_SIDEBAR_SETTING}
 					</h3>
 					<SidebarSettingsSection
@@ -37,8 +38,8 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 
 				<Separator />
 
-				<div className="grid gap-4">
-					<h3 className="text-xs font-bold">
+				<div className="grid gap-2">
+					<h3 className={TYPOGRAPHY.LABEL}>
 						{translationMetaData.RIGHT_SIDEBAR_SETTING}
 					</h3>
 					<SidebarSettingsSection

@@ -6,6 +6,7 @@ import { Label } from "../components/ui/label";
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
@@ -28,34 +29,7 @@ export function SidebarSettingsSection({
 	const saveStateId = useId();
 
 	return (
-		<div className="grid gap-4">
-			<div className="flex items-center justify-between">
-				<Label htmlFor={initialStateId} className={TYPOGRAPHY.SMALL}>
-					{translationMetaData.INITIAL_OPEN_STATE}
-				</Label>
-				<Select
-					disabled={setting.saveState}
-					value={setting.initialOpen ? "open" : "close"}
-					onValueChange={(value) =>
-						onUpdate({
-							...setting,
-							initialOpen: value === "open",
-						})
-					}
-				>
-					<SelectTrigger id={initialStateId} className="w-[120px]">
-						<SelectValue />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="open">
-							{translationMetaData.OPEN_LABEL}
-						</SelectItem>
-						<SelectItem value="close">
-							{translationMetaData.CLOSE_LABEL}
-						</SelectItem>
-					</SelectContent>
-				</Select>
-			</div>
+		<div className="grid gap-2">
 			<div className="flex items-center justify-between">
 				<Label htmlFor={saveStateId} className={TYPOGRAPHY.SMALL}>
 					{translationMetaData.SAVE_STATE_TO_BROWSER}
@@ -70,6 +44,40 @@ export function SidebarSettingsSection({
 						})
 					}
 				/>
+			</div>
+			<div className="flex items-center justify-between">
+				<Label htmlFor={initialStateId} className={TYPOGRAPHY.SMALL}>
+					{translationMetaData.INITIAL_SIDEBAR_STATE}
+				</Label>
+				<Select
+					id={initialStateId}
+					disabled={setting.saveState}
+					value={
+						setting.initialOpen
+							? translationMetaData.SIDEBAR_OPEN_LABEL
+							: translationMetaData.SIDEBAR_CLOSE_LABEL
+					}
+					onValueChange={(value) =>
+						onUpdate({
+							...setting,
+							initialOpen: value === "open",
+						})
+					}
+				>
+					<SelectTrigger>
+						<SelectValue />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectGroup>
+							<SelectItem value="open">
+								{translationMetaData.SIDEBAR_OPEN_LABEL}
+							</SelectItem>
+							<SelectItem value="close">
+								{translationMetaData.SIDEBAR_CLOSE_LABEL}
+							</SelectItem>
+						</SelectGroup>
+					</SelectContent>
+				</Select>
 			</div>
 		</div>
 	);
