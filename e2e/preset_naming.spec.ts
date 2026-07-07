@@ -32,7 +32,7 @@ test("Preset naming and persistence behavior", async ({ page, browser }) => {
 	await selectButton.click({ force: true });
 	await page.waitForSelector('[data-slot="select-content"]');
 
-	// プリセット 2 (index 1) に切り替える
+	// プリセット 10 (index 9) に切り替える
 	const preset2Button = page.getByRole("option", { name: "10", exact: true });
 	await expect(preset2Button).toBeVisible();
 	await preset2Button.click();
@@ -47,10 +47,10 @@ test("Preset naming and persistence behavior", async ({ page, browser }) => {
 		timeout: 15000,
 	});
 
-	// 入力欄が index 1 のデフォルト値 "2" になっていることを確認
+	// 入力欄が index 9 のデフォルト値 "10" になっていることを確認
 	await expect(presetInput).toHaveValue("10");
 
-	// プリセット 2 (index 1) に名前を付ける
+	// プリセット 10 (index 9) に名前を付ける
 	await presetInput.fill("Casual Fun");
 	await presetInput.blur(); // onBlur での保存をテスト
 
@@ -79,16 +79,16 @@ test("Preset naming and persistence behavior", async ({ page, browser }) => {
 
 	const newSelectButton = newPage
 		.getByRole("combobox")
-		.filter({ has: page.locator(".lucide-chevron-down") });
+		.filter({ has: newPage.locator(".lucide-chevron-down") });
 
-	// ドロップダウンを開いて index 1 の名前が保持されていることを確認
+	// ドロップダウンを開いて index 9 の名前が保持されていることを確認
 	await expect(newSelectButton).toBeVisible();
 	await newSelectButton.click({ force: true });
 	await newPage.waitForSelector('[data-slot="select-content"]');
 	const casualFunButton = newPage.getByRole("option", { name: "Casual Fun" });
 	await expect(casualFunButton).toBeVisible();
 
-	// index 1 (Casual Fun) に切り替える
+	// index 9 (Casual Fun) に切り替える
 	await casualFunButton.click();
 	// 確認ダイアログで OK
 	await newPage.getByRole("button", { name: "OK" }).click();
