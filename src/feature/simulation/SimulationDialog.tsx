@@ -22,6 +22,7 @@ interface SimulationDialogProps {
 export function SimulationDialog({ title }: SimulationDialogProps) {
 	const cycle = useStore((state) => state.simulationCycle);
 	const playerNum = useStore((state) => state.simulationPlayerNum);
+	const mockPlayerNames = useStore((state) => state.appSetting.mockPlayerNames);
 	const result = useStore((state) => state.simulationResult);
 	const setResult = useStore((state) => state.setSimulationResult);
 	const isLoading = useStore((state) => state.isSimulationLoading);
@@ -45,7 +46,7 @@ export function SimulationDialog({ title }: SimulationDialogProps) {
 				Option: {
 					PlayerNum: playerNum,
 				},
-				MockPlayerNames: null,
+				MockPlayerNames: mockPlayerNames.length > 0 ? mockPlayerNames : null,
 			});
 			setResult(res);
 		} catch (error) {

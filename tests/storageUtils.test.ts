@@ -48,6 +48,7 @@ describe("storageUtils", () => {
 			const setting = {
 				leftSidebar: { initialOpen: false, saveState: false },
 				rightSidebar: { initialOpen: true, saveState: false },
+				mockPlayerNames: ["Player1"],
 			};
 			saveAppSetting(setting);
 			expect(loadAppSetting()).toEqual(setting);
@@ -57,6 +58,7 @@ describe("storageUtils", () => {
 			const defaultSetting = {
 				leftSidebar: { initialOpen: true, saveState: true },
 				rightSidebar: { initialOpen: false, saveState: true },
+				mockPlayerNames: [],
 			};
 			expect(loadAppSetting()).toEqual(defaultSetting);
 		});
@@ -67,6 +69,7 @@ describe("storageUtils", () => {
 			saveAppSetting({
 				leftSidebar: { initialOpen: false, saveState: false },
 				rightSidebar: { initialOpen: false, saveState: true },
+				mockPlayerNames: [],
 			});
 			// ブラウザには 'true' が保存されていても、saveState が false なら初期値を使う
 			window.localStorage.setItem("sidebar_state", "true");
@@ -77,6 +80,7 @@ describe("storageUtils", () => {
 			saveAppSetting({
 				leftSidebar: { initialOpen: false, saveState: true },
 				rightSidebar: { initialOpen: false, saveState: true },
+				mockPlayerNames: [],
 			});
 			window.localStorage.setItem("sidebar_state", "true");
 			expect(loadSidebarState()).toBe(true);
@@ -86,6 +90,7 @@ describe("storageUtils", () => {
 			saveAppSetting({
 				leftSidebar: { initialOpen: true, saveState: false },
 				rightSidebar: { initialOpen: false, saveState: true },
+				mockPlayerNames: [],
 			});
 			saveSidebarState(false);
 			expect(window.localStorage.getItem("sidebar_state")).toBeNull();
@@ -95,6 +100,7 @@ describe("storageUtils", () => {
 			saveAppSetting({
 				leftSidebar: { initialOpen: true, saveState: true },
 				rightSidebar: { initialOpen: true, saveState: false },
+				mockPlayerNames: [],
 			});
 			window.localStorage.setItem("right_sidebar_state", "false");
 			expect(loadRightSidebarState()).toBe(true);
@@ -104,6 +110,7 @@ describe("storageUtils", () => {
 			saveAppSetting({
 				leftSidebar: { initialOpen: true, saveState: true },
 				rightSidebar: { initialOpen: true, saveState: true },
+				mockPlayerNames: [],
 			});
 			window.localStorage.setItem("right_sidebar_state", "true");
 			expect(loadRightSidebarState()).toBe(true);
@@ -113,6 +120,7 @@ describe("storageUtils", () => {
 			saveAppSetting({
 				leftSidebar: { initialOpen: true, saveState: true },
 				rightSidebar: { initialOpen: true, saveState: false },
+				mockPlayerNames: [],
 			});
 			saveRightSidebarState(true);
 			expect(window.localStorage.getItem("right_sidebar_state")).toBeNull();

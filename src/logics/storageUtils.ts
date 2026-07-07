@@ -25,6 +25,7 @@ export interface SidebarSetting {
 export interface AppSetting {
 	leftSidebar: SidebarSetting;
 	rightSidebar: SidebarSetting;
+	mockPlayerNames: string[];
 }
 
 /**
@@ -75,6 +76,7 @@ export function loadAppSetting(): AppSetting {
 	const defaultSetting: AppSetting = {
 		leftSidebar: { initialOpen: true, saveState: true },
 		rightSidebar: { initialOpen: false, saveState: true },
+		mockPlayerNames: [],
 	};
 	if (stored === null) {
 		return defaultSetting;
