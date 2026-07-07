@@ -1,4 +1,9 @@
 import type { StateCreator } from "zustand";
+import {
+	type AppSetting,
+	loadAppSetting,
+	saveAppSetting,
+} from "../logics/storageUtils";
 import type { BlockDialog } from "../type";
 
 export type SelectedTab = "Au" | "ExR";
@@ -20,10 +25,18 @@ export interface GlobalUiSlice {
 	setLastClickedId: (roleId: number | null) => void;
 	windowWidth: number;
 	setWindowWidth: (width: number) => void;
+	appSetting: AppSetting;
+	updateAppSetting: (setting: Partial<AppSetting>) => void;
 }
 
 export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 	return {
+		appSetting: loadAppSetting(),
+		updateAppSetting: (setting) => {
+			const nextSetting = { ...get().appSetting, ...setting };
+			saveAppSetting(nextSetting);
+			set({ appSetting: nextSetting });
+		},
 		windowWidth: typeof window !== "undefined" ? window.innerWidth : 1920,
 		setWindowWidth: (width) => set({ windowWidth: width }),
 		isPendingBlock: false,

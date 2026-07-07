@@ -26,8 +26,9 @@ test("設定ダイアログが開くこと", async ({ page }) => {
 	const title = dialog.getByText("設定", { exact: true });
 	await expect(title).toBeVisible();
 
-	// 準備中のテキストがあることを確認
-	await expect(page.getByText("設定項目は現在準備中です。")).toBeVisible();
+	// 設定項目が表示されていることを確認
+	await expect(page.getByText("左サイドバー設定")).toBeVisible();
+	await expect(page.getByText("右サイドバー設定")).toBeVisible();
 });
 
 test("サイドバーの開閉に合わせて設定ボタンの表示が切り替わること", async ({

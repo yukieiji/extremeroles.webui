@@ -44,7 +44,7 @@ export const createRightSidePanelSlice: StateCreator<RightSidePanelSlice> = (
 	set,
 ) => {
 	const initialWidth = loadRightPanelWidth(320);
-	const initialOpen = loadRightSidebarState(false);
+	const initialOpen = loadRightSidebarState();
 
 	return {
 		isRightPanelOpen: initialOpen,

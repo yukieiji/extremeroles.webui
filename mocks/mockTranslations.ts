@@ -35,7 +35,6 @@ export const mockTranslations: Record<string, string> = {
 	ROLE_FILTER_SHORT_LABEL: "R",
 	RANDOM_MAP_LABEL: "ランダム",
 	ROLE_FILTER_NOT_FOUND: "見つかりませんでした",
-	SETTINGS_UNDER_PREPARATION: "設定項目は現在準備中です。",
 	OK: "OK",
 	SEARCH_NO_RESULTS: "Search No Results",
 	CLIPBOARD_SETTING_TITLE: "設定",
@@ -68,4 +67,10 @@ export const mockTranslations: Record<string, string> = {
 	SERVER_TITLE: "サーバー",
 	RoomCodeLabel: "ルームコード",
 	CURRENT_PLAYER_LABEL: "現在のプレイヤー",
+	LEFT_SIDEBAR_SETTING: "左サイドバー設定",
+	RIGHT_SIDEBAR_SETTING: "右サイドバー設定",
+	INITIAL_SIDEBAR_STATE: "初期状態",
+	SAVE_STATE_TO_BROWSER: "状態をブラウザに保存する",
+	SIDEBAR_OPEN_LABEL: "開く",
+	SIDEBAR_CLOSE_LABEL: "閉じる",
 };

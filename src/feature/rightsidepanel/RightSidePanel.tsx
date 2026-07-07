@@ -57,6 +57,7 @@ export function RightSidePanel() {
 				maxWidth: `${maxWidth + RIGHT_PANEL_TOGGLE_WIDTH}px`,
 			}}
 			data-testid="right-side-panel"
+			data-state={isRightPanelOpen ? "open" : "closed"}
 		>
 			{/* パネル本体 */}
 			<div

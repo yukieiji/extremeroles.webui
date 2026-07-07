@@ -1,6 +1,7 @@
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
@@ -33,11 +34,13 @@ export function OptionDropdownControl({
 				<SelectValue />
 			</SelectTrigger>
 			<SelectContent alignItemWithTrigger={false}>
-				{values.map((value) => (
-					<SelectItem key={value} value={value}>
-						{value}
-					</SelectItem>
-				))}
+				<SelectGroup>
+					{values.map((value) => (
+						<SelectItem key={value} value={value}>
+							{value}
+						</SelectItem>
+					))}
+				</SelectGroup>
 			</SelectContent>
 		</Select>
 	);

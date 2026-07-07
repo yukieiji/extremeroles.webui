@@ -68,7 +68,7 @@ function SidebarProvider({
 
 	// This is the internal state of the sidebar.
 	// We use openProp and setOpenProp for control from outside the component.
-	const [_open, _setOpen] = React.useState(() => loadSidebarState(defaultOpen));
+	const [_open, _setOpen] = React.useState(() => loadSidebarState());
 	const open = openProp ?? _open;
 	const setOpen = React.useCallback(
 		(value: boolean | ((value: boolean) => boolean)) => {
