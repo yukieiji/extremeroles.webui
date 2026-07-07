@@ -25,6 +25,7 @@ export interface SidebarSetting {
 export interface AppSetting {
 	leftSidebar: SidebarSetting;
 	rightSidebar: SidebarSetting;
+	mockPlayerNames: string[];
 }
 
 /**
@@ -75,12 +76,19 @@ export function loadAppSetting(): AppSetting {
 	const defaultSetting: AppSetting = {
 		leftSidebar: { initialOpen: true, saveState: true },
 		rightSidebar: { initialOpen: false, saveState: true },
+		mockPlayerNames: [],
 	};
 	if (stored === null) {
 		return defaultSetting;
 	}
 	try {
-		return { ...defaultSetting, ...JSON.parse(stored) };
+		const parsed = JSON.parse(stored);
+		return {
+			...defaultSetting,
+			...parsed,
+			leftSidebar: { ...defaultSetting.leftSidebar, ...parsed.leftSidebar },
+			rightSidebar: { ...defaultSetting.rightSidebar, ...parsed.rightSidebar },
+		};
 	} catch (e) {
 		console.error("Failed to parse app setting", e);
 		return defaultSetting;

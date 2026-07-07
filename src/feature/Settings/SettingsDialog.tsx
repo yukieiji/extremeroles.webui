@@ -9,6 +9,7 @@ import {
 } from "../../components/ui/dialog";
 import { Separator } from "../../components/ui/separator";
 import { useStore } from "../../useStore";
+import { MockPlayerSettingsSection } from "./MockPlayerSettingsSection";
 
 interface SettingsDialogProps {
 	title: string;
@@ -38,6 +39,17 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 					<SidebarSettingsSection
 						setting={appSetting.rightSidebar}
 						onUpdate={(rightSidebar) => updateAppSetting({ rightSidebar })}
+					/>
+				</BigSettingSelection>
+				<Separator />
+				<BigSettingSelection
+					title={translationMetaData.SIMULATE_SETTING_PLAYER_NAME}
+				>
+					<MockPlayerSettingsSection
+						mockPlayerNames={appSetting.mockPlayerNames}
+						onUpdate={(mockPlayerNames) =>
+							updateAppSetting({ mockPlayerNames })
+						}
 					/>
 				</BigSettingSelection>
 			</div>

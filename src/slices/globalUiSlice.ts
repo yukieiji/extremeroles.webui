@@ -27,6 +27,8 @@ export interface GlobalUiSlice {
 	setWindowWidth: (width: number) => void;
 	appSetting: AppSetting;
 	updateAppSetting: (setting: Partial<AppSetting>) => void;
+	mockPlayerInput: string;
+	setMockPlayerInput: (input: string) => void;
 }
 
 export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
@@ -37,6 +39,8 @@ export const createGlobalUiSlice: StateCreator<GlobalUiSlice> = (set, get) => {
 			saveAppSetting(nextSetting);
 			set({ appSetting: nextSetting });
 		},
+		mockPlayerInput: "",
+		setMockPlayerInput: (input) => set({ mockPlayerInput: input }),
 		windowWidth: typeof window !== "undefined" ? window.innerWidth : 1920,
 		setWindowWidth: (width) => set({ windowWidth: width }),
 		isPendingBlock: false,
