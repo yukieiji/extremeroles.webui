@@ -73,4 +73,5 @@ export const mockTranslations: Record<string, string> = {
 	SAVE_STATE_TO_BROWSER: "状態をブラウザに保存する",
 	SIDEBAR_OPEN_LABEL: "開く",
 	SIDEBAR_CLOSE_LABEL: "閉じる",
+	SIMULATE_SETTING_PLAYER_NAME: "役職割り当てシュミレート時のダミープレイヤー名"
 };

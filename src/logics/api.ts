@@ -189,6 +189,7 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"SAVE_STATE_TO_BROWSER",
 		"SIDEBAR_OPEN_LABEL",
 		"SIDEBAR_CLOSE_LABEL",
+		"SIMULATE_SETTING_PLAYER_NAME",
 	];
 	const batchBody = batchKeys.map((key) => {
 		return { Key: key };

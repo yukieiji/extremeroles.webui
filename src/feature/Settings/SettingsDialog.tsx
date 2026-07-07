@@ -42,7 +42,9 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 					/>
 				</BigSettingSelection>
 				<Separator />
-				<BigSettingSelection title={translationMetaData.SIMULATE_LABEL}>
+				<BigSettingSelection
+					title={translationMetaData.SIMULATE_SETTING_PLAYER_NAME}
+				>
 					<MockPlayerSettingsSection
 						mockPlayerNames={appSetting.mockPlayerNames}
 						onUpdate={(mockPlayerNames) =>

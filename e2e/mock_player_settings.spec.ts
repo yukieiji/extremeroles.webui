@@ -11,7 +11,9 @@ test.describe("Mock Player Names Settings", () => {
 
 		// シミュレートセクションの見出しを確認
 		await expect(
-			page.getByRole("heading", { name: "シミュレート" }),
+			page.getByRole("heading", {
+				name: "役職割り当てシュミレート時のダミープレイヤー名",
+			}),
 		).toBeVisible();
 
 		// プレイヤー名を追加
