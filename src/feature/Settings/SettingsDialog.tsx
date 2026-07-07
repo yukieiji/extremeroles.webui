@@ -1,13 +1,14 @@
+import { BigSettingSelection } from "@/components/blocks/BigSettingSelection";
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
+import { SidebarSettingsSection } from "../../components/parts/SidebarSettingsSection";
 import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-} from "../components/ui/dialog";
-import { Separator } from "../components/ui/separator";
-import { useStore } from "../useStore";
-import { SidebarSettingsSection } from "./SidebarSettingsSection";
+} from "../../components/ui/dialog";
+import { Separator } from "../../components/ui/separator";
+import { useStore } from "../../useStore";
 
 interface SettingsDialogProps {
 	title: string;
@@ -23,30 +24,22 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 	return (
 		<DialogContent className="sm:max-w-[425px]">
 			<DialogHeader>
-				<DialogTitle>{title}</DialogTitle>
+				<DialogTitle className={TYPOGRAPHY.SIDEBAR}>{title}</DialogTitle>
 			</DialogHeader>
 			<div className="grid gap-4 py-4">
-				<div className="grid gap-2">
-					<h3 className={TYPOGRAPHY.LABEL}>
-						{translationMetaData.LEFT_SIDEBAR_SETTING}
-					</h3>
+				<BigSettingSelection title={translationMetaData.LEFT_SIDEBAR_SETTING}>
 					<SidebarSettingsSection
 						setting={appSetting.leftSidebar}
 						onUpdate={(leftSidebar) => updateAppSetting({ leftSidebar })}
 					/>
-				</div>
-
+				</BigSettingSelection>
 				<Separator />
-
-				<div className="grid gap-2">
-					<h3 className={TYPOGRAPHY.LABEL}>
-						{translationMetaData.RIGHT_SIDEBAR_SETTING}
-					</h3>
+				<BigSettingSelection title={translationMetaData.RIGHT_SIDEBAR_SETTING}>
 					<SidebarSettingsSection
 						setting={appSetting.rightSidebar}
 						onUpdate={(rightSidebar) => updateAppSetting({ rightSidebar })}
 					/>
-				</div>
+				</BigSettingSelection>
 			</div>
 		</DialogContent>
 	);
