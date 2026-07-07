@@ -51,7 +51,11 @@ export function DropdownSettingSection<T>({
 					<SelectGroup>
 						{select.map((x) => {
 							return (
-								<SelectItem key={x.title} value={x.value}>
+								<SelectItem
+									key={x.title}
+									value={x.value}
+									className={TYPOGRAPHY.SMALL}
+								>
 									{x.title}
 								</SelectItem>
 							);

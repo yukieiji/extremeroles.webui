@@ -26,7 +26,7 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 			<DialogHeader>
 				<DialogTitle className={TYPOGRAPHY.SIDEBAR}>{title}</DialogTitle>
 			</DialogHeader>
-			<div className="grid gap-4 py-4">
+			<div className="grid gap-4 py-2">
 				<BigSettingSelection title={translationMetaData.LEFT_SIDEBAR_SETTING}>
 					<SidebarSettingsSection
 						setting={appSetting.leftSidebar}
