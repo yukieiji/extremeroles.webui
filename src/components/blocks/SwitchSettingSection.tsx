@@ -20,7 +20,7 @@ export function SwitchSettingSection({
 
 	return (
 		<SettingSectionLayout>
-			<Label htmlFor={id} className={TYPOGRAPHY.SMALL}>
+			<Label htmlFor={id} className={TYPOGRAPHY.CHILD_LABEL}>
 				{title}
 			</Label>
 			<Switch id={id} checked={isChecked} onCheckedChange={onUpdate} />

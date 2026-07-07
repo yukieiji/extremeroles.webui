@@ -1,7 +1,9 @@
 import { Plus, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 import { useStore } from "@/useStore";
 
@@ -42,34 +44,36 @@ export function MockPlayerSettingsSection({
 
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="flex gap-2">
+			<Field orientation="horizontal">
 				<Input
 					value={inputValue}
 					onChange={(e) => setInputValue(e.target.value)}
 					onKeyDown={handleKeyDown}
-					placeholder={translationMetaData.playerName as string}
-					className="flex-1"
+					placeholder={translationMetaData.playerName}
+					className={TYPOGRAPHY.SMALL}
 				/>
 				<Button size="icon" onClick={handleAdd} disabled={!inputValue.trim()}>
-					<Plus className="w-4 h-4" />
+					<Plus />
 				</Button>
-			</div>
+			</Field>
 			<div className="flex flex-wrap gap-1 min-h-8">
 				{mockPlayerNames.map((name) => (
 					<Badge
 						key={name}
-						variant="secondary"
-						className="flex items-center gap-1 pr-1"
+						className={TYPOGRAPHY.CHILD_LABEL}
+						variant="outline"
 					>
 						{name}
-						<button
-							type="button"
-							onClick={() => handleDelete(name)}
-							className="hover:bg-destructive/20 rounded-full p-0.5 transition-colors"
+						<Button
+							onClick={(e) => {
+								e.stopPropagation();
+								handleDelete(name);
+							}}
 							aria-label={`Delete ${name}`}
+							variant="ghost"
 						>
-							<X className="w-3 h-3" />
-						</button>
+							<X data-icon="inline-end" />
+						</Button>
 					</Badge>
 				))}
 			</div>

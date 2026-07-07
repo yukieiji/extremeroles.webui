@@ -35,7 +35,7 @@ export function DropdownSettingSection<T>({
 
 	return (
 		<SettingSectionLayout>
-			<Label htmlFor={id} className={TYPOGRAPHY.SMALL}>
+			<Label htmlFor={id} className={TYPOGRAPHY.CHILD_LABEL}>
 				{title}
 			</Label>
 			<Select
