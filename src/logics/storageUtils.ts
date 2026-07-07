@@ -82,7 +82,13 @@ export function loadAppSetting(): AppSetting {
 		return defaultSetting;
 	}
 	try {
-		return { ...defaultSetting, ...JSON.parse(stored) };
+		const parsed = JSON.parse(stored);
+		return {
+			...defaultSetting,
+			...parsed,
+			leftSidebar: { ...defaultSetting.leftSidebar, ...parsed.leftSidebar },
+			rightSidebar: { ...defaultSetting.rightSidebar, ...parsed.rightSidebar },
+		};
 	} catch (e) {
 		console.error("Failed to parse app setting", e);
 		return defaultSetting;
