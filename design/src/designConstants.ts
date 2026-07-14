@@ -15,12 +15,30 @@ export const BASIC_TEXT_COLOR = {
   textTertiary: "text-[#A1A1AA]",
 };
 
+export const BASIC_TEXT_COLOR_DARK = {
+  // Primary Text Color: 設定項目名など、最も重要なテキスト (ダーク)
+  textPrimary: "text-[#FFFFFF]",
+
+  // Secondary Text Color: 設定の補足説明、注釈、デフォルト値 (ダーク)
+  textSecondary: "text-[#E0E6ED]",
+
+  // Disabled Text Color/Tertiary Text Color: 無効な項目やプレースホルダー (ダーク)
+  textTertiary: "text-[#B4BAC5]",
+};
+
 export const PRIMARY_ACTION_COLOR = {
   // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色
   // ここを変更することで、主要なアクションボタンの色を一括で調整できます。
   primary: "bg-[#9CE1FD]",
   hover: "hover:bg-[#9CE1FD]/80 transition-colors",
   active: "active:bg-[#7DD3FC]",
+};
+
+export const PRIMARY_ACTION_COLOR_DARK = {
+  // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色 (ダーク)
+  primary: "bg-[#2279F2]",
+  hover: "hover:bg-[#2279F2]/80 transition-colors",
+  active: "active:bg-[#2279F2]",
 };
 
 export const SEMANTIC_COLORS = {
@@ -34,6 +52,17 @@ export const SEMANTIC_COLORS = {
   info: "#818CF8",
 };
 
+export const SEMANTIC_COLORS_DARK = {
+  // エラー色 (ダーク)
+  error: "#C53030",
+  // 警告色 (ダーク)
+  warning: "#E08C1D",
+  // 成功色 (ダーク)
+  success: "#2A935A",
+  // 情報色 (ダーク)
+  info: "#3A5FDC",
+};
+
 // ニュートラルカラーの各レベルの16進数カラーコード
 const NEUTRAL_HEX = {
   n1: '#F4F4F5',
@@ -43,6 +72,15 @@ const NEUTRAL_HEX = {
   n5: '#FFFFFF',
   n6: '#a3a3a3',
   n7: '#737373',
+};
+
+// ニュートラルカラーの各レベルの16進数カラーコード (ダーク)
+const NEUTRAL_HEX_DARK = {
+  n1: '#2C3138',
+  n2: '#404652',
+  n3: '#5F677A',
+  n4: '#8990A1',
+  n5: '#B4BAC5',
 };
 
 export const NEUTRAL_COLORS = {
@@ -91,9 +129,59 @@ export const NEUTRAL_COLORS = {
   },
 };
 
+export const NEUTRAL_COLORS_DARK = {
+  // Level 1: Main Background (最背面背景) (ダーク)
+  neutral1: {
+    hex: NEUTRAL_HEX_DARK.n1,
+    bg: `bg-[${NEUTRAL_HEX_DARK.n1}]`,
+    border: `border-[${NEUTRAL_HEX_DARK.n1}]`,
+    description: "アプリ全体のメイン背景色、最背面のレイヤーに使用します（ダーク）。",
+  },
+  // Level 2: Border / Input Border (標準的な枠線) (ダーク)
+  neutral2: {
+    hex: NEUTRAL_HEX_DARK.n2,
+    bg: `bg-[${NEUTRAL_HEX_DARK.n2}]`,
+    border: `border-[${NEUTRAL_HEX_DARK.n2}]`,
+    description:
+      "外枠のボーダーと背景との枠線などの意味が異なるコンポーネントを区切る強い枠線（ダーク）",
+  },
+  // Level 3: Separator / Light Border (区切り線、弱い枠線) (ダーク)
+  neutral3: {
+    hex: NEUTRAL_HEX_DARK.n3,
+    bg: `bg-[${NEUTRAL_HEX_DARK.n3}]`,
+    hover: `hover:bg-[${NEUTRAL_HEX_DARK.n3}]`,
+    border: `border-[${NEUTRAL_HEX_DARK.n3}]`,
+    description:
+      "同じ要素同士を分ける区切り線（Separator）や、非常に弱い枠線に使用します（ダーク）。",
+  },
+  // Level 4: Surface / Card Background (コンテンツ面、カード背景) (ダーク)
+  neutral4: {
+    hex: NEUTRAL_HEX_DARK.n4,
+    bg: `bg-[${NEUTRAL_HEX_DARK.n4}]`,
+    border: `border-[${NEUTRAL_HEX_DARK.n4}]`,
+    description:
+      "メインコンポーネントの背景（ダーク）",
+  },
+  // Level 5: UserInputs (標準的な枠線) (ダーク)
+  neutral5: {
+    hex: NEUTRAL_HEX_DARK.n5,
+    bg: `bg-[${NEUTRAL_HEX_DARK.n5}]`,
+    border: `border-[${NEUTRAL_HEX_DARK.n5}]`,
+    description:
+      "最前面、ユーザーが操作する場所(入力欄)（ダーク）",
+  },
+};
+
 export const SEARCH_HIGHLIGHT_COLOR = {
   // 検索ワードに一致した箇所を目立たせる色。
   ring: "ring-[#3b82f6]",
+  // ハイライトが自動的に消えるまでの時間（ミリ秒）
+  duration: 2000,
+};
+
+export const SEARCH_HIGHLIGHT_COLOR_DARK = {
+  // 検索ワードに一致した箇所を目立たせる色 (ダーク)
+  ring: "ring-[#2196F3]",
   // ハイライトが自動的に消えるまでの時間（ミリ秒）
   duration: 2000,
 };
