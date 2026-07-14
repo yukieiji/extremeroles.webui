@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import BasicTextColor from "./pages/color-system/BasicTextColor";
 import RoleColors from "./pages/color-system/RoleColors";
 import PrimaryActionColor from "./pages/color-system/PrimaryActionColor";
@@ -181,15 +182,49 @@ function Home() {
   );
 }
 
+function Header() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
+  const [isDark, setIsDark] = useState(() => {
+    return document.documentElement.classList.contains("dark");
+  });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDark]);
+
+  return (
+    <header>
+      {isHomePage && (
+        <div className="flex items-center gap-2 pb-2">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={isDark}
+              onChange={(e) => setIsDark(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+            />
+            <span className="text-sm font-medium text-text-primary">ダークテーマ</span>
+          </label>
+        </div>
+      )}
+      <h1>
+        <Link to="/">Design Language Checklist</Link>
+      </h1>
+    </header>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <div>
-        <header>
-          <h1>
-            <Link to="/">Design Language Checklist</Link>
-          </h1>
-        </header>
+        <Header />
 
         <div className="flex flex-1">
           <nav>
