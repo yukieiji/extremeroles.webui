@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDesignTheme } from "../../themeContext";
 import {
   ChevronDown,
   ChevronRight,
@@ -12,11 +13,8 @@ import {
   RefreshCw,
 } from "lucide-react";
 import {
-  BASIC_TEXT_COLOR,
-  NEUTRAL_COLORS,
   GRID_SYSTEM,
   TYPOGRAPHY,
-  PRIMARY_ACTION_COLOR,
   DATA_FONT,
 } from "../../designConstants";
 
@@ -65,7 +63,7 @@ function VisualAidOverlay({
       }}
     >
         <div className="absolute inset-0 flex items-center justify-center">
-             <span className={`text-[10px] text-blue-600 font-bold bg-white/80 ${GRID_SYSTEM.spacing.small.paddingX} rounded shadow-sm`}>
+             <span className={`text-[10px] text-blue-600 font-bold bg-white/80 dark:bg-neutral-800 ${GRID_SYSTEM.spacing.small.paddingX} rounded shadow-sm`}>
                 {label || `${level.toUpperCase()} (${spacingValue})`}
              </span>
         </div>
@@ -84,6 +82,8 @@ function SidebarMock({
   setIsOpen: (o: boolean) => void;
 }) {
   const [activeTab, setActiveTab] = useState("ExR");
+  const { basicTextColor, neutralColors } = useDesignTheme();
+
   const tabs = [
     { id: "Au", label: "Among Us Options", shortLabel: "Au" },
     { id: "ExR", label: "Extreme Roles Options", shortLabel: "ExR" },
@@ -92,14 +92,14 @@ function SidebarMock({
 
   return (
     <div
-      className={`${isOpen ? "w-56" : "w-14"} flex flex-col border-r ${NEUTRAL_COLORS.neutral4.border} ${
-        NEUTRAL_COLORS.neutral2.bg
+      className={`${isOpen ? "w-56" : "w-14"} flex flex-col border-r ${neutralColors.neutral4.border} ${
+        neutralColors.neutral2.bg
       } transition-all duration-300 h-full shadow-sm`}
     >
       <div className={`flex flex-row items-center justify-end ${GRID_SYSTEM.spacing.base.padding}`}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`${GRID_SYSTEM.spacing.small.padding} rounded cursor-pointer ${NEUTRAL_COLORS.neutral3.hover} transition-colors ${BASIC_TEXT_COLOR.textSecondary}`}
+          className={`${GRID_SYSTEM.spacing.small.padding} rounded cursor-pointer ${neutralColors.neutral3.hover} transition-colors ${basicTextColor.textSecondary}`}
         >
           {isOpen ? <ChevronLeft size={16} /> : <Menu size={16} />}
         </button>
@@ -111,20 +111,20 @@ function SidebarMock({
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`w-full flex items-center cursor-pointer transition-colors rounded ${
-                NEUTRAL_COLORS.neutral3.hover
-              } ${activeTab === tab.id ? NEUTRAL_COLORS.neutral4.bg : ""} ${
+                neutralColors.neutral3.hover
+              } ${activeTab === tab.id ? neutralColors.neutral4.bg : ""} ${
                 isOpen ? `${GRID_SYSTEM.spacing.large.paddingX} ${GRID_SYSTEM.spacing.base.paddingY}` : "h-10 justify-center"
               }`}
             >
               {isOpen ? (
                 <span
-                  className={`${TYPOGRAPHY.sidebar.size} ${TYPOGRAPHY.sidebar.weight} ${BASIC_TEXT_COLOR.textPrimary} truncate`}
+                  className={`${TYPOGRAPHY.sidebar.size} ${TYPOGRAPHY.sidebar.weight} ${basicTextColor.textPrimary} truncate`}
                 >
                   {tab.label}
                 </span>
               ) : (
                 <span
-                  className={`${TYPOGRAPHY.sidebar.size} font-bold ${BASIC_TEXT_COLOR.textPrimary}`}
+                  className={`${TYPOGRAPHY.sidebar.size} font-bold ${basicTextColor.textPrimary}`}
                 >
                   {tab.shortLabel}
                 </span>
@@ -133,16 +133,16 @@ function SidebarMock({
           ))}
         </div>
       </div>
-      <div className={`${GRID_SYSTEM.spacing.base.padding} border-t ${NEUTRAL_COLORS.neutral4.border}`}>
+      <div className={`${GRID_SYSTEM.spacing.base.padding} border-t ${neutralColors.neutral4.border}`}>
         <button
           className={`w-full flex items-center ${GRID_SYSTEM.spacing.large.gap} cursor-pointer transition-colors rounded ${
-            NEUTRAL_COLORS.neutral3.hover
+            neutralColors.neutral3.hover
           } ${isOpen ? `${GRID_SYSTEM.spacing.large.paddingX} ${GRID_SYSTEM.spacing.base.paddingY}` : "h-10 justify-center"}`}
         >
-          <Settings size={20} className={`shrink-0 ${BASIC_TEXT_COLOR.textSecondary}`} />
+          <Settings size={20} className={`shrink-0 ${basicTextColor.textSecondary}`} />
           {isOpen && (
             <span
-              className={`${TYPOGRAPHY.sidebar.size} ${TYPOGRAPHY.sidebar.weight} ${BASIC_TEXT_COLOR.textPrimary}`}
+              className={`${TYPOGRAPHY.sidebar.size} ${TYPOGRAPHY.sidebar.weight} ${basicTextColor.textPrimary}`}
             >
               Settings
             </span>
@@ -157,25 +157,27 @@ function SidebarMock({
  * MainHeader モック
  */
 function MainHeader() {
+  const { neutralColors } = useDesignTheme();
+
   return (
-    <div className={`flex items-center ${GRID_SYSTEM.spacing.xLarge.padding} ${GRID_SYSTEM.spacing.xLarge.gap} border-b ${NEUTRAL_COLORS.neutral4.border}`}>
+    <div className={`flex items-center ${GRID_SYSTEM.spacing.xLarge.padding} ${GRID_SYSTEM.spacing.xLarge.gap} border-b ${neutralColors.neutral4.border}`}>
       <h2 className="text-2xl font-bold whitespace-nowrap flex-1">Extreme Roles Options</h2>
 
-      <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} flex-1 max-w-md border ${NEUTRAL_COLORS.neutral5.border} rounded ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} ${NEUTRAL_COLORS.neutral1.bg}`}>
+      <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} flex-1 max-w-md border ${neutralColors.neutral5.border} rounded ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} ${neutralColors.neutral1.bg}`}>
         <Search size={18} className="text-gray-400" />
         <input type="text" placeholder="Search..." className="bg-transparent outline-none w-full text-sm" />
       </div>
 
       <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap}`}>
-        <button className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
+        <button className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${neutralColors.neutral5.border} rounded ${neutralColors.neutral3.hover} transition-colors`}>
           <Upload size={18} />
           <span className={TYPOGRAPHY.label.size}>Import</span>
         </button>
-        <button className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
+        <button className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${neutralColors.neutral5.border} rounded ${neutralColors.neutral3.hover} transition-colors`}>
           <Download size={18} />
           <span className={TYPOGRAPHY.label.size}>Export</span>
         </button>
-        <button className={`${GRID_SYSTEM.spacing.base.padding} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
+        <button className={`${GRID_SYSTEM.spacing.base.padding} border ${neutralColors.neutral5.border} rounded ${neutralColors.neutral3.hover} transition-colors`}>
            <RefreshCw size={18} />
         </button>
       </div>
@@ -198,30 +200,31 @@ function RoleCategoryAccordionMock({
   children?: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(initialOpen);
+  const { basicTextColor, neutralColors } = useDesignTheme();
 
   return (
-    <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg}`}>
-      <div className={`flex items-center ${NEUTRAL_COLORS.neutral3.hover} transition-colors relative`}>
+    <div className={`border ${neutralColors.neutral4.border} rounded-lg overflow-hidden ${neutralColors.neutral1.bg}`}>
+      <div className={`flex items-center ${neutralColors.neutral3.hover} transition-colors relative`}>
         {showVisualAid && <VisualAidOverlay level="large" />}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={`flex-1 flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.xLarge.padding} text-left cursor-pointer`}
         >
           <div className="w-5 h-5 flex items-center justify-center">
-            {isOpen ? <ChevronDown size={20} className={BASIC_TEXT_COLOR.textTertiary} /> : <ChevronRight size={20} className={BASIC_TEXT_COLOR.textTertiary} />}
+            {isOpen ? <ChevronDown size={20} className={basicTextColor.textTertiary} /> : <ChevronRight size={20} className={basicTextColor.textTertiary} />}
           </div>
-          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
+          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary}`}>
             {text}
           </span>
         </button>
         <div className={`${GRID_SYSTEM.spacing.xLarge.paddingX} flex items-center`}>
-           <div className={`w-8 h-8 rounded-full border ${NEUTRAL_COLORS.neutral4.border} flex items-center justify-center ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textSecondary} ${DATA_FONT.family}`}>
+           <div className={`w-8 h-8 rounded-full border ${neutralColors.neutral4.border} flex items-center justify-center ${TYPOGRAPHY.small.size} ${basicTextColor.textSecondary} ${DATA_FONT.family}`}>
              0
            </div>
         </div>
       </div>
       {isOpen && (
-        <div className={`border-t ${NEUTRAL_COLORS.neutral4.border} flex flex-col`}>
+        <div className={`border-t ${neutralColors.neutral4.border} flex flex-col`}>
           {children}
         </div>
       )}
@@ -243,23 +246,24 @@ function OptionRowMock({
   depth?: number;
   showVisualAid: boolean;
 }) {
+  const { basicTextColor, neutralColors } = useDesignTheme();
   const paddingLeft = `${depth * 0.5 + 0.375}rem`;
 
   return (
-    <div className={`${GRID_SYSTEM.spacing.small.paddingY} ${NEUTRAL_COLORS.neutral3.hover} transition-colors group relative`}>
+    <div className={`${GRID_SYSTEM.spacing.small.paddingY} ${neutralColors.neutral3.hover} transition-colors group relative`}>
       <div className="flex items-stretch" style={{ paddingLeft }}>
         <div className="flex items-center justify-center w-10 shrink-0">
-           <div className={`w-4 h-4 rounded border ${NEUTRAL_COLORS.neutral5.border}`} />
+           <div className={`w-4 h-4 rounded border ${neutralColors.neutral5.border}`} />
         </div>
         <div className={`flex-1 min-w-0 flex items-center justify-between ${GRID_SYSTEM.spacing.xLarge.paddingRight} h-10`}>
-           <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
+           <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight} ${basicTextColor.textPrimary}`}>
              {label}
            </span>
            <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap}`}>
-             <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} ${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textPrimary} ${DATA_FONT.family}`}>
+             <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} border ${neutralColors.neutral5.border} rounded ${neutralColors.neutral2.bg} ${TYPOGRAPHY.small.size} ${basicTextColor.textPrimary} ${DATA_FONT.family}`}>
                 {value}
              </div>
-             <Info size={14} className={BASIC_TEXT_COLOR.textTertiary} />
+             <Info size={14} className={basicTextColor.textTertiary} />
            </div>
         </div>
       </div>
@@ -273,14 +277,15 @@ function OptionRowMock({
 export default function GridSystem() {
   const [showVisualAid, setShowVisualAid] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { basicTextColor, neutralColors } = useDesignTheme();
 
   return (
-    <div className={`${GRID_SYSTEM.spacing.xLarge.padding} ${GRID_SYSTEM.spacing.xLarge.gap} flex flex-col ${NEUTRAL_COLORS.neutral1.bg} min-h-screen pb-24`}>
+    <div className={`${GRID_SYSTEM.spacing.xLarge.padding} ${GRID_SYSTEM.spacing.xLarge.gap} flex flex-col ${neutralColors.neutral1.bg} min-h-screen pb-24`}>
       <section>
         <div className="flex justify-between items-start">
           <div>
-            <h2 className={`text-2xl font-bold ${GRID_SYSTEM.spacing.xLarge.marginBottom} ${BASIC_TEXT_COLOR.textPrimary}`}>グリッドシステム</h2>
-            <p className={`${BASIC_TEXT_COLOR.textSecondary} max-w-2xl`}>
+            <h2 className={`text-2xl font-bold ${GRID_SYSTEM.spacing.xLarge.marginBottom} ${basicTextColor.textPrimary}`}>グリッドシステム</h2>
+            <p className={`${basicTextColor.textSecondary} max-w-2xl`}>
               余白を8の倍数で固定し、ルールに基づいて項目間の距離を制御します。
             </p>
           </div>
@@ -288,8 +293,8 @@ export default function GridSystem() {
             onClick={() => setShowVisualAid(!showVisualAid)}
             className={`${GRID_SYSTEM.spacing.xLarge.paddingX} ${GRID_SYSTEM.spacing.base.paddingY} rounded border transition-colors ${
               showVisualAid
-                ? "bg-blue-100 border-blue-300 text-blue-700 font-bold"
-                : `${NEUTRAL_COLORS.neutral1.bg} border-neutral-300 text-neutral-600 hover:bg-neutral-50`
+                ? "bg-blue-100 border-blue-300 text-blue-700 font-bold dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200"
+                : `${neutralColors.neutral1.bg} border-neutral-300 text-neutral-600 hover:bg-neutral-50`
             }`}
           >
             視覚補助: {showVisualAid ? "ON" : "OFF"}
@@ -299,26 +304,26 @@ export default function GridSystem() {
 
       {/* アプリ全体の構成例 */}
       <section className={`${GRID_SYSTEM.spacing.xLarge.gap} flex flex-col`}>
-        <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>全体レイアウト構造 (Layout Structure)</h3>
-        <p className={BASIC_TEXT_COLOR.textSecondary}>
+        <h3 className={`text-xl font-semibold ${basicTextColor.textPrimary}`}>全体レイアウト構造 (Layout Structure)</h3>
+        <p className={basicTextColor.textSecondary}>
           サイドバー、タブ（Selector）、メインコンテンツの配置とそれらの間の余白を確認できます。
         </p>
-        <div className={`h-[500px] border ${NEUTRAL_COLORS.neutral4.border} rounded-xl overflow-hidden flex bg-white relative shadow-lg`}>
+        <div className={`h-[500px] border ${neutralColors.neutral4.border} rounded-xl overflow-hidden flex bg-white dark:bg-neutral-900 relative shadow-lg`}>
           <SidebarMock isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
           <div className="flex flex-col flex-1 overflow-hidden h-full">
             <MainHeader />
 
             {/* Tab Selector Area */}
-            <div className={`border-b ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg}`}>
+            <div className={`border-b ${neutralColors.neutral4.border} ${neutralColors.neutral2.bg}`}>
               <div className="flex">
                 {["General", "Roles", "System"].map((tab, i) => (
                   <div
                     key={tab}
                     className={`${GRID_SYSTEM.spacing.xLarge.paddingX} ${GRID_SYSTEM.spacing.base.paddingY} ${TYPOGRAPHY.tab.size} ${
                       i === 1
-                        ? `${BASIC_TEXT_COLOR.textPrimary} border-b-2 border-blue-500 font-bold`
-                        : BASIC_TEXT_COLOR.textSecondary
+                        ? `${basicTextColor.textPrimary} border-b-2 border-blue-500 font-bold`
+                        : basicTextColor.textSecondary
                     }`}
                   >
                     {tab}
@@ -328,28 +333,28 @@ export default function GridSystem() {
             </div>
 
             {/* Main View Area */}
-            <div className={`flex-1 overflow-y-auto ${GRID_SYSTEM.spacing.xLarge.padding} ${NEUTRAL_COLORS.neutral2.bg} relative`}>
+            <div className={`flex-1 overflow-y-auto ${GRID_SYSTEM.spacing.xLarge.padding} ${neutralColors.neutral2.bg} relative`}>
                <div className={`flex flex-col ${GRID_SYSTEM.spacing.xLarge.gap}`}>
                   <RoleCategoryAccordionMock text="役職設定" showVisualAid={showVisualAid}>
                      <OptionRowMock label="インポスターの数" value="2" showVisualAid={showVisualAid} />
-                     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg ${NEUTRAL_COLORS.neutral1.bg} ${GRID_SYSTEM.spacing.base.padding}`}>
+                     <div className={`border ${neutralColors.neutral4.border} rounded-lg ${neutralColors.neutral1.bg} ${GRID_SYSTEM.spacing.base.padding}`}>
                         <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.small.marginBottom}`}>
-                           <ChevronRight size={16} className={BASIC_TEXT_COLOR.textTertiary} />
+                           <ChevronRight size={16} className={basicTextColor.textTertiary} />
                            <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight}`}>マッドメイト設定</span>
                            <div className="flex-1" />
-                           <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} bg-gray-100 rounded text-xs ${DATA_FONT.family}`}>ON</div>
+                           <div className={`px-2 py-1 bg-gray-100 dark:bg-neutral-800 rounded text-xs ${DATA_FONT.family}`}>ON</div>
                         </div>
                      </div>
                      <OptionRowMock label="クルーメイトの数" value="8" showVisualAid={showVisualAid} />
                   </RoleCategoryAccordionMock>
                   <RoleCategoryAccordionMock text="役職設定2" showVisualAid={showVisualAid}>
                      <OptionRowMock label="インポスターの数2" value="2" showVisualAid={showVisualAid} />
-                     <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg ${NEUTRAL_COLORS.neutral1.bg} ${GRID_SYSTEM.spacing.base.padding}`}>
+                     <div className={`border ${neutralColors.neutral4.border} rounded-lg ${neutralColors.neutral1.bg} ${GRID_SYSTEM.spacing.base.padding}`}>
                         <div className={`flex items-center ${GRID_SYSTEM.spacing.base.gap} ${GRID_SYSTEM.spacing.small.marginBottom}`}>
-                           <ChevronRight size={16} className={BASIC_TEXT_COLOR.textTertiary} />
+                           <ChevronRight size={16} className={basicTextColor.textTertiary} />
                            <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight}`}>マッドメイト設定</span>
                            <div className="flex-1" />
-                           <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} bg-gray-100 rounded text-xs ${DATA_FONT.family}`}>ON</div>
+                           <div className={`px-2 py-1 bg-gray-100 dark:bg-neutral-800 rounded text-xs ${DATA_FONT.family}`}>ON</div>
                         </div>
                      </div>
                      <OptionRowMock label="クルーメイトの数2" value="8" showVisualAid={showVisualAid} />
@@ -363,11 +368,11 @@ export default function GridSystem() {
       {/* 余白のテスト・調整ガイド */}
       <section className={`grid grid-cols-1 md:grid-cols-2 ${GRID_SYSTEM.spacing.xLarge.gap}`}>
         <div className={`${GRID_SYSTEM.spacing.xLarge.gap} flex flex-col`}>
-          <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>アコーディオン・イン・アコーディオン</h3>
-          <p className={BASIC_TEXT_COLOR.textSecondary}>
+          <h3 className={`text-xl font-semibold ${basicTextColor.textPrimary}`}>アコーディオン・イン・アコーディオン</h3>
+          <p className={basicTextColor.textSecondary}>
             階層が深くなる場合のインデントと余白のバランスを確認します。
           </p>
-          <div className={`border ${NEUTRAL_COLORS.neutral4.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg} divide-y ${NEUTRAL_COLORS.neutral4.border}`}>
+          <div className={`border ${neutralColors.neutral4.border} rounded-lg overflow-hidden ${neutralColors.neutral1.bg} divide-y ${neutralColors.neutral4.border}`}>
              <OptionRowMock label="ルート項目" value="Value" showVisualAid={showVisualAid} />
              <OptionRowMock label="第一階層アコーディオン" value="Expand" depth={1} showVisualAid={showVisualAid} />
           </div>
