@@ -1,9 +1,7 @@
 import { useState } from "react";
+import { useDesignTheme } from "../../themeContext";
 import { ChevronDown, ChevronRight, Info } from "lucide-react";
 import {
-  BASIC_TEXT_COLOR,
-  NEUTRAL_COLORS,
-  SEMANTIC_COLORS,
   TYPOGRAPHY,
   LINE_HEIGHT,
 } from "../../designConstants";
@@ -21,9 +19,11 @@ function MockOptionRow({
   value: string;
   format: string;
 }) {
+  const { basicTextColor, neutralColors, semanticColors } = useDesignTheme();
+
   return (
     <div
-      className={`py-0.5 ${NEUTRAL_COLORS.neutral3.hover} transition-colors ${LINE_HEIGHT.standard}`}
+      className={`py-0.5 ${neutralColors.neutral3.hover} transition-colors ${LINE_HEIGHT.standard}`}
     >
       <div className="flex items-stretch px-4">
         {/* 左側領域（スペーサー） */}
@@ -35,7 +35,7 @@ function MockOptionRow({
             {/* 設定名 */}
             <div className="flex-1 min-w-0">
               <div
-                className={`${TYPOGRAPHY.label.size} ${LINE_HEIGHT.standard} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} break-words whitespace-pre-wrap`}
+                className={`${TYPOGRAPHY.label.size} ${LINE_HEIGHT.standard} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary} break-words whitespace-pre-wrap`}
               >
                 {name}
               </div>
@@ -44,20 +44,20 @@ function MockOptionRow({
             {/* 設定値 & フォーマット */}
             <div className="shrink-0 flex items-center gap-2">
               <div
-                className={`px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} min-w-[3.5rem] text-center`}
+                className={`px-2 py-1 border ${neutralColors.neutral5.border} rounded ${neutralColors.neutral2.bg} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary} min-w-[3.5rem] text-center`}
               >
                 {value}
               </div>
               {format && (
                 <div className="flex flex-col items-start">
                   <span
-                    className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textSecondary} whitespace-nowrap`}
+                    className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${basicTextColor.textSecondary} whitespace-nowrap`}
                   >
                     {format}
                   </span>
                 </div>
               )}
-              <Info size={14} style={{ color: SEMANTIC_COLORS.info }} />
+              <Info size={14} style={{ color: semanticColors.info }} />
             </div>
           </div>
         </div>
@@ -78,17 +78,18 @@ function MockAccordion({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(true);
+  const { basicTextColor, neutralColors } = useDesignTheme();
 
   return (
     <div
-      className={`border ${NEUTRAL_COLORS.neutral4.border} rounded overflow-hidden shadow-sm`}
+      className={`border ${neutralColors.neutral4.border} rounded overflow-hidden shadow-sm`}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full flex items-center justify-between p-3 cursor-pointer ${NEUTRAL_COLORS.neutral2.bg} ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
+        className={`w-full flex items-center justify-between p-3 cursor-pointer ${neutralColors.neutral2.bg} ${neutralColors.neutral3.hover} transition-colors`}
       >
         <span
-          className={`${TYPOGRAPHY.label.size} font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}
+          className={`${TYPOGRAPHY.label.size} font-semibold ${basicTextColor.textPrimary}`}
         >
           {title}
         </span>
@@ -96,7 +97,7 @@ function MockAccordion({
       </button>
       {isOpen && (
         <div
-          className={`${NEUTRAL_COLORS.neutral1.bg} divide-y ${NEUTRAL_COLORS.neutral4.border}`}
+          className={`${neutralColors.neutral1.bg} divide-y ${neutralColors.neutral4.border}`}
         >
           {children}
         </div>
@@ -106,11 +107,13 @@ function MockAccordion({
 }
 
 export default function LineHeight() {
+  const { basicTextColor, neutralColors } = useDesignTheme();
+
   return (
-    <div className={`p-6 space-y-12 ${NEUTRAL_COLORS.neutral1.bg} min-h-screen`}>
+    <div className={`p-6 space-y-12 ${neutralColors.neutral1.bg} min-h-screen`}>
       <section>
         <h2 className="text-2xl font-bold mb-4">行間（Line Height）の定義</h2>
-        <p className={`${BASIC_TEXT_COLOR.textSecondary} mb-8`}>
+        <p className={`${basicTextColor.textSecondary} mb-8`}>
           {LINE_HEIGHT.description}
         </p>
       </section>
@@ -119,19 +122,19 @@ export default function LineHeight() {
         <div className="flex items-baseline gap-4">
           <h3 className="text-xl font-semibold">設定画面の行間テスト</h3>
           <span
-            className={`${TYPOGRAPHY.small.size} ${BASIC_TEXT_COLOR.textTertiary}`}
+            className={`${TYPOGRAPHY.small.size} ${basicTextColor.textTertiary}`}
           >
             Current: {LINE_HEIGHT.standard}
           </span>
         </div>
 
         <div className="space-y-4">
-          <p className={BASIC_TEXT_COLOR.textSecondary}>
+          <p className={basicTextColor.textSecondary}>
             OptionRowをアコーディオン内で使用した場合の表示サンプルです。
             複数行にわたる説明文や、ラベルと値のバランスを確認できます。
           </p>
           <div
-            className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner`}
+            className={`p-6 border rounded ${neutralColors.neutral4.border} ${neutralColors.neutral2.bg} shadow-inner`}
           >
             <MockAccordion title="サンプル役職">
               <MockOptionRow
@@ -158,7 +161,7 @@ export default function LineHeight() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
               <p className="text-sm font-bold text-gray-400 uppercase">Standard (1.6)</p>
-              <div className={`p-4 border rounded ${NEUTRAL_COLORS.neutral1.bg} ${LINE_HEIGHT.standard} ${BASIC_TEXT_COLOR.textPrimary}`}>
+              <div className={`p-4 border rounded ${neutralColors.neutral1.bg} ${LINE_HEIGHT.standard} ${basicTextColor.textPrimary}`}>
                 このテキストは、デザインシステムで定義された標準の行間（1.6）を適用しています。
                 情報密度が高いアプリケーションにおいて、可読性を維持しつつ効率的に情報を配置するための設定です。
                 長文の説明文でも目が疲れにくく、かつ各項目の区切りが明確になります。
@@ -166,7 +169,7 @@ export default function LineHeight() {
             </div>
             <div className="space-y-2">
               <p className="text-sm font-bold text-gray-400 uppercase">Tight (1.25)</p>
-              <div className={`p-4 border rounded ${NEUTRAL_COLORS.neutral1.bg} leading-tight ${BASIC_TEXT_COLOR.textPrimary}`}>
+              <div className={`p-4 border rounded ${neutralColors.neutral1.bg} leading-tight ${basicTextColor.textPrimary}`}>
                 このテキストは、比較用の詰まった行間（1.25）を適用しています。
                 情報密度は非常に高くなりますが、複数行にわたる場合に文字が重なって見えたり、
                 行を追うのが難しくなる可能性があります。特に日本語フォントでは窮屈に感じられやすいです。

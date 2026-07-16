@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
 import BasicTextColor from "./pages/color-system/BasicTextColor";
 import RoleColors from "./pages/color-system/RoleColors";
 import PrimaryActionColor from "./pages/color-system/PrimaryActionColor";
@@ -10,12 +9,8 @@ import FontSizeWeight from "./pages/typography/FontSizeWeight";
 import LineHeight from "./pages/typography/LineHeight";
 import DataFont from "./pages/typography/DataFont";
 import GridSystem from "./pages/typography/GridSystem";
+import { ThemeProvider, useTheme, useDesignTheme } from "./themeContext";
 import {
-  BASIC_TEXT_COLOR,
-  PRIMARY_ACTION_COLOR,
-  SEMANTIC_COLORS,
-  NEUTRAL_COLORS,
-  SEARCH_HIGHLIGHT_COLOR,
   TYPOGRAPHY,
   DATA_FONT,
   LINE_HEIGHT,
@@ -23,6 +18,14 @@ import {
 } from "./designConstants";
 
 function Home() {
+  const {
+    basicTextColor,
+    primaryActionColor,
+    semanticColors,
+    neutralColors,
+    searchHighlightColor,
+  } = useDesignTheme();
+
   return (
     <div className="p-8 space-y-12">
       {/* Color Matrix */}
@@ -32,56 +35,56 @@ function Home() {
         <div className="space-y-1 border-2">
           {/* Top Row: Primary + Semantic */}
           <div className="grid grid-cols-4">
-            <div className={`${PRIMARY_ACTION_COLOR.primary} row-span-2 p-4 min-h-[160px] flex flex-col items-center justify-center text-white`}>
+            <div className={`${primaryActionColor.primary} row-span-2 p-4 min-h-[160px] flex flex-col items-center justify-center text-white`}>
               <span className="font-bold text-2xl">PRIMARY_ACTION_COLOR</span>
-              <span className="text-xl opacity-80 mt-2">{PRIMARY_ACTION_COLOR.primary}</span>
+              <span className="text-xl opacity-80 mt-2">{primaryActionColor.primary}</span>
             </div>
             <div
               className=" p-4 flex flex-col items-center justify-center text-white"
-              style={{ backgroundColor: SEMANTIC_COLORS.error }}
+              style={{ backgroundColor: semanticColors.error }}
             >
               <span className="text-2xl font-bold">Error</span>
-              <span className="text-xl opacity-80">{SEMANTIC_COLORS.error}</span>
+              <span className="text-xl opacity-80">{semanticColors.error}</span>
             </div>
             <div
               className="p-4 flex flex-col items-center justify-center text-white"
-              style={{ backgroundColor: SEMANTIC_COLORS.warning }}
+              style={{ backgroundColor: semanticColors.warning }}
             >
               <span className="text-2xl font-bold">Warning</span>
-              <span className="text-xl opacity-80">{SEMANTIC_COLORS.warning}</span>
+              <span className="text-xl opacity-80">{semanticColors.warning}</span>
             </div>
             <div
               className="p-4 flex flex-col items-center justify-center text-white"
-              style={{ backgroundColor: SEMANTIC_COLORS.success }}
+              style={{ backgroundColor: semanticColors.success }}
             >
               <span className="text-2xl font-bold">Success</span>
-              <span className="text-xl opacity-80">{SEMANTIC_COLORS.success}</span>
+              <span className="text-xl opacity-80">{semanticColors.success}</span>
             </div>
             <div
               className="col-span-3 p-4 flex flex-col items-center justify-center text-white"
-              style={{ backgroundColor: SEMANTIC_COLORS.info }}
+              style={{ backgroundColor: semanticColors.info }}
             >
               <span className="text-2xl font-bold">info</span>
-              <span className="text-xl opacity-80">{SEMANTIC_COLORS.info}</span>
+              <span className="text-xl opacity-80">{semanticColors.info}</span>
             </div>
           </div>
 
           {/* Middle Row: Neutral 1 + Text/Highlight */}
           <div
             className="p-6 min-h-[140px] flex flex-col justify-between"
-            style={{ backgroundColor: NEUTRAL_COLORS.neutral1.hex }}
+            style={{ backgroundColor: neutralColors.neutral1.hex }}
           >
             <span className="mb-4 text-2xl font-bold text-gray-500">Neutral1</span>
-            <span className="mb-4 text-xl font-bold text-gray-500">{NEUTRAL_COLORS.neutral1.hex}</span>
+            <span className="mb-4 text-xl font-bold text-gray-500">{neutralColors.neutral1.hex}</span>
           </div>
 
           {/* Bottom Row: Neutrals 2-7 */}
           <div className="grid grid-cols-4">
             {[
-              NEUTRAL_COLORS.neutral2,
-              NEUTRAL_COLORS.neutral3,
-              NEUTRAL_COLORS.neutral4,
-              NEUTRAL_COLORS.neutral5,
+              neutralColors.neutral2,
+              neutralColors.neutral3,
+              neutralColors.neutral4,
+              neutralColors.neutral5,
             ].map((data, i) => {
               const isDark = i >= 4; // Neutral 6 and 7
               return (
@@ -101,8 +104,8 @@ function Home() {
       <section>
         <div className="flex items-center gap-4">
           <span className="text-xl text-gray-400">Search highlight Color:</span>
-          <span className="text-xl text-gray-400">{SEARCH_HIGHLIGHT_COLOR.ring}</span>
-          <div className={`px-4 py-1 border rounded ring-2 ${SEARCH_HIGHLIGHT_COLOR.ring} bg-white text-xl`}>
+          <span className="text-xl text-gray-400">{searchHighlightColor.ring}</span>
+          <div className={`px-4 py-1 border rounded ring-2 ${searchHighlightColor.ring} bg-white text-xl dark:bg-neutral-800`}>
             Highlighted Item
           </div>
         </div>
@@ -111,9 +114,9 @@ function Home() {
         <div className="gap-4">
           <span className="text-xl text-gray-400">TextColor:</span>
           <div className="grid gap-4">
-            <span className={`${BASIC_TEXT_COLOR.textPrimary} font-bold text-xl`}>{BASIC_TEXT_COLOR.textPrimary} Primary  The Boy who Cried Wolf.  ヤオヨロ～♪!</span>
-            <span className={`${BASIC_TEXT_COLOR.textSecondary} text-xl`}>{BASIC_TEXT_COLOR.textSecondary} Secondary  The Boy who Cried Wolf. ヤオヨロ～♪!</span>
-            <span className={`${BASIC_TEXT_COLOR.textTertiary} text-xl`}>{BASIC_TEXT_COLOR.textTertiary} Tertiary   The Boy who Cried Wolf. ヤオヨロ～♪!</span>
+            <span className={`${basicTextColor.textPrimary} font-bold text-xl`}>{basicTextColor.textPrimary} Primary  The Boy who Cried Wolf.  ヤオヨロ～♪!</span>
+            <span className={`${basicTextColor.textSecondary} text-xl`}>{basicTextColor.textSecondary} Secondary  The Boy who Cried Wolf. ヤオヨロ～♪!</span>
+            <span className={`${basicTextColor.textTertiary} text-xl`}>{basicTextColor.textTertiary} Tertiary   The Boy who Cried Wolf. ヤオヨロ～♪!</span>
           </div>
         </div>
       </section>
@@ -186,17 +189,7 @@ function Header() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const [isDark, setIsDark] = useState(() => {
-    return document.documentElement.classList.contains("dark");
-  });
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
+  const { isDark, setIsDark } = useTheme();
 
   return (
     <header>
@@ -220,75 +213,85 @@ function Header() {
   );
 }
 
+function AppContent() {
+  const { isDark } = useTheme();
+
+  return (
+    <div className={isDark ? "bg-black text-slate-100 min-h-screen transition-colors duration-200" : "bg-white text-slate-900 min-h-screen transition-colors duration-200"}>
+      <Header />
+
+      <div className="flex flex-1">
+        <nav>
+          <div className="border-2 py-2">
+            <h3 className="py-0.5">カラーシステム</h3>
+            <ul>
+              <li>
+                <Link to="/color/basic" className="underline" >基本テキストカラー</Link>
+              </li>
+              <li>
+                <Link to="/color/role" className="underline">役職カラーパレット</Link>
+              </li>
+              <li>
+                <Link to="/color/primary-action" className="underline">プライマリーアクション色</Link>
+              </li>
+              <li>
+                <Link to="/color/semantic" className="underline">セマンティックカラー</Link>
+              </li>
+              <li>
+                <Link to="/color/neutral" className="underline">ニュートラルカラー</Link>
+              </li>
+              <li>
+                <Link to="/color/search-highlight" className="underline">検索ハイライト色</Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="border-2 py-2">
+            <h3 className="py-0.5">タイポグラフィ</h3>
+            <ul>
+              <li>
+                <Link to="/typography/font-size-weight" className="underline">フォントサイズ・ウェイト階層</Link>
+              </li>
+              <li>
+                <Link to="/typography/line-height" className="underline">行間</Link>
+              </li>
+              <li>
+                <Link to="/typography/data-font" className="underline">データ用フォント</Link>
+              </li>
+              <li>
+                <Link to="/typography/grid" className="underline">グリッドシステム</Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/color/basic" element={<BasicTextColor />} />
+            <Route path="/color/role" element={<RoleColors />} />
+            <Route path="/color/primary-action" element={<PrimaryActionColor />} />
+            <Route path="/color/semantic" element={<SemanticColors />} />
+            <Route path="/color/neutral" element={<NeutralColors />} />
+            <Route path="/color/search-highlight" element={<SearchHighlightColor />} />
+            <Route path="/typography/font-size-weight" element={<FontSizeWeight />} />
+            <Route path="/typography/line-height" element={<LineHeight />} />
+            <Route path="/typography/data-font" element={<DataFont />} />
+            <Route path="/typography/grid" element={<GridSystem />} />
+          </Routes>
+        </main>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
-    <BrowserRouter>
-      <div>
-        <Header />
-
-        <div className="flex flex-1">
-          <nav>
-            <div className="border-2 py-2">
-              <h3 className="py-0.5">カラーシステム</h3>
-              <ul>
-                <li>
-                  <Link to="/color/basic" className="underline" >基本テキストカラー</Link>
-                </li>
-                <li>
-                  <Link to="/color/role" className="underline">役職カラーパレット</Link>
-                </li>
-                <li>
-                  <Link to="/color/primary-action" className="underline">プライマリーアクション色</Link>
-                </li>
-                <li>
-                  <Link to="/color/semantic" className="underline">セマンティックカラー</Link>
-                </li>
-                <li>
-                  <Link to="/color/neutral" className="underline">ニュートラルカラー</Link>
-                </li>
-                <li>
-                  <Link to="/color/search-highlight" className="underline">検索ハイライト色</Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="border-2 py-2">
-              <h3 className="py-0.5">タイポグラフィ</h3>
-              <ul>
-                <li>
-                  <Link to="/typography/font-size-weight" className="underline">フォントサイズ・ウェイト階層</Link>
-                </li>
-                <li>
-                  <Link to="/typography/line-height" className="underline">行間</Link>
-                </li>
-                <li>
-                  <Link to="/typography/data-font" className="underline">データ用フォント</Link>
-                </li>
-                <li>
-                  <Link to="/typography/grid" className="underline">グリッドシステム</Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
-
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/color/basic" element={<BasicTextColor />} />
-              <Route path="/color/role" element={<RoleColors />} />
-              <Route path="/color/primary-action" element={<PrimaryActionColor />} />
-              <Route path="/color/semantic" element={<SemanticColors />} />
-              <Route path="/color/neutral" element={<NeutralColors />} />
-              <Route path="/color/search-highlight" element={<SearchHighlightColor />} />
-              <Route path="/typography/font-size-weight" element={<FontSizeWeight />} />
-              <Route path="/typography/line-height" element={<LineHeight />} />
-              <Route path="/typography/data-font" element={<DataFont />} />
-              <Route path="/typography/grid" element={<GridSystem />} />
-            </Routes>
-          </main>
-        </div>
-      </div>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

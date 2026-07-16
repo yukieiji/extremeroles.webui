@@ -1,11 +1,9 @@
 import { useState } from "react";
+import { useDesignTheme } from "../../themeContext";
 import { ChevronDown, ChevronRight, Info, Plus } from "lucide-react";
 import {
-  BASIC_TEXT_COLOR,
-  NEUTRAL_COLORS,
   DATA_FONT,
   TYPOGRAPHY,
-  SEMANTIC_COLORS,
 } from "../../designConstants";
 
 /**
@@ -21,38 +19,39 @@ function RoleCategoryAccordionMock({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(true);
+  const { basicTextColor, neutralColors } = useDesignTheme();
 
   return (
     <div
-      className={`border ${NEUTRAL_COLORS.neutral5.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg}`}
+      className={`border ${neutralColors.neutral5.border} rounded-lg overflow-hidden ${neutralColors.neutral1.bg}`}
     >
       <div
-        className={`flex items-center ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}
+        className={`flex items-center ${neutralColors.neutral3.hover} transition-colors`}
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex-1 flex items-center gap-3 p-4 text-left cursor-pointer"
         >
           {isOpen ? (
-            <ChevronDown size={20} className={BASIC_TEXT_COLOR.textTertiary} />
+            <ChevronDown size={20} className={basicTextColor.textTertiary} />
           ) : (
-            <ChevronRight size={20} className={BASIC_TEXT_COLOR.textTertiary} />
+            <ChevronRight size={20} className={basicTextColor.textTertiary} />
           )}
-          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
+          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary}`}>
             {title}
           </span>
-          <span className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textTertiary} ml-2`}>
+          <span className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${basicTextColor.textTertiary} ml-2`}>
             ({id})
           </span>
         </button>
         <div className="px-4">
-          <button className={`p-1 rounded cursor-pointer ${NEUTRAL_COLORS.neutral3.hover} transition-colors`}>
-            <Plus size={20} className={BASIC_TEXT_COLOR.textSecondary} />
+          <button className={`p-1 rounded cursor-pointer ${neutralColors.neutral3.hover} transition-colors`}>
+            <Plus size={20} className={basicTextColor.textSecondary} />
           </button>
         </div>
       </div>
       {isOpen && (
-        <div className={`border-t ${NEUTRAL_COLORS.neutral4.border}`}>
+        <div className={`border-t ${neutralColors.neutral4.border}`}>
           {children}
         </div>
       )}
@@ -74,24 +73,26 @@ function OptionRowMock({
   format: string;
   depth?: number;
 }) {
+  const { basicTextColor, neutralColors, semanticColors } = useDesignTheme();
+
   return (
     <div
-      className={`flex items-center gap-4 p-3 ${NEUTRAL_COLORS.neutral3.hover} cursor-pointer transition-colors ${NEUTRAL_COLORS.neutral1.bg}`}
+      className={`flex items-center gap-4 p-3 ${neutralColors.neutral3.hover} cursor-pointer transition-colors ${neutralColors.neutral1.bg}`}
       style={{ paddingLeft: `${depth * 1.5 + 0.75}rem` }}
     >
       <div className="flex-1 min-w-0">
-        <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
+        <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary}`}>
           {label}
         </span>
       </div>
       <div className="shrink-0 flex items-center gap-2">
-        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
+        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary} px-2 py-1 border ${neutralColors.neutral5.border} rounded ${neutralColors.neutral2.bg} min-w-[3rem] text-center`}>
           {value}
         </div>
-        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textSecondary}`}>
+        <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${basicTextColor.textSecondary}`}>
           {format}
         </div>
-        <Info size={14} style={{ color: SEMANTIC_COLORS.info }} />
+        <Info size={14} style={{ color: semanticColors.info }} />
       </div>
     </div>
   );
@@ -114,35 +115,36 @@ function ChildOptionViewAccordionMock({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { basicTextColor, neutralColors } = useDesignTheme();
 
   return (
     <div className="flex flex-col">
       <div
-        className={`flex items-center gap-2 p-3 ${NEUTRAL_COLORS.neutral3.hover} cursor-pointer transition-colors ${NEUTRAL_COLORS.neutral1.bg}`}
+        className={`flex items-center gap-2 p-3 ${neutralColors.neutral3.hover} cursor-pointer transition-colors ${neutralColors.neutral1.bg}`}
         style={{ paddingLeft: `${depth * 1.5 + 0.75}rem` }}
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-1 rounded cursor-pointer ${BASIC_TEXT_COLOR.textTertiary} ${NEUTRAL_COLORS.neutral3.hover}`}
+          className={`p-1 rounded cursor-pointer ${basicTextColor.textTertiary} ${neutralColors.neutral3.hover}`}
         >
           {isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
         </button>
         <div className="flex-1 flex items-center justify-between gap-4">
-          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
+          <span className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary}`}>
             {label}
           </span>
           <div className="shrink-0 flex items-center gap-2">
-            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary} px-2 py-1 border ${NEUTRAL_COLORS.neutral5.border} rounded ${NEUTRAL_COLORS.neutral2.bg} min-w-[3rem] text-center`}>
+            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary} px-2 py-1 border ${neutralColors.neutral5.border} rounded ${neutralColors.neutral2.bg} min-w-[3rem] text-center`}>
               {value}
             </div>
-            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textSecondary}`}>
+            <div className={`${DATA_FONT.family} ${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${basicTextColor.textSecondary}`}>
               {format}
             </div>
           </div>
         </div>
       </div>
       {isOpen && (
-        <div className={`flex flex-col border-l-2 ml-6 ${NEUTRAL_COLORS.neutral4.border}`}>
+        <div className={`flex flex-col border-l-2 ml-6 ${neutralColors.neutral4.border}`}>
           {children}
         </div>
       )}
@@ -151,25 +153,27 @@ function ChildOptionViewAccordionMock({
 }
 
 export default function DataFont() {
+  const { basicTextColor, neutralColors } = useDesignTheme();
+
   return (
-    <div className={`p-6 space-y-12 ${NEUTRAL_COLORS.neutral1.bg} min-h-screen`}>
+    <div className={`p-6 space-y-12 ${neutralColors.neutral1.bg} min-h-screen`}>
       <section>
-        <h2 className={`text-2xl font-bold mb-4 ${BASIC_TEXT_COLOR.textPrimary}`}>データ用フォント（等幅）</h2>
+        <h2 className={`text-2xl font-bold mb-4 ${basicTextColor.textPrimary}`}>データ用フォント（等幅）</h2>
         <div className="space-y-4">
-          <p className={`${BASIC_TEXT_COLOR.textSecondary}`}>
+          <p className={`${basicTextColor.textSecondary}`}>
             {DATA_FONT.description}
           </p>
-          <div className={`p-4 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg}`}>
+          <div className={`p-4 border rounded ${neutralColors.neutral4.border} ${neutralColors.neutral2.bg}`}>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textTertiary} mb-1`}>Standard Font (Sans)</p>
-                <p className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
+                <p className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${basicTextColor.textTertiary} mb-1`}>Standard Font (Sans)</p>
+                <p className={`${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary}`}>
                   0123456789 ABCDEFGHIJKLMN
                 </p>
               </div>
               <div>
-                <p className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${BASIC_TEXT_COLOR.textTertiary} mb-1`}>Data Font (Mono)</p>
-                <p className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${BASIC_TEXT_COLOR.textPrimary}`}>
+                <p className={`${TYPOGRAPHY.small.size} ${TYPOGRAPHY.small.weight} ${basicTextColor.textTertiary} mb-1`}>Data Font (Mono)</p>
+                <p className={`${DATA_FONT.family} ${TYPOGRAPHY.label.size} ${TYPOGRAPHY.label.weight} ${basicTextColor.textPrimary}`}>
                   0123456789 ABCDEFGHIJKLMN
                 </p>
               </div>
@@ -180,13 +184,13 @@ export default function DataFont() {
 
       {/* RoleCategoryAccordion */}
       <section className="space-y-4">
-        <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>Role Category (RoleCategoryAccordion)</h3>
-        <p className={BASIC_TEXT_COLOR.textSecondary}>
+        <h3 className={`text-xl font-semibold ${basicTextColor.textPrimary}`}>Role Category (RoleCategoryAccordion)</h3>
+        <p className={basicTextColor.textSecondary}>
           カテゴリー名に付随する内部IDや、項目のカウント数などに等幅フォントを適用します。
         </p>
-        <div className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner`}>
+        <div className={`p-6 border rounded ${neutralColors.neutral4.border} ${neutralColors.neutral2.bg} shadow-inner`}>
           <RoleCategoryAccordionMock title="役職設定" id="CAT_ROLES_001">
-            <div className={`divide-y ${NEUTRAL_COLORS.neutral4.border}`}>
+            <div className={`divide-y ${neutralColors.neutral4.border}`}>
               <OptionRowMock label="インポスター" value="2" format="人" />
               <OptionRowMock label="クルーメイト" value="8" format="人" />
             </div>
@@ -196,12 +200,12 @@ export default function DataFont() {
 
       {/* OptionEditorCategoryOptionLayout & ExROptionRowView */}
       <section className="space-y-4">
-        <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>Option Settings (ExROptionRowView)</h3>
-        <p className={BASIC_TEXT_COLOR.textSecondary}>
+        <h3 className={`text-xl font-semibold ${basicTextColor.textPrimary}`}>Option Settings (ExROptionRowView)</h3>
+        <p className={basicTextColor.textSecondary}>
           設定値や単位（フォーマット）に等幅フォントを適用することで、数値の桁数に関わらずレイアウトを安定させ、視認性を高めます。
         </p>
-        <div className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner`}>
-          <div className={`border ${NEUTRAL_COLORS.neutral5.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg} divide-y ${NEUTRAL_COLORS.neutral4.border}`}>
+        <div className={`p-6 border rounded ${neutralColors.neutral4.border} ${neutralColors.neutral2.bg} shadow-inner`}>
+          <div className={`border ${neutralColors.neutral5.border} rounded-lg overflow-hidden ${neutralColors.neutral1.bg} divide-y ${neutralColors.neutral4.border}`}>
             <OptionRowMock label="プレイヤー速度" value="1.25" format="x" />
             <OptionRowMock label="キルクールダウン" value="22.5" format="sec" />
             <OptionRowMock label="タスク勝利条件" value="100" format="%" />
@@ -212,14 +216,14 @@ export default function DataFont() {
 
       {/* ChildOptionViewAccordion */}
       <section className="space-y-4">
-        <h3 className={`text-xl font-semibold ${BASIC_TEXT_COLOR.textPrimary}`}>Nested Options (ChildOptionViewAccordion)</h3>
-        <p className={BASIC_TEXT_COLOR.textSecondary}>
+        <h3 className={`text-xl font-semibold ${basicTextColor.textPrimary}`}>Nested Options (ChildOptionViewAccordion)</h3>
+        <p className={basicTextColor.textSecondary}>
           階層構造を持つオプションにおいても、右側に並ぶ数値とフォーマットに等幅フォントを一貫して適用します。
         </p>
-        <div className={`p-6 border rounded ${NEUTRAL_COLORS.neutral4.border} ${NEUTRAL_COLORS.neutral2.bg} shadow-inner`}>
-          <div className={`border ${NEUTRAL_COLORS.neutral5.border} rounded-lg overflow-hidden ${NEUTRAL_COLORS.neutral1.bg} divide-y ${NEUTRAL_COLORS.neutral4.border}`}>
+        <div className={`p-6 border rounded ${neutralColors.neutral4.border} ${neutralColors.neutral2.bg} shadow-inner`}>
+          <div className={`border ${neutralColors.neutral5.border} rounded-lg overflow-hidden ${neutralColors.neutral1.bg} divide-y ${neutralColors.neutral4.border}`}>
             <ChildOptionViewAccordionMock label="マッドメイト設定" value="ON" format="">
-              <div className={`divide-y ${NEUTRAL_COLORS.neutral4.border}`}>
+              <div className={`divide-y ${neutralColors.neutral4.border}`}>
                 <OptionRowMock label="出現確率" value="50" format="%" depth={1} />
                 <OptionRowMock label="キル可能数" value="0" format="回" depth={1} />
               </div>

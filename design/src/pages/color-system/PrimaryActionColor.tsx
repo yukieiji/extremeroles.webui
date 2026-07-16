@@ -1,10 +1,11 @@
-import { BASIC_TEXT_COLOR, PRIMARY_ACTION_COLOR } from "../../designConstants";
+import { useDesignTheme } from "../../themeContext";
 import { Button } from "@/components/ui/button";
 import { Plus, Minus, RefreshCw, Download } from "lucide-react";
 import { translationMetaData } from "@/logics/api";
 
 export default function PrimaryActionColor() {
-  const primaryActionClass = `${PRIMARY_ACTION_COLOR.primary} ${BASIC_TEXT_COLOR.textPrimary}`;
+  const { basicTextColor, primaryActionColor } = useDesignTheme();
+  const primaryActionClass = `${primaryActionColor.primary} ${basicTextColor.textPrimary}`;
 
   const handleDummyClick = (name: string) => {
     console.log(`${name} clicked`);
@@ -31,8 +32,8 @@ export default function PrimaryActionColor() {
           <div className="flex gap-4 items-center mt-2">
             <span>
               Primary:{" "}
-              <code className="bg-gray-100 p-1 rounded text-black">
-                {PRIMARY_ACTION_COLOR.primary}
+              <code className="bg-gray-100 p-1 rounded text-black dark:text-neutral-200 dark:bg-neutral-800">
+                {primaryActionColor.primary}
               </code>
             </span>
           </div>
