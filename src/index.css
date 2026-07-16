@@ -160,26 +160,3 @@
 
 	--radius: 0.625rem;
 }
-
-.dark {
-	--n1-app-background: #2c3138;
-	--n2-border-strong: #404652;
-	--n3-border-weak: #5f677a;
-	--n4-components-background: #8990a1;
-	--n5-usercontrol-background: #b4bac5;
-
-	--text-primary: #ffffff;
-	--text-secondary: #e0e6ed;
-	--text-tertiary: #b4bac5;
-
-	--primary-action: #2279f2;
-	--primary-action-hover: #2279f2cc;
-	--primary-action-active: #2279f2;
-
-	--info: #3a5fdc;
-	--error: #c53030;
-	--success: #2a935a;
-	--search-highlight: #2196f3;
-
-	--ring: #404652;
-}

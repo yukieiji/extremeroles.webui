@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import BasicTextColor from "./pages/color-system/BasicTextColor";
 import RoleColors from "./pages/color-system/RoleColors";
 import PrimaryActionColor from "./pages/color-system/PrimaryActionColor";
@@ -139,7 +139,7 @@ function Home() {
           <div className="space-y-8">
             <div className="space-y-2">
               <span className="text-[10px] font-mono text-gray-400 uppercase">Data Font</span>
-              <p className={`${DATA_FONT.family} text-xl border p-4 bg-gray-50 dark:bg-neutral-800 rounded`}>
+              <p className={`${DATA_FONT.family} text-xl border p-4 bg-gray-50 rounded`}>
                 ID: 987,654,321.00
               </p>
               <p className="text-[10px] text-gray-500 italic">{DATA_FONT.description}</p>
@@ -167,13 +167,13 @@ function Home() {
                  <span className="px-5 text-[10px] font-mono text-gray-500">{grid.px} ({grid.value})</span>
               </div>
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-gray-200 dark:bg-neutral-800 rounded flex items-center justify-center text-[10px]">Item</div>
+                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
                 <div
                   className="bg-blue-200 border-x border-blue-400 h-8 flex items-center justify-center text-[10px] text-blue-600 font-bold overflow-hidden"
                   style={{ width: grid.px }}
                 >
                 </div>
-                <div className="w-12 h-12 bg-gray-200 dark:bg-neutral-800 rounded flex items-center justify-center text-[10px]">Item</div>
+                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
               </div>
               <span className="ml-4 text-xs text-gray-500 italic">{grid.description}</span>
             </div>
@@ -186,79 +186,84 @@ function Home() {
 }
 
 function Header() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   const { isDark, setIsDark } = useTheme();
 
   return (
-    <header className="p-4 border-b flex justify-between items-center bg-app-background text-text-primary">
-      <h1 className="text-xl font-bold">
+    <header>
+      {isHomePage && (
+        <div className="flex items-center gap-2 pb-2">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={isDark}
+              onChange={(e) => setIsDark(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+            />
+            <span className="text-sm font-medium text-text-primary">ダークテーマ</span>
+          </label>
+        </div>
+      )}
+      <h1>
         <Link to="/">Design Language Checklist</Link>
       </h1>
-      <div className="flex items-center gap-2">
-        <label className="flex items-center gap-2 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={isDark}
-            onChange={(e) => setIsDark(e.target.checked)}
-            className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-          />
-          <span className="text-sm font-medium">ダークテーマ</span>
-        </label>
-      </div>
     </header>
   );
 }
 
 function AppContent() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       <Header />
 
       <div className="flex flex-1">
-        <nav className="w-64 border-r p-4 space-y-4">
-          <div className="border-2 rounded p-2">
-            <h3 className="font-bold mb-2">カラーシステム</h3>
-            <ul className="space-y-1">
+        <nav>
+          <div className="border-2 py-2">
+            <h3 className="py-0.5">カラーシステム</h3>
+            <ul>
               <li>
-                <Link to="/color/basic" className="underline block hover:text-blue-500">基本テキストカラー</Link>
+                <Link to="/color/basic" className="underline" >基本テキストカラー</Link>
               </li>
               <li>
-                <Link to="/color/role" className="underline block hover:text-blue-500">役職カラーパレット</Link>
+                <Link to="/color/role" className="underline">役職カラーパレット</Link>
               </li>
               <li>
-                <Link to="/color/primary-action" className="underline block hover:text-blue-500">プライマリーアクション色</Link>
+                <Link to="/color/primary-action" className="underline">プライマリーアクション色</Link>
               </li>
               <li>
-                <Link to="/color/semantic" className="underline block hover:text-blue-500">セマンティックカラー</Link>
+                <Link to="/color/semantic" className="underline">セマンティックカラー</Link>
               </li>
               <li>
-                <Link to="/color/neutral" className="underline block hover:text-blue-500">ニュートラルカラー</Link>
+                <Link to="/color/neutral" className="underline">ニュートラルカラー</Link>
               </li>
               <li>
-                <Link to="/color/search-highlight" className="underline block hover:text-blue-500">検索ハイライト色</Link>
+                <Link to="/color/search-highlight" className="underline">検索ハイライト色</Link>
               </li>
             </ul>
           </div>
 
-          <div className="border-2 rounded p-2">
-            <h3 className="font-bold mb-2">タイポグラフィ</h3>
-            <ul className="space-y-1">
+          <div className="border-2 py-2">
+            <h3 className="py-0.5">タイポグラフィ</h3>
+            <ul>
               <li>
-                <Link to="/typography/font-size-weight" className="underline block hover:text-blue-500">フォントサイズ・ウェイト階層</Link>
+                <Link to="/typography/font-size-weight" className="underline">フォントサイズ・ウェイト階層</Link>
               </li>
               <li>
-                <Link to="/typography/line-height" className="underline block hover:text-blue-500">行間</Link>
+                <Link to="/typography/line-height" className="underline">行間</Link>
               </li>
               <li>
-                <Link to="/typography/data-font" className="underline block hover:text-blue-500">データ用フォント</Link>
+                <Link to="/typography/data-font" className="underline">データ用フォント</Link>
               </li>
               <li>
-                <Link to="/typography/grid" className="underline block hover:text-blue-500">グリッドシステム</Link>
+                <Link to="/typography/grid" className="underline">グリッドシステム</Link>
               </li>
             </ul>
           </div>
         </nav>
 
-        <main className="flex-1 p-4">
+        <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/color/basic" element={<BasicTextColor />} />
