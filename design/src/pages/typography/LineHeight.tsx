@@ -68,7 +68,7 @@ function MockOptionRow({
 
 /**
  * アコーディオンのモック
- * src/components/blocks/OptionEditorAccordion.tsx 等ের 構造を模倣
+ * src/components/blocks/OptionEditorAccordion.tsx 等の構造を模倣
  */
 function MockAccordion({
   title,
