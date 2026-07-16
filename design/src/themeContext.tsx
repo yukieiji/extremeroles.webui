@@ -76,12 +76,22 @@ export function useTheme() {
 export function useDesignTheme() {
   const { isDark } = useTheme();
 
+  const neutralColorsBase = isDark ? NEUTRAL_COLORS_DARK : NEUTRAL_COLORS;
+  const neutralColors = {
+    ...neutralColorsBase,
+    neutral1: {
+      ...neutralColorsBase.neutral1,
+      hex: isDark ? "#000000" : "#FFFFFF",
+      bg: isDark ? "bg-black" : "bg-white",
+    },
+  };
+
   return {
     isDark,
     basicTextColor: isDark ? BASIC_TEXT_COLOR_DARK : BASIC_TEXT_COLOR,
     primaryActionColor: isDark ? PRIMARY_ACTION_COLOR_DARK : PRIMARY_ACTION_COLOR,
     semanticColors: isDark ? SEMANTIC_COLORS_DARK : SEMANTIC_COLORS,
-    neutralColors: isDark ? NEUTRAL_COLORS_DARK : NEUTRAL_COLORS,
+    neutralColors,
     searchHighlightColor: isDark ? SEARCH_HIGHLIGHT_COLOR_DARK : SEARCH_HIGHLIGHT_COLOR,
   };
 }
