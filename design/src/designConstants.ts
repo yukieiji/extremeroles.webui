@@ -65,7 +65,7 @@ export const SEMANTIC_COLORS_DARK = {
 
 // ニュートラルカラーの各レベルの16進数カラーコード
 const NEUTRAL_HEX = {
-  n1: '#F4F4F5',
+  n1: '#FFFFFF',
   n2: '#D0D0D6',
   n3: '#E4E4E7',
   n4: '#FFFFFF',
@@ -76,7 +76,7 @@ const NEUTRAL_HEX = {
 
 // ニュートラルカラーの各レベルの16進数カラーコード (ダーク)
 const NEUTRAL_HEX_DARK = {
-  n1: '#2C3138',
+  n1: '#000000',
   n2: '#404652',
   n3: '#5F677A',
   n4: '#8990A1',

@@ -217,7 +217,7 @@ function AppContent() {
   const { isDark } = useTheme();
 
   return (
-    <div className={isDark ? "bg-[#1e293b] text-slate-100 min-h-screen transition-colors duration-200" : "min-h-screen transition-colors duration-200"}>
+    <div className={isDark ? "bg-black text-slate-100 min-h-screen transition-colors duration-200" : "bg-white text-slate-900 min-h-screen transition-colors duration-200"}>
       <Header />
 
       <div className="flex flex-1">
