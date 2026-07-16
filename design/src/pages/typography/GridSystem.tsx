@@ -342,7 +342,7 @@ export default function GridSystem() {
                            <ChevronRight size={16} className={basicTextColor.textTertiary} />
                            <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight}`}>マッドメイト設定</span>
                            <div className="flex-1" />
-                           <div className={`px-2 py-1 bg-gray-100 dark:bg-neutral-800 rounded text-xs ${DATA_FONT.family}`}>ON</div>
+                           <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} bg-gray-100 dark:bg-neutral-800 rounded text-xs ${DATA_FONT.family}`}>ON</div>
                         </div>
                      </div>
                      <OptionRowMock label="クルーメイトの数" value="8" showVisualAid={showVisualAid} />
@@ -354,7 +354,7 @@ export default function GridSystem() {
                            <ChevronRight size={16} className={basicTextColor.textTertiary} />
                            <span className={`${TYPOGRAPHY.childlabel.size} ${TYPOGRAPHY.childlabel.weight}`}>マッドメイト設定</span>
                            <div className="flex-1" />
-                           <div className={`px-2 py-1 bg-gray-100 dark:bg-neutral-800 rounded text-xs ${DATA_FONT.family}`}>ON</div>
+                           <div className={`${GRID_SYSTEM.spacing.base.paddingX} ${GRID_SYSTEM.spacing.small.paddingY} bg-gray-100 dark:bg-neutral-800 rounded text-xs ${DATA_FONT.family}`}>ON</div>
                         </div>
                      </div>
                      <OptionRowMock label="クルーメイトの数2" value="8" showVisualAid={showVisualAid} />

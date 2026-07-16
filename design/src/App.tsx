@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import BasicTextColor from "./pages/color-system/BasicTextColor";
 import RoleColors from "./pages/color-system/RoleColors";
 import PrimaryActionColor from "./pages/color-system/PrimaryActionColor";
@@ -186,28 +186,24 @@ function Home() {
 }
 
 function Header() {
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
   const { isDark, setIsDark } = useTheme();
 
   return (
-    <header className="p-4 border-b">
-      {isHomePage && (
-        <div className="flex items-center gap-2 pb-2">
-          <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={isDark}
-              onChange={(e) => setIsDark(e.target.checked)}
-              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-            />
-            <span className="text-sm font-medium text-text-primary">ダークテーマ</span>
-          </label>
-        </div>
-      )}
+    <header className="p-4 border-b flex justify-between items-center bg-app-background text-text-primary">
       <h1 className="text-xl font-bold">
         <Link to="/">Design Language Checklist</Link>
       </h1>
+      <div className="flex items-center gap-2">
+        <label className="flex items-center gap-2 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={isDark}
+            onChange={(e) => setIsDark(e.target.checked)}
+            className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+          />
+          <span className="text-sm font-medium">ダークテーマ</span>
+        </label>
+      </div>
     </header>
   );
 }

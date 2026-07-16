@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import {
   BASIC_TEXT_COLOR,
   BASIC_TEXT_COLOR_DARK,
@@ -29,6 +29,12 @@ interface ThemeProviderProps {
 // テーマのプロバイダーコンポーネント
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [isDark, setIsDarkState] = useState(() => {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      const stored = localStorage.getItem("design-theme");
+      if (stored !== null) {
+        return stored === "dark";
+      }
+    }
     if (typeof document !== "undefined") {
       return document.documentElement.classList.contains("dark");
     }
@@ -37,6 +43,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   const setIsDark = (dark: boolean) => {
     setIsDarkState(dark);
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("design-theme", dark ? "dark" : "light");
+    }
   };
 
   useEffect(() => {
