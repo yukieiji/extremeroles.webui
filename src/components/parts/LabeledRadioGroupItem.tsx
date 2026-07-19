@@ -1,10 +1,12 @@
 import { useId } from "react";
-import { Label } from "../ui/label";
+import { TYPOGRAPHY } from "@/designConstants";
+import { Field, FieldLabel } from "../ui/field";
 import { RadioGroupItem } from "../ui/radio-group";
 
 interface LabeledRadioGroupItemProps {
 	value: string;
 	label: string;
+	orientation?: "horizontal" | "vertical";
 }
 
 /**
@@ -13,17 +15,18 @@ interface LabeledRadioGroupItemProps {
 export function LabeledRadioGroupItem({
 	value,
 	label,
+	orientation = "horizontal",
 }: LabeledRadioGroupItemProps) {
 	const id = useId();
 	return (
-		<div className="flex items-center gap-2">
+		<Field orientation={orientation}>
 			<RadioGroupItem value={value} id={id} />
-			<Label
+			<FieldLabel
 				htmlFor={id}
-				className="cursor-pointer font-medium text-sm text-text-primary"
+				className={`text-text-primary ${TYPOGRAPHY.CHILD_LABEL}`}
 			>
 				{label}
-			</Label>
-		</div>
+			</FieldLabel>
+		</Field>
 	);
 }

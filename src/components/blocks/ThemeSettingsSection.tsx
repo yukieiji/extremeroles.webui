@@ -1,5 +1,5 @@
+import { LabeledRadioGroupItem } from "../parts/LabeledRadioGroupItem";
 import { RadioGroup } from "../ui/radio-group";
-import { LabeledRadioGroupItem } from "./LabeledRadioGroupItem";
 
 interface ThemeSettingsSectionProps {
 	theme: "light" | "dark" | "system";
@@ -12,9 +12,9 @@ export function ThemeSettingsSection({
 }: ThemeSettingsSectionProps) {
 	return (
 		<RadioGroup
-			value={theme}
+			defaultValue={theme}
 			onValueChange={(value) => onUpdate(value as "light" | "dark" | "system")}
-			className="flex flex-row gap-6 mt-1"
+			className="flex flex-row gap-4 mt-1"
 		>
 			<LabeledRadioGroupItem value="system" label="システム" />
 			<LabeledRadioGroupItem value="light" label="ライト" />

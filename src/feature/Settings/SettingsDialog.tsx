@@ -1,8 +1,8 @@
 import { BigSettingSelection } from "@/components/blocks/BigSettingSelection";
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
+import { ThemeSettingsSection } from "../../components/blocks/ThemeSettingsSection";
 import { SidebarSettingsSection } from "../../components/parts/SidebarSettingsSection";
-import { ThemeSettingsSection } from "../../components/parts/ThemeSettingsSection";
 import {
 	DialogContent,
 	DialogHeader,
@@ -29,6 +29,13 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 				<DialogTitle className={TYPOGRAPHY.SIDEBAR}>{title}</DialogTitle>
 			</DialogHeader>
 			<div className="grid gap-4 py-2">
+				<BigSettingSelection title="テーマ設定">
+					<ThemeSettingsSection
+						theme={appSetting.theme ?? "system"}
+						onUpdate={(theme) => updateAppSetting({ theme })}
+					/>
+				</BigSettingSelection>
+				<Separator />
 				<BigSettingSelection title={translationMetaData.LEFT_SIDEBAR_SETTING}>
 					<SidebarSettingsSection
 						setting={appSetting.leftSidebar}
@@ -40,13 +47,6 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 					<SidebarSettingsSection
 						setting={appSetting.rightSidebar}
 						onUpdate={(rightSidebar) => updateAppSetting({ rightSidebar })}
-					/>
-				</BigSettingSelection>
-				<Separator />
-				<BigSettingSelection title="テーマ設定">
-					<ThemeSettingsSection
-						theme={appSetting.theme ?? "system"}
-						onUpdate={(theme) => updateAppSetting({ theme })}
 					/>
 				</BigSettingSelection>
 				<Separator />
