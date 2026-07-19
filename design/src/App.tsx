@@ -220,7 +220,7 @@ function AppContent() {
   const textStyle = isDark ? "text-slate-100 " : "text-slate-900"
 
   return (
-    <div className={`${textStyle} ${neutralColors.neutral1.bg} min-h-screen`}>
+    <div className={`${textStyle} min-h-screen`} style={{ backgroundColor: neutralColors.neutral1.hex }}>
       <Header />
 
       <div className="flex flex-1">
