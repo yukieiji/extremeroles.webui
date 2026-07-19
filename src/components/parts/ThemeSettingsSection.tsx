@@ -1,29 +1,5 @@
-import { useId } from "react";
-import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-
-interface ThemeSettingsItemProps {
-	value: "light" | "dark" | "system";
-	label: string;
-}
-
-/**
- * 各テーマの選択アイテムを表すサブコンポーネント
- */
-function ThemeSettingsItem({ value, label }: ThemeSettingsItemProps) {
-	const id = useId();
-	return (
-		<div className="flex items-center gap-2">
-			<RadioGroupItem value={value} id={id} />
-			<Label
-				htmlFor={id}
-				className="cursor-pointer font-medium text-sm text-text-primary"
-			>
-				{label}
-			</Label>
-		</div>
-	);
-}
+import { RadioGroup } from "../ui/radio-group";
+import { LabeledRadioGroupItem } from "./LabeledRadioGroupItem";
 
 interface ThemeSettingsSectionProps {
 	theme: "light" | "dark" | "system";
@@ -40,9 +16,9 @@ export function ThemeSettingsSection({
 			onValueChange={(value) => onUpdate(value as "light" | "dark" | "system")}
 			className="flex flex-row gap-6 mt-1"
 		>
-			<ThemeSettingsItem value="system" label="システム" />
-			<ThemeSettingsItem value="light" label="ライト" />
-			<ThemeSettingsItem value="dark" label="ダーク" />
+			<LabeledRadioGroupItem value="system" label="システム" />
+			<LabeledRadioGroupItem value="light" label="ライト" />
+			<LabeledRadioGroupItem value="dark" label="ダーク" />
 		</RadioGroup>
 	);
 }
