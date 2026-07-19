@@ -214,10 +214,13 @@ function Header() {
 }
 
 function AppContent() {
-  const { isDark } = useTheme();
+
+  const { isDark, neutralColors } = useDesignTheme();
+
+  const textStyle = isDark ? "text-slate-100 " : "text-slate-900"
 
   return (
-    <div className={isDark ? "bg-black text-slate-100 min-h-screen transition-colors duration-200" : "bg-white text-slate-900 min-h-screen transition-colors duration-200"}>
+    <div className={`${textStyle} ${neutralColors.neutral1.bg} min-h-screen`}>
       <Header />
 
       <div className="flex flex-1">

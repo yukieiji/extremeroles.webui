@@ -36,9 +36,9 @@ export const PRIMARY_ACTION_COLOR = {
 
 export const PRIMARY_ACTION_COLOR_DARK = {
   // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色 (ダーク)
-  primary: "bg-[#2279F2]",
-  hover: "hover:bg-[#2279F2]/80 transition-colors",
-  active: "active:bg-[#2279F2]",
+  primary: "bg-[#69D2FB]",
+  hover: "hover:bg-[#69D2FB]/80 transition-colors",
+  active: "active:bg-[#7DD3FC]",
 };
 
 export const SEMANTIC_COLORS = {
@@ -54,13 +54,13 @@ export const SEMANTIC_COLORS = {
 
 export const SEMANTIC_COLORS_DARK = {
   // エラー色 (ダーク)
-  error: "#C53030",
+  error: "#F22648",
   // 警告色 (ダーク)
-  warning: "#E08C1D",
+  warning: "#F38406",
   // 成功色 (ダーク)
-  success: "#2A935A",
+  success: "#19B853",
   // 情報色 (ダーク)
-  info: "#3A5FDC",
+  info: "#818CF8",
 };
 
 // ニュートラルカラーの各レベルの16進数カラーコード
@@ -76,7 +76,7 @@ const NEUTRAL_HEX = {
 
 // ニュートラルカラーの各レベルの16進数カラーコード (ダーク)
 const NEUTRAL_HEX_DARK = {
-  n1: '#2C3138',
+  n1: '#000000',
   n2: '#404652',
   n3: '#5F677A',
   n4: '#8990A1',
