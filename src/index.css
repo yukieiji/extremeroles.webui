@@ -160,3 +160,23 @@
 
 	--radius: 0.625rem;
 }
+
+.dark {
+	--n1-app-background: #101720;
+	--n2-border-strong: #202535;
+	--n3-border-weak: #272936;
+	--n4-components-background: #303545;
+	--n5-usercontrol-background: #3a4054;
+
+	--text-primary: #dde0e7;
+	--text-secondary: #a9aebb;
+	--text-tertiary: #6e7b93;
+
+	--primary-action: #058fc6;
+	--primary-action-hover: #058fc6cc;
+
+	--info: #818cf8;
+	--error: #f22648;
+	--success: #19b853;
+	--search-highlight: #3790f5;
+}
