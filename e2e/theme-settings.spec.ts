@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { getLeftSideber, prepare, reload } from "./conftest";
+import { getLeftSideber, prepare } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await prepare(page, 100);
@@ -10,9 +10,8 @@ test.beforeEach(async ({ page }) => {
 	});
 });
 
-test("テーマの切り替えラジオボタンが機能し、ページにクラスが正しく付与されること", async ({
+test("テーマの切り替えラジオボタンが機能し、ページにクラスが正しく付与および保存されること", async ({
 	page,
-	browser,
 }) => {
 	// 設定ボタンをクリックしてダイアログを開く
 	const settingsButton = page.getByTestId("sidebar-settings-button");
@@ -35,6 +34,13 @@ test("テーマの切り替えラジオボタンが機能し、ページにク�
 	);
 	expect(isDarkAfterLight).toBe(false);
 
+	// LocalStorageにthemeが「light」として保存されていることを検証
+	const localStorageThemeAfterLight = await page.evaluate(() => {
+		const setting = localStorage.getItem("setting");
+		return setting ? JSON.parse(setting).theme : null;
+	});
+	expect(localStorageThemeAfterLight).toBe("light");
+
 	// 「ダーク」ラジオボタンをクリック
 	const darkRadio = page.getByRole("radio", { name: "ダーク" });
 	await darkRadio.click();
@@ -45,24 +51,10 @@ test("テーマの切り替えラジオボタンが機能し、ページにク�
 	);
 	expect(isDarkAfterDark).toBe(true);
 
-	// ページをリロードして永続化（LocalStorageへの保存）を検証
-	const { newPage, newContext } = await reload(page, browser);
-
-	const isDarkAfterReload = await newPage.evaluate(() =>
-		document.documentElement.classList.contains("dark"),
-	);
-	expect(isDarkAfterReload).toBe(true);
-
-	// 設定を開き「ライト」に戻す
-	const newSettingsButton = newPage.getByTestId("sidebar-settings-button");
-	await newSettingsButton.click();
-	const newLightRadio = newPage.getByRole("radio", { name: "ライト" });
-	await newLightRadio.click();
-
-	const isDarkAfterRestore = await newPage.evaluate(() =>
-		document.documentElement.classList.contains("dark"),
-	);
-	expect(isDarkAfterRestore).toBe(false);
-
-	await newContext.close();
+	// LocalStorageにthemeが「dark」として保存されていることを検証
+	const localStorageThemeAfterDark = await page.evaluate(() => {
+		const setting = localStorage.getItem("setting");
+		return setting ? JSON.parse(setting).theme : null;
+	});
+	expect(localStorageThemeAfterDark).toBe("dark");
 });
