@@ -26,6 +26,7 @@ export interface AppSetting {
 	leftSidebar: SidebarSetting;
 	rightSidebar: SidebarSetting;
 	mockPlayerNames: string[];
+	theme?: "light" | "dark" | "system";
 }
 
 /**
@@ -77,6 +78,7 @@ export function loadAppSetting(): AppSetting {
 		leftSidebar: { initialOpen: true, saveState: true },
 		rightSidebar: { initialOpen: false, saveState: true },
 		mockPlayerNames: [],
+		theme: "system",
 	};
 	if (stored === null) {
 		return defaultSetting;
@@ -88,6 +90,7 @@ export function loadAppSetting(): AppSetting {
 			...parsed,
 			leftSidebar: { ...defaultSetting.leftSidebar, ...parsed.leftSidebar },
 			rightSidebar: { ...defaultSetting.rightSidebar, ...parsed.rightSidebar },
+			theme: parsed.theme ?? "system",
 		};
 	} catch (e) {
 		console.error("Failed to parse app setting", e);
