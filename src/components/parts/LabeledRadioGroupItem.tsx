@@ -20,7 +20,7 @@ export function LabeledRadioGroupItem({
 	const id = useId();
 	return (
 		<Field orientation={orientation}>
-			<RadioGroupItem value={value} id={id} />
+			<RadioGroupItem value={value} id={id} className="cursor-pointer" />
 			<FieldLabel
 				htmlFor={id}
 				className={`text-text-primary ${TYPOGRAPHY.CHILD_LABEL}`}
