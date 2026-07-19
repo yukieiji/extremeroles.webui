@@ -105,7 +105,7 @@ function Home() {
         <div className="flex items-center gap-4">
           <span className="text-xl text-gray-400">Search highlight Color:</span>
           <span className="text-xl text-gray-400">{searchHighlightColor.ring}</span>
-          <div className={`px-4 py-1 border rounded ring-2 ${searchHighlightColor.ring} bg-white text-xl dark:bg-neutral-800`}>
+          <div className={`px-4 py-1 border rounded ring-2 ${searchHighlightColor.ring} text-xl`} style={{ backgroundColor: neutralColors.neutral4.hex }}>
             Highlighted Item
           </div>
         </div>
@@ -139,7 +139,7 @@ function Home() {
           <div className="space-y-8">
             <div className="space-y-2">
               <span className="text-[10px] font-mono text-gray-400 uppercase">Data Font</span>
-              <p className={`${DATA_FONT.family} text-xl border p-4 bg-gray-50 rounded`}>
+              <p className={`${DATA_FONT.family} text-xl border p-4 rounded`} style={{ backgroundColor: neutralColors.neutral4.hex }}>
                 ID: 987,654,321.00
               </p>
               <p className="text-[10px] text-gray-500 italic">{DATA_FONT.description}</p>
@@ -167,13 +167,13 @@ function Home() {
                  <span className="px-5 text-[10px] font-mono text-gray-500">{grid.px} ({grid.value})</span>
               </div>
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
+                <div className="w-12 h-12 rounded flex items-center justify-center text-[10px]" style={{ backgroundColor: neutralColors.neutral4.hex }}>Item</div>
                 <div
                   className="bg-blue-200 border-x border-blue-400 h-8 flex items-center justify-center text-[10px] text-blue-600 font-bold overflow-hidden"
                   style={{ width: grid.px }}
                 >
                 </div>
-                <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-[10px]">Item</div>
+                <div className="w-12 h-12 rounded flex items-center justify-center text-[10px]" style={{ backgroundColor: neutralColors.neutral4.hex }}>Item</div>
               </div>
               <span className="ml-4 text-xs text-gray-500 italic">{grid.description}</span>
             </div>
