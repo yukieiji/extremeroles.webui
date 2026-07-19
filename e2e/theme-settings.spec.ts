@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { getLeftSideber, prepare } from "./conftest";
+import { getLeftSideber, prepare, reload } from "./conftest";
 
 test.beforeEach(async ({ page }) => {
 	await prepare(page, 100);
@@ -12,6 +12,7 @@ test.beforeEach(async ({ page }) => {
 
 test("テーマの切り替えラジオボタンが機能し、ページにクラスが正しく付与されること", async ({
 	page,
+	browser,
 }) => {
 	// 設定ボタンをクリックしてダイアログを開く
 	const settingsButton = page.getByTestId("sidebar-settings-button");
@@ -45,22 +46,23 @@ test("テーマの切り替えラジオボタンが機能し、ページにク�
 	expect(isDarkAfterDark).toBe(true);
 
 	// ページをリロードして永続化（LocalStorageへの保存）を検証
-	await page.reload();
-	await page.waitForSelector('[data-slot="sidebar"]');
+	const { newPage, newContext } = await reload(page, browser);
 
-	const isDarkAfterReload = await page.evaluate(() =>
+	const isDarkAfterReload = await newPage.evaluate(() =>
 		document.documentElement.classList.contains("dark"),
 	);
 	expect(isDarkAfterReload).toBe(true);
 
 	// 設定を開き「ライト」に戻す
-	const newSettingsButton = page.getByTestId("sidebar-settings-button");
+	const newSettingsButton = newPage.getByTestId("sidebar-settings-button");
 	await newSettingsButton.click();
-	const newLightRadio = page.getByRole("radio", { name: "ライト" });
+	const newLightRadio = newPage.getByRole("radio", { name: "ライト" });
 	await newLightRadio.click();
 
-	const isDarkAfterRestore = await page.evaluate(() =>
+	const isDarkAfterRestore = await newPage.evaluate(() =>
 		document.documentElement.classList.contains("dark"),
 	);
 	expect(isDarkAfterRestore).toBe(false);
+
+	await newContext.close();
 });
