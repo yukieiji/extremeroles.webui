@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useStore } from "@/useStore";
 
 interface ColoredTextProps {
 	text: string;
@@ -31,6 +32,15 @@ export function ColoredText({
 	className = "",
 	variant = "primary",
 }: ColoredTextProps) {
+	// ユニットテストなどで useStore が部分的にモックされている場合に備え、オプショナルチェイニングを使用します。
+	const theme = useStore((state) => state?.appSetting?.theme ?? "system");
+	const isDark =
+		theme === "system"
+			? typeof window !== "undefined" &&
+				typeof window.matchMedia === "function" &&
+				window.matchMedia("(prefers-color-scheme: dark)").matches
+			: theme === "dark";
+
 	if (!text) {
 		return null;
 	}
@@ -59,7 +69,12 @@ export function ColoredText({
 			const last = stack.pop();
 			if (last) {
 				const coloredSpan = (
-					<span key={`color-${i}-${last.color}`}>{currentElements}</span>
+					<span
+						key={`color-${i}-${last.color}`}
+						style={isDark ? { color: last.color } : undefined}
+					>
+						{currentElements}
+					</span>
 				);
 				// 親の要素リストに戻り、作成した要素を追加
 				currentElements = last.elements;
@@ -82,7 +97,12 @@ export function ColoredText({
 			break;
 		}
 		const coloredSpan = (
-			<span key={`unclosed-${stack.length}`}>{currentElements}</span>
+			<span
+				key={`unclosed-${stack.length}`}
+				style={isDark ? { color: last.color } : undefined}
+			>
+				{currentElements}
+			</span>
 		);
 		currentElements = last.elements;
 		currentElements.push(coloredSpan);
