@@ -174,9 +174,12 @@
 
 	--primary-action: #058fc6;
 	--primary-action-hover: #058fc6cc;
+	--primary-action-active: #02C7E3;
 
 	--info: #818cf8;
 	--error: #f22648;
 	--success: #19b853;
 	--search-highlight: #3790f5;
+
+	--ring: #6e7b93;
 }
