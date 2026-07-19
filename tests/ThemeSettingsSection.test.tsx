@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ThemeSettingsSection } from "@/components/parts/ThemeSettingsSection";
+import { ThemeSettingsSection } from "@/components/blocks/ThemeSettingsSection";
 
 describe("ThemeSettingsSection", () => {
 	it("renders all theme options", () => {
