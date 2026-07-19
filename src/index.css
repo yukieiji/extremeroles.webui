@@ -173,7 +173,7 @@
 	--text-tertiary: #6e7b93;
 
 	--primary-action: #058fc6;
-	--primary-action-hover: #058fc6cc;
+	--primary-action-hover: #50B1D7;
 	--primary-action-active: #02c7e3;
 
 	--info: #818cf8;
@@ -183,7 +183,7 @@
 
 	--ring: #6e7b93;
 
-	/* カラーブレンドによる明るめのホバー色定義 */
+	/* カラーブレンドによる明るめのホバー色定義
 	--color-hover-n3-30: color-mix(
 		in srgb,
 		var(--n3-border-weak) 70%,
@@ -204,11 +204,11 @@
 		var(--n4-components-background) 60%,
 		#ffffff 40%
 	);
-
-	/* 直接定義による1.3倍 / 1.4倍のホバー色定義（コメントアウト）
-	--color-hover-n3-30: #333546;
-	--color-hover-n3-40: #37394c;
-	--color-hover-n4-30: #3e455a;
-	--color-hover-n4-40: #434a61;
 	*/
+
+	/* 直接定義による1.15倍 / 1.25倍のホバー色定義	*/
+	--color-hover-n3-30: rgba(71, 73, 84, 0.5);
+	--color-hover-n3-40: rgba(93, 95, 104, 0.5);
+	--color-hover-n4-30: rgba(79, 83, 97, 0.5);
+	--color-hover-n4-40: rgba(100, 104, 116, 0.5);
 }
