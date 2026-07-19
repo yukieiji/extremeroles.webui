@@ -137,6 +137,8 @@
 }
 
 :root {
+	color-scheme: light;
+
 	--n1-app-background: #f4f4f5;
 	--n2-border-strong: #d0d0d6;
 	--n3-border-weak: #e4e4e7;
@@ -162,6 +164,8 @@
 }
 
 .dark {
+	color-scheme: dark;
+
 	--n1-app-background: #101720;
 	--n2-border-strong: #202535;
 	--n3-border-weak: #272936;
