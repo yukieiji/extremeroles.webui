@@ -182,4 +182,33 @@
 	--search-highlight: #3790f5;
 
 	--ring: #6e7b93;
+
+	/* カラーブレンドによる明るめのホバー色定義 */
+	--color-hover-n3-30: color-mix(
+		in srgb,
+		var(--n3-border-weak) 70%,
+		#ffffff 30%
+	);
+	--color-hover-n3-40: color-mix(
+		in srgb,
+		var(--n3-border-weak) 60%,
+		#ffffff 40%
+	);
+	--color-hover-n4-30: color-mix(
+		in srgb,
+		var(--n4-components-background) 70%,
+		#ffffff 30%
+	);
+	--color-hover-n4-40: color-mix(
+		in srgb,
+		var(--n4-components-background) 60%,
+		#ffffff 40%
+	);
+
+	/* 直接定義による1.3倍 / 1.4倍のホバー色定義（コメントアウト）
+	--color-hover-n3-30: #333546;
+	--color-hover-n3-40: #37394c;
+	--color-hover-n4-30: #3e455a;
+	--color-hover-n4-40: #434a61;
+	*/
 }
