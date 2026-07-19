@@ -17,13 +17,13 @@ export const BASIC_TEXT_COLOR = {
 
 export const BASIC_TEXT_COLOR_DARK = {
   // Primary Text Color: 設定項目名など、最も重要なテキスト (ダーク)
-  textPrimary: "text-[#FFFFFF]",
+  textPrimary: "text-[#DDE0E7]",
 
   // Secondary Text Color: 設定の補足説明、注釈、デフォルト値 (ダーク)
-  textSecondary: "text-[#E0E6ED]",
+  textSecondary: "text-[#A9AEBB]",
 
   // Disabled Text Color/Tertiary Text Color: 無効な項目やプレースホルダー (ダーク)
-  textTertiary: "text-[#B4BAC5]",
+  textTertiary: "text-[#6E7B93]",
 };
 
 export const PRIMARY_ACTION_COLOR = {
@@ -36,8 +36,8 @@ export const PRIMARY_ACTION_COLOR = {
 
 export const PRIMARY_ACTION_COLOR_DARK = {
   // Primary Action Color: 「保存」「追加」など、ユーザーが次に行うべき主要なアクションを示す色 (ダーク)
-  primary: "bg-[#69D2FB]",
-  hover: "hover:bg-[#69D2FB]/80 transition-colors",
+  primary: "bg-[#058FC6]",
+  hover: "hover:bg-[#058FC6]/80 transition-colors",
   active: "active:bg-[#7DD3FC]",
 };
 
@@ -76,11 +76,11 @@ const NEUTRAL_HEX = {
 
 // ニュートラルカラーの各レベルの16進数カラーコード (ダーク)
 const NEUTRAL_HEX_DARK = {
-  n1: '#000000',
-  n2: '#404652',
-  n3: '#5F677A',
-  n4: '#8990A1',
-  n5: '#B4BAC5',
+  n1: '#101720',
+  n2: '#202535',
+  n3: '#272936',
+  n4: '#303545',
+  n5: '#3A4054',
 };
 
 export const NEUTRAL_COLORS = {
@@ -181,7 +181,7 @@ export const SEARCH_HIGHLIGHT_COLOR = {
 
 export const SEARCH_HIGHLIGHT_COLOR_DARK = {
   // 検索ワードに一致した箇所を目立たせる色 (ダーク)
-  ring: "ring-[#2196F3]",
+  ring: "ring-[#3790F5]",
   // ハイライトが自動的に消えるまでの時間（ミリ秒）
   duration: 2000,
 };
