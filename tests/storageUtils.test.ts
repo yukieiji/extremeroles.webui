@@ -49,6 +49,7 @@ describe("storageUtils", () => {
 				leftSidebar: { initialOpen: false, saveState: false },
 				rightSidebar: { initialOpen: true, saveState: false },
 				mockPlayerNames: ["Player1"],
+				theme: "dark" as const,
 			};
 			saveAppSetting(setting);
 			expect(loadAppSetting()).toEqual(setting);
@@ -59,6 +60,7 @@ describe("storageUtils", () => {
 				leftSidebar: { initialOpen: true, saveState: true },
 				rightSidebar: { initialOpen: false, saveState: true },
 				mockPlayerNames: [],
+				theme: "system" as const,
 			};
 			expect(loadAppSetting()).toEqual(defaultSetting);
 		});

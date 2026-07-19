@@ -16,6 +16,7 @@ import { SynchronizeButtons } from "./feature/SynchronizeButtons";
 import { SearchBar } from "./feature/search/SearchBar";
 import { translationMetaData } from "./logics/api";
 import { getAllOptions, resetApiCache } from "./logics/api.store";
+import { applyTheme } from "./logics/themeUtils";
 import { AU_OPTIONS_TITLE, EXR_OPTIONS_TITLE } from "./noTrans";
 import { useStore } from "./useStore";
 
@@ -112,6 +113,7 @@ function MainContent() {
 function RootContent() {
 	use(getAllOptions());
 	const setWindowWidth = useStore((state) => state.setWindowWidth);
+	const theme = useStore((state) => state.appSetting.theme ?? "system");
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -120,6 +122,20 @@ function RootContent() {
 		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
 	}, [setWindowWidth]);
+
+	useEffect(() => {
+		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+		const handleChange = () => {
+			if (theme === "system") {
+				applyTheme("system");
+			}
+		};
+
+		applyTheme(theme);
+
+		mediaQuery.addEventListener("change", handleChange);
+		return () => mediaQuery.removeEventListener("change", handleChange);
+	}, [theme]);
 
 	return (
 		<SidebarProvider>
