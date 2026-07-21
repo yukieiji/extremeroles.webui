@@ -54,7 +54,7 @@
     "cross-env": "^10.1.0",
     "jsdom": "^29.1.1",
     "lefthook": "^2.1.10",
-    "msw": "^2.14.3",
+    "msw": "^2.15.0",
     "typescript": "~7.0.2",
     "vite": "^8.1.4",
     "vite-plugin-singlefile": "^2.3.3",
