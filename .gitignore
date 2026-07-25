@@ -40,3 +40,6 @@ dist-ssr
 apm_modules/
 package-lock.json
 public/mockServiceWorker.js
+
+# stryker temp files
+.stryker-tmp
