@@ -16,7 +16,7 @@ jobs:
         shardIndex: [1, 2, 3, 4]
         shardTotal: [4]
     container:
-      image: mcr.microsoft.com/playwright:v1.61.0
+      image: mcr.microsoft.com/playwright:v1.62.0
     steps:
       - uses: actions/checkout@v7
 
