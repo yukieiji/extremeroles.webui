@@ -1,7 +1,7 @@
 name: ci
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
     branches:
@@ -38,7 +38,7 @@ jobs:
     - name: Run unit tests
       run: pnpm test --coverage --reporter=default --reporter=github-actions
     - name: 'Report Coverage'
-      if: always() 
+      if: always()
       uses: davelosert/vitest-coverage-report-action@v2
       with:
         json-summary-path: coverage/coverage-summary.json
@@ -48,7 +48,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.61.0
+      image: mcr.microsoft.com/playwright:v1.62.0
     strategy:
       fail-fast: false
       matrix:
