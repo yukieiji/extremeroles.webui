@@ -2,9 +2,10 @@ import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSlide
 import { ColoredText } from "@/components/parts/ColoredText";
 import { OptionItem } from "@/components/parts/OptionItem";
 import { TYPOGRAPHY } from "@/designConstants";
-import { useOptionData } from "@/hooks/useExROptionData";
+import { useOptionActive, useOptionData } from "@/hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
 import type { OptionData } from "@/type";
+import { useStore } from "@/useStore";
 
 interface ExRPairedOptionContentProps {
 	baseName: string;
@@ -24,6 +25,14 @@ export function ExRPairedOptionContent({
 	const maxUniqueOptionId = maxData.uniqueOptionId;
 	const minValueData = useOptionData(minUniqueOptionId);
 	const maxValueData = useOptionData(maxUniqueOptionId);
+
+	const isMinActive = useOptionActive(minUniqueOptionId);
+	const isMaxActive = useOptionActive(maxUniqueOptionId);
+	const inactiveOptionDisplay = useStore(
+		(state) => state.appSetting?.inactiveOptionDisplay ?? "hidden",
+	);
+	const isMinDisabled = inactiveOptionDisplay === "disabled" && !isMinActive;
+	const isMaxDisabled = inactiveOptionDisplay === "disabled" && !isMaxActive;
 
 	const updateExROptionSelection = useUpdateExROptionSelection();
 
@@ -60,6 +69,8 @@ export function ExRPairedOptionContent({
 					onMaxChange={handleMaxChange}
 					minLabel={minData.label}
 					maxLabel={maxData.label}
+					minDisabled={isMinDisabled}
+					maxDisabled={isMaxDisabled}
 				/>
 			</div>
 		</OptionItem>

@@ -50,6 +50,7 @@ describe("storageUtils", () => {
 				rightSidebar: { initialOpen: true, saveState: false },
 				mockPlayerNames: ["Player1"],
 				theme: "dark" as const,
+				inactiveOptionDisplay: "disabled" as const,
 			};
 			saveAppSetting(setting);
 			expect(loadAppSetting()).toEqual(setting);
@@ -61,6 +62,7 @@ describe("storageUtils", () => {
 				rightSidebar: { initialOpen: false, saveState: true },
 				mockPlayerNames: [],
 				theme: "system" as const,
+				inactiveOptionDisplay: "hidden" as const,
 			};
 			expect(loadAppSetting()).toEqual(defaultSetting);
 		});

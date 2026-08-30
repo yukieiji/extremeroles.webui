@@ -8,6 +8,7 @@ interface OptionToggleControlProps {
 	selection: number; // 0 or 1
 	values: string[];
 	onChange: (selection: number) => void;
+	disabled?: boolean;
 }
 
 /**
@@ -17,11 +18,15 @@ export function OptionToggleControl({
 	selection,
 	values,
 	onChange,
+	disabled = false,
 }: OptionToggleControlProps) {
 	const id = useId();
 	const isOn = selection === 1;
 
 	const handleToggle = () => {
+		if (disabled) {
+			return;
+		}
 		onChange(isOn ? 0 : 1);
 	};
 
@@ -31,6 +36,7 @@ export function OptionToggleControl({
 				id={id}
 				onClick={handleToggle}
 				checked={isOn}
+				disabled={disabled}
 				className="cursor-pointer"
 				data-testid="option-toggle"
 			/>

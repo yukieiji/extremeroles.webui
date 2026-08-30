@@ -20,6 +20,14 @@ export interface SidebarSetting {
 }
 
 /**
+ * 非アクティブオプションの表示設定
+ * - hidden: 非表示（デフォルト）
+ * - disabled: 操作だけ無効
+ * - enabled: 操作可能
+ */
+export type InactiveOptionDisplayMode = "hidden" | "disabled" | "enabled";
+
+/**
  * アプリケーションの設定
  */
 export interface AppSetting {
@@ -27,6 +35,7 @@ export interface AppSetting {
 	rightSidebar: SidebarSetting;
 	mockPlayerNames: string[];
 	theme?: "light" | "dark" | "system";
+	inactiveOptionDisplay?: InactiveOptionDisplayMode;
 }
 
 /**
@@ -79,6 +88,7 @@ export function loadAppSetting(): AppSetting {
 		rightSidebar: { initialOpen: false, saveState: true },
 		mockPlayerNames: [],
 		theme: "system",
+		inactiveOptionDisplay: "hidden",
 	};
 	if (stored === null) {
 		return defaultSetting;
@@ -91,6 +101,7 @@ export function loadAppSetting(): AppSetting {
 			leftSidebar: { ...defaultSetting.leftSidebar, ...parsed.leftSidebar },
 			rightSidebar: { ...defaultSetting.rightSidebar, ...parsed.rightSidebar },
 			theme: parsed.theme ?? "system",
+			inactiveOptionDisplay: parsed.inactiveOptionDisplay ?? "hidden",
 		};
 	} catch (e) {
 		console.error("Failed to parse app setting", e);

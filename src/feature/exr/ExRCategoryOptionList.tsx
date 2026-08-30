@@ -22,9 +22,13 @@ export function ExRCategoryOptionList({
 	uniqueOptionIds,
 }: ExRCategoryOptionListProps) {
 	const activeUniqueOptionIds = useStore(
-		useShallow((state) =>
-			uniqueOptionIds.filter((id) => state.isExROptionActive[id]),
-		),
+		useShallow((state) => {
+			const displayMode = state.appSetting?.inactiveOptionDisplay ?? "hidden";
+			if (displayMode !== "hidden") {
+				return uniqueOptionIds;
+			}
+			return uniqueOptionIds.filter((id) => state.isExROptionActive[id]);
+		}),
 	);
 	const shouldGroup = GROUPED_CATEGORY_IDS.includes(categoryId);
 	const groupedItems = shouldGroup

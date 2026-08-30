@@ -20,9 +20,15 @@ export function useSearchResults(): SearchItem[] {
 					if (!normalizeForSearch(item.term).includes(normalizedQuery)) {
 						return false;
 					}
-					return item.info.mode === "exr-opt"
-						? (state.isExROptionActive[item.info.uniqueOptionId] ?? false)
-						: true;
+					if (item.info.mode === "exr-opt") {
+						const displayMode =
+							state.appSetting?.inactiveOptionDisplay ?? "hidden";
+						if (displayMode !== "hidden") {
+							return true;
+						}
+						return state.isExROptionActive[item.info.uniqueOptionId] ?? false;
+					}
+					return true;
 				})
 				.slice(0, 10);
 		}),

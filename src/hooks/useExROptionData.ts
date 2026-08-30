@@ -28,9 +28,13 @@ export function useActiveChildOptions(
 	const childs =
 		exrOptionMetaData.options[uniqueOptionId]?.childOptionIds ?? [];
 	return useStore(
-		useShallow((state) =>
-			childs.filter((childId) => state.isExROptionActive[childId]),
-		),
+		useShallow((state) => {
+			const displayMode = state.appSetting?.inactiveOptionDisplay ?? "hidden";
+			if (displayMode !== "hidden") {
+				return childs;
+			}
+			return childs.filter((childId) => state.isExROptionActive[childId]);
+		}),
 	);
 }
 
@@ -39,38 +43,47 @@ export function useHasActiveOptionChild(
 ): boolean {
 	const childs = exrOptionMetaData.options[uniqueOptionId]?.childOptionIds;
 	return useStore(
-		useShallow(
-			(state) =>
-				childs &&
-				childs.length > 0 &&
-				childs.some((id) => state.isExROptionActive[id] ?? false),
-		),
+		useShallow((state) => {
+			if (!childs || childs.length === 0) {
+				return false;
+			}
+			const displayMode = state.appSetting?.inactiveOptionDisplay ?? "hidden";
+			if (displayMode !== "hidden") {
+				return true;
+			}
+			return childs.some((id) => state.isExROptionActive[id] ?? false);
+		}),
 	);
 }
 
 export function useVisibleCategories(checkCategoryIds: number[]) {
 	return useStore(
-		useShallow((state) =>
-			checkCategoryIds
-				? checkCategoryIds.filter((categoryId) => {
-						const categoryUniqueOptions =
-							exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
-						if (!categoryUniqueOptions) {
-							return false;
-						}
+		useShallow((state) => {
+			if (!checkCategoryIds) {
+				return [];
+			}
+			const displayMode = state.appSetting?.inactiveOptionDisplay ?? "hidden";
+			return checkCategoryIds.filter((categoryId) => {
+				const categoryUniqueOptions =
+					exrOptionMetaData.globalCategoryIdTopLevelMap[categoryId];
+				if (!categoryUniqueOptions) {
+					return false;
+				}
 
-						const filterdUniqueOptions =
-							categoryId === 0
-								? categoryUniqueOptions.filter((optionId) => {
-										return optionId !== PRESET_OPTION_UNIQUE_ID; // プリセット設定（OptionId 0）を除外
-									})
-								: categoryUniqueOptions;
-						return (
-							filterdUniqueOptions.length > 0 &&
-							filterdUniqueOptions.some((id) => state.isExROptionActive[id])
-						);
-					})
-				: [],
-		),
+				const filterdUniqueOptions =
+					categoryId === 0
+						? categoryUniqueOptions.filter((optionId) => {
+								return optionId !== PRESET_OPTION_UNIQUE_ID; // プリセット設定（OptionId 0）を除外
+							})
+						: categoryUniqueOptions;
+				if (filterdUniqueOptions.length === 0) {
+					return false;
+				}
+				if (displayMode !== "hidden") {
+					return true;
+				}
+				return filterdUniqueOptions.some((id) => state.isExROptionActive[id]);
+			});
+		}),
 	);
 }
