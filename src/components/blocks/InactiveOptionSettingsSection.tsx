@@ -1,6 +1,5 @@
+import { DropdownSettingSection } from "@/components/blocks/DropdownSettingSection";
 import type { InactiveOptionDisplayMode } from "@/logics/storageUtils";
-import { LabeledRadioGroupItem } from "../parts/LabeledRadioGroupItem";
-import { RadioGroup } from "../ui/radio-group";
 
 interface InactiveOptionSettingsSectionProps {
 	inactiveOptionDisplay: InactiveOptionDisplayMode;
@@ -8,21 +7,26 @@ interface InactiveOptionSettingsSectionProps {
 }
 
 /**
- * 非アクティブオプション表示設定のコンポーネント（非表示/操作だけ無効/操作可能）
+ * 非アクティブオプション表示設定のコンポーネント（ドロップダウン形式）
  */
 export function InactiveOptionSettingsSection({
 	inactiveOptionDisplay,
 	onUpdate,
 }: InactiveOptionSettingsSectionProps) {
 	return (
-		<RadioGroup
+		<DropdownSettingSection
+			title="表示モード"
 			value={inactiveOptionDisplay}
-			onValueChange={(value) => onUpdate(value as InactiveOptionDisplayMode)}
-			className="flex flex-row flex-wrap gap-4 mt-1"
-		>
-			<LabeledRadioGroupItem value="hidden" label="非表示" />
-			<LabeledRadioGroupItem value="disabled" label="操作だけ無効" />
-			<LabeledRadioGroupItem value="enabled" label="操作可能" />
-		</RadioGroup>
+			onUpdate={(value) => {
+				if (value) {
+					onUpdate(value as InactiveOptionDisplayMode);
+				}
+			}}
+			select={[
+				{ value: "hidden", title: "非表示" },
+				{ value: "disabled", title: "操作だけ無効" },
+				{ value: "enabled", title: "操作可能" },
+			]}
+		/>
 	);
 }

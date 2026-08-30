@@ -1,9 +1,10 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { InactiveOptionSettingsSection } from "@/components/blocks/InactiveOptionSettingsSection";
 
 describe("InactiveOptionSettingsSection", () => {
-	it("renders all inactive option display choices", () => {
+	it("renders dropdown trigger with current selection", () => {
 		const onUpdate = vi.fn();
 		render(
 			<InactiveOptionSettingsSection
@@ -12,14 +13,12 @@ describe("InactiveOptionSettingsSection", () => {
 			/>,
 		);
 
-		expect(screen.getByRole("radio", { name: "非表示" })).toBeInTheDocument();
-		expect(
-			screen.getByRole("radio", { name: "操作だけ無効" }),
-		).toBeInTheDocument();
-		expect(screen.getByRole("radio", { name: "操作可能" })).toBeInTheDocument();
+		const trigger = screen.getByRole("combobox");
+		expect(trigger).toHaveTextContent("非表示");
 	});
 
-	it("calls onUpdate with disabled when '操作だけ無効' is clicked", () => {
+	it("calls onUpdate with disabled when '操作だけ無効' is selected", async () => {
+		const user = userEvent.setup();
 		const onUpdate = vi.fn();
 		render(
 			<InactiveOptionSettingsSection
@@ -28,13 +27,21 @@ describe("InactiveOptionSettingsSection", () => {
 			/>,
 		);
 
-		const disabledOption = screen.getByRole("radio", { name: "操作だけ無効" });
-		fireEvent.click(disabledOption);
+		const trigger = screen.getByRole("combobox");
+		await user.click(trigger);
 
-		expect(onUpdate).toHaveBeenCalledWith("disabled");
+		const disabledOption = await screen.findByRole("option", {
+			name: "操作だけ無効",
+		});
+		await user.click(disabledOption);
+
+		await waitFor(() => {
+			expect(onUpdate).toHaveBeenCalledWith("disabled");
+		});
 	});
 
-	it("calls onUpdate with enabled when '操作可能' is clicked", () => {
+	it("calls onUpdate with enabled when '操作可能' is selected", async () => {
+		const user = userEvent.setup();
 		const onUpdate = vi.fn();
 		render(
 			<InactiveOptionSettingsSection
@@ -43,24 +50,16 @@ describe("InactiveOptionSettingsSection", () => {
 			/>,
 		);
 
-		const enabledOption = screen.getByRole("radio", { name: "操作可能" });
-		fireEvent.click(enabledOption);
+		const trigger = screen.getByRole("combobox");
+		await user.click(trigger);
 
-		expect(onUpdate).toHaveBeenCalledWith("enabled");
-	});
+		const enabledOption = await screen.findByRole("option", {
+			name: "操作可能",
+		});
+		await user.click(enabledOption);
 
-	it("calls onUpdate with hidden when '非表示' is clicked", () => {
-		const onUpdate = vi.fn();
-		render(
-			<InactiveOptionSettingsSection
-				inactiveOptionDisplay="disabled"
-				onUpdate={onUpdate}
-			/>,
-		);
-
-		const hiddenOption = screen.getByRole("radio", { name: "非表示" });
-		fireEvent.click(hiddenOption);
-
-		expect(onUpdate).toHaveBeenCalledWith("hidden");
+		await waitFor(() => {
+			expect(onUpdate).toHaveBeenCalledWith("enabled");
+		});
 	});
 });

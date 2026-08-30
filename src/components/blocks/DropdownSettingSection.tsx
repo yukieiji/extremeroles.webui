@@ -45,7 +45,9 @@ export function DropdownSettingSection<T>({
 				onValueChange={onUpdate}
 			>
 				<SelectTrigger>
-					<SelectValue />
+					<SelectValue>
+						{select.find((x) => x.value === value)?.title}
+					</SelectValue>
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
