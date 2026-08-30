@@ -64,9 +64,7 @@ describe("ChildOptionViewAccordion", () => {
 		const header = screen.getByText("Option Item");
 		// The parent of Option Item (content area) should have its grandparent as the flex container with style
 		const flexContainer = header.parentElement?.parentElement;
-		expect(flexContainer).toHaveStyle({
-			paddingLeft: "0.7rem",
-		});
+		expect(flexContainer?.style.paddingLeft).toBe("0.7rem");
 	});
 
 	it("should apply correct indentation for large depth", () => {
@@ -74,8 +72,6 @@ describe("ChildOptionViewAccordion", () => {
 
 		const header = screen.getByText("Option Item");
 		const flexContainer = header.parentElement?.parentElement;
-		expect(flexContainer).toHaveStyle({
-			paddingLeft: "2.7rem",
-		});
+		expect(flexContainer?.style.paddingLeft).toBe("2.7rem");
 	});
 });
