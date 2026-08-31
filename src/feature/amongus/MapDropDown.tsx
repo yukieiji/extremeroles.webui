@@ -64,6 +64,7 @@ export function MapDropDown({ categoryId }: MapDropDownProps) {
 									selection: newSelectionValue,
 								});
 							}}
+							disabled={false}
 						/>
 					</div>
 				</div>

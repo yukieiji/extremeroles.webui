@@ -39,10 +39,15 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 	const chanceOptionMeta = auOptionMetaData.options[chanceOptionId];
 
 	// Chanceの実際の値（%）を取得
+	const inactiveOptionDisplay = useStore(
+		(state) => state.appSetting?.inactiveOptionDisplay ?? "hidden",
+	);
+
 	const chanceActualValue = chanceOptionMeta?.range?.[chanceValueIndex] ?? 0;
 	const isChanceZero = chanceActualValue === 0;
 
-	const isOpen = !isChanceZero && isCategoryOpen;
+	const isOpen =
+		(!isChanceZero || inactiveOptionDisplay !== "hidden") && isCategoryOpen;
 
 	// 残りのオプション
 	const otherOptionIds = categoryMeta.options.slice(2);
@@ -68,7 +73,7 @@ export function AuRoleCategoryItem({ categoryId }: AuRoleCategoryItemProps) {
 				onClick={() => toggleAuCategory(categoryId)}
 				text={categoryMeta.name}
 				spawnControl={<AuRoleSpawnControls categoryId={categoryId} />}
-				disable={isChanceZero}
+				disable={isChanceZero && inactiveOptionDisplay === "hidden"}
 			>
 				<AuCategoryOptionList optionIds={otherOptionIds} />
 			</RoleCategoryAccordion>

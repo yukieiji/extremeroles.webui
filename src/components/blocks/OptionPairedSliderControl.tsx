@@ -11,6 +11,7 @@ interface OptionPairedSliderControlProps {
 	onMaxChange: (selection: number) => void;
 	minLabel: string;
 	maxLabel: string;
+	disabled: boolean;
 }
 
 /**
@@ -26,6 +27,7 @@ export function OptionPairedSliderControl({
 	onMaxChange,
 	minLabel,
 	maxLabel,
+	disabled,
 }: OptionPairedSliderControlProps) {
 	const handleMinChange = (newMinIdx: number) => {
 		const newMinVal = minValues[newMinIdx];
@@ -57,6 +59,7 @@ export function OptionPairedSliderControl({
 				values={minValues}
 				format={format}
 				onChange={handleMinChange}
+				disabled={disabled}
 			/>
 			<OptionSliderControl
 				label={maxLabel}
@@ -64,6 +67,7 @@ export function OptionPairedSliderControl({
 				values={maxValues}
 				format={format}
 				onChange={handleMaxChange}
+				disabled={disabled}
 			/>
 		</div>
 	);

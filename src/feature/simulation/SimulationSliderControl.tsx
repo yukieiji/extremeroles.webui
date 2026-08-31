@@ -56,6 +56,7 @@ export function SimulationSliderControl({
 			onKeyDown={handleKeyDown}
 			stopPropagation={stopPropagation}
 			label={label}
+			disabled={false}
 		/>
 	);
 }

@@ -49,9 +49,15 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 	const category = categoryMeta?.name ?? "";
 	const categoryColors = categoryMeta?.categoryColors ?? [];
 
+	const inactiveOptionDisplay = useStore(
+		(state) => state.appSetting?.inactiveOptionDisplay ?? "hidden",
+	);
 	const spawnRateSelection = spawnRateOptionValue.selection ?? 0;
 	const isSpawnRateZero = spawnRateSelection === 0;
-	const isOpen = !isSpawnRateZero && (isOpendCategory ?? false);
+	const isRoleActive = !isSpawnRateZero;
+	const isOpen =
+		(isRoleActive || inactiveOptionDisplay !== "hidden") &&
+		(isOpendCategory ?? false);
 
 	// 役職のオプションは、トップレベルのスポーンレートが一つ合って、その下に各種オプションがぶら下がる構造になっている
 	// 50
@@ -89,7 +95,7 @@ export function ExRRoleCategoryItem({ categoryId }: ExRRoleCategoryItemProps) {
 						categoryId={categoryId}
 					/>
 				}
-				disable={isSpawnRateZero}
+				disable={isSpawnRateZero && inactiveOptionDisplay === "hidden"}
 				headerColors={categoryColors}
 			>
 				<ExRCategoryOptionList

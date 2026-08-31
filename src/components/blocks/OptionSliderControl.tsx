@@ -11,6 +11,7 @@ interface OptionSliderControlProps {
 	testId?: string;
 	className?: string;
 	inputClassName?: string;
+	disabled: boolean;
 }
 
 /**
@@ -25,6 +26,7 @@ export function OptionSliderControl({
 	testId,
 	className,
 	inputClassName,
+	disabled,
 }: OptionSliderControlProps) {
 	const {
 		id,
@@ -53,6 +55,7 @@ export function OptionSliderControl({
 			testId={testId}
 			className={className}
 			inputClassName={inputClassName}
+			disabled={disabled}
 		/>
 	);
 }

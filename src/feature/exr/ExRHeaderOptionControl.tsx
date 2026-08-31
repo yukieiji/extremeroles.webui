@@ -41,6 +41,7 @@ export function ExRHeaderOptionControl({
 			values={values}
 			selection={currentSelection}
 			onChange={handleSelectionChange}
+			disabled={false}
 		/>
 	);
 }

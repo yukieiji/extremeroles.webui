@@ -28,12 +28,18 @@ export function ExRCategoryViewer({ categoryId }: ExRCategoryViewerProps) {
 			if (!uniqueOptions) {
 				return [];
 			}
+			const displayMode = state.appSetting?.inactiveOptionDisplay ?? "hidden";
 			return uniqueOptions.filter((uniqueId) => {
-				return (
-					!(MOVED_EXR_OPTION_UNIQUE_IDS as readonly number[]).includes(
-						uniqueId,
-					) && state.isExROptionActive[uniqueId]
-				);
+				const isMoved = (
+					MOVED_EXR_OPTION_UNIQUE_IDS as readonly number[]
+				).includes(uniqueId);
+				if (isMoved) {
+					return false;
+				}
+				if (displayMode !== "hidden") {
+					return true;
+				}
+				return state.isExROptionActive[uniqueId];
 			});
 		}),
 	);

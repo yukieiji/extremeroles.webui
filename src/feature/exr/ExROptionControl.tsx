@@ -9,6 +9,7 @@ interface ExROptionControlProps {
 	uniqueOptionId: UniqueOptionId;
 	format: string;
 	type: string;
+	disabled: boolean;
 }
 
 /**
@@ -18,6 +19,7 @@ export function ExROptionControl({
 	uniqueOptionId,
 	format,
 	type,
+	disabled,
 }: ExROptionControlProps) {
 	const optionValue = useOptionData(uniqueOptionId);
 	const currentSelection = optionValue.selection ?? 0;
@@ -42,6 +44,7 @@ export function ExROptionControl({
 					selection={currentSelection}
 					values={stringValues}
 					onChange={handleChange}
+					disabled={disabled}
 				/>
 			);
 		}
@@ -53,6 +56,7 @@ export function ExROptionControl({
 				onChange={(newValue) => {
 					handleChange(newValue);
 				}}
+				disabled={disabled}
 			/>
 		);
 	}
@@ -64,6 +68,7 @@ export function ExROptionControl({
 				values={optionValue.values as number[]}
 				format={format}
 				onChange={handleChange}
+				disabled={disabled}
 			/>
 		);
 	}

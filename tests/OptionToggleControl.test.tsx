@@ -14,6 +14,7 @@ describe("OptionToggleControl", () => {
 				selection={0}
 				values={mockValues}
 				onChange={() => {}}
+				disabled={false}
 			/>,
 		);
 
@@ -30,6 +31,7 @@ describe("OptionToggleControl", () => {
 				selection={1}
 				values={mockValues}
 				onChange={() => {}}
+				disabled={false}
 			/>,
 		);
 
@@ -46,6 +48,7 @@ describe("OptionToggleControl", () => {
 				selection={0}
 				values={mockValues}
 				onChange={onChange}
+				disabled={false}
 			/>,
 		);
 
@@ -62,6 +65,7 @@ describe("OptionToggleControl", () => {
 				selection={1}
 				values={mockValues}
 				onChange={onChange}
+				disabled={false}
 			/>,
 		);
 

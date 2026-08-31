@@ -1,4 +1,5 @@
 import { BigSettingSelection } from "@/components/blocks/BigSettingSelection";
+import { InactiveOptionSettingsSection } from "@/components/blocks/InactiveOptionSettingsSection";
 import { TYPOGRAPHY } from "@/designConstants";
 import { translationMetaData } from "@/logics/api";
 import { ThemeSettingsSection } from "../../components/blocks/ThemeSettingsSection";
@@ -33,6 +34,15 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 					<ThemeSettingsSection
 						theme={appSetting.theme ?? "system"}
 						onUpdate={(theme) => updateAppSetting({ theme })}
+					/>
+				</BigSettingSelection>
+				<Separator />
+				<BigSettingSelection title="非アクティブのオプション表示">
+					<InactiveOptionSettingsSection
+						inactiveOptionDisplay={appSetting.inactiveOptionDisplay ?? "hidden"}
+						onUpdate={(inactiveOptionDisplay) =>
+							updateAppSetting({ inactiveOptionDisplay })
+						}
 					/>
 				</BigSettingSelection>
 				<Separator />

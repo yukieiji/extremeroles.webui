@@ -1,3 +1,4 @@
+import { DisabledControlTooltip } from "@/components/blocks/DisabledControlTooltip";
 import { OptionRowContent } from "@/components/blocks/OptionContent";
 import { HighlightWrapper } from "@/components/parts/HighlightWrapper";
 import { LargePoint } from "@/components/parts/LargePoint";
@@ -24,6 +25,29 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 		(state) => state.highlightedAuOptionId,
 	);
 
+	const inactiveOptionDisplay = useStore(
+		(state) => state.appSetting?.inactiveOptionDisplay ?? "hidden",
+	);
+
+	// Category ID and Chance option check
+	const categoryId = optionMeta?.categoryId;
+	const categoryMeta =
+		categoryId != null
+			? auOptionMetaData.categoryMetaData[categoryId]
+			: undefined;
+	const chanceOptionId = categoryMeta?.options[0];
+	const chanceValueIndex = useStore((state) =>
+		chanceOptionId != null ? (state.auValue[chanceOptionId] ?? 0) : 0,
+	);
+	const chanceOptionMeta =
+		chanceOptionId != null
+			? auOptionMetaData.options[chanceOptionId]
+			: undefined;
+	const chanceActualValue = chanceOptionMeta?.range?.[chanceValueIndex] ?? 0;
+	const isRoleInactive = chanceOptionId != null && chanceActualValue === 0;
+
+	const isDisabled = inactiveOptionDisplay === "disabled" && isRoleInactive;
+
 	const updateAuOption = useUpdateAuOptionSelection();
 
 	if (!optionMeta) {
@@ -46,13 +70,16 @@ export function AuOptionRow({ auOptionId }: AuOptionRowProps) {
 				content={
 					<div className={TYPOGRAPHY.LABEL}>
 						<OptionRowContent name={optionMeta.title}>
-							<AuOptionControl
-								optionMeta={optionMeta}
-								selection={selection}
-								onSelectionChange={(selection) => {
-									updateAuOption({ auOptionId, selection });
-								}}
-							/>
+							<DisabledControlTooltip disabled={isDisabled}>
+								<AuOptionControl
+									optionMeta={optionMeta}
+									selection={selection}
+									onSelectionChange={(selection) => {
+										updateAuOption({ auOptionId, selection });
+									}}
+									disabled={isDisabled}
+								/>
+							</DisabledControlTooltip>
 						</OptionRowContent>
 					</div>
 				}

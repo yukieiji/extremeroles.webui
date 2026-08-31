@@ -39,6 +39,7 @@ describe("ExROptionControl", () => {
 					uniqueOptionId={mockUniqueId}
 					format="{0}%"
 					type="Int32"
+					disabled={false}
 				/>,
 			);
 		});
@@ -60,6 +61,7 @@ describe("ExROptionControl", () => {
 					uniqueOptionId={mockUniqueId}
 					format="{0}x"
 					type="Single"
+					disabled={false}
 				/>,
 			);
 		});
@@ -81,6 +83,7 @@ describe("ExROptionControl", () => {
 					uniqueOptionId={mockUniqueId}
 					format=""
 					type="String"
+					disabled={false}
 				/>,
 			);
 		});
@@ -148,6 +151,7 @@ describe("ExROptionControl", () => {
 					uniqueOptionId={mockUniqueId}
 					format="{0}"
 					type="Int32"
+					disabled={false}
 				/>,
 			);
 		});
@@ -252,6 +256,7 @@ describe("ExROptionControl", () => {
 					uniqueOptionId={mockUniqueId}
 					format=""
 					type="UnknownType"
+					disabled={false}
 				/>,
 			);
 		});

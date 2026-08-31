@@ -21,6 +21,7 @@ interface BaseSelectionSliderLayoutProps {
 	testId?: string;
 	className?: string;
 	inputClassName?: string;
+	disabled: boolean;
 }
 
 /**
@@ -42,6 +43,7 @@ export function BaseSelectionSliderLayout({
 	testId,
 	className,
 	inputClassName,
+	disabled,
 }: BaseSelectionSliderLayoutProps) {
 	return (
 		<FieldSet
@@ -68,6 +70,7 @@ export function BaseSelectionSliderLayout({
 					onBlur={onBlur}
 					onKeyDown={onKeyDown}
 					className={inputClassName}
+					disabled={disabled}
 				/>
 				{renderFormat && (
 					<Label htmlFor={id} className="select-text">
@@ -81,6 +84,7 @@ export function BaseSelectionSliderLayout({
 				step={1}
 				value={[sliderValue]}
 				onValueChange={onSliderChange}
+				disabled={disabled}
 				className="cursor-pointer"
 			/>
 		</FieldSet>

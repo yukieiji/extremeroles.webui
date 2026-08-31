@@ -9,6 +9,7 @@ describe("OptionSliderControl", () => {
 		values: [0, 10, 20, 30],
 		onChange: vi.fn(),
 		testId: "test-slider-control",
+		disabled: false,
 	};
 
 	it("renders label and current value correctly", async () => {
@@ -119,6 +120,7 @@ describe("OptionSliderControl", () => {
 					selection={defaultProps.selection}
 					values={defaultProps.values}
 					onChange={defaultProps.onChange}
+					disabled={false}
 				/>,
 			);
 		});
