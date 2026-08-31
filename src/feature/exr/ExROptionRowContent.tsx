@@ -1,10 +1,5 @@
+import { DisabledControlTooltip } from "@/components/blocks/DisabledControlTooltip";
 import { OptionRowContent } from "@/components/blocks/OptionContent";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { useOptionActive } from "@/hooks/useExROptionData";
 import { exrOptionMetaData } from "@/logics/api";
 import type { UniqueOptionId } from "@/type";
@@ -29,33 +24,16 @@ export function ExROptionRowContent({
 		return null;
 	}
 
-	const control = (
-		<ExROptionControl
-			uniqueOptionId={uniqueOptionId}
-			format={optionData.format}
-			type={optionData.type}
-			disabled={isDisabled}
-		/>
-	);
-
 	return (
 		<OptionRowContent name={optionData.translatedName}>
-			{isDisabled ? (
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger
-							render={<span className="inline-block cursor-not-allowed" />}
-						>
-							{control}
-						</TooltipTrigger>
-						<TooltipContent>
-							前提となるオプションや役職が設定されていません
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-			) : (
-				control
-			)}
+			<DisabledControlTooltip disabled={isDisabled}>
+				<ExROptionControl
+					uniqueOptionId={uniqueOptionId}
+					format={optionData.format}
+					type={optionData.type}
+					disabled={isDisabled}
+				/>
+			</DisabledControlTooltip>
 		</OptionRowContent>
 	);
 }
