@@ -1,6 +1,12 @@
 import { OptionPairedSliderControl } from "@/components/blocks/OptionPairedSliderControl";
 import { ColoredText } from "@/components/parts/ColoredText";
 import { OptionItem } from "@/components/parts/OptionItem";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { TYPOGRAPHY } from "@/designConstants";
 import { useOptionActive, useOptionData } from "@/hooks/useExROptionData";
 import { useUpdateExROptionSelection } from "@/logics/api.store";
@@ -50,6 +56,21 @@ export function ExRPairedOptionContent({
 		});
 	};
 
+	const control = (
+		<OptionPairedSliderControl
+			minSelection={minValueData.selection}
+			maxSelection={maxValueData.selection}
+			minValues={minValueData.values as number[]}
+			maxValues={maxValueData.values as number[]}
+			format={minData.metaData.format}
+			onMinChange={handleMinChange}
+			onMaxChange={handleMaxChange}
+			minLabel={minData.label}
+			maxLabel={maxData.label}
+			disabled={isDisabled}
+		/>
+	);
+
 	return (
 		<OptionItem className="min-h-18">
 			<div className="flex-1 min-w-0">
@@ -59,18 +80,22 @@ export function ExRPairedOptionContent({
 				/>
 			</div>
 			<div className="shrink-0 flex items-center">
-				<OptionPairedSliderControl
-					minSelection={minValueData.selection}
-					maxSelection={maxValueData.selection}
-					minValues={minValueData.values as number[]}
-					maxValues={maxValueData.values as number[]}
-					format={minData.metaData.format}
-					onMinChange={handleMinChange}
-					onMaxChange={handleMaxChange}
-					minLabel={minData.label}
-					maxLabel={maxData.label}
-					disabled={isDisabled}
-				/>
+				{isDisabled ? (
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger
+								render={<span className="inline-block cursor-not-allowed" />}
+							>
+								{control}
+							</TooltipTrigger>
+							<TooltipContent>
+								前提となるオプションや役職が設定されていません
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				) : (
+					control
+				)}
 			</div>
 		</OptionItem>
 	);

@@ -109,6 +109,12 @@ test("非アクティブオプション（親条件を満たしていない子�
 		.getByRole("combobox");
 	if ((await childControl.count()) > 0) {
 		await expect(childControl.first()).toBeDisabled();
+
+		// disabled なコントロールにホバーした際、「前提となるオプションや役職が設定されていません」ツールチップが表示されることを確認
+		await childControl.first().hover();
+		await expect(
+			page.getByText("前提となるオプションや役職が設定されていません"),
+		).toBeVisible();
 	}
 
 	// 3. 「操作可能」設定に変更
