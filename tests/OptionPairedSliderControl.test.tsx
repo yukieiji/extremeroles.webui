@@ -23,6 +23,7 @@ describe("OptionPairedSliderControl", () => {
 					onMaxChange={onMaxChange}
 					minLabel="最小"
 					maxLabel="最大"
+					disabled={false}
 				/>,
 			);
 		});
@@ -60,6 +61,7 @@ describe("OptionPairedSliderControl", () => {
 					onMaxChange={onMaxChange}
 					minLabel="Min"
 					maxLabel="Max"
+					disabled={false}
 				/>,
 			);
 		});

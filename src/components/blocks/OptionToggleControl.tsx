@@ -8,7 +8,7 @@ interface OptionToggleControlProps {
 	selection: number; // 0 or 1
 	values: string[];
 	onChange: (selection: number) => void;
-	disabled?: boolean;
+	disabled: boolean;
 }
 
 /**

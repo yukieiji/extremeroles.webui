@@ -13,6 +13,7 @@ describe("OptionDropdownControl", () => {
 				selection={1}
 				values={mockValues}
 				onChange={() => {}}
+				disabled={false}
 			/>,
 		);
 
@@ -38,6 +39,7 @@ describe("OptionDropdownControl", () => {
 				selection={1}
 				values={mockValues}
 				onChange={onChange}
+				disabled={false}
 			/>,
 		);
 

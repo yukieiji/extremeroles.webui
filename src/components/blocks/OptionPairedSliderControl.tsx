@@ -11,7 +11,7 @@ interface OptionPairedSliderControlProps {
 	onMaxChange: (selection: number) => void;
 	minLabel: string;
 	maxLabel: string;
-	disabled?: boolean;
+	disabled: boolean;
 }
 
 /**

@@ -9,7 +9,7 @@ interface ExROptionControlProps {
 	uniqueOptionId: UniqueOptionId;
 	format: string;
 	type: string;
-	disabled?: boolean;
+	disabled: boolean;
 }
 
 /**

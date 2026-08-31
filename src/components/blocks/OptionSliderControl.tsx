@@ -11,7 +11,7 @@ interface OptionSliderControlProps {
 	testId?: string;
 	className?: string;
 	inputClassName?: string;
-	disabled?: boolean;
+	disabled: boolean;
 }
 
 /**

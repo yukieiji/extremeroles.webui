@@ -24,6 +24,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				testId="spawn-rate-control"
 				className="w-64"
 				inputClassName="w-24"
+				disabled={false}
 			/>
 			<OptionSliderControl
 				label={translationMetaData.RoleNum}
@@ -33,6 +34,7 @@ export function RoleSpawnControls({ rate, num }: RoleSpawnControlsProps) {
 				testId="spawn-count-control"
 				className="w-64"
 				inputClassName="w-24"
+				disabled={false}
 			/>
 		</div>
 	);

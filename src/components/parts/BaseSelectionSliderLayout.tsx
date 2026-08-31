@@ -21,7 +21,7 @@ interface BaseSelectionSliderLayoutProps {
 	testId?: string;
 	className?: string;
 	inputClassName?: string;
-	disabled?: boolean;
+	disabled: boolean;
 }
 
 /**

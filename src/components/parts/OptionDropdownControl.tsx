@@ -11,7 +11,7 @@ interface OptionDropdownControlProps {
 	selection: number;
 	values: string[];
 	onChange: (selection: number) => void;
-	disabled?: boolean;
+	disabled: boolean;
 }
 
 /**
