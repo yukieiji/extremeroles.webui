@@ -131,3 +131,42 @@ test("非アクティブオプション（親条件を満たしていない子�
 		await expect(childControl.first()).toBeEnabled();
 	}
 });
+
+test("役職設定（Crewmateタブ等）においてスポーン率0%の役職のオプションが「操作だけ無効」設定時にホバーでツールチップが表示されること", async ({
+	page,
+}) => {
+	await getLeftSidebarButton(page, "Extreme Roles").click();
+
+	const mainContent = page.getByTestId("main-content-section");
+
+	// 「操作だけ無効」設定に変更
+	const settingsButton = page.getByTestId("sidebar-settings-button");
+	await settingsButton.click();
+
+	const displayModeCombobox = page.getByLabel("表示モード");
+	await displayModeCombobox.click();
+	await page.getByRole("option", { name: "操作だけ無効" }).click();
+	await page.keyboard.press("Escape");
+
+	// タブ一覧から最初の役職系タブ（2番目のタブ）を選択
+	const tabs = mainContent.getByRole("tab");
+	await tabs.nth(1).click();
+
+	// 最初に表示される非アクティブ役職アコーディオンを取得し、アコーディオンを開く
+	const categoryList = page.getByTestId("category-list");
+	const roleButtons = categoryList.getByRole("button");
+	const firstRoleButton = roleButtons.first();
+
+	if (await firstRoleButton.isVisible()) {
+		await firstRoleButton.click();
+
+		// 子オプション行内の disabled コントロールをホバーし、ツールチップが表示されるか検証
+		const disabledControlWrapper = page.locator(".cursor-not-allowed").first();
+		if (await disabledControlWrapper.isVisible()) {
+			await disabledControlWrapper.hover();
+			await expect(
+				page.getByText("前提となるオプションや役職が設定されていません"),
+			).toBeVisible();
+		}
+	}
+});

@@ -29,10 +29,8 @@ export function DisabledControlTooltip({
 	return (
 		<TooltipProvider>
 			<Tooltip>
-				<TooltipTrigger
-					render={<span className="inline-block cursor-not-allowed" />}
-				>
-					{children}
+				<TooltipTrigger>
+					<span className="inline-block cursor-not-allowed">{children}</span>
 				</TooltipTrigger>
 				<TooltipContent>{tooltipText}</TooltipContent>
 			</Tooltip>
