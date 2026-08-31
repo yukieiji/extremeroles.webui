@@ -8,6 +8,7 @@ interface AuOptionControlProps {
 	optionMeta: AuOptionMeta;
 	selection: number;
 	onSelectionChange: (selection: number) => void;
+	disabled: boolean;
 }
 
 /**
@@ -17,6 +18,7 @@ export function AuOptionControl({
 	optionMeta,
 	selection,
 	onSelectionChange,
+	disabled,
 }: AuOptionControlProps) {
 	const range = optionMeta.range;
 
@@ -27,7 +29,7 @@ export function AuOptionControl({
 				selection={selection}
 				values={[translationMetaData[0], translationMetaData[1]]}
 				onChange={onSelectionChange}
-				disabled={false}
+				disabled={disabled}
 			/>
 		);
 	}
@@ -40,7 +42,7 @@ export function AuOptionControl({
 				selection={selection}
 				format={optionMeta.format}
 				onChange={onSelectionChange}
-				disabled={false}
+				disabled={disabled}
 			/>
 		);
 	}
@@ -52,7 +54,7 @@ export function AuOptionControl({
 			onChange={(newValue) => {
 				onSelectionChange(newValue);
 			}}
-			disabled={false}
+			disabled={disabled}
 		/>
 	);
 }
