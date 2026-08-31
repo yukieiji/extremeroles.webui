@@ -21,7 +21,7 @@ export function OptionDropdownControl({
 	selection,
 	values,
 	onChange,
-	disabled = false,
+	disabled,
 }: OptionDropdownControlProps) {
 	const handleValueChange = (value: string | null) => {
 		if (disabled) {

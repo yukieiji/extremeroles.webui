@@ -31,8 +31,8 @@ export function ExRPairedOptionContent({
 	const inactiveOptionDisplay = useStore(
 		(state) => state.appSetting?.inactiveOptionDisplay ?? "hidden",
 	);
-	const isMinDisabled = inactiveOptionDisplay === "disabled" && !isMinActive;
-	const isMaxDisabled = inactiveOptionDisplay === "disabled" && !isMaxActive;
+	const isDisabled =
+		inactiveOptionDisplay === "disabled" && (!isMinActive || !isMaxActive);
 
 	const updateExROptionSelection = useUpdateExROptionSelection();
 
@@ -69,8 +69,7 @@ export function ExRPairedOptionContent({
 					onMaxChange={handleMaxChange}
 					minLabel={minData.label}
 					maxLabel={maxData.label}
-					minDisabled={isMinDisabled}
-					maxDisabled={isMaxDisabled}
+					disabled={isDisabled}
 				/>
 			</div>
 		</OptionItem>

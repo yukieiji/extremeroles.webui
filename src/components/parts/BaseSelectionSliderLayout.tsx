@@ -43,7 +43,7 @@ export function BaseSelectionSliderLayout({
 	testId,
 	className,
 	inputClassName,
-	disabled = false,
+	disabled,
 }: BaseSelectionSliderLayoutProps) {
 	return (
 		<FieldSet

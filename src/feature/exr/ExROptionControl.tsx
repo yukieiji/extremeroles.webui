@@ -19,7 +19,7 @@ export function ExROptionControl({
 	uniqueOptionId,
 	format,
 	type,
-	disabled = false,
+	disabled,
 }: ExROptionControlProps) {
 	const optionValue = useOptionData(uniqueOptionId);
 	const currentSelection = optionValue.selection ?? 0;

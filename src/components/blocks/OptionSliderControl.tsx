@@ -26,7 +26,7 @@ export function OptionSliderControl({
 	testId,
 	className,
 	inputClassName,
-	disabled = false,
+	disabled,
 }: OptionSliderControlProps) {
 	const {
 		id,

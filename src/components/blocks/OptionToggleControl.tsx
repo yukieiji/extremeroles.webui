@@ -18,7 +18,7 @@ export function OptionToggleControl({
 	selection,
 	values,
 	onChange,
-	disabled = false,
+	disabled,
 }: OptionToggleControlProps) {
 	const id = useId();
 	const isOn = selection === 1;

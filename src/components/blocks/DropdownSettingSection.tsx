@@ -29,7 +29,7 @@ export function DropdownSettingSection<T>({
 	title,
 	onUpdate,
 	select,
-	disabled = false,
+	disabled,
 }: DropdownSettingSectionProp<T>) {
 	const id = useId();
 
