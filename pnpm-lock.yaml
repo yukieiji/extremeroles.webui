@@ -127,8 +127,8 @@ importers:
         specifier: ^2.3.3
         version: 2.3.3(vite@8.2.2(@types/node@26.2.0)(jiti@2.7.0))
       vite-svg-loader:
-        specifier: ^5.1.1
-        version: 5.1.1(supports-color@7.2.0)(vue@3.5.33(typescript@7.0.2))
+        specifier: ^5.1.2
+        version: 5.1.2(supports-color@7.2.0)(vue@3.5.33(typescript@7.0.2))
       vitest:
         specifier: ^4.1.0
         version: 4.1.0(@types/node@26.2.0)(@vitest/ui@4.1.0)(jsdom@30.0.1)(msw@2.15.0(@types/node@26.2.0)(typescript@7.0.2))(vite@8.2.2(@types/node@26.2.0)(jiti@2.7.0))
@@ -3110,8 +3110,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sax@1.6.0:
-    resolution: {integrity: sha512-6R3J5M4AcbtLUdZmRv2SygeVaM7IhrLXu9BmnOGmmACak8fiUtOsYNWUS4uK7upbmHIBbLBeFeI//477BKLBzA==}
+  sax@1.6.1:
+    resolution: {integrity: sha512-42tBVwLWnaQvW5zc4HbZrTuWccECCZfBi92FDuwtqxasH+JbPB3/FOKb1m222K42R4WxuxzzMsTswfzgtSu64Q==}
     engines: {node: '>=11.0.0'}
 
   saxes@6.0.0:
@@ -3276,8 +3276,8 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
-  svgo@3.3.3:
-    resolution: {integrity: sha512-+wn7I4p7YgJhHs38k2TNjy1vCfPIfLIJWR5MnCStsN8WuuTcBnRKcMHQLMM2ijxGZmDoZwNv8ipl5aTTen62ng==}
+  svgo@3.3.5:
+    resolution: {integrity: sha512-8SQMzdrvWaD8deUmrnYB+ASyxBVgWUOilg+A75nE/76WdLpj6LopCwiAVvkzkcqy/9b7t2Mg7faFLjg0ZRcZ3w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -3468,8 +3468,8 @@ packages:
       rollup:
         optional: true
 
-  vite-svg-loader@5.1.1:
-    resolution: {integrity: sha512-RPzcXA/EpKJA0585x58DBgs7my2VfeJ+j2j1EoHY4Zh82Y7hV4cR1fElgy2aZi85+QSrcLLoTStQ5uZjD68u+Q==}
+  vite-svg-loader@5.1.2:
+    resolution: {integrity: sha512-/ANGO8+F64Cd6fXRaefCY0mlHHIdstySQ+nr+blHpaXSJaXq+TH68KkVHbumtQIVLt6HZFBtlaxMV3dQyzg6lA==}
     peerDependencies:
       vue: '>=3.2.13'
 
@@ -6435,7 +6435,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sax@1.6.0: {}
+  sax@1.6.1: {}
 
   saxes@6.0.0:
     dependencies:
@@ -6676,7 +6676,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
-  svgo@3.3.3:
+  svgo@3.3.5:
     dependencies:
       commander: 7.2.0
       css-select: 5.2.2
@@ -6684,7 +6684,7 @@ snapshots:
       css-what: 6.2.2
       csso: 5.0.5
       picocolors: 1.1.1
-      sax: 1.6.0
+      sax: 1.6.1
 
   symbol-tree@3.2.4: {}
 
@@ -6850,10 +6850,10 @@ snapshots:
       micromatch: 4.0.8
       vite: 8.2.2(@types/node@26.2.0)(jiti@2.7.0)
 
-  vite-svg-loader@5.1.1(supports-color@7.2.0)(vue@3.5.33(typescript@7.0.2)):
+  vite-svg-loader@5.1.2(supports-color@7.2.0)(vue@3.5.33(typescript@7.0.2)):
     dependencies:
       debug: 4.4.3(supports-color@7.2.0)
-      svgo: 3.3.3
+      svgo: 3.3.5
       vue: 3.5.33(typescript@7.0.2)
     transitivePeerDependencies:
       - supports-color
