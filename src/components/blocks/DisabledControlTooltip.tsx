@@ -5,6 +5,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { translationMetaData } from "@/logics/api";
 
 interface DisabledControlTooltipProps {
 	disabled: boolean;
@@ -12,16 +13,15 @@ interface DisabledControlTooltipProps {
 	children: ReactNode;
 }
 
-const DEFAULT_TOOLTIP_TEXT = "前提となるオプションや役職が設定されていません";
-
 /**
  * コントロールが無効（disabled）な場合にホバー時ツールチップを表示するコンポーネント
  */
 export function DisabledControlTooltip({
 	disabled,
-	tooltipText = DEFAULT_TOOLTIP_TEXT,
+	tooltipText,
 	children,
 }: DisabledControlTooltipProps) {
+	const text = tooltipText ?? translationMetaData.DISABLED_CONTROL_TOOLTIP;
 	if (!disabled) {
 		return <>{children}</>;
 	}
@@ -32,7 +32,7 @@ export function DisabledControlTooltip({
 				<TooltipTrigger>
 					<span className="inline-block cursor-not-allowed">{children}</span>
 				</TooltipTrigger>
-				<TooltipContent>{tooltipText}</TooltipContent>
+				<TooltipContent>{text}</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>
 	);

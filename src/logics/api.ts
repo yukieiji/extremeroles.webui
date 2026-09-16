@@ -190,6 +190,16 @@ export async function fetchTranslationMetaData(): Promise<void> {
 		"SIDEBAR_OPEN_LABEL",
 		"SIDEBAR_CLOSE_LABEL",
 		"SIMULATE_SETTING_PLAYER_NAME",
+		"DISABLED_CONTROL_TOOLTIP",
+		"DISPLAY_MODE",
+		"DISPLAY_MODE_HIDDEN",
+		"DISPLAY_MODE_DISABLED",
+		"DISPLAY_MODE_ENABLED",
+		"THEME_SYSTEM",
+		"THEME_LIGHT",
+		"THEME_DARK",
+		"THEME_SETTING_TITLE",
+		"INACTIVE_OPTION_DISPLAY_TITLE",
 	];
 	const batchBody = batchKeys.map((key) => {
 		return { Key: key };
