@@ -1,4 +1,5 @@
 import { DropdownSettingSection } from "@/components/blocks/DropdownSettingSection";
+import { translationMetaData } from "@/logics/api";
 import type { InactiveOptionDisplayMode } from "@/logics/storageUtils";
 
 interface InactiveOptionSettingsSectionProps {
@@ -15,7 +16,7 @@ export function InactiveOptionSettingsSection({
 }: InactiveOptionSettingsSectionProps) {
 	return (
 		<DropdownSettingSection
-			title="表示モード"
+			title={translationMetaData.DISPLAY_MODE}
 			value={inactiveOptionDisplay}
 			onUpdate={(value) => {
 				if (value) {
@@ -23,9 +24,9 @@ export function InactiveOptionSettingsSection({
 				}
 			}}
 			select={[
-				{ value: "hidden", title: "非表示" },
-				{ value: "disabled", title: "操作だけ無効" },
-				{ value: "enabled", title: "操作可能" },
+				{ value: "hidden", title: translationMetaData.DISPLAY_MODE_HIDDEN },
+				{ value: "disabled", title: translationMetaData.DISPLAY_MODE_DISABLED },
+				{ value: "enabled", title: translationMetaData.DISPLAY_MODE_ENABLED },
 			]}
 		/>
 	);

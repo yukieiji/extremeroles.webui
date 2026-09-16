@@ -30,14 +30,16 @@ export function SettingsDialog({ title }: SettingsDialogProps) {
 				<DialogTitle className={TYPOGRAPHY.SIDEBAR}>{title}</DialogTitle>
 			</DialogHeader>
 			<div className="grid gap-4 py-2">
-				<BigSettingSelection title="テーマ設定">
+				<BigSettingSelection title={translationMetaData.THEME_SETTING_TITLE}>
 					<ThemeSettingsSection
 						theme={appSetting.theme ?? "system"}
 						onUpdate={(theme) => updateAppSetting({ theme })}
 					/>
 				</BigSettingSelection>
 				<Separator />
-				<BigSettingSelection title="非アクティブのオプション表示">
+				<BigSettingSelection
+					title={translationMetaData.INACTIVE_OPTION_DISPLAY_TITLE}
+				>
 					<InactiveOptionSettingsSection
 						inactiveOptionDisplay={appSetting.inactiveOptionDisplay ?? "hidden"}
 						onUpdate={(inactiveOptionDisplay) =>

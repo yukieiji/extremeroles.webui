@@ -73,5 +73,15 @@ export const mockTranslations: Record<string, string> = {
 	SAVE_STATE_TO_BROWSER: "状態をブラウザに保存する",
 	SIDEBAR_OPEN_LABEL: "開く",
 	SIDEBAR_CLOSE_LABEL: "閉じる",
-	SIMULATE_SETTING_PLAYER_NAME: "役職割り当てシュミレート時のダミープレイヤー名"
+	SIMULATE_SETTING_PLAYER_NAME: "役職割り当てシュミレート時のダミープレイヤー名",
+	DISABLED_CONTROL_TOOLTIP: "前提となるオプションや役職が設定されていません",
+	DISPLAY_MODE: "表示モード",
+	DISPLAY_MODE_HIDDEN: "非表示",
+	DISPLAY_MODE_DISABLED: "操作だけ無効",
+	DISPLAY_MODE_ENABLED: "操作可能",
+	THEME_SYSTEM: "システム",
+	THEME_LIGHT: "ライト",
+	THEME_DARK: "ダーク",
+	THEME_SETTING_TITLE: "テーマ設定",
+	INACTIVE_OPTION_DISPLAY_TITLE: "非アクティブのオプション表示"
 };
