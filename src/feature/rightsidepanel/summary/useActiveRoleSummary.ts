@@ -17,6 +17,7 @@ const EXR_ROLE_TAB_IDS = [
 	ExRTabId.CrewmateTab,
 	ExRTabId.ImpostorTab,
 	ExRTabId.NeutralTab,
+	ExRTabId.LiberalTab,
 	ExRTabId.CombinationTab,
 	ExRTabId.GhostCrewmateTab,
 	ExRTabId.GhostImpostorTab,

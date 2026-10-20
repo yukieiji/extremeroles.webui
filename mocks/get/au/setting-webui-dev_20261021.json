@@ -1,9 +1,9 @@
 [
   {
-    "TranslatedTitle": "\u30DE\u30C3\u30D7",
+    "TranslatedTitle": "マップ",
     "Options": [
       {
-        "TranslatedTitle": "\u30DE\u30C3\u30D7",
+        "TranslatedTitle": "マップ",
         "TranslatedFormat": "",
         "Value": 2,
         "Info": {
@@ -21,10 +21,10 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC",
+    "TranslatedTitle": "インポスター",
     "Options": [
       {
-        "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u6570",
+        "TranslatedTitle": "インポスター数",
         "TranslatedFormat": "",
         "Value": 1,
         "Info": {
@@ -50,8 +50,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u30AD\u30EB\u306E\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3\u6642\u9593",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "キルのクールダウン時間",
+        "TranslatedFormat": "{0}秒",
         "Value": 10,
         "Info": {
           "ValueType": "Float",
@@ -82,7 +82,7 @@
         ]
       },
       {
-        "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u30D3\u30B8\u30E7\u30F3",
+        "TranslatedTitle": "インポスタービジョン",
         "TranslatedFormat": "x",
         "Value": 1.5,
         "Info": {
@@ -113,7 +113,7 @@
         ]
       },
       {
-        "TranslatedTitle": "\u30AD\u30EB\u53EF\u80FD\u8DDD\u96E2",
+        "TranslatedTitle": "キル可能距離",
         "TranslatedFormat": "",
         "Value": 1,
         "Info": {
@@ -121,18 +121,18 @@
           "OptionName": 2
         },
         "Range": [
-          "\u30B7\u30E7\u30FC\u30C8",
-          "\u30DF\u30C9\u30EB",
-          "\u30ED\u30F3\u30B0"
+          "ショート",
+          "ミドル",
+          "ロング"
         ]
       }
     ]
   },
   {
-    "TranslatedTitle": "\u30AF\u30EB\u30FC",
+    "TranslatedTitle": "クルー",
     "Options": [
       {
-        "TranslatedTitle": "\u30D7\u30EC\u30A4\u30E4\u30FC\u901F\u5EA6",
+        "TranslatedTitle": "プレイヤー速度",
         "TranslatedFormat": "x",
         "Value": 1,
         "Info": {
@@ -154,7 +154,7 @@
         ]
       },
       {
-        "TranslatedTitle": "\u30AF\u30EB\u30FC\u30D3\u30B8\u30E7\u30F3",
+        "TranslatedTitle": "クルービジョン",
         "TranslatedFormat": "x",
         "Value": 0.75,
         "Info": {
@@ -187,10 +187,10 @@
     ]
   },
   {
-    "TranslatedTitle": "\u4F1A\u8B70",
+    "TranslatedTitle": "会議",
     "Options": [
       {
-        "TranslatedTitle": "# \u7DCA\u6025\u4F1A\u8B70",
+        "TranslatedTitle": "# 緊急会議",
         "TranslatedFormat": "",
         "Value": 1,
         "Info": {
@@ -211,8 +211,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u7DCA\u6025\u30DC\u30BF\u30F3\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "緊急ボタンクールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 0,
         "Info": {
           "ValueType": "Int",
@@ -235,8 +235,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u8B70\u8AD6\u30BF\u30A4\u30E0",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "議論タイム",
+        "TranslatedFormat": "{0}秒",
         "Value": 15,
         "Info": {
           "ValueType": "Int",
@@ -255,8 +255,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u6295\u7968\u6642\u9593",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "投票時間",
+        "TranslatedFormat": "{0}秒",
         "Value": 120,
         "Info": {
           "ValueType": "Int",
@@ -287,7 +287,7 @@
         ]
       },
       {
-        "TranslatedTitle": "\u533F\u540D\u6295\u7968",
+        "TranslatedTitle": "匿名投票",
         "TranslatedFormat": "",
         "Value": false,
         "Info": {
@@ -296,7 +296,7 @@
         }
       },
       {
-        "TranslatedTitle": "\u8FFD\u653E\u6570\u3092\u78BA\u8A8D",
+        "TranslatedTitle": "追放数を確認",
         "TranslatedFormat": "",
         "Value": true,
         "Info": {
@@ -307,10 +307,10 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30BF\u30B9\u30AF",
+    "TranslatedTitle": "タスク",
     "Options": [
       {
-        "TranslatedTitle": "\u30BF\u30B9\u30AF\u30D0\u30FC\u30A2\u30C3\u30D7\u30C7\u30FC\u30C8",
+        "TranslatedTitle": "タスクバーアップデート",
         "TranslatedFormat": "",
         "Value": 0,
         "Info": {
@@ -318,13 +318,13 @@
           "OptionName": 13
         },
         "Range": [
-          "\u5E38\u6642",
-          "\u4F1A\u8B70",
-          "\u884C\u308F\u306A\u3044"
+          "常時",
+          "会議",
+          "行わない"
         ]
       },
       {
-        "TranslatedTitle": "# \u901A\u5E38\u30BF\u30B9\u30AF",
+        "TranslatedTitle": "# 通常タスク",
         "TranslatedFormat": "",
         "Value": 1,
         "Info": {
@@ -338,7 +338,7 @@
         ]
       },
       {
-        "TranslatedTitle": "# \u30ED\u30F3\u30B0\u30BF\u30B9\u30AF",
+        "TranslatedTitle": "# ロングタスク",
         "TranslatedFormat": "",
         "Value": 1,
         "Info": {
@@ -353,7 +353,7 @@
         ]
       },
       {
-        "TranslatedTitle": "# \u30B7\u30E7\u30FC\u30C8\u30BF\u30B9\u30AF",
+        "TranslatedTitle": "# ショートタスク",
         "TranslatedFormat": "",
         "Value": 2,
         "Info": {
@@ -370,7 +370,7 @@
         ]
       },
       {
-        "TranslatedTitle": "\u8996\u8A8D\u30BF\u30B9\u30AF",
+        "TranslatedTitle": "視認タスク",
         "TranslatedFormat": "",
         "Value": true,
         "Info": {
@@ -381,7 +381,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u79D1\u5B66\u8005",
+    "TranslatedTitle": "科学者",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -396,8 +396,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u30D0\u30A4\u30BF\u30EB\u753B\u9762\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "バイタル画面クールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 15,
         "Info": {
           "ValueType": "Float",
@@ -419,8 +419,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u5145\u96FB\u6301\u7D9A\u6642\u9593",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "充電持続時間",
+        "TranslatedFormat": "{0}秒",
         "Value": 5,
         "Info": {
           "ValueType": "Float",
@@ -438,7 +438,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30A8\u30F3\u30B8\u30CB\u30A2",
+    "TranslatedTitle": "エンジニア",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -453,8 +453,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u901A\u6C17\u5B54\u4F7F\u7528\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "通気孔使用クールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 30,
         "Info": {
           "ValueType": "Float",
@@ -476,15 +476,15 @@
         ]
       },
       {
-        "TranslatedTitle": "\u901A\u6C17\u5B54\u5185\u3067\u306E\u6700\u5927\u6642\u9593",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "通気孔内での最大時間",
+        "TranslatedFormat": "{0}秒",
         "Value": 15,
         "Info": {
           "ValueType": "Float",
           "OptionName": 1301
         },
         "Range": [
-          3.4028235E+38,
+          3.4028235e+38,
           5,
           10,
           15,
@@ -502,7 +502,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u5B88\u8B77\u5929\u4F7F",
+    "TranslatedTitle": "守護天使",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -517,8 +517,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u8B77\u885B\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "護衛クールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 60,
         "Info": {
           "ValueType": "Float",
@@ -546,8 +546,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u8B77\u885B\u6301\u7D9A\u6642\u9593",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "護衛持続時間",
+        "TranslatedFormat": "{0}秒",
         "Value": 10,
         "Info": {
           "ValueType": "Float",
@@ -563,7 +563,7 @@
         ]
       },
       {
-        "TranslatedTitle": "\u30B7\u30FC\u30EB\u30C9\u306F\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u306B\u898B\u3048\u308B",
+        "TranslatedTitle": "シールドはインポスターに見える",
         "TranslatedFormat": "",
         "Value": false,
         "Info": {
@@ -574,7 +574,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30CE\u30A4\u30BA\u30E1\u30FC\u30AB\u30FC",
+    "TranslatedTitle": "ノイズメーカー",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -589,7 +589,7 @@
         }
       },
       {
-        "TranslatedTitle": "\u30A4\u30F3\u30DD\u30B9\u30BF\u30FC\u3078\u306E\u8B66\u5831",
+        "TranslatedTitle": "インポスターへの警報",
         "TranslatedFormat": "",
         "Value": true,
         "Info": {
@@ -598,8 +598,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u8B66\u5831\u306E\u9577\u3055",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "警報の長さ",
+        "TranslatedFormat": "{0}秒",
         "Value": 10,
         "Info": {
           "ValueType": "Float",
@@ -626,7 +626,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30C8\u30E9\u30C3\u30AB\u30FC",
+    "TranslatedTitle": "トラッカー",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -641,8 +641,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u8FFD\u8DE1\u306E\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "追跡のクールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 15,
         "Info": {
           "ValueType": "Float",
@@ -675,8 +675,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u8FFD\u8DE1\u306E\u9045\u308C",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "追跡の遅れ",
+        "TranslatedFormat": "{0}秒",
         "Value": 1,
         "Info": {
           "ValueType": "Float",
@@ -690,8 +690,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u8FFD\u8DE1\u306E\u9577\u3055",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "追跡の長さ",
+        "TranslatedFormat": "{0}秒",
         "Value": 30,
         "Info": {
           "ValueType": "Float",
@@ -726,7 +726,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u63A2\u5075",
+    "TranslatedTitle": "探偵",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -741,7 +741,7 @@
         }
       },
       {
-        "TranslatedTitle": "\u4E8B\u4EF6\u3054\u3068\u306E\u5BB9\u7591\u8005\u6570",
+        "TranslatedTitle": "事件ごとの容疑者数",
         "TranslatedFormat": "",
         "Value": 3,
         "Info": {
@@ -757,7 +757,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30B8\u30E3\u30C3\u30B8",
+    "TranslatedTitle": "ジャッジ",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -772,7 +772,7 @@
         }
       },
       {
-        "TranslatedTitle": "\u30BF\u30B9\u30AF\u30A2\u30F3\u30ED\u30C3\u30AF\u7387\uFF08%\uFF09",
+        "TranslatedTitle": "タスクアンロック率（%）",
         "TranslatedFormat": "",
         "Value": 50,
         "Info": {
@@ -790,7 +790,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30A4\u30F3\u30D5\u30EB\u30A8\u30F3\u30B5\u30FC",
+    "TranslatedTitle": "インフルエンサー",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -805,8 +805,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u30E1\u30C3\u30BB\u30FC\u30B8\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "メッセージクールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 20,
         "Info": {
           "ValueType": "Float",
@@ -829,14 +829,14 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30B7\u30A7\u30A4\u30D7\u30B7\u30D5\u30BF\u30FC",
+    "TranslatedTitle": "シェイプシフター",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
         "TranslatedFormat": "ShapeshifterRole",
         "Value": {
-          "MaxCount": 0,
-          "Chance": 0
+          "MaxCount": 15,
+          "Chance": 50
         },
         "Info": {
           "ValueType": "RoleBase",
@@ -844,7 +844,7 @@
         }
       },
       {
-        "TranslatedTitle": "\u5909\u8EAB\u306E\u8A3C\u62E0\u3092\u6B8B\u3059",
+        "TranslatedTitle": "変身の証拠を残す",
         "TranslatedFormat": "",
         "Value": false,
         "Info": {
@@ -853,15 +853,15 @@
         }
       },
       {
-        "TranslatedTitle": "\u5909\u8EAB\u6301\u7D9A\u6642\u9593",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "変身持続時間",
+        "TranslatedFormat": "{0}秒",
         "Value": 8,
         "Info": {
           "ValueType": "Float",
           "OptionName": 1001
         },
         "Range": [
-          3.4028235E+38,
+          3.4028235e+38,
           5,
           10,
           15,
@@ -871,8 +871,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u5909\u8EAB\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "変身クールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 10,
         "Info": {
           "ValueType": "Float",
@@ -902,7 +902,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30D5\u30A1\u30F3\u30C8\u30E0",
+    "TranslatedTitle": "ファントム",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -917,8 +917,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u6D88\u3048\u308B\u9577\u3055",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "消える長さ",
+        "TranslatedFormat": "{0}秒",
         "Value": 30,
         "Info": {
           "ValueType": "Float",
@@ -937,8 +937,8 @@
         ]
       },
       {
-        "TranslatedTitle": "\u6D88\u3048\u308B\u306E\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "消えるのクールダウン",
+        "TranslatedFormat": "{0}秒",
         "Value": 15,
         "Info": {
           "ValueType": "Float",
@@ -962,7 +962,7 @@
     ]
   },
   {
-    "TranslatedTitle": "\u30D0\u30A4\u30D1\u30FC",
+    "TranslatedTitle": "バイパー",
     "Options": [
       {
         "TranslatedTitle": "DefaultOption",
@@ -977,8 +977,8 @@
         }
       },
       {
-        "TranslatedTitle": "\u6EB6\u89E3\u6642\u9593",
-        "TranslatedFormat": "{0}\u79D2",
+        "TranslatedTitle": "溶解時間",
+        "TranslatedFormat": "{0}秒",
         "Value": 15,
         "Info": {
           "ValueType": "Float",
