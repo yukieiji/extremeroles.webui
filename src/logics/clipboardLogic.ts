@@ -245,7 +245,7 @@ export function generateClipboardText(
 	];
 	const neutralRolesList = getRolesForTab(ExRTabId.NeutralTab);
 
-	const liberalRolesList = getRolesForTab(ExRTabId.GeneralTab);
+	const liberalRolesList = getRolesForTab(ExRTabId.LiberalTab);
 
 	const formatRoleList = (
 		roles: { name: string; rate: string; count: string; isVanilla: boolean }[],
