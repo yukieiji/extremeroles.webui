@@ -95,7 +95,7 @@ export const EXR_MILITANT_MAX_ID = getUniqueOptionId(0, 7, 23);
 export const EXR_RANDOM_MAP_OPTION_ID = getUniqueOptionId(0, 20, 0);
 
 export const VANILLA_ROLE_CATEGORY_IDS = [
-	5, 6, 7, 8, 9, 10, 11, 12, 13,
+	5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 ] as const;
 
 // Summaryに移動したオプションのリスト

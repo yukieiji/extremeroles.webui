@@ -60,10 +60,11 @@ export const ExRTabId = {
 	CrewmateTab: 1,
 	ImpostorTab: 2,
 	NeutralTab: 3,
-	CombinationTab: 4,
-	GhostCrewmateTab: 5,
-	GhostImpostorTab: 6,
-	GhostNeutralTab: 7,
+	LiberalTab: 4,
+	CombinationTab: 5,
+	GhostCrewmateTab: 6,
+	GhostImpostorTab: 7,
+	GhostNeutralTab: 8,
 } as const;
 
 export type ExRTabId = (typeof ExRTabId)[keyof typeof ExRTabId];
