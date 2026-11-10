@@ -55,11 +55,16 @@ describe("generateClipboardText", () => {
 				categoryIds: [5],
 				colors: [],
 			},
+			[ExRTabId.LiberalTab]: {
+				name: "Liberal",
+				categoryIds: [3],
+				colors: [],
+			},
 		} as unknown as ExROptionMetaDataRecords["tabs"],
 		categories: {
 			1: { name: "Preset Category", tabId: ExRTabId.GeneralTab },
 			2: { name: "ExR Role", tabId: ExRTabId.CrewmateTab },
-			3: { name: "Liberal Category", tabId: ExRTabId.GeneralTab },
+			3: { name: "Liberal Category", tabId: ExRTabId.LiberalTab },
 			4: { name: "ExR Impostor", tabId: ExRTabId.ImpostorTab },
 			5: { name: "ExR Neutral", tabId: ExRTabId.NeutralTab },
 		},
@@ -161,7 +166,7 @@ describe("generateClipboardText", () => {
 				childOptionIds: [],
 				parentOptionIds: [],
 			},
-			[getUniqueOptionId(ExRTabId.GeneralTab, 3, SPAWN_RATE_OPTION_ID)]: {
+			[getUniqueOptionId(ExRTabId.LiberalTab, 3, SPAWN_RATE_OPTION_ID)]: {
 				metaData: {
 					translatedName: "Spawn Rate",
 					format: "{0}%",
@@ -170,7 +175,7 @@ describe("generateClipboardText", () => {
 				childOptionIds: [],
 				parentOptionIds: [],
 			},
-			[getUniqueOptionId(ExRTabId.GeneralTab, 3, SPAWN_COUNT_OPTION_ID)]: {
+			[getUniqueOptionId(ExRTabId.LiberalTab, 3, SPAWN_COUNT_OPTION_ID)]: {
 				metaData: {
 					translatedName: "Spawn Count",
 					format: "",
@@ -355,18 +360,18 @@ describe("generateClipboardText", () => {
 				[EXR_LIBERAL_MAX_ID]: { selection: 0, values: [1] },
 				[EXR_MILITANT_MIN_ID]: { selection: 0, values: [0] },
 				[EXR_MILITANT_MAX_ID]: { selection: 0, values: [0] },
-				[getUniqueOptionId(ExRTabId.GeneralTab, 3, SPAWN_RATE_OPTION_ID)]: {
+				[getUniqueOptionId(ExRTabId.LiberalTab, 3, SPAWN_RATE_OPTION_ID)]: {
 					selection: 1,
 					values: [0, 100],
 				},
-				[getUniqueOptionId(ExRTabId.GeneralTab, 3, SPAWN_COUNT_OPTION_ID)]: {
+				[getUniqueOptionId(ExRTabId.LiberalTab, 3, SPAWN_COUNT_OPTION_ID)]: {
 					selection: 0,
 					values: [1],
 				},
 			},
 			isExROptionActive: {
 				...mockState.isExROptionActive,
-				[getUniqueOptionId(ExRTabId.GeneralTab, 3, SPAWN_RATE_OPTION_ID)]: true,
+				[getUniqueOptionId(ExRTabId.LiberalTab, 3, SPAWN_RATE_OPTION_ID)]: true,
 			},
 		};
 		const text = generateClipboardText(

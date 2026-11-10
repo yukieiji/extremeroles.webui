@@ -2,6 +2,19 @@ import { describe, expect, it } from "vitest";
 import { ExRTabDtoArraySchema, ExRTabId } from "@/type";
 
 describe("ExRTabDto Validation", () => {
+	it("should validate LiberalTab (Id: 4) correctly", () => {
+		const data = [
+			{
+				Id: ExRTabId.LiberalTab,
+				Name: "Liberal Tab",
+				Categories: [],
+			},
+		];
+
+		const result = ExRTabDtoArraySchema.safeParse(data);
+		expect(result.success).toBe(true);
+	});
+
 	it("should validate a correct ExRTabDto array", () => {
 		const data = [
 			{
