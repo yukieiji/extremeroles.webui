@@ -25,7 +25,6 @@ jobs:
           version: 12
           cache: true
           save-cache: true
-          cache-dependency-path: 'pnpm'
           install: true
           require-lockfile: true
 
@@ -55,7 +54,6 @@ jobs:
           version: 12
           cache: true
           save-cache: true
-          cache-dependency-path: 'pnpm'
           install: true
           require-lockfile: true
 
