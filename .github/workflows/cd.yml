@@ -29,9 +29,6 @@ jobs:
           install: true
           require-lockfile: true
 
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
-
       - name: Run E2E tests
         env:
           HOME: /root
