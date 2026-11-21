@@ -1,0 +1,1004 @@
+[
+  {
+    "TranslatedTitle": "マップ",
+    "Options": [
+      {
+        "TranslatedTitle": "マップ",
+        "TranslatedFormat": "",
+        "Value": 2,
+        "Info": {
+          "ValueType": "Byte",
+          "OptionName": 1
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "インポスター",
+    "Options": [
+      {
+        "TranslatedTitle": "インポスター数",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 1
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "TranslatedTitle": "キルのクールダウン時間",
+        "TranslatedFormat": "{0}秒",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1
+        },
+        "Range": [
+          10,
+          12.5,
+          15,
+          17.5,
+          20,
+          22.5,
+          25,
+          27.5,
+          30,
+          32.5,
+          35,
+          37.5,
+          40,
+          42.5,
+          45,
+          47.5,
+          50,
+          52.5,
+          55,
+          57.5,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "インポスタービジョン",
+        "TranslatedFormat": "x",
+        "Value": 1.5,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 3
+        },
+        "Range": [
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3,
+          3.25,
+          3.5,
+          3.75,
+          4,
+          4.25,
+          4.5,
+          4.75,
+          5
+        ]
+      },
+      {
+        "TranslatedTitle": "キル可能距離",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 2
+        },
+        "Range": [
+          "ショート",
+          "ミドル",
+          "ロング"
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "クルー",
+    "Options": [
+      {
+        "TranslatedTitle": "プレイヤー速度",
+        "TranslatedFormat": "x",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 2
+        },
+        "Range": [
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3
+        ]
+      },
+      {
+        "TranslatedTitle": "クルービジョン",
+        "TranslatedFormat": "x",
+        "Value": 0.75,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 4
+        },
+        "Range": [
+          0.25,
+          0.5,
+          0.75,
+          1,
+          1.25,
+          1.5,
+          1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3,
+          3.25,
+          3.5,
+          3.75,
+          4,
+          4.25,
+          4.5,
+          4.75,
+          5
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "会議",
+    "Options": [
+      {
+        "TranslatedTitle": "# 緊急会議",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 3
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "TranslatedTitle": "緊急ボタンクールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 0,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 4
+        },
+        "Range": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "議論タイム",
+        "TranslatedFormat": "{0}秒",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 5
+        },
+        "Range": [
+          0,
+          15,
+          30,
+          45,
+          60,
+          75,
+          90,
+          105,
+          120
+        ]
+      },
+      {
+        "TranslatedTitle": "投票時間",
+        "TranslatedFormat": "{0}秒",
+        "Value": 120,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 6
+        },
+        "Range": [
+          0,
+          15,
+          30,
+          45,
+          60,
+          75,
+          90,
+          105,
+          120,
+          135,
+          150,
+          165,
+          180,
+          195,
+          210,
+          225,
+          240,
+          255,
+          270,
+          285,
+          300
+        ]
+      },
+      {
+        "TranslatedTitle": "匿名投票",
+        "TranslatedFormat": "",
+        "Value": false,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 4
+        }
+      },
+      {
+        "TranslatedTitle": "追放数を確認",
+        "TranslatedFormat": "",
+        "Value": true,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 3
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "タスク",
+    "Options": [
+      {
+        "TranslatedTitle": "タスクバーアップデート",
+        "TranslatedFormat": "",
+        "Value": 0,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 13
+        },
+        "Range": [
+          "常時",
+          "会議",
+          "行わない"
+        ]
+      },
+      {
+        "TranslatedTitle": "# 通常タスク",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 10
+        },
+        "Range": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "TranslatedTitle": "# ロングタスク",
+        "TranslatedFormat": "",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 12
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "TranslatedTitle": "# ショートタスク",
+        "TranslatedFormat": "",
+        "Value": 2,
+        "Info": {
+          "ValueType": "Int",
+          "OptionName": 11
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "TranslatedTitle": "視認タスク",
+        "TranslatedFormat": "",
+        "Value": true,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "科学者",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "ScientistRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 2
+        }
+      },
+      {
+        "TranslatedTitle": "バイタル画面クールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1200
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "充電持続時間",
+        "TranslatedFormat": "{0}秒",
+        "Value": 5,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1201
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "エンジニア",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "EngineerRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 3
+        }
+      },
+      {
+        "TranslatedTitle": "通気孔使用クールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 30,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1300
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      },
+      {
+        "TranslatedTitle": "通気孔内での最大時間",
+        "TranslatedFormat": "{0}秒",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1301
+        },
+        "Range": [
+          3.4028235e+38,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "守護天使",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "GuardianAngelRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 4
+        }
+      },
+      {
+        "TranslatedTitle": "護衛クールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 60,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1101
+        },
+        "Range": [
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          100,
+          105,
+          110,
+          115,
+          120
+        ]
+      },
+      {
+        "TranslatedTitle": "護衛持続時間",
+        "TranslatedFormat": "{0}秒",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1100
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30
+        ]
+      },
+      {
+        "TranslatedTitle": "シールドはインポスターに見える",
+        "TranslatedFormat": "",
+        "Value": false,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1100
+        }
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "ノイズメーカー",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "NoisemakerRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 8
+        }
+      },
+      {
+        "TranslatedTitle": "インポスターへの警報",
+        "TranslatedFormat": "",
+        "Value": true,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1300
+        }
+      },
+      {
+        "TranslatedTitle": "警報の長さ",
+        "TranslatedFormat": "{0}秒",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1600
+        },
+        "Range": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "トラッカー",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "TrackerRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 10
+        }
+      },
+      {
+        "TranslatedTitle": "追跡のクールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1550
+        },
+        "Range": [
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          100,
+          105,
+          110,
+          115,
+          120
+        ]
+      },
+      {
+        "TranslatedTitle": "追跡の遅れ",
+        "TranslatedFormat": "{0}秒",
+        "Value": 1,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1552
+        },
+        "Range": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "TranslatedTitle": "追跡の長さ",
+        "TranslatedFormat": "{0}秒",
+        "Value": 30,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1551
+        },
+        "Range": [
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90,
+          95,
+          100,
+          105,
+          110,
+          115,
+          120
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "探偵",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "DetectiveRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 12
+        }
+      },
+      {
+        "TranslatedTitle": "事件ごとの容疑者数",
+        "TranslatedFormat": "",
+        "Value": 3,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1602
+        },
+        "Range": [
+          2,
+          3,
+          4
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "ジャッジ",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "JudgeRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 19
+        }
+      },
+      {
+        "TranslatedTitle": "タスクアンロック率（%）",
+        "TranslatedFormat": "",
+        "Value": 50,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1620
+        },
+        "Range": [
+          0,
+          25,
+          50,
+          75,
+          100
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "インフルエンサー",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "SpiritGuideRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 21
+        }
+      },
+      {
+        "TranslatedTitle": "メッセージクールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 20,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1640
+        },
+        "Range": [
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "シェイプシフター",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "ShapeshifterRole",
+        "Value": {
+          "MaxCount": 15,
+          "Chance": 50
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 5
+        }
+      },
+      {
+        "TranslatedTitle": "変身の証拠を残す",
+        "TranslatedFormat": "",
+        "Value": false,
+        "Info": {
+          "ValueType": "Bool",
+          "OptionName": 1000
+        }
+      },
+      {
+        "TranslatedTitle": "変身持続時間",
+        "TranslatedFormat": "{0}秒",
+        "Value": 8,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1001
+        },
+        "Range": [
+          3.4028235e+38,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30
+        ]
+      },
+      {
+        "TranslatedTitle": "変身クールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 10,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1000
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60,
+          65,
+          70,
+          75,
+          80,
+          85,
+          90
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "ファントム",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "PhantomRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 9
+        }
+      },
+      {
+        "TranslatedTitle": "消える長さ",
+        "TranslatedFormat": "{0}秒",
+        "Value": 30,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1501
+        },
+        "Range": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ]
+      },
+      {
+        "TranslatedTitle": "消えるのクールダウン",
+        "TranslatedFormat": "{0}秒",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1500
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "TranslatedTitle": "バイパー",
+    "Options": [
+      {
+        "TranslatedTitle": "DefaultOption",
+        "TranslatedFormat": "ViperRole",
+        "Value": {
+          "MaxCount": 0,
+          "Chance": 0
+        },
+        "Info": {
+          "ValueType": "RoleBase",
+          "OptionName": 18
+        }
+      },
+      {
+        "TranslatedTitle": "溶解時間",
+        "TranslatedFormat": "{0}秒",
+        "Value": 15,
+        "Info": {
+          "ValueType": "Float",
+          "OptionName": 1601
+        },
+        "Range": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50,
+          55,
+          60
+        ]
+      }
+    ]
+  }
+]
